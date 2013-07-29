@@ -1,0 +1,16 @@
+@import "_mixins";
+// SASS VARIABLES
+$mq_enabled: false;
+@import "_reset";
+@import "_style";
+
+html {
+	//background-color: rgb(255,255,255);
+}
+.main_wrapper {
+	//margin: 0 auto;
+}
+.page_article {
+	//width: 960px;
+	//border: 2px solid rgb(200, 200, 200);
+}

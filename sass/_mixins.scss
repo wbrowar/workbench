@@ -1,0 +1,172 @@
+// SASS VARIABLES
+$mq_enabled: true !default;
+
+// SASS FUNCTION
+@function rwd_ratio_width($object_px, $container_px) {
+	@return $object_px / $container_px * 100%;
+}
+
+// COLORS
+$color_white_default: rgb(255, 255, 255);
+$color_black_default: rgb(51, 51, 51);
+$color_brown_default: rgb(79, 72, 67);
+$color_brown_footer_bg: rgb(104, 97, 87);
+$color_blue_default: rgb(157, 184, 181);
+
+.text_color_blue {
+	color: $color_blue_default;
+}
+
+// FONTS
+@mixin font($font_name) {
+	$font_family: sans-serif !default;
+	$font_weight: normal !default;
+	$font_style: normal !default;
+	
+	@if $font_name == 'museo_300' {
+		$font_family: 'museo-sans', Arial, Verdana, sans-serif;
+		$font_weight: 300;
+	}
+	@else if $font_name == 'museo_300_italic' {
+		$font_family: 'museo-sans', Arial, Verdana, sans-serif;
+		$font_weight: 300;
+		$font_style: italic;
+	}
+	@else if $font_name == 'museo_500' {
+		$font_family: 'museo-sans', Arial, Verdana, sans-serif;
+		$font_weight: 500;
+	}
+	@else if $font_name == 'museo_500_italic' {
+		$font_family: 'museo-sans', Arial, Verdana, sans-serif;
+		$font_weight: 500;
+		$font_style: italic;
+	}
+	@else if $font_name == 'futura_book' {
+		$font_family: 'futura-pt', 'museo-sans', Arial, Verdana, sans-serif;
+		$font_weight: 400;
+	}
+	
+	font: {
+		family: $font_family;
+		weight: $font_weight;
+		style: $font_style;
+	}
+}
+
+// BORDER
+$border_radius_default: 9px;
+$border_default: 3px solid $color_brown_default;
+
+@mixin box_sizing_default {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+// BOX SHADOW
+$box_shadow_default: 0px 0px 20px rgba(0,0,0,.6);
+
+// BACKGROUND
+@mixin bg_cover($img_url, $img_color: transparent) {
+	background: $img_color url($img_url) no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+// GRADIENTS
+@mixin gradient_gray_down_white {
+	background: rgb(255,255,255);
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VhZTllOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+	background: -moz-linear-gradient(top, rgba(234,233,232,1) 0%, rgba(255,255,255,1) 31%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(234,233,232,1)), color-stop(31%,rgba(255,255,255,1)));
+	background: -webkit-linear-gradient(top, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
+	background: -o-linear-gradient(top, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
+	background: -ms-linear-gradient(top, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
+	background: linear-gradient(to bottom, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eae9e8', endColorstr='#ffffff',GradientType=0 );
+	
+	.ie9 & {
+		filter: none;
+	}
+}
+.gradient_gray_down_white {
+	@include gradient_gray_down_white;
+}
+@mixin gradient_brown_down_transparent {
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY4NjE1NyIgc3RvcC1vcGFjaXR5PSIwLjkiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzY4NjE1NyIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+	background: -moz-linear-gradient(top, rgba(104,97,87,0.9) 0%, rgba(104,97,87,0) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,97,87,0.9)), color-stop(100%,rgba(104,97,87,0)));
+	background: -webkit-linear-gradient(top, rgba(104,97,87,0.9) 0%,rgba(104,97,87,0) 100%);
+	background: -o-linear-gradient(top, rgba(104,97,87,0.9) 0%,rgba(104,97,87,0) 100%);
+	background: -ms-linear-gradient(top, rgba(104,97,87,0.9) 0%,rgba(104,97,87,0) 100%);
+	background: linear-gradient(to bottom, rgba(104,97,87,0.9) 0%,rgba(104,97,87,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6686157', endColorstr='#00686157',GradientType=0 );
+	
+	.ie9 & {
+		filter: none;
+	}
+}
+.gradient_brown_down_transparent {
+	@include gradient_brown_down_transparent;
+}
+
+// HEIGHT
+$height_fixed_height_home: 600px;
+
+// MEDIA QUERIES
+$mq_fixed_height_home: 43.8125em;
+$mq_fixed_height: 56em;
+$mq_show_main_nav: 57em;
+$mq_max_width: 71.375em;
+
+// add inline media queries
+@mixin mq($breakpoint, $no_mq: false) {
+	@if $mq_enabled == true {
+		@if $no_mq == false {
+			@media (min-width: $breakpoint) {
+				@content;
+			}
+		}
+	} @else {
+		@content;
+	}
+}
+
+@mixin bg_2x {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+     only screen and (min--moz-device-pixel-ratio: 2),
+     only screen and (min-device-pixel-ratio: 2) {
+  	@content;
+  }
+}
+
+// PADDING
+$padding_wrapper_default: 8%;
+$padding_section_ver: 120px;
+
+// TEXT
+@mixin hide_text {
+	text-indent: -99999px;
+}
+
+// EXAMPLE USAGE
+/*
+.classname {
+	// sets padding and border to border-box
+	@include box_sizing_default;
+	
+	// sets a new "min-width" media query
+	@include mq(45em) {
+		.classname_2 {
+			// sets a background image, then a @2x image for hi-DPI displays
+			background: url(../img/main_bg.jpg) center top no-repeat;
+			@include bg_2x {
+				background-image: url(../img/main_bg@2x.jpg);
+				background-size: 1736px 519px;
+			}
+		}
+	}
+}
+*/		
