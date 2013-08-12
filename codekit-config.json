@@ -2,6 +2,18 @@
   "CodeKitInfo" : "This is a CodeKit project configuration file. It is designed to sync project settings across multiple machines. Modifying the contents of this file can be a poor life decision if you don't know what you're doing. This file is not useful unless accompanied by the project that created it in CodeKit. For more information, see: http:\/\/incident57.com\/codekit",
   "creatorBuild" : "8317",
   "files" : {
+    "\/_source\/_sass\/_helpers.scss" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/_source\/_sass\/_helpers.scss",
+      "outputStyle" : 3,
+      "shouldRunBless" : 1,
+      "outputAbbreviatedPath" : "\/css\/_helpers.css",
+      "fileType" : 4,
+      "debugStyle" : 0
+    },
     "\/apple-touch-icon-144x144-precomposed.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -34,17 +46,6 @@
       "syntaxCheckerStyle" : 1,
       "outputAbbreviatedPath" : "\/js\/modernizr-2.6.2.min.min.js",
       "fileType" : 64
-    },
-    "\/_source\/_img\/test.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/_source\/_img\/test.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/_source\/_img\/test.jpg",
-      "initialSize" : 2479,
-      "fileType" : 4096
     },
     "\/_source\/_sass\/_mixins.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -197,6 +198,18 @@
       "inputAbbreviatedPath" : "\/css\/all.css",
       "outputAbbreviatedPath" : "\/No Output Path",
       "fileType" : 16
+    },
+    "\/_source\/_sass\/_print.scss" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/_source\/_sass\/_print.scss",
+      "outputStyle" : 3,
+      "shouldRunBless" : 1,
+      "outputAbbreviatedPath" : "\/css\/_print.css",
+      "fileType" : 4,
+      "debugStyle" : 0
     },
     "\/_source\/_sass\/_style.scss" : {
       "ignoreWasSetByUser" : 0,
