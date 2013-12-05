@@ -22,3 +22,12 @@
 }());
 
 // Place any jQuery/helper plugins in here.
+
+// JQUERY TRANSIT - http://ricostacruz.com/jquery.transit/
+// Enable this if the jQuery Transit is used
+// Uses jQuery's .animate() if CSS transitions aren't available
+/*
+if (!jq.support.transition) {
+	jq.fn.transition = jq.fn.animate;
+}
+*/
