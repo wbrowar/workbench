@@ -1,12 +1,22 @@
 // SASS VARIABLES
 $mq_enabled: true !default;
 
-// MIXINS FOR CSS PROPERTIES:
+// SASS FUNCTIONS
+@function rwd_ratio_width($object_px, $container_px) {
+	@return $object_px / $container_px * 100%;
+}
 
+// SITE VARIABLES
 // COLORS
 $color_white_default: rgb(255, 255, 255);
 $color_black_default: rgb(40, 40, 40);
 
+// MEDIA QUERIES
+$mq_max_width: 60em;
+
+// MISC
+
+// SITE MIXINS
 // FONTS
 @mixin font($font_name) {
 	$font_family: sans-serif !default;
@@ -14,10 +24,10 @@ $color_black_default: rgb(40, 40, 40);
 	$font_style: normal !default;
 	
 	@if $font_name == 'avinir_next' {
-		$font_avinir_next: Avenir Next, Helvetica, Helvetica Neue, Arial;
+		$font_family: Avenir Next, Helvetica, Helvetica Neue, Arial;
 	}
 	@else if $font_name == 'avinir_next_condensed' {
-		$font_avinir_next_condensed: Avenir Next Condensed, Helvetica, Helvetica Neue, Arial;
+		$font_family: Avenir Next Condensed, Helvetica, Helvetica Neue, Arial;
 	}
 	
 	font: {
@@ -27,26 +37,35 @@ $color_black_default: rgb(40, 40, 40);
 	}
 }
 
-// BORDER
-$border_radius_default: 9px;
-$border_default: 3px solid $color_black_default;
-
-@mixin box_sizing_default {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-// BOX SHADOW
-$box_shadow_default: 0px 0px 20px rgba(0,0,0,.6);
-
 // BACKGROUND
 @mixin bg_cover($img_url, $img_color: transparent) {
-	background: $img_color url($img_url) no-repeat center center; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+	background: $img_color url($img_url) no-repeat center center;
   background-size: cover;
+}
+
+// FLEX BOX
+@mixin flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+  -moz-box-flex:  $values;
+  -webkit-flex:  $values;
+  -ms-flex:  $values;
+  flex:  $values;
+}
+
+@mixin order($val) {
+  -webkit-box-ordinal-group: $val;  
+  -moz-box-ordinal-group: $val;     
+  -ms-flex-order: $val;     
+  -webkit-order: $val;  
+  order: $val;
 }
 
 // GRADIENTS
@@ -67,9 +86,6 @@ $box_shadow_default: 0px 0px 20px rgba(0,0,0,.6);
 }
 
 // MEDIA QUERIES
-$mq_max_width: 71.375em;
-
-// add inline media queries
 @mixin mq($breakpoint, $no_mq: false) {
 	@if $mq_enabled == true {
 		@if $no_mq == false {
@@ -81,7 +97,17 @@ $mq_max_width: 71.375em;
 		@content;
 	}
 }
-
+@mixin mq_max($breakpoint, $no_mq: false) {
+	@if $mq_enabled == true {
+		@if $no_mq == false {
+			@media (max-width: $breakpoint) {
+				@content;
+			}
+		}
+	} @else {
+		@content;
+	}
+}
 @mixin bg_2x {
   @media only screen and (-webkit-min-device-pixel-ratio: 2),
      only screen and (min--moz-device-pixel-ratio: 2),
@@ -90,32 +116,34 @@ $mq_max_width: 71.375em;
   }
 }
 
+// PLACEHOLDER
+@mixin placeholder {
+	::-webkit-input-placeholder {
+   @content;
+	}
+	:-moz-placeholder {
+   @content;
+	}
+	::-moz-placeholder {
+   @content;
+	}
+	/*
+	:-ms-input-placeholder { 
+   @content;
+	}
+	*/
+}
+
+// SPRITES
+@mixin sprites_main($color: transparent) {
+	background: $color url(../img/sprites_main.png) no-repeat;
+	@include bg_2x {
+		background-image: url(../img/sprites_main@2x.png);
+		background-size: 56px 157px;
+	}
+}
+
 // TEXT
 @mixin hide_text {
 	text-indent: -99999px;
 }
-
-// EXAMPLE USAGE
-/*
-.classname {
-	// sets padding and border to border-box
-	@include box_sizing_default;
-	
-	// sets a new "min-width" media query
-	@include mq(45em) {
-		.classname_2 {
-			// sets a background image, then a @2x image for hi-DPI displays
-			background: url(../img/main_bg.jpg) center top no-repeat;
-			@include bg_2x {
-				background-image: url(../img/main_bg@2x.jpg);
-				background-size: 1736px 519px;
-			}
-		}
-	}
-}
-*/	
-
-// SASS FUNCTIONS
-@function rwd_ratio_width($object_px, $container_px) {
-	@return $object_px / $container_px * 100%;
-}	
