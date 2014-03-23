@@ -2531,22 +2531,6 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/css\/all.css": {
-		"fileType": 16,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/css\/all.css",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsSetByUser": 0
-		},
-	"\/css\/ie8.css": {
-		"fileType": 16,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/css\/ie8.css",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsSetByUser": 0
-		},
 	"\/index.html": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -2568,15 +2552,6 @@
 		}
 	},
 "hooks": [
-	{
-		"enabled": 1,
-		"hookType": 1,
-		"name": "Cache Busting",
-		"predicateDataBase64Encoded": "YnBsaXN0MDDUAQIDBAUGeXpYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QGgcIDxUdJygrMzc8PUJGTFFSV11iZ2xvcHJ0VSRudWxs0wkKCwwNDl8QF05TQ29tcG91bmRQcmVkaWNhdGVUeXBlXxAPTlNTdWJwcmVkaWNhdGVzViRjbGFzcxACgAKAGdIQCxEUWk5TLm9iamVjdHOiEhOAA4AUgBjUCxYXGBkaGxxfEBFOU1JpZ2h0RXhwcmVzc2lvbl8QEE5TTGVmdEV4cHJlc3Npb25fEBNOU1ByZWRpY2F0ZU9wZXJhdG9ygBOADoAEgBHVHh8gIQsiIyQlJllOU09wZXJhbmReTlNTZWxlY3Rvck5hbWVfEBBOU0V4cHJlc3Npb25UeXBlW05TQXJndW1lbnRzgAaABRADgAiADVx2YWx1ZUZvcktleTrSIAspKhABgAfSLC0uL1okY2xhc3NuYW1lWCRjbGFzc2VzXxAQTlNTZWxmRXhwcmVzc2lvbqMwMTJfEBBOU1NlbGZFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdNIQCzQ2oTWACYAM0wsgODk6O1lOU0tleVBhdGiACxAKgApeb3V0cHV0RnVsbFBhdGjSLC0+P18QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb26jQEEyXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SLC1DRF5OU011dGFibGVBcnJheaNDRTJXTlNBcnJhedIsLUdIXxATTlNLZXlQYXRoRXhwcmVzc2lvbqRJSksyXxATTlNLZXlQYXRoRXhwcmVzc2lvbl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbtNNIAtOT1BfEA9OU0NvbnN0YW50VmFsdWWADxAAgBBSanPSLC1TVF8QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb26jVVYyXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvblxOU0V4cHJlc3Npb27UC1hZWltPKVxaTlNNb2RpZmllcldOU0ZsYWdzXk5TT3BlcmF0b3JUeXBlgBIQY9IsLV5fXxAVTlNJblByZWRpY2F0ZU9wZXJhdG9yo2BhMl8QFU5TSW5QcmVkaWNhdGVPcGVyYXRvcl8QE05TUHJlZGljYXRlT3BlcmF0b3LSLC1jZF8QFU5TQ29tcGFyaXNvblByZWRpY2F0ZaNlZjJfEBVOU0NvbXBhcmlzb25QcmVkaWNhdGVbTlNQcmVkaWNhdGXUCxYXGBlpG2uAE4AVgASAF9NNIAttT1CAFoAQU2Nzc9QLWFlaW08pXIAS0iwtRXOiRTLSLC11dl8QE05TQ29tcG91bmRQcmVkaWNhdGWjd3gyXxATTlNDb21wb3VuZFByZWRpY2F0ZVtOU1ByZWRpY2F0ZV8QD05TS2V5ZWRBcmNoaXZlctF7fFRyb290gAEACAARABoAIwAtADIANwBUAFoAYQB7AI0AlACWAJgAmgCfAKoArQCvALEAswC8ANAA4wD5APsA\/QD\/AQEBDAEWASUBOAFEAUYBSAFKAUwBTgFbAWABYgFkAWkBdAF9AZABlAGnAbQBvQHCAcQBxgHIAc8B2QHbAd0B3wHuAfMCEgIWAjUCQgJHAlYCWgJiAmcCfQKCApgCrwK8AsMC1QLXAtkC2wLeAuMC\/wMDAx8DLAM1A0ADSANXA1kDWwNgA3gDfAOUA6oDrwPHA8sD4wPvA\/gD+gP8A\/4EAAQHBAkECwQPBBgEGgQfBCIEJwQ9BEEEVwRjBHUEeAR9AAAAAAAAAgEAAAAAAAAAfQAAAAAAAAAAAAAAAAAABH8=",
-		"runOrder": 0,
-		"scriptSourceString": "for f in \/css; do mv \"$f\" \"${f\/\/_\/-}\"; done",
-		"uuidString": "C04A18E9-2E0B-4018-A4A9-8618035AF6F7"
-		}
 	],
 "lastSavedByUser": "William Browar",
 "manualImportLinks": {
