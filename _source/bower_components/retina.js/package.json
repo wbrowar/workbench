@@ -1,0 +1,14 @@
+{
+  "name": "retina.js",
+  "version": "1.2.0",
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "less": "*",
+    "node-sass": "*"
+  },
+  "main": "./src/retina",
+  "scripts": {
+    "test": "mocha"
+  }
+}
