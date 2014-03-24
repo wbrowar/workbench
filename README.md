@@ -5,7 +5,8 @@ My personal framework for very simple sites includes a configuration from Initil
 
 This is here for my own storage, but please let me know if you have any feedback or suggestions.
 
-You can make your own by:
+You can make your own by doing the following:
+
 1. Configuring your build, [http://www.initializr.com](http://www.initializr.com)
 2. Buy CodeKit, [http://incident57.com/codekit/](http://incident57.com/codekit/)
 3. Write some sweet SASS Mixins and figure out a file structure that works best for you.
