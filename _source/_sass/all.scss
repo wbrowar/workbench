@@ -1,5 +1,7 @@
-@import "_mixins";
-@import "_reset";
-@import "_style";
-@import "_helpers";
-@import "_print";
+@import "_fonts"; // @font-face fonts (use this along with font() mixin
+@import "_mixins"; // mixins and variables
+@import "_reset"; // reset.css
+//@import "_animations"; // custom CSS animations
+@import "_style"; // custom styles
+//@import "_helpers"; // helpers (clearfix, etc)
+//@import "_print"; // print styles

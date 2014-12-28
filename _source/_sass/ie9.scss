@@ -1,0 +1,19 @@
+@import "_fonts"; // @font-face fonts (use this along with font() mixin
+@import "_mixins"; // mixins and variables
+$mq_enabled: false;
+@import "_reset"; // reset.css
+//@import "_animations"; // custom CSS animations
+@import "_style"; // custom styles
+@import "_helpers"; // helpers (clearfix, etc)
+//@import "_print"; // print styles
+
+html {
+	//background-color: rgb(255,255,255);
+}
+.main_wrapper {
+	//margin: 0 auto;
+}
+.page_article {
+	//width: 960px;
+	//border: 2px solid rgb(200, 200, 200);
+}

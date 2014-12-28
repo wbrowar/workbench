@@ -23,11 +23,11 @@ $mq_max_width: 60em;
 	$font_weight: normal !default;
 	$font_style: normal !default;
 	
-	@if $font_name == 'avinir_next' {
-		$font_family: Avenir Next, Helvetica, Helvetica Neue, Arial;
+	@if $font_name == 'eaves' {
+		$font_family: 'MrEavesXLSanRRegular', "Avinir Next", "Avinir", Helvetica, Arial, sans-serif;
 	}
-	@else if $font_name == 'avinir_next_condensed' {
-		$font_family: Avenir Next Condensed, Helvetica, Helvetica Neue, Arial;
+	@else if $font_name == 'eaves_italic' {
+		$font_family: 'MrEavesXLModBkIRegular', "Avinir Next", "Avinir", Helvetica, Arial, sans-serif;
 	}
 	
 	font: {
@@ -35,6 +35,9 @@ $mq_max_width: 60em;
 		weight: $font_weight;
 		style: $font_style;
 	}
+	-webkit-font-smoothing: antialiased;
+	
+	@include embed_font($font_name);
 }
 
 // BACKGROUND

@@ -30,7 +30,10 @@ article, aside, figure, footer, header, hgroup, nav, section, details, summary {
    If this default setting for images is causing issues, you might want to replace it with a .responsive class instead. */
 img,
 object,
-embed {max-width: 100%;}
+embed {
+  max-width: 100%;
+  height: auto;
+}
 
 /* force a vertical scrollbar to prevent a jumpy page */
 html {overflow-y: scroll;}

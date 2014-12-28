@@ -1,0 +1,34 @@
+$font_embedded_eaves_light: false;
+$font_embedded_eaves_light_italic: false;
+
+@mixin embed_font($font_name) {
+  @at-root {
+    @if $font_name == 'eaves_light' {
+      @if $font_embedded_eaves_light == false {
+        $font_embedded_eaves_light: true;
+        // Light
+        @font-face {
+            font-family: 'MrEavesXLSanLRegular';
+            src: url('fonts/mreavesxlsanl-071211001EmigreWebOnly.eot');
+            src: url('fonts/mreavesxlsanl-071211001EmigreWebOnly.eot?#iefix') format('embedded-opentype'),
+                 url('fonts/mreavesxlsanl-071211001EmigreWebOnly.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+      }
+    }
+    @else if $font_name == 'eaves_light_italic' {
+      @if $font_embedded_eaves_light_italic == false {
+        $font_embedded_eaves_light_italic: true;
+        @font-face {
+            font-family: 'MrEavesXLSanAltLIRegular';
+            src: url('fonts/mreavesxlsanaltli-071211001EmigreWebOnly.eot');
+            src: url('fonts/mreavesxlsanaltli-071211001EmigreWebOnly.eot?#iefix') format('embedded-opentype'),
+                 url('fonts/mreavesxlsanaltli-071211001EmigreWebOnly.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+      }
+    }
+  }
+}
