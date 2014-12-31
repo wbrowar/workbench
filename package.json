@@ -14,7 +14,9 @@
     "grunt-contrib-sass": "^0.8.1",
     "grunt-contrib-uglify": "^0.7.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-favicons": "^0.6.4",
     "grunt-newer": "^0.8.0",
+    "grunt-responsive-images": "^0.1.4",
     "jshint-stylish": "^1.0.0"
   }
 }

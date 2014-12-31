@@ -16,12 +16,13 @@ You can make your own by doing the following:
 1. Clone the repo into your site's root folder
 2. Install [Node](http://nodejs.org/)
 3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
-4. In terminal, go to your site's root folder and run the command: `npm install`
-5. Run `npm update`
-6. Run `npm install -g bower`
-7. Run `bower update`
-8. Run `npm install -g grunt-cli`
-9. Run `grunt` to perform the default task, then you may use `grunt watch` going forward
+4. Install ImageMagick, run this command: `brew install imagemagick`. If you don't have homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+5. In terminal, go to your site's root folder and run the command: `npm install`
+6. Run `npm update`
+7. Run `npm install -g bower`
+8. Run `bower update`
+9. Run `npm install -g grunt-cli`
+10. Run `grunt` to perform the default task and to do an initial setup, then you may use `grunt watch` going forward
 
 ---
 ## CSS framework

@@ -77,6 +77,20 @@ module.exports = function(grunt) {
           },
         ],
       },
+      images2x: {
+        files: [
+          // move images to build folder
+          {
+            expand: true,
+            cwd: '_build/img/2x/',
+            src: '**/*.{png,jpg,gif}',
+            dest: '_build/img/',
+            rename: function(dest, src) {
+              return dest + '@2x';
+            }
+          },
+        ],
+      },
     },
     csslint: {
       dist: {
@@ -91,13 +105,56 @@ module.exports = function(grunt) {
         ],
       },
     },
+    favicons: {
+      options: {
+        trueColor: true,
+        precomposed: true,
+        appleTouchBackgroundColor: "#d2e5fc",
+        coast: true,
+        windowsTile: true,
+        tileBlackWhite: true,
+        tileColor: "none",
+        //html: 'index.html',
+        HTMLPrefix: "/img/meta/"
+      },
+      icons: {
+        src: '_source/_favicon/favicon.png',
+        dest: 'img/meta/'
+      }
+    },
     imagemin: {
       dynamic: {
         files: [{
           expand: true,
           cwd: '_build/img',
-          src: ['**/*.{png,jpg,gif}'],
+          src: ['**/*.{png,jpg,gif}', '!2x/*'],
           dest: 'img/'
+        }]
+      }
+    },
+    responsive_images: {
+      retina: {
+        options: {
+          engine: 'im',
+          sizes: [
+            {
+              rename: false,
+              width: '100%',
+              quality: 40,
+              suffix: '@2x'
+            },
+            {
+              rename: false,
+              width: '50%',
+              suffix: ''
+            }
+          ]
+        },
+        files: [{
+          expand: true,
+          cwd: '_build/img/2x/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: '_build/img/'
         }]
       }
     },
@@ -134,21 +191,21 @@ module.exports = function(grunt) {
     },
     watch: {
       css: {
-        files: ['_source/_sass/*.scss'],
+        files: ['_source/_sass/**/*.scss'],
         tasks: ['clean:css', 'sass', 'autoprefixer', 'cssmin'],
         options: {
           spawn: false,
         },
       },
       images: {
-        files: ['_source/_img/*'],
-        tasks: ['newer:copy:imagesbuild', 'newer:imagemin'],
+        files: ['_source/_img/**/*'],
+        tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:imagemin'],
         options: {
           spawn: false,
         },
       },
       scripts: {
-        files: ['_source/_js/*.js'],
+        files: ['_source/_js/**/*.js'],
         tasks: ['clean:scripts', 'concat', 'uglify'],
         options: {
           spawn: false,
@@ -164,9 +221,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-favicons');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-postcss');
+  //grunt.loadNpmTasks('grunt-postcss');
+  grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -175,6 +234,7 @@ module.exports = function(grunt) {
   
   grunt.registerTask('cleanall', ['clean']);
   grunt.registerTask('check', ['jshint', 'csslint']);
-  grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'copy:main', 'copy:imagesbuild', 'imagemin']);
+  grunt.registerTask('meta', ['favicons', 'imagemin']);
+  grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'copy:main', 'copy:imagesbuild', 'responsive_images', 'copy:images2x', 'imagemin']);
 
 };
