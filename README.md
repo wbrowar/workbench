@@ -13,6 +13,8 @@ You can make your own by doing the following:
 
 ---
 ## Installation
+NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly different.
+
 1. Clone the repo into your site's root folder
 2. Install [Node](http://nodejs.org/)
 3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
