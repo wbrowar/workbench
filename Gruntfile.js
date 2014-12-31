@@ -24,6 +24,10 @@ module.exports = function(grunt) {
         '_build/css',
         'css/*',
         ],
+      images: [
+        '_build/img',
+        'img/*',
+        ],
       scripts: [
         '_build/js',
         'js/*',
@@ -62,6 +66,17 @@ module.exports = function(grunt) {
           },
         ],
       },
+      imagesbuild: {
+        files: [
+          // move images to build folder
+          {
+            expand: true,
+            cwd: '_source/_img/',
+            src: '**/*',
+            dest: '_build/img/'
+          },
+        ],
+      },
     },
     csslint: {
       dist: {
@@ -75,6 +90,16 @@ module.exports = function(grunt) {
           { src: ['_build/css/ie9_prefixed.css'], dest: 'css/ie9.css'},
         ],
       },
+    },
+    imagemin: {
+      dynamic: {
+        files: [{
+          expand: true,
+          cwd: '_build/img',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: 'img/'
+        }]
+      }
     },
     jshint: {
       options: {
@@ -115,6 +140,13 @@ module.exports = function(grunt) {
           spawn: false,
         },
       },
+      images: {
+        files: ['_source/_img/*'],
+        tasks: ['newer:copy:imagesbuild', 'newer:imagemin'],
+        options: {
+          spawn: false,
+        },
+      },
       scripts: {
         files: ['_source/_js/*.js'],
         tasks: ['clean:scripts', 'concat', 'uglify'],
@@ -132,14 +164,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-
+  grunt.loadNpmTasks('grunt-newer');
+  
+  
   grunt.registerTask('cleanall', ['clean']);
   grunt.registerTask('check', ['jshint', 'csslint']);
-  grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'copy:main']);
+  grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'copy:main', 'copy:imagesbuild', 'imagemin']);
 
 };
