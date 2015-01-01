@@ -22,6 +22,7 @@ module.exports = function(grunt) {
     clean: {
       css: [
         '_build/css',
+        '_build/critcss',
         'css/*',
         ],
       images: [
@@ -40,6 +41,7 @@ module.exports = function(grunt) {
         },
         src: [
           '_build/js/modernizr-custom.js',
+          '_source/bower_components/loadcss/loadCSS.js',
           '_source/_js/head.js',
           ],
         dest: '_build/js/head.js',
@@ -102,18 +104,34 @@ module.exports = function(grunt) {
         ],
       },
     },
+    criticalcss: {
+      home: {
+        options: {
+          url: "http://wbrowar.com", // Change to live or dev URL
+          width: 1200,
+          height: 900,
+          outputfile: "_build/critcss/home.css",
+          filename: "css/all.css"
+        }
+      }
+    },
     csslint: {
       dist: {
         src: '_build/css/*.css'
       },
     },
     cssmin: {
-      dist: {
+      styles: {
         files: [
           //{ src: ['_build/css/all_sprites.css'], dest: 'css/all.css'},
           //{ src: ['_build/css/ie9_sprites.css'], dest: 'css/ie9.css'}
           { src: ['_build/css/all_prefixed.css'], dest: 'css/all.css'},
           { src: ['_build/css/ie9_prefixed.css'], dest: 'css/ie9.css'}
+        ],
+      },
+      critcss: {
+        files: [
+          { src: ['_build/critcss/home.css'], dest: '_build/critcss/home.min.css'}
         ],
       },
     },
@@ -247,7 +265,7 @@ module.exports = function(grunt) {
     watch: {
       css: {
         files: ['_source/_sass/**/*.scss'],
-        tasks: ['clean:css', 'copy:imagesbuild', 'sass', 'autoprefixer', 'cssmin'],
+        tasks: ['clean:css', 'copy:imagesbuild', 'sass', 'autoprefixer', 'cssmin:styles'],
         options: {
           spawn: false,
         },
@@ -261,7 +279,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: ['_source/_js/**/*.js'],
-        tasks: ['clean:scripts', 'concat:scriptshead', 'concat:scriptsmain', 'uglify'],
+        tasks: ['clean:scripts', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify'],
         options: {
           spawn: false,
         },
@@ -274,6 +292,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat-sourcemaps');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-criticalcss');
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-favicons');
@@ -291,6 +310,7 @@ module.exports = function(grunt) {
   grunt.registerTask('cleanall', ['clean']);
   grunt.registerTask('check', ['jshint', 'csslint']);
   grunt.registerTask('meta', ['favicons', 'imagemin']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin', 'copy:main']);
+  grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main']);
 
 };

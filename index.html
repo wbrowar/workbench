@@ -27,25 +27,34 @@
       	<link rel="icon" sizes="228x228" href="/img/meta/coast-icon-228x228.png">
       	<link rel="shortcut icon" href="/img/meta/favicon.ico">
       	<link rel="icon" type="image/png" sizes="64x64" href="/img/meta/favicon.png">
-
-				<!-- styles -->
-				<!--[if gte IE 9]><!-->
-				<link rel="stylesheet" href="css/all.css">
-				<!--<![endif]-->
-				
-				<!--[if lte IE 9]>
-				<link rel="stylesheet" href="css/ie9.css">
-				<![endif]-->
+      	
+      	<!-- styles -->
+      	<noscript>
+  				<!--[if gte IE 9]><!-->
+  				<link rel="stylesheet" href="css/all.css">
+  				<!--<![endif]-->
+  				
+  				<!--[if lte IE 9]>
+  				<link rel="stylesheet" href="css/ie9.css">
+  				<![endif]-->
+      	</noscript>
 				
 				<!-- scripts -->
         <script src="js/head.min.js"></script>
+				<!--[if gte IE 9]><!-->
+				  <script>loadCSS( "css/all.css" );</script>
+				<!--<![endif]-->
+				<!--[if lte IE 9]>
+				  <script>loadCSS( "css/ie9.css" );</script>
+				<![endif]-->
+        
 </head>
     <body>
         <!--[if lt IE 8]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="header-container">
+        <div class="header_wrapper">
             <header class="wrapper clearfix">
                 <h1 class="title">h1.title</h1>
                 <nav>
@@ -58,7 +67,7 @@
             </header>
         </div>
 
-        <div class="main-container">
+        <div class="main_wrapper">
             <div class="main wrapper clearfix">
 
                 <article>
@@ -88,7 +97,7 @@
             </div> <!-- #main -->
         </div> <!-- #main-container -->
 
-        <div class="footer-container">
+        <div class="footer_wrapper">
             <footer class="wrapper">
                 <h3>footer</h3>
             </footer>
