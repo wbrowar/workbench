@@ -34,19 +34,32 @@ module.exports = function(grunt) {
         ],
     },
     concat: {
-      head: {
+      scriptshead: {
+        options: {
+          //sourceMap: true
+        },
         src: [
-          '_source/_js/_lib/modernizr.custom.js',
+          '_build/js/modernizr-custom.js',
           '_source/_js/head.js',
           ],
         dest: '_build/js/head.js',
       },
-      main: {
+      scriptsmain: {
+        options: {
+          //sourceMap: true
+        },
         src: [
           '_source/bower_components/jquery/dist/jquery.js',
           '_source/_js/main.js',
           '_source/bower_components/picturefill/dist/picturefill.js',
         ],
+        dest: '_build/js/main.js',
+      },
+      sprites: {
+        files: {
+          '_build/css/all_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/all_prefixed.css'],
+          '_build/css/ie9_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/ie9_prefixed.css'],
+        },
         dest: '_build/js/main.js',
       },
     },
@@ -66,6 +79,17 @@ module.exports = function(grunt) {
           },
         ],
       },
+      cssbuild: {
+        files: [
+          // move scss files to build folder
+          {
+            expand: true,
+            cwd: '_source/_sass/',
+            src: '**/*',
+            dest: '_build/css/'
+          },
+        ],
+      },
       imagesbuild: {
         files: [
           // move images to build folder
@@ -74,20 +98,6 @@ module.exports = function(grunt) {
             cwd: '_source/_img/',
             src: '**/*',
             dest: '_build/img/'
-          },
-        ],
-      },
-      images2x: {
-        files: [
-          // move images to build folder
-          {
-            expand: true,
-            cwd: '_build/img/2x/',
-            src: '**/*.{png,jpg,gif}',
-            dest: '_build/img/',
-            rename: function(dest, src) {
-              return dest + '@2x';
-            }
           },
         ],
       },
@@ -100,8 +110,10 @@ module.exports = function(grunt) {
     cssmin: {
       dist: {
         files: [
+          //{ src: ['_build/css/all_sprites.css'], dest: 'css/all.css'},
+          //{ src: ['_build/css/ie9_sprites.css'], dest: 'css/ie9.css'}
           { src: ['_build/css/all_prefixed.css'], dest: 'css/all.css'},
-          { src: ['_build/css/ie9_prefixed.css'], dest: 'css/ie9.css'},
+          { src: ['_build/css/ie9_prefixed.css'], dest: 'css/ie9.css'}
         ],
       },
     },
@@ -122,14 +134,57 @@ module.exports = function(grunt) {
         dest: 'img/meta/'
       }
     },
+    grunticon: {
+      main: {
+        options: {
+          datasvgcss: '_build/css/sprites/sprites.main.svg.css',
+          datapngcss: '_build/css/sprites/sprites.main.png.css'
+        },
+        files: [{
+          expand: true,
+          cwd: '_build/img/sprites_main',
+          src: ['*.svg', '*.png'],
+          dest: "_build/img/huh/"
+        }]
+      }
+    },
     imagemin: {
       dynamic: {
         files: [{
           expand: true,
           cwd: '_build/img',
-          src: ['**/*.{png,jpg,gif}', '!2x/*'],
+          src: ['**/*.{png,jpg,gif}', '!2x/*', '!sprites_main/*'],
           dest: 'img/'
         }]
+      }
+    },
+    modernizr: {
+      dist: {
+        "devFile" : "_source/_js/_lib/modernizr.custom.js",
+        "outputFile" : "_build/js/modernizr-custom.js",
+        "extra" : {
+            "shiv" : true,
+            "printshiv" : false,
+            "load" : true,
+            "mq" : false,
+            "cssclasses" : true
+        },
+        "extensibility" : {
+            "addtest" : false,
+            "prefixed" : false,
+            "teststyles" : false,
+            "testprops" : false,
+            "testallprops" : false,
+            "hasevents" : false,
+            "prefixes" : false,
+            "domprefixes" : false,
+            "cssclassprefix": ""
+        },
+        "uglify" : false,
+        "tests" : [],
+        "parseFiles" : true,
+        "matchCommunityTests" : false,
+        "customTests" : []
       }
     },
     responsive_images: {
@@ -174,8 +229,8 @@ module.exports = function(grunt) {
           style: 'nested',
         },
         files: {
-          '_build/css/all_compiled.css': '_source/_sass/all.scss',
-          '_build/css/ie9_compiled.css': '_source/_sass/ie9.scss'
+          '_build/css/all_compiled.css': '_build/css/all.scss',
+          '_build/css/ie9_compiled.css': '_build/css/ie9.scss'
         },
       },
     },
@@ -192,7 +247,7 @@ module.exports = function(grunt) {
     watch: {
       css: {
         files: ['_source/_sass/**/*.scss'],
-        tasks: ['clean:css', 'sass', 'autoprefixer', 'cssmin'],
+        tasks: ['clean:css', 'copy:imagesbuild', 'sass', 'autoprefixer', 'cssmin'],
         options: {
           spawn: false,
         },
@@ -206,7 +261,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: ['_source/_js/**/*.js'],
-        tasks: ['clean:scripts', 'concat', 'uglify'],
+        tasks: ['clean:scripts', 'concat:scriptshead', 'concat:scriptsmain', 'uglify'],
         options: {
           spawn: false,
         },
@@ -222,9 +277,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-favicons');
+  grunt.loadNpmTasks('grunt-grunticon');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  //grunt.loadNpmTasks('grunt-postcss');
+  grunt.loadNpmTasks("grunt-modernizr");
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -235,6 +291,6 @@ module.exports = function(grunt) {
   grunt.registerTask('cleanall', ['clean']);
   grunt.registerTask('check', ['jshint', 'csslint']);
   grunt.registerTask('meta', ['favicons', 'imagemin']);
-  grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'copy:main', 'copy:imagesbuild', 'responsive_images', 'copy:images2x', 'imagemin']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin', 'copy:main']);
 
 };
