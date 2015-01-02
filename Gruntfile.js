@@ -27,6 +27,7 @@ module.exports = function(grunt) {
         ],
       html: [
         '<%= pkg.build_path %>html',
+        '<%= pkg.html_build_path %>'
         ],
       images: [
         '<%= pkg.build_path %>img',
@@ -170,7 +171,9 @@ module.exports = function(grunt) {
       main: {
         options: {
           datasvgcss: '<%= pkg.build_path %>css/sprites/sprites.main.svg.css',
-          datapngcss: '<%= pkg.build_path %>css/sprites/sprites.main.png.css'
+          datapngcss: '<%= pkg.build_path %>css/sprites/sprites.main.png.css',
+          pngfolder: '<%= pkg.build_path %>img/',
+          pngpath: '<%= pkg.theme_path %>img/'
         },
         files: [{
           expand: true,
@@ -182,8 +185,8 @@ module.exports = function(grunt) {
     },
     htmlbuild: {
       layout: {
-        src: '<%= pkg.source_path %>_html/layout.html',
-        dest: '<%= pkg.theme_path %>index.html',
+        src: '<%= pkg.source_path %>_html/*.html',
+        dest: '<%= pkg.html_build_path %>',
         options: {
           styles: {
             critcss: '<%= pkg.build_path %>critcss/home.min.css'
