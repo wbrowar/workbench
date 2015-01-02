@@ -11,9 +11,9 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "latest",
-    "jquery.transit": "latest",
-    "picturefill": "latest",
-    "loadcss": "latest"
+    "jquery": ">=2.1.3",
+    "jquery.transit": ">=0.9.12",
+    "picturefill": ">=2.2.0",
+    "loadcss": ">=0.1.2"
   }
 }

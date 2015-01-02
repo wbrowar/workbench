@@ -8,30 +8,33 @@ module.exports = function(grunt) {
         options: {
           browsers: ['last 2 versions']
         },
-        src: '_build/css/all_compiled.css',
-        dest: '_build/css/all_prefixed.css'
+        src: '<%= pkg.build_path %>css/all_compiled.css',
+        dest: '<%= pkg.build_path %>css/all_prefixed.css'
       },
       ie9: {
         options: {
           browsers: ['ie 9']
         },
-        src: '_build/css/ie9_compiled.css',
-        dest: '_build/css/ie9_prefixed.css'
+        src: '<%= pkg.build_path %>css/ie9_compiled.css',
+        dest: '<%= pkg.build_path %>css/ie9_prefixed.css'
       }
     },
     clean: {
       css: [
-        '_build/css',
-        '_build/critcss',
-        'css/*',
+        '<%= pkg.build_path %>css',
+        '<%= pkg.build_path %>critcss',
+        '<%= pkg.theme_path %>css/*'
+        ],
+      html: [
+        '<%= pkg.build_path %>html',
         ],
       images: [
-        '_build/img',
-        'img/*',
+        '<%= pkg.build_path %>img',
+        '<%= pkg.theme_path %>img/*'
         ],
       scripts: [
-        '_build/js',
-        'js/*',
+        '<%= pkg.build_path %>js',
+        '<%= pkg.theme_path %>js/*'
         ],
     },
     concat: {
@@ -40,29 +43,29 @@ module.exports = function(grunt) {
           //sourceMap: true
         },
         src: [
-          '_build/js/modernizr-custom.js',
-          '_source/bower_components/loadcss/loadCSS.js',
-          '_source/_js/head.js',
+          '<%= pkg.build_path %>js/modernizr-custom.js',
+          '<%= pkg.source_path %>bower_components/loadcss/loadCSS.js',
+          '<%= pkg.source_path %>_js/head.js',
           ],
-        dest: '_build/js/head.js',
+        dest: '<%= pkg.build_path %>js/head.js',
       },
       scriptsmain: {
         options: {
           //sourceMap: true
         },
         src: [
-          '_source/bower_components/jquery/dist/jquery.js',
-          '_source/_js/main.js',
-          '_source/bower_components/picturefill/dist/picturefill.js',
+          '<%= pkg.source_path %>bower_components/jquery/dist/jquery.js',
+          '<%= pkg.source_path %>_js/main.js',
+          '<%= pkg.source_path %>bower_components/picturefill/dist/picturefill.js',
         ],
-        dest: '_build/js/main.js',
+        dest: '<%= pkg.build_path %>js/main.js',
       },
       sprites: {
         files: {
-          '_build/css/all_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/all_prefixed.css'],
-          '_build/css/ie9_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/ie9_prefixed.css'],
+          '<%= pkg.build_path %>css/all_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/all_prefixed.css'],
+          '<%= pkg.build_path %>css/ie9_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/ie9_prefixed.css'],
         },
-        dest: '_build/js/main.js',
+        dest: '<%= pkg.build_path %>js/main.js',
       },
     },
     copy: {
@@ -72,8 +75,8 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: true,
-            src: ['_build/css/*.css.map'],
-            dest: 'css/',
+            src: ['<%= pkg.build_path %>css/*.css.map'],
+            dest: '<%= pkg.theme_path %>css/',
             filter: 'isFile',
             rename: function(dest, src) {
               return dest + src.replace('_compiled','');
@@ -86,9 +89,20 @@ module.exports = function(grunt) {
           // move scss files to build folder
           {
             expand: true,
-            cwd: '_source/_sass/',
+            cwd: '<%= pkg.source_path %>_sass/',
             src: '**/*',
-            dest: '_build/css/'
+            dest: '<%= pkg.build_path %>css/'
+          },
+        ],
+      },
+      htmlbuild: {
+        files: [
+          // move images to build folder
+          {
+            expand: true,
+            cwd: '<%= pkg.source_path %>_html/',
+            src: '**/*',
+            dest: '<%= pkg.build_path %>html/'
           },
         ],
       },
@@ -97,9 +111,9 @@ module.exports = function(grunt) {
           // move images to build folder
           {
             expand: true,
-            cwd: '_source/_img/',
+            cwd: '<%= pkg.source_path %>_img/',
             src: '**/*',
-            dest: '_build/img/'
+            dest: '<%= pkg.build_path %>img/'
           },
         ],
       },
@@ -110,28 +124,28 @@ module.exports = function(grunt) {
           url: "http://wbrowar.com", // Change to live or dev URL
           width: 1200,
           height: 900,
-          outputfile: "_build/critcss/home.css",
-          filename: "css/all.css"
+          outputfile: "<%= pkg.build_path %>critcss/home.css",
+          filename: "<%= pkg.theme_path %>css/all.css"
         }
       }
     },
     csslint: {
       dist: {
-        src: '_build/css/*.css'
+        src: '<%= pkg.build_path %>css/*.css'
       },
     },
     cssmin: {
       styles: {
         files: [
-          //{ src: ['_build/css/all_sprites.css'], dest: 'css/all.css'},
-          //{ src: ['_build/css/ie9_sprites.css'], dest: 'css/ie9.css'}
-          { src: ['_build/css/all_prefixed.css'], dest: 'css/all.css'},
-          { src: ['_build/css/ie9_prefixed.css'], dest: 'css/ie9.css'}
+          //{ src: ['<%= pkg.build_path %>css/all_sprites.css'], dest: 'css/all.css'},
+          //{ src: ['<%= pkg.build_path %>css/ie9_sprites.css'], dest: 'css/ie9.css'}
+          { src: ['<%= pkg.build_path %>css/all_prefixed.css'], dest: 'css/all.css'},
+          { src: ['<%= pkg.build_path %>css/ie9_prefixed.css'], dest: 'css/ie9.css'}
         ],
       },
       critcss: {
         files: [
-          { src: ['_build/critcss/home.css'], dest: '_build/critcss/home.min.css'}
+          { src: ['<%= pkg.build_path %>critcss/home.css'], dest: '_build/critcss/home.min.css'}
         ],
       },
     },
@@ -144,42 +158,59 @@ module.exports = function(grunt) {
         windowsTile: true,
         tileBlackWhite: true,
         tileColor: "none",
-        //html: 'index.html',
+        html: '<%= pkg.build_path %>html/meta.html',
         HTMLPrefix: "/img/meta/"
       },
       icons: {
-        src: '_source/_favicon/favicon.png',
-        dest: 'img/meta/'
+        src: '<%= pkg.source_path %>_favicon/favicon.png',
+        dest: '<%= pkg.theme_path %>img/meta/'
       }
     },
     grunticon: {
       main: {
         options: {
-          datasvgcss: '_build/css/sprites/sprites.main.svg.css',
-          datapngcss: '_build/css/sprites/sprites.main.png.css'
+          datasvgcss: '<%= pkg.build_path %>css/sprites/sprites.main.svg.css',
+          datapngcss: '<%= pkg.build_path %>css/sprites/sprites.main.png.css'
         },
         files: [{
           expand: true,
-          cwd: '_build/img/sprites_main',
+          cwd: '<%= pkg.build_path %>img/sprites_main',
           src: ['*.svg', '*.png'],
-          dest: "_build/img/huh/"
+          dest: "<%= pkg.build_path %>img/huh/"
         }]
+      }
+    },
+    htmlbuild: {
+      layout: {
+        src: '<%= pkg.source_path %>_html/layout.html',
+        dest: '<%= pkg.theme_path %>index_layout.html',
+        options: {
+          styles: {
+            critcss: '<%= pkg.build_path %>critcss/home.min.css'
+          },
+          sections: {
+            meta: '<%= pkg.build_path %>html/meta.html'
+          },
+          data: {
+            version: '<%= pkg.version %>'
+          }
+        },
       }
     },
     imagemin: {
       dynamic: {
         files: [{
           expand: true,
-          cwd: '_build/img',
+          cwd: '<%= pkg.build_path %>img',
           src: ['**/*.{png,jpg,gif}', '!2x/*', '!sprites_main/*'],
-          dest: 'img/'
+          dest: '<%= pkg.theme_path %>img/'
         }]
       }
     },
     modernizr: {
       dist: {
-        "devFile" : "_source/_js/_lib/modernizr.custom.js",
-        "outputFile" : "_build/js/modernizr-custom.js",
+        "devFile" : "<%= pkg.source_path %>_js/_lib/modernizr.custom.js",
+        "outputFile" : "<%= pkg.build_path %>js/modernizr-custom.js",
         "extra" : {
             "shiv" : true,
             "printshiv" : false,
@@ -225,9 +256,9 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: '_build/img/2x/',
+          cwd: '<%= pkg.build_path %>img/2x/',
           src: ['**/*.{png,jpg,gif}'],
-          dest: '_build/img/'
+          dest: '<%= pkg.build_path %>img/'
         }]
       }
     },
@@ -236,49 +267,49 @@ module.exports = function(grunt) {
         reporter: require('jshint-stylish')
       },
       dist: {
-        src: '_source/_js/*.js'
+        src: '<%= pkg.source_path %>_js/*.js'
       }
     },
     sass: {
       dist: {
         options: {
-          cacheLocation: '_build/.sass-cache',
+          cacheLocation: '<%= pkg.build_path %>.sass-cache',
           precision: 10,
           style: 'nested',
         },
         files: {
-          '_build/css/all_compiled.css': '_build/css/all.scss',
-          '_build/css/ie9_compiled.css': '_build/css/ie9.scss'
+          '<%= pkg.build_path %>css/all_compiled.css': '_build/css/all.scss',
+          '<%= pkg.build_path %>css/ie9_compiled.css': '_build/css/ie9.scss'
         },
       },
     },
     uglify: {
       head: {
-        src: '_build/js/head.js',
-        dest: 'js/head.min.js'
+        src: '<%= pkg.build_path %>js/head.js',
+        dest: '<%= pkg.theme_path %>js/head.min.js'
       },
       main: {
-        src: '_build/js/main.js',
-        dest: 'js/main.min.js'
+        src: '<%= pkg.build_path %>js/main.js',
+        dest: '<%= pkg.theme_path %>js/main.min.js'
       }
     },
     watch: {
       css: {
-        files: ['_source/_sass/**/*.scss'],
+        files: ['<%= pkg.source_path %>_sass/**/*.scss'],
         tasks: ['clean:css', 'copy:imagesbuild', 'sass', 'autoprefixer', 'cssmin:styles'],
         options: {
           spawn: false,
         },
       },
       images: {
-        files: ['_source/_img/**/*'],
+        files: ['<%= pkg.source_path %>_img/**/*'],
         tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:imagemin'],
         options: {
           spawn: false,
         },
       },
       scripts: {
-        files: ['_source/_js/**/*.js'],
+        files: ['<%= pkg.source_path %>_js/**/*.js'],
         tasks: ['clean:scripts', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify'],
         options: {
           spawn: false,
@@ -297,6 +328,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-favicons');
   grunt.loadNpmTasks('grunt-grunticon');
+  grunt.loadNpmTasks('grunt-html-build');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks("grunt-modernizr");
@@ -309,8 +341,9 @@ module.exports = function(grunt) {
   
   grunt.registerTask('cleanall', ['clean']);
   grunt.registerTask('check', ['jshint', 'csslint']);
-  grunt.registerTask('meta', ['favicons', 'imagemin']);
+  grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
+  grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
   grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main']);
 
 };

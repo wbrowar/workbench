@@ -28,25 +28,32 @@
       	<link rel="shortcut icon" href="/img/meta/favicon.ico">
       	<link rel="icon" type="image/png" sizes="64x64" href="/img/meta/favicon.png">
       	
+      	<!-- build:process -->
       	<!-- styles -->
       	<noscript>
   				<!--[if gte IE 9]><!-->
-  				<link rel="stylesheet" href="css/all.css">
+  				<link rel="stylesheet" href="css/all.css?v=<%= version %>">
   				<!--<![endif]-->
   				
   				<!--[if lte IE 9]>
-  				<link rel="stylesheet" href="css/ie9.css">
+  				<link rel="stylesheet" href="css/ie9.css?v=<%= version %>">
   				<![endif]-->
       	</noscript>
+      	<!-- /build -->
+      	
+      	<!-- build:style inline critcss --><!-- /build -->
 				
+				<!-- build:process -->
 				<!-- scripts -->
-        <script src="js/head.min.js"></script>
+        <script src="js/head.min.js?v=<%= version %>"></script>
 				<!--[if gte IE 9]><!-->
-				  <script>loadCSS( "css/all.css" );</script>
+				  <script>loadCSS( "css/all.css?v=<%= version %>" );</script>
 				<!--<![endif]-->
 				<!--[if lte IE 9]>
-				  <script>loadCSS( "css/ie9.css" );</script>
+				  <script>loadCSS( "css/ie9.css?v=<%= version %>" );</script>
 				<![endif]-->
+				<!-- /build -->
+				
         
 </head>
     <body>
@@ -103,7 +110,9 @@
             </footer>
         </div>
         
-        <script src="js/main.min.js"></script>
+				<!-- build:process -->
+          <script src="js/main.min.js?v=<%= version %>"></script>
+				<!-- /build -->
 
         <script>
         		/*
