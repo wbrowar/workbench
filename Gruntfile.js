@@ -131,8 +131,11 @@ module.exports = function(grunt) {
       }
     },
     csslint: {
+      options: {
+        'adjoining-classes': false
+      },
       dist: {
-        src: '<%= pkg.build_path %>css/*.css'
+        src: '<%= pkg.build_path %>css/*_prefixed.css'
       },
     },
     cssmin: {
@@ -210,6 +213,14 @@ module.exports = function(grunt) {
         }]
       }
     },
+    jshint: {
+      options: {
+        reporter: require('jshint-stylish')
+      },
+      dist: {
+        src: '<%= pkg.source_path %>_js/*.js'
+      }
+    },
     modernizr: {
       dist: {
         "devFile" : "<%= pkg.source_path %>_js/_lib/modernizr.custom.js",
@@ -278,14 +289,6 @@ module.exports = function(grunt) {
         }]
       }
     },
-    jshint: {
-      options: {
-        reporter: require('jshint-stylish')
-      },
-      dist: {
-        src: '<%= pkg.source_path %>_js/*.js'
-      }
-    },
     sass: {
       dist: {
         options: {
@@ -312,7 +315,7 @@ module.exports = function(grunt) {
     watch: {
       css: {
         files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-        tasks: ['clean:css', 'copy:imagesbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'notify:watch'],
+        tasks: ['clean:css', 'copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'notify:watch'],
         options: {
           spawn: false,
         },
@@ -357,10 +360,9 @@ module.exports = function(grunt) {
   
   
   grunt.registerTask('cleanall', ['clean']);
-  grunt.registerTask('check', ['jshint', 'csslint']);
   grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
   grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main', 'notify:dist']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main', 'notify:dist']);
 
 };
