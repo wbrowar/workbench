@@ -183,7 +183,7 @@ module.exports = function(grunt) {
     htmlbuild: {
       layout: {
         src: '<%= pkg.source_path %>_html/layout.html',
-        dest: '<%= pkg.theme_path %>index_layout.html',
+        dest: '<%= pkg.theme_path %>index.html',
         options: {
           styles: {
             critcss: '<%= pkg.build_path %>critcss/home.min.css'
@@ -234,6 +234,19 @@ module.exports = function(grunt) {
         "parseFiles" : true,
         "matchCommunityTests" : false,
         "customTests" : []
+      }
+    },
+    notify: {
+      watch: {
+        options: {
+          title: 'Task Complete',
+          message: 'Grunt watch complete',
+        }
+      },
+      dist: {
+        options: {
+          message: 'Grunt task complete'
+        }
       }
     },
     responsive_images: {
@@ -296,21 +309,21 @@ module.exports = function(grunt) {
     watch: {
       css: {
         files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-        tasks: ['clean:css', 'copy:imagesbuild', 'sass', 'autoprefixer', 'cssmin:styles'],
+        tasks: ['clean:css', 'copy:imagesbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'notify:watch'],
         options: {
           spawn: false,
         },
       },
       images: {
         files: ['<%= pkg.source_path %>_img/**/*'],
-        tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:imagemin'],
+        tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:imagemin', 'notify:watch'],
         options: {
           spawn: false,
         },
       },
       scripts: {
         files: ['<%= pkg.source_path %>_js/**/*.js'],
-        tasks: ['clean:scripts', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify'],
+        tasks: ['clean:scripts', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'notify:watch'],
         options: {
           spawn: false,
         },
@@ -332,6 +345,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks("grunt-modernizr");
+  grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -344,6 +358,6 @@ module.exports = function(grunt) {
   grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
   grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main', 'notify:dist']);
 
 };

@@ -23,6 +23,7 @@
     "grunt-html-build": "^0.3.2",
     "grunt-modernizr": ">=0.3.2",
     "grunt-newer": ">=0.8.0",
+    "grunt-notify": ">=0.4.1",
     "grunt-responsive-images": ">=0.1.4",
     "jshint-stylish": ">=1.0.0"
   }
