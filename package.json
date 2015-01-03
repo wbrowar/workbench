@@ -4,7 +4,7 @@
   "theme_path": "",
   "source_path": "_source/",
   "build_path": "_build/",
-  "html_build_path": "html_built/",
+  "html_build_path": "",
   "devDependencies": {
     "grunt": ">=0.4.5",
     "grunt-autoprefixer": ">=2.1.0",

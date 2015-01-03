@@ -26,8 +26,7 @@ module.exports = function(grunt) {
         '<%= pkg.theme_path %>css/*'
         ],
       html: [
-        '<%= pkg.build_path %>html',
-        '<%= pkg.html_build_path %>'
+        '<%= pkg.build_path %>html'
         ],
       images: [
         '<%= pkg.build_path %>img',
