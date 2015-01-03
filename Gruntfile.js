@@ -8,14 +8,14 @@ module.exports = function(grunt) {
         options: {
           browsers: ['last 2 versions']
         },
-        src: '<%= pkg.build_path %>css/all_compiled.css',
+        src: '<%= pkg.build_path %>css/compiled/all.css',
         dest: '<%= pkg.build_path %>css/release/all.css'
       },
       ie9: {
         options: {
           browsers: ['ie 9']
         },
-        src: '<%= pkg.build_path %>css/ie9_compiled.css',
+        src: '<%= pkg.build_path %>css/compiled/ie9.css',
         dest: '<%= pkg.build_path %>css/release/ie9.css'
       }
     },
@@ -64,21 +64,6 @@ module.exports = function(grunt) {
       },
     },
     copy: {
-      main: {
-        files: [
-          // move css
-          {
-            expand: true,
-            flatten: true,
-            src: ['<%= pkg.build_path %>css/*.css.map'],
-            dest: '<%= pkg.theme_path %>css/',
-            filter: 'isFile',
-            rename: function(dest, src) {
-              return dest + src.replace('_compiled','');
-            }
-          },
-        ],
-      },
       cssbuild: {
         files: [
           // move scss files to build folder
@@ -127,6 +112,18 @@ module.exports = function(grunt) {
             cwd: '<%= pkg.source_path %>_img/',
             src: '**/*',
             dest: '<%= pkg.build_path %>img/'
+          },
+        ],
+      },
+      sourcemaps: {
+        files: [
+          // move css
+          {
+            expand: true,
+            cwd: '<%= pkg.build_path %>css/compiled/',
+            src: '**/*.css.map',
+            dest: '<%= pkg.theme_path %>css/',
+            filter: 'isFile'
           },
         ],
       },
@@ -288,10 +285,33 @@ module.exports = function(grunt) {
           message: 'Scripts updated'
         }
       },
-      release: {
+      build: {
         options: {
           message: 'Grunt build complete'
         }
+      },
+      release: {
+        options: {
+          message: 'Grunt release complete'
+        }
+      }
+    },
+    replace: {
+      csssourcemaps: {
+        src: ['<%= pkg.build_path %>css/compiled/*.map'],
+        dest: '<%= pkg.theme_path %>css/',
+        replacements: [{
+          from: '../',
+          to: '/<%= pkg.source_path %>_sass/'
+        }]
+      },
+      cssaddsourcemaps: {
+        src: ['<%= pkg.theme_path %>css/*.css'],
+        overwrite: true,
+        replacements: [{
+          from: '/*!',
+          to: '/*#'
+        }]
       }
     },
     responsive_images: {
@@ -325,11 +345,11 @@ module.exports = function(grunt) {
         options: {
           cacheLocation: '<%= pkg.build_path %>.sass-cache',
           precision: 10,
-          style: 'nested',
+          style: 'nested'
         },
         files: {
-          '<%= pkg.build_path %>css/all_compiled.css': '_build/css/all.scss',
-          '<%= pkg.build_path %>css/ie9_compiled.css': '_build/css/ie9.scss'
+          '<%= pkg.build_path %>css/compiled/all.css': '_build/css/all.scss',
+          '<%= pkg.build_path %>css/compiled/ie9.css': '_build/css/ie9.scss'
         },
       },
     },
@@ -351,7 +371,7 @@ module.exports = function(grunt) {
     watch: {
       css: {
         files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-        tasks: ['clean:css', 'copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'notify:watchcss'],
+        tasks: ['clean:css', 'copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'replace:csssourcemaps', 'notify:watchcss'],
         options: {
           spawn: false,
         },
@@ -390,6 +410,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-text-replace');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-newer');
@@ -399,6 +420,6 @@ module.exports = function(grunt) {
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
   grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
   grunt.registerTask('release', ['default', 'htmlprocess', 'notify:release']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:build']);
 
 };
