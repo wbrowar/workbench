@@ -26,7 +26,8 @@ module.exports = function(grunt) {
         '<%= pkg.theme_path %>css/*'
         ],
       html: [
-        '<%= pkg.build_path %>html'
+        '<%= pkg.build_path %>html',
+        '<%= pkg.build_path %>html_backup/'
         ],
       images: [
         '<%= pkg.build_path %>img',
@@ -102,6 +103,13 @@ module.exports = function(grunt) {
       },
       htmlbuild: {
         files: [
+          // backup all HTML files (just in case)
+          {
+            expand: true,
+            cwd: '<%= pkg.html_build_path %>',
+            src: ['**/*.html', '!**/_source/**', '!**/_build/**', '!**/node_modules/**'],
+            dest: '<%= pkg.build_path %>html_backup/'
+          },
           // move images to build folder
           {
             expand: true,
@@ -264,25 +272,25 @@ module.exports = function(grunt) {
     notify: {
       watchcss: {
         options: {
-          title: 'CSS Updated',
-          message: 'Grunt watch complete',
+          title: 'Grunt Watch Complete',
+          message: 'CSS updated'
         }
       },
       watchimg: {
         options: {
-          title: 'Images Processed',
-          message: 'Grunt watch complete',
+          title: 'Grunt Watch Complete',
+          message: 'Images processed'
         }
       },
       watchjs: {
         options: {
-          title: 'Scripts Updated',
-          message: 'Grunt watch complete',
+          title: 'Grunt Watch Complete',
+          message: 'Scripts updated'
         }
       },
-      dist: {
+      release: {
         options: {
-          message: 'Grunt task complete'
+          message: 'Grunt build complete'
         }
       }
     },
@@ -390,7 +398,7 @@ module.exports = function(grunt) {
   grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
   grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
-  grunt.registerTask('release', ['default', 'htmlprocess']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main', 'notify:dist']);
+  grunt.registerTask('release', ['default', 'htmlprocess', 'notify:release']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main']);
 
 };
