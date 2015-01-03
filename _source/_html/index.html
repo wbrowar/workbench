@@ -3,127 +3,134 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- meta icons -->
+    <meta name="msapplication-square70x70logo" content="/img/meta/windows-tile-70x70.png">
+    <meta name="msapplication-square150x150logo" content="/img/meta/windows-tile-150x150.png">
+    <meta name="msapplication-square310x310logo" content="/img/meta/windows-tile-310x310.png">
+    <meta name="msapplication-TileImage" content="/img/meta/windows-tile-144x144.png">
+    <meta name="msapplication-TileColor" content="#d2e5fc">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/meta/apple-touch-icon-152x152-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/meta/apple-touch-icon-120x120-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/meta/apple-touch-icon-76x76-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/meta/apple-touch-icon-60x60-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/meta/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/meta/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/meta/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/meta/apple-touch-icon.png">
+    <link rel="icon" sizes="228x228" href="/img/meta/coast-icon-228x228.png">
+    <link rel="shortcut icon" href="/img/meta/favicon.ico">
+    <link rel="icon" type="image/png" sizes="64x64" href="/img/meta/favicon.png">
+    
+    <!-- build:process -->
+    <!-- styles -->
+    <noscript>
+      <!--[if gte IE 9]><!-->
+      <link rel="stylesheet" href="css/all.css?v=<%= version %>">
+      <!--<![endif]-->
+      
+      <!--[if lte IE 9]>
+      <link rel="stylesheet" href="css/ie9.css?v=<%= version %>">
+      <![endif]-->
+    </noscript>
+    <!-- /build -->
+    
+    <!-- build:style inline critcss --><!-- /build -->
+    
+    <!-- build:script inline grunticon --><!-- /build -->
+    <!-- build:process -->
+    <script type="text/javascript">
+      if (typeof grunticon == 'function') { 
+        grunticon(["<%= theme_path %>css/sprites.main.svg.css", "<%= theme_path %>css/sprites.main.png.css", "<%= theme_path %>css/icons.fallback.css"]); 
+      }
+    </script>
+    <!-- /build -->
+    
+    <!-- build:process -->
+    <!-- scripts -->
+    <script src="js/head.min.js?v=<%= version %>"></script>
+    <!--[if gte IE 9]><!-->
+      <script>loadCSS( "css/all.css?v=<%= version %>" );</script>
+    <!--<![endif]-->
+    <!--[if lte IE 9]>
+      <script>loadCSS( "css/ie9.css?v=<%= version %>" );</script>
+    <![endif]-->
+    <!-- /build -->
         
-        <!-- meta icons -->
-      	<meta name="msapplication-square70x70logo" content="/img/meta/windows-tile-70x70.png">
-      	<meta name="msapplication-square150x150logo" content="/img/meta/windows-tile-150x150.png">
-      	<meta name="msapplication-square310x310logo" content="/img/meta/windows-tile-310x310.png">
-      	<meta name="msapplication-TileImage" content="/img/meta/windows-tile-144x144.png">
-      	<meta name="msapplication-TileColor" content="#d2e5fc">
-      	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/meta/apple-touch-icon-152x152-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/meta/apple-touch-icon-120x120-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/meta/apple-touch-icon-76x76-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/meta/apple-touch-icon-60x60-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/meta/apple-touch-icon-144x144-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/meta/apple-touch-icon-114x114-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/meta/apple-touch-icon-72x72-precomposed.png">
-      	<link rel="apple-touch-icon" sizes="57x57" href="/img/meta/apple-touch-icon.png">
-      	<link rel="icon" sizes="228x228" href="/img/meta/coast-icon-228x228.png">
-      	<link rel="shortcut icon" href="/img/meta/favicon.ico">
-      	<link rel="icon" type="image/png" sizes="64x64" href="/img/meta/favicon.png">
-      	
-      	<!-- build:process -->
-      	<!-- styles -->
-      	<noscript>
-  				<!--[if gte IE 9]><!-->
-  				<link rel="stylesheet" href="css/all.css?v=<%= version %>">
-  				<!--<![endif]-->
-  				
-  				<!--[if lte IE 9]>
-  				<link rel="stylesheet" href="css/ie9.css?v=<%= version %>">
-  				<![endif]-->
-      	</noscript>
-      	<!-- /build -->
-      	
-      	<!-- build:style inline critcss --><!-- /build -->
-				
-				<!-- build:process -->
-				<!-- scripts -->
-        <script src="js/head.min.js?v=<%= version %>"></script>
-				<!--[if gte IE 9]><!-->
-				  <script>loadCSS( "css/all.css?v=<%= version %>" );</script>
-				<!--<![endif]-->
-				<!--[if lte IE 9]>
-				  <script>loadCSS( "css/ie9.css?v=<%= version %>" );</script>
-				<![endif]-->
-				<!-- /build -->
-				
-        
-</head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
 
-        <div class="header_wrapper">
-            <header class="wrapper clearfix">
-                <h1 class="title">h1.title</h1>
-                <nav>
-                    <ul>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                    </ul>
-                </nav>
-            </header>
-        </div>
+    <div class="header_wrapper">
+      <header class="wrapper clearfix">
+        <h1 class="title">h1.title</h1>
+        <nav>
+          <a href="#">nav a</a>
+          <a href="#">nav a</a>
+          <a href="#">nav a</a>
+        </nav>
+      </header>
+    </div>
 
-        <div class="main_wrapper">
-            <div class="main wrapper clearfix">
+    <div class="main_wrapper">
+      <div class="wrapper clearfix">
 
-                <article>
-                    <header>
-                        <h1>article header h1</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
-                    </header>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <footer>
-                        <h3>article footer h3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
-                    </footer>
-                </article>
+        <div class="icon_skaman" style="height: 150px; width: 50px; background-size: contain; background-position: center center;"></div>
+        <article>
+          <header>
+            <h1>article header h1</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
+          </header>
+          <section>
+            <h2>article section h2</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
+          </section>
+          <section>
+            <h2>article section h2</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
+          </section>
+          <footer>
+            <h3>article footer h3</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
+          </footer>
+        </article>
 
-                <aside>
-                    <h3>aside</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices.</p>
-                </aside>
+        <aside>
+          <h3>aside</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices.</p>
+        </aside>
 
-            </div> <!-- #main -->
-        </div> <!-- #main-container -->
+      </div> <!-- #main -->
+    </div> <!-- #main-container -->
 
-        <div class="footer_wrapper">
-            <footer class="wrapper">
-                <h3>footer</h3>
-            </footer>
-        </div>
-        
-				<!-- build:process -->
-          <script src="js/main.min.js?v=<%= version %>"></script>
-				<!-- /build -->
+    <div class="footer_wrapper">
+      <footer class="wrapper">
+        <h3>footer</h3>
+      </footer>
+    </div>
+    
+		<!-- build:process -->
+    <script src="js/main.min.js?v=<%= version %>"></script>
+		<!-- /build -->
 
-        <script>
-        		/*
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-          
-            ga('create', 'UA-2284756-1', 'dixonschwabl.com');
-            ga('send', 'pageview');
-            */
-        </script>
-    </body>
+    <script>
+  		/*
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-2284756-1', 'dixonschwabl.com');
+      ga('send', 'pageview');
+      */
+    </script>
+  </body>
 </html>

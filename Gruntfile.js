@@ -9,14 +9,14 @@ module.exports = function(grunt) {
           browsers: ['last 2 versions']
         },
         src: '<%= pkg.build_path %>css/all_compiled.css',
-        dest: '<%= pkg.build_path %>css/all_prefixed.css'
+        dest: '<%= pkg.build_path %>css/release/all.css'
       },
       ie9: {
         options: {
           browsers: ['ie 9']
         },
         src: '<%= pkg.build_path %>css/ie9_compiled.css',
-        dest: '<%= pkg.build_path %>css/ie9_prefixed.css'
+        dest: '<%= pkg.build_path %>css/release/ie9.css'
       }
     },
     clean: {
@@ -31,6 +31,7 @@ module.exports = function(grunt) {
         ],
       images: [
         '<%= pkg.build_path %>img',
+        '<%= pkg.build_path %>grunticon',
         '<%= pkg.theme_path %>img/*'
         ],
       scripts: [
@@ -46,9 +47,9 @@ module.exports = function(grunt) {
         src: [
           '<%= pkg.build_path %>js/modernizr-custom.js',
           '<%= pkg.source_path %>bower_components/loadcss/loadCSS.js',
-          '<%= pkg.source_path %>_js/head.js',
+          '<%= pkg.source_path %>_js/head.js'
           ],
-        dest: '<%= pkg.build_path %>js/head.js',
+        dest: '<%= pkg.build_path %>js/release/head.js',
       },
       scriptsmain: {
         options: {
@@ -57,16 +58,9 @@ module.exports = function(grunt) {
         src: [
           '<%= pkg.source_path %>bower_components/jquery/dist/jquery.js',
           '<%= pkg.source_path %>_js/main.js',
-          '<%= pkg.source_path %>bower_components/picturefill/dist/picturefill.js',
+          '<%= pkg.source_path %>bower_components/picturefill/dist/picturefill.js'
         ],
-        dest: '<%= pkg.build_path %>js/main.js',
-      },
-      sprites: {
-        files: {
-          '<%= pkg.build_path %>css/all_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/all_prefixed.css'],
-          '<%= pkg.build_path %>css/ie9_sprites.css': ['_build/css/sprites/sprites.main.svg.css', '_build/css/sprites/sprites_main.png.css', '_build/css/ie9_prefixed.css'],
-        },
-        dest: '<%= pkg.build_path %>js/main.js',
+        dest: '<%= pkg.build_path %>js/release/main.js',
       },
     },
     copy: {
@@ -96,6 +90,17 @@ module.exports = function(grunt) {
           },
         ],
       },
+      grunticon: {
+        files: [
+          // move images to build folder
+          {
+            expand: true,
+            cwd: '<%= pkg.build_path %>grunticon/',
+            src: ['sprites.main.svg.css', 'sprites.main.png.css', 'icons.fallback.css'],
+            dest: '<%= pkg.build_path %>css/release/'
+          },
+        ],
+      },
       htmlbuild: {
         files: [
           // move images to build folder
@@ -122,7 +127,7 @@ module.exports = function(grunt) {
     criticalcss: {
       home: {
         options: {
-          url: "http://wbrowar.com", // Change to live or dev URL
+          url: "index.html", // Change to live or dev URL
           width: 1200,
           height: 900,
           outputfile: "<%= pkg.build_path %>critcss/home.css",
@@ -141,10 +146,12 @@ module.exports = function(grunt) {
     cssmin: {
       styles: {
         files: [
-          //{ src: ['<%= pkg.build_path %>css/all_sprites.css'], dest: 'css/all.css'},
-          //{ src: ['<%= pkg.build_path %>css/ie9_sprites.css'], dest: 'css/ie9.css'}
-          { src: ['<%= pkg.build_path %>css/all_prefixed.css'], dest: 'css/all.css'},
-          { src: ['<%= pkg.build_path %>css/ie9_prefixed.css'], dest: 'css/ie9.css'}
+          {
+            expand: true,
+            cwd: '<%= pkg.build_path %>css/release/',
+            src: '**/*.css',
+            dest: 'css/'
+          }
         ],
       },
       critcss: {
@@ -173,16 +180,17 @@ module.exports = function(grunt) {
     grunticon: {
       main: {
         options: {
-          datasvgcss: '<%= pkg.build_path %>css/sprites/sprites.main.svg.css',
-          datapngcss: '<%= pkg.build_path %>css/sprites/sprites.main.png.css',
-          pngfolder: '<%= pkg.build_path %>img/',
-          pngpath: '<%= pkg.theme_path %>img/'
+          datasvgcss: 'sprites.main.svg.css',
+          datapngcss: 'sprites.main.png.css',
+          pngfolder: '../img/icon_fallback/',
+          pngpath: '../img/icon_fallback/',
+          cssprefix: ".icon_"
         },
         files: [{
           expand: true,
           cwd: '<%= pkg.build_path %>img/sprites_main',
           src: ['*.svg', '*.png'],
-          dest: "<%= pkg.build_path %>img/huh/"
+          dest: "<%= pkg.build_path %>/grunticon"
         }]
       }
     },
@@ -191,6 +199,9 @@ module.exports = function(grunt) {
         src: '<%= pkg.source_path %>_html/*.html',
         dest: '<%= pkg.html_build_path %>',
         options: {
+          scripts: {
+            grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js'
+          },
           styles: {
             critcss: '<%= pkg.build_path %>critcss/home.min.css'
           },
@@ -198,6 +209,7 @@ module.exports = function(grunt) {
             meta: '<%= pkg.build_path %>html/meta.html'
           },
           data: {
+            theme_path: '<%= pkg.theme_path %>',
             version: '<%= pkg.version %>'
           }
         },
@@ -251,9 +263,21 @@ module.exports = function(grunt) {
       }
     },
     notify: {
-      watch: {
+      watchcss: {
         options: {
-          title: 'Task Complete',
+          title: 'CSS Updated',
+          message: 'Grunt watch complete',
+        }
+      },
+      watchimg: {
+        options: {
+          title: 'Images Processed',
+          message: 'Grunt watch complete',
+        }
+      },
+      watchjs: {
+        options: {
+          title: 'Scripts Updated',
           message: 'Grunt watch complete',
         }
       },
@@ -303,33 +327,38 @@ module.exports = function(grunt) {
       },
     },
     uglify: {
-      head: {
-        src: '<%= pkg.build_path %>js/head.js',
-        dest: '<%= pkg.theme_path %>js/head.min.js'
-      },
-      main: {
-        src: '<%= pkg.build_path %>js/main.js',
-        dest: '<%= pkg.theme_path %>js/main.min.js'
+      scripts: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= pkg.build_path %>js/release/',
+            src: '**/*.js',
+            dest: 'js/',
+            rename: function(dest, src) {
+              return dest + src.replace('.js','.min.js');
+            }
+          }
+        ],
       }
     },
     watch: {
       css: {
         files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-        tasks: ['clean:css', 'copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'notify:watch'],
+        tasks: ['clean:css', 'copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'notify:watchcss'],
         options: {
           spawn: false,
         },
       },
       images: {
         files: ['<%= pkg.source_path %>_img/**/*'],
-        tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:imagemin', 'notify:watch'],
+        tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:grunticon', 'newer:copy:grunticon', 'newer:imagemin', 'notify:watchimg'],
         options: {
           spawn: false,
         },
       },
       scripts: {
         files: ['<%= pkg.source_path %>_js/**/*.js'],
-        tasks: ['clean:scripts', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'notify:watch'],
+        tasks: ['clean:scripts', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'notify:watchjs'],
         options: {
           spawn: false,
         },
@@ -359,10 +388,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-newer');
   
   
-  grunt.registerTask('cleanall', ['clean']);
   grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
   grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main', 'notify:dist']);
+  grunt.registerTask('release', ['default', 'htmlprocess']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'copy:main', 'notify:dist']);
 
 };
