@@ -14,10 +14,10 @@ function ga_track(category, action, label) {
 // BROWSER EVENTS
 /*
 jq(window).resize(function() {
-  windowWidth = jq(window).width()
-  windowHeight = jq(window).height()
-  availHeight = window.screen.availHeight
-});
+  windowWidth = jq(window).width();
+  windowHeight = jq(window).height();
+  availHeight = window.screen.availHeight;
+}).resize();
 */
 jq(document).ready(function() {
   // do something

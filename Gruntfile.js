@@ -131,7 +131,7 @@ module.exports = function(grunt) {
     criticalcss: {
       home: {
         options: {
-          url: "index.html", // Change to live or dev URL
+          url: "<%= pkg.html_build_path %>index.html", // Change to live or dev URL
           width: 1200,
           height: 900,
           outputfile: "<%= pkg.build_path %>critcss/home.css",
@@ -154,13 +154,13 @@ module.exports = function(grunt) {
             expand: true,
             cwd: '<%= pkg.build_path %>css/release/',
             src: '**/*.css',
-            dest: 'css/'
+            dest: '<%= pkg.theme_path %>css/'
           }
         ],
       },
       critcss: {
         files: [
-          { src: ['<%= pkg.build_path %>critcss/home.css'], dest: '_build/critcss/home.min.css'}
+          { src: ['<%= pkg.build_path %>critcss/home.css'], dest: '<%= pkg.build_path %>critcss/home.min.css'}
         ],
       },
     },
@@ -260,7 +260,7 @@ module.exports = function(grunt) {
             "cssclassprefix": ""
         },
         "uglify" : false,
-        "tests" : [],
+        "tests" : ['flexbox'],
         "parseFiles" : true,
         "matchCommunityTests" : false,
         "customTests" : []
@@ -271,6 +271,12 @@ module.exports = function(grunt) {
         options: {
           title: 'Grunt Watch Complete',
           message: 'CSS updated'
+        }
+      },
+      watchhtml: {
+        options: {
+          title: 'Grunt Watch Complete',
+          message: 'HTML processed'
         }
       },
       watchimg: {
@@ -360,7 +366,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: '<%= pkg.build_path %>js/release/',
             src: '**/*.js',
-            dest: 'js/',
+            dest: '<%= pkg.theme_path %>js/',
             rename: function(dest, src) {
               return dest + src.replace('.js','.min.js');
             }
@@ -371,7 +377,14 @@ module.exports = function(grunt) {
     watch: {
       css: {
         files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-        tasks: ['clean:css', 'copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'replace:csssourcemaps', 'notify:watchcss'],
+        tasks: ['newer:copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'replace:csssourcemaps', 'notify:watchcss'],
+        options: {
+          spawn: false,
+        },
+      },
+      htmlbuild: {
+        files: ['<%= pkg.source_path %>_html/**/*'],
+        tasks: ['newer:copy:htmlbuild', 'newer:htmlbuild', 'notify:watchhtml'],
         options: {
           spawn: false,
         },
@@ -385,7 +398,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: ['<%= pkg.source_path %>_js/**/*.js'],
-        tasks: ['clean:scripts', 'jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'notify:watchjs'],
+        tasks: ['jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'notify:watchjs'],
         options: {
           spawn: false,
         },
@@ -416,7 +429,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-newer');
   
   // Grouped tasks to be used below
-  grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'newer:imagemin']);
+  grunt.registerTask('meta', ['favicons', 'newer:imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
   grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'htmlbuild']);
   
