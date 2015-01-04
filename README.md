@@ -31,9 +31,22 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 ---
 ## package.json
 - **name**
+
 Something Here
 - **version**
+
 Something Here
+
+
+
+
+- - 
+  "name": "example-project",
+  "version": "0.1.0",
+  "theme_path": "",
+  "source_path": "_source/",
+  "build_path": "_build/",
+  "html_build_path": "",
 
 ---
 ## CSS framework
