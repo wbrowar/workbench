@@ -53,9 +53,9 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 ---
 ### Image Processing
 - **_img** Images will be processed differently depending on where they are located in the `_source/_img` folder:
-- - **2x** Putting 2x-resolution images in the `2x` folder will result in both a 2x image and a 1x image being placed into your `img` directory. Directory trees will be built out
-- - **icons** All .svg and .png images into the `icons` folder will be processed through [grunt-grunticon](https://www.npmjs.com/package/grunt-grunticon)
-- - Images located directly in the `_source/_img`, or folders not listed above will not be processed
+-- **2x** Putting 2x-resolution images in the `2x` folder will result in both a 2x image and a 1x image being placed into your `img` directory. Directory trees will be built out
+-- **icons** All .svg and .png images into the `icons` folder will be processed through [grunt-grunticon](https://www.npmjs.com/package/grunt-grunticon)
+-- Images located directly in the `_source/_img`, or folders not listed above will not be processed
 - **_favicons** Adding a 512x512 .png into the `_source/_favicons` folder, and running `grunt release`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process
 - All images are run through [grunt-contrib-imagemin](https://www.npmjs.com/package/grunt-contrib-imagemin)
 
