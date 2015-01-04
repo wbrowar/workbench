@@ -178,7 +178,7 @@ module.exports = function(grunt) {
       },
       icons: {
         src: '<%= pkg.source_path %>_favicon/favicon.png',
-        dest: '<%= pkg.theme_path %>img/meta/'
+        dest: '<%= pkg.build_path %>img/meta/'
       }
     },
     grunticon: {
@@ -192,7 +192,7 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= pkg.build_path %>img/sprites_main',
+          cwd: '<%= pkg.build_path %>img/icons',
           src: ['*.svg', '*.png'],
           dest: "<%= pkg.build_path %>/grunticon"
         }]
@@ -224,7 +224,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%= pkg.build_path %>img',
-          src: ['**/*.{png,jpg,gif}', '!2x/*', '!sprites_main/*'],
+          src: ['**/*.{png,jpg,gif}', '!2x/*', '!icons/*'],
           dest: '<%= pkg.theme_path %>img/'
         }]
       }
@@ -416,9 +416,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-newer');
   
   
-  grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'imagemin']);
+  grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'newer:imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
   grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
+  
   grunt.registerTask('release', ['default', 'htmlprocess', 'notify:release']);
   grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:build']);
 
