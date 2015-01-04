@@ -22,8 +22,10 @@ module.exports = function(grunt) {
     clean: {
       css: [
         '<%= pkg.build_path %>css',
-        '<%= pkg.build_path %>critcss',
         '<%= pkg.theme_path %>css/*'
+        ],
+      critcss: [
+        '<%= pkg.build_path %>critcss'
         ],
       html: [
         '<%= pkg.build_path %>html',
@@ -384,7 +386,7 @@ module.exports = function(grunt) {
       },
       htmlbuild: {
         files: ['<%= pkg.source_path %>_html/**/*'],
-        tasks: ['newer:copy:htmlbuild', 'newer:htmlbuild', 'notify:watchhtml'],
+        tasks: ['clean:critcss', 'newer:copy:htmlbuild', 'newer:htmlbuild', 'notify:watchhtml'],
         options: {
           spawn: false,
         },
