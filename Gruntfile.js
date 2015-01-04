@@ -415,12 +415,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-newer');
   
-  
+  // Grouped tasks to be used below
   grunt.registerTask('meta', ['copy:htmlbuild', 'favicons', 'newer:imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
-  grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'meta', 'critcss', 'htmlbuild']);
+  grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'htmlbuild']);
   
-  grunt.registerTask('release', ['default', 'htmlprocess', 'notify:release']);
+  // Main Grunt tasks
+  grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
   grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:build']);
 
 };
