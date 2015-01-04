@@ -11,22 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- meta icons -->
-    <meta name="msapplication-square70x70logo" content="/img/meta/windows-tile-70x70.png">
-    <meta name="msapplication-square150x150logo" content="/img/meta/windows-tile-150x150.png">
-    <meta name="msapplication-square310x310logo" content="/img/meta/windows-tile-310x310.png">
-    <meta name="msapplication-TileImage" content="/img/meta/windows-tile-144x144.png">
-    <meta name="msapplication-TileColor" content="#d2e5fc">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/meta/apple-touch-icon-152x152-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/meta/apple-touch-icon-120x120-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/meta/apple-touch-icon-76x76-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/meta/apple-touch-icon-60x60-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/meta/apple-touch-icon-144x144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/meta/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/meta/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="/img/meta/apple-touch-icon.png">
-    <link rel="icon" sizes="228x228" href="/img/meta/coast-icon-228x228.png">
-    <link rel="shortcut icon" href="/img/meta/favicon.ico">
-    <link rel="icon" type="image/png" sizes="64x64" href="/img/meta/favicon.png">
+    <!-- build:section meta --><!-- /build -->
     
     <!-- build:process -->
     <!-- styles -->
@@ -44,13 +29,12 @@
     <!-- build:style inline critcss --><!-- /build -->
     
     <!-- build:script inline grunticon --><!-- /build -->
-    <!-- build:process -->
     <script type="text/javascript">
       if (typeof grunticon == 'function') { 
-        grunticon(["<%= theme_path %>css/sprites.main.svg.css", "<%= theme_path %>css/sprites.main.png.css", "<%= theme_path %>css/icons.fallback.css"]); 
+        grunticon(["/css/sprites.main.svg.css", "/css/sprites.main.png.css", "/css/icons.fallback.css"]); 
       }
     </script>
-    <!-- /build -->
+    <noscript><link href="/css/icons.fallback.css" rel="stylesheet"></noscript>
     
     <!-- build:process -->
     <!-- scripts -->
