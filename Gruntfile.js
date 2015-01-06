@@ -38,45 +38,33 @@ module.exports = function(grunt) {
         ],
       scripts: [
         '<%= pkg.build_path %>js',
+        '<%= pkg.build_path %>uglified',
         '<%= pkg.theme_path %>js/*'
         ],
     },
     concat: {
-      scriptshead: {
-        options: {
-          //sourceMap: true
-        },
-        src: [
-          '<%= pkg.build_path %>js/modernizr-custom.js',
-          '<%= pkg.source_path %>bower_components/loadcss/loadCSS.js',
-          '<%= pkg.source_path %>_js/head.js'
-          ],
-        dest: '<%= pkg.build_path %>js/release/head.js',
-      },
-      scriptsmain: {
-        options: {
-          //sourceMap: true
-        },
-        src: [
-          '<%= pkg.source_path %>bower_components/jquery/dist/jquery.js',
-          '<%= pkg.source_path %>_js/main.js',
-          '<%= pkg.source_path %>bower_components/picturefill/dist/picturefill.js'
-        ],
-        dest: '<%= pkg.build_path %>js/release/main.js',
-      },
+      scripts: {
+        files: [
+          {
+            src: [
+              '<%= pkg.build_path %>uglified/head/prepend/*.js',
+              '<%= pkg.build_path %>uglified/head/head.min.js',
+              '<%= pkg.build_path %>uglified/head/append/*.js',
+            ],
+            dest: '<%= pkg.theme_path %>js/head.min.js'
+          },
+          {
+            src: [
+              '<%= pkg.build_path %>uglified/main/prepend/*.js',
+              '<%= pkg.build_path %>uglified/main/head.min.js',
+              '<%= pkg.build_path %>uglified/main/append/*.js',
+            ],
+            dest: '<%= pkg.theme_path %>js/main.min.js'
+          }
+        ]
+      }
     },
     copy: {
-      cssbuild: {
-        files: [
-          // move scss files to build folder
-          {
-            expand: true,
-            cwd: '<%= pkg.source_path %>_sass/',
-            src: '**/*',
-            dest: '<%= pkg.build_path %>css/'
-          },
-        ],
-      },
       grunticon: {
         files: [
           // move images to build folder
@@ -114,6 +102,51 @@ module.exports = function(grunt) {
             cwd: '<%= pkg.source_path %>_img/',
             src: '**/*',
             dest: '<%= pkg.build_path %>img/'
+          },
+        ],
+      },
+      scriptsbuild: {
+        files: [
+          // move scripts to build folder
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              '<%= pkg.source_path %>bower_components/loadcss/loadCSS.js'
+            ],
+            dest: '<%= pkg.build_path %>js/head/prepend/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              '<%= pkg.source_path %>_js/head.js'
+            ],
+            dest: '<%= pkg.build_path %>js/head/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              '<%= pkg.source_path %>bower_components/jquery/dist/jquery.js'
+            ],
+            dest: '<%= pkg.build_path %>js/main/prepend/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              '<%= pkg.source_path %>_js/main.js'
+            ],
+            dest: '<%= pkg.build_path %>js/main/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              '<%= pkg.source_path %>bower_components/picturefill/dist/picturefill.js'
+            ],
+            dest: '<%= pkg.build_path %>js/main/append/'
           },
         ],
       },
@@ -242,7 +275,7 @@ module.exports = function(grunt) {
     modernizr: {
       dist: {
         "devFile" : "<%= pkg.source_path %>_js/_lib/modernizr.custom.js",
-        "outputFile" : "<%= pkg.build_path %>js/modernizr-custom.js",
+        "outputFile" : "<%= pkg.build_path %>js/head/prepend/modernizr-custom.js",
         "extra" : {
             "shiv" : true,
             "printshiv" : false,
@@ -261,7 +294,7 @@ module.exports = function(grunt) {
             "domprefixes" : false,
             "cssclassprefix": ""
         },
-        "uglify" : false,
+        "uglify" : true,
         "tests" : ['flexbox'],
         "parseFiles" : true,
         "matchCommunityTests" : false,
@@ -349,15 +382,15 @@ module.exports = function(grunt) {
       }
     },
     sass: {
-      dist: {
+      styles: {
         options: {
           cacheLocation: '<%= pkg.build_path %>.sass-cache',
           precision: 10,
-          style: 'nested'
+          style: 'compressed'
         },
         files: {
-          '<%= pkg.build_path %>css/compiled/all.css': '_build/css/all.scss',
-          '<%= pkg.build_path %>css/compiled/ie9.css': '_build/css/ie9.scss'
+          '<%= pkg.build_path %>css/compiled/all.css': '<%= pkg.source_path %>_sass/all.scss',
+          '<%= pkg.build_path %>css/compiled/ie9.css': '<%= pkg.source_path %>_sass/ie9.scss'
         },
       },
     },
@@ -366,20 +399,20 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: '<%= pkg.build_path %>js/release/',
+            cwd: '<%= pkg.build_path %>js/',
             src: '**/*.js',
-            dest: '<%= pkg.theme_path %>js/',
+            dest: '<%= pkg.build_path %>uglified/',
             rename: function(dest, src) {
               return dest + src.replace('.js','.min.js');
             }
           }
-        ],
+        ]
       }
     },
     watch: {
       css: {
         files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-        tasks: ['newer:copy:cssbuild', 'sass', 'autoprefixer', 'csslint', 'cssmin:styles', 'replace:csssourcemaps', 'notify:watchcss'],
+        tasks: ['sass', 'newer:autoprefixer', 'newer:cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:watchcss'],
         options: {
           spawn: false,
         },
@@ -400,7 +433,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: ['<%= pkg.source_path %>_js/**/*.js'],
-        tasks: ['jshint', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'notify:watchjs'],
+        tasks: ['jshint', 'newer:copy:scriptsbuild', 'modernizr', 'newer:uglify', 'concat:scripts', 'notify:watchjs'],
         options: {
           spawn: false,
         },
@@ -437,6 +470,6 @@ module.exports = function(grunt) {
   
   // Main Grunt tasks
   grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'modernizr', 'concat:scriptshead', 'concat:scriptsmain', 'uglify', 'copy:cssbuild', 'sass', 'autoprefixer', 'cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:build']);
+  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'copy:scriptsbuild', 'modernizr', 'uglify', 'concat:scripts', 'sass', 'autoprefixer', 'cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:build']);
 
 };
