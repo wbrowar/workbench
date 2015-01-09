@@ -235,7 +235,9 @@ module.exports = function(grunt) {
     },
     htmlbuild: {
       layout: {
-        src: '<%= pkg.source_path %>_html/*.html',
+        expand: true,
+        cwd: '<%= pkg.source_path %>_html',
+        src: '**/*.html',
         dest: '<%= pkg.html_build_path %>',
         options: {
           scripts: {
