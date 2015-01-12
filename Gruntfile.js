@@ -127,6 +127,20 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: true,
+            cwd: '<%= pkg.source_path %>_js/head/prepend/',
+            src: '**/*.js',
+            dest: '<%= pkg.build_path %>js/head/prepend/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            cwd: '<%= pkg.source_path %>_js/head/append/',
+            src: '**/*.js',
+            dest: '<%= pkg.build_path %>js/head/append/'
+          },
+          {
+            expand: true,
+            flatten: true,
             src: [
               '<%= pkg.source_path %>bower_components/jquery/dist/jquery.js'
             ],
@@ -146,6 +160,20 @@ module.exports = function(grunt) {
             src: [
               '<%= pkg.source_path %>bower_components/picturefill/dist/picturefill.js'
             ],
+            dest: '<%= pkg.build_path %>js/main/append/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            cwd: '<%= pkg.source_path %>_js/main/prepend/',
+            src: '**/*.js',
+            dest: '<%= pkg.build_path %>js/main/prepend/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            cwd: '<%= pkg.source_path %>_js/main/append/',
+            src: '**/*.js',
             dest: '<%= pkg.build_path %>js/main/append/'
           },
         ],
@@ -209,7 +237,7 @@ module.exports = function(grunt) {
         tileBlackWhite: true,
         tileColor: "none",
         html: '<%= pkg.build_path %>html/meta.html',
-        HTMLPrefix: "/img/meta/"
+        HTMLPrefix: "<%= pkg.html_theme_path %>img/meta/"
       },
       icons: {
         src: '<%= pkg.source_path %>_favicon/favicon.png',
@@ -250,7 +278,7 @@ module.exports = function(grunt) {
             meta: '<%= pkg.build_path %>html/meta.html'
           },
           data: {
-            theme_path: '<%= pkg.theme_path %>',
+            html_theme_path: '<%= pkg.html_theme_path %>',
             version: '<%= pkg.version %>'
           }
         },

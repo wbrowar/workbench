@@ -11,6 +11,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- meta icons -->
+	<meta name="msapplication-square70x70logo" content="img/meta/windows-tile-70x70.png">
+	<meta name="msapplication-square150x150logo" content="img/meta/windows-tile-150x150.png">
+	<meta name="msapplication-square310x310logo" content="img/meta/windows-tile-310x310.png">
+	<meta name="msapplication-TileImage" content="img/meta/windows-tile-144x144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/meta/apple-touch-icon-152x152-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/meta/apple-touch-icon-120x120-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="img/meta/apple-touch-icon-76x76-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="img/meta/apple-touch-icon-60x60-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/meta/apple-touch-icon-144x144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/meta/apple-touch-icon-114x114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/meta/apple-touch-icon-72x72-precomposed.png">
+	<link rel="apple-touch-icon" sizes="57x57" href="img/meta/apple-touch-icon.png">
+	<link rel="icon" sizes="228x228" href="img/meta/coast-icon-228x228.png">
+	<link rel="shortcut icon" href="img/meta/favicon.ico">
+	<link rel="icon" type="image/png" sizes="64x64" href="img/meta/favicon.png">
 
     
     
@@ -26,25 +41,28 @@
     </noscript>
     
     
-<style></style>
+<style>article,aside,body,body div,footer,h1,h2,h3,header,html,nav,p,section{margin:0;padding:0;border-width:0;border-style:initial;border-color:initial;font-size:100%;vertical-align:baseline;background-image:initial;background-attachment:initial;background-origin:initial;background-clip:initial;background-color:initial;background-position:0 0;background-repeat:initial initial}article,aside,footer,header,nav,section{display:block}html{overflow-y:scroll}a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background-image:initial;background-attachment:initial;background-origin:initial;background-clip:initial;background-color:initial;background-position:0 0;background-repeat:initial initial}.clearfix{zoom:1}html{font-family:sans-serif;font-weight:400;font-style:normal;-webkit-font-smoothing:antialiased;line-height:1.4;color:#282828}</style>
     
 <script type="text/javascript">/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
 (function(e){"use strict";var t=e.document,n=e.navigator,r=e.Image,a="grunticon:",o=!(!t.createElementNS||!t.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!t.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||e.opera&&-1===n.userAgent.indexOf("Chrome")||-1!==n.userAgent.indexOf("Series40")),i=function(e){if(t.attachEvent?"complete"===t.readyState:"loading"!==t.readyState)e();else{var n=!1;t.addEventListener("readystatechange",function(){n||(n=!0,e())},!1)}},c=function(n,r){r=r||function(){};var a=t.createElement("link"),o=t.getElementsByTagName("script")[0];a.rel="stylesheet",a.href=n,a.media="only x",a.onload=r,o.parentNode.insertBefore(a,o),e.setTimeout(function(){a.media="all"})},s=function(e){for(var n,r,o,i,c,s,l={},u=t.styleSheets,g=0;u.length>g;g++)if(u[g].href&&u[g].href.indexOf(e)>-1){n=u[g];break}if(!n)return l;for(r=n.cssRules?n.cssRules:n.rules,g=0;r.length>g;g++)o=r[g].cssText,i=a+r[g].selectorText,c=o.split(");")[0].match(/US\-ASCII\,([^"']+)/),c&&c[1]&&(s=decodeURIComponent(c[1]),l[i]=s);return l},l=function(e){var n,r,o;r="data-grunticon-embed";for(var i in e)if(o=i.slice(a.length),n=t.querySelectorAll(o+"["+r+"]"),n.length)for(var c=0;n.length>c;c++)n[c].innerHTML=e[i],n[c].style.backgroundImage="none",n[c].removeAttribute(r);return n},u=function(e){if(e&&3===e.length){var n=new r;n.onerror=function(){u.method="png",c(e[2])},n.onload=function(){var t,r,a=1===n.width&&1===n.height,g=e[a&&o?0:a?1:2];a&&o?(u.method="svg",t=function(){r=s(g),i(function(){l(r)})}):u.method=a?"datapng":"png",c(g,t)},n.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",t.documentElement.className=t.documentElement.className+" grunticon"}};u.embedIcons=l,u.getIcons=s,u.loadCSS=c,e.grunticon=u})(this);</script>
+    
     <script type="text/javascript">
       if (typeof grunticon == 'function') { 
-        grunticon(["/css/sprites.main.svg.css", "/css/sprites.main.png.css", "/css/icons.fallback.css"]); 
+        grunticon(["css/sprites.main.svg.css", "css/sprites.main.png.css", "css/icons.fallback.css"]); 
       }
     </script>
-    <noscript><link href="/css/icons.fallback.css" rel="stylesheet"></noscript>
+    <noscript><link href="css/icons.fallback.css" rel="stylesheet"></noscript>
+    
     
     
     <!-- scripts -->
     <script src="js/head.min.js?v=0.1.0"></script>
+    <script>loadJS("js/main.min.js?v=0.1.0");</script>
     <!--[if gte IE 9]><!-->
-      <script>loadCSS( "css/all.css?v=0.1.0" );</script>
+      <script>loadCSS("css/all.css?v=0.1.0");</script>
     <!--<![endif]-->
     <!--[if lte IE 9]>
-      <script>loadCSS( "css/ie9.css?v=0.1.0" );</script>
+      <script>loadCSS("css/ie9.css?v=0.1.0");</script>
     <![endif]-->
     
         
@@ -101,10 +119,6 @@
         <h3>footer</h3>
       </footer>
     </div>
-    
-		
-    <script src="js/main.min.js?v=0.1.0"></script>
-		
 
     <script>
   		/*
@@ -113,7 +127,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     
-      ga('create', 'UA-2284756-1', 'dixonschwabl.com');
+      ga('create', 'UA-XXXXXXX-X', 'example.com');
       ga('send', 'pageview');
       */
     </script>

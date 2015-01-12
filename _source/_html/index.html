@@ -17,11 +17,11 @@
     <!-- styles -->
     <noscript>
       <!--[if gte IE 9]><!-->
-      <link rel="stylesheet" href="css/all.css?v=<%= version %>">
+      <link rel="stylesheet" href="<%= html_theme_path %>css/all.css?v=<%= version %>">
       <!--<![endif]-->
       
       <!--[if lte IE 9]>
-      <link rel="stylesheet" href="css/ie9.css?v=<%= version %>">
+      <link rel="stylesheet" href="<%= html_theme_path %>css/ie9.css?v=<%= version %>">
       <![endif]-->
     </noscript>
     <!-- /build -->
@@ -29,21 +29,24 @@
     <!-- build:style inline critcss --><!-- /build -->
     
     <!-- build:script inline grunticon --><!-- /build -->
+    <!-- build:process -->
     <script type="text/javascript">
       if (typeof grunticon == 'function') { 
-        grunticon(["/css/sprites.main.svg.css", "/css/sprites.main.png.css", "/css/icons.fallback.css"]); 
+        grunticon(["<%= html_theme_path %>css/sprites.main.svg.css", "<%= html_theme_path %>css/sprites.main.png.css", "<%= html_theme_path %>css/icons.fallback.css"]); 
       }
     </script>
-    <noscript><link href="/css/icons.fallback.css" rel="stylesheet"></noscript>
+    <noscript><link href="<%= html_theme_path %>css/icons.fallback.css" rel="stylesheet"></noscript>
+    <!-- /build -->
     
     <!-- build:process -->
     <!-- scripts -->
-    <script src="js/head.min.js?v=<%= version %>"></script>
+    <script src="<%= html_theme_path %>js/head.min.js?v=<%= version %>"></script>
+    <script>loadJS("<%= html_theme_path %>js/main.min.js?v=<%= version %>");</script>
     <!--[if gte IE 9]><!-->
-      <script>loadCSS( "css/all.css?v=<%= version %>" );</script>
+      <script>loadCSS("<%= html_theme_path %>css/all.css?v=<%= version %>");</script>
     <!--<![endif]-->
     <!--[if lte IE 9]>
-      <script>loadCSS( "css/ie9.css?v=<%= version %>" );</script>
+      <script>loadCSS("<%= html_theme_path %>css/ie9.css?v=<%= version %>");</script>
     <![endif]-->
     <!-- /build -->
         
@@ -100,10 +103,6 @@
         <h3>footer</h3>
       </footer>
     </div>
-    
-		<!-- build:process -->
-    <script src="js/main.min.js?v=<%= version %>"></script>
-		<!-- /build -->
 
     <script>
   		/*
@@ -112,7 +111,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     
-      ga('create', 'UA-2284756-1', 'dixonschwabl.com');
+      ga('create', 'UA-XXXXXXX-X', 'EXAMPLE.com');
       ga('send', 'pageview');
       */
     </script>
