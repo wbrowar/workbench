@@ -8,6 +8,7 @@ This is here for my own storage, but please let me know if you have any feedback
 ## Installation
 NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly different.
 
+### Setting Up for the First Time
 1. Clone the repo into your site's root folder. You may move your `_source` and `_build` folders if needed
 2. If you rename or move the `_source` folder, update the `.bowerrc` file with the new directory path
 3. Install [Node](http://nodejs.org/)
@@ -17,11 +18,14 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 7. Run `npm install -g bower`
 8. Run `npm install -g grunt-cli`.
 9. Close the terminal window and open it up again. If you run `grunt` and you get an error, "Unable to find local grunt", check to see if you have a `.bash_profile` file in your home folder. If you don't have a `.bash_profile` file setup, create it, then add the following line to it: `export PATH=/usr/local/lib/node_modules/grunt-cli:$PATH`
-10. In Terminal, `cd` to your project root
-11. Run `npm update`
-12. Run `bower update`
-13. Update the `package.json` file to fit your project's needs. See `package.json` below
-14. Run `grunt` to perform the default task and to do an initial setup. From here feel free to edit the Gruntfile to work how you want
+
+### Setting Up Each Project
+1. In Terminal, `cd` to your project root
+2. Run `npm update`
+3. Run `bower update`
+4. Update the `package.json` file to fit your project's needs. See `package.json` below
+5. Edit `Gruntfile.js` to work however you want
+6. Run `grunt` to perform the default task and to do an initial setup
 
 ## Commands
 ### `grunt`
@@ -88,3 +92,4 @@ Backed up files will be copied to `_build/html_backup`. Each time a `clean` task
 ## Resources
 - [Grunt for People Who Think Things Like Grunt are Weird and Hard](http://24ways.org/2013/grunt-is-not-weird-and-hard/) - Setup tutorial by Chris Coyier
 - [Automating Your Web Workflow with Grunt.js](http://techneblog.com/article/automating-your-web-workflow-gruntjs)
+- [Responsible Responsive Design](http://www.abookapart.com/products/responsible-responsive-design) - A lot of good organization and optimization tips
