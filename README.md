@@ -9,18 +9,29 @@ This is here for my own storage, but please let me know if you have any feedback
 NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly different.
 
 1. Clone the repo into your site's root folder. You may move your `_source` and `_build` folders if needed
-8. If you rename or move the `_source` folder, update the `.bowerrc` file with the new directory path
-2. Install [Node](http://nodejs.org/)
-3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
-4. Install ImageMagick, run this command: `brew install imagemagick`. If you don't have homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-5. In terminal, go to your site's root folder and run the command: `npm install`
-6. Run `npm install -g bower`
-7. Run `npm install -g grunt-cli`
-9. In Terminal, `cd` to your project root
-10. Run `npm update`
-11. Run `bower update`
-12. Update the `package.json` file to fit your project's needs. See `package.json` below
-13. Run `grunt` to perform the default task and to do an initial setup, then you may use `grunt watch` going forward
+2. If you rename or move the `_source` folder, update the `.bowerrc` file with the new directory path
+3. Install [Node](http://nodejs.org/)
+4. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
+5. Install ImageMagick, run this command: `brew install imagemagick`. If you don't have homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+6. In terminal, go to your site's root folder and run the command: `npm install`
+7. Run `npm install -g bower`
+8. Run `npm install -g grunt-cli`.
+9. Close the terminal window and open it up again. If you run `grunt` and you get an error, "Unable to find local grunt", check to see if you have a `.bash_profile` file in your home folder. If you don't have a `.bash_profile` file setup, create it, then add the following line to it: `export PATH=/usr/local/lib/node_modules/grunt-cli:$PATH`
+10. In Terminal, `cd` to your project root
+11. Run `npm update`
+12. Run `bower update`
+13. Update the `package.json` file to fit your project's needs. See `package.json` below
+14. Run `grunt` to perform the default task and to do an initial setup. From here feel free to edit the Gruntfile to work how you want
+
+## Commands
+### `grunt`
+- Grunt default task. Runs tasks to process images, javascript, and CSS files. The `grunt-html-build` task is left off of the `grunt` task since it may not be needed as often.
+
+### `grunt watch`
+- Run this to automate tasks as files in the `_source` folder are modified. Use `control+C` or close the Terminal window to stop `grunt watch`.
+
+### `grunt release`
+- Running `grunt release` will run all of the tasks in the default `grunt` task, then it will run tasks to build your meta icons, generate Critical CSS, then process the files in your `_source/_html` folder. It's intended that `grunt release` be run before deploying your files to dev or prod servers.
 
 ## Settings
 ### package.json
@@ -47,8 +58,9 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 
 ---
 ### Javascript
-- I've read that Modernizr should be included in the `<head>`, while your custom scripts should be included just before the closing `<body>` tag. A customized dev version of Modernizr is compiled into `/js/head.min.js` and everything else should be compiled into `/js/main.min.js`.
-- JQuery is included into `main.min.js` by default, but they can be removed if it isn't needed for the project.
+- The `head.min.js` file will include blocking script files, such as polyfils, shims, and Modernizr, so it should remain as small as possible. It includes [loadCSS](https://github.com/filamentgroup/loadCSS) and [loadJS](https://github.com/filamentgroup/loadJS) scripts to asynchronously load in `main.min.js`.
+- `main.min.js` should be made up from all other scripts. Since it's loaded asynchronously, it should only include scripts that aren't needed right away. In the future, `main.min.js` may be replaced with `require.js`.
+- A few libraries are included into `main.min.js` by default, but they can be removed if it isn't needed for the project.
 
 ---
 ### Image Processing
