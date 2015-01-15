@@ -45,7 +45,10 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 - **source_path** Path to your source folder from the project root. The name of the folder can be different but the contents should stay the same. If you update the name or location, be sure to update the path in the `.bowerrc` file
 - **build_path** Location of your build folder. This can be moved and renamed if needed
 - **html_build_path** If you run `grunt release`, files in your `_source/_html` folder will be processed and built at this path, using [grunt-html-build](https://www.npmjs.com/package/grunt-html-build). This path will become a root for your processed files and directory trees will be built out
+- **html_theme_path** A string that is appended when linking the `css`, `js`, and `img` files. Examples: `../`, `/`, `/sites/all/theme/`
 - **devDependencies** Finding [Grunt packages](http://gruntjs.com/plugins) and installing them through Terminal—using `--save-dev`—will update this section. Update version numbers if needed
+
+*NOTE: for path variables above, a trailing slash should be used in most cases*
 
 ### .bowerrc
 - **directory** Path to your `bower_components` folder
