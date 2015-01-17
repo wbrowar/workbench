@@ -192,12 +192,12 @@ module.exports = function(grunt) {
       },
     },
     criticalcss: {
-      home: {
+      index: {
         options: {
-          url: "<%= pkg.html_build_path %>index.html", // Change to live or dev URL
+          url: "<%= pkg.html_build_path %>index_grunt.html", // Change to live or dev URL
           width: 1200,
           height: 900,
-          outputfile: "<%= pkg.build_path %>critcss/home.css",
+          outputfile: "<%= pkg.build_path %>critcss/compiled/index.css",
           filename: "<%= pkg.theme_path %>css/all.css"
         }
       }
@@ -223,7 +223,15 @@ module.exports = function(grunt) {
       },
       critcss: {
         files: [
-          { src: ['<%= pkg.build_path %>critcss/home.css'], dest: '<%= pkg.build_path %>critcss/home.min.css'}
+          {
+            expand: true,
+            cwd: '<%= pkg.build_path %>critcss/compiled/',
+            src: '**/*.css',
+            dest: '<%= pkg.build_path %>critcss/release/',
+            rename: function(dest, src) {
+              return dest + src.replace('.css','.min.css');
+            }
+          }
         ],
       },
     },
@@ -272,7 +280,7 @@ module.exports = function(grunt) {
             grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js'
           },
           styles: {
-            critcss: '<%= pkg.build_path %>critcss/home.min.css'
+            critcss: '<%= pkg.build_path %>critcss/release/index.min.css'
           },
           sections: {
             meta: '<%= pkg.build_path %>html/meta.html'
