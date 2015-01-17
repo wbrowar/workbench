@@ -41,7 +41,7 @@
     </noscript>
     
     
-<style>article,aside,body,body div,footer,h1,h2,h3,header,html,nav,p,section{margin:0;padding:0;border-width:0;border-style:initial;border-color:initial;font-size:100%;vertical-align:baseline;background-image:initial;background-attachment:initial;background-origin:initial;background-clip:initial;background-color:initial;background-position:0 0;background-repeat:initial initial}article,aside,footer,header,nav,section{display:block}html{overflow-y:scroll}a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background-image:initial;background-attachment:initial;background-origin:initial;background-clip:initial;background-color:initial;background-position:0 0;background-repeat:initial initial}.clearfix{zoom:1}html{font-family:sans-serif;font-weight:400;font-style:normal;-webkit-font-smoothing:antialiased;line-height:1.4;color:#282828}</style>
+<style></style>
     
 <script type="text/javascript">/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
 (function(e){"use strict";var t=e.document,n=e.navigator,r=e.Image,a="grunticon:",o=!(!t.createElementNS||!t.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!t.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||e.opera&&-1===n.userAgent.indexOf("Chrome")||-1!==n.userAgent.indexOf("Series40")),i=function(e){if(t.attachEvent?"complete"===t.readyState:"loading"!==t.readyState)e();else{var n=!1;t.addEventListener("readystatechange",function(){n||(n=!0,e())},!1)}},c=function(n,r){r=r||function(){};var a=t.createElement("link"),o=t.getElementsByTagName("script")[0];a.rel="stylesheet",a.href=n,a.media="only x",a.onload=r,o.parentNode.insertBefore(a,o),e.setTimeout(function(){a.media="all"})},s=function(e){for(var n,r,o,i,c,s,l={},u=t.styleSheets,g=0;u.length>g;g++)if(u[g].href&&u[g].href.indexOf(e)>-1){n=u[g];break}if(!n)return l;for(r=n.cssRules?n.cssRules:n.rules,g=0;r.length>g;g++)o=r[g].cssText,i=a+r[g].selectorText,c=o.split(");")[0].match(/US\-ASCII\,([^"']+)/),c&&c[1]&&(s=decodeURIComponent(c[1]),l[i]=s);return l},l=function(e){var n,r,o;r="data-grunticon-embed";for(var i in e)if(o=i.slice(a.length),n=t.querySelectorAll(o+"["+r+"]"),n.length)for(var c=0;n.length>c;c++)n[c].innerHTML=e[i],n[c].style.backgroundImage="none",n[c].removeAttribute(r);return n},u=function(e){if(e&&3===e.length){var n=new r;n.onerror=function(){u.method="png",c(e[2])},n.onload=function(){var t,r,a=1===n.width&&1===n.height,g=e[a&&o?0:a?1:2];a&&o?(u.method="svg",t=function(){r=s(g),i(function(){l(r)})}):u.method=a?"datapng":"png",c(g,t)},n.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",t.documentElement.className=t.documentElement.className+" grunticon"}};u.embedIcons=l,u.getIcons=s,u.loadCSS=c,e.grunticon=u})(this);</script>
@@ -86,12 +86,15 @@
     <div class="main_wrapper">
       <div class="wrapper clearfix">
 
-        <div class="icon_skaman" style="height: 150px; width: 50px; background-size: contain; background-position: center center;"></div>
         <article>
           <header>
             <h1>article header h1</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
           </header>
+          <section>
+            <div class="icon_skaman" style="height: 150px; width: 50px; background-size: contain; background-position: center center;"></div>
+            <p style="color: #883d00;"><i>If you don't see an image of a man in a suite right above this line, run the "grunt release" command and look for errors. He'll show up because of the "grunticon" task.</i></p>
+          </section>
           <section>
             <h2>article section h2</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
