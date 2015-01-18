@@ -1,4 +1,10 @@
 module.exports = function(grunt) {
+  require('time-grunt')(grunt);
+  require('jit-grunt')(grunt, {
+    concat: 'grunt-contrib-concat-sourcemaps',
+    replace: 'grunt-text-replace',
+    htmlbuild: 'grunt-html-build'
+  });
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -479,27 +485,6 @@ module.exports = function(grunt) {
     }
 
   });
-
-  grunt.loadNpmTasks('grunt-autoprefixer');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-concat-sourcemaps');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-criticalcss');
-  grunt.loadNpmTasks('grunt-contrib-csslint');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-favicons');
-  grunt.loadNpmTasks('grunt-grunticon');
-  grunt.loadNpmTasks('grunt-html-build');
-  grunt.loadNpmTasks('grunt-contrib-imagemin');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks("grunt-modernizr");
-  grunt.loadNpmTasks('grunt-notify');
-  grunt.loadNpmTasks('grunt-responsive-images');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-text-replace');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-newer');
   
   // Grouped tasks to be used below
   grunt.registerTask('meta', ['favicons', 'newer:imagemin']);
