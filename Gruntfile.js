@@ -62,7 +62,7 @@ module.exports = function(grunt) {
           {
             src: [
               '<%= pkg.build_path %>uglified/main/prepend/*.js',
-              '<%= pkg.build_path %>uglified/main/head.min.js',
+              '<%= pkg.build_path %>uglified/main/main.min.js',
               '<%= pkg.build_path %>uglified/main/append/*.js',
             ],
             dest: '<%= pkg.theme_path %>js/main.min.js'
