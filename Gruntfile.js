@@ -459,6 +459,7 @@ module.exports = function(grunt) {
         tasks: ['sass', 'newer:autoprefixer', 'newer:cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:watchcss'],
         options: {
           spawn: false,
+          livereload: true
         },
       },
       htmlbuild: {
@@ -466,13 +467,14 @@ module.exports = function(grunt) {
         tasks: ['clean:critcss', 'newer:copy:htmlbuild', 'newer:htmlbuild', 'notify:watchhtml'],
         options: {
           spawn: false,
+          livereload: true
         },
       },
       images: {
         files: ['<%= pkg.source_path %>_img/**/*'],
         tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:grunticon', 'newer:copy:grunticon', 'newer:imagemin', 'notify:watchimg'],
         options: {
-          spawn: false,
+          spawn: false
         },
       },
       scripts: {
@@ -480,6 +482,7 @@ module.exports = function(grunt) {
         tasks: ['jshint', 'newer:copy:scriptsbuild', 'modernizr', 'newer:uglify', 'concat:scripts', 'notify:watchjs'],
         options: {
           spawn: false,
+          livereload: true
         },
       },
     }
