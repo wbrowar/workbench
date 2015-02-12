@@ -54,7 +54,7 @@ module.exports = function(grunt) {
           {
             src: [
               '<%= pkg.build_path %>uglified/head/prepend/*.js',
-              '<%= pkg.build_path %>uglified/head/head.min.js',
+              '<%= pkg.build_path %>uglified/head/head.js',
               '<%= pkg.build_path %>uglified/head/append/*.js',
             ],
             dest: '<%= pkg.theme_path %>js/head.min.js'
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
           {
             src: [
               '<%= pkg.build_path %>uglified/main/prepend/*.js',
-              '<%= pkg.build_path %>uglified/main/main.min.js',
+              '<%= pkg.build_path %>uglified/main/main.js',
               '<%= pkg.build_path %>uglified/main/append/*.js',
             ],
             dest: '<%= pkg.theme_path %>js/main.min.js'
@@ -118,9 +118,10 @@ module.exports = function(grunt) {
             expand: true,
             flatten: true,
             src: [
-              '<%= pkg.source_path %>bower_components/loadcss/loadCSS.js'
+              '<%= pkg.source_path %>bower_components/loadcss/loadCSS.js',
+              '<%= pkg.source_path %>_js/loadJS.js'
             ],
-            dest: '<%= pkg.build_path %>js/head/prepend/'
+            dest: '<%= pkg.build_path %>js/'
           },
           {
             expand: true,
@@ -265,7 +266,8 @@ module.exports = function(grunt) {
           datapngcss: 'sprites.main.png.css',
           pngfolder: '../img/icon_fallback/',
           pngpath: '../img/icon_fallback/',
-          cssprefix: ".icon_"
+          cssprefix: ".icon_",
+          enhanceSVG: true
         },
         files: [{
           expand: true,
@@ -283,10 +285,12 @@ module.exports = function(grunt) {
         dest: '<%= pkg.html_build_path %>',
         options: {
           scripts: {
+            loadcss: '<%= pkg.build_path %>uglified/loadCSS.js',
+            loadjs: '<%= pkg.build_path %>uglified/loadJS.js',
             grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js'
           },
           styles: {
-            critcss: '<%= pkg.build_path %>critcss/release/index.min.css'
+            critcss: '<%= pkg.build_path %>critcss/replaced/index.min.css'
           },
           sections: {
             meta: '<%= pkg.build_path %>html/meta.html'
@@ -382,6 +386,14 @@ module.exports = function(grunt) {
       }
     },
     replace: {
+      critcss: {
+        src: ['<%= pkg.build_path %>critcss/release/index.min.css'],
+        dest: '<%= pkg.build_path %>critcss/replaced/index.min.css',
+        replacements: [{
+          from: '{#',
+          to: '{ #'
+        }]
+      },
       csssourcemaps: {
         src: ['<%= pkg.build_path %>css/compiled/*.map'],
         dest: '<%= pkg.theme_path %>css/',
@@ -446,9 +458,6 @@ module.exports = function(grunt) {
             cwd: '<%= pkg.build_path %>js/',
             src: '**/*.js',
             dest: '<%= pkg.build_path %>uglified/',
-            rename: function(dest, src) {
-              return dest + src.replace('.js','.min.js');
-            }
           }
         ]
       }
@@ -492,7 +501,7 @@ module.exports = function(grunt) {
   // Grouped tasks to be used below
   grunt.registerTask('meta', ['favicons', 'newer:imagemin']);
   grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
-  grunt.registerTask('htmlprocess', ['copy:htmlbuild', 'htmlbuild']);
+  grunt.registerTask('htmlprocess', ['replace:critcss', 'copy:htmlbuild', 'htmlbuild']);
   
   // Main Grunt tasks
   grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
