@@ -21,7 +21,7 @@
     "grunt-contrib-watch": ">=0.6.1",
     "grunt-criticalcss": ">=0.4.2",
     "grunt-favicons": ">=0.6.4",
-    "grunt-grunticon": ">=2.0.0-alpha.2",
+    "grunt-grunticon": ">=2.1.0",
     "grunt-html-build": ">=0.3.2",
     "grunt-modernizr": ">=0.3.2",
     "grunt-newer": ">=0.8.0",
