@@ -16,7 +16,7 @@
     <!-- build:process -->
     <!-- styles -->
     <noscript>
-      <!--[if gte IE 9]><!-->
+      <!--[if gt IE 9]><!-->
       <link rel="stylesheet" href="<%= html_theme_path %>css/all.css?v=<%= version %>">
       <!--<![endif]-->
       
@@ -44,7 +44,7 @@
     <!-- scripts -->
     <script src="<%= html_theme_path %>js/head.min.js?v=<%= version %>"></script>
     <script>loadJS("<%= html_theme_path %>js/main.min.js?v=<%= version %>");</script>
-    <!--[if gte IE 9]><!-->
+    <!--[if gt IE 9]><!-->
       <script>loadCSS("<%= html_theme_path %>css/all.css?v=<%= version %>");</script>
     <!--<![endif]-->
     <!--[if lte IE 9]>
