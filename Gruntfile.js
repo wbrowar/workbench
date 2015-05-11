@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         '<%= pkg.build_path %>css',
         '<%= pkg.theme_path %>css/*'
         ],
-      critcss: [
+      clean_critcss: [
         '<%= pkg.build_path %>critcss'
         ],
       html: [
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-      grunticon: {
+      copy_grunticon: {
         files: [
           // move images to build folder
           {
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
           },
         ],
       },
-      htmlbuild: {
+      copy_htmlbuild: {
         files: [
           // backup all HTML files (just in case)
           {
@@ -100,7 +100,7 @@ module.exports = function(grunt) {
           },
         ],
       },
-      imagesbuild: {
+      copy_imagesbuild: {
         files: [
           // move images to build folder
           {
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
           },
         ],
       },
-      scriptsbuild: {
+      copy_scriptsbuild: {
         files: [
           // move scripts to build folder
           {
@@ -185,7 +185,7 @@ module.exports = function(grunt) {
           },
         ],
       },
-      sourcemaps: {
+      copy_sourcemaps: {
         files: [
           // move css
           {
@@ -218,7 +218,7 @@ module.exports = function(grunt) {
       },
     },
     cssmin: {
-      styles: {
+      cssmin_styles: {
         files: [
           {
             expand: true,
@@ -228,7 +228,7 @@ module.exports = function(grunt) {
           }
         ],
       },
-      critcss: {
+      cssmin_critcss: {
         files: [
           {
             expand: true,
@@ -386,7 +386,7 @@ module.exports = function(grunt) {
       }
     },
     replace: {
-      critcss: {
+      replace_critcss: {
         src: ['<%= pkg.build_path %>critcss/release/index.min.css'],
         dest: '<%= pkg.build_path %>critcss/replaced/index.min.css',
         replacements: [{
@@ -394,7 +394,7 @@ module.exports = function(grunt) {
           to: '{ #'
         }]
       },
-      csssourcemaps: {
+      replace_csssourcemaps: {
         src: ['<%= pkg.build_path %>css/compiled/*.map'],
         dest: '<%= pkg.theme_path %>css/',
         replacements: [{
@@ -402,7 +402,7 @@ module.exports = function(grunt) {
           to: '/<%= pkg.source_path %>_sass/'
         }]
       },
-      cssaddsourcemaps: {
+      replace_cssaddsourcemaps: {
         src: ['<%= pkg.theme_path %>css/*.css'],
         overwrite: true,
         replacements: [{
@@ -463,32 +463,32 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      css: {
+      watch_css: {
         files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-        tasks: ['sass', 'newer:autoprefixer', 'newer:cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:watchcss'],
+        tasks: ['sass', 'newer:autoprefixer', 'newer:cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:watchcss'],
         options: {
           spawn: false,
           livereload: true
         },
       },
-      htmlbuild: {
+      watch_htmlbuild: {
         files: ['<%= pkg.source_path %>_html/**/*'],
-        tasks: ['clean:critcss', 'newer:copy:htmlbuild', 'newer:htmlbuild', 'notify:watchhtml'],
+        tasks: ['clean:clean_critcss', 'newer:copy:copy_htmlbuild', 'newer:htmlbuild', 'notify:watchhtml'],
         options: {
           spawn: false,
           livereload: true
         },
       },
-      images: {
+      watch_images: {
         files: ['<%= pkg.source_path %>_img/**/*'],
-        tasks: ['newer:copy:imagesbuild', 'newer:responsive_images', 'newer:grunticon', 'newer:copy:grunticon', 'newer:imagemin', 'notify:watchimg'],
+        tasks: ['newer:copy:copy_imagesbuild', 'newer:responsive_images', 'newer:grunticon', 'newer:copy:copy_grunticon', 'newer:imagemin', 'notify:watchimg'],
         options: {
           spawn: false
         },
       },
-      scripts: {
+      watch_scripts: {
         files: ['<%= pkg.source_path %>_js/**/*.js'],
-        tasks: ['jshint', 'newer:copy:scriptsbuild', 'modernizr', 'newer:uglify', 'concat:scripts', 'notify:watchjs'],
+        tasks: ['jshint', 'newer:copy:copy_scriptsbuild', 'modernizr', 'newer:uglify', 'concat:scripts', 'notify:watchjs'],
         options: {
           spawn: false,
           livereload: true
@@ -500,11 +500,11 @@ module.exports = function(grunt) {
   
   // Grouped tasks to be used below
   grunt.registerTask('meta', ['favicons', 'newer:imagemin']);
-  grunt.registerTask('critcss', ['criticalcss', 'cssmin:critcss']);
-  grunt.registerTask('htmlprocess', ['replace:critcss', 'copy:htmlbuild', 'htmlbuild']);
+  grunt.registerTask('critcss', ['criticalcss', 'cssmin:cssmin_critcss']);
+  grunt.registerTask('htmlprocess', ['replace:replace_critcss', 'copy:copy_htmlbuild', 'htmlbuild']);
   
   // Main Grunt tasks
   grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
-  grunt.registerTask('default', ['clean', 'copy:imagesbuild', 'responsive_images', 'grunticon', 'copy:grunticon', 'imagemin', 'copy:scriptsbuild', 'modernizr', 'uglify', 'concat:scripts', 'sass', 'autoprefixer', 'cssmin:styles', 'replace:csssourcemaps', 'replace:cssaddsourcemaps', 'notify:build']);
+  grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'concat:scripts', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:build']);
 
 };
