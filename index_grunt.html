@@ -41,12 +41,12 @@
     </noscript>
     
     
-<style></style>
+<style>a,article,aside,body,body div,footer,h1,h2,h3,header,html,i,nav,p,section{font-size:100%;vertical-align:baseline;background-image:initial;background-attachment:initial;background-origin:initial;background-clip:initial;background-color:initial;background-position:0 0;background-repeat:initial initial;margin:0;padding:0}article,aside,footer,header,nav,section{display:block}html{font-weight:400;overflow-y:scroll;font-family:sans-serif;font-style:normal;-webkit-font-smoothing:antialiased;line-height:1.4;color:#282828}article,aside,body,body div,footer,h1,h2,h3,header,html,i,nav,p,section{border-style:initial;border-color:initial;border-width:0;border-width:0;border-width:0}.clearfix::after,.clearfix::before{content:' ';display:block;height:0;overflow-x:hidden;overflow-y:hidden}.clearfix::after{clear:both}.clearfix{zoom:1}</style>
     
-<script type="text/javascript">function loadJS(a,b){"use strict";var c=window.document.getElementsByTagName("script")[0],d=window.document.createElement("script");return d.src=a,d.async=!0,c.parentNode.insertBefore(d,c),b&&"function"==typeof b&&(d.onload=b),d}</script>
-<script type="text/javascript">function loadCSS(a,b,c){"use strict";function d(){for(var b,f=0;f<g.length;f++)g[f].href&&g[f].href.indexOf(a)>-1&&(b=!0);b?e.media=c||"all":setTimeout(d)}var e=window.document.createElement("link"),f=b||window.document.getElementsByTagName("script")[0],g=window.document.styleSheets;return e.rel="stylesheet",e.href=a,e.media="only x",f.parentNode.insertBefore(e,f),d(),e}</script>
-<script type="text/javascript">/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
-(function(e){"use strict";var t=e.document,n=e.navigator,r=e.Image,a="grunticon:",o=!(!t.createElementNS||!t.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!t.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||e.opera&&-1===n.userAgent.indexOf("Chrome")||-1!==n.userAgent.indexOf("Series40")),i=function(e){if(t.attachEvent?"complete"===t.readyState:"loading"!==t.readyState)e();else{var n=!1;t.addEventListener("readystatechange",function(){n||(n=!0,e())},!1)}},c=function(n,r){r=r||function(){};var a=t.createElement("link"),o=t.getElementsByTagName("script")[0];a.rel="stylesheet",a.href=n,a.media="only x",a.onload=r,o.parentNode.insertBefore(a,o),e.setTimeout(function(){a.media="all"})},s=function(e){for(var n,r,o,i,c,s,l={},u=t.styleSheets,g=0;u.length>g;g++)if(u[g].href&&u[g].href.indexOf(e)>-1){n=u[g];break}if(!n)return l;for(r=n.cssRules?n.cssRules:n.rules,g=0;r.length>g;g++)o=r[g].cssText,i=a+r[g].selectorText,c=o.split(");")[0].match(/US\-ASCII\,([^"']+)/),c&&c[1]&&(s=decodeURIComponent(c[1]),l[i]=s);return l},l=function(e){var n,r,o;r="data-grunticon-embed";for(var i in e)if(o=i.slice(a.length),n=t.querySelectorAll(o+"["+r+"]"),n.length)for(var c=0;n.length>c;c++)n[c].innerHTML=e[i],n[c].style.backgroundImage="none",n[c].removeAttribute(r);return n},u=function(e){if(e&&3===e.length){var n=new r;n.onerror=function(){u.method="png",c(e[2])},n.onload=function(){var t,r,a=1===n.width&&1===n.height,g=e[a&&o?0:a?1:2];a&&o?(u.method="svg",t=function(){r=s(g),i(function(){l(r)})}):u.method=a?"datapng":"png",c(g,t)},n.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",t.documentElement.className=t.documentElement.className+" grunticon"}};u.embedIcons=l,u.getIcons=s,u.loadCSS=c,e.grunticon=u})(this);</script>
+<script type="text/javascript">function loadCSS(a,b,c,d){"use strict";var e=window.document.createElement("link"),f=b||window.document.getElementsByTagName("script")[0],g=window.document.styleSheets;return e.rel="stylesheet",e.href=a,e.media="only x",d&&(e.onload=d),f.parentNode.insertBefore(e,f),e.onloadcssdefined=function(b){for(var c,d=0;d<g.length;d++)g[d].href&&g[d].href.indexOf(a)>-1&&(c=!0);c?b():setTimeout(function(){e.onloadcssdefined(b)})},e.onloadcssdefined(function(){e.media=c||"all"}),e}</script>
+<script type="text/javascript">/*! grunt-grunticon Stylesheet Loader - v2.1.6 | https://github.com/filamentgroup/grunticon | (c) 2015 Scott Jehl, Filament Group, Inc. | MIT license. */
+
+(function(e){function n(n,t,o,a){"use strict";var i=e.document.createElement("link"),r=t||e.document.getElementsByTagName("script")[0],d=e.document.styleSheets;return i.rel="stylesheet",i.href=n,i.media="only x",a&&(i.onload=a),r.parentNode.insertBefore(i,r),i.onloadcssdefined=function(e){for(var t,o=0;d.length>o;o++)d[o].href&&d[o].href.indexOf(n)>-1&&(t=!0);t?e():setTimeout(function(){i.onloadcssdefined(e)})},i.onloadcssdefined(function(){i.media=o||"all"}),i}function t(e,n){e.onload=function(){e.onload=null,n&&n.call(e)},"isApplicationInstalled"in navigator&&"onloadcssdefined"in e&&e.onloadcssdefined(n)}var o=function(a,i){"use strict";if(a&&3===a.length){var r=e.Image,d=!(!document.createElementNS||!document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||e.opera&&-1===navigator.userAgent.indexOf("Chrome")||-1!==navigator.userAgent.indexOf("Series40")),c=new r;c.onerror=function(){o.method="png",o.href=a[2],n(a[2])},c.onload=function(){var e=1===c.width&&1===c.height,r=a[e&&d?0:e?1:2];o.method=e&&d?"svg":e?"datapng":"png",o.href=r,t(n(r),i)},c.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",document.documentElement.className+=" grunticon"}};o.loadCSS=n,o.onloadCSS=t,e.grunticon=o})(this);(function(e,n){"use strict";var t=n.document,o="grunticon:",r=function(e){if(t.attachEvent?"complete"===t.readyState:"loading"!==t.readyState)e();else{var n=!1;t.addEventListener("readystatechange",function(){n||(n=!0,e())},!1)}},a=function(e){return n.document.querySelector('link[href$="'+e+'"]')},i=function(e){var n,t,r,a,i,c,d={};if(n=e.sheet,!n)return d;t=n.cssRules?n.cssRules:n.rules;for(var s=0;t.length>s;s++)r=t[s].cssText,a=o+t[s].selectorText,i=r.split(");")[0].match(/US\-ASCII\,([^"']+)/),i&&i[1]&&(c=decodeURIComponent(i[1]),d[a]=c);return d},c=function(e){var n,r,a;r="data-grunticon-embed";for(var i in e){a=i.slice(o.length);try{n=t.querySelectorAll(a+"["+r+"]")}catch(c){continue}if(n.length)for(var d=0;n.length>d;d++)n[d].innerHTML=e[i],n[d].style.backgroundImage="none",n[d].removeAttribute(r)}return n},d=function(n){"svg"===e.method&&r(function(){c(i(a(e.href))),"function"==typeof n&&n()})};e.embedIcons=c,e.getCSS=a,e.getIcons=i,e.ready=r,e.svgLoadedCallback=d,e.embedSVG=d})(grunticon,this);</script>
     
     <script type="text/javascript">
       if (typeof grunticon == 'function') { 
@@ -58,8 +58,13 @@
     
     
     <!-- scripts -->
-    <script src="js/head.min.js?v=0.1.0"></script>
-    <script>loadJS("js/main.min.js?v=0.1.0");</script>
+    <!--[if gt IE 9]><!-->
+      <script data-main="js/pages/home.min" src="js/lib/require.min.js" async></script>
+    <!--<![endif]-->
+    <!--[if lte IE 9]>
+      <script data-main="js/pages/home.min" src="js/lib/require.min.js"></script>
+    <![endif]-->
+    
     <!--[if gt IE 9]><!-->
       <script>loadCSS("css/all.css?v=0.1.0");</script>
     <!--<![endif]-->
@@ -95,7 +100,7 @@
           </header>
           <section>
             <div class="icon_skaman" style="height: 150px; width: 50px; background-size: contain; background-position: center center;"></div>
-            <p style="color: #883d00;"><i>If you don't see an image of a man in a suite right above this line, run the "grunt release" command and look for errors. He'll show up because of the "grunticon" task.</i></p>
+            <p style="color: #883d00;"><i>If you don't see an image of a man in a suit right above this line, run the "grunt release" command and look for errors. He'll show up because of the "grunticon" task.</i></p>
           </section>
           <section>
             <h2>article section h2</h2>

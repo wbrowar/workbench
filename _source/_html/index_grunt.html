@@ -28,7 +28,6 @@
     
     <!-- build:style inline critcss --><!-- /build -->
     
-    <!-- build:script inline loadjs --><!-- /build -->
     <!-- build:script inline loadcss --><!-- /build -->
     <!-- build:script inline grunticon --><!-- /build -->
     <!-- build:process -->
@@ -42,8 +41,13 @@
     
     <!-- build:process -->
     <!-- scripts -->
-    <script src="<%= html_theme_path %>js/head.min.js?v=<%= version %>"></script>
-    <script>loadJS("<%= html_theme_path %>js/main.min.js?v=<%= version %>");</script>
+    <!--[if gt IE 9]><!-->
+      <script data-main="<%= html_theme_path %>js/pages/home.min" src="<%= html_theme_path %>js/lib/require.min.js" async></script>
+    <!--<![endif]-->
+    <!--[if lte IE 9]>
+      <script data-main="<%= html_theme_path %>js/pages/home.min" src="<%= html_theme_path %>js/lib/require.min.js"></script>
+    <![endif]-->
+    
     <!--[if gt IE 9]><!-->
       <script>loadCSS("<%= html_theme_path %>css/all.css?v=<%= version %>");</script>
     <!--<![endif]-->
@@ -79,7 +83,7 @@
           </header>
           <section>
             <div class="icon_skaman" style="height: 150px; width: 50px; background-size: contain; background-position: center center;"></div>
-            <p style="color: #883d00;"><i>If you don't see an image of a man in a suite right above this line, run the "grunt release" command and look for errors. He'll show up because of the "grunticon" task.</i></p>
+            <p style="color: #883d00;"><i>If you don't see an image of a man in a suit right above this line, run the "grunt release" command and look for errors. He'll show up because of the "grunticon" task.</i></p>
           </section>
           <section>
             <h2>article section h2</h2>
