@@ -10,26 +10,28 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 
 ### Setting Up for the First Time
 1. Clone the repo into your site's root folder. You may move your `_source` and `_build` folders if needed
-2. If you rename or move the `_source` folder, update the `.bowerrc` file with the new directory path
-3. Install [Node](http://nodejs.org/)
-4. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
-5. Install ImageMagick, run this command: `brew install imagemagick`. If you don't have homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-6. In terminal, go to your site's root folder and run the command: `npm install`
-7. Run `npm install -g bower`
-8. Run `npm install -g grunt-cli`.
-9. Close the terminal window and open it up again. If you run `grunt` and you get an error, "Unable to find local grunt", check to see if you have a `.bash_profile` file in your home folder. If you don't have a `.bash_profile` file setup, create it, then add the following line to it: `export PATH=/usr/local/lib/node_modules/grunt-cli:$PATH`
+2. Install [Node](http://nodejs.org/)
+3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
+4. Install ImageMagick, run this command: `brew install imagemagick`. If you don't have homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+5. In terminal, go to your site's root folder and run the command: `npm install`
+6. Run `npm install -g bower`
+7. Run `npm install -g grunt-cli`.
+8. Close the terminal window and open it up again. If you run `grunt first` and you get an error, "Unable to find local grunt", check to see if you have a `.bash_profile` file in your home folder. If you don't have a `.bash_profile` file setup, create it, then add the following line to it: `export PATH=/usr/local/lib/node_modules/grunt-cli:$PATH`
 
 ### Setting Up Each Project
 1. In Terminal, `cd` to your project root
-2. Run `npm update`
+2. Run `npm update` (you may need to run `sudo npm update`)
 3. Run `bower update`
 4. Update the `package.json` file to fit your project's needs. See `package.json` below
 5. Edit `Gruntfile.js` to work however you want
-6. Run `grunt` to perform the default task and to do an initial setup
+6. Run `grunt first` to perform the default task and to do an initial setup
 
 ## Commands
 ### `grunt`
 - Grunt default task. Runs tasks to process images, javascript, and CSS files. The `grunt-html-build` task is left off of the `grunt` task since it may not be needed as often.
+
+### `grunt first`
+- Updates bower (based on your `bower.json` settings), then runs `grunt`.
 
 ### `grunt watch`
 - Run this to automate tasks as files in the `_source` folder are modified. Use `control+C` or close the Terminal window to stop `grunt watch`.
@@ -42,16 +44,13 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 - **name** Project name
 - **version** Project version. Changing this number and running `grunt release` will perform cache busting in the generated HTML
 - **theme_path** Path to your theme folder from the project root. This is where your final `css`, `js`, and `img` folders will be built
-- **source_path** Path to your source folder from the project root. The name of the folder can be different but the contents should stay the same. If you update the name or location, be sure to update the path in the `.bowerrc` file
+- **source_path** Path to your source folder from the project root. The name of the folder can be different but the contents should stay the same
 - **build_path** Location of your build folder. This can be moved and renamed if needed
 - **html_build_path** If you run `grunt release`, files in your `_source/_html` folder will be processed and built at this path, using [grunt-html-build](https://www.npmjs.com/package/grunt-html-build). This path will become a root for your processed files and directory trees will be built out
 - **html_theme_path** A string that is appended when linking the `css`, `js`, and `img` files. Examples: `../`, `/`, `/sites/all/theme/`
 - **devDependencies** Finding [Grunt packages](http://gruntjs.com/plugins) and installing them through Terminal—using `--save-dev`—will update this section. Update version numbers if needed
 
 *NOTE: for path variables above, a trailing slash should be used in most cases*
-
-### .bowerrc
-- **directory** Path to your `bower_components` folder
 
 ### bower.json
 - **name** Can be renamed to your project name. Not used otherwise
