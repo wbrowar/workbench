@@ -2,6 +2,10 @@ requirejs.config({
     baseUrl: 'js/lib'
 });
 
+requirejs(["modernizr-custom.min"]);
+
+requirejs(["picturefill.min"]);
+
 requirejs(["jquery.min"], function() {
 	var jq = jQuery;
 	//var windowWidth = 0, windowWidth = 0, availHeight = 0;
