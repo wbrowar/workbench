@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 		bower: {
 			install: {
 				options: {
-					targetDir: '<%= pkg.source_path %>bower_components',
+					targetDir: '<%= pkg.source_path %>_js/lib/',
 					bowerOptions: {
 						"analytics": false
 					},
@@ -103,24 +103,6 @@ module.exports = function(grunt) {
 			copy_scriptsbuild: {
 				files: [
 					// move scripts to build folder
-					{
-						expand: true,
-						flatten: true,
-						src: [
-							'<%= pkg.source_path %>bower_components/jquery/dist/jquery.min.js',
-							'<%= pkg.source_path %>bower_components/picturefill/dist/picturefill.min.js'
-						],
-						dest: '<%= pkg.build_path %>uglified/lib/'
-					},
-					{
-						expand: true,
-						flatten: true,
-						src: [
-							'<%= pkg.source_path %>bower_components/loadcss/loadCSS.js',
-							'<%= pkg.source_path %>bower_components/requirejs/require.js'
-						],
-						dest: '<%= pkg.build_path %>js/lib/'
-					},
 					{
 						expand: true,
 						cwd: '<%= pkg.source_path %>_js/',
@@ -240,7 +222,7 @@ module.exports = function(grunt) {
 				dest: '<%= pkg.html_build_path %>',
 				options: {
 					scripts: {
-						loadcss: '<%= pkg.build_path %>uglified/lib/loadCSS.min.js',
+						loadcss: '<%= pkg.build_path %>uglified/lib/loadcss/loadCSS.min.js',
 						grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js'
 					},
 					styles: {
@@ -445,7 +427,7 @@ module.exports = function(grunt) {
 			},
 			watch_scripts: {
 				files: ['<%= pkg.source_path %>_js/**/*.js'],
-				tasks: ['jshint', 'newer:copy:copy_scriptsbuild', 'modernizr', 'newer:uglify', 'newer:copy:copy_scriptsdist', 'notify:watchjs'],
+				tasks: ['jshint', 'newer:copy:copy_scriptsbuild', 'newer:uglify', 'newer:copy:copy_scriptsdist', 'notify:watchjs'],
 				options: {
 					spawn: false,
 					livereload: true

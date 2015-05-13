@@ -9,12 +9,17 @@ $mq_enabled: true !default;
 // SITE VARIABLES
 // COLORS
 $color_white_default: rgb(255, 255, 255);
-$color_black_default: rgb(40, 40, 40);
+$color_black_default: rgb(0, 0, 0);
 
 // MEDIA QUERIES
-$mq_max_width: 60em;
+$mq_max_width: 1300px;
 
-// MISC
+// PLACEHOLDERS
+@mixin clearfix {
+	&:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }	
+	&:after { clear: both; }	
+	& { zoom: 1; } 
+}
 
 // SITE MIXINS
 // FONTS
@@ -38,54 +43,6 @@ $mq_max_width: 60em;
 	-webkit-font-smoothing: antialiased;
 	
 	@include embed_font($font_name);
-}
-
-// BACKGROUND
-@mixin bg_cover($img_url, $img_color: transparent) {
-	background: $img_color url($img_url) no-repeat center center;
-  background-size: cover;
-}
-
-// FLEX BOX
-@mixin flexbox {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-
-@mixin flex($values) {
-  -webkit-box-flex: $values;
-  -moz-box-flex:  $values;
-  -webkit-flex:  $values;
-  -ms-flex:  $values;
-  flex:  $values;
-}
-
-@mixin order($val) {
-  -webkit-box-ordinal-group: $val;  
-  -moz-box-ordinal-group: $val;     
-  -ms-flex-order: $val;     
-  -webkit-order: $val;  
-  order: $val;
-}
-
-// GRADIENTS
-@mixin gradient_gray_down_white {
-	background: rgb(255,255,255);
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VhZTllOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-	background: -moz-linear-gradient(top, rgba(234,233,232,1) 0%, rgba(255,255,255,1) 31%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(234,233,232,1)), color-stop(31%,rgba(255,255,255,1)));
-	background: -webkit-linear-gradient(top, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
-	background: -o-linear-gradient(top, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
-	background: -ms-linear-gradient(top, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
-	background: linear-gradient(to bottom, rgba(234,233,232,1) 0%,rgba(255,255,255,1) 31%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eae9e8', endColorstr='#ffffff',GradientType=0 );
-	
-	.ie9 & {
-		filter: none;
-	}
 }
 
 // MEDIA QUERIES
@@ -112,37 +69,49 @@ $mq_max_width: 60em;
 	}
 }
 @mixin bg_2x {
-  @media only screen and (-webkit-min-device-pixel-ratio: 2),
-     only screen and (min--moz-device-pixel-ratio: 2),
-     only screen and (min-device-pixel-ratio: 2) {
-  	@content;
-  }
+	@media only screen and (-webkit-min-device-pixel-ratio: 2),
+		 only screen and (min--moz-device-pixel-ratio: 2),
+		 only screen and (min-device-pixel-ratio: 2) {
+		@content;
+	}
+}
+
+// FLEX BOX
+@mixin flexbox($mq: 0) {
+	@if $mq != 0 {
+		@include mq($mq) {
+			.flexbox {
+				display: flex;
+				@content;
+			}
+			.no-flexbox {
+				@include clearfix;
+				@content;
+			}
+		}
+	}
+	@else {
+		.flexbox {
+			display: flex;
+			@content;
+		}
+		.no-flexbox {
+			@include clearfix;
+			@content;
+		}
+	}
 }
 
 // PLACEHOLDER
 @mixin placeholder {
 	::-webkit-input-placeholder {
-   @content;
+	 @content;
 	}
 	:-moz-placeholder {
-   @content;
+	 @content;
 	}
 	::-moz-placeholder {
-   @content;
-	}
-	/*
-	:-ms-input-placeholder { 
-   @content;
-	}
-	*/
-}
-
-// SPRITES
-@mixin sprites_main($color: transparent) {
-	background: $color url(../img/sprites_main.png) no-repeat;
-	@include bg_2x {
-		background-image: url(../img/sprites_main@2x.png);
-		background-size: 56px 157px;
+	 @content;
 	}
 }
 

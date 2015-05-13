@@ -73,8 +73,6 @@ pre {
 
 input[type="radio"] {vertical-align: text-bottom;}
 input[type="checkbox"] {vertical-align: bottom;}
-//.ie7 input[type="checkbox"] {vertical-align: baseline;}
-//.ie6 input {vertical-align: text-bottom;}
 
 select, input, textarea {font: 99% sans-serif;}
 
@@ -107,15 +105,4 @@ button {cursor: pointer;}
 button, input, select, textarea {margin: 0;}
 
 /* make buttons play nice in IE */
-button {width: auto; overflow: visible;}
- 
-/* scale images in IE7 more attractively */
-//.ie7 img {-ms-interpolation-mode: bicubic;}
-
-/* prevent BG image flicker upon hover */
-//.ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
-
-/* let's clear some floats */
-.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
-.clearfix:after { clear: both; }  
-.clearfix { zoom: 1; }  
+button {width: auto; overflow: visible;} 
