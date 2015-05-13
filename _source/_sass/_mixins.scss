@@ -80,24 +80,22 @@ $mq_max_width: 1300px;
 @mixin flexbox($mq: 0) {
 	@if $mq != 0 {
 		@include mq($mq) {
-			.flexbox {
+			.flexbox & {
 				display: flex;
 				@content;
 			}
-			.no-flexbox {
+			.no-flexbox & {
 				@include clearfix;
-				@content;
 			}
 		}
 	}
 	@else {
-		.flexbox {
+		.flexbox & {
 			display: flex;
 			@content;
 		}
-		.no-flexbox {
+		.no-flexbox & {
 			@include clearfix;
-			@content;
 		}
 	}
 }

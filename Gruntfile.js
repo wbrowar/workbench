@@ -221,14 +221,12 @@ module.exports = function(grunt) {
 				src: '**/*.html',
 				dest: '<%= pkg.html_build_path %>',
 				options: {
-					scripts: {
-						loadcss: '<%= pkg.build_path %>uglified/lib/loadcss/loadCSS.min.js',
-						grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js'
-					},
 					styles: {
 						critcss: '<%= pkg.build_path %>critcss/replaced/index.min.css'
 					},
 					sections: {
+						loadcss: '<%= pkg.build_path %>uglified/lib/loadcss/loadCSS.min.js',
+						grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js',
 						meta: '<%= pkg.build_path %>html/meta.html'
 					},
 					data: {
