@@ -1,5 +1,5 @@
 var jq = jQuery;
-//var windowWidth = 0, windowWidth = 0, availHeight = 0;
+//var windowWidth = 0, windowHeight = 0;
 
 // UTILITY FUNCTIONS
 /*
@@ -18,6 +18,5 @@ console.log('ready');
 jq(window).resize(function() {
 	windowWidth = jq(window).width();
 	windowHeight = jq(window).height();
-	availHeight = window.screen.availHeight;
 }).resize();
 */
