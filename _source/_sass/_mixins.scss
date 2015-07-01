@@ -40,7 +40,7 @@ $mq_max_width: 1300px;
 		weight: $font_weight;
 		style: $font_style;
 	}
-	-webkit-font-smoothing: antialiased;
+	//-webkit-font-smoothing: antialiased;
 	
 	@include embed_font($font_name);
 }
