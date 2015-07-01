@@ -278,9 +278,12 @@ module.exports = function(grunt) {
 				},
 				"uglify" : true,
 				"tests" : ['flexbox'],
-				"parseFiles" : true,
+				"customTests" : [],
 				"matchCommunityTests" : false,
-				"customTests" : []
+				"parseFiles" : true,
+				"files" : {
+					src: ['<%= pkg.source_path %>_js/**/*.js', '!<%= pkg.source_path %>_js/lib', '<%= pkg.source_path %>_sass/**/*.scss']
+				},
 			}
 		},
 		notify: {
