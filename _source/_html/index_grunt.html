@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>			<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>				 <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>				 <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lte IE 9]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -33,7 +31,12 @@
 		<script type="text/javascript">
 			var requireSection = 'home',
 					requireDevMode = true,
-					requireVersion = '<%= version %>';
+					requireVersion = '<%= version %>',
+					requireThemePath = '<%= html_theme_path %>',
+					requireModules = [];
+			
+			// use this to add page-specific required modules
+			/* requireModules.push('modulepathname'); */
 					
 			<!-- build:section loadcss --><!-- /build -->
 			<!-- build:section grunticon --><!-- /build -->
@@ -67,9 +70,6 @@
 			<script data-main="<%= html_theme_path %>js/require-config.min" src="<%= html_theme_path %>js/lib/requirejs/require.min.js"></script>
 		<![endif]-->
 		
-		<!--[if gt IE 9]><!-->
-			<script>loadCSS("<%= html_theme_path %>css/all.css?v=<%= version %>");</script>
-		<!--<![endif]-->
 		<!--[if lte IE 9]>
 			<script>loadCSS("<%= html_theme_path %>css/ie9.css?v=<%= version %>");</script>
 		<![endif]-->
@@ -78,7 +78,7 @@
 				
 	</head>
 	<body>
-		<!--[if lt IE 8]>
+		<!--[if lt IE 9]>
 				<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->
 
