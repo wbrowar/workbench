@@ -24,6 +24,7 @@ loadCSS(requireThemePath+'css/all.css?v='+requireVersion);
 		return;
 	} else if (requireFontEvents === true) {
 		requirejs(['fontfaceobserver'], function() {
+			var eaves = new w.FontFaceObserver("MrEavesXLSanRRegular");
 			var eaves_italic = new w.FontFaceObserver("MrEavesXLModBkIRegular");
 			
 			w.Promise.all([museo.check(), eaves_italic.check()]).then(function(){
