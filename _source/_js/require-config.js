@@ -4,6 +4,7 @@ requirejs.config({
 		'jquery': 'lib/jquery/jquery.min',
 		'modernizr': 'lib/modernizr-custom.min',
 		'picturefill': 'lib/picturefill/picturefill.min',
+		'fontfaceobserver': 'lib/fontfaceobserver.min',
 		'home': 'home.min',
 	},
 	shim: {
@@ -18,11 +19,19 @@ requirejs.config({
 loadCSS(requireThemePath+'css/all.css?v='+requireVersion);
 
 // setup font events
-if (requireFontEvents === true) {
-	new w.FontFaceObserver("eaves").check().then( function(){
-		w.document.documentElement.className += " fonts-loaded";
-	});
-}
+(function(w) {
+	if (w.document.documentElement.className.indexOf("fonts_loaded") > -1){
+		return;
+	} else if (requireFontEvents === true) {
+		requirejs(['fontfaceobserver'], function() {
+			var eaves_italic = new w.FontFaceObserver("MrEavesXLModBkIRegular");
+			
+			w.Promise.all([museo.check(), eaves_italic.check()]).then(function(){
+				w.document.documentElement.className += " fonts-loaded";
+			});
+		});
+	}
+}(this));
 
 if (requireSection === 'home') {
 	requirejs(["home"]);
