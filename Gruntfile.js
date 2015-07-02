@@ -248,6 +248,7 @@ module.exports = function(grunt) {
 						meta: '<%= pkg.build_path %>html/meta.html'
 					},
 					data: {
+						enable_font_events: '<%= pkg.enable_font_events %>',
 						html_theme_path: '<%= pkg.html_theme_path %>',
 						version: '<%= pkg.version %>'
 					}

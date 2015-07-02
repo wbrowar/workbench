@@ -40,7 +40,7 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 					requireVersion = '<%= version %>',
 					requireThemePath = '<%= html_theme_path %>',
 					requireModules = [],
-					requireFontEvents = '<%= enable_font_events %>';
+					requireFontEvents = <%= enable_font_events %>;
 			<!-- /build -->
 			
 			// use this to add page-specific required modules
