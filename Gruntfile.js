@@ -100,6 +100,17 @@ module.exports = function(grunt) {
 					},
 				],
 			},
+			copy_npm: {
+				files: [
+					// move images to build folder
+					{
+						expand: true,
+						cwd: 'node_modules/fontfaceobserver/',
+						src: 'fontfaceobserver.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+				],
+			},
 			copy_scriptsbuild: {
 				files: [
 					// move scripts to build folder
@@ -108,6 +119,13 @@ module.exports = function(grunt) {
 						cwd: '<%= pkg.source_path %>_js/',
 						src: ['**/*.js', '!_lib/*'],
 						dest: '<%= pkg.build_path %>js/'
+					},
+					{
+						expand: true,
+						flatten: true,
+						cwd: '<%= pkg.source_path %>_js/',
+						src: ['_lib/fontfaceobserver.js'],
+						dest: '<%= pkg.build_path %>js/lib/'
 					},
 				],
 			},
@@ -444,7 +462,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('htmlprocess', ['replace:replace_critcss', 'copy:copy_htmlbuild', 'htmlbuild']);
 	
 	// Main Grunt tasks
-	grunt.registerTask('first', ['bower', 'default']);
+	grunt.registerTask('first', ['bower', 'copy:copy_npm', 'default']);
 	grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
 	grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'copy:copy_scriptsdist', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:build']);
 

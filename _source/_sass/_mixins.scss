@@ -24,21 +24,37 @@ $mq_max_width: 1300px;
 // SITE MIXINS
 // FONTS
 @mixin font($font_name) {
-	$font_family: sans-serif !default;
+	$font_family: '';
+	$font_fallbacks: sans-serif !default;
 	$font_weight: normal !default;
 	$font_style: normal !default;
 	
 	@if $font_name == 'eaves' {
-		$font_family: 'MrEavesXLSanRRegular', "Avinir Next", "Avinir", Helvetica, Arial, sans-serif;
+		$font_family: 'MrEavesXLSanRRegular';
+		$font_fallbacks: "Avinir Next", "Avinir", Helvetica, Arial, sans-serif;
 	}
 	@else if $font_name == 'eaves_italic' {
-		$font_family: 'MrEavesXLModBkIRegular', "Avinir Next", "Avinir", Helvetica, Arial, sans-serif;
+		$font_family: 'MrEavesXLModBkIRegular';
+		$font_fallbacks: "Avinir Next", "Avinir", Helvetica, Arial, sans-serif;
 	}
 	
-	font: {
-		family: $font_family;
-		weight: $font_weight;
-		style: $font_style;
+	@if $enable_font_events == true {
+		font: {
+			family: $font_fallbacks;
+			weight: $font_weight;
+			style: $font_style;
+		}
+		
+		.fonts_loaded & {
+			font-family: $font_family;
+		}
+	}
+	@else {
+		font: {
+			family: $font_family, $font_fallbacks;
+			weight: $font_weight;
+			style: $font_style;
+		}
 	}
 	//-webkit-font-smoothing: antialiased;
 	

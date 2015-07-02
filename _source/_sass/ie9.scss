@@ -1,3 +1,5 @@
+$enable_font_events: false;
+
 @import "_fonts"; // @font-face fonts (use this along with font() mixin
 @import "_mixins"; // mixins and variables
 $mq_enabled: false;
@@ -17,5 +19,3 @@ html {
 	//width: 960px;
 	//border: 2px solid rgb(200, 200, 200);
 }
-
-/*! sourceMappingURL=ie9.css.map */

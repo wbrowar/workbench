@@ -1,6 +1,11 @@
 <!DOCTYPE html>
-<!--[if lte IE 9]> <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
+
+<!--
+SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
+-->
+
+<!--[if lte IE 9]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -29,11 +34,14 @@
 		
 		<!-- scripts -->
 		<script type="text/javascript">
+			<!-- build:process -->
 			var requireSection = 'home',
 					requireDevMode = true,
 					requireVersion = '<%= version %>',
 					requireThemePath = '<%= html_theme_path %>',
-					requireModules = [];
+					requireModules = [],
+					requireFontEvents = '<%= enable_font_events %>';
+			<!-- /build -->
 			
 			// use this to add page-specific required modules
 			/* requireModules.push('modulepathname'); */

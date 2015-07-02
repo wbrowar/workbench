@@ -17,6 +17,13 @@ requirejs.config({
 // Global functions and scripts
 loadCSS(requireThemePath+'css/all.css?v='+requireVersion);
 
+// setup font events
+if (requireFontEvents === true) {
+	new w.FontFaceObserver("eaves").check().then( function(){
+		w.document.documentElement.className += " fonts-loaded";
+	});
+}
+
 if (requireSection === 'home') {
 	requirejs(["home"]);
 }
