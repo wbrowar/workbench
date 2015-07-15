@@ -1,11 +1,11 @@
 {
   "name": "example-project",
   "version": "0.1.0",
-  "theme_path": "",
+  "theme_path": "httpdocs/",
   "source_path": "_source/",
   "build_path": "_build/",
-  "html_build_path": "",
-  "html_theme_path": "",
+  "html_build_path": "httpdocs/",
+  "html_theme_path": "/",
   "enable_font_events": "false",
   "devDependencies": {
     "fontfaceobserver": ">=1.4.17",
