@@ -16,7 +16,6 @@ requirejs.config({
 });
 
 // Global functions and scripts
-loadCSS(requireThemePath+'css/all.css?v='+requireVersion);
 
 // setup font events
 (function(w) {
@@ -59,10 +58,6 @@ function requirePageSpecificModule(moduleName) {
 			break;
 		*/
 	}
-}
-
-for (var i = 0; i < requireModules.length; i++) {
-	requirePageSpecificModule(requireModules[i]);
 }
 
 requirejs(["modernizr"]);

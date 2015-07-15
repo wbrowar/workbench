@@ -245,7 +245,9 @@ module.exports = function(grunt) {
 					sections: {
 						loadcss: '<%= pkg.build_path %>uglified/lib/loadcss/loadCSS.min.js',
 						grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js',
-						meta: '<%= pkg.build_path %>html/meta.html'
+						meta: '<%= pkg.build_path %>html/meta.html',
+						requirejs: '<%= pkg.theme_path %>js/lib/requirejs/require.min.js',
+						requireconfig: '<%= pkg.theme_path %>js/require-config.min.js'
 					},
 					data: {
 						enable_font_events: '<%= pkg.enable_font_events %>',
@@ -424,7 +426,7 @@ module.exports = function(grunt) {
 		watch: {
 			watch_css: {
 				files: ['<%= pkg.source_path %>_sass/**/*.scss'],
-				tasks: ['sass', 'newer:autoprefixer', 'newer:cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:watchcss'],
+				tasks: ['watch_css'],
 				options: {
 					spawn: false,
 					livereload: true
@@ -432,7 +434,7 @@ module.exports = function(grunt) {
 			},
 			watch_htmlbuild: {
 				files: ['<%= pkg.source_path %>_html/**/*'],
-				tasks: ['clean:clean_critcss', 'newer:copy:copy_htmlbuild', 'newer:htmlbuild', 'notify:watchhtml'],
+				tasks: ['watch_html'],
 				options: {
 					spawn: false,
 					livereload: true
@@ -440,14 +442,14 @@ module.exports = function(grunt) {
 			},
 			watch_images: {
 				files: ['<%= pkg.source_path %>_img/**/*'],
-				tasks: ['newer:copy:copy_imagesbuild', 'newer:responsive_images', 'newer:grunticon', 'newer:copy:copy_grunticon', 'newer:imagemin', 'notify:watchimg'],
+				tasks: ['watch_images'],
 				options: {
 					spawn: false
 				},
 			},
 			watch_scripts: {
 				files: ['<%= pkg.source_path %>_js/**/*.js'],
-				tasks: ['jshint', 'newer:copy:copy_scriptsbuild', 'newer:uglify', 'newer:copy:copy_scriptsdist', 'notify:watchjs'],
+				tasks: ['watch_scripts', 'watch_html'],
 				options: {
 					spawn: false,
 					livereload: true
@@ -466,5 +468,11 @@ module.exports = function(grunt) {
 	grunt.registerTask('first', ['bower', 'copy:copy_npm', 'default']);
 	grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
 	grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'copy:copy_scriptsdist', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:build']);
+	
+	// Watch tasks
+	grunt.registerTask('watch_css', ['sass', 'newer:autoprefixer', 'newer:cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:watchcss']);
+	grunt.registerTask('watch_html', ['clean:clean_critcss', 'newer:copy:copy_htmlbuild', 'newer:htmlbuild', 'notify:watchhtml']);
+	grunt.registerTask('watch_images', ['newer:copy:copy_imagesbuild', 'newer:responsive_images', 'newer:grunticon', 'newer:copy:copy_grunticon', 'newer:imagemin', 'notify:watchimg']);
+	grunt.registerTask('watch_scripts', ['jshint', 'newer:copy:copy_scriptsbuild', 'newer:uglify', 'newer:copy:copy_scriptsdist', 'notify:watchjs']);
 
 };
