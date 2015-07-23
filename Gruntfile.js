@@ -221,7 +221,6 @@ module.exports = function(grunt) {
 					datapngcss: 'sprites.main.png.css',
 					pngfolder: '../img/icon_fallback/',
 					pngpath: '../img/icon_fallback/',
-					cssprefix: ".icon_",
 					enhanceSVG: true
 				},
 				files: [{
