@@ -2,7 +2,6 @@ module.exports = function(grunt) {
 	require('time-grunt')(grunt);
 	require('jit-grunt')(grunt, {
 		bower: 'grunt-bower-task',
-		concat: 'grunt-contrib-concat-sourcemaps',
 		replace: 'grunt-text-replace',
 		htmlbuild: 'grunt-html-build'
 	});
@@ -17,13 +16,6 @@ module.exports = function(grunt) {
 				},
 				src: '<%= pkg.build_path %>css/compiled/all.css',
 				dest: '<%= pkg.build_path %>css/release/all.css'
-			},
-			ie9: {
-				options: {
-					browsers: ['ie 9']
-				},
-				src: '<%= pkg.build_path %>css/compiled/ie9.css',
-				dest: '<%= pkg.build_path %>css/release/ie9.css'
 			}
 		},
 		bower: {
@@ -62,7 +54,6 @@ module.exports = function(grunt) {
 		copy: {
 			copy_grunticon: {
 				files: [
-					// move images to build folder
 					{
 						expand: true,
 						cwd: '<%= pkg.build_path %>grunticon/',
@@ -80,7 +71,6 @@ module.exports = function(grunt) {
 						src: ['**/*.html', '!**/_source/**', '!**/_build/**', '!**/node_modules/**'],
 						dest: '<%= pkg.build_path %>html_backup/'
 					},
-					// move images to build folder
 					{
 						expand: true,
 						cwd: '<%= pkg.source_path %>_html/',
@@ -91,7 +81,6 @@ module.exports = function(grunt) {
 			},
 			copy_imagesbuild: {
 				files: [
-					// move images to build folder
 					{
 						expand: true,
 						cwd: '<%= pkg.source_path %>_img/',
@@ -102,7 +91,6 @@ module.exports = function(grunt) {
 			},
 			copy_npm: {
 				files: [
-					// move images to build folder
 					{
 						expand: true,
 						cwd: 'node_modules/fontfaceobserver/',
@@ -113,7 +101,6 @@ module.exports = function(grunt) {
 			},
 			copy_scriptsbuild: {
 				files: [
-					// move scripts to build folder
 					{
 						expand: true,
 						cwd: '<%= pkg.source_path %>_js/',
@@ -131,24 +118,11 @@ module.exports = function(grunt) {
 			},
 			copy_scriptsdist: {
 				files: [
-					// move uglified scripts to theme folder
 					{
 						expand: true,
 						cwd: '<%= pkg.build_path %>uglified/',
 						src: '**/*.js',
 						dest: '<%= pkg.theme_path %>js/'
-					},
-				],
-			},
-			copy_sourcemaps: {
-				files: [
-					// move css
-					{
-						expand: true,
-						cwd: '<%= pkg.build_path %>css/compiled/',
-						src: '**/*.css.map',
-						dest: '<%= pkg.theme_path %>css/',
-						filter: 'isFile'
 					},
 				],
 			},
@@ -277,32 +251,19 @@ module.exports = function(grunt) {
 		modernizr: {
 			dist: {
 				"devFile" : "<%= pkg.source_path %>_js/_lib/modernizr.custom.js",
-				"outputFile" : "<%= pkg.build_path %>uglified/lib/modernizr-custom.min.js",
-				"extra" : {
-						"shiv" : true,
-						"printshiv" : false,
-						"load" : true,
-						"mq" : false,
-						"cssclasses" : true
-				},
-				"extensibility" : {
-						"addtest" : false,
-						"prefixed" : false,
-						"teststyles" : false,
-						"testprops" : false,
-						"testallprops" : false,
-						"hasevents" : false,
-						"prefixes" : false,
-						"domprefixes" : false,
-						"cssclassprefix": ""
-				},
+				"dest" : "<%= pkg.build_path %>uglified/lib/modernizr-custom.min.js",
+				"options" : [
+					"html5shiv",
+					"testAllProps",
+					"testStyles",
+				],
+				"enableClasses" : true,
 				"uglify" : true,
-				"tests" : ['flexbox'],
+				"tests" : ['flexbox', 'flexboxlegacy', 'flexboxtweener'],
 				"customTests" : [],
-				"matchCommunityTests" : false,
-				"parseFiles" : true,
+				"crawl" : true,
 				"files" : {
-					src: ['<%= pkg.source_path %>_js/**/*.js', '!<%= pkg.source_path %>_js/lib', '<%= pkg.source_path %>_sass/**/*.scss']
+					"src": ['<%= pkg.source_path %>_js/**/*.js', '!<%= pkg.source_path %>_js/lib', '<%= pkg.source_path %>_sass/**/*.scss']
 				},
 			}
 		},
@@ -351,22 +312,6 @@ module.exports = function(grunt) {
 					to: '{ #'
 				}]
 			},
-			replace_csssourcemaps: {
-				src: ['<%= pkg.build_path %>css/compiled/*.map'],
-				dest: '<%= pkg.theme_path %>css/',
-				replacements: [{
-					from: '../',
-					to: '/<%= pkg.source_path %>_sass/'
-				}]
-			},
-			replace_cssaddsourcemaps: {
-				src: ['<%= pkg.theme_path %>css/*.css'],
-				overwrite: true,
-				replacements: [{
-					from: '/*!',
-					to: '/*#'
-				}]
-			}
 		},
 		responsive_images: {
 			retina: {
@@ -402,8 +347,7 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files: {
-					'<%= pkg.build_path %>css/compiled/all.css': '<%= pkg.source_path %>_sass/all.scss',
-					'<%= pkg.build_path %>css/compiled/ie9.css': '<%= pkg.source_path %>_sass/ie9.scss'
+					'<%= pkg.build_path %>css/compiled/all.css': '<%= pkg.source_path %>_sass/all.scss'
 				},
 			},
 		},
@@ -413,7 +357,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: '<%= pkg.build_path %>js/',
-						src: '**/*.js',
+						src: ['**/*.js', '!**/*.min.js'],
 						dest: '<%= pkg.build_path %>uglified/',
 						rename: function(dest, src) {
 							return dest + src.replace('.js','.min.js');
@@ -466,12 +410,12 @@ module.exports = function(grunt) {
 	// Main Grunt tasks
 	grunt.registerTask('first', ['bower', 'copy:copy_npm', 'default']);
 	grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
-	grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'copy:copy_scriptsdist', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:build']);
+	grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'copy:copy_scriptsdist', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'notify:build']);
 	
 	// Watch tasks
-	grunt.registerTask('watch_css', ['sass', 'newer:autoprefixer', 'newer:cssmin:cssmin_styles', 'replace:replace_csssourcemaps', 'replace:replace_cssaddsourcemaps', 'notify:watchcss']);
+	grunt.registerTask('watch_css', ['sass', 'newer:autoprefixer', 'newer:cssmin:cssmin_styles', 'notify:watchcss']);
 	grunt.registerTask('watch_html', ['clean:clean_critcss', 'newer:copy:copy_htmlbuild', 'newer:htmlbuild', 'notify:watchhtml']);
-	grunt.registerTask('watch_images', ['newer:copy:copy_imagesbuild', 'newer:responsive_images', 'newer:grunticon', 'newer:copy:copy_grunticon', 'newer:imagemin', 'notify:watchimg']);
+	grunt.registerTask('watch_images', ['copy:copy_imagesbuild', 'newer:responsive_images', 'grunticon', 'copy:copy_grunticon', 'newer:imagemin', 'notify:watchimg']);
 	grunt.registerTask('watch_scripts', ['jshint', 'newer:copy:copy_scriptsbuild', 'newer:uglify', 'newer:copy:copy_scriptsdist', 'notify:watchjs']);
 
 };
