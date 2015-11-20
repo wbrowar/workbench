@@ -65,7 +65,7 @@ $mq_max_width: 1300px;
 	@include embed_font($font_name);
 }
 // Set scalable font size (in vw units) and set fallback
-@include fz($font_vw_unit, $font_fallback_size: '') {
+@media fz($font_vw_unit, $font_fallback_size: '') {
 	@if $font_fallback_unit != '' {
 		font-size: $font_fallback_size;
 	}
@@ -76,11 +76,11 @@ $mq_max_width: 1300px;
 // Quickly write simple media queries
 @mixin mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '') {
 	@if $additional_media != '' {
-		@media ($mq_min_max + - + $mq_direction: $breakpoint , $additional_media) {
+		@media (#{$mq_min_max}-#{$mq_direction}: $breakpoint , $additional_media) {
 			@content;
 		}
 	} @else {
-		@media ($mq_min_max + - + $mq_direction: $breakpoint) {
+		@media (#{$mq_min_max}-#{$mq_direction}: $breakpoint) {
 			@content;
 		}
 	}
