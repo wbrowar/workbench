@@ -37,7 +37,7 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 - Run this to automate tasks as files in the `_source` folder are modified. Use `control+C` or close the Terminal window to stop `grunt watch`.
 
 ### `grunt release`
-- Running `grunt release` will run all of the tasks in the default `grunt` task, then it will run tasks to build your meta icons, generate Critical CSS, then process the files in your `_source/_html` folder. It's intended that `grunt release` be run before deploying your files to dev or prod servers.
+- Running `grunt release` will run all of the tasks in the default `grunt` task, then it will run tasks to build your meta icons, generate Critical CSS, then process the files in your `_source/_html` folder. It's intended that `grunt release` be run before deploying your files to staging or prod servers.
 
 ## Settings
 ### package.json
@@ -59,14 +59,13 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 ---
 ## Theme Components
 ### SCSS Framework
-- In `_source/sass` there are a few files with underscores in front. These all get compiled into both `all.css` and `ie9.css`. A lot of this is pulled right out of HTML5 Boilerplate. Custom styles should go in `_style.scss`.
-- The CSS setup is configured to output a normal CSS file (`all.css`) and an IE9-specific CSS file (`ie9.css`). If you are working in a mobile-first pattern, the IE9 stylesheet should dump out all off the CSS in your normal stylesheet, but without the media queries. This setup is based on the idea of serving up a static layout for IE9 and below.
+- In `_source/sass` there are a few files with underscores in front. These all get compiled into `all.css`. A lot of this is pulled right out of HTML5 Boilerplate. Custom styles should go in `_style.scss`.
 
 ---
 ### Javascript
-- The `head.min.js` file will include blocking script files, such as polyfils, shims, and Modernizr, so it should remain as small as possible. It includes [loadCSS](https://github.com/filamentgroup/loadCSS) and [loadJS](https://github.com/filamentgroup/loadJS) scripts to asynchronously load in `main.min.js`.
-- `main.min.js` should be made up from all other scripts. Since it's loaded asynchronously, it should only include scripts that aren't needed right away. In the future, `main.min.js` may be replaced with `require.js`.
-- A few libraries are included into `main.min.js` by default, but they can be removed if it isn't needed for the project.
+- All of the JS is configured to be loaded using RequireJS
+- The `require-config.js` file sets up options for RequireJS. As part of the HTML Builder, it will be added inline to the `<head>` tag and will be run every page
+- The `home.js` file is set up to be a default place to store scripts
 
 ---
 ### Image Processing
