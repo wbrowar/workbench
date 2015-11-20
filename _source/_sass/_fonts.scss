@@ -1,3 +1,8 @@
+// To use this file:
+//1. setup link to @font-face files
+//2. set $font_name variable (this is how you call the font in _mixins)
+//3. Create $font_... variable (see examples below)
+
 $font_embedded_eaves_light: false;
 $font_embedded_eaves_light_italic: false;
 
