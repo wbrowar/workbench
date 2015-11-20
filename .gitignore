@@ -1,3 +1,39 @@
-node_modules
-bower_components
-_build/
+# MISC FILES
+# https://github.com/github/gitignore/tree/master/Global
+# ------------------------------------------------------------
+# .cache
+# .DS_Store
+# Thumbs.db
+# /logs/*
+
+# BUILD FILES
+# /bower_components/*
+# /node_modules/*
+# /build/*
+# /_source/_PSD/*
+# /EXTRAS/*
+
+
+# CRAFT CMS
+# LOCAL CONFIG SETTINGS
+# Exclude local config files so we don't overwrite other local setups.
+# Leave example files that can be copied to get setup
+# ------------------------------------------------------------
+# /craft/config/local/*
+# !/craft/config/local/db.php.example
+# !/craft/config/local/general.php.example
+
+# CRAFT STORAGE
+# http://buildwithcraft.com/help/craft-storage-gitignore
+# ------------------------------------------------------------
+# /craft/storage/*
+# !/craft/storage/.gitignore
+# !/craft/storage/logo/*
+
+
+
+
+# FOR STARTER GITHUB – DELETE ALL BELOW
+/node_modules/*
+/bower_components/*
+/_build/*
