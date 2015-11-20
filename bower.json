@@ -13,8 +13,8 @@
   "dependencies": {
     "jquery": ">=2.1.4",
     "jquery.transit": ">=0.9.12",
-    "loadcss": ">=0.1.6",
-    "picturefill": ">=2.3.1",
-    "requirejs": ">=2.1.17"
+    "loadcss": ">=0.2.4",
+    "picturefill": ">=3.0.1",
+    "requirejs": ">=2.1.21"
   }
 }
