@@ -4,11 +4,10 @@
 SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 -->
 
-<!--[if lte IE 9]> <html class="no-js ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<title></title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,20 +15,17 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 		<!-- meta icons -->
 		<!-- build:section meta --><!-- /build -->
 		
-		<!-- build:process -->
 		<!-- styles -->
 		<noscript>
-			<!--[if gt IE 9]><!-->
+			<!-- build:process -->
+			<!-- backup for critcss -->
 			<link rel="stylesheet" href="<%= html_theme_path %>css/all.css?v=<%= version %>">
-			<!--<![endif]-->
-			
-			<!--[if lte IE 9]>
-			<link rel="stylesheet" href="<%= html_theme_path %>css/ie9.css?v=<%= version %>">
-			<![endif]-->
+			<!-- backup for grunticon -->
+			<link href="<%= html_theme_path %>css/icons.fallback.css?v=<%= version %>" rel="stylesheet">
+			<!-- /build -->
 		</noscript>
-		<!-- /build -->
 		
-		<!-- scripts -->
+		<!-- critcss -->
 		<!-- build:style inline critcss --><!-- /build -->
 		
 		<!-- scripts -->
@@ -52,19 +48,11 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 			<!-- build:section requireconfig --><!-- /build -->
 			
 			// load CSS
-			function hasClass(element, cls) {
-				return (' '+element.className+' ').indexOf(' '+cls+' ') > -1;
-			}
-			if (hasClass(document.documentElement, 'ie9')) {
-				<!-- build:process -->
-				loadCSS("<%= html_theme_path %>css/ie9.css?v=<%= version %>");
-				<!-- /build -->
-			} else {
-				<!-- build:process -->
-				loadCSS("<%= html_theme_path %>css/all.css?v=<%= version %>");
-				<!-- /build -->
-			}
+			<!-- build:process -->
+			loadCSS("<%= html_theme_path %>css/all.css?v=<%= version %>");
+			<!-- /build -->
 			
+			// Google analytics tag
 			/*
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -77,23 +65,14 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 			
 			<!-- build:process -->
 			if (typeof grunticon == 'function') { 
-				grunticon(["<%= html_theme_path %>css/sprites.main.svg.css", "<%= html_theme_path %>css/sprites.main.png.css", "<%= html_theme_path %>css/icons.fallback.css"]); 
+				grunticon(["<%= html_theme_path %>css/sprites.main.svg.css?v=<%= version %>", "<%= html_theme_path %>css/sprites.main.png.css?v=<%= version %>", "<%= html_theme_path %>css/icons.fallback.css?v=<%= version %>"], grunticon.svgLoadedCallback); 
 			}
 			<!-- /build -->
 		</script>
-		<!-- build:process -->
-		<noscript><link href="<%= html_theme_path %>css/icons.fallback.css" rel="stylesheet"></noscript>
-		<!-- /build -->
-		
-		<!-- build:process -->
-		
-		<!-- /build -->
 				
 	</head>
 	<body>
-		<!--[if lt IE 9]>
-				<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-		<![endif]-->
+		<p>Hello world!</p>
 		
 		<script>
 			(function() {
