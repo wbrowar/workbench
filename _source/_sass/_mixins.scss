@@ -65,7 +65,7 @@ $mq_max_width: 1300px;
 	@include embed_font($font_name);
 }
 // Set scalable font size (in vw units) and set fallback
-@media fz($font_vw_unit, $font_fallback_size: '') {
+@mixin fz($font_vw_unit, $font_fallback_size: '') {
 	@if $font_fallback_unit != '' {
 		font-size: $font_fallback_size;
 	}
