@@ -86,16 +86,24 @@ $mq_max_width: 1300px;
 	}
 }
 @mixin mq($breakpoint, $additional_media: '') {
-	@include mq_handler('min', 'width', $breakpoint, $additional_media);
+	@include mq_handler('min', 'width', $breakpoint, $additional_media) {
+		@content;
+	}
 }
 @mixin mq_max($breakpoint, $additional_media: '') {
-	@include mq_handler('max', 'width', $breakpoint, $additional_media);
+	@include mq_handler('max', 'width', $breakpoint, $additional_media) {
+		@content;
+	}
 }
 @mixin mq_v($breakpoint, $additional_media: '') {
-	@include mq_handler('min', 'height', $breakpoint, $additional_media);
+	@include mq_handler('min', 'height', $breakpoint, $additional_media) {
+		@content;
+	}
 }
 @mixin mq_vmax($breakpoint, $additional_media: '') {
-	@include mq_handler('max', 'height', $breakpoint, $additional_media);
+	@include mq_handler('max', 'height', $breakpoint, $additional_media) {
+		@content;
+	}
 }
 @mixin bg_2x {
 	@media only screen and (-webkit-min-device-pixel-ratio: 2),
