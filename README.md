@@ -20,8 +20,8 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 
 ### Setting Up Each Project
 1. In Terminal, `cd` to your project root
-2. Run `npm update` (you may need to run `sudo npm update`)
-3. Run `bower update`
+2. Run `npm install` (you may need to run `sudo npm install`)
+3. Run `bower install`
 4. Update the `package.json` file to fit your project's needs. See `package.json` below
 5. Edit `Gruntfile.js` to work however you want
 6. Run `grunt first` to perform the default task and to do an initial setup
