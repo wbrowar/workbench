@@ -11,14 +11,6 @@ $color_black_default: rgb(0, 0, 0);
 // MEDIA QUERIES
 $mq_max_width: 1300px;
 
-// PLACEHOLDERS
-// Put clearfix on wrapper elements for floats
-@mixin clearfix {
-	&:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }	
-	&:after { clear: both; }	
-	& { zoom: 1; } 
-}
-
 // SITE MIXINS
 // FONTS
 // Embed fonts from font service or hosted locally
@@ -130,4 +122,12 @@ $mq_max_width: 1300px;
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
 	text-indent: -99999px;
+}
+
+// PLACEHOLDERS
+// Put clearfix on wrapper elements for floats
+%clearfix {
+	&:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }	
+	&:after { clear: both; }	
+	& { zoom: 1; } 
 }
