@@ -57,11 +57,17 @@ $mq_max_width: 1300px;
 	@include embed_font($font_name);
 }
 // Set scalable font size (in vw units) and set fallback
-@mixin fz($font_vw_unit, $font_fallback_size: '') {
-	@if $font_fallback_unit != '' {
+@mixin fz($font_vw_unit, $font_fallback_size: '', $font_fallback_mq: '') {
+	@if $font_fallback_size != '' {
 		font-size: $font_fallback_size;
 	}
-	font-size: $font_vw_unit + 'vw';
+	font-size: $font_vw_unit + vw;
+
+	@if $font_fallback_mq != '' {
+		@include mq($font_fallback_mq) {
+			font-size: $font_fallback_size;
+		}
+	}
 }
 
 // MEDIA QUERIES
