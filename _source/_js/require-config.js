@@ -5,11 +5,15 @@ requirejs.config({
 		'modernizr': 'lib/modernizr-custom.min',
 		'picturefill': 'lib/picturefill/picturefill.min',
 		'fontfaceobserver': 'lib/fontfaceobserver.min',
+		'global': 'global.min',
 		'home': 'home.min',
 	},
 	shim: {
-		'home': {
+		'global': {
 			deps: ['jquery'],
+		},
+		'home': {
+			deps: ['global', 'jquery'],
 		},
 	},
 	urlArgs: "v=" + ((requireDevMode) ? (new Date()).getTime() : requireVersion),
@@ -35,7 +39,9 @@ requirejs.config({
 }(this));
 
 if (requireSection === 'home') {
-	requirejs(["home"]);
+	requirejs(['home']);
+} else {
+	requirejs(['global']);
 }
 
 // Get page-specific modules
