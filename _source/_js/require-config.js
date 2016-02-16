@@ -32,7 +32,7 @@ requirejs.config({
 			var eaves_italic = new w.FontFaceObserver("MrEavesXLModBkIRegular");
 			
 			w.Promise.all([eaves.check(), eaves_italic.check()]).then(function(){
-				w.document.documentElement.className += " fonts-loaded";
+				w.document.documentElement.className += " fonts_loaded";
 			});
 		});
 	}
