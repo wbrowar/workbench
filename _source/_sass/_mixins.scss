@@ -4,6 +4,9 @@
 }
 
 // SITE VARIABLES
+// ANIMATIONS
+$anim_duration_default: 0.3s;
+
 // COLORS
 $color_white_default: rgb(255, 255, 255);
 $color_black_default: rgb(0, 0, 0);
@@ -132,6 +135,14 @@ $mq_max_width: 1300px;
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
 	text-indent: -99999px;
+}
+
+// TRANSITIONS/ANIMATIONS
+@mixin transition($property, $duration: $anim_duration_default, $delay: 0, $timing: ease-out) {
+	transition-property: $property;
+	transition-duration: $duration;
+	transition-delay: $delay;
+	transition-timing-function: $timing;
 }
 
 // PLACEHOLDERS
