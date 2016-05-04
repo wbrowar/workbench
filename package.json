@@ -6,6 +6,7 @@
   "build_path": "_build/",
   "html_build_path": "httpdocs/",
   "html_theme_path": "/",
+  "local_url": "/index_grunt.html",
   "enable_font_events": "false",
   "devDependencies": {
     "fontfaceobserver": ">=1.5.4",

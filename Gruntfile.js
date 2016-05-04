@@ -130,7 +130,7 @@ module.exports = function(grunt) {
 		criticalcss: {
 			index: {
 				options: {
-					url: "<%= pkg.html_build_path %>index_grunt.html", // Change to live or dev URL
+					url: "<%= pkg.local_url %>", // Change to live or dev URL
 					width: 1200,
 					height: 900,
 					outputfile: "<%= pkg.build_path %>critcss/compiled/index.css",
