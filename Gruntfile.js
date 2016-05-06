@@ -462,7 +462,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('htmlprocess', ['replace:replace_critcss', 'copy:copy_htmlbuild', 'htmlbuild']);
 	
 	// Main Grunt tasks
-	grunt.registerTask('first', ['copy:copy_npm', 'copy:copy_bower', 'default']);
+	grunt.registerTask('first', ['copy:copy_npm', 'copy:copy_bower']);
 	grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
 	grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'copy:copy_scriptsdist', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'notify:build']);
 	
