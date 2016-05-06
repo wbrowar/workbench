@@ -55,7 +55,54 @@ module.exports = function(grunt) {
 			copy_bower: {
 				files: [
 					{
-						src: 'fontfaceobserver.js',
+						expand: true,
+						cwd: 'bower_components/fitvids/',
+						src: 'jquery.fitvids.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+					{
+						expand: true,
+						cwd: 'bower_components/ideal-image-slider/',
+						src: 'ideal-image-slider.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+					{
+						expand: true,
+						cwd: 'bower_components/ideal-image-slider/',
+						src: 'ideal-image-slider.css',
+						dest: '<%= pkg.source_path %>_sass/',
+						rename: function(dest, src) {
+							return dest + src.replace('ideal-image-slider.css','_ideal-image-slider.scss');
+						}
+					},
+					{
+						expand: true,
+						cwd: 'bower_components/jquery/dist/',
+						src: 'jquery.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+					{
+						expand: true,
+						cwd: 'bower_components/jquery.transit/',
+						src: 'jquery.transit.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+					{
+						expand: true,
+						cwd: 'bower_components/loadcss/',
+						src: 'loadCSS.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+					{
+						expand: true,
+						cwd: 'bower_components/picturefill/dist/',
+						src: 'picturefill.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+					{
+						expand: true,
+						cwd: 'bower_components/requirejs/',
+						src: 'require.js',
 						dest: '<%= pkg.source_path %>_js/_lib/'
 					},
 				],
