@@ -58,13 +58,13 @@ module.exports = function(grunt) {
 						expand: true,
 						cwd: 'bower_components/fitvids/',
 						src: 'jquery.fitvids.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 					{
 						expand: true,
 						cwd: 'bower_components/ideal-image-slider/',
 						src: 'ideal-image-slider.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 					{
 						expand: true,
@@ -79,31 +79,31 @@ module.exports = function(grunt) {
 						expand: true,
 						cwd: 'bower_components/jquery/dist/',
 						src: 'jquery.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 					{
 						expand: true,
 						cwd: 'bower_components/jquery.transit/',
 						src: 'jquery.transit.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 					{
 						expand: true,
 						cwd: 'bower_components/loadcss/',
 						src: 'loadCSS.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 					{
 						expand: true,
 						cwd: 'bower_components/picturefill/dist/',
 						src: 'picturefill.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 					{
 						expand: true,
 						cwd: 'bower_components/requirejs/',
 						src: 'require.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 				],
 			},
@@ -150,7 +150,7 @@ module.exports = function(grunt) {
 						expand: true,
 						cwd: 'node_modules/fontfaceobserver/',
 						src: 'fontfaceobserver.js',
-						dest: '<%= pkg.source_path %>_js/_lib/'
+						dest: '<%= pkg.source_path %>_js/lib/'
 					},
 				],
 			},
@@ -159,16 +159,9 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: '<%= pkg.source_path %>_js/',
-						src: ['**/*.js', '!_lib/*'],
+						src: ['**/*.js'],
 						dest: '<%= pkg.build_path %>js/'
-					},
-					{
-						expand: true,
-						flatten: true,
-						cwd: '<%= pkg.source_path %>_js/',
-						src: ['_lib/fontfaceobserver.js'],
-						dest: '<%= pkg.build_path %>js/lib/'
-					},
+					}
 				],
 			},
 			copy_scriptsdist: {
@@ -271,9 +264,9 @@ module.exports = function(grunt) {
 					sections: {
 						critcss: '<%= pkg.build_path %>critcss/replaced/index.min.css',
 						grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js',
-						loadcss: '<%= pkg.build_path %>uglified/lib/loadcss/loadCSS.min.js',
+						loadcss: '<%= pkg.theme_path %>js/lib/loadCSS.min.js',
 						meta: '<%= pkg.build_path %>html/meta.html',
-						requirejs: '<%= pkg.theme_path %>js/lib/requirejs/require.min.js',
+						requirejs: '<%= pkg.theme_path %>js/lib/require.min.js',
 						requireconfig: '<%= pkg.theme_path %>js/require-config.min.js'
 					},
 					data: {
