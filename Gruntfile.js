@@ -52,6 +52,14 @@ module.exports = function(grunt) {
 				],
 		},
 		copy: {
+			copy_bower: {
+				files: [
+					{
+						src: 'fontfaceobserver.js',
+						dest: '<%= pkg.source_path %>_js/_lib/'
+					},
+				],
+			},
 			copy_grunticon: {
 				files: [
 					{
@@ -213,12 +221,10 @@ module.exports = function(grunt) {
 				src: '**/*.html',
 				dest: '<%= pkg.html_build_path %>',
 				options: {
-					styles: {
-						critcss: '<%= pkg.build_path %>critcss/replaced/index.min.css'
-					},
 					sections: {
-						loadcss: '<%= pkg.build_path %>uglified/lib/loadcss/loadCSS.min.js',
+						critcss: '<%= pkg.build_path %>critcss/replaced/index.min.css',
 						grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js',
+						loadcss: '<%= pkg.build_path %>uglified/lib/loadcss/loadCSS.min.js',
 						meta: '<%= pkg.build_path %>html/meta.html',
 						requirejs: '<%= pkg.theme_path %>js/lib/requirejs/require.min.js',
 						requireconfig: '<%= pkg.theme_path %>js/require-config.min.js'
@@ -409,7 +415,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('htmlprocess', ['replace:replace_critcss', 'copy:copy_htmlbuild', 'htmlbuild']);
 	
 	// Main Grunt tasks
-	grunt.registerTask('first', ['bower', 'copy:copy_npm', 'default']);
+	grunt.registerTask('first', ['copy:copy_npm', 'copy:copy_bower', 'default']);
 	grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
 	grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'copy:copy_scriptsdist', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'notify:build']);
 	
