@@ -81,6 +81,9 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 		
 		<script>
 			(function() {
+				requireModules = requireModules.filter(function(elem, pos,arr) {
+					return arr.indexOf(elem) == pos;
+				});
 				for (var i = 0; i < requireModules.length; i++) {
 					requirePageSpecificModule(requireModules[i]);
 				}
