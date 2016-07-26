@@ -307,6 +307,7 @@ module.exports = function(grunt) {
         "dest" : "<%= pkg.build_path %>uglified/lib/modernizr-custom.min.js",
         "options" : [
           "html5shiv",
+          "setClasses",
           "testAllProps",
           "testStyles",
         ],
