@@ -11,8 +11,11 @@ $anim_duration_default: 0.3s;
 $color_white_default: rgb(255, 255, 255);
 $color_black_default: rgb(0, 0, 0);
 
+// LAYOUT
+$margin_bottom_default: 30px;
+
 // MEDIA QUERIES
-$mq_max_width: 1300px;
+$mq_max_width: 1300px; // example
 
 // SITE MIXINS
 // FONTS
@@ -79,6 +82,7 @@ $mq_max_width: 1300px;
 
 // MEDIA QUERIES
 // Quickly write simple media queries
+// @include mq(600px) {  }
 @mixin mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '') {
 	@if $additional_media != '' {
 		@media (#{$mq_min_max}-#{$mq_direction}: $breakpoint , $additional_media) {
@@ -131,6 +135,38 @@ $mq_max_width: 1300px;
 	}
 }
 
+// SUPPORTS – BROKEN! DON'T USE YET
+// Checks to see if a CSS property is supported by the browser
+// @include sup('display:flex', 'flex-flow:row wrap');
+/*
+@mixin sup_handler($not: '', $properties...) {
+  @each $property in $properties {
+    $i: index($property);
+    $supports_string: '';
+    
+    @if $i == 0 {
+      $supports_string: $supports_string;
+    } @else {
+      
+    }
+  }
+	@supports #{$not} () {
+		@content;
+	}
+}
+@mixin sup($properties...) {
+  @include sup_handler('', $properties...) {
+    @content;
+  }
+}
+@mixin supno($properties...) {
+  @include sup_handler('not', $properties...) {
+    @content;
+  }
+}
+@include sup('display:flex', 'flex-flow:row wrap');
+*/
+
 // TEXT
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
@@ -151,4 +187,11 @@ $mq_max_width: 1300px;
 	&:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }	
 	&:after { clear: both; }	
 	& { zoom: 1; } 
+}
+%margin-bottom {
+  margin-bottom: $margin_bottom_default;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
 }

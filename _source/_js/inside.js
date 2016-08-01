@@ -1,6 +1,6 @@
 /*
-  HOME
-  🏡 Scripts specific to the home page of the website
+  INSIDE
+  🛋 Scripts specific to interior pages
 */
 
 var jq = jQuery;
@@ -14,5 +14,5 @@ var jq = jQuery;
 
 // INIT FUNCTIONS
 if (!requireDevMode) {
-  console.log('Home');
+  console.log('Inside');
 }

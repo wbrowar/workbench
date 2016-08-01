@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         '<%= pkg.build_path %>grunticon',
         '<%= pkg.theme_path %>img/*'
         ],
-      scripts: [
+      js: [
         '<%= pkg.build_path %>js',
         '<%= pkg.build_path %>uglified',
         '<%= pkg.theme_path %>js/*'
@@ -123,7 +123,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: '<%= pkg.html_build_path %>',
-            src: ['**/*.html', '!**/_source/**', '!**/_build/**', '!**/node_modules/**'],
+            src: ['**/*.html', '**/*.php', '**/*.twig', '!**/_source/**', '!**/_build/**', '!**/node_modules/**'],
             dest: '<%= pkg.build_path %>html_backup/'
           },
           {
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
           },
         ],
       },
-      copy_scriptsbuild: {
+      copy_jsbuild: {
         files: [
           {
             expand: true,
@@ -164,7 +164,7 @@ module.exports = function(grunt) {
           }
         ],
       },
-      copy_scriptsdist: {
+      copy_jsdist: {
         files: [
           {
           expand: true,
@@ -182,12 +182,21 @@ module.exports = function(grunt) {
       },
     },
     criticalcss: {
-      index: {
+      home: {
         options: {
-          url: "<%= pkg.local_url %>", // Change to live or dev URL
+          url: "<%= pkg.local_url %>", // Change to live or dev URL of the homepage
           width: 1200,
           height: 900,
-          outputfile: "<%= pkg.build_path %>critcss/compiled/index.css",
+          outputfile: "<%= pkg.build_path %>critcss/compiled/home.css",
+          filename: "<%= pkg.theme_path %>css/all.css"
+        }
+      },
+      inside: {
+        options: {
+          url: "<%= pkg.local_url %>", // Change to live or dev URL of an interior page
+          width: 1200,
+          height: 900,
+          outputfile: "<%= pkg.build_path %>critcss/compiled/inside.css",
           filename: "<%= pkg.theme_path %>css/all.css"
         }
       }
@@ -264,11 +273,12 @@ module.exports = function(grunt) {
       layout: {
         expand: true,
         cwd: '<%= pkg.source_path %>_html',
-        src: '**/*.html',
+        src: ['**/*.html', '**/*.php', '**/*.twig'],
         dest: '<%= pkg.html_build_path %>',
         options: {
           sections: {
-            critcss: '<%= pkg.build_path %>critcss/replaced/index.min.css',
+            critcsshome: '<%= pkg.build_path %>critcss/replaced/home.min.css',
+            critcssinside: '<%= pkg.build_path %>critcss/replaced/inside.min.css',
             grunticon: '<%= pkg.build_path %>grunticon/grunticon.loader.js',
             loadcss: '<%= pkg.theme_path %>js/lib/loadCSS.min.js',
             meta: '<%= pkg.build_path %>html/meta.html',
@@ -343,7 +353,7 @@ module.exports = function(grunt) {
       watchjs: {
         options: {
           title: 'Grunt Watch Complete',
-          message: 'Scripts updated'
+          message: 'js updated'
         }
       },
       build: {
@@ -406,7 +416,7 @@ module.exports = function(grunt) {
       },
     },
     uglify: {
-      scripts: {
+      js: {
         files: [
           {
             expand: true,
@@ -438,15 +448,30 @@ module.exports = function(grunt) {
         },
       },
       watch_images: {
-        files: ['<%= pkg.source_path %>_img/**/*'],
+        files: ['<%= pkg.source_path %>_img/**/*', '!<%= pkg.source_path %>_img/icons/*'],
         tasks: ['watch_images'],
         options: {
           spawn: false
         },
       },
-      watch_scripts: {
-        files: ['<%= pkg.source_path %>_js/**/*.js'],
-        tasks: ['watch_scripts', 'watch_html'],
+      watch_js: {
+        files: ['<%= pkg.source_path %>_js/**/*.js', '!require-config.js'],
+        tasks: ['watch_js'],
+        options: {
+          spawn: false,
+          livereload: true
+        },
+      },
+      watch_grunticon: {
+        files: ['<%= pkg.source_path %>_img/icons/*'],
+        tasks: ['watch_images', 'watch_html'],
+        options: {
+          spawn: false
+        },
+      },
+      watch_requirejs: {
+        files: ['require-config.js'],
+        tasks: ['watch_js', 'watch_html'],
         options: {
           spawn: false,
           livereload: true
@@ -456,20 +481,28 @@ module.exports = function(grunt) {
 
   });
   
-  // Grouped tasks to be used below
-  grunt.registerTask('meta', ['favicons', 'newer:imagemin']);
-  grunt.registerTask('critcss', ['criticalcss', 'cssmin:cssmin_critcss']);
-  grunt.registerTask('htmlprocess', ['replace:replace_critcss', 'copy:copy_htmlbuild', 'htmlbuild']);
-  
   // Main Grunt tasks
   grunt.registerTask('first', ['copy:copy_npm', 'copy:copy_bower']);
-  grunt.registerTask('release', ['default', 'meta', 'critcss', 'htmlprocess', 'notify:release']);
-  grunt.registerTask('default', ['clean', 'copy:copy_imagesbuild', 'responsive_images', 'grunticon', 'copy:copy_grunticon', 'imagemin', 'copy:copy_scriptsbuild', 'modernizr', 'uglify', 'copy:copy_scriptsdist', 'sass', 'autoprefixer', 'cssmin:cssmin_styles', 'notify:build']);
-  
+  grunt.registerTask('default', ['clean', 'images', 'js', 'css', 'notify:build']);
+  grunt.registerTask('release', ['default', 'meta', 'critcss', 'html', 'notify:release']);
+
+  // Grouped tasks to be used below
+  grunt.registerTask('critcss', ['criticalcss', 'cssmin:cssmin_critcss','replace:replace_critcss']);
+  grunt.registerTask('icons', ['grunticon', 'copy:copy_grunticon']);
+  grunt.registerTask('meta', ['favicons', 'newer:imagemin']);
+  grunt.registerTask('htmlupdate', ['icons', 'critcss', 'html']);
+
+  // Default tasks
+  grunt.registerTask('images', ['copy:copy_imagesbuild', 'responsive_images', 'icons', 'imagemin']);
+  //grunt.registerTask('js', ['copy:copy_jsbuild', 'modernizr', 'uglify', 'copy:copy_jsdist']); // uncomment this and comment out the `js` line below to use Modernizr
+  grunt.registerTask('js', ['copy:copy_jsbuild', 'uglify', 'copy:copy_jsdist']);
+  grunt.registerTask('css', ['sass', 'autoprefixer', 'cssmin:cssmin_styles']);
+  grunt.registerTask('html', ['copy:copy_htmlbuild', 'htmlbuild']);
+
   // Watch tasks
   grunt.registerTask('watch_css', ['sass', 'newer:autoprefixer', 'newer:cssmin:cssmin_styles', 'notify:watchcss']);
   grunt.registerTask('watch_html', ['clean:clean_critcss', 'newer:copy:copy_htmlbuild', 'newer:htmlbuild', 'notify:watchhtml']);
-  grunt.registerTask('watch_images', ['copy:copy_imagesbuild', 'newer:responsive_images', 'grunticon', 'copy:copy_grunticon', 'newer:imagemin', 'notify:watchimg']);
-  grunt.registerTask('watch_scripts', ['jshint', 'newer:copy:copy_scriptsbuild', 'newer:uglify', 'newer:copy:copy_scriptsdist', 'notify:watchjs']);
+  grunt.registerTask('watch_images', ['copy:copy_imagesbuild', 'newer:responsive_images', 'icons', 'newer:imagemin', 'notify:watchimg']);
+  grunt.registerTask('watch_js', ['jshint', 'newer:copy:copy_jsbuild', 'newer:uglify', 'newer:copy:copy_jsdist', 'notify:watchjs']);
 
 };
