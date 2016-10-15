@@ -455,7 +455,7 @@ module.exports = function(grunt) {
         },
       },
       watch_js: {
-        files: ['<%= pkg.source_path %>_js/**/*.js', '!require-config.js'],
+        files: ['<%= pkg.source_path %>_js/**/*.js', '!<%= pkg.source_path %>_js/require-config.js'],
         tasks: ['watch_js'],
         options: {
           spawn: false,
@@ -464,14 +464,14 @@ module.exports = function(grunt) {
       },
       watch_grunticon: {
         files: ['<%= pkg.source_path %>_img/icons/*'],
-        tasks: ['watch_images', 'watch_html'],
+        tasks: ['watch_images', 'html', 'notify:watchhtml'],
         options: {
           spawn: false
         },
       },
       watch_requirejs: {
-        files: ['require-config.js'],
-        tasks: ['watch_js', 'watch_html'],
+        files: ['<%= pkg.source_path %>_js/require-config.js'],
+        tasks: ['watch_js', 'html', 'notify:watchhtml'],
         options: {
           spawn: false,
           livereload: true
