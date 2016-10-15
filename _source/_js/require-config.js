@@ -1,7 +1,7 @@
 requirejs.config({
 	baseUrl: requireThemePath+'js',
 	paths: {
-		'fitvids': 'lib/fitvids.min',
+		'fitvids': 'lib/jquery.fitvids.min',
 		'fontfaceobserver': 'lib/fontfaceobserver.min',
 		'idealimageslider': 'lib/idealimageslider.min',
 		'jquery': 'lib/jquery.min',
@@ -11,6 +11,9 @@ requirejs.config({
 		'home': 'home.min',
 	},
 	shim: {
+		'fitvids': {
+			deps: ['jquery'],
+		},
 		'global': {
 			deps: ['jquery'],
 		},
@@ -51,6 +54,16 @@ function requirePageSpecificModule(moduleName) {
 	switch(moduleName) {
 		/*
 		// EXAMPLES
+		case 'formValidator':
+			requirejs(['formValidator']);
+			break;
+		case 'fitvids':
+			requirejs(['fitvids'], function() {
+				var jq = jQuery;
+				
+				jq('.video').fitVids();
+			});
+			break;
 		case 'idealSlider':
 			requirejs(['idealSlider'], function() {
 				var idealSlider = new IdealImageSlider.Slider({
@@ -61,9 +74,6 @@ function requirePageSpecificModule(moduleName) {
 				});
 				idealSlider.start();
 			});
-			break;
-		case 'formValidator':
-			requirejs(['formValidator']);
 			break;
 		*/
 	}

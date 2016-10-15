@@ -31,6 +31,16 @@ jq(window).resize(function() {
 	windowHeight = jq(window).height();
 }).resize();
 */
+/*
+// track click-to-call links
+jq('a[href^="tel:"]').click(function() {
+  ga_track('Call', 'clicked', jq(this).attr('href').substr(4));
+});
+// track form submissions
+jq('form').submit(function() {
+  ga_track('Forms', 'submitted', jq(this).attr('name')); // change from name attribute to some unique id
+});
+*/
 
 
 // INIT FUNCTIONS
