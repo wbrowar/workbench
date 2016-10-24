@@ -19,18 +19,18 @@ const bases = {
   site:   vars.site_root,
 };
 const paths = {
-  distCss:   bases.theme + 'css/',
-  distImg:   bases.theme + 'img/',
-  distJs:    bases.theme + 'js/',
-  srcCss:    bases.source + '_sass/',
-  srcImg:    bases.source + '_img/',
-  srcJs:     bases.source + '_js/',
-  filesHtml: [bases.source + '_html/**/*.html', bases.source + '_html/**/*.php', bases.source + '_html/**/*.twig'],
-  filesImg:  bases.source + '_img/**/*.{png,jpg,gif}',
-  filesJs:   [bases.source + '_js/**/*.js', '!' + bases.source + '_js/_lib/**/*'],
-  filesJsLib:   [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
-  filesScss: bases.source + '_sass/**/*.scss',
-  filesSvg:  bases.source + '_img/icons/**/*.{svg}',
+  distCss:    bases.theme + 'css/',
+  distImg:    bases.theme + 'img/',
+  distJs:     bases.theme + 'js/',
+  srcCss:     bases.source + '_sass/',
+  srcImg:     bases.source + '_img/',
+  srcJs:      bases.source + '_js/',
+  filesHtml:  [bases.source + '_html/**/*.html', bases.source + '_html/**/*.php', bases.source + '_html/**/*.twig'],
+  filesImg:   bases.source + '_img/**/*.{png,jpg,gif}',
+  filesJs:    [bases.source + '_js/**/*.js', '!' + bases.source + '_js/require-config.js', '!' + bases.source + '_js/_lib/**/*'],
+  filesJsLib: [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
+  filesScss:  bases.source + '_sass/**/*.scss',
+  filesSvg:   bases.source + '_img/icons/**/*.{svg}',
 };
 
 // Gulp Variables
@@ -226,11 +226,10 @@ for (let i=0; i<vars.critcss.length; i++) {
   }
   critCssTasks.push(func);
 }
-gulp.task('critCss', ['css:cleaned'], function(cb) {
+gulp.task('critCss', ['css:cleaned'], function() {
   for (var i=0; i<critCssTasks.length; i++) {
     critCssTasks[i]();
   }
-  cb();
 });
 
 // Compile SCSS files (all `.scss` files that don't start with `_`)
@@ -248,11 +247,11 @@ function cssHandler() {
   .pipe(gulp.dest(bases.build + 'css/autoprefixer'))
   .pipe(gulp.dest(paths.distCss));
 }
-gulp.task('css:cleaned', ['cleanCss', 'svg'], function() {
+gulp.task('css:cleaned', ['cleanCss', 'svg'], function(cb) {
   return cssHandler();
 });
 gulp.task('css', function() {
-  cssHandler();
+  return cssHandler();
 });
 
 // Resize 2x images
@@ -279,23 +278,20 @@ function imgResizeHandler() {
   .pipe($.imagemin())
   .pipe(gulp.dest(paths.distImg));
 };
-gulp.task('img:cleaned', ['cleanImg'], function(cb) {
+gulp.task('img:cleaned', ['cleanImg'], function() {
   imgMoveHandler();
   imgResizeHandler();
-  cb();
 });
-gulp.task('img', function(cb) {
+gulp.task('img', function() {
   imgMoveHandler();
   imgResizeHandler();
-  cb();
 });
 gulp.task('svg', function() {
   return gulp.src(paths.srcImg + 'icons/**/*.svg')
-  .pipe($.changed(paths.distImg + 'icons/'))
   .pipe($.imagemin())
   .pipe(gulp.dest(bases.build + 'icons/minimized'))
   .pipe(gulp.dest(paths.distImg + 'icons/'))
-  .pipe($.svgInline({ className: '.icon.icon_%s' }))
+  .pipe($.svgInline({ className: '.icon_%s' }))
   .pipe($.concat('_icons.scss'))
   .pipe(gulp.dest(paths.srcCss));
 });
@@ -322,20 +318,27 @@ function jsLibHandler() {
   .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
   .pipe(gulp.dest(paths.distJs + '_lib/'));
 };
-gulp.task('js:babel', ['cleanJs'], function(cb) {
+function jsRequireConfigHandler() {
+  return gulp.src(paths.srcJs + 'require-config.js')
+  .pipe($.changed(paths.distJs, {extension: '.min.js'}))
+  .pipe($.uglify())
+  .pipe($.rename({ extname: '.min.js' }))
+  .pipe(gulp.dest(bases.build + 'js/uglify/'))
+  .pipe(gulp.dest(paths.distJs));
+};
+gulp.task('js:babel', ['cleanJs'], function() {
   jsHandler(true);
   jsLibHandler();
-  cb();
+  jsRequireConfigHandler();
 });
-gulp.task('js:cleaned', ['cleanJs'], function(cb) {
+gulp.task('js:cleaned', ['cleanJs'], function() {
   jsHandler();
   jsLibHandler();
-  cb();
+  jsRequireConfigHandler();
 });
-gulp.task('js', function(cb) {
+gulp.task('js', function() {
   jsHandler();
   jsLibHandler();
-  cb();
 });
 
 // Compile HTML, TWIG, and PHP files
