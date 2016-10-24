@@ -214,7 +214,7 @@ gulp.task('copyFirstJs', function() {
 for (let i=0; i<vars.critcss.length; i++) {
   ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
   var func = function() {
-    return critical.generate({
+    critical.generate({
       src: vars.critcss[i].src,
       css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
       width: 1280,
@@ -226,10 +226,11 @@ for (let i=0; i<vars.critcss.length; i++) {
   }
   critCssTasks.push(func);
 }
-gulp.task('critCss', ['css:cleaned'], function() {
+gulp.task('critCss', ['css:cleaned'], function(cb) {
   for (var i=0; i<critCssTasks.length; i++) {
     critCssTasks[i]();
   }
+  cb();
 });
 
 // Compile SCSS files (all `.scss` files that don't start with `_`)
