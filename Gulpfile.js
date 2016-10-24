@@ -27,7 +27,8 @@ const paths = {
   srcJs:     bases.source + '_js/',
   filesHtml: [bases.source + '_html/**/*.html', bases.source + '_html/**/*.php', bases.source + '_html/**/*.twig'],
   filesImg:  bases.source + '_img/**/*.{png,jpg,gif}',
-  filesJs:   [bases.source + '_js/**/*.js', bases.source + '!_js/_lib/**/*.min.js'],
+  filesJs:   [bases.source + '_js/**/*.js', '!' + bases.source + '_js/_lib/**/*'],
+  filesJsLib:   [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
   filesScss: bases.source + '_sass/**/*.scss',
   filesSvg:  bases.source + '_img/icons/**/*.{svg}',
 };
@@ -72,7 +73,7 @@ gulp.task('default',function() {
       + `\n${$.gutil.colors.inverse(' gulp release ')}`
       + `\n${$.gutil.colors.bold('└─ Performs all tasks, including Critical CSS and processing HTML files.')}\n`
       + `\n${$.gutil.colors.inverse(' gulp vars ')}`
-      + `\n${$.gutil.colors.bold('└─ Descriptions of variables found in \`package.json\`.')}\n`;
+      + `\n${$.gutil.colors.bold('└─ Descriptions of variables found in \`package.json\`.')}\n`
       + `\n${$.gutil.colors.inverse(' gulp watch ')}`
       + `\n${$.gutil.colors.bold('└─ Watches source folders and runs tasks based on the type of file changed.')}\n`;
 	$.gutil.log(text);
@@ -137,7 +138,7 @@ gulp.task('run', ['css:cleaned', 'img:cleaned', 'js:cleaned'], function() {
 });
 
 // [gulp release]
-gulp.task('release', ['css:cleaned', 'img:cleaned', 'js:babel', 'ejs:full'], function() {
+gulp.task('release', ['critCss', 'img:cleaned', 'js:babel', 'ejs:full'], function() {
   return notifier.notify({ 'title': name, 'message': 'Release Complete' });
 });
 
@@ -212,8 +213,7 @@ gulp.task('copyFirstJs', function() {
 // Run Critical CSS and place in build folder
 for (let i=0; i<vars.critcss.length; i++) {
   ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
-  critCssTasks.push('critcss:' + vars.critcss[i].critCssFilename);
-  gulp.task('critcss:' + vars.critcss[i].critCssFilename, ['css'], function() {
+  var func = function() {
     return critical.generate({
       src: vars.critcss[i].src,
       css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
@@ -223,9 +223,15 @@ for (let i=0; i<vars.critcss.length; i++) {
       minify: true,
       extract: false
     });
-  });
+  }
+  critCssTasks.push(func);
 }
-gulp.task('critCss', critCssTasks);
+gulp.task('critCss', ['css:cleaned'], function(cb) {
+  for (var i=0; i<critCssTasks.length; i++) {
+    critCssTasks[i]();
+  }
+  cb();
+});
 
 // Compile SCSS files (all `.scss` files that don't start with `_`)
 // Adds autoprefixing
@@ -242,8 +248,12 @@ function cssHandler() {
   .pipe(gulp.dest(bases.build + 'css/autoprefixer'))
   .pipe(gulp.dest(paths.distCss));
 }
-gulp.task('css:cleaned', ['cleanCss', 'svg'], cssHandler);
-gulp.task('css', cssHandler);
+gulp.task('css:cleaned', ['cleanCss', 'svg'], function() {
+  return cssHandler();
+});
+gulp.task('css', function() {
+  cssHandler();
+});
 
 // Resize 2x images
 // Run Grunticon
@@ -269,15 +279,15 @@ function imgResizeHandler() {
   .pipe($.imagemin())
   .pipe(gulp.dest(paths.distImg));
 };
-gulp.task('img:cleaned', ['cleanImg'], function() {
+gulp.task('img:cleaned', ['cleanImg'], function(cb) {
   imgMoveHandler();
   imgResizeHandler();
-  //imgSvgHandler();
+  cb();
 });
-gulp.task('img', function() {
+gulp.task('img', function(cb) {
   imgMoveHandler();
   imgResizeHandler();
-  //imgSvgHandler();
+  cb();
 });
 gulp.task('svg', function() {
   return gulp.src(paths.srcImg + 'icons/**/*.svg')
@@ -304,9 +314,29 @@ function jsHandler(useBabel = false) {
   .pipe(gulp.dest(bases.build + 'js/uglify'))
   .pipe(gulp.dest(paths.distJs));
 };
-gulp.task('js:babel', ['cleanJs'], function() { jsHandler(true) })
-gulp.task('js:cleaned', ['cleanJs'], jsHandler);
-gulp.task('js', jsHandler);
+function jsLibHandler() {
+  return gulp.src(paths.filesJsLib)
+  .pipe($.changed(paths.distJs + '_lib/', {extension: '.min.js'}))
+  .pipe($.uglify())
+  .pipe($.rename({ extname: '.min.js' }))
+  .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
+  .pipe(gulp.dest(paths.distJs + '_lib/'));
+};
+gulp.task('js:babel', ['cleanJs'], function(cb) {
+  jsHandler(true);
+  jsLibHandler();
+  cb();
+});
+gulp.task('js:cleaned', ['cleanJs'], function(cb) {
+  jsHandler();
+  jsLibHandler();
+  cb();
+});
+gulp.task('js', function(cb) {
+  jsHandler();
+  jsLibHandler();
+  cb();
+});
 
 // Compile HTML, TWIG, and PHP files
 for (var val in vars.ejsVars) {
