@@ -30,7 +30,7 @@
     "bower_components/ideal-image-slider/ideal-image-slider.js",
     "bower_components/jquery/dist/jquery.js",
     "bower_components/jquery.transit/jquery.transit.js",
-    "bower_components/loadcss/loadCSS.js",
+    "bower_components/loadcss/src/loadCSS.js",
     "bower_components/requirejs/require.js",
     "node_modules/fontfaceobserver/fontfaceobserver.js"
   ],

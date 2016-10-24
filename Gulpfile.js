@@ -213,8 +213,9 @@ gulp.task('copyFirstJs', function() {
 // Run Critical CSS and place in build folder
 for (let i=0; i<vars.critcss.length; i++) {
   ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
-  var func = function() {
-    critical.generate({
+  critCssTasks.push('critcss:' + vars.critcss[i].critCssFilename);
+  gulp.task('critcss:' + vars.critcss[i].critCssFilename, ['css:cleaned'], function() {
+    return critical.generate({
       src: vars.critcss[i].src,
       css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
       width: 1280,
@@ -223,15 +224,29 @@ for (let i=0; i<vars.critcss.length; i++) {
       minify: true,
       extract: false
     });
-  }
-  critCssTasks.push(func);
+  });
 }
-gulp.task('critCss', ['css:cleaned'], function(cb) {
-  for (var i=0; i<critCssTasks.length; i++) {
-    critCssTasks[i]();
-  }
-  cb();
-});
+gulp.task('critCss', critCssTasks);
+//for (let i=0; i<vars.critcss.length; i++) {
+//  ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
+//  var func = function() {
+//    critical.generate({
+//      src: vars.critcss[i].src,
+//      css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
+//      width: 1280,
+//      height: 960,
+//      dest: bases.build + 'critcss/' + vars.critcss[i].critCssFilename + '.css',
+//      minify: true,
+//      extract: false
+//    });
+//  }
+//  critCssTasks.push(func);
+//}
+//gulp.task('critCss', ['css:cleaned'], function() {
+//  for (let i=0; i<critCssTasks.length; i++) {
+//    critCssTasks[i]();
+//  }
+//});
 
 // Compile SCSS files (all `.scss` files that don't start with `_`)
 // Adds autoprefixing
