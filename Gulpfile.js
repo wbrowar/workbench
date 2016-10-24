@@ -313,39 +313,39 @@ gulp.task('svg', function() {
 });
 
 // Uglify JS
-function jsHandler(useBabel = false) {
+function jsHandler(useBabel = false, useUglify = false) {
   var babelOptions = {
     presets: ['es2015'],
   }
 
   return gulp.src(paths.filesJs)
   .pipe($.changed(paths.distJs, {extension: '.min.js'}))
-  .pipe(useBabel && vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
-  .pipe($.uglify())
+  .pipe(useBabel == true && vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
+  .pipe(useUglify ? $.uglify() : $.gutil.noop())
   .pipe($.rename({ extname: '.min.js' }))
   .pipe(gulp.dest(bases.build + 'js/uglify'))
   .pipe(gulp.dest(paths.distJs));
 };
-function jsLibHandler() {
+function jsLibHandler(useUglify = false) {
   return gulp.src(paths.filesJsLib)
   .pipe($.changed(paths.distJs + '_lib/', {extension: '.min.js'}))
-  .pipe($.uglify())
+  .pipe(useUglify ? $.uglify() : $.gutil.noop())
   .pipe($.rename({ extname: '.min.js' }))
   .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
   .pipe(gulp.dest(paths.distJs + '_lib/'));
 };
-function jsRequireConfigHandler() {
+function jsRequireConfigHandler(useUglify = false) {
   return gulp.src(paths.srcJs + 'require-config.js')
   .pipe($.changed(paths.distJs, {extension: '.min.js'}))
-  .pipe($.uglify())
+  .pipe(useUglify ? $.uglify() : $.gutil.noop())
   .pipe($.rename({ extname: '.min.js' }))
   .pipe(gulp.dest(bases.build + 'js/uglify/'))
   .pipe(gulp.dest(paths.distJs));
 };
 gulp.task('js:babel', ['cleanJs'], function() {
-  jsHandler(true);
-  jsLibHandler();
-  jsRequireConfigHandler();
+  jsHandler(true, true);
+  jsLibHandler(true);
+  jsRequireConfigHandler(true);
 });
 gulp.task('js:cleaned', ['cleanJs'], function() {
   jsHandler();

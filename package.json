@@ -12,7 +12,7 @@
   "minify_html": "true",
   "critcss": [
     {
-      "src": "http://google.com",
+      "src": "http://test:8888/",
       "cssFilename": "all",
       "critCssFilename": "home"
     },
