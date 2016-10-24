@@ -12,11 +12,12 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux are slightly di
 1. Clone the repo into your site's root folder. You may move your `_source` and `_build` folders if needed
 2. Install [Node](http://nodejs.org/)
 3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
-4. Install ImageMagick, run this command: `brew install imagemagick`. If you don't have homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-5. In terminal, go to your site's root folder and run the command: `npm install`
-6. Run `npm install -g bower`
-7. Run `npm install -g grunt-cli`.
-8. Close the terminal window and open it up again. If you run `grunt first` and you get an error, "Unable to find local grunt", check to see if you have a `.bash_profile` file in your home folder. If you don't have a `.bash_profile` file setup, create it, then add the following line to it: `export PATH=/usr/local/lib/node_modules/grunt-cli:$PATH`
+4. Install Imagemin, run this command: `brew cask install imagemin`. If you don't have homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+5. Install ImageMagick, run this command: `brew install imagemagick`
+6. In terminal, go to your site's root folder and run the command: `npm install`
+7. Run `npm install -g bower`
+8. Run `npm install -g grunt-cli`.
+9. Close the terminal window and open it up again. If you run `grunt first` and you get an error, "Unable to find local grunt", check to see if you have a `.bash_profile` file in your home folder. If you don't have a `.bash_profile` file setup, create it, then add the following line to it: `export PATH=/usr/local/lib/node_modules/grunt-cli:$PATH`
 
 ### Setting Up Each Project
 1. In Terminal, `cd` to your project root

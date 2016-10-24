@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<% if (enable_font_events === 'true') { %>
+<!--
+SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
+-->
+<% } %>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- meta icons -->
+    <%- include(favicons) %>
+
+    <!-- styles -->
+    <noscript>
+      <!-- backup for critcss -->
+      <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
+      <!-- backup for grunticon -->
+      <link href="<%= site_root %>css/icons.fallback.css?v=<%= version %>" rel="stylesheet">
+    </noscript>
+
+    <!-- critcss -->
+    <% if (critCssEnabled) { %><style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+
+    <!-- scripts -->
+    <script type="text/javascript">
+      var requireSection = 'home',
+          requireDevMode = true,
+          requireVersion = '<%= version %>',
+          requireThemePath = '<%= site_root %>',
+          requireModules = [],
+          requireFontEvents = <%= enable_font_events %>;
+
+      <%#
+      // use this to add page-specific required modules
+      /* requireModules.push('modulepathname'); */
+      %>
+
+      <%- include(loadcss) %>
+      <% if (enable_require_js === 'true') { %>
+      <%- include(requirejs) %>
+      <%- include(requireconfig) %>
+      <% } %>
+
+      // load CSS
+      loadCSS("<%= site_root %>css/all.css?v=<%= version %>");
+
+      <%#
+      // Google analytics tag
+      /*
+      if (!requireDevMode) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+        ga('create', 'UA-XXXXXXX-X', 'EXAMPLE.com');
+        ga('send', 'pageview');
+      }
+      */
+      %>
+    </script>
+
+  </head>
+  <body>
+    <p>Hello world!</p>
+    <div class="icon logo" style="display: block; width: 40px; height: 40px; background-size: contain;"></div>
+
+    <% if (enable_require_js === 'true') { %>
+    <script>
+      (function() {
+        requireModules = requireModules.filter(function(elem, pos,arr) {
+          return arr.indexOf(elem) == pos;
+        });
+        for (var i = 0; i < requireModules.length; i++) {
+          requirePageSpecificModule(requireModules[i]);
+        }
+      }());
+    </script>
+    <% } %>
+  </body>
+</html>

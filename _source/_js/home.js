@@ -13,6 +13,6 @@ var jq = jQuery;
 
 
 // INIT FUNCTIONS
-if (!requireDevMode) {
+if (requireDevMode) {
   console.log('Home');
 }

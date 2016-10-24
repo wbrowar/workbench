@@ -44,6 +44,6 @@ jq('form').submit(function() {
 
 
 // INIT FUNCTIONS
-if (!requireDevMode) {
+if (requireDevMode) {
   console.log('Global');
 }

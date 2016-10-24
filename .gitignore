@@ -37,3 +37,4 @@
 /node_modules/*
 /bower_components/*
 /_build/*
+yarn.lock

@@ -1,12 +1,12 @@
 requirejs.config({
 	baseUrl: requireThemePath+'js',
 	paths: {
-		'fitvids': 'lib/jquery.fitvids.min',
-		'fontfaceobserver': 'lib/fontfaceobserver.min',
-		'idealimageslider': 'lib/idealimageslider.min',
-		'jquery': 'lib/jquery.min',
-		'modernizr': 'lib/modernizr-custom.min',
-		'picturefill': 'lib/picturefill.min',
+		'fitvids': '_lib/jquery.fitvids.min',
+		'fontfaceobserver': '_lib/fontfaceobserver.min',
+		'idealimageslider': '_lib/idealimageslider.min',
+		'jquery': '_lib/jquery.min',
+		'modernizr': '_lib/modernizr-custom.min',
+		'picturefill': '_lib/picturefill.min',
 		'global': 'global.min',
 		'home': 'home.min',
 	},
