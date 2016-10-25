@@ -274,7 +274,7 @@ gulp.task('css', function() {
 // Run Grunticon
 // Losslessly compress images
 function imgMoveHandler() {
-  return gulp.src([paths.srcImg + '**/*.{png,jpg,gif}', '!' + paths.srcImg + '2x/**/*', '!' + paths.srcImg + 'icons/**/*'])
+  return gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*', '!' + paths.srcImg + 'icons/**/*'])
   .pipe($.changed(paths.distImg))
   .pipe(gulp.dest(bases.build + 'img/moved'))
   .pipe($.imagemin())
