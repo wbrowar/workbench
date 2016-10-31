@@ -16,7 +16,7 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 5. Install Imagemin, run this command: `brew cask install imagemin`. 
 6. Install ImageMagick, run this command: `brew install imagemagick`
 7. Run `npm install -g bower`
-8. Run `npm install -g grunt-cli`.
+8. Run `npm install -g gulp-cli`.
 9. Go to your site's root folder and run the command: `yarn`. This will do the same thing as `npm install`, but faster. If you don't have yarn installed, globally, run `npm install --global yarn`
 
 ### Setting Up Each Project
@@ -43,7 +43,8 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 - When staging files for review or testing, run `gulp release`—every time—before deploying to a staging server. `gulp release` includes extra tasks, such as Babel compiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
 
 ### Going Live and Releasing
-- When preparing to go live, increase the version number in the `package.json` file, then run the `gulp release` task. Changing the version number will cause cache-busting to occur on static files that are loaded using version number parameters.
+- When preparing to go live, run the `gulp release` task. This will increase the version number in the `package.json` file, which will cause cache-busting to occur on static files that are loaded using version number parameters.
+- For feature releases (when you're adding new sections and features), run `gulp releasefeature`. This bumps the version number up by one SEMVER minor version.
 - Running `gulp release` cleans out all CSS, JS, SVG, and image files and replaces them with fresh builds.
 - `gulp release` also creates favicons, adds Critical CSS, processes SVG icons and processes HTML theme files.
 
@@ -63,7 +64,7 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 - **_img** Images will be processed differently depending on where they are located in the `_source/_img` folder:
   - **2x** Putting 2x-resolution images in the `2x` folder will result in both a 2x image and a 1x image being placed into your `img` directory. The 2x image will be suffixed with `@2x`.
   - **icons** All .svg images in the `icons` folder will be base64-encoded and added using `background-image` to a file in the `_source/sass/` folder, called `_icons.scss`. This will be compiled when the `sass` task is run. A file, named `logo.svg` will access using the class, `.icon_logo`.
-  - Images located directly in the `_source/_img`, or folders not listed above will not be processed.
+  - Images located directly in the `_source/_img`, or folders not listed above will only be minimized and moved into your theme's `img` folder.
 - **_favicons** Adding a 512x512 .png into the `_source/_favicons` folder, and running `gulp release`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
 
 ---

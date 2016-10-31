@@ -2,60 +2,62 @@
 
 // Package Variables
 const fs = require('fs'),
-    vars = JSON.parse(fs.readFileSync('./package.json'));
+      vars = JSON.parse(fs.readFileSync('./package.json'));
 
 const name = vars.name,
-    copyFirstCssFiles = vars.copyFirstCssFiles,
-    copyFirstJsFiles = vars.copyFirstJsFiles,
-    critCssTasks = [],
-    gulpiconCustomSelectors = vars.gulpiconCustomSelectors;
+      copyFirstCssFiles = vars.copyFirstCssFiles,
+      copyFirstJsFiles = vars.copyFirstJsFiles,
+      critCssTasks = [],
+      gulpiconCustomSelectors = vars.gulpiconCustomSelectors;
 
 // Paths
 const bases = {
-  source: vars.source_path,
-  build:  vars.build_path,
-  theme:  vars.theme_path,
-  html:   vars.html_path,
-  site:   vars.site_root,
+      source: vars.source_path,
+      build:  vars.build_path,
+      theme:  vars.theme_path,
+      html:   vars.html_path,
+      site:   vars.site_root,
 };
 const paths = {
-  distCss:    bases.theme + 'css/',
-  distImg:    bases.theme + 'img/',
-  distJs:     bases.theme + 'js/',
-  srcCss:     bases.source + '_sass/',
-  srcImg:     bases.source + '_img/',
-  srcJs:      bases.source + '_js/',
-  filesHtml:  [bases.source + '_html/**/*.html', bases.source + '_html/**/*.php', bases.source + '_html/**/*.twig'],
-  filesImg:   bases.source + '_img/**/*.{png,jpg,gif}',
-  filesJs:    [bases.source + '_js/**/*.js', '!' + bases.source + '_js/require-config.js', '!' + bases.source + '_js/_lib/**/*'],
-  filesJsLib: [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
-  filesScss:  bases.source + '_sass/**/*.scss',
-  filesSvg:   bases.source + '_img/icons/**/*.{svg}',
+      distCss:    bases.theme + 'css/',
+      distImg:    bases.theme + 'img/',
+      distJs:     bases.theme + 'js/',
+      srcCss:     bases.source + '_sass/',
+      srcImg:     bases.source + '_img/',
+      srcJs:      bases.source + '_js/',
+      filesHtml:  [bases.source + '_html/**/*.html', bases.source + '_html/**/*.php', bases.source + '_html/**/*.twig'],
+      filesImg:   bases.source + '_img/**/*.{png,jpg,gif}',
+      filesJs:    [bases.source + '_js/**/*.js', '!' + bases.source + '_js/require-config.js', '!' + bases.source + '_js/_lib/**/*'],
+      filesJsLib: [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
+      filesScss:  bases.source + '_sass/**/*.scss',
+      filesSvg:   bases.source + '_img/icons/**/*.{svg}',
 };
 
 // Gulp Variables
 const critical        = require('critical'),
-      notifier        = require('node-notifier'),
       glob            = require("glob"),
       gulp            = require('gulp'),
       gulpLoadPlugins = require('gulp-load-plugins'),
+      notifier        = require('node-notifier'),
+      semver          = require('semver'),
+      webshot         = require('webshot'),
       $               = gulpLoadPlugins({
         rename: {
-          'gulp-svg-inline-css': 'svgInline',
-          'gulp-util':           'gutil',
+          'gulp-svg-inline-css':    'svgInline',
+          'gulp-util':              'gutil',
         }
       });
 
 const ejsVars = {
-  root:               bases.build,
-  enable_font_events: vars.enable_font_events,
-  enable_require_js:  vars.enable_require_js,
-  favicons:           '/favicon/favicons.html',
-  site_root:          vars.site_root,
-  loadcss:            '/js/uglify/_lib/loadCSS.min.js',
-  requirejs:          '/js/uglify/_lib/require.min.js',
-  requireconfig:      '/js/uglify/require-config.min.js',
-  version:            vars.version,
+      root:               bases.build,
+      enable_font_events: vars.enable_font_events,
+      enable_require_js:  vars.enable_require_js,
+      favicons:           '/favicon/favicons.html',
+      site_root:          vars.site_root,
+      loadcss:            '/js/uglify/_lib/loadCSS.min.js',
+      requirejs:          '/js/uglify/_lib/require.min.js',
+      requireconfig:      '/js/uglify/require-config.min.js',
+      version:            vars.version,
 };
 
 
@@ -71,7 +73,7 @@ gulp.task('default',function() {
       + `\n${$.gutil.colors.inverse(' gulp run ')}`
       + `\n${$.gutil.colors.bold('└─ Processes CSS, JS, and image files.')}\n`
       + `\n${$.gutil.colors.inverse(' gulp release ')}`
-      + `\n${$.gutil.colors.bold('└─ Performs all tasks, including Critical CSS and processing HTML files.')}\n`
+      + `\n${$.gutil.colors.bold('└─ Performs all tasks, including Critical CSS and processing HTML files.\n\n\`gulp release\` advances the version number in \`package.json\` by 0.0.1. Running \`gulp releasefeature\` will advance it by 0.1.0; and running \`gulp releasemajor\` will advance it by 1.0.0.')}\n`
       + `\n${$.gutil.colors.inverse(' gulp vars ')}`
       + `\n${$.gutil.colors.bold('└─ Descriptions of variables found in \`package.json\`.')}\n`
       + `\n${$.gutil.colors.inverse(' gulp watch ')}`
@@ -114,7 +116,9 @@ gulp.task('vars',function() {
       + `\n${$.gutil.colors.inverse(' ejsVars ')}`
       + `\n${$.gutil.colors.bold('└─ Additional files and settings for use in the \`ejs\` task. All paths must start from the \`_build\` folder.')}\n`
       + `\n${$.gutil.colors.inverse(' gulpiconCustomSelectors ')}`
-      + `\n${$.gutil.colors.bold('└─ Additional selector for use when running the \`gulpicon\` task. Look in the Grunticon documentation for usage exampes.')}\n`;
+      + `\n${$.gutil.colors.bold('└─ Additional selector for use when running the \`gulpicon\` task. Look in the Grunticon documentation for usage exampes.')}\n`
+      + `\n${$.gutil.colors.inverse(' webshotScreenshots ')}`
+      + `\n${$.gutil.colors.bold('└─ Array of pages to take screenshots of when running \`gulp release\`.')}\n`;
 	$.gutil.log(text);
 	$.gutil.beep();
 });
@@ -138,13 +142,17 @@ gulp.task('run', ['css:cleaned', 'img:cleaned', 'js:cleaned'], function() {
 });
 
 // [gulp release]
-gulp.task('release', ['critCss', 'img:cleaned', 'js:babel', 'ejs:full'], function() {
+gulp.task('release', ['bump:patch', 'release:tasks']);
+gulp.task('releasefeature', ['bump:minor', 'release:tasks']);
+gulp.task('releasemajor', ['bump:major', 'release:tasks']);
+gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:full'], function() {
+  webshotHandler();
   return notifier.notify({ 'title': name, 'message': 'Release Complete' });
 });
 
 // [gulp watch]
 gulp.task('watch', function() {
-  $.livereload.listen();
+  $.livereload.listen(35729);
   var watchHtml = gulp.watch(paths.filesHtml, ['ejs:quick']),
       watchJs   = gulp.watch(paths.filesJs, ['js']),
       watchImg  = gulp.watch(paths.filesImg, ['img']),
@@ -173,6 +181,39 @@ gulp.task('watch', function() {
 
 
 // TASKS
+// Bumps up the version number of the package file
+function bumpVersionNumber(level) {
+  var version = semver.inc(vars.version, level);
+  
+  ejsVars.version = version;
+  
+  return version;
+}
+gulp.task('bump:major', function() {
+  var version = bumpVersionNumber('major');
+  
+  gulp.src('./package.json')
+  .pipe(gulp.dest(bases.build + 'package'))
+  .pipe($.bump({version: version}))
+  .pipe(gulp.dest('./'));
+});
+gulp.task('bump:minor', function() {
+  var version = bumpVersionNumber('minor');
+  
+  gulp.src('./package.json')
+  .pipe(gulp.dest(bases.build + 'package'))
+  .pipe($.bump({version: version}))
+  .pipe(gulp.dest('./'));
+});
+gulp.task('bump:patch', function() {
+  var version = bumpVersionNumber('patch');
+  
+  gulp.src('./package.json')
+  .pipe(gulp.dest(bases.build + 'package'))
+  .pipe($.bump({version: version}))
+  .pipe(gulp.dest('./'));
+});
+
 // Removes `css`, `js` folders from theme folder
 gulp.task('cleanBuild', function() {
   return gulp.src(bases.build, {read: false})
@@ -395,3 +436,58 @@ gulp.task('favicons:generate', ['cleanFavicon'], function() {
   }))
   .pipe(gulp.dest(bases.build + 'favicon'));
 });
+
+// Take screenshots of webpage, using Webshot
+const webshot320 = {
+  renderDelay: 10000,
+  screenSize: {
+    width: 320,
+    height: 480
+  },
+  shotSize: {
+    width: 'window',
+    height: 'all'
+  },
+}, webshot768 = {
+  renderDelay: 10000,
+  screenSize: {
+    width: 768,
+    height: 2014
+  },
+  shotSize: {
+    width: 'window',
+    height: 'all'
+  },
+}, webshot1440 = {
+  renderDelay: 10000,
+  screenSize: {
+    width: 1440,
+    height: 900
+  },
+  shotSize: {
+    width: 'window',
+    height: 'all'
+  },
+}, webshot2560 = {
+  renderDelay: 10000,
+  screenSize: {
+    width: 2560,
+    height: 1440
+  },
+  shotSize: {
+    width: 'window',
+    height: 'all'
+  },
+}
+function webshotHandler() {
+  var date = new Date();
+  var timestamp = date.getFullYear() + '-' + (date.getMonth()<10?'0':'') + date.getMonth() + '-' + (date.getDate()<10?'0':'') + date.getDate() + '-' + (date.getHours()<10?'0':'') + date.getHours() + ';' + (date.getMinutes()<10?'0':'') + date.getMinutes() + ';' + (date.getSeconds()<10?'0':'') + date.getSeconds();
+  
+  $.gutil.log('Taking screenshots');
+  for (let i=0; i<vars.webshotScreenshots.length; i++) {
+    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-320.png', webshot320, function() {});
+    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-768.png', webshot768, function() {});
+    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-1440.png', webshot1440, function() {});
+    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-2560.png', webshot2560, function() {});
+  }
+}
