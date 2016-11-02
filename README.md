@@ -13,11 +13,10 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 2. Install [Node](http://nodejs.org/) (requires v6+)
 3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
 4. If you don't have Homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-5. Install Imagemin, run this command: `brew cask install imagemin`. 
-6. Install ImageMagick, run this command: `brew install imagemagick`
-7. Run `npm install -g bower`
-8. Run `npm install -g gulp-cli`.
-9. Go to your site's root folder and run the command: `yarn`. This will do the same thing as `npm install`, but faster. If you don't have yarn installed, globally, run `npm install --global yarn`
+5. Install ImageMagick, run this command: `brew install imagemagick`
+6. Run `npm install -g bower`
+7. Run `npm install -g gulp-cli`.
+8. Go to your site's root folder and run the command: `yarn`. This will do the same thing as `npm install`, but faster. If you don't have yarn installed, globally, run `npm install --global yarn`
 
 ### Setting Up Each Project
 1. In Terminal, `cd` to your project root
