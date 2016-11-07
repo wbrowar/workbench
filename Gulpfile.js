@@ -402,6 +402,14 @@ gulp.task('js', function() {
 for (var val in vars.ejsVars) {
   ejsVars[val] = vars.ejsVars[val];
 }
+gulp.task('ejs', ['favicons'], function() {
+  ejsVars.critCssEnabled = false;
+
+  return gulp.src(paths.filesHtml)
+  .pipe($.changed(bases.html))
+  .pipe($.ejs(ejsVars))
+  .pipe(gulp.dest(bases.html));
+});
 gulp.task('ejs:full', ['critCss', 'favicons'], function() {
   ejsVars.critCssEnabled = true;
   var minOptions = {
