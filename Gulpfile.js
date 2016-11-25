@@ -22,6 +22,7 @@ const paths = {
       distCss:    bases.theme + 'css/',
       distImg:    bases.theme + 'img/',
       distJs:     bases.theme + 'js/',
+      distIcon:   bases.theme + 'icon/',
       srcCss:     bases.source + '_sass/',
       srcImg:     bases.source + '_img/',
       srcJs:      bases.source + '_js/',
@@ -59,6 +60,8 @@ const ejsVars = {
       requireconfig:      '/js/uglify/require-config.min.js',
       version:            vars.version,
 };
+
+require('events').EventEmitter.prototype._maxListeners = 10000;
 
 
 
@@ -217,27 +220,27 @@ gulp.task('bump:patch', function() {
 // Removes `css`, `js` folders from theme folder
 gulp.task('cleanBuild', function() {
   return gulp.src(bases.build, {read: false})
-  .pipe($.clean());
+  .pipe($.clean({force: true}));
 });
 gulp.task('cleanCritCss', function() {
   return gulp.src(bases.build + 'critcss/', {read: false})
-  .pipe($.clean());
+  .pipe($.clean({force: true}));
 });
 gulp.task('cleanCss', function() {
   return gulp.src([paths.distCss, bases.build + 'css'], {read: false})
-  .pipe($.clean());
+  .pipe($.clean({force: true}));
 });
 gulp.task('cleanFavicon', function() {
   return gulp.src([paths.distImg + 'meta/', bases.build + 'favicon'], {read: false})
-  .pipe($.clean());
+  .pipe($.clean({force: true}));
 });
 gulp.task('cleanImg', function() {
-  return gulp.src([paths.distImg, bases.build + 'img'], {read: false})
-  .pipe($.clean());
+  return gulp.src([paths.distImg, bases.build + 'img', '!' + paths.distImg + 'icons/'], {read: false})
+  .pipe($.clean({force: true}));
 });
 gulp.task('cleanJs', function() {
   return gulp.src([paths.distJs, bases.build + 'js'], {read: false})
-  .pipe($.clean());
+  .pipe($.clean({force: true}));
 });
 
 // Copy files from `node_modules` and `bower_components` folders
@@ -253,17 +256,22 @@ gulp.task('copyFirstJs', function() {
 
 // Run Critical CSS and place in build folder
 for (let i=0; i<vars.critcss.length; i++) {
-  ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
+  ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/replaced/' + vars.critcss[i].critCssFilename + '.css';
   critCssTasks.push('critcss:' + vars.critcss[i].critCssFilename);
-  gulp.task('critcss:' + vars.critcss[i].critCssFilename, ['css:cleaned'], function() {
-    return critical.generate({
+  gulp.task('critcss:' + vars.critcss[i].critCssFilename, ['css:cleaned'], function(cb) {
+    critical.generate({
       src: vars.critcss[i].src,
       css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
       width: 1280,
       height: 960,
-      dest: bases.build + 'critcss/' + vars.critcss[i].critCssFilename + '.css',
+      dest: bases.build + 'critcss/raw/' + vars.critcss[i].critCssFilename + '.css',
       minify: true,
-      extract: false
+      extract: false,
+    }, function (err, output) {
+      gulp.src(bases.build + 'critcss/raw/' + vars.critcss[i].critCssFilename + '.css')
+      .pipe($.replace('{#', '{ #'))
+      .pipe(gulp.dest(bases.build + 'critcss/replaced/'));
+      cb();
     });
   });
 }
@@ -347,8 +355,9 @@ gulp.task('svg', function() {
   return gulp.src(paths.srcImg + 'icons/**/*.svg')
   .pipe($.imagemin())
   .pipe(gulp.dest(bases.build + 'icons/minimized'))
-  .pipe(gulp.dest(paths.distImg + 'icons/'))
+  .pipe(gulp.dest(paths.distIcon))
   .pipe($.svgInline({ className: '.icon_%s' }))
+  .pipe($.replace('background-image', 'background-position: center center; background-repeat: no-repeat; background-size: contain; background-image'))
   .pipe($.concat('_icons.scss'))
   .pipe(gulp.dest(paths.srcCss));
 });
