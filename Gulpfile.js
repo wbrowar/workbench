@@ -155,28 +155,32 @@ gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:full'], f
 
 // [gulp watch]
 gulp.task('watch', function() {
-  $.livereload.listen(35729);
-  var watchHtml = gulp.watch(paths.filesHtml, ['ejs:quick']),
-      watchJs   = gulp.watch(paths.filesJs, ['js']),
+  //$.livereload.listen(35729);
+  var watchCss  = gulp.watch(paths.filesScss, ['css']),
+      watchHtml = gulp.watch(paths.filesHtml, ['ejs:quick']),
       watchImg  = gulp.watch(paths.filesImg, ['img']),
-      watchCss  = gulp.watch(paths.filesScss, ['css']),
-      watchCss  = gulp.watch(paths.filesSvg, ['css:cleaned']);
+      watchJs   = gulp.watch(paths.filesJs, ['js']),
+      watchSvg  = gulp.watch(paths.filesSvg, ['css:cleaned']);
 
   watchCss.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'CSS Updated' });
-    $.livereload();
+    //$.livereload();
   });
   watchHtml.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'HTML Updated' });
-    $.livereload();
+    //$.livereload();
   });
   watchImg.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'Images Updated' });
-    $.livereload();
+    //$.livereload();
   });
   watchJs.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'JS Updated' });
-    $.livereload();
+    //$.livereload();
+  });
+  watchSvg.on('change', function(event) {
+    notifier.notify({ 'title': name, 'message': 'SVG and CSS Updated' });
+    //$.livereload();
   });
 });
 
