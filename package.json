@@ -18,16 +18,15 @@
     }
   ],
   "copyFirstCssFiles": [
-    "bower_components/ideal-image-slider/ideal-image-slider.css"
+    "node_modules/ideal-image-slider/ideal-image-slider.css"
   ],
   "copyFirstJsFiles": [
-    "bower_components/fitvids/jquery.fitvids.js",
-    "bower_components/ideal-image-slider/ideal-image-slider.js",
-    "bower_components/jquery/dist/jquery.js",
-    "bower_components/jquery.transit/jquery.transit.js",
-    "bower_components/loadcss/src/loadCSS.js",
-    "bower_components/requirejs/require.js",
-    "node_modules/fontfaceobserver/fontfaceobserver.js"
+    "node_modules/fontfaceobserver/fontfaceobserver.js",
+    "node_modules/ideal-image-slider/ideal-image-slider.js",
+    "node_modules/jquery/dist/jquery.js",
+    "node_modules/fg-loadcss/src/loadCSS.js",
+    "node_modules/requirejs/require.js",
+    "node_modules/vanilla-fitvids/jquery.fitvids.js"
   ],
   "ejsVars": {
     "includename": "/path/from/_build"
@@ -38,10 +37,17 @@
       "url": "http://starter:1111/index_gulp.html"
     }
   ],
+  "dependencies": {
+    "fg-loadcss": "^1.2.0",
+    "fontfaceobserver": "^1.5.4",
+    "ideal-image-slider": "^1.5.1",
+    "jquery": "^3.1.1",
+    "requirejs": "^2.3.2",
+    "vanilla-fitvids": "^1.1.0"
+  },
   "devDependencies": {
     "babel-preset-es2015": "^6.16.0",
     "critical": "^0.8.0",
-    "fontfaceobserver": "^1.5.4",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",

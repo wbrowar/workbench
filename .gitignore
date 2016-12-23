@@ -4,14 +4,15 @@
 # .cache
 # .DS_Store
 # Thumbs.db
-# /logs/*
+# logs/*
+yarn.lock
 
 # BUILD FILES
-# /bower_components/*
-# /node_modules/*
-# /build/*
-# /_source/_PSD/*
-# /EXTRAS/*
+# bower_components/*
+# node_modules/*
+# build/*
+# _source/_PSD/*
+# EXTRAS/*
 
 
 # CRAFT CMS
@@ -19,22 +20,22 @@
 # Exclude local config files so we don't overwrite other local setups.
 # Leave example files that can be copied to get setup
 # ------------------------------------------------------------
-# /craft/config/local/*
-# !/craft/config/local/db.php.example
-# !/craft/config/local/general.php.example
+# craft/config/local/*
+# !craft/config/local/db.php.example
+# !craft/config/local/general.php.example
 
 # CRAFT STORAGE
 # http://buildwithcraft.com/help/craft-storage-gitignore
 # ------------------------------------------------------------
-# /craft/storage/*
-# !/craft/storage/.gitignore
-# !/craft/storage/logo/*
+# craft/storage/*
+# !craft/storage/.gitignore
+# !craft/storage/logo/*
 
 
 
 
 # FOR STARTER GITHUB – DELETE ALL BELOW
-/node_modules/*
-/bower_components/*
-/_build/*
-yarn.lock
+.DS_Store
+node_modules/*
+bower_components/*
+_build/*
