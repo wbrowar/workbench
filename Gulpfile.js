@@ -72,7 +72,7 @@ gulp.task('default',function() {
   var text  = `\n\n${$.gutil.colors.inverse('        COMMANDS        ')}`
       + `\n––––––––––––––––––––––––\n`
       + `\n${$.gutil.colors.inverse(' gulp first ')}`
-      + `\n${$.gutil.colors.bold('└─ Moves all important files from npm and bower to _source/_js/_lib/')}\n`
+      + `\n${$.gutil.colors.bold('└─ Moves all important files from npm to _source/_js/_lib/')}\n`
       + `\n${$.gutil.colors.inverse(' gulp run ')}`
       + `\n${$.gutil.colors.bold('└─ Processes CSS, JS, and image files.')}\n`
       + `\n${$.gutil.colors.inverse(' gulp release ')}`
@@ -247,7 +247,7 @@ gulp.task('cleanJs', function() {
   .pipe($.clean({force: true}));
 });
 
-// Copy files from `node_modules` and `bower_components` folders
+// Copy files from `node_modules` folder
 gulp.task('copyFirstCss', function() {
   return gulp.src(copyFirstCssFiles)
   .pipe($.rename({ extname: '.scss', prefix: '_' }))

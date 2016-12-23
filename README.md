@@ -1,7 +1,7 @@
 WB-Starter
 ==========
 
-My personal framework for front-end development includes some SASS, HTML, and JS snippits that I use on a regular basis. This framework is built using Bower, NPM, and Gulp and it is meant to be pulled apart or modified for the project at hand. By changing settings in the `package.json` file, this can be used for one-page landing pages, as well as used in full-fledged CMS themes.
+My personal framework for front-end development includes some SASS, HTML, and JS snippits that I use on a regular basis. This framework is built using NPM and Gulp and it is meant to be pulled apart or modified for the project at hand. By changing settings in the `package.json` file, this can be used for one-page landing pages, as well as used in full-fledged CMS themes.
 
 This is here for my own storage, but please let me know if you have any feedback or suggestions.
 
@@ -14,23 +14,21 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
 4. If you don't have Homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 5. Install ImageMagick, run this command: `brew install imagemagick`
-6. Run `npm install -g bower`
-7. Run `npm install -g gulp-cli`.
-8. Go to your site's root folder and run the command: `yarn`. This will do the same thing as `npm install`, but faster. If you don't have yarn installed, globally, run `npm install --global yarn`
+6. Run `npm install -g gulp-cli`.
+7. Go to your site's root folder and run the command: `yarn`. This will do the same thing as `npm install`, but faster. If you don't have yarn installed, globally, run `npm install --global yarn`
 
 ### Setting Up Each Project
 1. In Terminal, `cd` to your project root
 2. Run `yarn`
-3. Run `bower update`
-4. Update the `package.json` file to fit your project's needs. See `package.json` below
-5. Run `gulp first` to perform the default task and to do an initial setup
+3. Update the `package.json` file to fit your project's needs. See `package.json` below
+4. Run `gulp first` to perform the default task and to do an initial setup
 
 ---
 ## When to Use What
 ### Beginning a project
 - When starting a project, run the helper task, `gulp`, to see what commands are available.
 - When editing the `package.json` file, run `gulp vars` for a description of each variable.
-- `gulp first` only needs to be run once at the beginning of the project to move the default bower and npm files out of the `bower_components` and `node_modules` folders. From there, additional libraries can be added manually, as needed.
+- `gulp first` only needs to be run once at the beginning of the project to move the default npm files out of the `node_modules` folder. In order to keep files up-to-date, and to make working with git easier, edit the `package.json` file to include all other libraries and re-run `gulp first` to update front-end libraries.
 - To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `gulp run` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `gulp release` for a more thorough check.
 
 ### During Development
