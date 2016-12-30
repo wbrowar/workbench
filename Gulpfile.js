@@ -28,7 +28,7 @@ const paths = {
       srcJs:      bases.source + '_js/',
       filesHtml:  [bases.source + '_html/**/*.html', bases.source + '_html/**/*.php', bases.source + '_html/**/*.twig'],
       filesImg:   bases.source + '_img/**/*.{png,jpg,gif}',
-      filesJs:    [bases.source + '_js/**/*.js', '!' + bases.source + '_js/require-config.js', '!' + bases.source + '_js/_lib/**/*'],
+      filesJs:    [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
       filesJsLib: [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
       filesScss:  bases.source + '_sass/**/*.scss',
       filesSvg:   bases.source + '_img/icons/**/*.{svg}',
@@ -52,12 +52,12 @@ const critical        = require('critical'),
 const ejsVars = {
       root:               bases.build,
       enable_font_events: vars.enable_font_events,
-      enable_require_js:  vars.enable_require_js,
+      enable_system_js:   vars.enable_system_js,
       favicons:           '/favicon/favicons.html',
       site_root:          vars.site_root,
       loadcss:            '/js/uglify/_lib/loadCSS.min.js',
-      requirejs:          '/js/uglify/_lib/require.min.js',
-      requireconfig:      '/js/uglify/require-config.min.js',
+      systemjs:           '/js/uglify/_lib/system.min.js',
+      systemconfig:       '/js/uglify/system-config.min.js',
       version:            vars.version,
 };
 
@@ -106,8 +106,8 @@ gulp.task('vars',function() {
       + `\n${$.gutil.colors.bold('└─ When running the \`gulp release\` task, babel can be used to process ES6 Javascript into ES5 Javascript for older browsers.')}\n`
       + `\n${$.gutil.colors.inverse(' enable_font_events ')}`
       + `\n${$.gutil.colors.bold('└─ Turn on Font Events for fonts loaded from this server.')}\n`
-      + `\n${$.gutil.colors.inverse(' enable_require_js ')}`
-      + `\n${$.gutil.colors.bold('└─ Enable RequireJS for async loading of JS files.')}\n`
+      + `\n${$.gutil.colors.inverse(' enable_system_js ')}`
+      + `\n${$.gutil.colors.bold('└─ Enable SystemJS for async loading of JS files.')}\n`
       + `\n${$.gutil.colors.inverse(' minify_html ')}`
       + `\n${$.gutil.colors.bold('└─ Enable minification of HTML in the \`gulp release\` task. Turn this off when theming with PHP and Twig files.')}\n`
       + `\n${$.gutil.colors.inverse(' critcss ')}`
@@ -133,7 +133,7 @@ gulp.task('vars',function() {
    • theme_path – the folder where `css`, `js` folders are placed
    • html_path – the folder where html, twig, and php files are placed
    • site_root – appended to asset URLs sourced in your template files
-   • enable_font_events – enables Font Face Observer (requires edits to `require-config.js`, `index_gulp.html`
+   • enable_font_events – enables Font Face Observer (requires edits to `system-config.js`, `index_gulp.html`
 */
 
 // [gulp first]
@@ -388,8 +388,8 @@ function jsLibHandler(useUglify = false) {
   .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
   .pipe(gulp.dest(paths.distJs + '_lib/'));
 };
-function jsRequireConfigHandler(useUglify = false) {
-  return gulp.src(paths.srcJs + 'require-config.js')
+function jsSystemConfigHandler(useUglify = false) {
+  return gulp.src(paths.srcJs + 'system-config.js')
   .pipe($.changed(paths.distJs, {extension: '.min.js'}))
   .pipe(useUglify ? $.uglify() : $.gutil.noop())
   .pipe($.rename({ extname: '.min.js' }))
@@ -399,12 +399,12 @@ function jsRequireConfigHandler(useUglify = false) {
 gulp.task('js:babel', ['cleanJs'], function() {
   jsHandler(true, true);
   jsLibHandler(true);
-  jsRequireConfigHandler(true);
+  jsSystemConfigHandler(true);
 });
 gulp.task('js:cleaned', ['cleanJs'], function() {
   jsHandler();
   jsLibHandler();
-  jsRequireConfigHandler();
+  jsSystemConfigHandler();
 });
 gulp.task('js', function() {
   jsHandler();

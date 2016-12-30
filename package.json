@@ -8,7 +8,7 @@
   "site_root": "",
   "enable_babel": "true",
   "enable_font_events": "false",
-  "enable_require_js": "true",
+  "enable_system_js": "true",
   "minify_html": "true",
   "critcss": [
     {
@@ -25,7 +25,7 @@
     "node_modules/ideal-image-slider/ideal-image-slider.js",
     "node_modules/jquery/dist/jquery.js",
     "node_modules/fg-loadcss/src/loadCSS.js",
-    "node_modules/requirejs/require.js",
+    "node_modules/systemjs/dist/system.js",
     "node_modules/vanilla-fitvids/jquery.fitvids.js"
   ],
   "ejsVars": {
@@ -42,7 +42,7 @@
     "fontfaceobserver": "^1.5.4",
     "ideal-image-slider": "^1.5.1",
     "jquery": "^3.1.1",
-    "requirejs": "^2.3.2",
+    "systemjs": "^0.19.41",
     "vanilla-fitvids": "^1.1.0"
   },
   "devDependencies": {
@@ -56,7 +56,7 @@
     "gulp-changed": "^1.3.2",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
-    "gulp-ejs": "^2.2.1",
+    "gulp-ejs": "2.2.1",
     "gulp-favicons": "^2.2.6",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.0.3",

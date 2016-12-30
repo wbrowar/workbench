@@ -3,7 +3,8 @@
   🛋 Scripts specific to interior pages
 */
 
-var jq = jQuery;
+import jq from 'jquery';
+import global from 'global';
 
 
 // CUSTOM FUNCTIONS
@@ -13,6 +14,6 @@ var jq = jQuery;
 
 
 // INIT FUNCTIONS
-if (requireDevMode) {
+if (jsDevMode) {
   console.log('Inside');
 }

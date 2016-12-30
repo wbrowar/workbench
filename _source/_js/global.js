@@ -6,17 +6,18 @@
   🏗 Utility functions, global variables, or browser events used on all pages of the site
 */
 
-var jq = jQuery;
+import jq from 'jquery';
+
 //var windowWidth = 0, windowHeight = 0;
 
 // UTILITY FUNCTIONS
 /*
 function ga_track(category, action, label) {
-	if (!requireDevMode) {
-		ga("send", "event", category, action, label);
-	} else {
-		console.log('GA Tracking Preview: ', category, action, label);
-	}
+  if (!jsDevMode) {
+    ga("send", "event", category, action, label);
+  } else {
+    console.log('GA Tracking Preview: ', category, action, label);
+  }
 }
 */
 
@@ -27,8 +28,8 @@ function ga_track(category, action, label) {
 // BROWSER EVENTS
 /*
 jq(window).resize(function() {
-	windowWidth = jq(window).width();
-	windowHeight = jq(window).height();
+  windowWidth = jq(window).width();
+  windowHeight = jq(window).height();
 }).resize();
 */
 /*
@@ -44,6 +45,6 @@ jq('form').submit(function() {
 
 
 // INIT FUNCTIONS
-if (requireDevMode) {
+if (jsDevMode) {
   console.log('Global');
 }

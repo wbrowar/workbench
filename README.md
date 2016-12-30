@@ -53,8 +53,8 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 
 ---
 ### Javascript
-- All of the JS is configured to be loaded using [RequireJS](http://requirejs.org), unless disabled in the `package.json` file.
-- The `require-config.js` file sets up options for RequireJS. As part of the `ejs` task, it will be added inline to the `<head>` tag and will be run every page.
+- All of the JS is configured to be loaded using [SystemJS](https://github.com/systemjs/systemjs), unless disabled in the `package.json` file.
+- The `system-config.js` file sets up options for SystemJS. As part of the `ejs` task, it will be added inline to the `<head>` tag and will be run every page.
 
 ---
 ### Image Processing
