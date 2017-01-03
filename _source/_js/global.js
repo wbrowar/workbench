@@ -8,11 +8,11 @@
 
 import jq from 'jquery';
 
-//var windowWidth = 0, windowHeight = 0;
+// export var windowWidth = 0, windowHeight = 0;
 
 // UTILITY FUNCTIONS
 /*
-function ga_track(category, action, label) {
+export function ga_track(category, action, label) {
   if (!jsDevMode) {
     ga("send", "event", category, action, label);
   } else {

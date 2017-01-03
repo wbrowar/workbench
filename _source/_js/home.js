@@ -4,7 +4,7 @@
 */
 
 import jq from 'jquery';
-import global from 'global';
+import * as g from 'global';
 
 // CUSTOM FUNCTIONS
 

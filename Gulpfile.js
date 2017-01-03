@@ -266,8 +266,8 @@ for (let i=0; i<vars.critcss.length; i++) {
     critical.generate({
       src: vars.critcss[i].src,
       css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
-      width: 1280,
-      height: 960,
+      width: vars.critcss[i].width ? vars.critcss[i].width : 1280,
+      height: vars.critcss[i].height ? vars.critcss[i].height : 960,
       dest: bases.build + 'critcss/raw/' + vars.critcss[i].critCssFilename + '.css',
       minify: true,
       extract: false,
@@ -314,6 +314,8 @@ function cssHandler() {
           cascade: false
         }))
   .pipe(gulp.dest(bases.build + 'css/autoprefixer'))
+  .pipe($.replace('{#', '{ #'))
+  .pipe(gulp.dest(bases.build + 'css/replaced/'))
   .pipe(gulp.dest(paths.distCss));
 }
 gulp.task('css:cleaned', ['cleanCss', 'svg'], function(cb) {
@@ -367,14 +369,14 @@ gulp.task('svg', function() {
 });
 
 // Uglify JS
-function jsHandler(useBabel = false, useUglify = false) {
+function jsHandler(useUglify = false) {
   var babelOptions = {
     presets: ['es2015'],
   }
 
   return gulp.src(paths.filesJs)
   .pipe($.changed(paths.distJs, {extension: '.min.js'}))
-  .pipe(useBabel == true && vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
+  .pipe(vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
   .pipe(useUglify ? $.uglify() : $.gutil.noop())
   .pipe($.rename({ extname: '.min.js' }))
   .pipe(gulp.dest(bases.build + 'js/uglify'))
@@ -397,7 +399,7 @@ function jsSystemConfigHandler(useUglify = false) {
   .pipe(gulp.dest(paths.distJs));
 };
 gulp.task('js:babel', ['cleanJs'], function() {
-  jsHandler(true, true);
+  jsHandler(true);
   jsLibHandler(true);
   jsSystemConfigHandler(true);
 });
@@ -407,7 +409,7 @@ gulp.task('js:cleaned', ['cleanJs'], function() {
   jsSystemConfigHandler();
 });
 gulp.task('js', function() {
-  jsHandler();
+  jsHandler(false);
   jsLibHandler();
 });
 
