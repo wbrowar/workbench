@@ -51,10 +51,31 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 - In `_source/sass` there are a few files with underscores in front. These all get compiled into `all.css`, by default.
 - Sass will compile all `.scss` files that do note contain an underscore in front of the filename.
 
+
+
 ---
 ### Javascript
 - All of the JS is configured to be loaded using [SystemJS](https://github.com/systemjs/systemjs), unless disabled in the `package.json` file.
 - The `system-config.js` file sets up options for SystemJS. As part of the `ejs` task, it will be added inline to the `<head>` tag and will be run every page.
+
+#### Using SystemJS
+SystemJS is a module loader, just like RequireJS. Where require uses AMD modules, SystemJS supports AMD, but also supports the ES6 module loading spec. Since ES6 is not yet supported, SystemJS—along with code that's transpiled through Babel in this Gulp process—allows you to follow the spec for loading modules and to set your javascript code up for how you would want to load it in the future. The idea is that when the ES6 spec is more supported, we could remove SystemJS and there would be very little work required to load our javascript the native way.
+
+To load a Javascript file, first start by adding the key and the path of the file into `_source/_js/system-config.js`. The key must be unique and it should point to path, relative to the `public/js` directory.
+
+If a script is an external library, you may need to add dependencies into the `meta` object. For example, the FitVids jQuery plugin depends on jQuery, so in order to make sure the dependency is loaded first, add it to the `meta` object:
+
+```
+meta: {
+  'fitvids': {
+    deps: ['jquery'],
+  },
+},
+```
+
+You can now use `SystemJS.import('fitvids');` to load both FitVids and jQuery.
+
+Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/systemjs/blob/master/docs/es6-modules-overview.md) to learn more about module loading.
 
 ---
 ### Image Processing

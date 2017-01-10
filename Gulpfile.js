@@ -260,6 +260,10 @@ gulp.task('copyFirstJs', function() {
 
 // Run Critical CSS and place in build folder
 for (let i=0; i<vars.critcss.length; i++) {
+  if (vars.critcss[i].src === 'http://google.com/') {
+    $.gutil.colors.bold('Critical CSS is not set up, yet. Change your settings in package.json to use Critical CSS.');
+  }
+
   ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/replaced/' + vars.critcss[i].critCssFilename + '.css';
   critCssTasks.push('critcss:' + vars.critcss[i].critCssFilename);
   gulp.task('critcss:' + vars.critcss[i].critCssFilename, ['css:cleaned'], function(cb) {
@@ -508,9 +512,11 @@ function webshotHandler() {
   
   $.gutil.log('Taking screenshots');
   for (let i=0; i<vars.webshotScreenshots.length; i++) {
-    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-320.png', webshot320, function() {});
-    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-768.png', webshot768, function() {});
-    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-1440.png', webshot1440, function() {});
-    webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-2560.png', webshot2560, function() {});
+    if (vars.webshotScreenshots[i].url !== 'http://google.com/') {
+      webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-320.png', webshot320, function() {});
+      webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-768.png', webshot768, function() {});
+      webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-1440.png', webshot1440, function() {});
+      webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-2560.png', webshot2560, function() {});
+    }
   }
 }

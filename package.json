@@ -12,7 +12,7 @@
   "minify_html": "true",
   "critcss": [
     {
-      "src": "http://starter:1111/",
+      "src": "http://google.com/",
       "cssFilename": "all",
       "critCssFilename": "home"
     }
@@ -34,7 +34,7 @@
   "webshotScreenshots": [
     { 
       "name": "home",
-      "url": "http://starter:1111/index_gulp.html"
+      "url": "http://google.com/"
     }
   ],
   "dependencies": {
