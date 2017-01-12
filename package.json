@@ -10,6 +10,10 @@
   "enable_font_events": "false",
   "enable_system_js": "true",
   "minify_html": "true",
+  "browserSync": {
+    "browser": "google chrome",
+    "url": "http://google.com/"
+  },
   "critcss": [
     {
       "src": "http://google.com/",
@@ -32,7 +36,7 @@
     "includename": "/path/from/_build"
   },
   "webshotScreenshots": [
-    { 
+    {
       "name": "home",
       "url": "http://google.com/"
     }
@@ -47,6 +51,7 @@
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.16.0",
+    "browser-sync": "^2.18.6",
     "critical": "^0.8.0",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",

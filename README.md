@@ -90,3 +90,12 @@ Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/
 - Uses [ejs](http://ejs.co) to process HTML files when the `gulp release` task is run.
 - Using `ejs` allows you to include files, use conditionals, and replace strings—like IDs and classes.
 - There are default replacements included in the Gulpfile, and additional replacements can be added to the `ejsVars` setting in `package.json`. If the replacement is for an include, the file must be included based on the root of the `_build` folder.
+
+---
+## Release Notes
+**4.3.0**
+- :rocket: Added `browserSync` settings to `package.json`
+- :rocket: Added Browsersync support
+  - Run `gulp watch` and Browsersync will open a new tab at the URL you set
+  - When you save any HTML or Javascript file that is watched, Browsersync will reload the page
+  - Saving a SCSS file will automatically update the CSS on the page without reloading

@@ -35,7 +35,8 @@ const paths = {
 };
 
 // Gulp Variables
-const critical        = require('critical'),
+const browserSync = require('browser-sync').create(),
+      critical        = require('critical'),
       glob            = require("glob"),
       gulp            = require('gulp'),
       gulpLoadPlugins = require('gulp-load-plugins'),
@@ -162,25 +163,34 @@ gulp.task('watch', function() {
       watchJs   = gulp.watch(paths.filesJs, ['js']),
       watchSvg  = gulp.watch(paths.filesSvg, ['css:cleaned']);
 
+  if (vars.browserSync.url === 'http://google.com/') {
+    $.gutil.log($.gutil.colors.inverse(' Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json. '));
+  } else {
+    browserSync.init({
+      browser: vars.browserSync.browser,
+      proxy: vars.browserSync.url,
+    });
+  }
+
   watchCss.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'CSS Updated' });
-    //$.livereload();
+    //browserSync.stream();
   });
   watchHtml.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'HTML Updated' });
-    //$.livereload();
+    browserSync.reload();
   });
   watchImg.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'Images Updated' });
-    //$.livereload();
+    browserSync.reload();
   });
   watchJs.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'JS Updated' });
-    //$.livereload();
+    browserSync.reload();
   });
   watchSvg.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'SVG and CSS Updated' });
-    //$.livereload();
+    browserSync.reload();
   });
 });
 
@@ -260,50 +270,29 @@ gulp.task('copyFirstJs', function() {
 
 // Run Critical CSS and place in build folder
 for (let i=0; i<vars.critcss.length; i++) {
-  if (vars.critcss[i].src === 'http://google.com/') {
-    $.gutil.colors.bold('Critical CSS is not set up, yet. Change your settings in package.json to use Critical CSS.');
-  }
-
-  ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/replaced/' + vars.critcss[i].critCssFilename + '.css';
+  ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
   critCssTasks.push('critcss:' + vars.critcss[i].critCssFilename);
   gulp.task('critcss:' + vars.critcss[i].critCssFilename, ['css:cleaned'], function(cb) {
+    if (vars.critcss[i].src === 'http://google.com/') {
+      $.gutil.log($.gutil.colors.inverse(' Critical CSS is not set up, yet. Change your settings in package.json to use Critical CSS. '));
+    }
     critical.generate({
       src: vars.critcss[i].src,
       css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
       width: vars.critcss[i].width ? vars.critcss[i].width : 1280,
       height: vars.critcss[i].height ? vars.critcss[i].height : 960,
-      dest: bases.build + 'critcss/raw/' + vars.critcss[i].critCssFilename + '.css',
+      dest: bases.build + 'critcss/' + vars.critcss[i].critCssFilename + '.css',
       minify: true,
       extract: false,
     }, function (err, output) {
-      gulp.src(bases.build + 'critcss/raw/' + vars.critcss[i].critCssFilename + '.css')
+      gulp.src(bases.build + 'critcss/' + vars.critcss[i].critCssFilename + '.css')
       .pipe($.replace('{#', '{ #'))
-      .pipe(gulp.dest(bases.build + 'critcss/replaced/'));
+      .pipe(gulp.dest(bases.build + 'critcss/'));
       cb();
     });
   });
 }
 gulp.task('critCss', critCssTasks);
-//for (let i=0; i<vars.critcss.length; i++) {
-//  ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
-//  var func = function() {
-//    critical.generate({
-//      src: vars.critcss[i].src,
-//      css: [paths.distCss + vars.critcss[i].cssFilename + '.css'],
-//      width: 1280,
-//      height: 960,
-//      dest: bases.build + 'critcss/' + vars.critcss[i].critCssFilename + '.css',
-//      minify: true,
-//      extract: false
-//    });
-//  }
-//  critCssTasks.push(func);
-//}
-//gulp.task('critCss', ['css:cleaned'], function() {
-//  for (let i=0; i<critCssTasks.length; i++) {
-//    critCssTasks[i]();
-//  }
-//});
 
 // Compile SCSS files (all `.scss` files that don't start with `_`)
 // Adds autoprefixing
@@ -320,7 +309,8 @@ function cssHandler() {
   .pipe(gulp.dest(bases.build + 'css/autoprefixer'))
   .pipe($.replace('{#', '{ #'))
   .pipe(gulp.dest(bases.build + 'css/replaced/'))
-  .pipe(gulp.dest(paths.distCss));
+  .pipe(gulp.dest(paths.distCss))
+  .pipe(browserSync.stream());
 }
 gulp.task('css:cleaned', ['cleanCss', 'svg'], function(cb) {
   return cssHandler();
