@@ -93,7 +93,7 @@ Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/
 
 ---
 ## Release Notes
-**4.3.0**
+##### 4.3.0
 - :rocket: Added `browserSync` settings to `package.json`
 - :rocket: Added Browsersync support
   - Run `gulp watch` and Browsersync will open a new tab at the URL you set
