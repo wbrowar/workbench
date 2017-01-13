@@ -99,3 +99,9 @@ Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/
   - Run `gulp watch` and Browsersync will open a new tab at the URL you set
   - When you save any HTML or Javascript file that is watched, Browsersync will reload the page
   - Saving a SCSS file will automatically update the CSS on the page without reloading
+
+#### 4.2.0
+- :wrench: Replaced `RequireJS` with `SystemJS` for Javascript module loading
+
+#### 4.1.0
+- :wrench: Removed bower to use npm for front-end libraries
