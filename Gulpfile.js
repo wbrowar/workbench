@@ -19,23 +19,24 @@ const bases = {
       site:   vars.site_root,
 };
 const paths = {
-      distCss:    bases.theme + 'css/',
-      distImg:    bases.theme + 'img/',
-      distJs:     bases.theme + 'js/',
-      distIcon:   bases.theme + 'icon/',
-      srcCss:     bases.source + '_sass/',
-      srcImg:     bases.source + '_img/',
-      srcJs:      bases.source + '_js/',
-      filesHtml:  [bases.source + '_html/**/*.html', bases.source + '_html/**/*.php', bases.source + '_html/**/*.twig'],
-      filesImg:   bases.source + '_img/**/*.{png,jpg,gif}',
-      filesJs:    [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
-      filesJsLib: [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
-      filesScss:  bases.source + '_sass/**/*.scss',
-      filesSvg:   bases.source + '_img/icons/**/*.{svg}',
+      distCss:           bases.theme + 'css/',
+      distImg:           bases.theme + 'img/',
+      distJs:            bases.theme + 'js/',
+      distIcon:          bases.theme + 'icon/',
+      srcCss:            bases.source + '_sass/',
+      srcImg:            bases.source + '_img/',
+      srcJs:             bases.source + '_js/',
+      filesHtml:         [bases.source + '_html/**/[^_]*.{html,php,twig}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig}'],
+      filesHtmlIncludes: [bases.source + '_html/ejs_includes/*.{html,php,twig}'],
+      filesImg:          bases.source + '_img/**/*.{png,jpg,gif}',
+      filesJs:           [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
+      filesJsLib:        [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
+      filesScss:         bases.source + '_sass/**/*.scss',
+      filesSvg:          bases.source + '_img/icons/**/*.{svg}',
 };
 
 // Gulp Variables
-const browserSync = require('browser-sync').create(),
+const browserSync     = require('browser-sync').create(),
       critical        = require('critical'),
       glob            = require("glob"),
       gulp            = require('gulp'),
@@ -45,8 +46,9 @@ const browserSync = require('browser-sync').create(),
       webshot         = require('webshot'),
       $               = gulpLoadPlugins({
         rename: {
-          'gulp-svg-inline-css':    'svgInline',
-          'gulp-util':              'gutil',
+          'gulp-sass-glob':      'sassGlob',
+          'gulp-svg-inline-css': 'svgInline',
+          'gulp-util':           'gutil',
         }
       });
 
@@ -158,7 +160,7 @@ gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:full'], f
 gulp.task('watch', function() {
   //$.livereload.listen(35729);
   var watchCss  = gulp.watch(paths.filesScss, ['css']),
-      watchHtml = gulp.watch(paths.filesHtml, ['ejs:quick']),
+      watchHtml = gulp.watch([paths.filesHtmlIncludes, paths.filesHtml], ['ejs:quick']),
       watchImg  = gulp.watch(paths.filesImg, ['img']),
       watchJs   = gulp.watch(paths.filesJs, ['js']),
       watchSvg  = gulp.watch(paths.filesSvg, ['css:cleaned']);
@@ -178,7 +180,7 @@ gulp.task('watch', function() {
   });
   watchHtml.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'HTML Updated' });
-    browserSync.reload();
+    //browserSync.reload();
   });
   watchImg.on('change', function(event) {
     notifier.notify({ 'title': name, 'message': 'Images Updated' });
@@ -300,6 +302,7 @@ gulp.task('critCss', critCssTasks);
 function cssHandler() {
   return gulp.src(paths.filesScss)
   .pipe($.changed(paths.distCss))
+  .pipe($.sassGlob())
   .pipe($.sass({outputStyle: 'compressed'}).on('error', $.sass.logError))
   .pipe(gulp.dest(bases.build + 'css/sass'))
   .pipe($.autoprefixer({
@@ -411,7 +414,15 @@ gulp.task('js', function() {
 for (var val in vars.ejsVars) {
   ejsVars[val] = vars.ejsVars[val];
 }
-gulp.task('ejs', ['favicons'], function() {
+gulp.task('ejs:includes', function() {
+  ejsVars.critCssEnabled = false;
+
+  return gulp.src(paths.filesHtmlIncludes)
+  .pipe($.changed(bases.html))
+  .pipe($.ejs(ejsVars))
+  .pipe(gulp.dest(bases.build + 'html/ejs/ejs_includes'));
+});
+gulp.task('ejs', ['favicons', 'ejs:includes'], function() {
   ejsVars.critCssEnabled = false;
 
   return gulp.src(paths.filesHtml)
@@ -419,7 +430,7 @@ gulp.task('ejs', ['favicons'], function() {
   .pipe($.ejs(ejsVars))
   .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:full', ['critCss', 'favicons'], function() {
+gulp.task('ejs:full', ['critCss', 'favicons', 'ejs:includes'], function() {
   ejsVars.critCssEnabled = true;
   var minOptions = {
     collapseWhitespace: true,
@@ -431,13 +442,17 @@ gulp.task('ejs:full', ['critCss', 'favicons'], function() {
   .pipe(vars.minify_html === "true" ? $.htmlmin(minOptions) : $.gutil.noop())
   .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:quick', function() {
+gulp.task('ejs:quick', ['ejs:includes'], function(cb) {
   ejsVars.critCssEnabled = false;
 
-  return gulp.src(paths.filesHtml)
+  gulp.src(paths.filesHtml)
   .pipe($.changed(bases.html))
   .pipe($.ejs(ejsVars))
   .pipe(gulp.dest(bases.html));
+  
+  browserSync.reload();
+  
+  cb();
 });
 
 // Generate favicons

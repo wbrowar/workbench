@@ -19,6 +19,11 @@
       "src": "http://google.com/",
       "cssFilename": "all",
       "critCssFilename": "home"
+    },
+    {
+      "src": "http://google.com/",
+      "cssFilename": "all",
+      "critCssFilename": "amp"
     }
   ],
   "copyFirstCssFiles": [
@@ -33,7 +38,7 @@
     "node_modules/vanilla-fitvids/jquery.fitvids.js"
   ],
   "ejsVars": {
-    "includename": "/path/from/_build"
+    "stylemarkup": "/html/ejs/ejs_partials/_style_markup.html"
   },
   "webshotScreenshots": [
     {
@@ -71,6 +76,7 @@
     "gulp-replace": "^0.5.4",
     "gulp-responsive": "^2.6.0",
     "gulp-sass": "^2.3.2",
+    "gulp-sass-glob": "^1.0.8",
     "gulp-svg-inline-css": "^1.3.3",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",

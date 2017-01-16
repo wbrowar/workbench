@@ -1,0 +1,13 @@
+$enable_font_events: false;
+
+@import "_fonts"; // @font-face fonts (use this along with font() mixin
+@import "_icons"; // Adds all svgs from _source/_img/_icons turned into SCSS base64-encoded data
+//@import "_animations"; // custom CSS animations
+@import "_mixins"; // mixins and variables
+@import "_reset"; // reset.css
+//@import "lib/_ideal-image-slider"; // Ideal Image Slider
+@import "_globals"; // buttons or elements used accross the entire website
+@import "modules/*"
+@import "layout/*"
+@import "pages/*"; // custom styles for pages
+//@import "_print"; // print styles
