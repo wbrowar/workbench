@@ -26,7 +26,7 @@ const paths = {
       srcCss:            bases.source + '_sass/',
       srcImg:            bases.source + '_img/',
       srcJs:             bases.source + '_js/',
-      filesHtml:         [bases.source + '_html/**/[^_]*.{html,php,twig}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig}'],
+      filesHtml:         [bases.source + '_html/**/*.{html,php,twig}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig}'],
       filesHtmlIncludes: [bases.source + '_html/ejs_includes/*.{html,php,twig}'],
       filesImg:          bases.source + '_img/**/*.{png,jpg,gif}',
       filesJs:           [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
@@ -263,7 +263,7 @@ gulp.task('cleanJs', function() {
 gulp.task('copyFirstCss', function() {
   return gulp.src(copyFirstCssFiles)
   .pipe($.rename({ extname: '.scss', prefix: '_' }))
-  .pipe(gulp.dest(paths.srcCss));
+  .pipe(gulp.dest(paths.srcCss + 'lib/'));
 });
 gulp.task('copyFirstJs', function() {
   return gulp.src(copyFirstJsFiles)
@@ -362,7 +362,7 @@ gulp.task('svg', function() {
   .pipe($.svgInline({ className: '.icon_%s' }))
   .pipe($.replace('background-image', 'background-position: center center; background-repeat: no-repeat; background-size: contain; background-image'))
   .pipe($.concat('_icons.scss'))
-  .pipe(gulp.dest(paths.srcCss));
+  .pipe(gulp.dest(paths.srcCss + 'automated/'));
 });
 
 // Uglify JS

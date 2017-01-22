@@ -1,7 +1,5 @@
-img {
-	height: auto;
-	max-width: 100%;
-}
+// GLOBAL
+
 ::selection {
 	background-color: lighten($color_black_default, 50);
 	background-color: transparentize($color_black_default, .5);
