@@ -38,7 +38,7 @@
     "node_modules/vanilla-fitvids/jquery.fitvids.js"
   ],
   "ejsVars": {
-    "stylemarkup": "/html/ejs/ejs_partials/_style_markup.html"
+    "stylemarkup": "/html/ejs/ejs_includes/_style_markup.html"
   },
   "webshotScreenshots": [
     {
