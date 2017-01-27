@@ -1,7 +1,5 @@
-/*
-  INSIDE
-  🛋 Scripts specific to interior pages
-*/
+//  INSIDE
+//  🛋 Scripts specific to interior pages
 
 import jq from 'jquery';
 import global from 'global';

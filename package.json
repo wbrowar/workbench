@@ -47,6 +47,7 @@
     }
   ],
   "dependencies": {
+    "emergence.js": "^1.0.3",
     "fg-loadcss": "^1.2.0",
     "fontfaceobserver": "^1.5.4",
     "ideal-image-slider": "^1.5.1",
