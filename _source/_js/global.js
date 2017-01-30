@@ -5,6 +5,7 @@
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
 
 import jq from 'jquery';
+import emergence from 'emergence';
 
 // export var windowWidth = 0, windowHeight = 0;
 
