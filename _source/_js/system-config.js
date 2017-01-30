@@ -1,6 +1,7 @@
 SystemJS.config({
   baseURL: jsThemePath+'js/',
   paths: {
+    'emergence': '_lib/emergence.min.js',
     'fitvids': '_lib/jquery.fitvids.min.js',
     'fontfaceobserver': '_lib/fontfaceobserver.min.js',
     'idealimageslider': '_lib/idealimageslider.min.js',
