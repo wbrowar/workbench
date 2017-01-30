@@ -3,7 +3,6 @@
 
 import jq from 'jquery';
 import * as g from 'global';
-import emergence from 'emergence';
 
 // CUSTOM FUNCTIONS
 

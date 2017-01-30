@@ -22,7 +22,12 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
     </noscript>
 
     <!-- critcss -->
-    <% if (critCssEnabled) { %><style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+    <% if (critCssEnabled) { %>
+      <!--
+      SET COOKIE, THEN CHECK FOR IT. IF COOKIE IS FOUND, SKIP CRITCSS BECAUSE CSS FILE SHOULD ALREADY BE CACHED
+      -->
+      <style><%- include(critcsshome) %></style>
+    <% } else { %><!-- CRITICAL CSS --><% } %>
 
     <!-- scripts -->
     <% if (enable_system_js === 'true') { %><script src='<%= site_root %>js/_lib/system.min.js?v=<%= version %>'></script><% } %>

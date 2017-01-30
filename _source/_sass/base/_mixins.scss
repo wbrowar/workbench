@@ -135,37 +135,6 @@ $mq_max_width: 1300px; // example
 	}
 }
 
-// SUPPORTS
-// Checks to see if a CSS property is supported by the browser
-// @include sup('display:flex', 'flex-flow:row wrap');
-
-// @mixin sup_handler($not: '', $properties...) {
-//   @each $property in $properties {
-//     $i: index($property);
-//     $supports_string: '';
-//     
-//     @if $i == 0 {
-//       $supports_string: $supports_string;
-//     } @else {
-//       
-//     }
-//   }
-// 	@supports #{$not} () {
-// 		@content;
-// 	}
-// }
-// @mixin sup($properties...) {
-//   @include sup_handler('', $properties...) {
-//     @content;
-//   }
-// }
-// @mixin supno($properties...) {
-//   @include sup_handler('not', $properties...) {
-//     @content;
-//   }
-// }
-// @include sup('display:flex', 'flex-flow:row wrap');
-
 // TEXT
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
