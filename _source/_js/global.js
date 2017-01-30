@@ -75,7 +75,10 @@ import emergence from 'emergence';
 //         element.removeAttribute('data-srcset');
 //         element.removeAttribute('data-emergence');
 //         g.addClass(element, 'animated');
-//         removeImagePlaceholder(element);
+//
+//         element.addEventListener('load', function () {
+//            removeImagePlaceholder(element);
+//         });
 //       }
 // 
 //       // lazy load videos and audio files
