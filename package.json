@@ -30,6 +30,7 @@
     "node_modules/ideal-image-slider/ideal-image-slider.css"
   ],
   "copyFirstJsFiles": [
+    "node_modules/emergence.js/dist/emergence.js",
     "node_modules/fontfaceobserver/fontfaceobserver.js",
     "node_modules/ideal-image-slider/ideal-image-slider.js",
     "node_modules/jquery/dist/jquery.js",
@@ -71,7 +72,6 @@
     "gulp-favicons": "^2.2.6",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.0.3",
-    "gulp-livereload": "^3.8.1",
     "gulp-load-plugins": "^1.3.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
@@ -81,7 +81,6 @@
     "gulp-svg-inline-css": "^1.3.3",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "gulpicon": "^1.0.0",
     "imagemin-gifsicle": "^5.1.0",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-optipng": "^5.2.1",
