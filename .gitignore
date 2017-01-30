@@ -1,10 +1,11 @@
 # MISC FILES
 # https://github.com/github/gitignore/tree/master/Global
 # ------------------------------------------------------------
-# .cache
-# .DS_Store
-# Thumbs.db
-# logs/*
+.cache
+.DS_Store
+.idea
+logs/*
+Thumbs.db
 yarn.lock
 
 # BUILD FILES
