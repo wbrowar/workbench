@@ -151,7 +151,7 @@ gulp.task('run', ['css:cleaned', 'img:cleaned', 'js:cleaned'], function() {
 gulp.task('release', ['bump:patch', 'release:tasks']);
 gulp.task('releasefeature', ['bump:minor', 'release:tasks']);
 gulp.task('releasemajor', ['bump:major', 'release:tasks']);
-gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:full'], function() {
+gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release'], function() {
   webshotHandler();
   return notifier.notify({ 'title': name, 'message': 'Release Complete' });
 });
@@ -416,6 +416,7 @@ for (var val in vars.ejsVars) {
 }
 gulp.task('ejs:includes', function() {
   ejsVars.critCssEnabled = false;
+  ejsVars.release = false;
 
   return gulp.src(paths.filesHtmlIncludes)
   .pipe($.changed(bases.html))
@@ -424,14 +425,16 @@ gulp.task('ejs:includes', function() {
 });
 gulp.task('ejs', ['favicons', 'ejs:includes'], function() {
   ejsVars.critCssEnabled = false;
+  ejsVars.release = false;
 
   return gulp.src(paths.filesHtml)
   .pipe($.changed(bases.html))
   .pipe($.ejs(ejsVars))
   .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:full', ['critCss', 'favicons', 'ejs:includes'], function() {
+gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes'], function() {
   ejsVars.critCssEnabled = true;
+  ejsVars.release = true;
   var minOptions = {
     collapseWhitespace: true,
   }
@@ -444,6 +447,7 @@ gulp.task('ejs:full', ['critCss', 'favicons', 'ejs:includes'], function() {
 });
 gulp.task('ejs:quick', ['ejs:includes'], function(cb) {
   ejsVars.critCssEnabled = false;
+  ejsVars.release = false;
 
   gulp.src(paths.filesHtml)
   .pipe($.changed(bases.html))
