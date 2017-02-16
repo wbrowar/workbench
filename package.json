@@ -41,6 +41,66 @@
   "ejsVars": {
     "stylemarkup": "/html/ejs/ejs_includes/_style_markup.html"
   },
+  "fonts": [
+    {
+      "name": "avinir",
+      "source": "system",
+      "fontFamily": "'Avinir Next'",
+      "fallbackStack": "'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "normal",
+      "files": {},
+      "fontEventCheck": false
+    },
+    {
+      "name": "avinir_italic",
+      "source": "system",
+      "fontFamily": "'Avinir Next'",
+      "fallbackStack": "'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "italic",
+      "fontWeight": "normal",
+      "files": {},
+      "fontEventCheck": false
+    },
+    {
+      "name": "apple",
+      "source": "system",
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "normal",
+      "files": {},
+      "fontEventCheck": false
+    },
+    {
+      "name": "eaves",
+      "source": "fontface",
+      "fontFamily": "'MrEavesXLSanRRegular'",
+      "fallbackStack": "Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "normal",
+      "files": {
+        "eot": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
+        "woff": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
+        "woff2": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
+      },
+      "fontEventCheck": true
+    },
+    {
+      "name": "eaves_italic",
+      "source": "fontface",
+      "fontFamily": "'MrEavesXLModBkIRegular'",
+      "fallbackStack": "Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "normal",
+      "files": {
+        "eot": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
+        "woff": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
+        "woff2": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
+      },
+      "fontEventCheck": true
+    }
+  ],
   "webshotScreenshots": [
     {
       "name": "home",

@@ -18,25 +18,6 @@ SystemJS.config({
   urlArgs: "v=" + ((jsDevMode) ? (new Date()).getTime() : jsVersion),
 });
 
-// Load fonts locally and avoid FOIT
-// Setup font events (don't forget to change variable in package.json)
-(function(w) {
-  if (w.document.documentElement.className.indexOf("fonts_loaded") > -1){
-    return;
-  } else if (enableFontEvents === true) {
-    SystemJS.import('fontfaceobserver').then(function(m) {
-      // change fonts 
-      var font = new w.FontFaceObserver("MrEavesXLSanRRegular");
-      var fontBold = new w.FontFaceObserver("MrEavesXLModBkIRegular");
-      var fontItalic = new w.FontFaceObserver("MrEavesXLModBkIRegular");
-      
-      w.Promise.all([font.check(), fontBold.check(), fontItalic.check()]).then(function(){
-        w.document.documentElement.className += " fonts_loaded";
-      });
-    });
-  }
-}(this));
-
 if (jsSection === 'home') {
   SystemJS.import('home');
 } else if (jsSection === 'inside') {

@@ -1,6 +1,4 @@
-$enable_font_events: false;
-
-@import "base/_fonts"; // @font-face fonts (use this along with font() mixin
+@import "automated/_fonts"; // @font-face fonts (use this along with font() mixin
 @import "automated/_icons"; // Adds all svgs from _source/_img/_icons turned into SCSS base64-encoded data
 @import "base/_mixins"; // Functions, mixins, and variables
 //@import "base/_animations"; // Custom CSS animations

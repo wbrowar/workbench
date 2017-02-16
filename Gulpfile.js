@@ -33,6 +33,7 @@ const paths = {
     filesJsLib:        [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
     filesScss:         bases.source + '_sass/**/*.scss',
     filesSvg:          bases.source + '_img/icons/**/*.{svg}',
+    utilFonts:         bases.source + '_util/_fonts.ejs',
 };
 
 // Gulp Variables
@@ -57,9 +58,10 @@ const ejsVars = {
     enable_font_events: vars.enable_font_events,
     enable_system_js:   vars.enable_system_js,
     favicons:           '/favicon/favicons.html',
-    site_root:          vars.site_root,
+    fonts:              vars.fonts,
     loadcss:            '/js/uglify/_lib/loadCSS.min.js',
     release:            (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false,
+    site_root:          vars.site_root,
     systemjs:           '/js/uglify/_lib/system.min.js',
     systemconfig:       '/js/uglify/system-config.min.js',
     version:            vars.version,
@@ -250,6 +252,10 @@ gulp.task('cleanFavicon', function() {
     return gulp.src([paths.distImg + 'meta/', bases.build + 'favicon'], {read: false})
         .pipe($.clean({force: true}));
 });
+gulp.task('cleanFonts', function() {
+    return gulp.src(paths.srcCss + 'automated/_fonts.scss', {read: false})
+        .pipe($.clean({force: true}));
+});
 gulp.task('cleanImg', function() {
     return gulp.src([paths.distImg, bases.build + 'img', '!' + paths.distImg + 'icons/'], {read: false})
         .pipe($.clean({force: true}));
@@ -322,8 +328,16 @@ gulp.task('css', function() {
     return cssHandler();
 });
 
+// Create _fonts.scss file from package.json settings
+gulp.task('font', ['cleanFonts'], function() {
+  return gulp.src(paths.utilFonts)
+      .pipe($.ejs(ejsVars))
+      .pipe($.rename({ extname: '.scss' }))
+      .pipe(gulp.dest(paths.srcCss + 'automated/'));
+});
+
 // Resize 2x images
-// Run Grunticon
+// Turn SVGs into CSS sprite
 // Losslessly compress images
 function imgMoveHandler() {
     return gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*', '!' + paths.srcImg + 'icons/**/*'])
