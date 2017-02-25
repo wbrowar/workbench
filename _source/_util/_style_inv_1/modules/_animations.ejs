@@ -1,0 +1,49 @@
+<% const currentSection = 'animations' %>
+<% const modules = styleTemplateConfig.sections.animations.modules %>
+<% const moduleTemplates = [] %>
+
+<% if (modules.rollover_pop) { %>
+    <% moduleTemplates.push({
+        "title": "Rollover Pop Up",
+        "description": "Simple roll-over animations.",
+        "background": "light",
+        "demoCode": '<div class="styles_demo_box_wrapper">' +
+        '<div class="styles_demo_box animate_rollover_pop_up">Roll over me.</div>' +
+        '<div class="styles_demo_box animate_rollover_pop_down">Roll over me.</div>' +
+        '<div class="styles_demo_box animate_rollover_pop_forward">Roll over me.</div>' +
+        '</div>',
+        "code": '<div class="animate_rollover_pop_up">Roll over me.</div>' +
+        '\n<div class="animate_rollover_pop_down">Roll over me.</div>' +
+        '\n<div class="animate_rollover_pop_forward">Roll over me.</div>'
+    }); %>
+<% } %>
+
+<% if (modules.click_push_in) { %>
+    <% moduleTemplates.push({
+        "title": "Push In on Click",
+        "description": "Used to show the action of a button being pushed.",
+        "background": "light",
+        "demoCode": '<div class="styles_demo_box_wrapper">' +
+        '<div class="styles_demo_box animate animate_click_push_in">Click me.</div>' +
+        '</div>',
+        "code": '<div class="animate animate_click_push_in">Click me.</div>'
+    }); %>
+<% } %>
+
+<% if (modules.scroll_slide_in) { %>
+    <% moduleTemplates.push({
+        "title": "Slide In on Scroll",
+        "description": "Animated in page elements when the user scrolls down to them.",
+        "background": "light",
+        "demoCode": '<div class="styles_demo_box_wrapper">' +
+        '<div data-emergence="hidden" class="styles_demo_box animate animate_fade_in_from_left">Content</div>' +
+        '<div data-emergence="hidden" class="styles_demo_box animate animate_fade_in_from_bottom">Content</div>' +
+        '<div data-emergence="hidden" class="styles_demo_box animate animate_fade_in_from_right">Content</div>' +
+        '</div>',
+        "code": '<div data-emergence="hidden" class="animate animate_fade_in_from_left">Content</div>' +
+        '\n<div data-emergence="hidden" class="animate animate_fade_in_from_bottom">Content</div>' +
+        '\n<div data-emergence="hidden" class="animate animate_fade_in_from_right">Content</div>'
+    }); %>
+<% } %>
+
+<%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>

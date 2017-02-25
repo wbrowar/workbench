@@ -1,0 +1,5 @@
+<div class="styles_menu">
+    <% for(var section in sections) { %>
+        <a<% if (activeItem === section) { %> class="active"<% } %> href="<%- styleTemplatePrefix %><%- section %><%- styleTemplateSuffix %>"><% if (activeItem === section) { %><span class="styles_active_spacer"></span><% } %><%= sections[section].title; %><% if (activeItem === section) { %><span class="styles_active_indicator"></span><% } %></a>
+    <% } %>
+</div>

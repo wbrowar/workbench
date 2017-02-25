@@ -1,0 +1,37 @@
+<% const currentSection = 'icons' %>
+<% const modules = styleTemplateConfig.sections.icons.modules %>
+<% const moduleTemplates = [] %>
+
+<% if (modules.logo_color) { %>
+    <% moduleTemplates.push({
+        "title": "Logo",
+        "description": "The logo for the client as it appears on the site.",
+        "background": "light",
+        "twigCode": '<a class="icon_logo" href="{{ siteUrl }}"></a>',
+        "code": '<a class="icon_logo" href="/"></a>'
+    }); %>
+<% } %>
+
+<% if (modules.social_media_default) { %>
+    <% moduleTemplates.push({
+        "title": "Push In on Click",
+        "description": "Social Media icon links.",
+        "background": "light",
+        "twigCode": '{% macro socialNav() %}' +
+        '\n    <nav class="nav_social">{% spaceless %}' +
+        '\n        {% if seomaticSocial.facebookHandle|length %}<a href="https://www.facebook.com/{{ seomaticSocial.facebookHandle }}" target="_blank" class="icon icon_social_facebook" title="Facebook">Facebook</a>{% endif %}' +
+        '\n        {% if seomaticSocial.twitterHandle|length %}<a href="https://twitter.com/{{ seomaticSocial.twitterHandle }}" target="_blank" class="icon icon_social_twitter" title="Twitter">Twitter</a>{% endif %}' +
+        '\n        {% if seomaticSocial.instagramHandle|length %}<a href="https://www.instagram.com/{{ seomaticSocial.instagramHandle }}" target="_blank" class="icon icon_social_instagram" title="Instagram">Instagram</a>{% endif %}' +
+        '\n        {% if seomaticSocial.youtubeHandle|length %}<a href="https://www.youtube.com/user/{{ seomaticSocial.youtubeHandle }}" target="_blank" class="icon icon_social_youtube" title="YouTube">YouTube</a>{% endif %}' +
+        '\n    {% endspaceless %}</nav>' +
+        '\n{% endmacro %}',
+        "code": '<nav class="nav_social black">' +
+        '\n    <a href="https://www.facebook.com/username" target="_blank" class="icon icon_social_facebook" title="Facebook">Facebook</a>' +
+        '\n    <a href="https://twitter.com/username" target="_blank" class="icon icon_social_twitter" title="Twitter">Twitter</a>' +
+        '\n    <a href="https://www.instagram.com/username" target="_blank" class="icon icon_social_instagram" title="Instagram">Instagram</a>' +
+        '\n    <a href="https://www.youtube.com/user/username" target="_blank" class="icon icon_social_youtube" title="YouTube">YouTube</a>' +
+        '\n</nav>'
+    }); %>
+<% } %>
+
+<%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>

@@ -29,11 +29,11 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 - When starting a project, run the helper task, `gulp`, to see what commands are available.
 - When editing the `package.json` file, run `gulp vars` for a description of each variable.
 - `gulp first` only needs to be run once at the beginning of the project to move the default npm files out of the `node_modules` folder. In order to keep files up-to-date, and to make working with git easier, edit the `package.json` file to include all other libraries and re-run `gulp first` to update front-end libraries.
+- `gulp font` also only needs to be run, but you can run it anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
 - To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `gulp run` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `gulp release` for a more thorough check.
 
 ### During Development
 - Every time you begin to write code, run `gulp watch` first. This will watch the `_source` folder and update theme files as you save them.
-- If you're running `gulp watch`, you can update your browser by using the [Live Reload browser extension](http://livereload.com/extensions/).
 - At any given time, run `gulp run` to reprocess basic theme assets (JS, CSS, and images). This is not as good as running `gulp release` but it will clean out old JS, CSS, and image files and replace them with up-to-date versions.
 
 ### Staging and Testing
@@ -57,6 +57,22 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
   - `lib` – For code pulled in using `gulp first` (as set in `package.json`). Also, any other CSS that we receive from vendors (like Frontier) can go here.
   - `modules` – base CSS for HTML elements, such as forms, buttons, tables, images, etc… These should be basic and modular so these elements can be dropped anywhere in the site and still look the same.
   - `pages` – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
+
+#### Using Fonts in CSS
+- A `font()` mixin is available to optimize the use of custom `@font-face` fonts, and to making changes to fonts and font stacks consistent in your CSS. Here are the advantages of using this mixin:
+  - Only fonts that are used within your SCSS are given a `@font-face` declaration.
+  - `@font-face` declarations are only made once, on the first time that `font()` appears in SCSS. This reduces the amount of CSS code.
+  - If you are loading fonts from the server, Font Events can be used to remove FOIT. This requires you to enable `enable_font_events` in `package.json`.
+
+In your `package.json`, here are the options you can use. Options marked with ° are required:
+  - °`name` – Used to identify the font when using the `font()` mixin. For example, in your SCSS you could write `@include font('avinir');`.
+  - °`source` – Determines whether or not a font needs a `@font-face` declaration. Options are `system` or `fontface`.
+  - °`fontFamily` – The font family used in CSS to refer to the font. If quotes are needed, use single quotes. For example: `"fontFamily": "'Avinir Next'",`
+  - °`fallbackStack` – Fallbacks used in order in case the font is not loaded. This is especially important when using `enable_font_events`.
+  - °`fontStyle` – CSS value for the `font-style` property. The output in CSS will be `font-style: normal;`, by default.
+  - °`fontWeight` – CSS value for the `font-weight` property. The output in CSS will be `font-weight: normal;`, by default. You can use any CSS-valid value, such as `100` or `bold`.
+  - `files` – Pairs up font file types and their locations. This is only applicable for fonts that need a `@font-face` declaration. In most situations, you'll want an `.eot` and a `.woff` file for cross-browser compatibility. A `.woff2` file can be included for better performance.
+  - °`fontEventCheck` – If you are using `enable_font_events`, set this option to `true` if you know that this font will appear on every page on your site. This modifies the code in `index_grunt.html` and it requires that one font has this set to `true` when `enable_font_events` is set to true, otherwise you'll get a Javascript error.
 
 
 

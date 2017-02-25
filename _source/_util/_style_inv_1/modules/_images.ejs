@@ -1,0 +1,23 @@
+<% const currentSection = 'images' %>
+<% const modules = styleTemplateConfig.sections.images.modules %>
+<% const moduleTemplates = [] %>
+
+<% if (modules.srcset) { %>
+    <% moduleTemplates.push({
+        "title": "Src-Set Image",
+        "description": "A normal image, loaded with the `src-set` attribute.",
+        "background": "light",
+        "code": '<img src="/img/FPO.png" srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" alt="For Placement Only">'
+    }); %>
+<% } %>
+
+<% if (modules.lazy_load_srcset) { %>
+    <% moduleTemplates.push({
+        "title": "Lazy-loading Images",
+        "description": "An image loaded when the user scrolls down to its location on the page.",
+        "background": "light",
+        "code": '<img data-emergence="hidden" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">'
+    }); %>
+<% } %>
+
+<%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>

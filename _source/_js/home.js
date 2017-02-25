@@ -1,7 +1,7 @@
 //  HOME
 //  🏡 Scripts specific to the home page of the website
 
-import jq from 'jquery';
+//import jq from 'jquery';
 import * as g from 'global';
 
 // CUSTOM FUNCTIONS

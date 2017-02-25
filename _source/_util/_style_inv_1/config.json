@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "animations": {
+      "enabled": true,
+      "title": "Animations",
+      "modules": {
+        "rollover_pop": true,
+        "click_push_in": true,
+        "scroll_slide_in": true
+      }
+    },
+    "buttons": {
+      "enabled": true,
+      "title": "Buttons",
+      "modules": {
+        "class": true,
+        "element": true,
+        "submit": true
+      }
+    },
+    "icons": {
+      "enabled": true,
+      "title": "Icons",
+      "modules": {
+        "logo_color": true,
+        "social_media_default": true
+      }
+    },
+    "images": {
+      "enabled": true,
+      "title": "Images",
+      "modules": {
+        "srcset": true,
+        "lazy_load_srcset": true
+      }
+    },
+    "tables": {
+      "enabled": true,
+      "title": "Tables",
+      "modules": {
+        "element": true
+      }
+    }
+  }
+}

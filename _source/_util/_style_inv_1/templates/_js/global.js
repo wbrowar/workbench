@@ -4,7 +4,7 @@
 //  🛣 Functionality in nagivation used accross all pages on the site
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
 
-import jq from 'jquery';
+//import jq from 'jquery';
 import emergence from 'emergence';
 
 // export var windowWidth = 0, windowHeight = 0;
@@ -41,7 +41,7 @@ export function removeClass(el, className) {
 
 
 // CUSTOM FUNCTIONS
-// Lazy loading and on-scroll animations
+<% if (styleTemplateConfig.sections.animations.modules.scroll_slide_in || styleTemplateConfig.sections.images.modules.lazy_load_srcset) { %>// Lazy loading and on-scroll animations
 export function createImagePlaceholders() {
   var images = document.querySelectorAll('img[data-emergence="hidden"]');
   Array.prototype.forEach.call(images, function(el, i){
@@ -102,7 +102,7 @@ export function setupEnhancments() {
         }
       }
     });
-}
+}<% } %>
 
 
 // BROWSER EVENTS

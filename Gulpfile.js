@@ -8,32 +8,34 @@ const name = vars.name,
     copyFirstCssFiles = vars.copyFirstCssFiles,
     copyFirstJsFiles = vars.copyFirstJsFiles,
     critCssTasks = [],
-    gulpiconCustomSelectors = vars.gulpiconCustomSelectors;
+    release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false;
 
 // Paths
 const bases = {
-    source: vars.source_path,
-    build:  vars.build_path,
-    theme:  vars.theme_path,
-    html:   vars.html_path,
-    site:   vars.site_root,
+    source: './' + vars.source_path,
+    build:  './' + vars.build_path,
+    theme:  './' + vars.theme_path,
+    html:   './' + vars.html_path,
+    site:   './' + vars.site_root,
 };
 const paths = {
-    distCss:           bases.theme + 'css/',
-    distImg:           bases.theme + 'img/',
-    distJs:            bases.theme + 'js/',
-    distIcon:          bases.theme + 'icon/',
-    srcCss:            bases.source + '_sass/',
-    srcImg:            bases.source + '_img/',
-    srcJs:             bases.source + '_js/',
-    filesHtml:         [bases.source + '_html/**/*.{html,php,twig}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig}'],
-    filesHtmlIncludes: [bases.source + '_html/ejs_includes/*.{html,php,twig}'],
-    filesImg:          bases.source + '_img/**/*.{png,jpg,gif}',
-    filesJs:           [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
-    filesJsLib:        [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
-    filesScss:         bases.source + '_sass/**/*.scss',
-    filesSvg:          bases.source + '_img/icons/**/*.{svg}',
-    utilFonts:         bases.source + '_util/_fonts.ejs',
+    distCss:                bases.theme + 'css/',
+    distImg:                bases.theme + 'img/',
+    distJs:                 bases.theme + 'js/',
+    distIcon:               bases.theme + 'icon/',
+    srcCss:                 bases.source + '_sass/',
+    srcImg:                 bases.source + '_img/',
+    srcJs:                  bases.source + '_js/',
+    srcUtil:                bases.source + '_util/',
+    filesHtml:              [bases.source + '_html/**/*.{html,php,twig}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig}'],
+    filesHtmlIncludes:      bases.source + '_html/ejs_includes/*.{html,php,twig}',
+    filesHtmlStyleTemplate: vars.style_template !== '' ? bases.source + '_util/' + vars.style_template + '**/*.ejs' : '',
+    filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
+    filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
+    filesJsLib:             [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
+    filesScss:              bases.source + '_sass/**/*.scss',
+    filesSvg:               bases.source + '_img/icons/**/*.{svg}',
+    utilFonts:              bases.source + '_util/_fonts.ejs',
 };
 
 // Gulp Variables
@@ -54,20 +56,23 @@ const browserSync     = require('browser-sync').create(),
     });
 
 const ejsVars = {
-    root:               bases.build,
-    enable_font_events: vars.enable_font_events,
-    enable_system_js:   vars.enable_system_js,
-    favicons:           '/favicon/favicons.html',
-    fonts:              vars.fonts,
-    loadcss:            '/js/uglify/_lib/loadCSS.min.js',
-    release:            (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false,
-    site_root:          vars.site_root,
-    systemjs:           '/js/uglify/_lib/system.min.js',
-    systemconfig:       '/js/uglify/system-config.min.js',
-    version:            vars.version,
+    root:                bases.build,
+    enable_font_events:  vars.enable_font_events,
+    enable_system_js:    vars.enable_system_js,
+    favicons:            '/favicon/favicons.html',
+    fonts:               vars.fonts,
+    loadcss:             '/js/uglify/_lib/loadCSS.min.js',
+    release:             release,
+    site_root:           vars.site_root,
+    styleTemplateConfig: vars.style_template !== '' ? JSON.parse(fs.readFileSync(paths.srcUtil + vars.style_template + 'config.json')) : null,
+    styleTemplatePrefix:   vars.style_template_url_prefix,
+    styleTemplateSuffix:   vars.style_template_url_suffix,
+    systemjs:            '/js/uglify/_lib/system.min.js',
+    systemconfig:        '/js/uglify/system-config.min.js',
+    version:             release ? vars.version : new Date().toLocaleString(),
 };
 
-require('events').EventEmitter.prototype._maxListeners = 10000;
+//require('events').EventEmitter.prototype._maxListeners = 10000;
 
 
 
@@ -78,6 +83,8 @@ gulp.task('default',function() {
         + `\n––––––––––––––––––––––––\n`
         + `\n${$.gutil.colors.inverse(' gulp first ')}`
         + `\n${$.gutil.colors.bold('└─ Moves all important files from npm to _source/_js/_lib/')}\n`
+        + `\n${$.gutil.colors.inverse(' gulp font ')}`
+        + `\n${$.gutil.colors.bold('└─ Uses info in package.json to generate _source/_sass/automated/_fonts.scss')}\n`
         + `\n${$.gutil.colors.inverse(' gulp run ')}`
         + `\n${$.gutil.colors.bold('└─ Processes CSS, JS, and image files.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp release ')}`
@@ -115,6 +122,8 @@ gulp.task('vars',function() {
         + `\n${$.gutil.colors.bold('└─ Enable SystemJS for async loading of JS files.')}\n`
         + `\n${$.gutil.colors.inverse(' minify_html ')}`
         + `\n${$.gutil.colors.bold('└─ Enable minification of HTML in the \`gulp release\` task. Turn this off when theming with PHP and Twig files.')}\n`
+        + `\n${$.gutil.colors.inverse(' browserSync ')}`
+        + `\n${$.gutil.colors.bold('└─ Configure BrowserSync to reload your website as \`watch\` tasks are run. Change \`url\` to the page on your site that you want to start on when \`gulp watch\` is run.')}\n`
         + `\n${$.gutil.colors.inverse(' critcss ')}`
         + `\n${$.gutil.colors.bold('└─ Settings used to run Crtitical CSS for muliple page templates. \`"critCssFilename"\` is used in the \`ejs\` task to include the CSS. For example, to include the Critical CSS for \`"home"\`, use this in your theme file: \`<%- include(critcsshome) %>\`')}\n`
         + `\n${$.gutil.colors.inverse(' copyFirstCssFiles ')}`
@@ -123,8 +132,8 @@ gulp.task('vars',function() {
         + `\n${$.gutil.colors.bold('└─ Array of files to be pulled into \`_source/_js/_lib\` when running \`gulp first\`.')}\n`
         + `\n${$.gutil.colors.inverse(' ejsVars ')}`
         + `\n${$.gutil.colors.bold('└─ Additional files and settings for use in the \`ejs\` task. All paths must start from the \`_build\` folder.')}\n`
-        + `\n${$.gutil.colors.inverse(' gulpiconCustomSelectors ')}`
-        + `\n${$.gutil.colors.bold('└─ Additional selector for use when running the \`gulpicon\` task. Look in the Grunticon documentation for usage exampes.')}\n`
+        + `\n${$.gutil.colors.inverse(' fonts ')}`
+        + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`
         + `\n${$.gutil.colors.inverse(' webshotScreenshots ')}`
         + `\n${$.gutil.colors.bold('└─ Array of pages to take screenshots of when running \`gulp release\`.')}\n`;
     $.gutil.log(text);
@@ -138,11 +147,22 @@ gulp.task('vars',function() {
  • theme_path – the folder where `css`, `js` folders are placed
  • html_path – the folder where html, twig, and php files are placed
  • site_root – appended to asset URLs sourced in your template files
- • enable_font_events – enables Font Face Observer (requires edits to `system-config.js`, `index_gulp.html`
+ • enable_font_events – enables Font Face Observer (requires edits to `system-config.js`, `index.html`
  */
 
 // [gulp first]
 gulp.task('first', ['copyFirstCss', 'copyFirstJs']);
+
+// [gulp template]
+gulp.task('template:backup', function() {
+    return gulp.src(bases.source + '**/*')
+        .pipe(gulp.dest(bases.build + '_source_backup/'));
+});
+gulp.task('template', ['template:backup'], function() {
+    return gulp.src(paths.srcUtil + vars.style_template + '/templates/**/*')
+        .pipe($.ejs(ejsVars))
+        .pipe(gulp.dest(bases.source));
+});
 
 // [gulp run]
 gulp.task('run', ['css:cleaned', 'img:cleaned', 'js:cleaned'], function() {
@@ -161,11 +181,12 @@ gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release']
 // [gulp watch]
 gulp.task('watch', function() {
     //$.livereload.listen(35729);
-    var watchCss  = gulp.watch(paths.filesScss, ['css']),
-        watchHtml = gulp.watch([paths.filesHtmlIncludes, paths.filesHtml], ['ejs:quick']),
-        watchImg  = gulp.watch(paths.filesImg, ['img']),
-        watchJs   = gulp.watch(paths.filesJs, ['js']),
-        watchSvg  = gulp.watch(paths.filesSvg, ['css:cleaned']);
+    var watchCss          = gulp.watch(paths.filesScss, ['css']),
+        watchHtml = gulp.watch(paths.filesHtml, ['ejs:quick']),
+        watchHtmlIncludes = gulp.watch([paths.filesHtmlIncludes, paths.filesHtmlStyleTemplate], ['ejs:quick:full']),
+        watchImg          = gulp.watch(paths.filesImg, ['img']),
+        watchJs           = gulp.watch(paths.filesJs, ['js']),
+        watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
 
     if (vars.browserSync.url === 'http://google.com/') {
         $.gutil.log($.gutil.colors.inverse(' Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json. '));
@@ -178,11 +199,12 @@ gulp.task('watch', function() {
 
     watchCss.on('change', function(event) {
         notifier.notify({ 'title': name, 'message': 'CSS Updated' });
-        //browserSync.stream();
     });
     watchHtml.on('change', function(event) {
         notifier.notify({ 'title': name, 'message': 'HTML Updated' });
-        //browserSync.reload();
+    });
+    watchHtmlIncludes.on('change', function(event) {
+        notifier.notify({ 'title': name, 'message': 'HTML Updated' });
     });
     watchImg.on('change', function(event) {
         notifier.notify({ 'title': name, 'message': 'Images Updated' });
@@ -250,10 +272,6 @@ gulp.task('cleanCss', function() {
 });
 gulp.task('cleanFavicon', function() {
     return gulp.src([paths.distImg + 'meta/', bases.build + 'favicon'], {read: false})
-        .pipe($.clean({force: true}));
-});
-gulp.task('cleanFonts', function() {
-    return gulp.src(paths.srcCss + 'automated/_fonts.scss', {read: false})
         .pipe($.clean({force: true}));
 });
 gulp.task('cleanImg', function() {
@@ -329,7 +347,7 @@ gulp.task('css', function() {
 });
 
 // Create _fonts.scss file from package.json settings
-gulp.task('font', ['cleanFonts'], function() {
+gulp.task('font', function() {
   return gulp.src(paths.utilFonts)
       .pipe($.ejs(ejsVars))
       .pipe($.rename({ extname: '.scss' }))
@@ -428,6 +446,14 @@ gulp.task('js', function() {
 for (var val in vars.ejsVars) {
     ejsVars[val] = vars.ejsVars[val];
 }
+if (ejsVars.styleTemplateConfig !== null) {
+    for (var val in ejsVars.styleTemplateConfig.sections) {
+        if (ejsVars.styleTemplateConfig.sections[val].enabled) {
+            ejsVars['styletemplate'+val] = '/html/templates/modules/_' + val + '.ejs';
+        }
+    }
+}
+$.gutil.log(ejsVars);
 gulp.task('ejs:includes', function() {
     ejsVars.critCssEnabled = false;
 
@@ -436,7 +462,11 @@ gulp.task('ejs:includes', function() {
         .pipe($.ejs(ejsVars))
         .pipe(gulp.dest(bases.build + 'html/ejs/ejs_includes'));
 });
-gulp.task('ejs', ['favicons', 'ejs:includes'], function() {
+gulp.task('ejs:templates', function() {
+    return gulp.src(paths.filesHtmlStyleTemplate)
+        .pipe(gulp.dest(bases.build + 'html/templates/'));
+});
+gulp.task('ejs', ['favicons', 'ejs:includes', 'ejs:templates'], function() {
     ejsVars.critCssEnabled = false;
 
     return gulp.src(paths.filesHtml)
@@ -444,7 +474,7 @@ gulp.task('ejs', ['favicons', 'ejs:includes'], function() {
         .pipe($.ejs(ejsVars))
         .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes'], function() {
+gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes', 'ejs:templates'], function() {
     ejsVars.critCssEnabled = true;
     var minOptions = {
         collapseWhitespace: true,
@@ -456,7 +486,18 @@ gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes'], function() {
         .pipe(vars.minify_html === "true" ? $.htmlmin(minOptions) : $.gutil.noop())
         .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:quick', ['ejs:includes'], function(cb) {
+gulp.task('ejs:quick:full', ['ejs:includes', 'ejs:templates'], function(cb) {
+    ejsVars.critCssEnabled = false;
+
+    gulp.src(paths.filesHtml)
+        .pipe($.ejs(ejsVars))
+        .pipe(gulp.dest(bases.html));
+
+    browserSync.reload();
+
+    cb();
+});
+gulp.task('ejs:quick', ['ejs:includes', 'ejs:templates'], function(cb) {
     ejsVars.critCssEnabled = false;
 
     gulp.src(paths.filesHtml)

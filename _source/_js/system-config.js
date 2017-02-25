@@ -29,17 +29,17 @@ if (jsSection === 'home') {
 // Get page-specific modules
 function importPageSpecificModule(moduleName) {
   switch(moduleName) {
+      case 'fitvids':
+          SystemJS.import('fitvids').then(function(m) {
+              var jq = jQuery;
+
+              jq('.video').fitVids();
+          });
+          break;
     /*
     // EXAMPLES
     case 'formValidator':
       SystemJS.import('formValidator');
-      break;
-    case 'fitvids':
-      SystemJS.import('fitvids').then(function(m) {
-        var jq = jQuery;
-        
-        jq('.video').fitVids();
-      });
       break;
     case 'idealSlider':
       SystemJS.import('idealSlider').then(function(m) {
