@@ -41,68 +41,6 @@ export function removeClass(el, className) {
 
 
 // CUSTOM FUNCTIONS
-// Lazy loading and on-scroll animations
-export function createImagePlaceholders() {
-  var images = document.querySelectorAll('img[data-emergence="hidden"]');
-  Array.prototype.forEach.call(images, function(el, i){
-    if (el.getAttribute('data-width') && el.getAttribute('data-height')) {
-      const width = el.getAttribute('data-width'),
-            height = el.getAttribute('data-height');
-      el.style.paddingTop = (height / width * 100) + '%';
-      el.style.maxWidth = el.getAttribute('data-width') + 'px';
-    }
-  });
-}
-export function removeImagePlaceholder(el) {
-  el.style.paddingTop = '';
-  el.style.maxWidth = '';
-}
-export function setupEnhancments() {
-  createImagePlaceholders();
-
-  emergence.init({
-    elemCushion: 0.25,
-    reset: false,
-    callback: function(element, state) {
-        // animate on scroll
-        if (state === 'visible' && hasClass(element, 'animate')) {
-          addClass(element, 'animated');
-          removeClass(element, 'animate');
-          element.removeAttribute('data-emergence');
-        }
-
-        // lazy load images
-        if (state === 'visible' && element.hasAttribute('data-srcset')) {
-          const srcset = element.getAttribute('data-srcset');
-          element.setAttribute('srcset', srcset);
-          element.removeAttribute('data-srcset');
-          element.removeAttribute('data-emergence');
-          addClass(element, 'animated');
-          element.addEventListener('load', function () {
-             removeImagePlaceholder(element);
-          });
-        }
-
-        // lazy load videos and audio files
-        if (state === 'visible' && element.hasAttribute('data-src')) {
-          const src = element.getAttribute('data-src');
-          element.setAttribute('src', src);
-          element.removeAttribute('data-src');
-          element.removeAttribute('data-emergence');
-          addClass(element, 'animated');
-        }
-
-        // lazy load Marketo Forms
-        if (state === 'visible' && hasClass(element, 'marketoform')) {
-          const formId = element.getAttribute('data-form-id');
-          const formElementId = parseFloat(element.getAttribute('id').substr(9));
-
-          MktoForms2.loadForm("//app-sj19.marketo.com", formId, formElementId);
-          element.removeAttribute('data-emergence');
-        }
-      }
-    });
-}
 
 
 // BROWSER EVENTS

@@ -83,8 +83,10 @@ gulp.task('default',function() {
         + `\n––––––––––––––––––––––––\n`
         + `\n${$.gutil.colors.inverse(' gulp first ')}`
         + `\n${$.gutil.colors.bold('└─ Moves all important files from npm to _source/_js/_lib/')}\n`
+        + `\n${$.gutil.colors.inverse(' gulp template ')}`
+        + `\n${$.gutil.colors.bold('└─ Moves files from _source/_util/ into _source/ based on the folder set for "style_template" in \`package.json\`. Before running this task, modify settings in the template\'s config.json. This task should only be run one time at the beginning of development.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp font ')}`
-        + `\n${$.gutil.colors.bold('└─ Uses info in package.json to generate _source/_sass/automated/_fonts.scss')}\n`
+        + `\n${$.gutil.colors.bold('└─ Uses info in \`package.json\` to generate _source/_sass/automated/_fonts.scss')}\n`
         + `\n${$.gutil.colors.inverse(' gulp run ')}`
         + `\n${$.gutil.colors.bold('└─ Processes CSS, JS, and image files.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp release ')}`
@@ -114,6 +116,12 @@ gulp.task('vars',function() {
         + `\n${$.gutil.colors.bold('└─ Path to where HTML, PHP, or Twig template files will be placed.')}\n`
         + `\n${$.gutil.colors.inverse(' site_root ')}`
         + `\n${$.gutil.colors.bold('└─ A string prepended to paths when linking to \`.css\` and \`.js\` files in the template.')}\n`
+        + `\n${$.gutil.colors.inverse(' style_template_url_prefix ')}`
+        + `\n${$.gutil.colors.bold('└─ Prepends this string to navigation links used in the style inventory.')}\n`
+        + `\n${$.gutil.colors.inverse(' style_template_url_suffix ')}`
+        + `\n${$.gutil.colors.bold('└─ Appends a file extension or another string if needed to link to style inventory pages.')}\n`
+        + `\n${$.gutil.colors.inverse(' style_template ')}`
+        + `\n${$.gutil.colors.bold('└─ Select the folder to pull template overrides from when running \`gulp template\`.')}\n`
         + `\n${$.gutil.colors.inverse(' enable_babel ')}`
         + `\n${$.gutil.colors.bold('└─ When running the \`gulp release\` task, babel can be used to process ES6 Javascript into ES5 Javascript for older browsers.')}\n`
         + `\n${$.gutil.colors.inverse(' enable_font_events ')}`
@@ -453,7 +461,6 @@ if (ejsVars.styleTemplateConfig !== null) {
         }
     }
 }
-$.gutil.log(ejsVars);
 gulp.task('ejs:includes', function() {
     ejsVars.critCssEnabled = false;
 

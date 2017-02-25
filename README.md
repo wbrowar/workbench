@@ -22,14 +22,16 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 2. Run `yarn`
 3. Update the `package.json` file to fit your project's needs. See `package.json` below
 4. Run `gulp first` to perform the default task and to do an initial setup
+5. If you want to use a style inventory, follow the steps in "Beginning a project", below.
 
 ---
 ## When to Use What
 ### Beginning a project
 - When starting a project, run the helper task, `gulp`, to see what commands are available.
 - When editing the `package.json` file, run `gulp vars` for a description of each variable.
+- If you would like to use a style inventory, point the `style_template` setting in `package.json` to a style template folder in `_source/_util/`. In that folder, change the configuration in `config.json` to enable or disable the features you want to use in your style inventory. Once you are all set, running `gulp template` will move all of the files in the style template's `templates` folder to replace those files in the `_source` folder. *NOTE: Every time `gulp template` is run, the files in `_source` will be overwritten by the style template files. Once you begin development, `gulp template` should no longer be run.*
 - `gulp first` only needs to be run once at the beginning of the project to move the default npm files out of the `node_modules` folder. In order to keep files up-to-date, and to make working with git easier, edit the `package.json` file to include all other libraries and re-run `gulp first` to update front-end libraries.
-- `gulp font` also only needs to be run, but you can run it anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
+- `gulp font` also only needs to be run once, but you can run it anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
 - To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `gulp run` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `gulp release` for a more thorough check.
 
 ### During Development
@@ -72,7 +74,7 @@ In your `package.json`, here are the options you can use. Options marked with °
   - °`fontStyle` – CSS value for the `font-style` property. The output in CSS will be `font-style: normal;`, by default.
   - °`fontWeight` – CSS value for the `font-weight` property. The output in CSS will be `font-weight: normal;`, by default. You can use any CSS-valid value, such as `100` or `bold`.
   - `files` – Pairs up font file types and their locations. This is only applicable for fonts that need a `@font-face` declaration. In most situations, you'll want an `.eot` and a `.woff` file for cross-browser compatibility. A `.woff2` file can be included for better performance.
-  - °`fontEventCheck` – If you are using `enable_font_events`, set this option to `true` if you know that this font will appear on every page on your site. This modifies the code in `index_grunt.html` and it requires that one font has this set to `true` when `enable_font_events` is set to true, otherwise you'll get a Javascript error.
+  - °`fontEventCheck` – If you are using `enable_font_events`, set this option to `true` if you know that this font will appear on every page on your site. This modifies the code in `index_gulp.html` and it requires that one font has this set to `true` when `enable_font_events` is set to true, otherwise you'll get a Javascript error.
 
 
 
@@ -109,13 +111,21 @@ Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/
 - **_favicons** Adding a 512x512 .png into the `_source/_favicons` folder, and running `gulp release`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
 
 ---
-### Grunt HTML Builder
+### Gulp HTML Builder
 - Uses [ejs](http://ejs.co) to process HTML files when the `gulp release` task is run.
 - Using `ejs` allows you to include files, use conditionals, and replace strings—like IDs and classes.
 - There are default replacements included in the Gulpfile, and additional replacements can be added to the `ejsVars` setting in `package.json`. If the replacement is for an include, the file must be included based on the root of the `_build` folder.
 
 ---
 ## Release Notes
+#### 4.4.0
+- :rocket: Added font configuration settings to `package.json`
+- :rocket: Added `gulp font` task to automate `@font-face` declarations and performance enhancements in `_source/automated/_fonts.scss`
+  - Configure font settings in `package.json` and run `gulp font` anytime you update fonts you want available in the `font()` mixin
+- :rocket: Added style template settings to `package.json`
+- :rocket: Added files to create default style inventory sections
+  - To add a style inventory section to a page, use `<%- include(styletemplate____) %>` and replace blank with name of the section. For example, to embed the icons section, use `<%- include(styletemplateicons) %>`
+
 #### 4.3.0
 - :rocket: Added `browserSync` settings to `package.json`
 - :rocket: Added Browsersync support
