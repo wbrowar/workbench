@@ -22,7 +22,7 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 2. Run `yarn`
 3. Update the `package.json` file to fit your project's needs. See `package.json` below
 4. Run `gulp first` to perform the default task and to do an initial setup
-5. If you want to use a style inventory, follow the steps in "Beginning a project", below.
+5. If you want to use a style inventory, follow the steps in [Beginning a project](https://github.com/wbrowar/WB-Starter#beginning-a-project), below.
 
 ---
 ## When to Use What

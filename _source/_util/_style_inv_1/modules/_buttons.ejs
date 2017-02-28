@@ -7,7 +7,7 @@
         "title": "Class",
         "description": "A call-to-action button, used to encourage user interaction.",
         "background": "light",
-        "twigCode": '<a class="button" href="{{ entry.linkUrl }}"{% if entry.openLinkInNewWindow %} target="_blank"{% endif %}>{{ entry.linkLabel }}</a>',
+        "twigCode": '<a class="button" href="{{ url(entry.linkUrl) }}"{% if entry.openLinkInNewWindow %} target="_blank"{% endif %}>{{ entry.linkLabel }}</a>',
         "code": '<a class="button" href="#">Read More</a>'
     }); %>
 <% } %>
@@ -30,4 +30,4 @@
     }); %>
 <% } %>
 
-<%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+<%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>

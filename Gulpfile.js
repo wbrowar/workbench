@@ -64,7 +64,7 @@ const ejsVars = {
     loadcss:             '/js/uglify/_lib/loadCSS.min.js',
     release:             release,
     site_root:           vars.site_root,
-    styleTemplateConfig: vars.style_template !== '' ? JSON.parse(fs.readFileSync(paths.srcUtil + vars.style_template + 'config.json')) : null,
+    styleTemplateConfig: !['', 'n', 'no'].includes(vars.style_template.toLowerCase()) ? JSON.parse(fs.readFileSync(paths.srcUtil + vars.style_template + 'config.json')) : null,
     styleTemplatePrefix:   vars.style_template_url_prefix,
     styleTemplateSuffix:   vars.style_template_url_suffix,
     systemjs:            '/js/uglify/_lib/system.min.js',
@@ -401,7 +401,7 @@ gulp.task('svg', function() {
         .pipe(gulp.dest(paths.distIcon))
         .pipe($.svgInline({ className: '.icon_%s' }))
         .pipe($.replace('background-image', 'background-position: center center; background-repeat: no-repeat; background-size: contain; background-image'))
-        .pipe($.concat('_icons.scss'))
+        .pipe($.concat('_icon_sprite.scss'))
         .pipe(gulp.dest(paths.srcCss + 'automated/'));
 });
 

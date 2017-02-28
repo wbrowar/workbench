@@ -1,0 +1,26 @@
+// ICONS<% if (styleTemplateConfig.sections.icons.modules.logo_color) { %>
+.icon_logo {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+<% } %><% if (styleTemplateConfig.sections.icons.modules.social_media_default) { %>
+.nav_social {
+  display: block;
+
+  & > .icon {
+    @include hide_text;
+    display: inline-block;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: $color_black_default;
+    background-size: 30px 30px;
+    border-radius: 50%;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+<% } %>
