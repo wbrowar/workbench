@@ -13,5 +13,5 @@ import * as g from 'global';
 
 // INIT FUNCTIONS
 if (jsDevMode) {
-  console.log('Inside');
+    console.log('Inside');
 }

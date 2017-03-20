@@ -11,32 +11,32 @@ import emergence from 'emergence';
 
 // UTILITY FUNCTIONS
 export function gaTrack(category, action, label) {
-  if (!jsDevMode) {
-    ga("send", "event", category, action, label);
-  } else {
-    console.log('GA Tracking Preview: ', category, action, label);
-  }
+    if (!jsDevMode) {
+        ga("send", "event", category, action, label);
+    } else {
+        console.log('GA Tracking Preview: ', category, action, label);
+    }
 }
 export function hasClass(el, className) {
-  if (el.classList) {
-    return el.classList.contains(className);
-  } else {
-    return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
-  }
+    if (el.classList) {
+        return el.classList.contains(className);
+    } else {
+        return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+    }
 }
 export function addClass(el, className) {
-  if (el.classList) {
-    el.classList.add(className);
-  } else {
-    el.className += ' ' + className;
-  }
+    if (el.classList) {
+        el.classList.add(className);
+    } else {
+        el.className += ' ' + className;
+    }
 }
 export function removeClass(el, className) {
-  if (el.classList) {
-    el.classList.remove(className);
-  } else {
-    el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-  }
+    if (el.classList) {
+        el.classList.remove(className);
+    } else {
+        el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    }
 }
 
 
@@ -60,5 +60,5 @@ export function removeClass(el, className) {
 
 // INIT FUNCTIONS
 if (jsDevMode) {
-  console.log('Global');
+    console.log('Global');
 }

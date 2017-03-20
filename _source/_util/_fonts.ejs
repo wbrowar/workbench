@@ -12,7 +12,7 @@ $font_embedded_<%= fonts[i].name %>: false;<% }; %><% }; %>
             src: url('<%= fonts[i].files.eot %>');
             src: url('<%= fonts[i].files.eot %>?#iefix') format('embedded-opentype')<% if (fonts[i].files.woff2 !== undefined) { %>,
                  url('<%= fonts[i].files.woff2 %>') format('woff2')<% } %><% if (fonts[i].files.woff !== undefined) { %>,
-                 url('/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff') format('woff')<% } %>;
+                 url('<%= fonts[i].files.woff %>') format('woff')<% } %>;
             font-style: <%= fonts[i].fontStyle %>;
             font-weight: <%= fonts[i].fontWeight %>;
         }

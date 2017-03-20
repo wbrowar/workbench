@@ -1,6 +1,6 @@
 // SASS FUNCTIONS
 @function rwd_ratio_width($object_px, $container_px) {
-	@return $object_px / $container_px * 100%;
+  @return $object_px / $container_px * 100%;
 }
 
 // SITE VARIABLES
@@ -28,97 +28,112 @@ $mq_max_width: 1300px; // example
 // $font_fallback_size = fallback size used if vw units are not supported by the browser
 // $font_fallback_mq = at this width, the texrt will stop scaling up
 @mixin fz($font_vw_unit, $font_fallback_size: '', $font_fallback_mq: '') {
-	@if $font_fallback_size != '' {
-		font-size: $font_fallback_size;
-	}
-	font-size: $font_vw_unit + vw;
+  @if $font_fallback_size != '' {
+    font-size: $font_fallback_size;
+  }
+  font-size: $font_vw_unit + vw;
 
-	@if $font_fallback_mq != '' {
-		@include mq($font_fallback_mq) {
-			font-size: $font_fallback_size;
-		}
-	}
+  @if $font_fallback_mq != '' {
+    @include mq($font_fallback_mq) {
+      font-size: $font_fallback_size;
+    }
+  }
 }
 
 // MEDIA QUERIES
 // Quickly write simple media queries
 // @include mq(600px) {  }
 @mixin mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '') {
-	@if $additional_media != '' {
-		@media (#{$mq_min_max}-#{$mq_direction}: $breakpoint , $additional_media) {
-			@content;
-		}
-	} @else {
-		@media (#{$mq_min_max}-#{$mq_direction}: $breakpoint) {
-			@content;
-		}
-	}
+  @if $additional_media != '' {
+    @media (#{$mq_min_max}-#{$mq_direction}: $breakpoint, $additional_media) {
+      @content;
+    }
+  } @else {
+    @media (#{$mq_min_max}-#{$mq_direction}: $breakpoint) {
+      @content;
+    }
+  }
 }
+
 @mixin mq($breakpoint, $additional_media: '') {
-	@include mq_handler('min', 'width', $breakpoint, $additional_media) {
-		@content;
-	}
+  @include mq_handler('min', 'width', $breakpoint, $additional_media) {
+    @content;
+  }
 }
+
 @mixin mq_max($breakpoint, $additional_media: '') {
-	@include mq_handler('max', 'width', $breakpoint, $additional_media) {
-		@content;
-	}
+  @include mq_handler('max', 'width', $breakpoint, $additional_media) {
+    @content;
+  }
 }
+
 @mixin mq_v($breakpoint, $additional_media: '') {
-	@include mq_handler('min', 'height', $breakpoint, $additional_media) {
-		@content;
-	}
+  @include mq_handler('min', 'height', $breakpoint, $additional_media) {
+    @content;
+  }
 }
+
 @mixin mq_vmax($breakpoint, $additional_media: '') {
-	@include mq_handler('max', 'height', $breakpoint, $additional_media) {
-		@content;
-	}
+  @include mq_handler('max', 'height', $breakpoint, $additional_media) {
+    @content;
+  }
 }
+
 @mixin bg_2x {
-	@media only screen and (-webkit-min-device-pixel-ratio: 2),
-	       only screen and (min-resolution: 192dpi) {
-		@content;
-	}
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi) {
+    @content;
+  }
 }
 
 // PLACEHOLDER
 // Style placeholder
 @mixin placeholder {
-	::-webkit-input-placeholder {
-	 @content;
-	}
-	:-moz-placeholder {
-	 @content;
-	}
-	::-moz-placeholder {
-	 @content;
-	}
+  ::-webkit-input-placeholder {
+    @content;
+  }
+  :-moz-placeholder {
+    @content;
+  }
+  ::-moz-placeholder {
+    @content;
+  }
 }
 
 // TEXT
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
-	text-indent: -99999px;
+  text-indent: -99999px;
 }
 
 // TRANSITIONS/ANIMATIONS
 @mixin transition($property, $duration: $anim_duration_default, $delay: 0, $timing: ease-out) {
-	transition-property: $property;
-	transition-duration: $duration;
-	transition-delay: $delay;
-	transition-timing-function: $timing;
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-delay: $delay;
+  transition-timing-function: $timing;
 }
 
 // PLACEHOLDERS
 // Put clearfix on wrapper elements for floats
 %clearfix {
-	&:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }	
-	&:after { clear: both; }	
-	& { zoom: 1; } 
+  &:before, &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  &:after {
+    clear: both;
+  }
+  & {
+    zoom: 1;
+  }
 }
+
 %margin-bottom {
   margin-bottom: $margin_bottom_default;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
