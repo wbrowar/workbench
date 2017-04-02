@@ -40,20 +40,19 @@ const paths = {
 
 // Gulp Variables
 const browserSync     = require('browser-sync').create(),
-    critical        = require('critical'),
-    glob            = require("glob"),
-    gulp            = require('gulp'),
-    gulpLoadPlugins = require('gulp-load-plugins'),
-    notifier        = require('node-notifier'),
-    semver          = require('semver'),
-    webshot         = require('webshot'),
-    $               = gulpLoadPlugins({
-        rename: {
-            'gulp-sass-glob':      'sassGlob',
-            'gulp-svg-inline-css': 'svgInline',
-            'gulp-util':           'gutil',
-        }
-    });
+      critical        = require('critical'),
+      glob            = require("glob"),
+      gulp            = require('gulp'),
+      gulpLoadPlugins = require('gulp-load-plugins'),
+      notifier        = require('node-notifier'),
+      semver          = require('semver'),
+      $               = gulpLoadPlugins({
+          rename: {
+              'gulp-sass-glob':      'sassGlob',
+              'gulp-svg-inline-css': 'svgInline',
+              'gulp-util':           'gutil',
+          }
+      });
 
 const ejsVars = {
     root:                bases.build,
@@ -142,8 +141,6 @@ gulp.task('vars',function() {
         + `\n${$.gutil.colors.bold('└─ Additional files and settings for use in the \`ejs\` task. All paths must start from the \`_build\` folder.')}\n`
         + `\n${$.gutil.colors.inverse(' fonts ')}`
         + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`
-        + `\n${$.gutil.colors.inverse(' webshotScreenshots ')}`
-        + `\n${$.gutil.colors.bold('└─ Array of pages to take screenshots of when running \`gulp release\`.')}\n`;
     $.gutil.log(text);
     $.gutil.beep();
 });
@@ -182,7 +179,6 @@ gulp.task('release', ['bump:patch', 'release:tasks']);
 gulp.task('releasefeature', ['bump:minor', 'release:tasks']);
 gulp.task('releasemajor', ['bump:major', 'release:tasks']);
 gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release'], function() {
-    webshotHandler();
     return notifier.notify({ 'title': name, 'message': 'Release Complete' });
 });
 
@@ -530,60 +526,3 @@ gulp.task('favicons:generate', ['cleanFavicon'], function() {
         }))
         .pipe(gulp.dest(bases.build + 'favicon'));
 });
-
-// Take screenshots of webpage, using Webshot
-const webshot320 = {
-    renderDelay: 10000,
-    screenSize: {
-        width: 320,
-        height: 480
-    },
-    shotSize: {
-        width: 'window',
-        height: 'all'
-    },
-}, webshot768 = {
-    renderDelay: 10000,
-    screenSize: {
-        width: 768,
-        height: 2014
-    },
-    shotSize: {
-        width: 'window',
-        height: 'all'
-    },
-}, webshot1440 = {
-    renderDelay: 10000,
-    screenSize: {
-        width: 1440,
-        height: 900
-    },
-    shotSize: {
-        width: 'window',
-        height: 'all'
-    },
-}, webshot2560 = {
-    renderDelay: 10000,
-    screenSize: {
-        width: 2560,
-        height: 1440
-    },
-    shotSize: {
-        width: 'window',
-        height: 'all'
-    },
-}
-function webshotHandler() {
-    var date = new Date();
-    var timestamp = date.getFullYear() + '-' + (date.getMonth()<10?'0':'') + date.getMonth() + '-' + (date.getDate()<10?'0':'') + date.getDate() + '-' + (date.getHours()<10?'0':'') + date.getHours() + ';' + (date.getMinutes()<10?'0':'') + date.getMinutes() + ';' + (date.getSeconds()<10?'0':'') + date.getSeconds();
-
-    $.gutil.log('Taking screenshots');
-    for (let i=0; i<vars.webshotScreenshots.length; i++) {
-        if (vars.webshotScreenshots[i].url !== 'http://google.com/') {
-            webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-320.png', webshot320, function() {});
-            webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-768.png', webshot768, function() {});
-            webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-1440.png', webshot1440, function() {});
-            webshot(vars.webshotScreenshots[i].url, bases.source + '/screenshots/' + timestamp + '-' + vars.webshotScreenshots[i].name + '-2560.png', webshot2560, function() {});
-        }
-    }
-}

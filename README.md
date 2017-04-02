@@ -118,6 +118,13 @@ Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/
 
 ---
 ## Release Notes
+#### 4.5.0
+- :wrench: Replaced `emergence` with `scrollMonitor` for lazy loading
+- :rocket: Added `_source/_js/lazy.js` to handle lazy loading
+  - `lazy.js` relies on `data` attributes. See comments in the code for required attributes and data types
+  - Check `lazy.js` comments for more information
+- :fire: Removed webshot from `Gulpfile.js`
+  
 #### 4.4.0
 - :rocket: Added font configuration settings to `package.json`
 - :rocket: Added `gulp font` task to automate `@font-face` declarations and performance enhancements in `_source/automated/_fonts.scss`

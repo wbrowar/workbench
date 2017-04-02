@@ -10,6 +10,13 @@ import emergence from 'emergence';
 // export var windowWidth = 0, windowHeight = 0;
 
 // UTILITY FUNCTIONS
+export function addClass(el, className) {
+    if (el.classList) {
+        el.classList.add(className);
+    } else {
+        el.className += ' ' + className;
+    }
+}
 export function gaTrack(category, action, label) {
     if (!jsDevMode) {
         ga("send", "event", category, action, label);
@@ -22,13 +29,6 @@ export function hasClass(el, className) {
         return el.classList.contains(className);
     } else {
         return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
-    }
-}
-export function addClass(el, className) {
-    if (el.classList) {
-        el.classList.add(className);
-    } else {
-        el.className += ' ' + className;
     }
 }
 export function removeClass(el, className) {

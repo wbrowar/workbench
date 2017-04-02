@@ -33,13 +33,14 @@
     "node_modules/ideal-image-slider/ideal-image-slider.css"
   ],
   "copyFirstJsFiles": [
-    "node_modules/emergence.js/dist/emergence.js",
     "node_modules/fontfaceobserver/fontfaceobserver.js",
     "node_modules/ideal-image-slider/ideal-image-slider.js",
     "node_modules/jquery/dist/jquery.js",
     "node_modules/fg-loadcss/src/loadCSS.js",
+    "node_modules/scrollmonitor/scrollMonitor.js",
     "node_modules/systemjs/dist/system.js",
-    "node_modules/vanilla-fitvids/jquery.fitvids.js"
+    "node_modules/vanilla-fitvids/jquery.fitvids.js",
+    "node_modules/vue/dist/vue.js"
   ],
   "ejsVars": {
     "stylemarkup": "/html/ejs/ejs_includes/_style_markup.html"
@@ -104,20 +105,15 @@
       "fontEventCheck": true
     }
   ],
-  "webshotScreenshots": [
-    {
-      "name": "home",
-      "url": "http://google.com/"
-    }
-  ],
   "dependencies": {
-    "emergence.js": "^1.0.3",
     "fg-loadcss": "^1.2.0",
     "fontfaceobserver": "^1.5.4",
     "ideal-image-slider": "^1.5.1",
     "jquery": "^3.1.1",
+    "scrollmonitor": "^1.2.3",
     "systemjs": "^0.19.41",
-    "vanilla-fitvids": "^1.1.0"
+    "vanilla-fitvids": "^1.1.0",
+    "vue": "^2.2.4"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.16.0",
