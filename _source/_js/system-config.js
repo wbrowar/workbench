@@ -6,7 +6,7 @@ SystemJS.config({
         'idealimageslider': '_lib/idealimageslider.min.js',
         'jquery': '_lib/jquery.min.js',
         'scrollmonitor': '_lib/scrollMonitor.min.js',
-        'vue': '_lib/vue.min.js',
+        'vue': jsDevMode ? 'https://unpkg.com/vue' : '_lib/vue.min.js',
         'modernizr': '_lib/modernizr-custom.min.js',
         'global': 'global.min.js',
         'home': 'home.min.js',

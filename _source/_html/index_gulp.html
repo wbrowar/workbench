@@ -27,11 +27,10 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 
     <!-- scripts -->
     <% if (enable_system_js === 'true') { %>
-    <script src='<%= site_root %>js/_lib/system.min.js?v=<%= version %>'></script>
     <script type="text/javascript">
         var jsSection = 'home',
-            jsDevMode = true,
-            jsVersion = '<%= version %>',
+            jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
+            jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Date.now().toString()<% } %>,
             jsThemePath = '<%= site_root %>',
             jsModules = [],
             enableFontEvents = <%= enable_font_events %>;
@@ -40,25 +39,6 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
         /* jsModules.push('modulepathname'); */
 
         <%- include(loadcss) %>
-        <% if (enable_system_js === 'true') { %><%- include(systemconfig) %>
-            <% if (enable_font_events === 'true') { %>
-                // Load fonts locally and avoid FOIT
-                // Setup font events (do not forget to change variable in package.json)
-                (function(w) {
-                    if (w.document.documentElement.className.indexOf("fonts_loaded") > -1){
-                        return;
-                    } else if (enableFontEvents === true) {
-                        SystemJS.import('fontfaceobserver').then(function(m) {
-                            // change fonts
-                            <% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>
-                                var font_<%- fonts[i].name %> = new w.FontFaceObserver(<%- fonts[i].fontFamily %>);<% } %><% } %>
-
-                            w.Promise.all([<% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>font_<%- fonts[i].name %>.check(),<% } %><% } %>]).then(function(){
-                                w.document.documentElement.className += " fonts_loaded";
-                            });
-                        });
-                    }
-            }(this));<% } %><% } %><% } %>
 
         // load CSS
         loadCSS("<%= site_root %>css/all.css?v=<%= version %>");
@@ -84,16 +64,37 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
     <%- include(stylemarkup) %>
 
     <% if (enable_system_js === 'true') { %>
-    <script>
-        (function() {
-            jsModules = jsModules.filter(function(elem, pos, arr) {
-                return arr.indexOf(elem) == pos;
-            });
-            for (var i = 0; i < jsModules.length; i++) {
-                importPageSpecificModule(jsModules[i]);
-            }
-        }());
-    </script>
-<% } %>
+        <script src='<%= site_root %>js/_lib/system.min.js?v=<%= version %>'></script>
+        <script>
+            <%- include(systemconfig) %>
+            (function() {
+                jsModules = jsModules.filter(function(elem, pos, arr) {
+                    return arr.indexOf(elem) == pos;
+                });
+                for (var i = 0; i < jsModules.length; i++) {
+                    importPageSpecificModule(jsModules[i]);
+                }
+            }());
+
+        <% if (enable_font_events === 'true') { %>
+            // Load fonts locally and avoid FOIT
+            // Setup font events (do not forget to change variable in package.json)
+            (function(w) {
+                if (w.document.documentElement.className.indexOf("fonts_loaded") > -1){
+                    return;
+                } else if (enableFontEvents === true) {
+                    SystemJS.import('fontfaceobserver').then(function(m) {
+                        // change fonts
+                        <% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>
+                            var font_<%- fonts[i].name %> = new w.FontFaceObserver(<%- fonts[i].fontFamily %>);<% } %><% } %>
+
+                        w.Promise.all([<% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>font_<%- fonts[i].name %>.check(),<% } %><% } %>]).then(function(){
+                            w.document.documentElement.className += " fonts_loaded";
+                        });
+                    });
+                }
+            }(this));<% } %><% } %>
+        </script>
+    <% } %>
 </body>
 </html>

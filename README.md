@@ -118,6 +118,16 @@ Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/
 
 ---
 ## Release Notes
+#### 4.5.1
+- :rocket: `jsDevMode` now gets set to false when running `gulp release`
+- :rocket: `jsVersion` gets set to the package version number upon `gulp release`, otherwise it is set to the current timestamp and files that use `<%= version %>` will be forced to reload during development
+- :wrench: Added support for `.min` files in the `_js/_lib` folder
+  - `.min.js` files do not get uglified or renamed. They are just moved to your `js/_lib` folder in your theme path
+- :wrench: Moved SystemJS `<script>` tag, system config code, and font events code down to bottom of the `<body>` tag. I'm not sure if this will have an impact either way, but it seems like it's safe to move to speed up loading
+- :rocket: Added `vue.js` to default libraries
+  - Vue is not turned on by default, but it'll be there in case you'd like to use it
+  - Because of the way Vue's libraries are named (dev = `.js`, prod = `.min.js`), moving only one file during `gulp first` gets messed up, so conditional loading—based on whether or not `jsDevMode` is true—makes it so development Vue is loaded via their CDN, and when `gulp release` is run, the local, production version is used
+
 #### 4.5.0
 - :wrench: Replaced `emergence` with `scrollMonitor` for lazy loading
 - :rocket: Added `_source/_js/lazy.js` to handle lazy loading
