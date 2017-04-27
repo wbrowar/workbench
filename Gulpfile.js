@@ -16,7 +16,7 @@ const bases = {
     build:  './' + vars.build_path,
     theme:  './' + vars.theme_path,
     html:   './' + vars.html_path,
-    site:   './' + vars.site_root,
+    site:          vars.site_root,
 };
 const paths = {
     distCss:                bases.theme + 'css/',
@@ -62,7 +62,7 @@ const ejsVars = {
     fonts:               vars.fonts,
     loadcss:             '/js/uglify/_lib/loadCSS.min.js',
     release:             release,
-    site_root:           vars.site_root,
+    site_root:           bases.site,
     styleTemplateConfig: !['', 'n', 'no'].includes(vars.style_template.toLowerCase()) ? JSON.parse(fs.readFileSync(paths.srcUtil + vars.style_template + 'config.json')) : null,
     styleTemplatePrefix:   vars.style_template_url_prefix,
     styleTemplateSuffix:   vars.style_template_url_suffix,
@@ -192,7 +192,7 @@ gulp.task('watch', function() {
         watchJs           = gulp.watch(paths.filesJs, ['js']),
         watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
 
-    if (vars.browserSync.url === 'http://google.com/') {
+    if (vars.browserSync.url === 'https://starter.wbrowar.com/') {
         $.gutil.log($.gutil.colors.inverse(' Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json. '));
     } else {
         browserSync.init({
@@ -303,7 +303,7 @@ for (let i=0; i<vars.critcss.length; i++) {
     ejsVars['critcss' + vars.critcss[i].critCssFilename] = '/critcss/' + vars.critcss[i].critCssFilename + '.css';
     critCssTasks.push('critcss:' + vars.critcss[i].critCssFilename);
     gulp.task('critcss:' + vars.critcss[i].critCssFilename, ['css:cleaned'], function(cb) {
-        if (vars.critcss[i].src === 'http://google.com/') {
+        if (vars.critcss[i].src === 'https://starter.wbrowar.com/critcss/') {
             $.gutil.log($.gutil.colors.inverse(' Critical CSS is not set up, yet. Change your settings in package.json to use Critical CSS. '));
         }
         critical.generate({

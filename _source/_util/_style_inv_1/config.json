@@ -34,6 +34,18 @@
         "lazy_load_srcset": true
       }
     },
+    "media": {
+      "enabled": true,
+      "title": "Media",
+      "modules": {
+        "audio": true,
+        "lazy_load_audio": true
+        "youtube": true,
+        "lazy_load_iframe": true
+        "video": true,
+        "lazy_load_video": true
+      }
+    },
     "tables": {
       "enabled": true,
       "title": "Tables",

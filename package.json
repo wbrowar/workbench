@@ -15,16 +15,16 @@
   "minify_html": "true",
   "browserSync": {
     "browser": "google chrome",
-    "url": "http://google.com/"
+    "url": "https://starter.wbrowar.com/"
   },
   "critcss": [
     {
-      "src": "http://google.com/",
+      "src": "https://starter.wbrowar.com/critcss/",
       "cssFilename": "all",
       "critCssFilename": "home"
     },
     {
-      "src": "http://google.com/",
+      "src": "https://starter.wbrowar.com/critcss/",
       "cssFilename": "all",
       "critCssFilename": "amp"
     }
@@ -145,7 +145,6 @@
     "imagemin-optipng": "^5.2.1",
     "imagemin-pngquant": "^4.2.2",
     "imagemin-svgo": "^5.2.0",
-    "node-notifier": "^4.6.1",
-    "webshot": "^0.18.0"
+    "node-notifier": "^4.6.1"
   }
 }
