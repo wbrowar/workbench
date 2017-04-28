@@ -1,15 +1,19 @@
-//  GLOBAL
-//  🌎 Scripts used on all pages on the site
-//  Examples:
-//  🛣 Functionality in nagivation used accross all pages on the site
-//  🏗 Utility functions, global variables, or browser events used on all pages of the site
+//  LAZY
+//
 
 import { addClass } from 'global';
 import 'scrollmonitor';
 
 let config = {
-    animationFunctions: {}
+    animationFunctions: {
+        'animationFunction': testFunction,
+    }
 };
+
+// FUNCTIONS
+function testFunction($argAsString) {
+    console.log($argAsString);
+}
 
 // Adds max-width and padding-top to images for easier styling of placeholder images
 function createImagePlaceholders() {
@@ -31,19 +35,21 @@ function lazyAnimateHandler(element, watcher = null) {
         const func = (animation.indexOf("|") > 0) ? animation.split('|', 2)[0] : animation;
         const args = (animation.indexOf("|") > 0) ? animation.split('|', 2)[1] : null;
 
-        if (config.animationFunctions[func] !== undefined) {
+        if (typeof config.animationFunctions[func] === "function") {
             if (args !== null) {
-                config.animationFunctions[func](args);
+                requestAnimationFrame(() => config.animationFunctions[func](args));
             } else {
-                config.animationFunctions[func]();
+                requestAnimationFrame(() => config.animationFunctions[func]());
             }
         }
     }
 
     // in CSS use a class, called 'animated', for CSS transforms and keyframe animations
     addClass(element, 'animated');
-    element.removeAttribute('data-lazy-animate');
-    watcher.destroy();
+    if (!element.hasAttribute('data-lazy-animate-reset')) {
+        element.removeAttribute('data-lazy-animate');
+        watcher.destroy();
+    }
 }
 function lazyLoadHandler(element, watcher = null) {
     // lazy load background images
@@ -77,9 +83,7 @@ function lazyLoadHandler(element, watcher = null) {
     if (element.hasAttribute('data-srcset')) {
         const srcset = element.getAttribute('data-srcset');
         element.setAttribute('srcset', srcset);
-        element.addEventListener('load', function () {
-            removeImagePlaceholder(element);
-        });
+        removeImagePlaceholder(element);
         element.removeAttribute('data-srcset');
     }
 

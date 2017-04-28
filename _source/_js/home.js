@@ -12,7 +12,7 @@ import * as g from 'global';
 
 // INIT FUNCTIONS
 if (jsDevMode) {
-    console.log('Home');
+  console.log('Home');
 }
 
 g.setupEnhancments();

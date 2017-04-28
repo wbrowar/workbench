@@ -5,37 +5,33 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
 -->
 <% } %>
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- meta icons -->
-    <%- include(favicons) %>
+  <!-- meta icons -->
+  <%- include(favicons) %>
 
-    <!-- styles -->
-    <noscript>
-      <!-- backup for critcss -->
-      <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
-    </noscript>
+  <!-- styles -->
+  <noscript>
+    <!-- backup for critcss -->
+    <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
+  </noscript>
 
-    <!-- critcss -->
-    <% if (critCssEnabled) { %>
-      <!--
-      SET COOKIE, THEN CHECK FOR IT. IF COOKIE IS FOUND, SKIP CRITCSS BECAUSE CSS FILE SHOULD ALREADY BE CACHED
-      -->
-      <style><%- include(critcsshome) %></style>
-    <% } else { %><!-- CRITICAL CSS --><% } %>
+  <!-- critcss -->
+  <% if (critCssEnabled) { %><!-- SET COOKIE, THEN CHECK FOR IT. IF COOKIE IS FOUND, SKIP CRITCSS BECAUSE CSS FILE SHOULD ALREADY BE CACHED -->
+  <style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
 
-    <!-- scripts -->
-    <% if (enable_system_js === 'true') { %><script src='<%= site_root %>js/_lib/system.min.js?v=<%= version %>'></script><% } %>
-    <script type="text/javascript">
+  <!-- scripts -->
+  <% if (enable_system_js === 'true') { %>
+  <script type="text/javascript">
       var jsSection = 'home',
-          jsDevMode = true,
-          jsVersion = '<%= version %>',
-          jsThemePath = '<%= site_root %>',
+          jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
+      jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Date.now().toString()<% } %>,
+      jsThemePath = '<%= site_root %>',
           jsModules = [],
           enableFontEvents = <%= enable_font_events %>;
 
@@ -43,25 +39,6 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
       /* jsModules.push('modulepathname'); */
 
       <%- include(loadcss) %>
-      <% if (enable_system_js === 'true') { %><%- include(systemconfig) %>
-<% if (enable_font_events === 'true') { %>
-      // Load fonts locally and avoid FOIT
-      // Setup font events (don't forget to change variable in package.json)
-      (function(w) {
-        if (w.document.documentElement.className.indexOf("fonts_loaded") > -1){
-          return;
-        } else if (enableFontEvents === true) {
-          SystemJS.import('fontfaceobserver').then(function(m) {
-            // change fonts
-            <% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>
-            var font_<%- fonts[i].name %> = new w.FontFaceObserver(<%- fonts[i].fontFamily %>);<% } %><% } %>
-            
-            w.Promise.all([<% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>font_<%- fonts[i].name %>.check(),<% } %><% } %>]).then(function(){
-              w.document.documentElement.className += " fonts_loaded";
-            });
-          });
-        }
-      }(this));<% } %><% } %>
 
       // load CSS
       loadCSS("<%= site_root %>css/all.css?v=<%= version %>");
@@ -69,35 +46,58 @@ SET COOKIE, THEN CHECK FOR IT AND ADD .fonts_loaded IF COOKIE IS SET
       <%#
       // Google analytics tag
       /*
-      if (!jsDevMode) {
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      
-        ga('create', 'UA-XXXXXXX-X', 'EXAMPLE.com');
-        ga('send', 'pageview');
-      }
-      */
+       if (!jsDevMode) {
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXXXX-X', 'EXAMPLE.com');
+       ga('send', 'pageview');
+       }
+       */
       %>
-    </script>
+  </script>
+</head>
+<body>
 
-  </head>
-  <body>
+<div id="page">
+  <%- include(styletemplateicons) %>
+</div>
 
-    <%- include(styletemplateicons) %>
-
-    <% if (enable_system_js === 'true') { %>
-    <script>
-      (function() {
-        jsModules = jsModules.filter(function(elem, pos,arr) {
-          return arr.indexOf(elem) == pos;
+<% if (enable_system_js === 'true') { %>
+<script src='<%= site_root %>js/_lib/es6-promise.auto.min.js?v=<%= version %>'></script>
+<script src='<%= site_root %>js/_lib/system.min.js?v=<%= version %>'></script>
+<script>
+    <%- include(systemconfig) %>
+    (function() {
+        jsModules = jsModules.filter(function(elem, pos, arr) {
+            return arr.indexOf(elem) == pos;
         });
         for (var i = 0; i < jsModules.length; i++) {
-          importPageSpecificModule(jsModules[i]);
+            importPageSpecificModule(jsModules[i]);
         }
-      }());
-    </script>
-    <% } %>
-  </body>
+    }());
+
+    <% if (enable_font_events === 'true') { %>
+        // Load fonts locally and avoid FOIT
+        // Setup font events (do not forget to change variable in package.json)
+        (function(w) {
+            if (w.document.documentElement.className.indexOf("fonts_loaded") > -1){
+                return;
+            } else if (enableFontEvents === true) {
+                SystemJS.import('fontfaceobserver').then(function(m) {
+                    // change fonts
+                    <% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>
+                        var font_<%- fonts[i].name %> = new w.FontFaceObserver(<%- fonts[i].fontFamily %>);<% } %><% } %>
+
+                    w.Promise.all([<% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>font_<%- fonts[i].name %>.check(),<% } %><% } %>]).then(function(){
+                        w.document.documentElement.className += " fonts_loaded";
+                    });
+                });
+            }
+        }(this));<% } %><% } %>
+</script>
+<% } %>
+</body>
 </html>

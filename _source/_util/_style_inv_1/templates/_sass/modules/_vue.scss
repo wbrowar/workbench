@@ -1,0 +1,100 @@
+// VUE COMPONENTS
+// GLOBAL STYLES
+[v-cloak] {
+  display: none;
+}
+<% if (styleTemplateConfig.sections.vue.modules.accordion) { %>// ACCORDION
+.vue_accordion {
+  & > .tab {
+    margin-bottom: 20px;
+    border: 1px solid lighten($color_black_default, 90);
+    border-radius: 2px;
+
+    & > .title {
+      padding: 10px 10px 8px;
+      @extend .icon_plus;
+      background-position: calc(100% - 10px) 50% !important;
+      background-size: 15px 15px !important;
+      cursor: pointer;
+
+      &.active {
+        @extend .icon_minus;
+      }
+    }
+    & > .content {
+      height: 0;
+      border-top: 1px solid transparent;
+      overflow: hidden;
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: opacity .3s ease-out, transform .3s ease-out;
+
+      &.active {
+        height: auto;
+        border-top-color: lighten($color_black_default, 90);
+        opacity: 1;
+        transform: translateY(0);
+      }
+      & > .inner {
+        padding: 10px 10px 8px;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+<% } %><% if (styleTemplateConfig.sections.vue.modules.overlay) { %>// OVERLAY
+$_mq_overlay_1: 700px;
+.vue_overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50000;
+
+  & > .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparentize($color_black_default, .6);
+  }
+  & > .content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $color_white_default;
+    box-sizing: border-box;
+
+    & > .inner {
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+    }
+    & > .close {
+      @include hide_text;
+      display: block;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      background-color: lighten($color_black_default, 90);
+      background-size: 20px 20px;
+
+      @include mq($_mq_overlay_1) {
+        top: -10px;
+        right: -10px;
+      }
+    }
+
+    @include mq($_mq_overlay_1) {
+      width: 80%;
+      height: auto;
+    }
+  }
+}
+<% } %>

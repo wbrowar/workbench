@@ -1,0 +1,51 @@
+// MESSAGES<% if (styleTemplateConfig.sections.messages.modules.alert_bar || styleTemplateConfig.sections.messages.modules.alert_bar_message) { %>
+// ALERT BAR
+.alert_bar {
+  background-color: $color_alert_error;
+  color: $color_white_default;
+
+  & > .summary {
+    padding: 15px;
+    text-align: center;
+
+    &.has_message {
+      cursor: pointer;
+    }
+  }
+  & > .message {
+    display: none;
+    padding: 15px;
+    background-color: transparentize(lighten($color_alert_error, 20), .1);
+  }
+  &.active {
+    & > .message {
+      display: block;
+    }
+  }
+}
+<% } %>
+// ALERT MESSAGES<% if (styleTemplateConfig.sections.messages.modules.success || styleTemplateConfig.sections.messages.modules.error || styleTemplateConfig.sections.messages.modules.warning) { %>
+.alert_message {
+  display: block;
+  padding: 25px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: $color_white_default;
+  <% if (styleTemplateConfig.sections.messages.modules.success) { %>
+  &.success {
+    border-color: $color_alert_success;
+    background-color: transparentize(lighten($color_alert_success, 20), .1);
+    color: lighten($color_alert_success, 50);
+  }<% } %><% if (styleTemplateConfig.sections.messages.modules.error) { %>
+  &.error {
+    border-color: $color_alert_error;
+    background-color: transparentize(lighten($color_alert_error, 20), .1);
+    color: lighten($color_alert_error, 50);
+  }<% } %><% if (styleTemplateConfig.sections.messages.modules.warning) { %>
+  &.warning {
+    border-color: $color_alert_warning;
+    background-color: transparentize(lighten($color_alert_warning, 20), .1);
+    color: darken($color_alert_warning, 10);
+  }<% } %>
+}
+<% } %>

@@ -6,7 +6,9 @@
       "modules": {
         "rollover_pop": true,
         "click_push_in": true,
-        "scroll_slide_in": true
+        "scroll_slide_in": true,
+        "js_animation": true,
+        "js_animation_update": true
       }
     },
     "buttons": {
@@ -16,6 +18,13 @@
         "class": true,
         "element": true,
         "submit": true
+      }
+    },
+    "grid": {
+      "enabled": true,
+      "title": "CSS Grid",
+      "modules": {
+        "holy_grail": true
       }
     },
     "icons": {
@@ -31,19 +40,38 @@
       "title": "Images",
       "modules": {
         "srcset": true,
-        "lazy_load_srcset": true
+        "lazy_load_srcset": true,
+        "lazy_load_background": true
       }
     },
     "media": {
       "enabled": true,
       "title": "Media",
       "modules": {
-        "audio": true,
-        "lazy_load_audio": true
-        "youtube": true,
-        "lazy_load_iframe": true
-        "video": true,
+        "audio": false,
+        "lazy_load_audio": true,
+        "iframe": false,
+        "lazy_load_iframe": true,
+        "video": false,
         "lazy_load_video": true
+      }
+    },
+    "messages": {
+      "enabled": true,
+      "title": "Messages",
+      "modules": {
+        "alert_bar": true,
+        "alert_bar_message": true,
+        "success": true,
+        "error": true,
+        "warning": true
+      }
+    },
+    "nav": {
+      "enabled": true,
+      "title": "Navigation",
+      "modules": {
+        "mobile_nav_toggle": true
       }
     },
     "tables": {
@@ -51,6 +79,15 @@
       "title": "Tables",
       "modules": {
         "element": true
+      }
+    },
+    "vue": {
+      "enabled": true,
+      "title": "Vue Components",
+      "modules": {
+        "accordion": true,
+        "mobile_nav_toggle": false,
+        "overlay": true
       }
     }
   }

@@ -15,3 +15,5 @@ import * as g from 'global';
 if (jsDevMode) {
     console.log('Inside');
 }
+
+g.setupEnhancments();

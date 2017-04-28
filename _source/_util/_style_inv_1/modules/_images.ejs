@@ -5,19 +5,38 @@
 <% if (modules.srcset) { %>
     <% moduleTemplates.push({
         "title": "Src-Set Image",
-        "description": "A normal image, loaded with the `src-set` attribute.",
+        "description": "A normal content image, loaded with the `src-set` attribute.",
         "background": "light",
-        "code": '<img src="/img/FPO.png" srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" alt="For Placement Only">'
+        "code":
+`<figure>
+    <img src="/img/FPO.png" srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" alt="For Placement Only">
+</figure>`
     }); %>
 <% } %>
 
 <% if (modules.lazy_load_srcset) { %>
     <% moduleTemplates.push({
-        "title": "Lazy-loading Images",
+        "title": "Lazy-loading Image",
         "description": "An image loaded when the user scrolls down to its location on the page.",
         "background": "light",
-        "code": '<img data-emergence="hidden" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">'
+        "code":
+`<figure>
+    <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">
+</figure>`
     }); %>
+<% } %>
+
+<% if (modules.lazy_load_background) { %>
+<% moduleTemplates.push({
+    "title": "Lazy-loading Background Image",
+    "description": "Loads a background image when the user scrolls down to its location on the page. Uses a JSON object in the `data-bg-array` attribute to create CSS that laods the background image. Multiple images can be loaded via media queries defined in the JSON object.",
+    "background": "light",
+    "demoCode":
+`<div class="styles_demo_box_wrapper">
+    <div data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "mq": "(min-width: 300px)", "url": "/img/FPO.png" },{ "mq": "(min-width: 300px)", "retina": true, "url": "/img/FPO@2x.png" }] }' class="styles_demo_box" style="background-size: cover;"></div>
+</div>`,
+    "code": `<div data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "mq": "(min-width: 300px)", "url": "/img/FPO.png" },{ "mq": "(min-width: 300px)", "retina": true, "url": "/img/FPO@2x.png" }] }'></div>`
+}); %>
 <% } %>
 
 <%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>

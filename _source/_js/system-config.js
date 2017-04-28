@@ -1,16 +1,19 @@
+var jsModulePaths = {
+    'fitvids': '_lib/jquery.fitvids.min.js',
+    'fontfaceobserver': '_lib/fontfaceobserver.min.js',
+    'idealimageslider': '_lib/idealimageslider.min.js',
+    'jquery': '_lib/jquery.min.js',
+    'scrollmonitor': '_lib/scrollMonitor.min.js',
+    'vue': jsDevMode ? 'https://unpkg.com/vue' : '_lib/vue.min.js',
+    'modernizr': '_lib/modernizr-custom.min.js',
+    'global': 'global.min.js',
+    'home': 'home.min.js',
+    'lazy': 'lazy.min.js',
+    'vuecomponents': 'vue-components.min.js',
+};
 SystemJS.config({
     baseURL: jsThemePath+'js/',
-    paths: {
-        'fitvids': '_lib/jquery.fitvids.min.js',
-        'fontfaceobserver': '_lib/fontfaceobserver.min.js',
-        'idealimageslider': '_lib/idealimageslider.min.js',
-        'jquery': '_lib/jquery.min.js',
-        'scrollmonitor': '_lib/scrollMonitor.min.js',
-        'vue': jsDevMode ? 'https://unpkg.com/vue' : '_lib/vue.min.js',
-        'modernizr': '_lib/modernizr-custom.min.js',
-        'global': 'global.min.js',
-        'home': 'home.min.js',
-    },
+    paths: jsModulePaths,
     meta: {
         'fitvids': {
             deps: ['jquery'],
@@ -32,12 +35,16 @@ if (jsSection === 'home') {
 function importPageSpecificModule(moduleName) {
     switch(moduleName) {
         case 'fitvids':
-          SystemJS.import('fitvids').then(function(m) {
-              var jq = jQuery;
+            SystemJS.import('fitvids').then(function(m) {
+                var jq = jQuery;
 
-              jq('.video').fitVids();
-          });
-          break;
+                jq('.video').fitVids();
+            });
+            break;
+        default:
+            if (jsModulePaths[moduleName] !== undefined) {
+                SystemJS.import(moduleName);
+            }
         /*
         // EXAMPLES
         case 'formValidator':

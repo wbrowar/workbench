@@ -55,7 +55,6 @@ const browserSync     = require('browser-sync').create(),
       });
 
 const ejsVars = {
-    root:                bases.build,
     enable_font_events:  vars.enable_font_events,
     enable_system_js:    vars.enable_system_js,
     favicons:            '/favicon/favicons.html',
@@ -70,6 +69,9 @@ const ejsVars = {
     systemconfig:        '/js/uglify/system-config.min.js',
     version:             release ? vars.version : new Date().toLocaleString(),
 };
+const ejsOptions = {
+    root:                bases.build,
+}
 
 //require('events').EventEmitter.prototype._maxListeners = 10000;
 
@@ -165,7 +167,7 @@ gulp.task('template:backup', function() {
 });
 gulp.task('template', ['template:backup'], function() {
     return gulp.src(paths.srcUtil + vars.style_template + '/templates/**/*')
-        .pipe($.ejs(ejsVars))
+        .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.source));
 });
 
@@ -353,7 +355,7 @@ gulp.task('css', function() {
 // Create _fonts.scss file from package.json settings
 gulp.task('font', function() {
   return gulp.src(paths.utilFonts)
-      .pipe($.ejs(ejsVars))
+      .pipe($.ejs(ejsVars, ejsOptions))
       .pipe($.rename({ extname: '.scss' }))
       .pipe(gulp.dest(paths.srcCss + 'automated/'));
 });
@@ -462,7 +464,7 @@ gulp.task('ejs:includes', function() {
 
     return gulp.src(paths.filesHtmlIncludes)
         .pipe($.changed(bases.html))
-        .pipe($.ejs(ejsVars))
+        .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.build + 'html/ejs/ejs_includes'));
 });
 gulp.task('ejs:templates', function() {
@@ -474,7 +476,7 @@ gulp.task('ejs', ['favicons', 'ejs:includes', 'ejs:templates'], function() {
 
     return gulp.src(paths.filesHtml)
         .pipe($.changed(bases.html))
-        .pipe($.ejs(ejsVars))
+        .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.html));
 });
 gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes', 'ejs:templates'], function() {
@@ -484,7 +486,7 @@ gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes', 'ejs:templates'
     }
 
     return gulp.src(paths.filesHtml)
-        .pipe($.ejs(ejsVars))
+        .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.build + 'html/ejs'))
         .pipe(vars.minify_html === "true" ? $.htmlmin(minOptions) : $.gutil.noop())
         .pipe(gulp.dest(bases.html));
@@ -493,7 +495,7 @@ gulp.task('ejs:quick:full', ['ejs:includes', 'ejs:templates'], function(cb) {
     ejsVars.critCssEnabled = false;
 
     gulp.src(paths.filesHtml)
-        .pipe($.ejs(ejsVars))
+        .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.html));
 
     browserSync.reload();
@@ -505,7 +507,7 @@ gulp.task('ejs:quick', ['ejs:includes', 'ejs:templates'], function(cb) {
 
     gulp.src(paths.filesHtml)
         .pipe($.changed(bases.html))
-        .pipe($.ejs(ejsVars))
+        .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.html));
 
     browserSync.reload();

@@ -9,6 +9,7 @@ $color_dev_white: rgb(255, 255, 255);
 $color_dev_red_default: rgb(188, 66, 0);
 $color_dev_green: rgb(211, 231, 220);
 $color_dev_green_text: darken($color_dev_green, 20);
+$color_dev_demo_active: rgb(6, 187, 27);
 
 $padding_dev_spacing: 20px;
 $border_radius: 4px;
@@ -29,6 +30,7 @@ $border_radius: 4px;
       flex: 1 1 140px;
       padding: $padding_dev_spacing;
       box-sizing: border-box;
+      text-align: center;
       text-decoration: none;
       color: $color_dev_grey_links;
       transition: color .2s ease-out, background .2s ease-out;
@@ -73,6 +75,11 @@ $border_radius: 4px;
         box-sizing: border-box;
         margin-bottom: 16px;
         font-size: .9rem;
+
+        a {
+          font-weight: 500;
+          color: $color_dev_black;
+        }
       }
       & > .styles_example_display {
         display: block;
@@ -135,4 +142,8 @@ $border_radius: 4px;
   box-sizing: border-box;
   background-color: $color_dev_red_default;
   color: $color_dev_white;
+
+  &.active {
+    background-color: $color_dev_demo_active;
+  }
 }

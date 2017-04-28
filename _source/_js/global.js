@@ -4,8 +4,8 @@
 //  🛣 Functionality in nagivation used accross all pages on the site
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
 
-import jq from 'jquery';
-import emergence from 'emergence';
+//import jq from 'jquery';
+import lazy from 'lazy';
 
 // export var windowWidth = 0, windowHeight = 0;
 
@@ -31,6 +31,13 @@ export function hasClass(el, className) {
         return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
     }
 }
+function ready(fn) {
+    if (document.readyState != 'loading'){
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
 export function removeClass(el, className) {
     if (el.classList) {
         el.classList.remove(className);
@@ -41,6 +48,32 @@ export function removeClass(el, className) {
 
 
 // CUSTOM FUNCTIONS
+function activeToggleHandler(e) {
+    const element = e.target,
+          activeToggleTargets = element.getAttribute('data-active-toggle') !== '' ? document.querySelectorAll(element.getAttribute('data-active-toggle')) : [element];
+
+    Array.prototype.forEach.call(activeToggleTargets, function(el, i) {
+        if (hasClass(el, 'active')) {
+            removeClass(el, 'active');
+        } else {
+            addClass(el, 'active');
+        }
+    });
+}
+function activeToggleSetup() {
+    const activeToggleElements = document.querySelectorAll('[data-active-toggle]');
+
+    Array.prototype.forEach.call(activeToggleElements, function(el, i) {
+        el.addEventListener('click', activeToggleHandler);
+    });
+}
+
+export function setupEnhancments() {
+    ready(function() {
+        activeToggleSetup();
+        lazy();
+    });
+}
 
 
 // BROWSER EVENTS

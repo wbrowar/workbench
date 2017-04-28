@@ -4,57 +4,87 @@
 
 <% if (modules.audio) { %>
     <% moduleTemplates.push({
-        "title": "Src-Set Image",
-        "description": "A normal image, loaded with the `src-set` attribute.",
+        "title": "Audio",
+        "description": "Plays an audio file using default browser controls.",
         "background": "light",
-        "code": `<img src="/img/FPO.png" srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" alt="For Placement Only">`
+        "code": `<audio src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio>`
     }); %>
 <% } %>
 
 <% if (modules.lazy_load_audio) { %>
     <% moduleTemplates.push({
-        "title": "Lazy-loading Images",
-        "description": "An image loaded when the user scrolls down to its location on the page.",
+        "title": "Lazy-Loading Audio File",
+        "description": "Plays an audio file using default browser controls. Waits until user has scrolled down to the element to load the audio file.",
         "background": "light",
-        "code": `<img data-emergence="hidden" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">`
+        "twigCode":
+`{% set file = block.file.first() %}
+<audio data-lazy-load data-src="{{ file.url }}" controls></audio>
+<noscript><audio src="{{ file.url }}" controls></audio></noscript>`,
+        "code":
+`<audio data-lazy-load data-src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio>
+<noscript><audio src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio></noscript>`
     }); %>
 <% } %>
 
-<% if (modules.youtube) { %>
+<% if (modules.iframe) { %>
     <% moduleTemplates.push({
-        "title": "Lazy-loading Images",
-        "description": "An image loaded when the user scrolls down to its location on the page.",
+        "title": "Iframe",
+        "description": "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio.",
         "background": "light",
-        "code": `<img data-emergence="hidden" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">`
+        "code":
+`<div class="video">
+    <iframe src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480" frameborder="0" allowfullscreen></iframe>
+</div>`
     }); %>
 <% } %>
 
 <% if (modules.lazy_load_iframe) { %>
     <% moduleTemplates.push({
-        "title": "Lazy-loading Images",
-        "description": "An image loaded when the user scrolls down to its location on the page.",
+        "title": "Lazy-Loading Iframe",
+        "description": "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio. Waits until user has scrolled down to the element to load iframe content.",
         "background": "light",
-        "code": `<div class="video">
-    <iframe data-lazy-load width="853" height="480" data-src="https://www.youtube.com/embed/-tPLRTt965k?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        "twigCode":
+`{% set videoId = block.videoId %}
+<div class="video">
+    <iframe data-lazy-load data-src="https://www.youtube.com/embed/{{ videoId }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
+    <noscript><iframe src="https://www.youtube.com/embed/{{ videoId }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
+</div>`,
+        "code":
+`<div class="video">
+    <iframe data-lazy-load data-src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
+    <noscript><iframe src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
 </div>`
     }); %>
 <% } %>
 
 <% if (modules.video) { %>
     <% moduleTemplates.push({
-        "title": "Lazy-loading Images",
-        "description": "An image loaded when the user scrolls down to its location on the page.",
+        "title": "Video",
+        "description": "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag.",
         "background": "light",
-        "code": `<img data-emergence="hidden" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">`
+        "code":
+`<div class="video">
+    <video src="https://starter.wbrowar.com/video/clip.mp4"></video>
+</div>`
     }); %>
 <% } %>
 
 <% if (modules.lazy_load_video) { %>
     <% moduleTemplates.push({
         "title": "Lazy-loading Images",
-        "description": "An image loaded when the user scrolls down to its location on the page.",
+        "description": "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag. Waits until user has scrolled down to the element to load the video file.",
         "background": "light",
-        "code": `<img data-emergence="hidden" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">`
+        "twigCode":
+`{% set file = block.file.first() %}
+<div class="video">
+    <video data-lazy-load data-src="{{ file.url }}"></video>
+    <noscript><video src="{{ file.url }}"></video></noscript>
+</div>`,
+        "code":
+`<div class="video">
+    <video data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4"></video>
+    <noscript><video src="https://starter.wbrowar.com/video/clip.mp4"></video></noscript>
+</div>`
     }); %>
 <% } %>
 
