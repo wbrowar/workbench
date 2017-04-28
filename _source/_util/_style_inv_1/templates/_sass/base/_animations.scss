@@ -31,7 +31,7 @@
   }
 }
 <% } %><% if (styleTemplateConfig.sections.animations.modules.click_push_in) { %>
-.animate_click_push_in {
+.js .animate_click_push_in {
   transition: transform $anim_duration_default ease-out;
 
   &:active {
@@ -39,7 +39,7 @@
   }
 }
 <% } %><% if (styleTemplateConfig.sections.animations.modules.scroll_slide_in) { %>
-.animate_fade_in_from_left {
+.js .animate_fade_in_from_left {
   transform: translateX(-50%);
   opacity: 0;
 
@@ -49,7 +49,7 @@
     opacity: 1;
   }
 }
-.animate_fade_in_from_bottom {
+.js .animate_fade_in_from_bottom {
   transform: translateY(50%);
   opacity: 0;
 
@@ -59,7 +59,7 @@
     opacity: 1;
   }
 }
-.animate_fade_in_from_right {
+.js .animate_fade_in_from_right {
   transform: translateX(50%);
   opacity: 0;
 
