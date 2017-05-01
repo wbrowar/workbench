@@ -129,10 +129,14 @@ export default function(lazyConfig = {}) {
         const elementDelay = lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-delay')) : 0;
         const elementWatcher = scrollMonitor.create(lazyAnimateElements[i], elementOffset);
         elementWatcher.enterViewport(function() {
-            let watchItem = this.watchItem;
-            setTimeout(function() {
-                lazyAnimateHandler(watchItem, elementWatcher);
-            }, elementDelay);
+            if (lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay')) {
+                const watchItem = this.watchItem;
+                setTimeout(function() {
+                    lazyAnimateHandler(watchItem, elementWatcher);
+                }, elementDelay);
+            } else {
+                lazyAnimateHandler(this.watchItem, this);
+            }
         });
         elementWatcher.update();
         elementWatcher.triggerCallbacks();
