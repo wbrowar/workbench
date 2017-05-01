@@ -72,6 +72,8 @@ export function setupEnhancments() {
     ready(function() {
         activeToggleSetup();
         lazy();
+
+        addClass(document.documentElement, 'enhanced');
     });
 }
 
