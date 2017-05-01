@@ -16,4 +16,5 @@ if (jsDevMode) {
     console.log('Inside');
 }
 
-g.setupEnhancments();
+g.setupJsComponents();
+g.setupEnhancements();

@@ -15,4 +15,5 @@ if (jsDevMode) {
   console.log('Home');
 }
 
-g.setupEnhancments();
+g.setupJsComponents();
+g.setupEnhancements();

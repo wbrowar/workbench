@@ -19,7 +19,11 @@ export function addClass(el, className) {
 }
 export function gaTrack(category, action, label) {
     if (!jsDevMode) {
-        ga("send", "event", category, action, label);
+        if (typeof ga === 'function') {
+            ga("send", "event", category, action, label);
+        } else {
+            console.warn('Google Analytics is not set up.');
+        }
     } else {
         console.log('GA Tracking Preview: ', category, action, label);
     }
@@ -31,6 +35,28 @@ export function hasClass(el, className) {
         return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
     }
 }
+const QueryString = function () {
+    // This function is anonymous, is executed immediately and
+    // the return value is assigned to QueryString!
+    const query_string = {};
+    const query = window.location.search.substring(1);
+    const vars = query.split("&");
+    for (let i=0;i<vars.length;i++) {
+        const pair = vars[i].split("=");
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === "undefined") {
+            query_string[pair[0]] = decodeURIComponent(pair[1]);
+            // If second entry with this name
+        } else if (typeof query_string[pair[0]] === "string") {
+            const arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+            query_string[pair[0]] = arr;
+            // If third or later entry with this name
+        } else {
+            query_string[pair[0]].push(decodeURIComponent(pair[1]));
+        }
+    }
+    return query_string;
+}();
 function ready(fn) {
     if (document.readyState != 'loading'){
         fn();
@@ -50,7 +76,7 @@ export function removeClass(el, className) {
 // CUSTOM FUNCTIONS
 function activeToggleHandler(e) {
     const element = e.target,
-          activeToggleTargets = element.getAttribute('data-active-toggle') !== '' ? document.querySelectorAll(element.getAttribute('data-active-toggle')) : [element];
+        activeToggleTargets = element.getAttribute('data-active-toggle') !== '' ? document.querySelectorAll(element.getAttribute('data-active-toggle')) : [element];
 
     Array.prototype.forEach.call(activeToggleTargets, function(el, i) {
         if (hasClass(el, 'active')) {
@@ -65,15 +91,6 @@ function activeToggleSetup() {
 
     Array.prototype.forEach.call(activeToggleElements, function(el, i) {
         el.addEventListener('click', activeToggleHandler);
-    });
-}
-
-export function setupEnhancments() {
-    ready(function() {
-        activeToggleSetup();
-        lazy();
-
-        addClass(document.documentElement, 'enhanced');
     });
 }
 
@@ -94,6 +111,18 @@ export function setupEnhancments() {
 
 
 // INIT FUNCTIONS
+export function setupJsComponents() {
+    activeToggleSetup();
+}
+export function setupEnhancements() {
+    if (!jsDevMode && (typeof QueryString.enhanced === 'undefined')) {
+        ready(function() {
+            lazy();
+
+            addClass(document.documentElement, 'enhanced');
+        });
+    }
+}
 if (jsDevMode) {
     console.log('Global');
 }
