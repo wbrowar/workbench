@@ -112,7 +112,7 @@ export default function(lazyConfig = {}) {
     // when the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
     const lazyLoadElements = document.querySelectorAll('[data-lazy-load]');
     for (let i = 0, l = lazyLoadElements.length; i<l; i++) {
-        const elementOffset = lazyLoadElements[i].hasAttribute('data-lazy-load-offset') ? parseFloat(lazyLoadElements[i].getAttribute('data-lazy-load-offset')) : 500;
+        const elementOffset = lazyLoadElements[i].hasAttribute('data-lazy-load-offset') ? lazyLoadElements[i].getAttribute('data-lazy-load-offset') : 500;
         const elementWatcher = scrollMonitor.create(lazyLoadElements[i], elementOffset);
         elementWatcher.enterViewport(function() {
             lazyLoadHandler(this.watchItem, this);
@@ -126,9 +126,13 @@ export default function(lazyConfig = {}) {
     const lazyAnimateElements = document.querySelectorAll('[data-lazy-animate]');
     for (let i = 0, l = lazyAnimateElements.length; i<l; i++) {
         const elementOffset = lazyAnimateElements[i].hasAttribute('data-lazy-animate-offset') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-offset')) : -100;
+        const elementDelay = lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-delay')) : 0;
         const elementWatcher = scrollMonitor.create(lazyAnimateElements[i], elementOffset);
         elementWatcher.enterViewport(function() {
-            lazyAnimateHandler(this.watchItem, this);
+            let watchItem = this.watchItem;
+            setTimeout(function() {
+                lazyAnimateHandler(watchItem, elementWatcher);
+            }, elementDelay);
         });
         elementWatcher.update();
         elementWatcher.triggerCallbacks();
