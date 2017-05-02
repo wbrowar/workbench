@@ -39,15 +39,25 @@
   }
 }
 <% } %><% if (styleTemplateConfig.sections.animations.modules.scroll_slide_in) { %>
-.enhanced .animate_fade_in_from_left {
-  transform: translateX(-50%);
-  opacity: 0;
+.enhanced .animate_fade_in_from_top {
+ transform: translateY(-50%);
+ opacity: 0;
 
-  &.animated {
-    transition: transform $anim_duration_default ease-out, opacity $anim_duration_default ease-out;
-    transform: translateX(0);
-    opacity: 1;
-  }
+ &.animated {
+   transition: transform $anim_duration_default ease-out, opacity $anim_duration_default ease-out;
+   transform: translateY(0);
+   opacity: 1;
+ }
+}
+.enhanced .animate_fade_in_from_right {
+ transform: translateX(50%);
+ opacity: 0;
+
+ &.animated {
+   transition: transform $anim_duration_default ease-out, opacity $anim_duration_default ease-out;
+   transform: translateX(0);
+   opacity: 1;
+ }
 }
 .enhanced .animate_fade_in_from_bottom {
   transform: translateY(50%);
@@ -59,8 +69,8 @@
     opacity: 1;
   }
 }
-.enhanced .animate_fade_in_from_right {
-  transform: translateX(50%);
+.enhanced .animate_fade_in_from_left {
+  transform: translateX(-50%);
   opacity: 0;
 
   &.animated {

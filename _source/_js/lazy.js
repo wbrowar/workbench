@@ -6,13 +6,17 @@ import 'scrollmonitor';
 
 let config = {
     animationFunctions: {
-        'animationFunction': testFunction,
+        'rotateBox': testFunction,
     }
 };
 
 // FUNCTIONS
-function testFunction($argAsString) {
-    console.log($argAsString);
+function testFunction(el, rotation = '15') {
+    const currentDegrees = el.hasAttribute('data-rotation-degrees') ? parseFloat(el.getAttribute('data-rotation-degrees')) : '0';
+    const degrees = currentDegrees + parseFloat(rotation);
+
+    el.style.transform="rotateY(" + degrees + "deg)";
+    el.setAttribute('data-rotation-degrees', degrees);
 }
 
 // Adds max-width and padding-top to images for easier styling of placeholder images
@@ -37,9 +41,9 @@ function lazyAnimateHandler(element, watcher = null) {
 
         if (typeof config.animationFunctions[func] === "function") {
             if (args !== null) {
-                requestAnimationFrame(() => config.animationFunctions[func](args));
+                requestAnimationFrame(() => config.animationFunctions[func](element, args));
             } else {
-                requestAnimationFrame(() => config.animationFunctions[func]());
+                requestAnimationFrame(() => config.animationFunctions[func](element));
             }
         }
     }

@@ -117,9 +117,8 @@ export function setupJsComponents() {
 export function setupEnhancements() {
     if (!jsDevMode && (typeof QueryString.enhanced === 'undefined')) {
         ready(function() {
-            lazy();
-
             addClass(document.documentElement, 'enhanced');
+            lazy();
         });
     }
 }

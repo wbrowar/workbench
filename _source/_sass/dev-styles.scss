@@ -128,6 +128,7 @@ $border_radius: 4px;
   display: block;
   flex-flow: row wrap;
   margin: 0 -($padding_dev_spacing / 2);
+  perspective: 800px;
 }
 
 .styles_demo_box {
