@@ -89,6 +89,11 @@
         "mobile_nav_toggle": false,
         "overlay": true
       }
+    },
+    "index": {
+      "enabled": true,
+      "title": "?",
+      "modules": {}
     }
   }
 }

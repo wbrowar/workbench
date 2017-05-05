@@ -27,12 +27,13 @@ const paths = {
     srcImg:                 bases.source + '_img/',
     srcJs:                  bases.source + '_js/',
     srcUtil:                bases.source + '_util/',
-    filesHtml:              [bases.source + '_html/**/*.{html,php,twig}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig}'],
-    filesHtmlIncludes:      bases.source + '_html/ejs_includes/*.{html,php,twig}',
+    filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig,ejs}'],
+    filesHtmlIncludes:      bases.source + '_html/ejs_includes/*.{html,php,twig,ejs}',
     filesHtmlStyleTemplate: vars.style_template !== '' ? bases.source + '_util/' + vars.style_template + '**/*.ejs' : '',
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
     filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
     filesJsLib:             [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
+    filesJsLibMin:          bases.source + '_js/_lib/**/*.min.js',
     filesScss:              bases.source + '_sass/**/*.scss',
     filesSvg:               bases.source + '_img/icons/**/*.{svg}',
     utilFonts:              bases.source + '_util/_fonts.ejs',
@@ -67,7 +68,7 @@ const ejsVars = {
     styleTemplateSuffix:   vars.style_template_url_suffix,
     systemjs:            '/js/uglify/_lib/system.min.js',
     systemconfig:        '/js/uglify/system-config.min.js',
-    version:             release ? vars.version : new Date().toLocaleString(),
+    version:             release ? vars.version : (new Date().getTime() / 1000),
 };
 const ejsOptions = {
     root:                bases.build,
@@ -188,7 +189,7 @@ gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release']
 gulp.task('watch', function() {
     //$.livereload.listen(35729);
     var watchCss          = gulp.watch(paths.filesScss, ['css']),
-        watchHtml = gulp.watch(paths.filesHtml, ['ejs:quick']),
+        watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
         watchHtmlIncludes = gulp.watch([paths.filesHtmlIncludes, paths.filesHtmlStyleTemplate], ['ejs:quick:full']),
         watchImg          = gulp.watch(paths.filesImg, ['img']),
         watchJs           = gulp.watch(paths.filesJs, ['js']),
@@ -418,6 +419,11 @@ function jsHandler(useUglify = false) {
         .pipe(gulp.dest(paths.distJs));
 };
 function jsLibHandler(useUglify = false) {
+    gulp.src(paths.filesJsLibMin)
+        .pipe($.changed(paths.distJs + '_lib/'))
+        .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
+        .pipe(gulp.dest(paths.distJs + '_lib/'));
+
     return gulp.src(paths.filesJsLib)
         .pipe($.changed(paths.distJs + '_lib/', {extension: '.min.js'}))
         .pipe(useUglify ? $.uglify() : $.gutil.noop())

@@ -73,6 +73,7 @@ vueData['overlayIsVisible'] = false;
 vueMethods['showOverlay'] = function(overlayTitle) {
     VueEvent.$emit('show-overlay', overlayTitle);
     this.overlayIsVisible = true;
+    g.gaTrack('overlay', 'shown', overlayTitle);
 };
 Vue.component('overlay', {
     data() {

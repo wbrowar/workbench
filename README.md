@@ -118,6 +118,12 @@ Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/
 
 ---
 ## Release Notes
+#### 4.7.1
+- :wrench: Updated all NPM libraries. **This now requires the latest Node 7.x and all `node_modules` should be deleted and `yarn` (or `npm install`) should be run to update dependencies.**
+- :wrench: Split index.html into ejs partials for better portability when creating multiple pages
+- :rocket: Added an `index` section to default style inventory to explain what a style inventory does
+- :wrench: Bug fixes and minor tweaks in `Gulpfile.js`
+
 #### 4.7.0
 - :rocket: Added new templates to the default style inventory
   - **Animations** - Added the option to use javascript functions when an element is scrolled into view
