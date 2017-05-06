@@ -33,6 +33,23 @@
     }); %>
 <% } %>
 
+<% if (modules.scroll_fade) { %>
+    <% moduleTemplates.push({
+        "title": "Fade on Scroll",
+        "description": "Animated page elements in and out when the user scrolls down to them. Note the optional `data-lazy-animate-offset` attribute is used here, but it's not required.",
+        "background": "light",
+        "demoCode":
+`<div class="styles_demo_box_wrapper">
+    <div class="styles_demo_box animate_fade_in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
+    <div class="styles_demo_box animate_fade_out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>
+</div>`,
+        "code":
+`<div class="animate_fade_in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
+<div class="animate_fade_out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>`
+    }); %>
+<% }
+%>
+
 <% if (modules.scroll_slide_in) { %>
     <% moduleTemplates.push({
         "title": "Slide in on Scroll",
@@ -40,46 +57,46 @@
         "background": "light",
         "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div data-lazy-animate class="styles_demo_box animate_fade_in_from_left">Content</div>
-    <div data-lazy-animate class="styles_demo_box animate_fade_in_from_bottom">Content</div>
-    <div data-lazy-animate class="styles_demo_box animate_fade_in_from_right">Content</div>
-    <div data-lazy-animate class="styles_demo_box animate_fade_in_from_top">Content</div>
+    <div class="styles_demo_box animate_fade_in_from_left" data-lazy-animate>Content</div>
+    <div class="styles_demo_box animate_fade_in_from_bottom" data-lazy-animate>Content</div>
+    <div class="styles_demo_box animate_fade_in_from_right" data-lazy-animate>Content</div>
+    <div class="styles_demo_box animate_fade_in_from_top" data-lazy-animate>Content</div>
 </div>`,
         "code":
-`<div data-lazy-animate class="animate_fade_in_from_left">Content</div>
-<div data-lazy-animate class="animate_fade_in_from_bottom">Content</div>
-<div data-lazy-animate class="animate_fade_in_from_right">Content</div>
-<div data-lazy-animate class="animate_fade_in_from_top">Content</div>`
+`<div class="animate_fade_in_from_left" data-lazy-animate>Content</div>
+<div class="animate_fade_in_from_bottom" data-lazy-animate>Content</div>
+<div class="animate_fade_in_from_right" data-lazy-animate>Content</div>
+<div class="animate_fade_in_from_top" data-lazy-animate>Content</div>`
     }); %>
 <% }
 %>
 
 <% if (modules.js_animation) { %>
-<% moduleTemplates.push({
-    "title": "JS Callback Function on Scroll",
-    "description": 'Fire a function when element is scolled into the viewport. In the format, "function|argumentsAsAString", you can call a function and pass in a string that can be processed as arguments by your function. The function needs to be passed into the `lazy.js` default function when `lazy()` is first fired. EXAMPLE: Check Console to see the results of the function fired.',
-    "background": "light",
-    "demoCode":
+    <% moduleTemplates.push({
+        "title": "JS Callback Function on Scroll",
+        "description": 'Fire a function when element is scolled into the viewport. In the format, "function|argumentsAsAString", you can call a function and pass in a string that can be processed as arguments by your function. The function needs to be passed into the `lazy.js` default function when `lazy()` is first fired. EXAMPLE: Check Console to see the results of the function fired.',
+        "background": "light",
+        "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div id="js_animation" data-lazy-animate="rotateBox|30" class="styles_demo_box">Content</div>
+    <div id="js_animation" class="styles_demo_box" data-lazy-animate="rotateBox|60">Content</div>
 </div>`,
-    "code":
-`<div id="js_animation" data-lazy-animate="rotateBox|30">Content</div>`
-}); %>
+        "code":
+`<div id="js_animation" data-lazy-animate="rotateBox|60">Content</div>`
+    }); %>
 <% }
 %>
 
 <% if (modules.js_animation_update) { %>
-<% moduleTemplates.push({
-    "title": "Repeated JS Callback Function on Scroll",
-    "description": "Fire a function when element is scolled into the viewport. By including the `data-lazy-animate-reset` attribute, the function will continue to fire every time the element leaves and re-enters the viewport. EXAMPLE: Check Console to see the results of the function fired.",
-    "background": "light",
-    "demoCode":
+    <% moduleTemplates.push({
+        "title": "Repeated JS Callback Function on Scroll",
+        "description": "Fire a function when element is scolled into the viewport. By including the `data-lazy-animate-reset` attribute, the function will continue to fire every time the element leaves and re-enters the viewport. EXAMPLE: Check Console to see the results of the function fired.",
+        "background": "light",
+        "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div id="js_animation_update" class="styles_demo_box" data-lazy-animate="rotateBox|30" data-lazy-animate-reset>Content</div>
+    <div id="js_animation_update" class="styles_demo_box" data-lazy-animate="rotateBox|25" data-lazy-animate-reset>Content</div>
 </div>`,
-    "code": `<div id="js_animation_update" data-lazy-animate="rotateBox|30" data-lazy-animate-reset>Content</div>`
-}); %>
+        "code": `<div id="js_animation_update" data-lazy-animate="rotateBox|25" data-lazy-animate-reset>Content</div>`
+    }); %>
 <% }
 %>
 

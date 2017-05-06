@@ -129,7 +129,7 @@ export default function(lazyConfig = {}) {
     // when the element scrolls into view, a CSS class will be added to the element and an animation can be done in CSS or Javascript
     const lazyAnimateElements = document.querySelectorAll('[data-lazy-animate]');
     for (let i = 0, l = lazyAnimateElements.length; i<l; i++) {
-        const elementOffset = lazyAnimateElements[i].hasAttribute('data-lazy-animate-offset') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-offset')) : -100;
+        const elementOffset = lazyAnimateElements[i].hasAttribute('data-lazy-animate-offset') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-offset')) : -200;
         const elementDelay = lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-delay')) : 0;
         const elementWatcher = scrollMonitor.create(lazyAnimateElements[i], elementOffset);
         elementWatcher.enterViewport(function() {

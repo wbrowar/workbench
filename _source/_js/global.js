@@ -115,7 +115,7 @@ export function setupJsComponents() {
     activeToggleSetup();
 }
 export function setupEnhancements() {
-    if (!jsDevMode && (typeof QueryString.enhanced === 'undefined')) {
+    if (typeof QueryString.enhanced === 'undefined') {
         ready(function() {
             addClass(document.documentElement, 'enhanced');
             lazy();

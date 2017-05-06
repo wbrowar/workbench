@@ -7,6 +7,7 @@
         "rollover_pop": true,
         "click_push_in": true,
         "scroll_slide_in": true,
+        "scroll_fade": true,
         "js_animation": true,
         "js_animation_update": true
       }
@@ -53,7 +54,8 @@
         "iframe": false,
         "lazy_load_iframe": true,
         "video": false,
-        "lazy_load_video": true
+        "lazy_load_video": true,
+        "background_video": true
       }
     },
     "messages": {

@@ -88,4 +88,31 @@
     }); %>
 <% } %>
 
+<% if (modules.background_video) { %>
+    <% moduleTemplates.push({
+        "title": "Video Background",
+        "description": "Fills the background of an element with a responsive video file that autoplays and loops.",
+        "background": "light",
+        "demoCode":
+`<div class="styles_demo_box_wrapper">
+    <div class="styles_demo_box" style="padding: 0;">
+        <div class="video_bg" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.png" },{ "retina": true, "url": "/img/FPO@2x.png" }] }'>
+            <video class="video_bg_video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
+        </div>
+    </div>
+</div>`,
+        "twigCode":
+`{% set videoUrls = ['https://starter.wbrowar.com/video/clip.mp4'] %}
+<div class="video_bg">
+    {% if craft.request.isMobileBrowser(true) != 1 %}
+        <video class="video_bg_video" src="{{ random(videoUrls) }}" preload autoplay muted loop></video>
+    {% endif %}
+</div>`,
+        "code":
+`<div class="video_bg" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.png" },{ "retina": true, "url": "/img/FPO@2x.png" }] }'>
+    <video class="video_bg_video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
+</div>`
+    }); %>
+<% } %>
+
 <%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>

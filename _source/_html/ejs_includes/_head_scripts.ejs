@@ -3,7 +3,7 @@
     <script type="text/javascript">
         var jsSection = 'home',
             jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
-            jsVersion = '<%= version %>',
+            jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Math.floor(new Date().getTime() / 1000)<% } %>,
             jsThemePath = '<%= site_root %>',
             jsModules = [],
             enableFontEvents = <%= enable_font_events %>;
@@ -14,5 +14,5 @@
         <%- include(loadcss) %>
 
         // load CSS
-        loadCSS("<%= site_root %>css/all.css?v=<%= version %>");
+        loadCSS("<%= site_root %>css/all.css?v=" + jsVersion);
     </script><% } %>
