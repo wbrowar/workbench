@@ -64,11 +64,11 @@ const ejsVars = {
     release:             release,
     site_root:           bases.site,
     styleTemplateConfig: !['', 'n', 'no'].includes(vars.style_template.toLowerCase()) ? JSON.parse(fs.readFileSync(paths.srcUtil + vars.style_template + 'config.json')) : null,
-    styleTemplatePrefix:   vars.style_template_url_prefix,
-    styleTemplateSuffix:   vars.style_template_url_suffix,
+    styleTemplatePrefix: vars.style_template_url_prefix,
+    styleTemplateSuffix: vars.style_template_url_suffix,
     systemjs:            '/js/uglify/_lib/system.min.js',
     systemconfig:        '/js/uglify/system-config.min.js',
-    version:             release ? vars.version : (new Date().getTime() / 1000),
+    version:             release ? vars.version : Math.floor(new Date().getTime() / 1000),
 };
 const ejsOptions = {
     root:                bases.build,

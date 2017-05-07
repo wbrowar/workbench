@@ -5,6 +5,7 @@
       "title": "Animations",
       "modules": {
         "rollover_pop": true,
+        "rollover_scale": true,
         "click_push_in": true,
         "scroll_slide_in": true,
         "scroll_fade": true,

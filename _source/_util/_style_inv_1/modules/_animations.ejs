@@ -9,14 +9,40 @@
         "background": "light",
         "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div class="styles_demo_box animate_rollover_pop_up">Roll over me.</div>
-    <div class="styles_demo_box animate_rollover_pop_down">Roll over me.</div>
-    <div class="styles_demo_box animate_rollover_pop_forward">Roll over me.</div>
+    <div class="styles_demo_box flex animate_rollover_pop_up">Roll over me.</div>
+    <div class="styles_demo_box flex animate_rollover_pop_down">Roll over me.</div>
+    <div class="styles_demo_box flex animate_rollover_pop_forward">Roll over me.</div>
 </div>`,
         "code":
 `<div class="animate_rollover_pop_up">Roll over me.</div>
 <div class="animate_rollover_pop_down">Roll over me.</div>
 <div class="animate_rollover_pop_forward">Roll over me.</div>`
+    }); %>
+<% } %>
+
+<% if (modules.rollover_scale) { %>
+    <% moduleTemplates.push({
+        "title": "Rollover Scale",
+        "description": "Roll over to zoom in on an image. Content placed in the `foreground` will remain static, where content in the background will scale with the background image.",
+        "background": "light",
+        "demoCode":
+`<div class="styles_demo_box_wrapper">
+    <div class="styles_demo_box animate_rollover_scale">
+        <div class="animate_scale_background flex" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
+    </div>
+    <div class="styles_demo_box animate_rollover_scale">
+        <div class="animate_scale_background" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
+        <div class="animate_scale_foreground flex">Roll over me.</div>
+    </div>
+</div>`,
+        "code":
+`<div class="animate_rollover_scale">
+    <div class="animate_scale_background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
+</div>
+<div class="animate_rollover_scale">
+    <div class="animate_scale_background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
+    <div class="animate_scale_foreground flex">Roll over me.</div>
+</div>`
     }); %>
 <% } %>
 
@@ -27,7 +53,7 @@
         "background": "light",
         "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div class="styles_demo_box animate animate_click_push_in">Click me.</div>
+    <div class="styles_demo_box flex animate animate_click_push_in">Click me.</div>
 </div>`,
         "code": `<div class="animate animate_click_push_in">Click me.</div>`
     }); %>
@@ -40,8 +66,8 @@
         "background": "light",
         "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div class="styles_demo_box animate_fade_in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
-    <div class="styles_demo_box animate_fade_out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>
+    <div class="styles_demo_box flex flex animate_fade_in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
+    <div class="styles_demo_box flex flex animate_fade_out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>
 </div>`,
         "code":
 `<div class="animate_fade_in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
@@ -57,10 +83,10 @@
         "background": "light",
         "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div class="styles_demo_box animate_fade_in_from_left" data-lazy-animate>Content</div>
-    <div class="styles_demo_box animate_fade_in_from_bottom" data-lazy-animate>Content</div>
-    <div class="styles_demo_box animate_fade_in_from_right" data-lazy-animate>Content</div>
-    <div class="styles_demo_box animate_fade_in_from_top" data-lazy-animate>Content</div>
+    <div class="styles_demo_box flex animate_fade_in_from_left" data-lazy-animate>Content</div>
+    <div class="styles_demo_box flex animate_fade_in_from_bottom" data-lazy-animate>Content</div>
+    <div class="styles_demo_box flex animate_fade_in_from_right" data-lazy-animate>Content</div>
+    <div class="styles_demo_box flex animate_fade_in_from_top" data-lazy-animate>Content</div>
 </div>`,
         "code":
 `<div class="animate_fade_in_from_left" data-lazy-animate>Content</div>
@@ -78,7 +104,7 @@
         "background": "light",
         "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div id="js_animation" class="styles_demo_box" data-lazy-animate="rotateBox|60">Content</div>
+    <div id="js_animation" class="styles_demo_box flex" data-lazy-animate="rotateBox|60">Content</div>
 </div>`,
         "code":
 `<div id="js_animation" data-lazy-animate="rotateBox|60">Content</div>`
@@ -93,7 +119,7 @@
         "background": "light",
         "demoCode":
 `<div class="styles_demo_box_wrapper">
-    <div id="js_animation_update" class="styles_demo_box" data-lazy-animate="rotateBox|25" data-lazy-animate-reset>Content</div>
+    <div id="js_animation_update" class="styles_demo_box flex" data-lazy-animate="rotateBox|25" data-lazy-animate-reset>Content</div>
 </div>`,
         "code": `<div id="js_animation_update" data-lazy-animate="rotateBox|25" data-lazy-animate-reset>Content</div>`
     }); %>

@@ -132,12 +132,9 @@ $border_radius: 4px;
 }
 
 .styles_demo_box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   flex: 1 1 300px;
   margin: ($padding_dev_spacing / 2);
-  padding: 20px;
   width: 200px;
   height: 200px;
   box-sizing: border-box;
@@ -146,5 +143,16 @@ $border_radius: 4px;
 
   &.active {
     background-color: $color_dev_demo_active;
+  }
+  &.flex, .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &.flex {
+    display: inline-flex;
+  }
+  &.padding, .padding {
+    padding: 20px;
   }
 }

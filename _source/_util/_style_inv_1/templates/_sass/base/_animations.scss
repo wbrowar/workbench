@@ -30,6 +30,25 @@
     transform: translateY(-8%) scale(1.08, 1.08);
   }
 }
+<% } %><% if (styleTemplateConfig.sections.animations.modules.rollover_scale) { %>
+.animate_rollover_scale {
+  position: relative;
+  overflow: hidden;
+
+  & > * {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+  }
+  & > .animate_scale_background {
+   transition: transform $anim_duration_default ease-out;
+  }
+  &:hover  > .animate_scale_background {
+   transform: scale(1.25, 1.25);
+  }
+}
 <% } %><% if (styleTemplateConfig.sections.animations.modules.click_push_in) { %>
 .enhanced .animate_click_push_in {
   transition: transform $anim_duration_default ease-out;
