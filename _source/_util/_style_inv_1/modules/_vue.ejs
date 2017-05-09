@@ -3,11 +3,11 @@
 <% const moduleTemplates = [] %>
 
 <% if (modules.accordion) { %>
-<% moduleTemplates.push({
-    "title": "Accordion",
-    "description": "Show and hide one element at a time.",
-    "background": "light",
-    "demoCode":
+    <% moduleTemplates.push({
+        "title": "Accordion",
+        "description": "Show and hide one element at a time.",
+        "background": "light",
+        "demoCode":
 `<accordion>
     <accordion-tab title="Optimized Google My Business listing" :selected="true" v-cloak>
         <p>When people search for a business, Google scans its database so that local results appear first. However, if a business’s data is out of date or inaccurate, they may not appear at all. Bad data for your business can show up with no explanation of who posted it or why, and getting your business’ data updated and indexed correctly can be a complicated, time-consuming process. We’ll help you ensure that potential customers find your correct, up-to-date information on Google Search, Google Maps and Google+, every time on every device they use.</p>
@@ -26,7 +26,7 @@
     </accordion-tab>
 </accordion>
 <script>jsModules.push('vuecomponents');</script>`,
-    "code":
+        "code":
 `<accordion>
     <accordion-tab title="Title of Accordian I" :selected="true">
         <!-- content -->
@@ -39,15 +39,37 @@
     </accordion-tab>
 </accordion>
 <script>jsModules.push('vuecomponents');</script>`
-}); %>
+    }); %>
+<% } %>
+
+<% if (modules.detect_scroll) { %>
+    <% moduleTemplates.push({
+        "title": "Get Scroll Y",
+        "description": "Sets the global `scrollY` variable in the root Vue instance. This can be used for things like animation or sticky navigation.",
+        "background": "light",
+        "demoCode":
+`<div class="styles_demo_box_wrapper">
+    <div class="styles_demo_box flex">
+        <p>Current Scroll<br>Position: \${ scrollY }</p>
+    </div>
+    <div class="styles_demo_box flex" :class="{ active: scrollY > 600 && scrollY < 1100 }">
+        <p>Scroll between<br>600 and 1100</p>
+    </div>
+</div>
+<script>jsModules.push('vuecomponents');</script>`,
+        "code":
+`<div>Current Scroll Position: \${ scrollY }</div>
+<div :class="{ active: scrollY > 600 && scrollY < 1100 }">Scroll between<br>600 and 1100</div>
+<script>jsModules.push('vuecomponents');</script>`,
+    }); %>
 <% } %>
 
 <% if (modules.mobile_nav_toggle) { %>
-<% moduleTemplates.push({
-    "title": "Default Table",
-    "description": "A normal table of varying columns and rows.",
-    "background": "light",
-    "demoCode":
+    <% moduleTemplates.push({
+        "title": "Default Table",
+        "description": "A normal table of varying columns and rows.",
+        "background": "light",
+        "demoCode":
 `<button @click="showMobileNav()">Toggle Mobile Nav</button>
 <br>
 <div class="mobile_nav" :class="{ active: mobileNavActive }">
@@ -63,21 +85,21 @@
     </div>
 </div>
 <script>jsModules.push('vuecomponents');</script>`,
-    "code":
+        "code":
 `<button @click="showMobileNav()">Toggle Mobile Nav</button>
 <div class="mobile_nav" :class="{ active: mobileNavActive }" v-cloak>
     <!-- content -->
 </div>
 <script>jsModules.push('vuecomponents');</script>`
-}); %>
+    }); %>
 <% } %>
 
 <% if (modules.overlay) { %>
-<% moduleTemplates.push({
-    "title": "Overlay",
-    "description": "Display content in front of the current page. The `overlayIsVisible` global variable is available to the Vue root and it changes based on the `show-overlay` and `hide-overlay` events.",
-    "background": "light",
-    "code":
+    <% moduleTemplates.push({
+        "title": "Overlay",
+        "description": "Display content in front of the current page. The `overlayIsVisible` global variable is available to the Vue root and it changes based on the `show-overlay` and `hide-overlay` events.",
+        "background": "light",
+        "code":
 `<button @click="showOverlay('overlay_1')">Show Overlay</button>
 <overlay overlay-id="overlay_1" v-cloak>
     <div class="video">
@@ -85,7 +107,7 @@
     </div>
 </overlay>
 <script>jsModules.push('vuecomponents');</script>`,
-}); %>
+    }); %>
 <% } %>
 
 <%- include('partials/_wrapper', {"activeItem": currentSection, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>

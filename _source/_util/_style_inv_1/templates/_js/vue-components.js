@@ -62,6 +62,12 @@ Vue.component('accordion-tab', {
     `,
 });<% } %>
 
+<% if (styleTemplateConfig.sections.vue.modules.detect_scroll) { %>// Detect Scroll
+vueData['scrollY'] = false;
+vueMethods['scrollHandler'] = function() {
+    this.scrollY = window.scrollY;
+};<% } %>
+
 <% if (styleTemplateConfig.sections.vue.modules.mobile_nav_toggle) { %>// Mobile Navigation Toggle
 vueData['mobileNavActive'] = false;
 vueMethods['showMobileNav'] = function() {
@@ -113,7 +119,11 @@ new Vue({
     el: '#page',
     data: vueData,
     created: function () {
-        VueEvent.$on('hide-overlay', () => this.isActive = (this.overlayIsVisible = false));
+        <% if (styleTemplateConfig.sections.vue.modules.detect_scroll) { %>// Hide overlay and remove content
+        VueEvent.$on('hide-overlay', () => this.isActive = (this.overlayIsVisible = false));<% } %>
+
+        <% if (styleTemplateConfig.sections.vue.modules.overlay) { %>// Watch scroll
+        window.addEventListener('scroll', this.scrollHandler);<% } %>
     },
     methods: vueMethods,
     delimiters: ['${', '}'],

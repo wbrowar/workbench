@@ -89,6 +89,7 @@
       "title": "Vue Components",
       "modules": {
         "accordion": true,
+        "detect_scroll": true,
         "mobile_nav_toggle": false,
         "overlay": true
       }
