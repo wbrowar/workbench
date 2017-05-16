@@ -9,6 +9,5 @@ yarn.lock
 
 # BUILD FILES
 _build/*
-_source/_PSD/*
 node_modules/*
 EXTRAS/*
