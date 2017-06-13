@@ -31,13 +31,21 @@ function createImagePlaceholders() {
         }
     });
 }
-function lazyAnimateHandler(element, watcher = null) {
+function lazyAnimateHandler(element, watcher = null, viewportEvent = 'enter') {
     // call a javascript animation that has been passed into config.animationFunctions
     // EXAMPLE data-lazy-animate="animateIcon|arguments"
-    if (element.getAttribute('data-lazy-animate') !== '') {
-        const animation = element.getAttribute('data-lazy-animate');
-        const func = (animation.indexOf("|") > 0) ? animation.split('|', 2)[0] : animation;
-        const args = (animation.indexOf("|") > 0) ? animation.split('|', 2)[1] : null;
+    if (element.getAttribute('data-lazy-animate') !== '' || element.getAttribute('data-lazy-animate-exit') !== '') {
+        let func, args;
+        switch (viewportEvent) {
+            case 'enter':
+                func = element.getAttribute('data-lazy-animate');
+                args = element.hasAttribute('data-lazy-animate-args') ? JSON.parse(element.getAttribute('data-lazy-animate-args')) : null;
+                break;
+            case 'exit':
+                func = element.getAttribute('data-lazy-animate-exit');
+                args = element.hasAttribute('data-lazy-animate-args-exit') ? JSON.parse(element.getAttribute('data-lazy-animate-args-exit')) : null;
+                break;
+        }
 
         if (typeof config.animationFunctions[func] === "function") {
             if (args !== null) {
@@ -73,7 +81,8 @@ function lazyLoadHandler(element, watcher = null) {
                 const mq = bgData.css[i].mq != undefined ? bgData.css[i].mq : '';
                 const retina = bgData.css[i].retina != undefined ? bgData.css[i].retina : false;
                 const media = ((mq != '') || retina);
-                css += `${media ? `@media ${retina ? `${mq != '' ? `${ mq } and ` : '' }(-webkit-min-device-pixel-ratio: 2), ${mq != '' ? `${ mq } and ` : '' }(min-resolution: 192dpi)` : mq } { ` : ''}.${elementClass} { background-image: url('${bgData.css[i].url}'); }${media ? ' }' : ''}`;
+                const extra = bgData.css[i].extra != undefined ? bgData.css[i].extra : '';
+                css += `${media ? `@media ${retina ? `${mq != '' ? `${ mq } and ` : '' }(-webkit-min-device-pixel-ratio: 2), ${mq != '' ? `${ mq } and ` : '' }(min-resolution: 192dpi)` : mq } { ` : ''}.${elementClass} { background-image: url('${bgData.css[i].url}');${extra} }${media ? ' }' : ''}`;
             }
             element.insertAdjacentHTML('afterend', `<style>${css}</style>`);
             addClass(element, elementClass);
@@ -136,12 +145,24 @@ export default function(lazyConfig = {}) {
             if (lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay')) {
                 const watchItem = this.watchItem;
                 setTimeout(function() {
-                    lazyAnimateHandler(watchItem, elementWatcher);
+                    lazyAnimateHandler(watchItem, elementWatcher, 'enter');
                 }, elementDelay);
             } else {
-                lazyAnimateHandler(this.watchItem, this);
+                lazyAnimateHandler(this.watchItem, this, 'enter');
             }
         });
+        if (lazyAnimateElements[i].hasAttribute('data-lazy-animate-exit')) {
+            elementWatcher.exitViewport(function() {
+                if (lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay')) {
+                    const watchItem = this.watchItem;
+                    setTimeout(function() {
+                        lazyAnimateHandler(watchItem, elementWatcher, 'exit');
+                    }, elementDelay);
+                } else {
+                    lazyAnimateHandler(this.watchItem, this, 'exit');
+                }
+            });
+        }
         elementWatcher.update();
         elementWatcher.triggerCallbacks();
     }

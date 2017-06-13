@@ -102,6 +102,87 @@ You can now use `SystemJS.import('fitvids');` to load both FitVids and jQuery.
 
 Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/systemjs/blob/master/docs/es6-modules-overview.md) to learn more about module loading.
 
+### lazy.js
+Include `lazy.js` into a JS document and call the default, `lazy()` function to init. An optional `config` object can be passed into the `lazy()` function.
+
+```javascript
+import lazy from 'lazy';
+
+const config = {
+    animationFunctions: {
+        'fadePageBgColor': fadePageBgColor,
+    }
+};
+
+lazy(config);
+```
+
+#### Lazy Loading
+To use Lazy Loading for better loading performance, add the `data-lazy-load` attribute to an element. By itself, this will do nothing, but when combined with the optional attributes, below, different modifications will be made to the element.
+
+| Attribute | Example Value | Description |
+| --- | --- | --- |
+| `data-src` | `/img/FPO.png` | Changes to the `src` attribute for `<video>`, `<audio>`, and `<img>` tags. |
+| `data-srcset` | `/img/FPO.png 1x, /img/FPO@2x.png 2x` | Changes to the `srcset` tag uses in `<img>` tags. |
+| `data-width` | `2048` | Setting both `data-width` and `data-height` on an element will add inline styles to the element that allow it to proportionately take up as much room as an image would in that space. This can be used for placeholder images styled in CSS. |
+| `data-height` | `2048` |  |
+| `data-bg-array` | See below | Uses a JSON string to generate CSS in a `<style>` tag below the element that populates the element's `background-image` property. |
+
+The value of `data-bg-array` is converted from a string into a JSON object. Here's an example JSON string:
+`{ "class": "image_2", "css": [{ "url": "/img/FPO.jpg", "extra": "background-position: 50% 50%;"" },{ "retina": true, "url": "/img/FPO@2x.jpg" },{ "mq": "(min-width: 700px)", "url": "/img/FPO.png" },{ "mq": "(min-width: 700px)", "retina": true, "url": "/img/FPO@2x.png" }] }`
+
+In this example, here are a few things to note:
+ - `class`
+   - Adds a class to your element that is used as the CSS selector in the generated CSS. This should be unique so that the class can be selected on it's own. One way to make this unique is to pass in a `{{ block.id }}` or `{{ image.id }}` (in Craft), or make a unique class name that's descriptive of the use of the image element.
+ - `css`
+   - An array of properties that build out the CSS.
+   - This array is looped in order, so it will cascade in the order of each object in the array.
+   - `url`
+     - The URL of the background image.
+   - `extra`
+     - Any extra CSS that needs to be included or overridden for this object. Useful for using `{{ image.focalPoint }}` to set the `background-position` property.
+   - `retina`
+     - Includes a check for 2x pixel density in the media query wrapping the CSS.
+   - `mq`
+     - A media query that wraps the CSS generated for this image. Can be combined with `retina` to also require that the screen resolution is at least 2x.
+
+#### On-scroll Animations
+When used with no value, `data-lazy-animate` simply adds the class `animated` to an element. In your CSS, a transition or CSS animation can fire when `animated` is added. You can also register a function that can be fired by setting the name of the function to the value of `data-lazy-animate`.
+
+| Attribute | Example Value | Description |
+| --- | --- | --- |
+| `data-lazy-animate` | **NONE** or `myFunction` | When the user scrolls to the element, a function registered in `config.animationFunctions` (see example above), will be fired. |
+| `data-lazy-animate-args` | `{ "id": 23, "option": "value" }` | Arguments that will be passed into the function registered in `data-lazy-animate` as an object. |
+| `data-lazy-animate-exit` | `myExitFunction` | When the element scrolls out of the viewport, a function registerd in `config.animationFunctions` will be fired. |
+| `data-lazy-animate-args-exit` | `{ "option": "value" }` | Arguments for the function in the `data-lazy-animate-exit` attribute. |
+| `data-lazy-animate-delay` | `500` | Uses `setTimeOut()` to delay the firing of a function set in `data-lazy-animate`. |
+| `data-lazy-animate-offset` | `-200` | Used to determine how much outside or inside an element needs to be within the viewport before activating. |
+| `data-lazy-animate-reset` | **NONE** | Add this attribute to allow a JS animation to continue firing as the element re-enters the viewport. |
+
+### scrollto.js
+Include `scrollto.js` into a JS document and call the default, `scrollto()` function to init.
+
+```javascript
+import scrollto from 'scrollto';
+
+function scrollToElement(el) {
+    const elRect = el.getBoundingClientRect();
+    const newY = elRect.top + document.body.scrollTop - 130;
+
+    scrollto({ destination: newY });
+}
+
+const el = document.getElementById("section_1");
+scrollToElement(el);
+```
+
+| Attribute | Default | Description |
+| --- | --- | --- |
+| `destination` | 0 | A `scrollTop` position, based on the top of the document. Leave this at `0` to go back to the top of the document. |
+| `duration` | 500 | How long the animation shold take. |
+| `easing` | 'easeOutQuad' | Easing function used to determine how the animation will look. Look into the `scroll.js` file to see what options are available. |
+| `callback` | *undefined* | Pass in a callback function that should fire after animation is done. |
+
 ---
 ### Image Processing
 - **_img** Images will be processed differently depending on where they are located in the `_source/_img` folder:
