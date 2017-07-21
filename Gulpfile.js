@@ -1,8 +1,24 @@
 'use strict';
 
+// Get Local IP Address
+var os = require('os');
+
+var interfaces = os.networkInterfaces();
+var addresses = [];
+for (var k in interfaces) {
+    for (var k2 in interfaces[k]) {
+        var address = interfaces[k][k2];
+        if (address.family === 'IPv4' && !address.internal) {
+            addresses.push(address.address);
+        }
+    }
+}
+
 // Package Variables
 const fs = require('fs'),
-    vars = JSON.parse(fs.readFileSync('./package.json'));
+    varsJsonRaw = JSON.parse(fs.readFileSync('./package.json')),
+    varsJsonString = JSON.stringify(varsJsonRaw).replace(/LOCAL_IP/g, addresses[0]),
+    vars = JSON.parse(varsJsonString);
 
 const name = vars.name,
     copyFirstCssFiles = vars.copyFirstCssFiles,
