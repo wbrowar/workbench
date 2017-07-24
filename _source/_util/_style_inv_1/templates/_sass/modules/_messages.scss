@@ -32,17 +32,17 @@
   border-radius: 3px;
   color: $color_white_default;
   <% if (styleTemplateConfig.sections.messages.modules.success) { %>
-  &.success {
+  &.alert_message--success {
     border-color: $color_alert_success;
     background-color: transparentize(lighten($color_alert_success, 20), .1);
     color: lighten($color_alert_success, 50);
   }<% } %><% if (styleTemplateConfig.sections.messages.modules.error) { %>
-  &.error {
+  &.alert_message--error {
     border-color: $color_alert_error;
     background-color: transparentize(lighten($color_alert_error, 20), .1);
     color: lighten($color_alert_error, 50);
   }<% } %><% if (styleTemplateConfig.sections.messages.modules.warning) { %>
-  &.warning {
+  &.alert_message--warning {
     border-color: $color_alert_warning;
     background-color: transparentize(lighten($color_alert_warning, 20), .1);
     color: darken($color_alert_warning, 10);
