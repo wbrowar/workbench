@@ -1,0 +1,35 @@
+    <script>
+        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('\x3Cscript src="<%= site_root %>js/_lib/es6-promise.auto.min.js?v=<%= version %>">\x3C/script>');
+        }
+    </script>
+    <script src='<%= site_root %>js/_lib/system.min.js?v=<%= version %>'></script>
+    <script>
+      <%- include(systemconfig) %>
+      (function() {
+          jsModules = jsModules.filter(function(elem, pos, arr) {
+              return arr.indexOf(elem) == pos;
+          });
+          for (var i = 0; i < jsModules.length; i++) {
+              importPageSpecificModule(jsModules[i]);
+          }
+      }());
+
+      // Load fonts locally and avoid FOIT
+      // Setup font events (do not forget to change variable in package.json)
+      (function(w) {
+          if (w.document.documentElement.className.indexOf("fonts_loaded") > -1){
+              return;
+          } else if (enableFontEvents === true) {
+              SystemJS.import('fontfaceobserver').then(function(m) {
+                  // change fonts
+                <% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>
+                  var font_<%- fonts[i].name %> = new w.FontFaceObserver(<%- fonts[i].fontFamily %>);<% } %><% } %>
+
+                  w.Promise.all([<% for(var i=0; i<fonts.length; i++) { %><% if (fonts[i].fontEventCheck) { %>font_<%- fonts[i].name %>.check(),<% } %><% } %>]).then(function(){
+                      w.document.documentElement.className += ' fonts_loaded';
+                  });
+              });
+          }
+      }(this));
+    </script>

@@ -1,0 +1,8 @@
+{# BUTTONS #}
+{% macro default(options) %}{% spaceless %}
+    {% set label = options.label ?? '' %}
+    {% set modifiers = options.modifiers ?? '' %}
+    {% set url = options.url ?? '#' %}
+
+    <div class="c_button_wrapper {{ modifiers }}"><a class="c_button" href="{{ url(url) }}"><div class="front">{{ label }}</div><div class="back">{{ label }}</div></a></div>
+{% endspaceless %}{% endmacro %}

@@ -1,0 +1,90 @@
+{% import 'macros/buttons' as buttons %}
+{% import 'macros/icons' as icons %}
+
+{% set footerActions = [] %}
+
+{% if entry ?? false %}
+    {% set gridConfig = {
+        'gridLayoutSource': 'default',
+        'gridLayout': [
+            { mq: '700px', columns: 2, layout: [{ one: '1', two: '2' }, { one: '1', two: '2' }] },
+            { mq: '1000px', columns: 3, layout: [{ one: '1', two: '2', three: '3' }, { one: '1', two: '2', three: '3' }] },
+            { mq: '1400px', columns: 4, layout: [{ one: '1', two: '2', three: '3', four: '4' }, { one: '1', two: '2', three: '3', four: '4' }] },
+            { mq: '1700px', columns: 5, layout: [{ one: '1', two: '2', three: '3', four: '4', five: '5' }, { one: '1', two: '2', three: '3', four: '4', five: '5' }] },
+            { mq: '2000px', columns: 6, layout: [{ one: '1', two: '2', three: '3', four: '4', five: '5', six: '6' }, { one: '1', two: '2', three: '3', four: '4', five: '5', six: '6' }] },
+        ]
+    } %}
+
+    {% switch entry.section.handle %}
+        {% case 'home' %}
+            {% set featureGridDefaults = entry %}
+            {% set footerActionsDefaults = entry %}
+
+            {% set gridConfig = {
+                'grid': entry.featureGrid,
+                'gridLayoutSource': 'custom',
+                'gridLayout': [
+                    { mq: '700px', columns: 2, layout: entry.gridTwoColumnLayout },
+                    { mq: '1000px', columns: 3, layout: entry.gridThreeColumnLayout },
+                    { mq: '1400px', columns: 4, layout: entry.gridFourColumnLayout },
+                    { mq: '1700px', columns: 5, layout: entry.gridFiveColumnLayout },
+                    { mq: '2000px', columns: 6, layout: entry.gridSixColumnLayout },
+                ]
+            } %}
+        {% case 'teamMember' %}
+            {% set featureGridDefaults = entry.featureGrid|length ? entry : teamDefaults %}
+            {% set footerActionsDefaults = entry.footerActionButtons|length ? entry : teamDefaults %}
+        {% case 'workProject' %}
+            {% set featureGridDefaults = entry.featureGrid|length ? entry : workDefaults %}
+            {% set footerActionsDefaults = entry.footerActionButtons|length ? entry : workDefaults %}
+    {% endswitch %}
+
+    {% set gridConfig = (featureGridDefaults.featureGrid ?? false) ? gridConfig|merge({ 'grid': featureGridDefaults.featureGrid }) : gridConfig %}
+
+    {# CONTINUE BROWSING #}
+    {# Resizes when the user scrolls or when the Main Menu is shown #}
+    {% if (gridConfig.grid ?? false) and (gridConfig.gridLayoutSource ?? false) and (gridConfig.gridLayout ?? false) %}
+        {% include 'partials/feature_grid' with gridConfig %}
+    {% endif %}
+
+    {# FOOTER ACTIONS #}
+    {# Call-to-action buttons to encourage users to browse to related pages #}
+
+    {% if (footerActionsDefaults.footerActionTitle ?? false) and (footerActionsDefaults.footerActionButtons ?? false) %}
+        {% set footerActionsTitle = (footerActionsDefaults.footerActionTitle ?? false) ? footerActionsDefaults.footerActionTitle : footerActionsTitle %}
+        {% for block in footerActionsDefaults.footerActionButtons %}
+            {% set label = block.label != '' ? block.label : block.entry.first.title %}
+
+            {% set footerActions = footerActions|merge([{ label: label, url: block.entry.first.url }]) %}
+        {% endfor %}
+    {% endif %}
+
+    {% if (footerActionsTitle ?? false) and footerActions|length %}
+        <div class="wrapper">
+            <footer class="footer_actions">
+                <div class="title">{{ footerActionsTitle|widont }}</div>
+                <div class="buttons">
+                    {% for button in footerActions %}
+                        {% if (button.label ?? false) and (button.url ?? false) %}
+                            {{ buttons.default({ label: button.label, modifiers: "c_button--cta", url: button.url }) }}
+                        {% endif %}
+                    {% endfor %}
+
+                    {{ buttons.default({ label: 'Email us', modifiers: "c_button__contact c_button--cta", url: 'contact' }) }}
+                </div>
+
+                {# BACK TO TOP BUTTON #}
+                <div class="footer_back_to_top" @click="scrollToTop()">
+                    {{ icons.arrow({ color: 'red' }) }}
+                    <span class="label">UP</span>
+                </div>
+            </footer>
+        </div>
+    {% endif %}
+{% endif %}
+
+<footer class="footer_info wrapper">
+    <a class="address" href="https://www.google.com/maps/place/Dixon+Schwabl/@43.0383759,-77.4538066,17z/data=!3m1!4b1!4m5!3m4!1s0x89d133ebc02c0dd3:0x820ee63dd174ae5e!8m2!3d43.038372!4d-77.4516179" target="_blank"><span class="icon icon_location_marker"></span> 1595 Mosely Road | Victor,&nbsp;NY</a>
+    <a class="email" href="mailto:info@dixonschwabl.com">info@dixonschwabl.com</a>
+    <span class="copyright">&copy; {{ now|date('Y') }} Dixon Schwabl&nbsp;Inc. All Rights&nbsp;Reserved.</span>
+</footer>

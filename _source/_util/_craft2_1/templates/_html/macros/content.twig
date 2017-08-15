@@ -1,0 +1,81 @@
+{# CONTENT #}
+{% macro body(body, pageContext, layoutType) %}
+  <section class="body_wrapper">
+  {% for block in body %}
+    {% switch block.type %}
+      {% case 'header' %}
+        <div class="heading_wrapper">
+          <{{ block.headerLevel }} id="{{ block.text|kebab }}" class="text">{{ block.text }}</{{ block.headerLevel }}>
+        </div>
+      {% case 'text' %}
+        <div class="text_wrapper">
+          <div class="c_text">{{ block.richText }}</div>
+        </div>
+      {% case 'image' %}
+        <div class="image_wrapper {{ block.imagePosition }}">
+          {% set image = block.image.first() %}
+          {% set transformedImage = craft.imager.transformImage(image, [
+            { width: 370, jpegQuality: 75 },
+            { width: 570, jpegQuality: 75 },
+            { width: 650, jpegQuality: 75 },
+            { width: 698, jpegQuality: 75 },
+            { width: 740, jpegQuality: 40 },
+            { width: 1140, jpegQuality: 40 },
+            { width: 1300, jpegQuality: 40 },
+          ], { mode: 'fit' }) %}
+
+        {% if layoutType == 'amp' %}
+          <amp-img src="{{ transformedImage[3].url }}"
+          srcset="{{ craft.imager.srcset(transformedImage) }}"
+          alt="{{ image.title }}"
+          layout="responsive"
+          width="{{ transformedImage[3].width }}"
+          height="{{ transformedImage[3].height }}">
+        {% else %}
+          <img src="{{ transformedImage[3].url }}"
+          srcset="{{ craft.imager.srcset(transformedImage) }}"
+          sizes="(min-width: 738px) 698px,
+                 calc(100vw - 30px)"
+          alt="{{ image.title }}">
+        {% endif %}
+        </div>
+      {% case 'button' %}
+        <div class="c_button_wrapper {{ block.position }}">
+          <a class="c_button" href="{{ block.buttonUrl }}"{% if block.openInANewWindow %} target="_blank"{% endif %}>{{ block.label }}</a>
+        </div>
+      {% case 'youtube' %}
+        <div class="video_wrapper">
+        {% if layoutType == 'amp' %}
+          <amp-vimeo data-videoid="{{ block.videoId }}" layout="responsive" width="500" height="281"></amp-vimeo>
+        {% else %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ block.videoId }}?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+          <script>requireModules.push('fitvids');</script>
+        {% endif %}
+        </div>
+      {% case 'vimeo' %}
+        <div class="video_wrapper">
+        {% if layoutType == 'amp' %}
+          <amp-youtube data-videoid="{{ block.videoId }}" layout="responsive" width="480" height="270"></amp-youtube>
+        {% else %}
+          <iframe src="https://player.vimeo.com/video/{{ block.videoId }}?title=0&byline=0&portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <script>requireModules.push('fitvids');</script>
+        {% endif %}
+        </div>
+      {% case 'form' %}
+        {% set formHandle = block.form.first().handle %}
+
+        <div class="form_wrapper">
+          {% include 'partials/am_form' with {
+            'form': craft.amForms.getForm(formHandle),
+            'context': pageContext,
+            'layoutType': layoutType,
+          } %}
+        </div>
+      {% case 'code' %}
+        <div class="code_wrapper">
+          {{ block.code|raw }}
+        </div>
+    {% endswitch %}
+  {% endfor %}
+  </section>
+{% endmacro %}

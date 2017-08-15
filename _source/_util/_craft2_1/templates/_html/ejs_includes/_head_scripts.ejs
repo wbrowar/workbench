@@ -1,0 +1,9 @@
+    <!-- scripts -->
+    <script type="text/javascript">
+        var jsSection = '{{ jsSection }}',
+            jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
+            jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Math.floor(new Date().getTime() / 1000)<% } %>,
+            jsThemePath = '<%= site_root %>',
+            jsModules = [],
+            enableFontEvents = <%= enable_font_events %>;
+    </script>

@@ -1,0 +1,144 @@
+{% minify %}
+<form id="am-form-{{ form.name|kebab }}" class="am_form" action="" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+  {{ getCsrfInput() }}
+  <input type="hidden" name="action" value="amForms/submissions/saveSubmission">
+  <input type="hidden" name="handle" value="{{ form.handle }}">
+
+  {% if form.redirectEntryId|length and craft.request.getParam('submitted') is defined %}
+    <input type="hidden" name="redirect" value="{{ craft.entries.id(form.redirectEntryId).first().url }}">
+  {% endif %}
+
+  {% if submittedEntry is defined and submittedEntry|length %}
+    <div class="messages">
+      {% if submittedEntry._errors|length %}
+        <ul class="errors">
+          {% for errors in submittedEntry._errors %}
+            {% for error in errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="form_section_wrapper">
+    {% for tab in form.getFieldLayout().getTabs() %}
+      {% for fieldElement in tab.getFields() %}
+        {% set field = fieldElement.getField() %}
+        {% set required = fieldElement.required %}
+        {% set type = field.type %}
+
+        {% switch type %}
+          {% case 'PlainText' %}
+            {% if field.settings.multiline is defined and field.settings.multiline %}
+              {% set fieldType = 'textarea' %}
+            {% else %}
+              {% set fieldType = 'text' %}
+            {% endif %}
+          {% case 'SproutFields_Phone' %}
+            {% set fieldType = 'tel' %}
+          {% case 'Number' %}
+            {% set fieldType = 'number' %}
+          {% case 'AmForms_Email' %}
+            {% set fieldType = 'email' %}
+          {% case 'AmForms_Link' %}
+            {% set fieldType = 'url' %}
+          {% case 'Dropdown' %}
+            {% set fieldType = 'select' %}
+          {% case 'RadioButtons' %}
+            {% set fieldType = 'radio' %}
+          {% case 'Checkboxes' %}
+            {% set fieldType = 'checkbox' %}
+          {% case 'AmForms_Notes' %}
+            {% set fieldType = 'notes' %}
+          {% case 'Assets' %}
+            {% set fieldType = 'assets' %}
+          {% default %}
+            {% set fieldType = '' %}
+        {% endswitch %}
+
+        {# OUTPUT FIELD #}
+        <div id="field_{{ field.handle }}" class="form_field field_type_{{ fieldType }}">
+          {% if
+            fieldType == 'text'
+            or fieldType == 'email'
+            or fieldType == 'number'
+            or fieldType == 'tel'
+            or fieldType == 'url'
+          %}
+            <label for="fields[{{ field.handle }}]">{{ field.name }}</label>
+            <input type="{{ fieldType }}" name="fields[{{ field.handle }}]" {# placeholder="{{ field.name }}" #} value="{% if attribute(submittedEntry, field.handle) is defined %}{{ attribute(submittedEntry, field.handle) }}{% endif %}" {% if field.settings.min is defined %}min="{{ field.settings.min }}"{% endif %} {% if field.settings.max is defined %}max="{{ field.settings.max }}"{% endif %} {% if required %}required{% endif %}>
+          {% elseif fieldType == 'textarea' %}
+            <label for="fields[{{ field.handle }}]">{{ field.name }}</label>
+            <textarea name="fields[{{ field.handle }}]" {# placeholder="{{ field.name }}" #} value="{% if attribute(submittedEntry, field.handle) is defined %}{{ attribute(submittedEntry, field.handle) }}{% endif %}" rows="5" {% if required %}required{% endif %}></textarea>
+          {% elseif fieldType == 'checkbox' %}
+            {% set submittedCheckboxValues = attribute(submittedEntry, field.handle) is defined ? attribute(submittedEntry, field.handle) : null %}
+
+            {% if field.settings.options|length > 1 %}
+              <label for="fields[{{ field.handle }}]">{{ field.name }}</label>
+            {% endif %}
+
+            {% for key, option in field.settings.options %}
+              {% if submittedEntry is defined and submittedCheckboxValues|length %}
+                {% set defaultValue = (option.default and not submittedEntry.getErrors()|length) ? option.value : null %}
+                {% set submittedCheckbox = submittedCheckboxValues.options[key] %}
+                {% set selectedCheckboxValue = submittedCheckbox.selected ? submittedCheckbox.value : defaultValue %}
+              {% else %}
+                {% set selectedCheckboxValue = null %}
+              {% endif %}
+              <div class="options">
+                <input id="{{ field.handle ~ '_' ~ loop.index }}" type="checkbox" name="fields[{{ field.handle }}][]" {%- if selectedCheckboxValue == option.value %} checked="checked"{% endif -%} value="{{ option.value }}">
+                <label for="{{ field.handle ~ '_' ~ loop.index }}">{{ option.label }}</label>
+              </div>
+            {% endfor %}
+          {% elseif fieldType == 'radio' %}
+            {% if submittedEntry is defined %}
+              {% set submittedRadioValue = attribute(submittedEntry, field.handle) %}
+            {% endif %}
+
+            <label for="fields[{{ field.handle }}]">{{ field.name }}</label>
+
+            {% for option in field.settings.options %}
+
+            {% if submittedEntry is defined %}
+              {% set defaultValue = option.value ? option.value : null %}
+              {% set selectedRadioValue = submittedRadioValue != '' ? submittedRadioValue : defaultValue %}
+            {% elseif option.default %}
+              {% set selectedRadioValue = option.value %}
+            {% else %}
+              {% set selectedRadioValue = null %}
+            {% endif %}
+
+              <div class="options">
+                <input id="{{ field.handle ~ '_' ~ loop.index }}" type="radio" name="fields[{{ field.handle }}]" {%- if selectedRadioValue == option.value %} checked="checked"{% endif -%} value="{{ option.value }}">
+                <label for="{{ field.handle ~ '_' ~ loop.index }}">{{ option.label }}</label>
+              </div>
+            {% endfor %}
+          {% elseif fieldType == 'notes' %}
+            <h3>{{ field.name }}</h3>
+            <p>{{ field.settings.instructions }}</p>
+          {% elseif fieldType == 'assets' %}
+            <label class="field_label_file_upload" for="fields[{{ field.handle }}]">{{ field.name }} <span class="file_size_limit">2MB Limit</span></label>
+            <input id="fields[{{ field.handle }}][]" type="file" name="fields[{{ field.handle }}][]">
+          {% else %}
+            {# IF FIELD ISN'T SETUP ABOVE, OUTPUT ITS DEFAULT MARKUP #}
+            {{ form.displayField(field.handle) }}
+          {% endif %}
+
+          {% if field.instructions|length %}<div class="field_instructions field_instructions_{{ field.handle }}">{{ field.instructions }}</div>{% endif %}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+
+  {# Optional: Anti-spam protection. #}
+  {{ craft.amForms.displayAntispam() }}
+
+  {# Optional: Google reCAPTCHA protection. #}
+  {{ craft.amForms.displayRecaptcha() }}
+
+  <input class="c_button" type="submit" value="{{ form.submitButton|length ? form.submitButton : 'Submit' }}">
+</form>
+
+{% endminify %}

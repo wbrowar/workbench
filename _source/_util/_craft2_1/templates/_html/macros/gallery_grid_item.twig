@@ -1,0 +1,43 @@
+{# Team Member Grid Item #}
+{% macro team(entry) %}{% spaceless %}
+    {% import 'macros/images' as images %}
+    {% import 'macros/media' as media %}
+    {% set type = entry.type.handle %}
+
+    <gallery-grid-item class="grid_team_members_item grid_team_members_item--{{ type|lower }}" grid-item-type="{{ type }}"{% if type == 'managingPartner' and entry.teamLivePhoto|length %} video-starting-point="{{ entry.teamLivePhoto.first().livePhotoStartingPoint }}"{% endif %}>{% spaceless %}
+            <a href="{{ url(entry.url) }}">
+                {% set image = entry.teamCulturePhoto[0] ?? null %}
+                {% if (entry.teamLivePhoto[0] ?? false) and (entry.teamLivePhoto[0].livePhotoBackupPhoto.first() ?? false) %}
+                    {% set image = entry.teamLivePhoto[0].livePhotoBackupPhoto.first() %}
+                {% endif %}
+                {% set config = {
+                    'class': 'grid_item__' ~ entry.title|kebab,
+                    'global': { position: entry.teamCulturePhoto[0].focalPoint },
+                    'sizes': [
+                        { width: 476, height: 476, jpegQuality: 80, },
+                        { width: 952, height: 952, jpegQuality: 70, retina: true },
+                        { width: 665, height: 665, jpegQuality: 80, mq: '(min-width: 500px)' },
+                        { width: 1330, height: 1330, jpegQuality: 70, mq: '(min-width: 500px)', retina: true },
+                        { width: (type == "managingPartner" ? (665 * 2) : 665 ), height: 665, jpegQuality: 80, mq: '(min-width: 730px)' },
+                        { width: (type == "managingPartner" ? (1330 * 2) : 1330 ), height: 1330, jpegQuality: 70, mq: '(min-width: 730px)', retina: true },
+                        { width: (type == "managingPartner" ? (476 * 2) : 476 ), height: 476, jpegQuality: 80, mq: '(min-width: 900px)' },
+                        { width: (type == "managingPartner" ? (952 * 2) : 952 ), height: 952, jpegQuality: 70, mq: '(min-width: 900px)', retina: true }
+                    ]
+                } %}
+
+                <div class="background grid_item__{{ entry.title|kebab }}" {{ images.lazyLoadBgImage(image, config) }}>
+                    {% if type == 'managingPartner' and entry.teamLivePhoto|length %}
+                        {# <video class="video_bg_video" data-lazy-load data-src="{{ entry.teamLivePhoto.first().url }}" preload muted loop></video> #}
+                        {{ media.videoBg({ 'autoplay': false, 'classes': 'video_bg', 'url': entry.teamLivePhoto.first().url }) }}
+                    {% endif %}
+                </div>
+                <div class="foreground">
+                    <div class="info">
+                        <div class="name">{{ entry.title }}</div>
+                        <div class="job_title">{{ entry.teamJobTitle }}</div>
+                    </div>
+                </div>
+            </a>
+            {{ craft.adminbar.edit(entry) }}
+        {% endspaceless %}</gallery-grid-item>
+{% endspaceless %}{% endmacro %}

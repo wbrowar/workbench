@@ -1,0 +1,32 @@
+{% extends "dev/_dev_page" %}
+
+{% set currentStylesNavItem = craft.request.getSegment(3) ?? null %}
+
+{% block content %}
+    <div class="wrapper wrapper--content">
+        {% switch currentStylesNavItem %}
+        {% case 'animations' %}
+        {% verbatim %}<%- include(styletemplateanimations) %>{% endverbatim %}
+        {% case 'buttons' %}
+        {% verbatim %}<%- include(styletemplatebuttons) %>{% endverbatim %}
+        {% case 'grid' %}
+        {% verbatim %}<%- include(styletemplategrid) %>{% endverbatim %}
+        {% case 'icons' %}
+        {% verbatim %}<%- include(styletemplateicons) %>{% endverbatim %}
+        {% case 'images' %}
+        {% verbatim %}<%- include(styletemplateimages) %>{% endverbatim %}
+        {% case 'index' %}
+        {% verbatim %}<%- include(styletemplateindex) %>{% endverbatim %}
+        {% case 'media' %}
+        {% verbatim %}<%- include(styletemplatemedia) %>{% endverbatim %}
+        {% case 'messages' %}
+        {% verbatim %}<%- include(styletemplatemessages) %>{% endverbatim %}
+        {% case 'nav' %}
+        {% verbatim %}<%- include(styletemplatenav) %>{% endverbatim %}
+        {% case 'tables' %}
+        {% verbatim %}<%- include(styletemplatetables) %>{% endverbatim %}
+        {% case 'vue' %}
+        {% verbatim %}<%- include(styletemplatevue) %>{% endverbatim %}
+        {% endswitch %}
+    </div>
+{% endblock %}

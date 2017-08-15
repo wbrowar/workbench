@@ -1,0 +1,18 @@
+    <!-- scripts -->
+    <% if (enable_system_js === 'true') { %>
+    <script type="text/javascript">
+        var jsSection = 'home',
+            jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
+            jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Math.floor(new Date().getTime() / 1000)<% } %>,
+            jsThemePath = '<%= site_root %>',
+            jsModules = [],
+            enableFontEvents = <%= enable_font_events %>;
+<% if (!release) { %>
+        // use this to add page-specific required modules
+        // jsModules.push('modulepathname');
+<% } %>
+        <%- include(loadcss) %>
+
+        // load CSS
+        loadCSS("<%= site_root %>css/all.css?v=" + jsVersion);
+    </script><% } %>

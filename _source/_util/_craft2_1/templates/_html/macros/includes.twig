@@ -1,0 +1,132 @@
+{# HELPERS #}
+{% macro backgroundImageCss(selector, imageUrl, position, retina, minWidth) %}
+  {% if minWidth|length and retina %}
+    @media (min-width: {{ minWidth }}) and (-webkit-min-device-pixel-ratio: 2), 
+           (min-width: {{ minWidth }}) and (min-resolution: 192dpi) {
+  {% elseif minWidth|length %}
+    @media (min-width:{{ minWidth }}) {
+  {% elseif retina %}
+    @media (-webkit-min-device-pixel-ratio: 2), 
+           (min-resolution: 192dpi) {
+  {% endif %}
+    {{ selector }} {
+      background-image: url({{ imageUrl }});
+      background-position: {{ position }};
+    }
+  {% if minWidth|length or retina %}
+    }
+  {% endif %}
+{% endmacro %}
+
+{% macro nextScheduledDate(sectionHandle) %}
+  {% set firstPending = craft.entries({
+    section: sectionHandle,
+    status: 'pending',
+    order: 'postDate asc'
+  }).first %}
+  {{ firstPending ? firstPending.postDate : now|date_modify('+1 year') }}
+{% endmacro %}
+
+{% macro splitText(text) %}
+  {% set text = text|nl2br|raw %}
+  {% set text = '<span class="split_text">' ~ text|replace('<br />', '</span> <span class="split_text">') ~ '</span>' %}
+  {{ text|raw }}
+{% endmacro %}
+
+{# VIDEO HEADERS #}
+{% macro videoHeader(options) %}
+    {% import 'macros/images' as images %}
+
+    {% set classes = options.classes ?? '' %}
+    {% set image = options.image ?? null %}
+    {% set phrases = options.phrases ?? '' %}
+    {% set videoUrl = options.videoUrl ?? '' %}
+
+    {% if image ?? false %}
+        {% set imageConfig = {
+            'class': 'video_header',
+            'position': image.focalPoint ?? '50% 50%',
+            'sizes': [
+                { width: 500, height: 500, jpegQuality: 80, mq: '(min-width: 1100px)' },
+                { width: 1000, height: 1000, jpegQuality: 70, mq: '(min-width: 1100px)', retina: true }
+            ]
+        } %}
+    {% endif %}
+
+    <pop-up-video :class="{ paused: scrollY > 300 }" :paused="scrollY > 300"{% if imageConfig ?? false %} {{ images.lazyLoadBgImage(image, imageConfig) }}{% endif %} url="" autoplay loop>
+        <div>
+            {% set list = [] %}
+            {% for row in phrases %}
+                {% set list = list|merge([row.phrase]) %}
+            {% endfor %}
+
+            <div class="text" data-typewriter data-typewriter-period="2000" data-typewriter-list='[ "{{ list|join('", "') }}" ]'>{{ phrases[0].phrase|nl2br }}</div>
+        </div>
+    </pop-up-video>
+{% endmacro %}
+
+{# GLOBAL BG MACROS #}
+{% macro bgZigZagContainer(options) %}
+    {% set back = options.back ?? false %}
+    {% set classes = options.classes ?? '' %}
+    {% set front = options.front ?? false %}
+
+    <span class="c_zigzag{% if classes|length %} {{ classes }}{% endif %}">
+        {% if back %}<div class="back">{{ back }}</div>{% endif %}
+        <div class="bg c_bg--zigzag"></div>
+        {% if back %}<div class="front">{{ front }}</div>{% endif %}
+    </span>
+{% endmacro %}
+
+{# GLOBAL TEXT MACROS #}
+{% macro pageSubheaderBars(text, options = {}) %}{% spaceless %}
+    {% set textFormatted = '<span>&nbsp;' ~ text|replace({ ' ': '&nbsp;</span><span>&nbsp;', '\n': '&nbsp;</span><br /><span>&nbsp;', '\r': '' }) ~ '&nbsp;</span>' %}
+    {% set textFormattedRedBars = textFormatted|replace({ '<span>&nbsp;|': '<span class="c_text c_text--red_bars"><span>&nbsp;', '|&nbsp;</span>': '&nbsp;</span></span>' }) %}
+
+    <span{% if '|' not in textFormatted %} class="c_text c_text--red_bars"{% endif %}>{{ textFormattedRedBars|widont|raw }}</span>
+{% endspaceless %}{% endmacro %}
+
+{# SOCIAL MEDIA NAV #}
+{% macro socialNav() %}
+  <nav class="nav_social">{% spaceless %}
+      {% if seomaticHelper.facebookUrl ?? false %}<a href="{{ seomaticHelper.facebookUrl }}" target="_blank" class="icon icon_social_facebook" title="Facebook">Facebook</a>{% endif %}
+      {% if seomaticHelper.twitterUrl ?? false %}<a href="{{ seomaticHelper.twitterUrl }}" target="_blank" class="icon icon_social_twitter" title="Twitter">Twitter</a>{% endif %}
+      {% if seomaticHelper.linkedinUrl ?? false %}<a href="{{ seomaticHelper.linkedInUrl }}" target="_blank" class="icon icon_social_linkedin" title="LinkedIn">LinkedIn</a>{% endif %}
+      {% if seomaticHelper.youtubeUrl ?? false %}<a href="{{ seomaticHelper.youtubeUrl }}" target="_blank" class="icon icon_social_youtube" title="YouTube">YouTube</a>{% endif %}
+      {% if seomaticHelper.pinterestUrl ?? false %}<a href="{{ seomaticHelper.pinterestUrl }}" target="_blank" class="icon icon_social_pinterest" title="Pinterest">Pinterest</a>{% endif %}
+      {% if seomaticHelper.instagramUrl ?? false %}<a href="{{ seomaticHelper.instagramUrl }}" target="_blank" class="icon icon_social_instagram" title="Instagram">Instagram</a>{% endif %}
+      <a href="https://www.snapchat.com/add/dixonschwabl" target="_blank" class="icon icon_social_snapchat" title="Snapchat">Snapchat</a>
+  {% endspaceless %}</nav>
+{% endmacro %}
+
+{# PAGINATION #}
+{% macro pager(paginate, max) %}
+  {% set maxRange = ((max - 1) / 2)|round %}
+  {% set queryString = craft.request.getQueryStringWithoutPath|length ? '?' ~ craft.request.getQueryStringWithoutPath : '' %}
+
+  <div class="pager_wrapper">
+  {% if paginate.prevUrl %}
+    <a class="pager_prev" href="{{ url(paginate.prevUrl) }}{{ queryString }}">Back</a>
+  {% endif %}
+
+  <div class="pager">
+    {% spaceless %}
+    {% if paginate.totalPages != 1 %}
+      {% if paginate.currentPage < (max - 1) %}
+        {% for page, url in paginate.getRangeUrls(1, max) %}
+        <a {% if page == paginate.currentPage %}class="active"{% endif %} href="{{ url(url) }}{{ queryString }}">{% if loop.first and page != 1 %}&hellip;{% endif %}{{ page }}{% if loop.last and page != paginate.totalPages %}&hellip;{% endif %}</a>
+        {% endfor %}
+      {% else %}
+        {% for page, url in paginate.getRangeUrls(paginate.currentPage - maxRange, paginate.currentPage + maxRange) %}
+        <a {% if page == paginate.currentPage %}class="active"{% endif %} href="{{ url(url) }}{{ queryString }}">{% if loop.first and page != 1 %}&hellip;{% endif %}{{ page }}{% if loop.last and page != paginate.totalPages %}&hellip;{% endif %}</a>
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+    {% endspaceless %}
+  </div>
+
+  {% if paginate.nextUrl %}
+    <a class="pager_next" href="{{ url(paginate.nextUrl) }}{{ queryString }}">Next</a>
+  {% endif %}
+  </div>
+{% endmacro %}

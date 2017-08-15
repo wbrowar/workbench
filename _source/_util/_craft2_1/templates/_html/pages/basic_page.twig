@@ -1,0 +1,20 @@
+{#
+ # The default page layout used for Basic Page entries.
+ # To use this layout on other channels, extend this template instead of "_layout".
+ #}
+
+{% extends "_layout" %}
+
+{% set pageSection = pageSection is defined ? pageSection : 'inside' %}
+
+{% block critcss %}
+  <% if (critCssEnabled) { %><style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+{% endblock %}
+
+{% block content %}
+  {#{% import "macros/content" as content %}#}
+
+  {#{{ content.body(entry.bodyContent, _context, layoutType) }}#}
+
+    <br><br><br><br><br><br><br><br><br><p>BASIC PAGE!</p><br><br><br><br><br><br><br><br><br>
+{% endblock %}

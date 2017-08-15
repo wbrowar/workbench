@@ -1,0 +1,105 @@
+{% extends "_layout" %}
+
+{% set pageSection = 'team_member' %}
+{% set jsSection = 'team_member' %}
+{% set uiLogoTop = '20' %}
+
+{% block critcss %}
+    <% if (critCssEnabled) { %>
+    <style><%- include(critcssteammember) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+{% endblock %}
+
+{% block content %}
+    {% import 'macros/buttons' as buttons %}
+    {% import 'macros/icons' as icons %}
+    {% import 'macros/images' as images %}
+    {% import 'macros/includes' as includes %}
+
+    {% macro professionalPhoto(entry) %}
+        {% import 'macros/images' as images %}
+
+        <div class="professional_photo">
+            <div class="photo">
+                {% set image = entry.teamProfessionalPhoto.first %}
+                {% set config = {
+                    'width': 600,
+                    'height': 380,
+                    'global': {
+                        position: image.focalPoint,
+                        ratio: 30/19
+                    },
+                    'sizes': [
+                        { width: 500, jpegQuality: 80 },
+                        { width: 1000, jpegQuality: 70 }
+                    ],
+                    'title': image.title
+                } %}
+                {{ images.lazyLoadImage(image, config) }}
+            </div>
+        </div>
+    {% endmacro %}
+
+    <section class="team_member_wrapper wrapper wrapper--content">
+        <div class="team_member_flex team_member_flex--top">
+            <div class="left">
+                <h1 class="c_header c_header--medium">{{ entry.title }}</h1>
+            </div>
+            <div class="right">
+                <h2 class="c_subheader">{{ entry.teamJobTitle|widont }}</h2>
+            </div>
+        </div>
+        <div class="team_member_flex team_member_flex--bottom">
+            <div class="left">
+                {{ _self.professionalPhoto(entry) }}
+                <div class="team_member_bio c_text">{{ entry.teamBio }}</div>
+                <div class="culture_photo">
+                    <div class="photo">
+                        {% set image = entry.teamCulturePhoto.first %}
+                        {% set config = {
+                            'width': 415,
+                            'height': 265,
+                            'global': {
+                            position: image.focalPoint,
+                            ratio: 415/265
+                        },
+                        'sizes': [
+                            { width: 500, jpegQuality: 80 },
+                            { width: 1000, jpegQuality: 70 }
+                        ],
+                        'title': image.title|widont
+                        } %}
+                        {{ images.lazyLoadImage(image, config) }}
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="professional_photo">
+                    {{ _self.professionalPhoto(entry) }}
+                </div>
+                <div class="team_member_info">
+                    <h2 class="team_member_quote_header c_subheader--bold">{{ includes.pageSubheaderBars(entry.teamFunFactTitle) }}</h2>
+                    <div class="team_member_quote c_text c_text--note">{{ entry.teamFunFactText|widont }}</div>
+
+                    <div class="team_member_social_links">
+                        {% set config = {
+                            'links': {
+                            'facebook': entry.facebookUrl ?? null,
+                            'twitter': entry.twitterUrl ?? null,
+                            'linkedin': entry.linkedinUrl ?? null,
+                            'youtube': entry.youtubeUrl ?? null,
+                            'pinterest': entry.pinterestUrl ?? null,
+                            'instagram': entry.instagramUrl ?? null,
+                            'snapchat': entry.snapchatUrl ?? null,
+                            'email': entry.emailAddress ?? null,
+                        },
+                        'modifiers': 'c_social_links--grey'
+                        } %}
+                        {{ icons.socialLinks(config) }}
+                    </div>
+
+                    {{ buttons.default({ label: "Back to team roster", url: "/team" }) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,88 @@
+{# The main layout file. #}
+
+<!DOCTYPE html>
+
+{% set jsSection = jsSection ?? 'inside' %}
+{% set bodyClasses = ['js-' ~ jsSection] %}
+
+{% if pageSection ?? false %}
+  {% set bodyClasses = bodyClasses|merge(['p-' ~ pageSection]) %}
+{% endif %}
+
+{% set uiLogoTop = uiLogoTop ?? '100' %}
+
+{# web, amp, fb, apple #}
+{% set layoutType = layoutMode ?? 'web' %}
+{% set bodyClasses = bodyClasses|merge(['l-' ~ layoutType]) %}
+
+<html class="no-js" lang="en">
+  <head>
+<%- include('ejs_includes/_head_meta') %>
+    {% hook 'seomaticRender' %}
+
+    {#
+    {% set adminBarKey = craft.adminbar.canEmbed() ? 'ctJNdANRv7gWCwyuWYFtQwtC' : 'false' %}
+    {% header 'adminbar: ' ~ adminBarKey %}
+    {% hook 'renderAdminBar' %}
+    #}
+
+    {# Critical CSS #}
+    <!--#if expr="$HTTP_COOKIE=/critical\-css\=<%= version %>/" -->
+    <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
+    <!--#else -->
+    {% block critcss %}{% endblock %}
+    <script>
+        <%- include(loadcss) %>
+        loadCSS("<%= site_root %>css/all.css?v=" + '<%= version %>');
+        var cookieExpiration = new Date();
+        cookieExpiration.setDate(cookieExpiration.getDate() + 7);
+
+        document.cookie = 'critical-css=<%= version %>; expires=' + cookieExpiration.toUTCString() + '; path=/';
+    </script>
+    <noscript><link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>"></noscript>
+    <!--#endif -->
+
+    {# Font Event #}
+    <!--#if expr="$HTTP_COOKIE=/fonts\-loaded\=<%= version %>/" -->
+    <script>
+        document.documentElement.className += ' fonts_loaded';
+    </script>
+    <!--#else -->
+    <script>
+        document.cookie = 'fonts-loaded=<%= version %>; expires=' + cookieExpiration.toUTCString() + '; path=/';
+    </script>
+    <!--#endif -->
+
+<%- include('ejs_includes/_head_scripts') %>
+
+<%- include('ejs_includes/_head_tracking') %>
+  </head>
+  <body{% if bodyClasses|length %} class="{{ bodyClasses|join(' ') }}"{% endif %}>
+    {% minify %}
+    <div id="page">
+      {% block header %}
+        {% include 'partials/page_ui' with {
+            'uiLogoTop': uiLogoTop,
+        } %}
+      {% endblock %}
+
+      <section class="page_wrapper">
+      {% block contentBefore %}{% endblock %}
+      {% block content %}{% endblock %}
+      {% block contentAfter %}{% endblock %}
+      </section>
+
+      {% block footer %}
+        {% include 'partials/page_footer' with {
+            'entry': entry ?? null,
+        } %}
+      {% endblock %}
+    </div>
+
+<%- include('ejs_includes/_body_bottom_scripts') %>
+    {% block jsFooter %}
+        <script>SystemJS.import('inside');</script>
+    {% endblock %}
+    {% endminify %}
+  </body>
+</html>

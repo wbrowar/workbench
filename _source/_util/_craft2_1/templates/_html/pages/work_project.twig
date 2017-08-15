@@ -1,0 +1,173 @@
+{% extends "_layout" %}
+
+{% import 'macros/images' as images %}
+{% import 'macros/includes' as includes %}
+{% import 'macros/media' as media %}
+
+{% set pageSection = 'work_project' %}
+{% set jsSection = 'work_project' %}
+{% set uiLogoTop = '20' %}
+
+{% block critcss %}
+    <% if (critCssEnabled) { %>
+    <style><%- include(critcssteam) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+{% endblock %}
+
+{% block content %}
+    <header class="wrapper">
+        {% set image = entry.workFeaturedImage.first() %}
+        {% set config = {
+            'class': 'image_',
+            'position': image.focalPoint ?? '50% 50%',
+            'sizes': [
+                { width: 500, height: 500, jpegQuality: 80, mq: '(min-width: 1100px)' },
+                { width: 1000, height: 1000, jpegQuality: 70, mq: '(min-width: 1100px)', retina: true }
+            ]
+        } %}
+        <div class="work_project_header_image" {{ images.lazyLoadBgImage(image, config) }}>
+        </div>
+        <div class="work_project_scope c_text c_text--note">Scope: {% for category in entry.workCategories %}{% if (loop.index > 1) and loop.last %} and {% elseif loop.index > 1 %}, {% endif %}{{ category.title }}{% endfor %}</div>
+    </header>
+    <article class="work_project_wrapper wrapper wrapper--content_center">
+        {% for block in entry.workBody %}
+            {% switch block.type.handle %}
+                {% case 'subheader10' %}
+                    <div class="work_project_section work_project_subheader10 c_subheader c_subheader--bold">{{ includes.pageSubheaderBars(block.text) }}</div>
+                {% case 'text20' %}
+                    <div class="work_project_section work_project_text20 c_subheader c_subheader--double_spaced">{{ block.text|widont }}</div>
+                {% case 'textTwoColumn21' %}
+                    <div class="work_project_section work_project_textTwoColumn21">
+                        <div class="column c_text">
+                            {% if block.headerLeft ?? false %}
+                                <h3 class="text--header">{{ block.headerLeft|widont }}</h3>
+                            {% elseif block.headerRight ?? false %}
+                                <h3 class="blank">&nbsp;</h3>
+                            {% endif %}
+                            {{ block.textLeft|widont }}
+                        </div>
+                        <div class="column c_text">
+                            {% if block.headerRight ?? false %}
+                                <h3 class="text--header">{{ block.headerRight|widont }}</h3>
+                            {% elseif block.headerLeft ?? false %}
+                                <h3 class="blank">&nbsp;</h3>
+                            {% endif %}
+                            {{ block.textRight|widont }}
+                        </div>
+                    </div>
+                {% case 'image30' %}
+                    <div class="work_project_section work_project_image30">
+                        {% set image = block.image.first() %}
+                        {% set config = {
+                            'width': 500,
+                            'sizes': [
+                                { width: 500, jpegQuality: 80 },
+                                { width: 1000, jpegQuality: 70 }
+                            ]
+                        } %}
+
+                        {% set config = (block.cropHeight > 0) ? config|merge({ 'global': { 'ratio': 2048/block.cropHeight } }) : config %}
+
+                        {{ images.lazyLoadImage(image, config) }}
+                    </div>
+                {% case 'imageText31' %}
+                    <div class="work_project_section{% if block.breakGridToTheRight %} work_project_section--no_padding_right{% endif %} work_project_imageText31 work_project_imageText31--{{ block.direction }} work_project_imageText31--images_{{ block.image|length }}">
+                        <div class="column c_text">
+                            {% if block.header ?? false %}<h3 class="header c_text--header">{{ block.header|widont }}</h3>{% endif %}
+
+                            {{ block.text|widont }}
+                        </div>
+                        {% for image in block.image %}
+                            <div class="image">
+                                {% set config = {
+                                    'width': 500,
+                                    'sizes': [
+                                        { width: 300, jpegQuality: 80 },
+                                        { width: 500, jpegQuality: 80 },
+                                        { width: 1000, jpegQuality: 70 }
+                                    ]
+                                } %}
+
+                                {{ images.lazyLoadImage(image, config) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% case 'imageLockup32' %}
+                    <div class="work_project_section work_project_imageLockup32">
+                        {% set primaryImage = block.primaryImage.first() %}
+                        {% set primaryConfig = {
+                            'class': 'image_' ~ block.id,
+                            'sizes': [
+                                { width: 300, height: 300, jpegQuality: 80, },
+                                { width: 600, height: 600, jpegQuality: 70, retina: true },
+                                { width: 500, height: 500, jpegQuality: 80, mq: '(min-width: 700px)' },
+                                { width: 1000, height: 1000, jpegQuality: 70, mq: '(min-width: 700px)', retina: true }
+                            ]
+                        } %}
+                        {% set secondaryImage = block.secondaryImage.first() %}
+                        {% set secondaryConfig = {
+                            'class': 'image_' ~ block.id,
+                            'sizes': [
+                                { width: 500, height: 500, jpegQuality: 80, mq: '(min-width: 700px)' },
+                                { width: 1000, height: 1000, jpegQuality: 70, mq: '(min-width: 700px)', retina: true }
+                            ]
+                        } %}
+
+                        <div class="primary" {{ images.lazyLoadBgImage(primaryImage, primaryConfig) }}></div>
+                        <div class="secondary" {{ images.lazyLoadBgImage(secondaryImage, secondaryConfig) }}></div>
+                        <div class="c_text c_text--note text"><div>{{ block.text|replace({ ' |': ' <span class="c_text c_text--red">', '| ': ' </span>' })|widont|nl2br }}</div></div>
+                    </div>
+                {% case 'list40' %}
+                    <div class="work_project_section work_project_list40">
+                        {% for item in block.listItems %}
+                            <span class="column c_text c_text--note">{% if item.header ?? false %}<h3 class="c_text c_text--red">{{ item.header|widont }}</h3>{% endif %}{{ item.text|nl2br|widont }}</span>
+                        {% endfor %}
+                    </div>
+                {% case 'stats41' %}
+                    <div class="work_project_section work_project_section--no_padding_right work_project_stats41">
+                        {% for item in block.listItems %}
+                            <div class="work_project_stat">
+                                {% set back %}{% spaceless %}
+                                    <span class="c_text c_text--count count_wrapper">{% if item.plusSign %}+{% endif %}<span class="presuffix">{% if item.dollarSign %}${% endif %}</span><span data-lazy-animate="countUp" data-lazy-animate-delay="{{ (loop.index * 200) - 200 }}" data-lazy-animate-args='{ "start": 0, "end": {{ item.number }}, "duration": 3 }'>0</span><span class="presuffix">{% if item.kThousand %}K{% endif %}{% if item.mMillion %}M{% endif %}{% if item.percent %}%{% endif %}</span></span>
+                                {% endspaceless %}{% endset %}
+                                {% set config = {
+                                    back: back,
+                                    classes: 'counter'
+                                } %}
+                                {{ includes.bgZigZagContainer(config) }}
+                                <div class="c_subheader label">{{ item.label }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% case 'audio50' %}
+                    <div class="work_project_section work_project_audio50">
+                        {% for clip in block.file %}
+                            {{ media.audio({ 'url': clip.url }) }}
+                        {% endfor %}
+                    </div>
+                {% case 'video60' %}
+                    <div class="work_project_section work_project_video60 work_project_video60--{{ block.direction }}">
+                        {% if block.vimeoId ?? false %}
+                            {% set id = block.vimeoId %}
+                            {% set source = 'vimeo' %}
+                        {% elseif block.youtubeId ?? false %}
+                            {% set id = block.youtubeId %}
+                            {% set source = 'youtube' %}
+                        {% endif %}
+
+                        {% if id ?? false %}
+                            {% if block.text ?? false %}
+                                <div class="column c_text">
+                                    {% if block.header ?? false %}<h3 class="header c_text--header">{{ block.header|widont }}</h3>{% endif %}
+
+                                    {{ block.text|widont }}
+                                </div>
+                            {% endif %}
+                            <div class="video">
+                                {{ media.video({ 'id': id, 'source': source }) }}
+                            </div>
+                        {% endif %}
+                    </div>
+            {% endswitch %}
+        {% endfor %}
+    </article>
+{% endblock %}

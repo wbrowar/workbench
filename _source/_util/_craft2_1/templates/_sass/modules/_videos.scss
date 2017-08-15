@@ -1,0 +1,39 @@
+// VIDEOS
+video {
+  width: 100%;
+}
+.video {
+  position: relative;
+  padding-bottom: percentage(9 / 16); // 16:9 aspect ratio
+  padding-top: 0;
+  height: 0;
+  overflow: hidden;
+
+  <% if (styleTemplateConfig.sections.media.modules.background_video) { %>.video__bg {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+
+    & > .video_bg_video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }<% } %>
+}
+.video iframe, .video object, .video embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

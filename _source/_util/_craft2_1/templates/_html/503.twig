@@ -1,0 +1,96 @@
+{# Remove this line to use this template #}
+{% redirect '404' %}
+
+
+
+
+
+
+
+{# styles #}
+{% set boxColor = 'rgba(0, 0, 0, .9)' %}
+{% set backgroundImage = '/uploads/content/FPO.png' %}
+{% set logoImage = '/uploads/site/logo.svg' %}
+{% set textColor = 'rgb(255, 255, 255)' %}
+
+{# content #}
+{% set header = '<h1>We&rsquo;ll be back soon.</h1>' %}
+{% set description = '<p>' ~ craft.config.environmentVariables.siteName ~ ' is currently down for&nbsp;maintainance.</p>' %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/all.css">
+    <style type="text/css">
+      .container_503 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        width: 100%;
+        min-width: 100%;
+        min-height: 100vh;
+        height: auto;
+        background-image: url({{ backgroundImage }});
+        background-position: center center;
+        background-size: cover;
+        box-sizing: border-box;
+      }
+      .box_503 {
+        padding: 30px 35px;
+        width: 100%;
+        max-width: 500px;
+        background-color: {{ boxColor }};
+        color: {{ textColor }};
+      }
+      .logo_503 {
+        display: block;
+        margin-bottom: 1.2rem;
+        padding-top: 50%;
+        width: 100%;
+        background-image: url({{ logoImage }});
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      .header_503 {
+        margin-bottom: .6rem;
+        font-size: 6.6vw;
+        line-height: 1.2;
+      }
+      .description_503 {
+        font-size: 4vw;
+        line-height: 1.2;
+      }
+
+      @media (min-width: 600px) {
+        .container_503 {
+          padding: 40px;
+        }
+        .box_503 {
+          padding: 60px 70px;
+        }
+        .header_503 {
+          font-size: 2.5rem;
+        }
+        .description_503 {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container_503">
+      <div class="box_503">
+        <div class="logo_503"></div>
+        <div class="header_503">{{ header|raw }}</div>
+        <div class="description_503">{{ description|raw }}</div>
+      </div>
+    </div>
+  </body>
+</html>
