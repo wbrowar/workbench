@@ -1,13 +1,13 @@
 'use strict';
 
 // Get Local IP Address
-var os = require('os');
+const os = require('os');
 
-var interfaces = os.networkInterfaces();
-var addresses = [];
-for (var k in interfaces) {
-    for (var k2 in interfaces[k]) {
-        var address = interfaces[k][k2];
+const interfaces = os.networkInterfaces();
+let addresses = [];
+for (let k in interfaces) {
+    for (let k2 in interfaces[k]) {
+        const address = interfaces[k][k2];
         if (address.family === 'IPv4' && !address.internal) {
             addresses.push(address.address);
         }
@@ -88,9 +88,7 @@ const ejsVars = {
 };
 const ejsOptions = {
     root:                bases.build,
-}
-
-//require('events').EventEmitter.prototype._maxListeners = 10000;
+};
 
 
 
@@ -159,7 +157,7 @@ gulp.task('vars',function() {
         + `\n${$.gutil.colors.inverse(' ejsVars ')}`
         + `\n${$.gutil.colors.bold('└─ Additional files and settings for use in the \`ejs\` task. All paths must start from the \`_build\` folder.')}\n`
         + `\n${$.gutil.colors.inverse(' fonts ')}`
-        + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`
+        + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`;
     $.gutil.log(text);
     $.gutil.beep();
 });
@@ -186,6 +184,11 @@ gulp.task('template', ['template:backup'], function() {
     return gulp.src(paths.srcUtil + vars.style_template + '/templates/**/*')
         .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.source));
+});
+
+// [gulp setup]
+gulp.task('setup', function() {
+    $.gutil.log($.gutil.colors.inverse(' HI '));
 });
 
 // [gulp run]
@@ -249,14 +252,14 @@ gulp.task('watch', function() {
 // TASKS
 // Bumps up the version number of the package file
 function bumpVersionNumber(level) {
-    var version = semver.inc(vars.version, level);
+    const version = semver.inc(vars.version, level);
 
     ejsVars.version = version;
 
     return version;
 }
 gulp.task('bump:major', function() {
-    var version = bumpVersionNumber('major');
+    const version = bumpVersionNumber('major');
 
     gulp.src('./package.json')
         .pipe(gulp.dest(bases.build + 'package'))
@@ -264,7 +267,7 @@ gulp.task('bump:major', function() {
         .pipe(gulp.dest('./'));
 });
 gulp.task('bump:minor', function() {
-    var version = bumpVersionNumber('minor');
+    const version = bumpVersionNumber('minor');
 
     gulp.src('./package.json')
         .pipe(gulp.dest(bases.build + 'package'))
@@ -272,7 +275,7 @@ gulp.task('bump:minor', function() {
         .pipe(gulp.dest('./'));
 });
 gulp.task('bump:patch', function() {
-    var version = bumpVersionNumber('patch');
+    const version = bumpVersionNumber('patch');
 
     gulp.src('./package.json')
         .pipe(gulp.dest(bases.build + 'package'))

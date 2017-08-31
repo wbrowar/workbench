@@ -199,6 +199,15 @@ scrollToElement(el);
 
 ---
 ## Release Notes
+#### 4.8.0
+- :rocket: Added `gulp setup` command to replace `gulp template`
+- :wrench: Refactored structure of `_source/_util` folder
+- :wrench: Moved everything from `_source/_js/system-config.js` to `_source/_html/ejs_includes/_body_bottom_scripts.ejs` or `_source/_html/ejs_includes/_head_scripts.ejs`
+- :fire: Removed `importPageSpecificModule` function
+- :fire: Deleted `_source/_js/system-config.js`
+- :fire: Deleted `_source/_js/modernizr.custom.js`
+- :fire: Stopped adding `.min` to uglified JS files
+
 #### 4.7.1
 - :wrench: Updated all NPM libraries. **This now requires the latest Node 7.x and all `node_modules` should be deleted and `yarn` (or `npm install`) should be run to update dependencies.**
 - :wrench: Split index.html into ejs partials for better portability when creating multiple pages

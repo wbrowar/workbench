@@ -8,11 +8,10 @@
   "site_root": "/",
   "style_template_url_prefix": "dev/inv/",
   "style_template_url_suffix": ".html",
-  "style_template": "_style_inv_1/",
   "enable_babel": "true",
-  "enable_font_events": "false",
   "enable_system_js": "true",
   "minify_html": "true",
+  "template_is_set_up": false,
   "browserSync": {
     "browser": "google chrome",
     "url": "https://starter.wbrowar.com/"
@@ -34,14 +33,13 @@
   ],
   "copyFirstJsFiles": [
     "node_modules/es6-promise/dist/es6-promise.auto.js",
-    "node_modules/fontfaceobserver/fontfaceobserver.js",
     "node_modules/ideal-image-slider/ideal-image-slider.js",
     "node_modules/jquery/dist/jquery.js",
     "node_modules/fg-loadcss/src/loadCSS.js",
     "node_modules/scrollmonitor/scrollMonitor.js",
     "node_modules/systemjs/dist/system.js",
     "node_modules/systemjs/dist/system-polyfills.js",
-    "node_modules/vanilla-fitvids/jquery.fitvids.js",
+    "node_modules/vue/dist/vue.min.js",
     "node_modules/vue/dist/vue.js"
   ],
   "ejsVars": {
@@ -55,8 +53,7 @@
       "fallbackStack": "'Avinir', Helvetica, Arial, sans-serif",
       "fontStyle": "normal",
       "fontWeight": "normal",
-      "files": {},
-      "fontEventCheck": false
+      "files": {}
     },
     {
       "name": "avinir_italic",
@@ -65,8 +62,7 @@
       "fallbackStack": "'Avinir', Helvetica, Arial, sans-serif",
       "fontStyle": "italic",
       "fontWeight": "normal",
-      "files": {},
-      "fontEventCheck": false
+      "files": {}
     },
     {
       "name": "apple",
@@ -75,8 +71,7 @@
       "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
       "fontStyle": "normal",
       "fontWeight": "normal",
-      "files": {},
-      "fontEventCheck": false
+      "files": {}
     },
     {
       "name": "eaves",
@@ -89,8 +84,7 @@
         "eot": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
         "woff": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
         "woff2": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
-      },
-      "fontEventCheck": true
+      }
     },
     {
       "name": "eaves_italic",
@@ -103,51 +97,49 @@
         "eot": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
         "woff": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
         "woff2": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
-      },
-      "fontEventCheck": true
+      }
     }
   ],
   "dependencies": {
-    "es6-promise": "^4.1.0",
+    "es6-promise": "^4.1.1",
     "fg-loadcss": "^1.3.1",
-    "fontfaceobserver": "^2.0.9",
     "ideal-image-slider": "^1.5.1",
     "jquery": "^3.2.1",
     "scrollmonitor": "^1.2.3",
-    "systemjs": "^0.20.12",
-    "vanilla-fitvids": "^1.1.0",
-    "vue": "^2.3.0"
+    "systemjs": "^0.20.18",
+    "vue": "^2.4.2"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
-    "browser-sync": "^2.18.8",
-    "critical": "^0.8.4",
-    "glob": "^7.1.1",
+    "browser-sync": "^2.18.13",
+    "critical": "^0.9.0",
+    "glob": "^7.1.2",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-babel": "^7.0.0",
     "gulp-bump": "^2.7.0",
-    "gulp-changed": "^3.0.0",
+    "gulp-changed": "^3.1.0",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.1",
     "gulp-ejs": "3.0.1",
     "gulp-favicons": "^2.2.7",
     "gulp-htmlmin": "^3.0.0",
-    "gulp-imagemin": "^3.2.0",
+    "gulp-imagemin": "^3.3.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.5.4",
-    "gulp-responsive": "^2.7.0",
+    "gulp-replace": "^0.6.1",
+    "gulp-responsive": "^2.8.0",
     "gulp-sass": "^3.1.0",
     "gulp-sass-glob": "^1.0.8",
     "gulp-svg-inline-css": "^1.3.3",
-    "gulp-uglify": "^2.1.2",
+    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
-    "imagemin-gifsicle": "^5.1.0",
+    "imagemin-gifsicle": "^5.2.0",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-optipng": "^5.2.1",
-    "imagemin-pngquant": "^5.0.0",
-    "imagemin-svgo": "^5.2.1",
+    "imagemin-pngquant": "^5.0.1",
+    "imagemin-svgo": "^5.2.2",
+    "inquirer": "^3.2.3",
     "node-notifier": "^5.1.2"
   }
 }
