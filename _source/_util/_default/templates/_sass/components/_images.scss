@@ -1,0 +1,13 @@
+figure {
+  line-height: 0;
+}
+img {
+  height: auto;
+  max-width: 100%;
+
+  &[data-lazy-load] {
+    width: 100%;
+    height: 0;
+    background-color: lighten($color_black_default, 50);
+  }
+}

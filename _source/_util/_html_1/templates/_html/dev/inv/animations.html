@@ -1,0 +1,133 @@
+<% const currentSection = 'animations' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+  "title": "Rollover Pop Up",
+  "description": "Simple roll-over animations.",
+  "background": "light",
+  "demoCode":
+`<div class="styles_demo_box_wrapper">
+  <div class="styles_demo_box flex animate_rollover_pop_up">Roll over me.</div>
+  <div class="styles_demo_box flex animate_rollover_pop_down">Roll over me.</div>
+  <div class="styles_demo_box flex animate_rollover_pop_forward">Roll over me.</div>
+</div>`,
+  "code":
+`<div class="animate_rollover_pop_up">Roll over me.</div>
+<div class="animate_rollover_pop_down">Roll over me.</div>
+<div class="animate_rollover_pop_forward">Roll over me.</div>`
+}); %>
+
+<% modules.push({
+  "title": "Rollover Scale",
+  "description": "Roll over to zoom in on an image. Content placed in the `foreground` will remain static, where content in the background will scale with the background image.",
+  "background": "light",
+  "demoCode":
+`<div class="styles_demo_box_wrapper">
+  <div class="styles_demo_box animate_rollover_scale">
+    <div class="animate_scale_background flex" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
+  </div>
+  <div class="styles_demo_box animate_rollover_scale">
+    <div class="animate_scale_background" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
+    <div class="animate_scale_foreground flex">Roll over me.</div>
+  </div>
+</div>`,
+  "code":
+`<div class="animate_rollover_scale">
+  <div class="animate_scale_background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
+</div>
+<div class="animate_rollover_scale">
+  <div class="animate_scale_background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
+  <div class="animate_scale_foreground flex">Roll over me.</div>
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "Push in on Click",
+  "description": "Used to show the action of a button being pushed.",
+  "background": "light",
+  "demoCode":
+`<div class="styles_demo_box_wrapper">
+  <div class="styles_demo_box flex animate animate_click_push_in">Click me.</div>
+</div>`,
+  "code": `<div class="animate animate_click_push_in">Click me.</div>`
+}); %>
+
+<% modules.push({
+  "title": "Fade on Scroll",
+  "description": "Animated page elements in and out when the user scrolls down to them. Note the optional `data-lazy-animate-offset` attribute is used here, but it's not required.",
+  "background": "light",
+  "demoCode":
+`<div class="styles_demo_box_wrapper">
+  <div class="styles_demo_box flex flex animate_fade_in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
+  <div class="styles_demo_box flex flex animate_fade_out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>
+</div>`,
+  "code":
+`<div class="animate_fade_in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
+<div class="animate_fade_out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>`
+}); %>
+
+<% modules.push({
+  "title": "Slide in on Scroll",
+  "description": "Animated in page elements when the user scrolls down to them.",
+  "background": "light",
+  "demoCode":
+`<div class="styles_demo_box_wrapper">
+  <div class="styles_demo_box flex animate_fade_in_from_left" data-lazy-animate>Content</div>
+  <div class="styles_demo_box flex animate_fade_in_from_bottom" data-lazy-animate>Content</div>
+  <div class="styles_demo_box flex animate_fade_in_from_right" data-lazy-animate>Content</div>
+  <div class="styles_demo_box flex animate_fade_in_from_top" data-lazy-animate>Content</div>
+</div>`,
+  "code":
+`<div class="animate_fade_in_from_left" data-lazy-animate>Content</div>
+<div class="animate_fade_in_from_bottom" data-lazy-animate>Content</div>
+<div class="animate_fade_in_from_right" data-lazy-animate>Content</div>
+<div class="animate_fade_in_from_top" data-lazy-animate>Content</div>`
+}); %>
+
+<% modules.push({
+  "title": "JS Callback Function on Scroll",
+  "description": 'Fire a function when element is scolled into the viewport. In the format, "function|argumentsAsAString", you can call a function and pass in a string that can be processed as arguments by your function. The function needs to be passed into the `lazy.js` default function when `lazy()` is first fired. EXAMPLE: Check Console to see the results of the function fired.',
+  "background": "light",
+  "demoCode":
+`<div class="styles_demo_box_wrapper">
+  <div id="js_animation" class="styles_demo_box flex" data-lazy-animate="rotateBox|60">Content</div>
+</div>`,
+  "code":
+`<div id="js_animation" data-lazy-animate="rotateBox|60">Content</div>`
+}); %>
+
+<% modules.push({
+  "title": "Repeated JS Callback Function on Scroll",
+  "description": "Fire a function when element is scolled into the viewport. By including the `data-lazy-animate-reset` attribute, the function will continue to fire every time the element leaves and re-enters the viewport. EXAMPLE: Check Console to see the results of the function fired.",
+  "background": "light",
+  "demoCode":
+`<div class="styles_demo_box_wrapper">
+  <div id="js_animation_update" class="styles_demo_box flex" data-lazy-animate="rotateBox|25" data-lazy-animate-reset>Content</div>
+</div>`,
+  "code": `<div id="js_animation_update" data-lazy-animate="rotateBox|25" data-lazy-animate-reset>Content</div>`
+}); %>
+
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <title></title>
+  <meta name="description" content="">
+  <%- include('../../ejs_includes/_head_meta') %>
+  <%- include('../../ejs_includes/_head_scripts') %>
+  <%- include('../../ejs_includes/_head_tracking') %>
+</head>
+<body>
+<div id="page">
+  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules, "sections": styleTemplateSections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+</div>
+
+<%- include('../../ejs_includes/_body_bottom_scripts') %>
+<% if (enable_system_js === 'true') { %><script>
+    SystemJS.import('home');
+</script><% } %>
+</body>
+</html>

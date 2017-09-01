@@ -1,0 +1,108 @@
+<% const currentSection = 'messages' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+  "title": "Alert Bar",
+  "description": "Used to display a timely message to users.",
+  "background": "light",
+  "twigCode":
+`{% if siteOptions.showAlertBar and (siteOptions.alertBarSummary ?? false) %}
+<div id="alert_bar" class="alert_bar">
+  <div class="summary">{{ siteOptions.alertBarSummary }}</div>
+</div>
+{% endif %}`,
+  "code":
+`<div id="alert_bar" class="alert_bar">
+  <div class="summary">There is an outage in our production.</div>
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "Alert Bar",
+  "description": "Used to display a timely message to users. The summary can be clicked on to reveal more information.",
+  "background": "light",
+  "demoCode":
+`<div id="alert_bar" class="alert_bar">
+  <div class="summary has_message" data-active-toggle="#alert_bar">There is an outage in our production. Click for more information.</div>
+  <div class="message">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </div>
+  <noscript>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </noscript>
+</div>`,
+  "twigCode":
+`{% if siteOptions.showAlertBar and (siteOptions.alertBarSummary ?? false) %}
+<div id="alert_bar" class="alert_bar">
+  <div class="summary{% if siteOptions.alertBarMessage ?? false %} has_message{% endif %}"{% if siteOptions.alertBarMessage ?? false %} data-active-toggle="#alert_bar"{% endif %}>{{ siteOptions.alertBarSummary }}</div>
+  {% if siteOptions.alertBarMessage ?? false %}
+  <div class="message">
+    {{ siteOptions.alertBarMessage }}
+  </div>
+  <noscript>
+    {{ siteOptions.alertBarMessage }}
+  </noscript>
+  {% endif %}
+</div>
+{% endif %}`,
+  "code":
+`<div id="alert_bar" class="alert_bar">
+  <div class="summary has_message" data-active-toggle="#alert_bar">There is an outage in our production. Click for more information.</div>
+  <div class="message">
+    <!-- content -->
+  </div>
+  <noscript>
+    <!-- content -->
+  </noscript>
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "Success Alert Message",
+  "description": "Default style for a success message—letting the user know the intended action occurred.",
+  "background": "light",
+  "code": `<div class="alert_message alert_message--success">Congrats! This was successful!</div>`
+}); %>
+
+<% modules.push({
+  "title": "Error Alert Message",
+  "description": "Default style for an error message—letting the user know the intended action failed, providing them with instructions on how to proceed.",
+  "background": "light",
+  "code": `<div class="alert_message alert_message--error">I&rsquo;m sorry, Dave. I&rsquo;m afraid I can&rsquo;t do that.</div>`
+}); %>
+
+<% modules.push({
+  "title": "Warning Alert Message",
+  "description": "Default style for an warning message—should be used when an intended action can succeed, but it is not optimized.",
+  "background": "light",
+  "code": `<div class="alert_message alert_message--warning">Houston we have a problem ...</div>`
+}); %>
+
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <title></title>
+  <meta name="description" content="">
+  <%- include('../../ejs_includes/_head_meta') %>
+  <%- include('../../ejs_includes/_head_scripts') %>
+  <%- include('../../ejs_includes/_head_tracking') %>
+</head>
+<body>
+<div id="page">
+  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules, "sections": styleTemplateSections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+</div>
+
+<%- include('../../ejs_includes/_body_bottom_scripts') %>
+<% if (enable_system_js === 'true') { %><script>
+    SystemJS.import('home');
+</script><% } %>
+</body>
+</html>

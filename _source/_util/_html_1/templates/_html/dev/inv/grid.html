@@ -1,0 +1,55 @@
+<% const currentSection = 'grid' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+  "title": "Holy Grail Layout",
+  "description": "Basic page layout that includes a header, sidebar, and footer.",
+  "background": "light",
+  "demoCode":
+`<div class="c_grid c_grid--holy_grail">
+  <header class="c_grid--holy_grail__header styles_demo_box flex" style="display: flex; width: auto;">Header</header>
+  <article class="c_grid--holy_grail__main styles_demo_box flex" style="display: flex; width: auto;">Main</article>
+  <aside class="c_grid--holy_grail__sidebar styles_demo_box flex" style="display: flex; width: auto;">Sidebar</aside>
+  <footer class="c_grid--holy_grail__footer styles_demo_box flex" style="display: flex; width: auto;">Footer</footer>
+</div>`,
+  "code":
+`<div class="c_grid c_grid--holy_grail">
+  <header class="c_grid--holy_grail__header">
+    <p>Header</p>
+  </header>
+  <article class="c_grid--holy_grail__main">
+    <p>Main</p>
+  </article>
+  <aside class="c_grid--holy_grail__sidebar">
+    <p>Sidebar</p>
+  </aside>
+  <footer class="c_grid--holy_grail__footer">
+    <p>Footer</p>
+  </footer>
+</div>`
+}); %>
+
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <title></title>
+  <meta name="description" content="">
+  <%- include('../../ejs_includes/_head_meta') %>
+  <%- include('../../ejs_includes/_head_scripts') %>
+  <%- include('../../ejs_includes/_head_tracking') %>
+</head>
+<body>
+<div id="page">
+  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules, "sections": styleTemplateSections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+</div>
+
+<%- include('../../ejs_includes/_body_bottom_scripts') %>
+<% if (enable_system_js === 'true') { %><script>
+    SystemJS.import('home');
+</script><% } %>
+</body>
+</html>

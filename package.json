@@ -100,6 +100,9 @@
       }
     }
   ],
+  "styleTemplateSections": [
+    { '' }
+  ],
   "dependencies": {
     "es6-promise": "^4.1.1",
     "fg-loadcss": "^1.3.1",

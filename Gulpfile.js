@@ -28,11 +28,11 @@ const name = vars.name,
 
 // Paths
 const bases = {
-    source: './' + vars.source_path,
-    build:  './' + vars.build_path,
-    theme:  './' + vars.theme_path,
-    html:   './' + vars.html_path,
-    site:          vars.site_root,
+    source: vars.source_path, // './' + vars.source_path,
+    build:  vars.build_path, // './' + vars.build_path,
+    theme:  vars.theme_path, // './' + vars.theme_path,
+    html:   vars.html_path, // './' + vars.html_path,
+    site:   vars.site_root,
 };
 const paths = {
     distCss:                bases.theme + 'css/',
@@ -40,6 +40,7 @@ const paths = {
     distJs:                 bases.theme + 'js/',
     distIcon:               bases.theme + 'icon/',
     srcCss:                 bases.source + '_sass/',
+    srcHtml:                bases.source + '_html/',
     srcImg:                 bases.source + '_img/',
     srcJs:                  bases.source + '_js/',
     srcUtil:                bases.source + '_util/',
@@ -47,7 +48,7 @@ const paths = {
     filesHtmlIncludes:      bases.source + '_html/ejs_includes/*.{html,php,twig,ejs}',
     filesHtmlStyleTemplate: vars.style_template !== '' ? bases.source + '_util/' + vars.style_template + '**/*.ejs' : '',
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
-    filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/system-config.js', '!' + bases.source + '_js/_lib/**/*'],
+    filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/_lib/**/*'],
     filesJsLib:             [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
     filesJsLibMin:          bases.source + '_js/_lib/**/*.min.js',
     filesScss:              bases.source + '_sass/**/*.scss',
@@ -61,6 +62,7 @@ const browserSync     = require('browser-sync').create(),
       glob            = require("glob"),
       gulp            = require('gulp'),
       gulpLoadPlugins = require('gulp-load-plugins'),
+      inquirer        = require('inquirer'),
       notifier        = require('node-notifier'),
       semver          = require('semver'),
       $               = gulpLoadPlugins({
@@ -72,18 +74,13 @@ const browserSync     = require('browser-sync').create(),
       });
 
 const ejsVars = {
-    enable_font_events:  vars.enable_font_events,
     enable_system_js:    vars.enable_system_js,
     favicons:            '/favicon/favicons.html',
     fonts:               vars.fonts,
     loadcss:             '/js/uglify/_lib/loadCSS.min.js',
     release:             release,
     site_root:           bases.site,
-    styleTemplateConfig: !['', 'n', 'no'].includes(vars.style_template.toLowerCase()) ? JSON.parse(fs.readFileSync(paths.srcUtil + vars.style_template + 'config.json')) : null,
-    styleTemplatePrefix: vars.style_template_url_prefix,
-    styleTemplateSuffix: vars.style_template_url_suffix,
     systemjs:            '/js/uglify/_lib/system.min.js',
-    systemconfig:        '/js/uglify/system-config.min.js',
     version:             release ? vars.version : Math.floor(new Date().getTime() / 1000),
 };
 const ejsOptions = {
@@ -163,32 +160,76 @@ gulp.task('vars',function() {
 });
 
 
-/* Package Variables
- • source_path – path to your `_source` folder from the root
- • build_path – path where `_build` folder should be placed
- • theme_path – the folder where `css`, `js` folders are placed
- • html_path – the folder where html, twig, and php files are placed
- • site_root – appended to asset URLs sourced in your template files
- • enable_font_events – enables Font Face Observer (requires edits to `system-config.js`, `index.html`
- */
-
 // [gulp first]
 gulp.task('first', ['copyFirstCss', 'copyFirstJs']);
 
 // [gulp template]
-gulp.task('template:backup', function() {
+gulp.task('source:backup', function() {
     return gulp.src(bases.source + '**/*')
         .pipe(gulp.dest(bases.build + '_source_backup/'));
 });
-gulp.task('template', ['template:backup'], function() {
-    return gulp.src(paths.srcUtil + vars.style_template + '/templates/**/*')
-        .pipe($.ejs(ejsVars, ejsOptions))
-        .pipe(gulp.dest(bases.source));
-});
 
 // [gulp setup]
-gulp.task('setup', function() {
-    $.gutil.log($.gutil.colors.inverse(' HI '));
+gulp.task('setup', ['source:backup'], function(cb) {
+    const questions = [{
+        type: 'list',
+        name: 'templateType',
+        message: 'What kind of project are you developing?',
+        choices: [{ name: 'HTML', value: '_html_1' },{ name: 'Craft 2 Website', value: '_craft2_1' }]
+    }];
+    inquirer.prompt(questions).then(function (answers) {
+        const defaultsPath           = paths.srcUtil + '_default/';
+        const defaultsTemplates      = defaultsPath + 'templates/**/*';
+        const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
+        let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
+
+        gulp.src(defaultsTemplates)
+            .pipe(gulp.dest(bases.source));
+
+        $.gutil.log('Moved default source files');
+
+        let templateQuestions = [];
+
+        switch (answers['templateType']) {
+            case '_html_1':
+                templateQuestions = [{
+                    type: 'confirm',
+                    name: 'animations',
+                    message: 'Include Animations?',
+                    default: true
+                },{
+                    type: 'confirm',
+                    name: 'vueComponents',
+                    message: 'Include Vue Components?',
+                    default: true
+                }];
+                break;
+            case '_craft2_1':
+                break;
+        }
+
+        inquirer.prompt(templateQuestions).then(function (templateAnswers) {
+            switch (answers['templateType']) {
+                case '_html_1':
+                    if (!templateAnswers['animations']) {
+                        projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/base/_animations.scss');
+                    }
+                    if (!templateAnswers['vueComponents']) {
+                        projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/components/_vue.scss');
+                    }
+                    break;
+                case '_craft2_1':
+                    break;
+            }
+
+            gulp.src(projectTemplateTemplates)
+                .pipe(gulp.dest(bases.source));
+
+            $.gutil.log('Moved template files');
+
+            cb();
+        });
+    });
 });
 
 // [gulp run]
@@ -433,7 +474,6 @@ function jsHandler(useUglify = false) {
         .pipe($.changed(paths.distJs, {extension: '.min.js'}))
         .pipe(vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
         .pipe(useUglify ? $.uglify() : $.gutil.noop())
-        .pipe($.rename({ extname: '.min.js' }))
         .pipe(gulp.dest(bases.build + 'js/uglify'))
         .pipe(gulp.dest(paths.distJs));
 };
@@ -446,27 +486,16 @@ function jsLibHandler(useUglify = false) {
     return gulp.src(paths.filesJsLib)
         .pipe($.changed(paths.distJs + '_lib/', {extension: '.min.js'}))
         .pipe(useUglify ? $.uglify() : $.gutil.noop())
-        .pipe($.rename({ extname: '.min.js' }))
         .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
         .pipe(gulp.dest(paths.distJs + '_lib/'));
-};
-function jsSystemConfigHandler(useUglify = false) {
-    return gulp.src(paths.srcJs + 'system-config.js')
-        .pipe($.changed(paths.distJs, {extension: '.min.js'}))
-        .pipe(useUglify ? $.uglify() : $.gutil.noop())
-        .pipe($.rename({ extname: '.min.js' }))
-        .pipe(gulp.dest(bases.build + 'js/uglify/'))
-        .pipe(gulp.dest(paths.distJs));
 };
 gulp.task('js:babel', ['cleanJs'], function() {
     jsHandler(true);
     jsLibHandler(true);
-    jsSystemConfigHandler(true);
 });
 gulp.task('js:cleaned', ['cleanJs'], function() {
     jsHandler();
     jsLibHandler();
-    jsSystemConfigHandler();
 });
 gulp.task('js', function() {
     jsHandler(false);
@@ -476,13 +505,6 @@ gulp.task('js', function() {
 // Compile HTML, TWIG, and PHP files
 for (var val in vars.ejsVars) {
     ejsVars[val] = vars.ejsVars[val];
-}
-if (ejsVars.styleTemplateConfig !== null) {
-    for (var val in ejsVars.styleTemplateConfig.sections) {
-        if (ejsVars.styleTemplateConfig.sections[val].enabled) {
-            ejsVars['styletemplate'+val] = '/html/templates/modules/_' + val + '.ejs';
-        }
-    }
 }
 gulp.task('ejs:includes', function() {
     ejsVars.critCssEnabled = false;

@@ -1,0 +1,31 @@
+<div class="styles_wrapper">
+    <%- include('_nav', {"activeItem": activeItem, "sections": sections, "siteRoot": siteRoot, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+    <div class="styles_content">
+        <% if (intro) { %><div class="styles_example">
+          <div class="styles_example_display">
+            <%- intro %>
+          </div>
+        </div><% } %>
+
+        <% for(var module in modules) { %>
+            <div class="styles_example">
+                <div class="title"><h2><%- modules[module].title %></h2></div>
+                <div class="description"><p><%- modules[module].description %></p></div>
+                <div class="styles_example_display" style="background-color: <% if (modules[module].background === 'dark') { %>#2B303B<% } else if (modules[module].background === 'light') { %>#FFFFFF<% } else { %><%- modules[module].background %><% } %>;">
+                  <% if (modules[module].demoCode) { %><%- modules[module].demoCode %><% } else if (modules[module].twigCode) { %><%- modules[module].twigCode %><% } else { %><%- modules[module].code %><% } %>
+                </div><% if (modules[module].twigCode) { %>
+                <div class="styles_example_code">
+                    <pre><code v-pre><%= modules[module].code %></code></pre>
+                </div><% } %><% if (modules[module].twigCode) { %>
+                <div class="styles_example_code styles_example_code_twig">
+                    <pre><code><%= modules[module].twigCode %></code></pre>
+                </div><% } %>
+            </div>
+        <% } %>
+    </div>
+</div>
+<script>loadCSS("<%= site_root %>css/dev-styles.css?v=<%= version %>");</script>
+<noscript>
+    <!-- backup for critcss -->
+    <link rel="stylesheet" href="<%= site_root %>css/dev-styles.css?v=<%= version %>">
+</noscript>
