@@ -1,0 +1,8 @@
+<% const currentSection = 'vue' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+{% verbatim %}
+    <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
+{% endverbatim %}

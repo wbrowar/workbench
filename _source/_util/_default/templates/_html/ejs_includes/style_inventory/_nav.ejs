@@ -1,5 +1,5 @@
-<div class="styles_menu">
-    <% for(var section in sections) { %>
-        <a<% if (activeItem === section) { %> class="active"<% } %> href="<%- siteRoot %><%- styleTemplatePrefix %><%- section %><%- styleTemplateSuffix %>"><% if (activeItem === section) { %><span class="styles_active_spacer"></span><% } %><%= sections[section].title; %><% if (activeItem === section) { %><span class="styles_active_indicator"></span><% } %></a>
+<div class="styles__menu">
+    <% for(var i=0; i<styleTemplateSections.length; i++) { %>
+        <a<% if (activeItem === styleTemplateSections[i].name) { %> class="active"<% } %> href="<%- site_root %><%- styleTemplatePrefix %><%- styleTemplateSections[i].name %><%- styleTemplateSuffix %>"><% if (activeItem === styleTemplateSections[i].name) { %><span class="styles__menu__active_spacer"></span><% } %><%= styleTemplateSections[i].label; %><% if (activeItem === styleTemplateSections[i].name) { %><span class="styles__menu__active_indicator"></span><% } %></a>
     <% } %>
 </div>

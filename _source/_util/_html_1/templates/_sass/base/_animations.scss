@@ -121,7 +121,7 @@
           transition: transform $anim_duration_slide ease-out;
         }
 
-        &:hover > #{&}__background {
+        @at-root &:hover > .c_animate--rollover--scale__background {
           transform: scale(1.25, 1.25);
         }
       }

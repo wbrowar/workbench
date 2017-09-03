@@ -8,11 +8,11 @@
   "description": "An example of `data-active-toggle`. This attribute can toggle an `active` class when the element is clicked. By setting the attribute to a query selector string, clicking this element will use `querySelectorAll` to toggle the `active` class on all applicable targets.",
   "background": "light",
   "demoCode":
-`<button data-active-toggle="#mobile_nav .styles_demo_box">Toggle Mobile Nav</button>
+`<button data-active-toggle="#mobile_nav .styles__box">Toggle Mobile Nav</button>
 <br>
 <div id="mobile_nav" class="mobile_nav">
-  <div class="styles_demo_box_wrapper">
-    <div class="styles_demo_box flex">
+  <div class="styles__box_wrapper">
+    <div class="styles__box styles__box--flex">
       <ul>
         <li>Home</li>
         <li>About</li>
@@ -42,7 +42,7 @@
 </head>
 <body>
 <div id="page">
-  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules, "sections": styleTemplateSections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
 </div>
 
 <%- include('../../ejs_includes/_body_bottom_scripts') %>

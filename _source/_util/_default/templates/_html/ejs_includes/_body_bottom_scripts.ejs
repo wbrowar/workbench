@@ -1,10 +1,10 @@
 <% if (enable_system_js === 'true') { %>
     <script>
         if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-            document.write('\x3Cscript src="<%= site_root %>js/_lib/es6-promise.auto.min.js?v=<%= version %>">\x3C/script>');
+            document.write('\x3Cscript src="<%= site_root %>js/_lib/es6-promise.auto.js?v=<%= version %>">\x3C/script>');
         }
     </script>
-    <script src='<%= site_root %>js/_lib/system.min.js?v=<%= version %>'></script>
+    <script src='<%= site_root %>js/_lib/system.js?v=<%= version %>'></script>
     <script>
         SystemJS.config({
             baseURL: jsThemePath+'js/',

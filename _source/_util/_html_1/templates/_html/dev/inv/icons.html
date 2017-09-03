@@ -4,33 +4,16 @@
 <% const intro = false %>
 
 <% modules.push({
-  "title": "Logo",
-  "description": "The logo for the client as it appears on the site.",
-  "background": "light",
-  "twigCode": '<a class="icon icon_logo" href="{{ siteUrl }}"></a>',
-  "code": '<a class="icon icon_logo" href="/"></a>'
-}); %>
-<% modules.push({
   "title": "Social Media Icons",
   "description": `Social Media icon links. The Twig code require the <a href="https://github.com/nystudio107/seomatic">SEOMatic Craft Plugin</a>`,
   "background": "dark",
-  "twigCode":
-`{% macro socialNav() %}
-<nav class="nav_social">{% spaceless %}
-  {% if seomaticSocial.facebookUrl ?? false %}<a href="{{ seomaticSocial.facebookUrl }}" target="_blank" class="icon icon_social_facebook" title="Facebook">Facebook</a>{% endif %}
-  {% if seomaticSocial.twitterUrl ?? false %}<a href="{{ seomaticSocial.twitterUrl }}" target="_blank" class="icon icon_social_twitter" title="Twitter">Twitter</a>{% endif %}
-  {% if seomaticSocial.instagramUrl ?? false %}<a href="{{ seomaticSocial.instagramUrl }}" target="_blank" class="icon icon_social_instagram" title="Instagram">Instagram</a>{% endif %}
-  {% if seomaticSocial.linkedinUrl ?? false %}<a href="{{ seomaticSocial.linkedInUrl }}" target="_blank" class="icon icon_social_linkedin" title="LinkedIn">LinkedIn</a>{% endif %}
-  {% if seomaticSocial.youtubeUrl ?? false %}<a href="{{ seomaticSocial.youtubeUrl }}" target="_blank" class="icon icon_social_youtube" title="YouTube">YouTube</a>{% endif %}
-  {% endspaceless %}</nav>
-{% endmacro %}`,
   "code":
-`<nav class="nav_social">
-  <a href="https://www.facebook.com/username" target="_blank" class="icon icon_social_facebook" title="Facebook">Facebook</a>
-  <a href="https://twitter.com/username" target="_blank" class="icon icon_social_twitter" title="Twitter">Twitter</a>
-  <a href="https://www.instagram.com/username" target="_blank" class="icon icon_social_instagram" title="Instagram">Instagram</a>
-  <a href="https://www.linkedin.com/company/username" target="_blank" class="icon icon_social_linkedin" title="LinkedIn">LinkedIn</a>
-  <a href="https://www.youtube.com/user/username" target="_blank" class="icon icon_social_youtube" title="YouTube">YouTube</a>
+`<nav class="c_nav_social">
+  <a href="https://www.facebook.com/username" target="_blank" class="c_nav_social__icon icon_social_facebook" title="Facebook">Facebook</a>
+  <a href="https://twitter.com/username" target="_blank" class="c_nav_social__icon icon_social_twitter" title="Twitter">Twitter</a>
+  <a href="https://www.instagram.com/username" target="_blank" class="c_nav_social__icon icon_social_instagram" title="Instagram">Instagram</a>
+  <a href="https://www.linkedin.com/company/username" target="_blank" class="c_nav_social__icon icon_social_linkedin" title="LinkedIn">LinkedIn</a>
+  <a href="https://www.youtube.com/user/username" target="_blank" class="c_nav_social__icon icon_social_youtube" title="YouTube">YouTube</a>
 </nav>`
 }); %>
 
@@ -47,7 +30,7 @@
 </head>
 <body>
 <div id="page">
-  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules, "sections": styleTemplateSections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
 </div>
 
 <%- include('../../ejs_includes/_body_bottom_scripts') %>

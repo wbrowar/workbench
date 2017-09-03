@@ -1,6 +1,5 @@
 <% const currentSection = 'index' %>
-<% const modules = styleTemplateConfig.sections.index.modules %>
-<% const moduleTemplates = [] %>
+<% const modules = [] %>
 
 <% const intro = `
 <h1>Style Inventory</h1>
@@ -12,4 +11,6 @@
 <p>The style inventory uses the \`all.css\` stylesheet and default javascript modules to display elements and components as they would look and work on the website. Copy the markup from the style inventory to add an element or component to the website.</p>
 ` %>
 
-<%- include('partials/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": moduleTemplates, "sections": styleTemplateConfig.sections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+{% verbatim %}
+    <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
+{% endverbatim %}

@@ -20,7 +20,7 @@
   }
 
   @at-root #{&}__item {
-    @at-root #{&}--span_2_column
+    @at-root #{&}--span_2_column {
       grid-column-end: span 2;
     }
     @at-root #{&}--span_3_column {

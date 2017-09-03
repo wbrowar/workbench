@@ -24,8 +24,7 @@
   <accordion-tab title="Curated newswire access" v-cloak>
     <p>CenturyLink’s online marketing platform gets you direct access to NearSay, a curated online newswire that you can use to publish articles, promote special offers and connect with the local community. The content of everything you post on NearSay is automatically optimized by location, right down to the neighborhood, so that your business will be found fast by customers in your area.</p>
   </accordion-tab>
-</accordion>
-<script>jsModules.push('vuecomponents');</script>`,
+</accordion>`,
   "code":
 `<accordion>
   <accordion-tab title="Title of Accordian I" :selected="true">
@@ -37,8 +36,7 @@
   <accordion-tab title="Title of Accordian III" v-cloak>
     <!-- as you'd like -->
   </accordion-tab>
-</accordion>
-<script>jsModules.push('vuecomponents');</script>`
+</accordion>`
 }); %>
 
 <% modules.push({
@@ -53,12 +51,10 @@
   <div class="styles_demo_box flex" :class="{ active: scrollY > 600 && scrollY < 1100 }">
     <p>Scroll between<br>600 and 1100</p>
   </div>
-</div>
-<script>jsModules.push('vuecomponents');</script>`,
+</div>`,
   "code":
 `<div>Current Scroll Position: \${ scrollY }</div>
-<div :class="{ active: scrollY > 600 && scrollY < 1100 }">Scroll between<br>600 and 1100</div>
-<script>jsModules.push('vuecomponents');</script>`,
+<div :class="{ active: scrollY > 600 && scrollY < 1100 }">Scroll between<br>600 and 1100</div>`,
 }); %>
 
 <% modules.push({
@@ -79,14 +75,12 @@
       </ul>
     </div>
   </div>
-</div>
-<script>jsModules.push('vuecomponents');</script>`,
+</div>`,
   "code":
 `<button @click="showMobileNav()">Toggle Mobile Nav</button>
 <div class="mobile_nav" :class="{ active: mobileNavActive }" v-cloak>
   <!-- content -->
-</div>
-<script>jsModules.push('vuecomponents');</script>`
+</div>`
 }); %>
 
 <% modules.push({
@@ -99,8 +93,7 @@
   <div class="video">
     <iframe :src="overlayIsVisible ? 'https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0' : null" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
   </div>
-</overlay>
-<script>jsModules.push('vuecomponents');</script>`,
+</overlay>`,
 }); %>
 
 
@@ -116,12 +109,13 @@
 </head>
 <body>
 <div id="page">
-  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules, "sections": styleTemplateSections, "siteRoot": site_root, "styleTemplatePrefix": styleTemplatePrefix, "styleTemplateSuffix": styleTemplateSuffix}) %>
+  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
 </div>
 
 <%- include('../../ejs_includes/_body_bottom_scripts') %>
 <% if (enable_system_js === 'true') { %><script>
     SystemJS.import('home');
+    SystemJS.import('vuecomponents');
 </script><% } %>
 </body>
 </html>

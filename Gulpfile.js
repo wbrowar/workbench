@@ -44,9 +44,7 @@ const paths = {
     srcImg:                 bases.source + '_img/',
     srcJs:                  bases.source + '_js/',
     srcUtil:                bases.source + '_util/',
-    filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig,ejs}'],
-    filesHtmlIncludes:      bases.source + '_html/ejs_includes/*.{html,php,twig,ejs}',
-    filesHtmlStyleTemplate: vars.style_template !== '' ? bases.source + '_util/' + vars.style_template + '**/*.ejs' : '',
+    filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/**/*'],
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
     filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/_lib/**/*'],
     filesJsLib:             [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
@@ -67,6 +65,7 @@ const browserSync     = require('browser-sync').create(),
       semver          = require('semver'),
       $               = gulpLoadPlugins({
           rename: {
+              'gulp-json-modify':    'jsonModify',
               'gulp-sass-glob':      'sassGlob',
               'gulp-svg-inline-css': 'svgInline',
               'gulp-util':           'gutil',
@@ -74,17 +73,20 @@ const browserSync     = require('browser-sync').create(),
       });
 
 const ejsVars = {
-    enable_system_js:    vars.enable_system_js,
-    favicons:            '/favicon/favicons.html',
-    fonts:               vars.fonts,
-    loadcss:             '/js/uglify/_lib/loadCSS.min.js',
-    release:             release,
-    site_root:           bases.site,
-    systemjs:            '/js/uglify/_lib/system.min.js',
-    version:             release ? vars.version : Math.floor(new Date().getTime() / 1000),
+    enable_system_js:      vars.enable_system_js,
+    favicons:              '/favicon/favicons.html',
+    fonts:                 vars.fonts,
+    loadcss:               '/js/uglify/_lib/loadCSS.js',
+    release:               release,
+    site_root:             bases.site,
+    styleTemplateSections: vars.styleTemplateSections,
+    styleTemplatePrefix:   vars.style_template_url_prefix,
+    styleTemplateSuffix:   vars.style_template_url_suffix,
+    systemjs:              '/js/uglify/_lib/system.js',
+    version:               release ? vars.version : Math.floor(new Date().getTime() / 1000),
 };
 const ejsOptions = {
-    root:                bases.build,
+    root:                  bases.build,
 };
 
 
@@ -171,65 +173,78 @@ gulp.task('source:backup', function() {
 
 // [gulp setup]
 gulp.task('setup', ['source:backup'], function(cb) {
-    const questions = [{
-        type: 'list',
-        name: 'templateType',
-        message: 'What kind of project are you developing?',
-        choices: [{ name: 'HTML', value: '_html_1' },{ name: 'Craft 2 Website', value: '_craft2_1' }]
-    }];
-    inquirer.prompt(questions).then(function (answers) {
-        const defaultsPath           = paths.srcUtil + '_default/';
-        const defaultsTemplates      = defaultsPath + 'templates/**/*';
-        const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
-        let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
+    if (!vars.template_is_set_up) {
+        const questions = [{
+            type: 'list',
+            name: 'templateType',
+            message: 'What kind of project are you developing?',
+            choices: [{ name: 'HTML', value: '_html_1' },{ name: 'Craft 2 Website', value: '_craft2_1' }]
+        }];
+        inquirer.prompt(questions).then(function (answers) {
+            const defaultsPath           = paths.srcUtil + '_default/';
+            const defaultsTemplates      = defaultsPath + 'templates/**/*';
+            const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
+            let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
 
-        gulp.src(defaultsTemplates)
-            .pipe(gulp.dest(bases.source));
+            gulp.src(defaultsTemplates)
+                .pipe(gulp.dest(bases.source));
 
-        $.gutil.log('Moved default source files');
+            $.gutil.log('Moved default source files');
 
-        let templateQuestions = [];
+            let templateQuestions = [];
 
-        switch (answers['templateType']) {
-            case '_html_1':
-                templateQuestions = [{
-                    type: 'confirm',
-                    name: 'animations',
-                    message: 'Include Animations?',
-                    default: true
-                },{
-                    type: 'confirm',
-                    name: 'vueComponents',
-                    message: 'Include Vue Components?',
-                    default: true
-                }];
-                break;
-            case '_craft2_1':
-                break;
-        }
-
-        inquirer.prompt(templateQuestions).then(function (templateAnswers) {
             switch (answers['templateType']) {
                 case '_html_1':
-                    if (!templateAnswers['animations']) {
-                        projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/base/_animations.scss');
-                    }
-                    if (!templateAnswers['vueComponents']) {
-                        projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/components/_vue.scss');
-                    }
+                    templateQuestions = [{
+                        type: 'confirm',
+                        name: 'animations',
+                        message: 'Include Animations?',
+                        default: true
+                    },{
+                        type: 'confirm',
+                        name: 'vueComponents',
+                        message: 'Include Vue Components?',
+                        default: true
+                    }];
                     break;
                 case '_craft2_1':
                     break;
             }
 
-            gulp.src(projectTemplateTemplates)
-                .pipe(gulp.dest(bases.source));
+            inquirer.prompt(templateQuestions).then(function (templateAnswers) {
+                switch (answers['templateType']) {
+                    case '_html_1':
+                        if (!templateAnswers['animations']) {
+                            projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/base/_animations.scss');
+                        }
+                        if (!templateAnswers['vueComponents']) {
+                            projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/components/_vue.scss');
+                        }
+                        break;
+                    case '_craft2_1':
+                        break;
+                }
 
-            $.gutil.log('Moved template files');
+                gulp.src(projectTemplateTemplates)
+                    .pipe(gulp.dest(bases.source));
 
-            cb();
+                $.gutil.log('Moved template files');
+
+                gulp.start('first');
+
+                gulp.start('font');
+
+                gulp.src('./package.json')
+                    .pipe(gulp.dest(bases.build + 'package'))
+                    .pipe($.jsonModify({ key: 'template_is_set_up', value: false })) // .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
+                    .pipe(gulp.dest('./'));
+
+                cb();
+            });
         });
-    });
+    } else {
+        $.gutil.log($.gutil.colors.inverse(' [gulp setup] has already been run and is now disabled. If you need to run [gulp setup] again, open `package.json` and change "template_is_set_up" to false. '));
+    }
 });
 
 // [gulp run]
@@ -250,7 +265,6 @@ gulp.task('watch', function() {
     //$.livereload.listen(35729);
     var watchCss          = gulp.watch(paths.filesScss, ['css']),
         watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
-        watchHtmlIncludes = gulp.watch([paths.filesHtmlIncludes, paths.filesHtmlStyleTemplate], ['ejs:quick:full']),
         watchImg          = gulp.watch(paths.filesImg, ['img']),
         watchJs           = gulp.watch(paths.filesJs, ['js']),
         watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
@@ -268,9 +282,6 @@ gulp.task('watch', function() {
         notifier.notify({ 'title': name, 'message': 'CSS Updated' });
     });
     watchHtml.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'HTML Updated' });
-    });
-    watchHtmlIncludes.on('change', function(event) {
         notifier.notify({ 'title': name, 'message': 'HTML Updated' });
     });
     watchImg.on('change', function(event) {
@@ -424,15 +435,19 @@ gulp.task('font', function() {
 // Resize 2x images
 // Turn SVGs into CSS sprite
 // Losslessly compress images
-function imgMoveHandler() {
-    return gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*', '!' + paths.srcImg + 'icons/**/*'])
+function imgMoveHandler(cb = null) {
+    gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*', '!' + paths.srcImg + 'icons/**/*'])
         .pipe($.changed(paths.distImg))
         .pipe(gulp.dest(bases.build + 'img/moved'))
         .pipe($.imagemin())
         .pipe(gulp.dest(paths.distImg));
+
+    if (cb !== null) {
+        cb();
+    }
 }
-function imgResizeHandler() {
-    return gulp.src(paths.srcImg + '2x/**/*.{png,jpg,gif}')
+function imgResizeHandler(cb = null) {
+    gulp.src(paths.srcImg + '2x/**/*.{png,jpg,gif}')
         .pipe($.changed(paths.distImg))
         .pipe($.responsive({
             '*': [{
@@ -444,14 +459,18 @@ function imgResizeHandler() {
         .pipe(gulp.dest(bases.build + 'img/resized'))
         .pipe($.imagemin())
         .pipe(gulp.dest(paths.distImg));
+
+    if (cb !== null) {
+        cb();
+    }
 };
-gulp.task('img:cleaned', ['cleanImg'], function() {
+gulp.task('img:cleaned', ['cleanImg'], function(cb) {
     imgMoveHandler();
-    imgResizeHandler();
+    imgResizeHandler(cb);
 });
-gulp.task('img', function() {
+gulp.task('img', function(cb) {
     imgMoveHandler();
-    imgResizeHandler();
+    imgResizeHandler(cb);
 });
 gulp.task('svg', function() {
     return gulp.src(paths.srcImg + 'icons/**/*.svg')
@@ -471,7 +490,7 @@ function jsHandler(useUglify = false) {
     }
 
     return gulp.src(paths.filesJs)
-        .pipe($.changed(paths.distJs, {extension: '.min.js'}))
+        .pipe($.changed(paths.distJs))
         .pipe(vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
         .pipe(useUglify ? $.uglify() : $.gutil.noop())
         .pipe(gulp.dest(bases.build + 'js/uglify'))
@@ -484,7 +503,7 @@ function jsLibHandler(useUglify = false) {
         .pipe(gulp.dest(paths.distJs + '_lib/'));
 
     return gulp.src(paths.filesJsLib)
-        .pipe($.changed(paths.distJs + '_lib/', {extension: '.min.js'}))
+        .pipe($.changed(paths.distJs + '_lib/'))
         .pipe(useUglify ? $.uglify() : $.gutil.noop())
         .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
         .pipe(gulp.dest(paths.distJs + '_lib/'));
@@ -506,19 +525,7 @@ gulp.task('js', function() {
 for (var val in vars.ejsVars) {
     ejsVars[val] = vars.ejsVars[val];
 }
-gulp.task('ejs:includes', function() {
-    ejsVars.critCssEnabled = false;
-
-    return gulp.src(paths.filesHtmlIncludes)
-        .pipe($.changed(bases.html))
-        .pipe($.ejs(ejsVars, ejsOptions))
-        .pipe(gulp.dest(bases.build + 'html/ejs/ejs_includes'));
-});
-gulp.task('ejs:templates', function() {
-    return gulp.src(paths.filesHtmlStyleTemplate)
-        .pipe(gulp.dest(bases.build + 'html/templates/'));
-});
-gulp.task('ejs', ['favicons', 'ejs:includes', 'ejs:templates'], function() {
+gulp.task('ejs', ['favicons'], function() {
     ejsVars.critCssEnabled = false;
 
     return gulp.src(paths.filesHtml)
@@ -526,7 +533,7 @@ gulp.task('ejs', ['favicons', 'ejs:includes', 'ejs:templates'], function() {
         .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes', 'ejs:templates'], function() {
+gulp.task('ejs:release', ['critCss', 'favicons'], function() {
     ejsVars.critCssEnabled = true;
     var minOptions = {
         collapseWhitespace: true,
@@ -538,7 +545,7 @@ gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes', 'ejs:templates'
         .pipe(vars.minify_html === "true" ? $.htmlmin(minOptions) : $.gutil.noop())
         .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:quick:full', ['ejs:includes', 'ejs:templates'], function(cb) {
+gulp.task('ejs:quick:full', function(cb) {
     ejsVars.critCssEnabled = false;
 
     gulp.src(paths.filesHtml)
@@ -549,7 +556,7 @@ gulp.task('ejs:quick:full', ['ejs:includes', 'ejs:templates'], function(cb) {
 
     cb();
 });
-gulp.task('ejs:quick', ['ejs:includes', 'ejs:templates'], function(cb) {
+gulp.task('ejs:quick', function(cb) {
     ejsVars.critCssEnabled = false;
 
     gulp.src(paths.filesHtml)

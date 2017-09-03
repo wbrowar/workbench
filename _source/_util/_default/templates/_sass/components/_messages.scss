@@ -17,8 +17,8 @@
     padding: 15px;
     background-color: transparentize(lighten($color_alert_error, 20), .1);
   }
-  @at-root #{&}--active {
-    & > .message {
+  @at-root &.active {
+    .c_alert_bar__message {
       display: block;
     }
   }
