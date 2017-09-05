@@ -1,9 +1,57 @@
     <!-- scripts -->
     <script type="text/javascript">
         var jsSection = '{{ jsSection }}',
-            jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
+            jsDevMode = {{ craft.config.devMode }},
             jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Math.floor(new Date().getTime() / 1000)<% } %>,
-            jsThemePath = '<%= site_root %>',
-            jsModules = [],
-            enableFontEvents = <%= enable_font_events %>;
+            jsThemePath = '<%= site_root %>';
+
+        var jsModulePaths = {
+            'idealimageslider': '_lib/idealimageslider.js?v=' + jsVersion,
+            'jquery': '_lib/jquery.js?v=' + jsVersion,
+            'scrollmonitor': '_lib/scrollMonitor.js?v=' + jsVersion,
+            'vue': jsDevMode ? '_lib/vue.js?v=' + jsVersion : '_lib/vue.min.js?v=' + jsVersion,
+            'global': 'global.js?v=' + jsVersion,
+            'home': 'home.js?v=' + jsVersion,
+            'inside': 'inside.js?v=' + jsVersion,
+            'lazy': 'lazy.js?v=' + jsVersion,
+            'vuecomponents': 'vue-components.js?v=' + jsVersion,
+        };
+
+        // remove no-js class for when Javascript is enabled
+        document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
     </script>
+
+    <% if (enable_ssi && release) { %>
+    <!--#if expr="$HTTP_COOKIE=/critical\-css\=<%= version %>/" -->
+    <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
+    <!--#else -->
+    {% block critcss %}
+        <!-- critcss -->
+        <% if (critCssEnabled) { %><!-- SET COOKIE, THEN CHECK FOR IT. IF COOKIE IS FOUND, SKIP CRITCSS BECAUSE CSS FILE SHOULD ALREADY BE CACHED -->
+        <style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+    {% endblock %}
+    <script>
+      <%- include(loadcss) %>
+      loadCSS("<%= site_root %>css/all.css?v=" + '<%= version %>');
+      var cookieExpiration = new Date();
+      cookieExpiration.setDate(cookieExpiration.getDate() + 7);
+
+      document.cookie = 'critical-css=<%= version %>; expires=' + cookieExpiration.toUTCString() + '; path=/';
+    </script>
+    <noscript><link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>"></noscript>
+    <!--#endif -->
+    <% } else { %>
+    <script>
+      <%- include(loadcss) %>
+
+      // load CSS
+      loadCSS("<%= site_root %>css/all.css?v=" + jsVersion);
+    </script>
+    <noscript><link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>"></noscript>
+    <% } %>
+
+    <!-- styles -->
+    <noscript>
+        <!-- backup for critcss -->
+        <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
+    </noscript>

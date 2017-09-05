@@ -148,6 +148,9 @@ $border_radius: 4px;
     @at-root #{&}--flex {
       display: inline-flex;
     }
+    @at-root #{&}--no_margin {
+      margin: 0;
+    }
     @at-root #{&}--padding, #{&}__padding {
       padding: 20px;
     }

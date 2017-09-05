@@ -21,17 +21,16 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 1. In Terminal, `cd` to your project root
 2. Run `yarn`
 3. Update the `package.json` file to fit your project's needs. See `package.json` below
-4. Run `gulp first` to perform the default task and to do an initial setup
-5. If you want to use a style inventory, follow the steps in [Beginning a project](https://github.com/wbrowar/WB-Starter#beginning-a-project), below.
+4. Run `gulp setup` to perform the default task and to do an initial setup
 
 ---
 ## When to Use What
 ### Beginning a project
 - When starting a project, run the helper task, `gulp`, to see what commands are available.
 - When editing the `package.json` file, run `gulp vars` for a description of each variable.
-- If you would like to use a style inventory, point the `style_template` setting in `package.json` to a style template folder in `_source/_util/`. In that folder, change the configuration in `config.json` to enable or disable the features you want to use in your style inventory. Once you are all set, running `gulp template` will move all of the files in the style template's `templates` folder to replace those files in the `_source` folder. *NOTE: Every time `gulp template` is run, the files in `_source` will be overwritten by the style template files. Once you begin development, `gulp template` should no longer be run.*
-- `gulp first` only needs to be run once at the beginning of the project to move the default npm files out of the `node_modules` folder. In order to keep files up-to-date, and to make working with git easier, edit the `package.json` file to include all other libraries and re-run `gulp first` to update front-end libraries.
-- `gulp font` also only needs to be run once, but you can run it anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
+- `gulp setup` should be run at the beginning of the project to pull together template files based on the type of project your are developing. In this task, you will be prompted to answer some questions that will customize the components and templates added to your `_source` folder. *NOTE: because this task overrides files in your `_source` folder, it should only be run once, at the beginning of a project.*
+- `gulp first` moves the npm files out of the `node_modules` folder. In order to keep files up-to-date, and to make working with git easier, edit the `package.json` file to include paths to JS and CSS files and re-run `gulp first` to update front-end libraries.
+- `gulp font` can be run anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
 - To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `gulp run` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `gulp release` for a more thorough check.
 
 ### During Development
@@ -39,13 +38,13 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 - At any given time, run `gulp run` to reprocess basic theme assets (JS, CSS, and images). This is not as good as running `gulp release` but it will clean out old JS, CSS, and image files and replace them with up-to-date versions.
 
 ### Staging and Testing
-- When staging files for review or testing, run `gulp release`—every time—before deploying to a staging server. `gulp release` includes extra tasks, such as Babel compiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
+- When staging files for review or testing, run `gulp release`—every time—before deploying to a staging server. `gulp release` includes extra tasks, such as Babel transpiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
 
-### Going Live and Releasing
+### Going Live
 - When preparing to go live, run the `gulp release` task. This will increase the version number in the `package.json` file, which will cause cache-busting to occur on static files that are loaded using version number parameters.
 - For feature releases (when you're adding new sections and features), run `gulp releasefeature`. This bumps the version number up by one SEMVER minor version.
 - Running `gulp release` cleans out all CSS, JS, SVG, and image files and replaces them with fresh builds.
-- `gulp release` also creates favicons, adds Critical CSS, processes SVG icons and processes HTML theme files.
+- `gulp release` also creates favicons, adds Critical CSS, processes SVG icons and processes template files.
 
 ---
 ## Theme Components
@@ -54,39 +53,39 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 - Sass will compile all `.scss` files that do note contain an underscore in front of the filename.
 - Files are organized into folders:
   - `automated` – For files generated by Gulp. We can assume these will update on their own, so we wouldn’t edit these manually.
-  - `base` – Global CSS that is used across all pages of the site. Animations, variables, mixins, and @font-face declarations are all organized here so they’re in one place.
-  - `layout` – Global components and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
+  - `base` – Global CSS that is used across all pages of the site. Animations, variables, mixins, and global styles are all organized here so they’re in one place.
+  - `compontents` – base CSS for HTML components, such as forms, buttons, tables, images, etc… These should be abstracted and modular so these elements can be dropped anywhere in the site and still look the same.
+  - `layout` – Layout areas and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
   - `lib` – For code pulled in using `gulp first` (as set in `package.json`). Also, any other CSS that we receive from vendors (like our clients) can go here.
-  - `modules` – base CSS for HTML elements, such as forms, buttons, tables, images, etc… These should be basic and modular so these elements can be dropped anywhere in the site and still look the same.
   - `pages` – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
+- CSS follows the [BEM naming convention](http://getbem.com/naming/) to reduce accidental mixing of styles.
+- Elements with class names that are prefixed with `c_` indicate this is a CSS component that is part of the Style Inventory.
 
 #### Using Fonts in CSS
 - A `font()` mixin is available to optimize the use of custom `@font-face` fonts, and to making changes to fonts and font stacks consistent in your CSS. Here are the advantages of using this mixin:
   - Only fonts that are used within your SCSS are given a `@font-face` declaration.
   - `@font-face` declarations are only made once, on the first time that `font()` appears in SCSS. This reduces the amount of CSS code.
-  - If you are loading fonts from the same server your site is being hosted on, Font Events can be used to remove FOIT. This requires you to enable `enable_font_events` in `package.json`.
 
 In your `package.json`, here are the options you can use. Options marked with ° are required:
   - °`name` – Used to identify the font when using the `font()` mixin. For example, in your SCSS you could write `@include font('avinir');`.
   - °`source` – Determines whether or not a font needs a `@font-face` declaration. Options are `system` or `fontface`.
   - °`fontFamily` – The font family used in CSS to refer to the font. If quotes are needed, use single quotes. For example: `"fontFamily": "'Avinir Next'",`
-  - °`fallbackStack` – Fallbacks used in order in case the font is not loaded. This is especially important when using `enable_font_events`.
+  - °`fallbackStack` – Fallbacks used in order in case the font is not loaded.
   - °`fontStyle` – CSS value for the `font-style` property. The output in CSS will be `font-style: normal;`, by default.
   - °`fontWeight` – CSS value for the `font-weight` property. The output in CSS will be `font-weight: normal;`, by default. You can use any CSS-valid value, such as `100` or `bold`.
   - `files` – Pairs up font file types and their locations. This is only applicable for fonts that need a `@font-face` declaration. In most situations, you'll want an `.eot` and a `.woff` file for cross-browser compatibility. A `.woff2` file can be included for better performance.
-  - °`fontEventCheck` – If you are using `enable_font_events`, set this option to `true` if you know that this font will appear on every page on your site. This modifies the code in `index.html` and it requires that one font has this set to `true` when `enable_font_events` is set to true, otherwise you'll get a Javascript error.
 
 
 
 ---
 ### Javascript
 - All of the JS is configured to be loaded using [SystemJS](https://github.com/systemjs/systemjs), unless disabled in the `package.json` file.
-- The `system-config.js` file sets up options for SystemJS. As part of the `ejs` task, it will be added inline to the `<body>` tag and will be run every page.
+- Edit the paths found in `_source/_html/ejs_includes/_head_scripts.ejs` to add or remove JS files loaded by SystemJS.
 
 #### Using SystemJS
 SystemJS is a module loader, just like RequireJS. Where require uses AMD modules, SystemJS supports AMD, but also supports the ES6 module loading spec. Since ES6 is not yet supported, SystemJS—along with code that's transpiled through Babel in this Gulp process—allows you to follow the spec for loading modules and to set your javascript code up for how you would want to load it in the future. The idea is that when the ES6 spec is more supported, we could remove SystemJS and there would be very little work required to load our javascript the native way.
 
-To load a Javascript file, first start by adding the key and the path of the file into `_source/_js/system-config.js`. The key must be unique and it should point to path, relative to the `public/js` directory.
+To load a Javascript file, first start by adding the key and the path of the file into `_source/_html/ejs_includes/_head_scripts.ejs`. The key must be unique and it should point to path, relative to the `public/js` directory.
 
 If a script is an external library, you may need to add dependencies into the `meta` object. For example, the FitVids jQuery plugin depends on jQuery, so in order to make sure the dependency is loaded first, add it to the `meta` object:
 
@@ -140,7 +139,7 @@ In this example, here are a few things to note:
    - `url`
      - The URL of the background image.
    - `extra`
-     - Any extra CSS that needs to be included or overridden for this object. Useful for using `{{ image.focalPoint }}` to set the `background-position` property.
+     - Any extra CSS that needs to be included or overridden for this object. Useful for using `{{ image.focalPoint }}` (in Craft) to set the `background-position` property.
    - `retina`
      - Includes a check for 2x pixel density in the media query wrapping the CSS.
    - `mq`
@@ -200,9 +199,10 @@ scrollToElement(el);
 ---
 ## Release Notes
 #### 4.8.0
-- :rocket: Added `gulp setup` command to replace `gulp template`
-- :wrench: Refactored structure of `_source/_util` folder
+- :rocket: Added `gulp setup` task
+- :wrench: Refactored `_source/_util` folder to make editing Style Inventories easier
 - :wrench: Moved everything from `_source/_js/system-config.js` to `_source/_html/ejs_includes/_body_bottom_scripts.ejs` or `_source/_html/ejs_includes/_head_scripts.ejs`
+- :fire: Removed `gulp template` task
 - :fire: Removed `importPageSpecificModule` function
 - :fire: Deleted `_source/_js/system-config.js`
 - :fire: Deleted `_source/_js/modernizr.custom.js`

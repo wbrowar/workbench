@@ -1,27 +1,14 @@
 {% extends "_layout" %}
 
-{% import 'macros/includes' as includes %}
-
 {% set pageSection = 'home' %}
 {% set jsSection = 'home' %}
 
 {% block critcss %}
-    <% if (critCssEnabled) { %>
-    <style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+    <% if (critCssEnabled) { %><style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
 {% endblock %}
 
 {% block content %}
-    {{ includes.videoHeader({ image: (entry.headerVideoPoster.first() ?? null), phrases: entry.pageHeader, videoUrl: 'https://starter.wbrowar.com/video/clip.mp4' }) }}
-
-    <section class="home_spacer"></section>
-
-    <section class="home_goodness_wrapper" data-lazy-animate="fadePageBgColor" data-lazy-animate-args='{ "color": "rgb(255, 103, 93)" }' data-lazy-animate-exit="fadePageBgColor" data-lazy-animate-args-exit='{ "color": "transparent" }' data-lazy-animate-delay="0" data-lazy-animate-reset>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </section>
-
-    <div class="home_grid_header wrapper">
-        <span>Ideas,</span> <span>glorious</span> <span>ideas</span>
-    </div>
+    <br><br><br><br><br><br><br><br><br><p>HOME</p><br><br><br><br><br><br><br><br><br>
 {% endblock %}
 
 {% block jsFooter %}

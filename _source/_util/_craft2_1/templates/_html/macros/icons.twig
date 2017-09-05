@@ -1,32 +1,3 @@
-{# SVG ICONS#}
-{# Used these for more complex animations #}
-
-{# Indicate that a user can get to further content #}
-{% macro arrowIcon(direction = 'up') %}{% spaceless %}
-    {% if direction == 'up' or direction == 'down' %}
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.39 16.49"><title>arrow_up</title><path fill="#ef0d1b" d="M27.39 14.86l-1.75 1.63L13.7 3.65 1.75 16.49 0 14.86 13.7.13l13.69 14.73z"></path></svg>
-    {% else %}
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.36 27.39"><title>arrow_right</title><path fill="#ef0d1b" d="M1.63 27.39L0 25.64 12.84 13.7 0 1.75 1.63 0l14.73 13.7L1.63 27.39z"></path></svg>
-    {% endif %}
-{% endspaceless %}{% endmacro %}
-
-{% macro arrow(config) %}
-    {% set color = config.color ?? '' %}
-    {% set direction = config.direction ?? 'up' %}
-
-    <div class="c_arrow c_arrow--{{ color }} c_arrow--{{ direction }}"><span class="icon">{{ _self.arrowIcon(direction) }}</span><span class="line"></span></div>
-{% endmacro %}
-
-{# Toggles the main menu on and off #}
-{% macro hamburger() %}<svg id="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.82 27.39"><title>hamburger</title> <rect id="top" x="0.09" width="30.73" height="3.63" fill="#fff"></rect> <rect id="middle" x="0.09" y="11.88" width="30.73" height="3.63" fill="#fff"></rect> <rect id="bottom" x="0.09" y="23.76" width="30.73" height="3.63" fill="#fff"></rect></svg>{% endmacro %}
-
-{# The Dixon Schwabl logo used in the UI #}
-{% macro dsLogo() %}<svg id="ds_logo" xmlns="http://www.w3.org/2000/svg" width="320.1" height="68.9" viewBox="0 0 320.1 68.9"><title>logo</title><g id="dixon"><path id="letter" d="M88.1,47V34c0-2.5-1.7-3.8-4.1-3.8a11.62,11.62,0,0,0-4.1.9V47h-5V28c2.9-1,6.1-2.1,9.1-2.1,5,0,9,1.7,9,7.4V47H88.1" fill="#696a6c"></path><path id="letter-2" data-name="letter" d="M51.7,36.7c0-6.2,4-10.8,10.4-10.8s10.4,4.6,10.4,10.8-4,10.8-10.4,10.8S51.7,42.8,51.7,36.7m15.2,0c0-3.1-1.2-6.5-4.9-6.5s-4.9,3.4-4.9,6.5,1.2,6.5,4.9,6.5S66.9,39.9,66.9,36.7Z" fill="#696a6c"></path><path id="letter-3" data-name="letter" d="M44.2,36.8l7.4-10.5H45.7L41.2,33,37,27.4l-.8-1H30.1l7.6,9.9-8,10.8h5.9l4.9-7,3.8,5c1.9,2.7,4.5,2.8,7.6,2L44.2,36.8" fill="#696a6c"></path><rect id="letter-4" data-name="letter" x="23.1" y="26.4" width="5" height="20.7" fill="#696a6c"></rect><path id="letter_d" d="M14.1,23.4c0-4.5,5-4.4,5-4.4V46a23,23,0,0,1-7.8,1.5C4.8,47.5,0,42.9,0,36.4,0,30.9,3.2,26,9.5,26a10.39,10.39,0,0,1,4.6,1.1V23.4m0,7.8a5.48,5.48,0,0,0-3.4-1c-3.8,0-5.2,3-5.2,6.4,0,3.7,1.8,6.6,5.8,6.6a9,9,0,0,0,2.8-.4V31.2Z" fill="#696a6c"></path></g><g id="schwabl"><path id="letter-5" data-name="letter" d="M236,19V47.1l5-.1V23.4c0-4.4-5-4.4-5-4.4" fill="#696a6c"></path><path id="letter-6" data-name="letter" d="M223.8,25.9a10.39,10.39,0,0,0-4.6,1.1h0V23.4c0-4.5-5-4.5-5-4.5V42.5h0v3.7a24.88,24.88,0,0,0,7.7,1.3c6.2,0,11.4-4.4,11.4-10.8-.1-5.9-3.2-10.8-9.5-10.8m-1.7,17.3a7.1,7.1,0,0,1-2.9-.5V31.2a5.68,5.68,0,0,1,3.4-1c3.7,0,5.2,3.1,5.2,6.4C227.7,40.1,225.9,43.2,222.1,43.2Z" fill="#696a6c"></path><path id="letter-7" data-name="letter" d="M210.4,43.3v2.6a27.23,27.23,0,0,1-8.5,1.6c-4,0-9.3-1.4-9.3-6.3,0-8.3,12.8-5.5,12.8-9.1,0-1.7-2.2-1.9-3.5-1.9a15.71,15.71,0,0,0-5.7,1.2l-1.7-3.8a20.75,20.75,0,0,1,8.1-1.8c4.4,0,7.7,1.9,7.7,6.7V43.3m-4.9-6.4c-1.7,1.6-7.4.9-7.4,3.9,0,2.1,2.1,2.5,3.8,2.5a10.3,10.3,0,0,0,3.5-.6V36.9Z" fill="#696a6c"></path><path id="letter-8" data-name="letter" d="M182.4,40.9s3.1-9.7,4.6-14.5h5.4l-7.7,21c-3.2,0-5.2-1-6.4-4.1l-3.6-10.1L170,47.3c-3.2,0-5.2-.9-6.4-4l-6.4-16.9h5.6l4.9,14.5h.1a4.87,4.87,0,0,1,.4-1.1l4.5-13.4h4.5l5.2,14.5h0" fill="#696a6c"></path><path id="letter-9" data-name="letter" d="M149.3,25.9a14.34,14.34,0,0,0-6.1,1.4V23.5c0-4.5-5-4.5-5-4.5V47h0v.1h5V31.7a10,10,0,0,1,4.7-1.5c2.1,0,3.5,1.5,3.5,3.8V47h5V33.2c0-4.6-2.5-7.3-7.1-7.3" fill="#696a6c"></path><path id="letter-10" data-name="letter" d="M135.7,46a15.69,15.69,0,0,1-6.4,1.4c-6.4,0-11.2-4.3-11.2-10.8s4.4-10.8,10.8-10.8a17.6,17.6,0,0,1,6.8,1.4l-1.5,4a14.64,14.64,0,0,0-5-1.2c-3.6,0-5.8,2.9-5.8,6.4,0,3.7,2.4,6.6,6.2,6.6a14,14,0,0,0,4.6-1l1.5,4" fill="#696a6c"></path><path id="letter_s" d="M103.3,42.2a14.1,14.1,0,0,0,5,1.2c1.5,0,3.1-.5,3.1-2.3,0-3.7-9-2.6-9-9.3,0-4.3,4.4-5.9,7.6-5.9a14.73,14.73,0,0,1,5.9,1.2l-1.4,3.8a14,14,0,0,0-4.5-1c-1.2,0-2.6.4-2.6,1.9,0,3.5,9.4,1.9,9.4,9.4,0,4.6-4.5,6.2-8.2,6.2a18.74,18.74,0,0,1-6.8-1.4l1.5-3.8" fill="#696a6c"></path></g><g id="icon"><path id="icon-2" data-name="icon" x="-34" y="-34" width="68" height="68px" d="M283.7,68.9h0c-3.8,0-6.8-.9-9.1-2.7l-.8-.6a13.12,13.12,0,0,0-3-1.8,36.16,36.16,0,0,1-5.2-2.7,18.31,18.31,0,0,1-2.5-1.5,6.47,6.47,0,0,1-.9-.8c-4.4-3.4-6.8-6.9-7.2-10.7l-.1-.5a15.92,15.92,0,0,0-.9-3,45.42,45.42,0,0,1-1.8-5.5,12.82,12.82,0,0,1-.7-3c0-.4-.1-.8-.1-1.2q-1-8.1,2.4-12.6l.2-.2a21.86,21.86,0,0,0,1.1-2.4,40.14,40.14,0,0,1,2.9-5.4,9.86,9.86,0,0,1,1.3-2,5.72,5.72,0,0,1,.7-.8c3.4-4.4,7-6.8,10.7-7.3l.8-.1a12.56,12.56,0,0,0,3-.9,43.68,43.68,0,0,1,5.2-1.8,11.93,11.93,0,0,1,3.8-1,8.6,8.6,0,0,1,1.6-.1c5.2-.6,9.3.2,12.1,2.4.3.1,1.1.4,2.2.9a33.93,33.93,0,0,1,4.8,2.3,14.88,14.88,0,0,1,3.6,2A12,12,0,0,1,309,9c4.1,3.2,6.4,6.7,6.9,10.3l.1.4a15.66,15.66,0,0,0,.9,2.7,43.67,43.67,0,0,1,1.8,5.2,14.68,14.68,0,0,1,1,3.7,13.4,13.4,0,0,1,.1,2c.6,5-.3,9-2.5,11.8l-.5.6a13,13,0,0,0-1.5,2.8,40.52,40.52,0,0,1-2.2,4.8,13.52,13.52,0,0,1-2.1,3.8,14.2,14.2,0,0,1-1.2,1.3c-3.2,4.1-6.6,6.4-10.2,6.8h-.3a21.29,21.29,0,0,0-2.5.9,51.48,51.48,0,0,1-5.6,1.8,11.09,11.09,0,0,1-2.9.7,7.57,7.57,0,0,1-1.5.1,16.15,16.15,0,0,1-3.1.2M279,64.1a15.78,15.78,0,0,0,7.7,2c1.2-.2,2.5-.4,3.9-.7.9-.3,1.7-.7,2.2-.9l-6.1-2.6a3.19,3.19,0,0,0-2.7,0C283.9,61.8,281.7,63.2,279,64.1Zm9.4-6.1c2.6,2,7.2,2.7,7.3,2.7.3,0,.6.1.9.1a10.42,10.42,0,0,0,1.1-.1l.2-.2c2.1-2.7,2.8-7.2,2.8-7.2a1.2,1.2,0,0,0-1-1.3,24.08,24.08,0,0,1-7.5-2.6c0,.2-.1.3-.1.5l-.1.1-3,6.9A4.07,4.07,0,0,0,288.4,58Zm-16.7-5.1v.2a14.92,14.92,0,0,0,2.4,6,11,11,0,0,0,1.2,1.4h.2a17.12,17.12,0,0,0,5.9-2.2,1.79,1.79,0,0,0,.5-.7.78.78,0,0,0-.2-.8,22.38,22.38,0,0,1-3-6.8c-.1.1-.3.1-.4.2l-.2.1-5.2,2.1A3.53,3.53,0,0,0,271.7,52.9Zm-4.9,5.8c1.1.5,2.2.9,2.8,1.1l-1.9-5.5a2.25,2.25,0,0,0-1.8-1.7l-.2-.1-5.5-1.9a22.33,22.33,0,0,0,3.7,6.2C264.9,57.4,265.8,58.1,266.8,58.7Zm44.7-9-4.8,1.9a2.52,2.52,0,0,0-1.7,1.9l-.1.2-2,5.8a19.58,19.58,0,0,0,4.9-3,31.77,31.77,0,0,0,2.9-4.5A10.58,10.58,0,0,0,311.5,49.7Zm-28.8-2.1.1.5a15.75,15.75,0,0,0,2.4,6.1,2.18,2.18,0,0,0,.4.5c1.8-2.5,2.6-6.8,2.6-6.8a5.09,5.09,0,0,0-.8-3.4l-.1-.1-1.4-2.2a13.6,13.6,0,0,1-2.2,3.5l-.5.6A3.49,3.49,0,0,0,282.7,47.6Zm-23.2-2.1.2.1a17.14,17.14,0,0,0,6.8,2.8,1.31,1.31,0,0,0,1.4-1l.1-.2,1.9-5a1.09,1.09,0,0,0,.1-.5,1.38,1.38,0,0,0-.4-.3l-.2-.1-6.9-2.8a.89.89,0,0,0-1.3.3l-1.7,4.9A5.21,5.21,0,0,0,259.5,45.5Zm19.8-4.6a17.61,17.61,0,0,1-4,1H275l-.1.1-.2.2a16.27,16.27,0,0,0-2.6,5.7c0,.1-.1.3-.1.4a22.42,22.42,0,0,0,4.9-2.3,4.68,4.68,0,0,0,1.8-2.9V43Zm22-.9c.1.1.1.2.2.3l.1.2,2.9,6a8.34,8.34,0,0,0,.4,1.2,20,20,0,0,0,5.7-2.5c.6-.4,1.1-.8,1.4-1a17.88,17.88,0,0,0-2.9-6.6,1.27,1.27,0,0,0-1.7-.3A19.93,19.93,0,0,1,301.3,40Zm-9.6-.4a17.61,17.61,0,0,1,1,4V44a1.14,1.14,0,0,0,.3.6l.3.2a17.19,17.19,0,0,0,6.7,2.7h.2v-.1l-3-5.6a5.73,5.73,0,0,0-3-1.7h-.1Zm-36.9-1.2a10.36,10.36,0,0,0,1,2.3l1.8-4.3a2.86,2.86,0,0,0-.1-2.7,26.52,26.52,0,0,1-2.3-4.4,17.29,17.29,0,0,0-1.1,5.5A28.31,28.31,0,0,0,254.8,38.4Zm60.4-12.2-2.8,6.3a2.75,2.75,0,0,0,0,2.5l.1.2,2.8,5.4a13.85,13.85,0,0,0,1.9-7.2,34,34,0,0,0-1-5C315.8,27.5,315.4,26.7,315.2,26.2Zm-50.8,8.7a20.5,20.5,0,0,0,7,2.5,4.74,4.74,0,0,0,3.3-.9l.1-.1,2.6-1.7a18.14,18.14,0,0,1-3.6-2.2l-.8-.6c-.4-.3-.7-.6-.9-.7H272c-3.5.4-7.1,3.1-7.1,3.1A3.81,3.81,0,0,1,264.4,34.9Zm33.4,1.3h.5l.5-.1a17,17,0,0,0,5.8-2.1c.1-.1.2-.1.3-.2a20.45,20.45,0,0,0-4.9-1.7h-.6a5.12,5.12,0,0,0-2.8.8l-.1.1-2.1,1.3A10.93,10.93,0,0,1,297.8,36.2ZM258.4,24.3l.1.5a17.67,17.67,0,0,0,2.4,6.1.9.9,0,0,0,1.4.2l.2-.1,6.4-3.2a1,1,0,0,0,.5-.4.66.66,0,0,0-.1-.6l-.1-.2-2.1-6a10.38,10.38,0,0,0-.3-1.2,17.63,17.63,0,0,0-6.9,3.3A4,4,0,0,0,258.4,24.3ZM301.5,28c.2,0,.3.1.5.1l.2.1,5.1,2.1a3.07,3.07,0,0,0,1.3.5l.1-.2c2-2.5,2.7-7,2.7-7a14.37,14.37,0,0,0,.1-1.8,17.39,17.39,0,0,0-6.1-2.7,1,1,0,0,0-1.2.8A25.55,25.55,0,0,1,301.5,28ZM300,18.8c-3.1.7-6.5,3.2-6.6,3.2a5.07,5.07,0,0,0-1.7,3v.2l-.7,3.3a17.33,17.33,0,0,1,4.1-1l.8-.1a1.53,1.53,0,0,0,1-.4l.3-.4c2.1-2.7,2.8-7.1,2.8-7.2S300,19,300,18.8Zm-29,.9a20.68,20.68,0,0,0,2.3,5.7,4.33,4.33,0,0,0,2.8,1.7h.1l2.9.7a17.61,17.61,0,0,1-1-4l-.1-.5a1.45,1.45,0,0,0-.2-.7l-.2-.1a17.39,17.39,0,0,0-6.1-2.7A2,2,0,0,0,271,19.7Zm11.8-.4a5.66,5.66,0,0,0,.8,3.2l.1.1,1.6,2.5a15.68,15.68,0,0,1,2.2-3.6l.1-.2v-.1a17.81,17.81,0,0,0-2.9-6.8c-.1-.1-.1-.2-.2-.2l-.1.1ZM295.3,6.9c-3.5.4-7,3.1-7.1,3.2a1.13,1.13,0,0,0-.2,1.6l.1.2,2.9,5.7c.1.2.2.4.5.4a.6.6,0,0,0,.4-.1l.2-.1,6.8-2.9a4.4,4.4,0,0,1,1-.2c-.1-.3-.2-.5-.3-.8l-3-5.7A15.29,15.29,0,0,0,295.3,6.9Zm-34.9,8.7a13.33,13.33,0,0,0-1,2.3l5.9-2.4a3,3,0,0,0,1.9-1.9l.1-.2L269,8.8a14.42,14.42,0,0,0-6.8,4.3A19.5,19.5,0,0,0,260.4,15.6Zm13.6-7a15.23,15.23,0,0,0-2.5,5.7,1.06,1.06,0,0,0,.1.8,1.79,1.79,0,0,0,.7.5l.2.1,5.5,2.1a.6.6,0,0,0,.4.1c.3,0,.4-.2.4-.5l.1-.2,2-5.1a4.07,4.07,0,0,0,.6-1.1,20.67,20.67,0,0,0-5.7-2.2,11.55,11.55,0,0,0-1.6-.2Zm27.3-1,2.5,5.3a3.15,3.15,0,0,0,2,1.9l.2.1,4.5,1.6a18.53,18.53,0,0,0-3.3-5.5A27.67,27.67,0,0,0,303,8.3C302.4,8,301.8,7.8,301.3,7.6ZM278.3,5l4.6,1.9a2.76,2.76,0,0,0,2.5-.1l.2-.1,5-2.6A21.28,21.28,0,0,0,285.3,3a27.2,27.2,0,0,0-4.6,1A15.83,15.83,0,0,0,278.3,5Z" fill="#d9272e"></path></g></svg>{% endmacro %}
-
-{# Toggles the social media icons in the UI #}
-{% macro socialToggle() %}<svg data-name="social_toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.96 27.39"><title>social_toggle</title><path fill="#fff" d="M23.96 27.26H0V9.83h5.39V12H2.17v13.09h19.62V12h-3.31V9.83h5.48v17.43z"></path><path fill="#fff" d="M18.59 6.61L11.98 0 5.37 6.61l1.54 1.53 3.98-3.99v16.33h2.17V4.15l3.99 3.99 1.54-1.53z"></path></svg>{% endmacro %}
-
-{#  #}
 {% macro socialIcon(name) %}{% spaceless %}
     {% switch name %}
         {% case 'facebook' %}
@@ -44,41 +15,43 @@
         {% case 'snapchat' %}
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.32 53"><title>social_snapchat</title><path d="M43.1 30.5a3 3 0 0 1-.29-2.56c.55-1.29 2.34-1.86 3.52-2.24.29-.09.57-.18.78-.26 2.07-.82 2.5-1.65 2.48-2.2a1.76 1.76 0 0 0-1.34-1.43 2.55 2.55 0 0 0-1-.18 2 2 0 0 0-.83.16 7.12 7.12 0 0 1-2.68.75 2.27 2.27 0 0 1-1.53-.54c0-.49.06-1 .09-1.53v-.16c.24-3.77.53-8.47-.66-11.15A14.48 14.48 0 0 0 28.2.46h-1.11a14.45 14.45 0 0 0-13.42 8.66c-1.2 2.68-.9 7.37-.66 11.15 0 .58.07 1.15.1 1.69a2.35 2.35 0 0 1-1.7.54 6.88 6.88 0 0 1-2.85-.75 1.52 1.52 0 0 0-.65-.13A2.23 2.23 0 0 0 5.74 23c-.09.49.1 1.45 2.47 2.38.22.09.49.17.78.26 1.18.38 3 .94 3.52 2.24a3 3 0 0 1-.29 2.56c-.15.35-3.73 8.51-11.72 9.83a.58.58 0 0 0-.49.61 1 1 0 0 0 .08.33c.33.78 1.82 1.87 7 2.67.45.07.61.72.84 1.79.09.41.18.84.31 1.28a.73.73 0 0 0 .81.58 6.83 6.83 0 0 0 1.16-.17 15.41 15.41 0 0 1 3.12-.35 13.85 13.85 0 0 1 2.25.19 10.81 10.81 0 0 1 4.29 2.19c2 1.44 4.14 2.92 7.41 2.92H28c3.28 0 5.38-1.49 7.42-2.93a10.8 10.8 0 0 1 4.29-2.19 13.87 13.87 0 0 1 2.29-.11 15.53 15.53 0 0 1 3.12.33 6.5 6.5 0 0 0 1.16.15h.06a.69.69 0 0 0 .74-.56c.13-.44.22-.85.31-1.27.25-1.16.42-1.71.84-1.78 5.2-.8 6.69-1.9 7-2.67a1 1 0 0 0 .08-.33.59.59 0 0 0-.49-.61C46.83 39 43.25 30.85 43.1 30.5z" fill="#fff"></path></svg>
         {% case 'email' %}
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.32 53"><title>social_snapchat</title><path d="M43.1 30.5a3 3 0 0 1-.29-2.56c.55-1.29 2.34-1.86 3.52-2.24.29-.09.57-.18.78-.26 2.07-.82 2.5-1.65 2.48-2.2a1.76 1.76 0 0 0-1.34-1.43 2.55 2.55 0 0 0-1-.18 2 2 0 0 0-.83.16 7.12 7.12 0 0 1-2.68.75 2.27 2.27 0 0 1-1.53-.54c0-.49.06-1 .09-1.53v-.16c.24-3.77.53-8.47-.66-11.15A14.48 14.48 0 0 0 28.2.46h-1.11a14.45 14.45 0 0 0-13.42 8.66c-1.2 2.68-.9 7.37-.66 11.15 0 .58.07 1.15.1 1.69a2.35 2.35 0 0 1-1.7.54 6.88 6.88 0 0 1-2.85-.75 1.52 1.52 0 0 0-.65-.13A2.23 2.23 0 0 0 5.74 23c-.09.49.1 1.45 2.47 2.38.22.09.49.17.78.26 1.18.38 3 .94 3.52 2.24a3 3 0 0 1-.29 2.56c-.15.35-3.73 8.51-11.72 9.83a.58.58 0 0 0-.49.61 1 1 0 0 0 .08.33c.33.78 1.82 1.87 7 2.67.45.07.61.72.84 1.79.09.41.18.84.31 1.28a.73.73 0 0 0 .81.58 6.83 6.83 0 0 0 1.16-.17 15.41 15.41 0 0 1 3.12-.35 13.85 13.85 0 0 1 2.25.19 10.81 10.81 0 0 1 4.29 2.19c2 1.44 4.14 2.92 7.41 2.92H28c3.28 0 5.38-1.49 7.42-2.93a10.8 10.8 0 0 1 4.29-2.19 13.87 13.87 0 0 1 2.29-.11 15.53 15.53 0 0 1 3.12.33 6.5 6.5 0 0 0 1.16.15h.06a.69.69 0 0 0 .74-.56c.13-.44.22-.85.31-1.27.25-1.16.42-1.71.84-1.78 5.2-.8 6.69-1.9 7-2.67a1 1 0 0 0 .08-.33.59.59 0 0 0-.49-.61C46.83 39 43.25 30.85 43.1 30.5z" fill="#fff"></path></svg>
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.97 53"><defs><style>.cls-1{fill:#fff;}</style></defs><title>social_email</title><polygon class="cls-1" points="71.97 50.24 71.97 3.6 50.85 25.12 71.97 50.24"/><polygon class="cls-1" points="69.57 0.28 2.89 0.28 36.45 34.04 69.57 0.28"/><polygon class="cls-1" points="0 3.1 0 50.72 21.32 24.55 0 3.1"/><polygon class="cls-1" points="48.03 28 36.47 39.78 24.16 27.4 3.39 52.91 68.97 52.91 48.03 28"/></svg>
     {% endswitch %}
 {% endspaceless %}{% endmacro %}
 
-{% macro socialLinks(config = { links: {} }) %}{% spaceless %}
-    {% set modifiers = config.modifiers ?? '' %}
+{% macro socialLinks(options = { links: {} }) %}{% spaceless %}
+    {% set modifiers = options.modifiers ?? '' %}
 
-    <nav class="c_social_links {{ modifiers }}">
-        {% if config.links.facebook ?? false %}<a class="facebook" href="{{ url(config.links.facebook) }}">{{ _self.socialIcon('facebook') }}</a>{% endif %}
-        {% if config.links.twitter ?? false %}<a class="twitter" href="{{ url(config.links.twitter) }}">{{ _self.socialIcon('twitter') }}</a>{% endif %}
-        {% if config.links.linkedin ?? false %}<a class="linkedin" href="{{ url(config.links.linkedin) }}">{{ _self.socialIcon('linkedin') }}</a>{% endif %}
-        {% if config.links.youtube ?? false %}<a class="youtube" href="{{ url(config.links.youtube) }}">{{ _self.socialIcon('youtube') }}</a>{% endif %}
-        {% if config.links.pinterest ?? false %}<a class="pinterest" href="{{ url(config.links.pinterest) }}">{{ _self.socialIcon('pinterest') }}</a>{% endif %}
-        {% if config.links.instagram ?? false %}<a class="instagram" href="{{ url(config.links.instagram) }}">{{ _self.socialIcon('instagram') }}</a>{% endif %}
-        {% if config.links.snapchat ?? false %}<a class="snapchat" href="{{ url(config.links.snapchat) }}">{{ _self.socialIcon('snapchat') }}</a>{% endif %}
-        {% if config.links.email ?? false %}<a class="email" href="{{ 'mailto:' not in config.links.email ? 'mailto:' : '' }}{{ config.links.email }}">{{ _self.socialIcon('email') }}</a>{% endif %}
+    <nav class="c_nav_social {{ modifiers }}">
+        {% if options.links.facebook ?? false %}<a class="c_nav_social--facebook" href="{{ url(options.links.facebook) }}">{{ _self.socialIcon('facebook') }}</a>{% endif %}
+        {% if options.links.twitter ?? false %}<a class="c_nav_social--twitter" href="{{ url(options.links.twitter) }}">{{ _self.socialIcon('twitter') }}</a>{% endif %}
+        {% if options.links.linkedin ?? false %}<a class="c_nav_social--linkedin" href="{{ url(options.links.linkedin) }}">{{ _self.socialIcon('linkedin') }}</a>{% endif %}
+        {% if options.links.youtube ?? false %}<a class="c_nav_social--youtube" href="{{ url(options.links.youtube) }}">{{ _self.socialIcon('youtube') }}</a>{% endif %}
+        {% if options.links.pinterest ?? false %}<a class="c_nav_social--pinterest" href="{{ url(options.links.pinterest) }}">{{ _self.socialIcon('pinterest') }}</a>{% endif %}
+        {% if options.links.instagram ?? false %}<a class="c_nav_social--instagram" href="{{ url(options.links.instagram) }}">{{ _self.socialIcon('instagram') }}</a>{% endif %}
+        {% if options.links.snapchat ?? false %}<a class="c_nav_social--snapchat" href="{{ url(options.links.snapchat) }}">{{ _self.socialIcon('snapchat') }}</a>{% endif %}
+        {% if options.links.email ?? false %}<a class="c_nav_social--email" href="{{ 'mailto:' not in options.links.email ? 'mailto:' : '' }}{{ options.links.email }}">{{ _self.socialIcon('email') }}</a>{% endif %}
     </nav>
 {% endspaceless %}{% endmacro %}
 
-{% macro socialShare(config = {}) %}
-    {% set image = config.image ?? null %}
-    {% set modifiers = config.modifiers ?? '' %}
-    {% set title = config.title ?? '' %}
-    {% set url = config.url ?? '#' %}
+{% macro socialShare(options = {}) %}
+    {% set image = options.image ?? null %}
+    {% set modifiers = options.modifiers ?? '' %}
+    {% set title = options.title ?? '' %}
+    {% set url = options.url ?? '#' %}
 
-    {% set links = {
-        'facebook': 'https://www.facebook.com/sharer.php?app_id=828593323821891&display=popup&u=' ~ url,
-        'twitter': 'https://twitter.com/intent/tweet?url=' ~ url ~ '&related=dixonschwabl&text=' ~ title,
-        'linkedin': 'http://www.linkedin.com/shareArticle?mini=true&amp;url=' ~ url ~ '&amp;title=' ~ title,
-        'email': 'mailto:?subject=' ~ title ~ '&body=' ~ url,
-    } %}
-    {% if image ?? false %}
-        {% set links = links|merge({ 'pinterest': 'http://pinterest.com/pin/create/button/?url=' ~ url(url) ~ '&media=' ~ image ~ '&description=' ~ title, }) %}
+    {% if (title ?? false) and (url ?? false) %}
+        {% set links = {
+            'facebook': 'https://www.facebook.com/sharer.php?app_id=828593323821891&display=popup&u=' ~ url,
+            'twitter': 'https://twitter.com/intent/tweet?url=' ~ url ~ '&related=dixonschwabl&text=' ~ title,
+            'linkedin': 'http://www.linkedin.com/shareArticle?mini=true&amp;url=' ~ url ~ '&amp;title=' ~ title,
+            'email': 'mailto:?subject=' ~ title ~ '&body=' ~ url,
+        } %}
+        {% if image ?? false %}
+            {% set links = links|merge({ 'pinterest': 'http://pinterest.com/pin/create/button/?url=' ~ url(url) ~ '&media=' ~ image ~ '&description=' ~ title, }) %}
+        {% endif %}
+        {% set options = options|merge({ 'links': links, 'modifiers': modifiers, 'title': title }) %}
+
+        {{ _self.socialLinks(options) }}
     {% endif %}
-    {% set config = config|merge({ 'links': links, 'modifiers': modifiers, 'title': title }) %}
-
-    {{ _self.socialLinks(config) }}
 {% endmacro %}

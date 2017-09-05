@@ -12,6 +12,7 @@
             'vue': jsDevMode ? '_lib/vue.js?v=' + jsVersion : '_lib/vue.min.js?v=' + jsVersion,
             'global': 'global.js?v=' + jsVersion,
             'home': 'home.js?v=' + jsVersion,
+            'inside': 'inside.js?v=' + jsVersion,
             'lazy': 'lazy.js?v=' + jsVersion,
             'vuecomponents': 'vue-components.js?v=' + jsVersion,
         };
@@ -25,12 +26,29 @@
         loadCSS("<%= site_root %>css/all.css?v=" + jsVersion);
     </script>
 
+    <% if (enable_ssi && release) { %>
+    <!--#if expr="$HTTP_COOKIE=/critical\-css\=<%= version %>/" -->
+    <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
+    <!--#else -->
     <!-- critcss -->
     <% if (critCssEnabled) { %><!-- SET COOKIE, THEN CHECK FOR IT. IF COOKIE IS FOUND, SKIP CRITCSS BECAUSE CSS FILE SHOULD ALREADY BE CACHED -->
     <style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+    <script>
+      <%- include(loadcss) %>
+      loadCSS("<%= site_root %>css/all.css?v=" + '<%= version %>');
+      var cookieExpiration = new Date();
+      cookieExpiration.setDate(cookieExpiration.getDate() + 7);
 
-    <!-- styles -->
-    <noscript>
-        <!-- backup for critcss -->
-        <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
-    </noscript>
+      document.cookie = 'critical-css=<%= version %>; expires=' + cookieExpiration.toUTCString() + '; path=/';
+    </script>
+    <noscript><link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>"></noscript>
+    <!--#endif -->
+    <% } else { %>
+    <script>
+      <%- include(loadcss) %>
+
+      // load CSS
+      loadCSS("<%= site_root %>css/all.css?v=" + jsVersion);
+    </script>
+    <noscript><link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>"></noscript>
+    <% } %>

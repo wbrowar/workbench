@@ -39,10 +39,11 @@
 {% macro videoBg(options) %}{% spaceless %}
     {% set autoplay = options.autoplay ?? true %}
     {% set classes = options.classes ?? '' %}
+    {% set lazyLoad = options.lazyLoad ?? true %}
     {% set loop = options.loop ?? true %}
     {% set url = options.url ?? '#' %}
 
     <div class="c_video_bg{% if classes|length %} {{ classes }}{% endif %}">
-        <video class="video" src="{{ url }}" preload muted {{ autoplay ? 'autoplay' : '' }} {{ loop ? 'loop' : '' }}></video>
+        <video class="c_video_bg__video" {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ url }}" preload muted {{ autoplay ? 'autoplay' : '' }} {{ loop ? 'loop' : '' }}></video>
     </div>
 {% endspaceless %}{% endmacro %}

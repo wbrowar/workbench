@@ -1,6 +1,6 @@
 {
   "name": "example-project",
-  "version": "0.1.11",
+  "version": "0.1.0",
   "source_path": "_source/",
   "build_path": "_build/",
   "theme_path": "public/",
@@ -8,9 +8,10 @@
   "site_root": "/",
   "style_template_url_prefix": "dev/inv/",
   "style_template_url_suffix": ".html",
-  "enable_babel": "true",
+  "enable_babel": true,
+  "enable_ssi": false,
   "enable_system_js": "true",
-  "minify_html": "true",
+  "minify_html": true,
   "template_is_set_up": false,
   "browserSync": {
     "browser": "google chrome",

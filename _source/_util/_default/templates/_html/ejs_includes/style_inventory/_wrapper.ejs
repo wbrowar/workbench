@@ -18,7 +18,7 @@
                     <pre><code v-pre><%= modules[module].code %></code></pre>
                 </div><% } %><% if (modules[module].twigCode) { %>
                 <div class="styles__example__code styles__example__code--twig">
-                    <pre><code><%= modules[module].twigCode %></code></pre>
+                    {% verbatim %}<pre><code><%= modules[module].twigCode %></code></pre>{% endverbatim %}
                 </div><% } %>
             </div>
         <% } %>

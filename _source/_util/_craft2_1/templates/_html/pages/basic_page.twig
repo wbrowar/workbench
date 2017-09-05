@@ -5,16 +5,17 @@
 
 {% extends "_layout" %}
 
-{% set pageSection = pageSection is defined ? pageSection : 'inside' %}
+{% set pageSection = pageSection ?? 'inside' %}
+{% set jsSection = jsSection ?? 'inside' %}
 
 {% block critcss %}
   <% if (critCssEnabled) { %><style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
 {% endblock %}
 
 {% block content %}
-  {#{% import "macros/content" as content %}#}
+    <br><br><br><br><br><br><br><br><br><p>BASIC PAGE</p><br><br><br><br><br><br><br><br><br>
+{% endblock %}
 
-  {#{{ content.body(entry.bodyContent, _context, layoutType) }}#}
-
-    <br><br><br><br><br><br><br><br><br><p>BASIC PAGE!</p><br><br><br><br><br><br><br><br><br>
+{% block jsFooter %}
+    <script>SystemJS.import('inside');</script>
 {% endblock %}

@@ -7,8 +7,9 @@
   "title": "Class",
   "description": "A call-to-action button, used to encourage user interaction.",
   "background": "light",
-  "twigCode": '<a class="c_button" href="{{ url(entry.linkUrl) }}"{% if entry.openLinkInNewWindow %} target="_blank"{% endif %}>{{ entry.linkLabel }}</a>',
-  "code": '<a class="c_button" href="#">Read More</a>'
+  "twigCode":
+`{% import 'macros/buttons' as buttons %}
+{{ buttons.default({ label: 'Button', url: 'http://google.com' }) }}`
 }); %>
 <% modules.push({
   "title": "Button Element",
@@ -23,6 +24,4 @@
   "code": '<input type="submit" value="Sign Me Up">'
 }); %>
 
-{% verbatim %}
-    <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
-{% endverbatim %}
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

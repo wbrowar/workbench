@@ -73,6 +73,7 @@ const browserSync     = require('browser-sync').create(),
       });
 
 const ejsVars = {
+    enable_ssi:            vars.enable_ssi,
     enable_system_js:      vars.enable_system_js,
     favicons:              '/favicon/favicons.html',
     fonts:                 vars.fonts,
@@ -97,15 +98,15 @@ gulp.task('default',function() {
     var text  = `\n\n${$.gutil.colors.inverse('        COMMANDS        ')}`
         + `\n––––––––––––––––––––––––\n`
         + `\n${$.gutil.colors.inverse(' gulp first ')}`
-        + `\n${$.gutil.colors.bold('└─ Moves all important files from npm to _source/_js/_lib/')}\n`
-        + `\n${$.gutil.colors.inverse(' gulp template ')}`
-        + `\n${$.gutil.colors.bold('└─ Moves files from _source/_util/ into _source/ based on the folder set for "style_template" in \`package.json\`. Before running this task, modify settings in the template\'s config.json. This task should only be run one time at the beginning of development.')}\n`
+        + `\n${$.gutil.colors.bold('└─ Moves all important files from npm to _source/_js/_lib/ and _source/_sass/lib/')}\n`
         + `\n${$.gutil.colors.inverse(' gulp font ')}`
         + `\n${$.gutil.colors.bold('└─ Uses info in \`package.json\` to generate _source/_sass/automated/_fonts.scss')}\n`
         + `\n${$.gutil.colors.inverse(' gulp run ')}`
         + `\n${$.gutil.colors.bold('└─ Processes CSS, JS, and image files.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp release ')}`
         + `\n${$.gutil.colors.bold('└─ Performs all tasks, including Critical CSS and processing HTML files.\n\n\`gulp release\` advances the version number in \`package.json\` by 0.0.1. Running \`gulp releasefeature\` will advance it by 0.1.0; and running \`gulp releasemajor\` will advance it by 1.0.0.')}\n`
+        + `\n${$.gutil.colors.inverse(' gulp setup ')}`
+        + `\n${$.gutil.colors.bold('└─ Moves files from _source/_util/ into _source/ based on answers you provide when prompted then runs [gulp first] and [gulp font]. Before running this task, modify settings in \`package.json\` for you project. This task should only be run one time at the beginning of development and once it is run, it will put a lock in package.json so it cannot be accidentally run again.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp vars ')}`
         + `\n${$.gutil.colors.bold('└─ Descriptions of variables found in \`package.json\`.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp watch ')}`
@@ -139,12 +140,14 @@ gulp.task('vars',function() {
         + `\n${$.gutil.colors.bold('└─ Select the folder to pull template overrides from when running \`gulp template\`.')}\n`
         + `\n${$.gutil.colors.inverse(' enable_babel ')}`
         + `\n${$.gutil.colors.bold('└─ When running the \`gulp release\` task, babel can be used to process ES6 Javascript into ES5 Javascript for older browsers.')}\n`
-        + `\n${$.gutil.colors.inverse(' enable_font_events ')}`
-        + `\n${$.gutil.colors.bold('└─ Turn on Font Events for fonts loaded from this server.')}\n`
+        + `\n${$.gutil.colors.inverse(' enable_ssi ')}`
+        + `\n${$.gutil.colors.bold('└─ Adjust template files to support Server Side Includes. Good for when using FastCGI to cache template files.')}\n`
         + `\n${$.gutil.colors.inverse(' enable_system_js ')}`
-        + `\n${$.gutil.colors.bold('└─ Enable SystemJS for async loading of JS files.')}\n`
+        + `\n${$.gutil.colors.bold('└─ Enable SystemJS to polyfill ES6 module loading of JS files.')}\n`
         + `\n${$.gutil.colors.inverse(' minify_html ')}`
         + `\n${$.gutil.colors.bold('└─ Enable minification of HTML in the \`gulp release\` task. Turn this off when theming with PHP and Twig files.')}\n`
+        + `\n${$.gutil.colors.inverse(' template_is_set_up ')}`
+        + `\n${$.gutil.colors.bold('└─ Puts a lock on the [gulp setup] task so it cannot be run more than once. Set it to false to allow [gulp setup] to be run again.')}\n`
         + `\n${$.gutil.colors.inverse(' browserSync ')}`
         + `\n${$.gutil.colors.bold('└─ Configure BrowserSync to reload your website as \`watch\` tasks are run. Change \`url\` to the page on your site that you want to start on when \`gulp watch\` is run.')}\n`
         + `\n${$.gutil.colors.inverse(' critcss ')}`
@@ -156,7 +159,9 @@ gulp.task('vars',function() {
         + `\n${$.gutil.colors.inverse(' ejsVars ')}`
         + `\n${$.gutil.colors.bold('└─ Additional files and settings for use in the \`ejs\` task. All paths must start from the \`_build\` folder.')}\n`
         + `\n${$.gutil.colors.inverse(' fonts ')}`
-        + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`;
+        + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`
+        + `\n${$.gutil.colors.inverse(' styleTemplateSections ')}`
+        + `\n${$.gutil.colors.bold('└─ An array used to build out the navigation for Style Inventory pages. Edit this as you add and remove pages in the Style Inventory.')}\n`;
     $.gutil.log(text);
     $.gutil.beep();
 });
@@ -172,24 +177,33 @@ gulp.task('source:backup', function() {
 });
 
 // [gulp setup]
-gulp.task('setup', ['source:backup'], function(cb) {
+gulp.task('setup:move:default', ['source:backup'], function(cb) {
+    if (!vars.template_is_set_up) {
+        const defaultsPath = paths.srcUtil + '_default/';
+        const defaultsTemplates = defaultsPath + 'templates/**/*';
+
+        gulp.src(defaultsTemplates)
+            .pipe(gulp.dest(bases.source));
+
+        $.gutil.log('Moved default source files');
+
+        cb();
+    }
+});
+gulp.task('setup', ['setup:move:default'], function(cb) {
     if (!vars.template_is_set_up) {
         const questions = [{
             type: 'list',
             name: 'templateType',
             message: 'What kind of project are you developing?',
-            choices: [{ name: 'HTML', value: '_html_1' },{ name: 'Craft 2 Website', value: '_craft2_1' }]
+            choices: [
+                { name: 'HTML', value: '_html_1' },
+                { name: 'Craft 2 Website', value: '_craft2_1' }
+            ]
         }];
         inquirer.prompt(questions).then(function (answers) {
-            const defaultsPath           = paths.srcUtil + '_default/';
-            const defaultsTemplates      = defaultsPath + 'templates/**/*';
             const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
             let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
-
-            gulp.src(defaultsTemplates)
-                .pipe(gulp.dest(bases.source));
-
-            $.gutil.log('Moved default source files');
 
             let templateQuestions = [];
 
@@ -236,7 +250,7 @@ gulp.task('setup', ['source:backup'], function(cb) {
 
                 gulp.src('./package.json')
                     .pipe(gulp.dest(bases.build + 'package'))
-                    .pipe($.jsonModify({ key: 'template_is_set_up', value: false })) // .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
+                    .pipe($.jsonModify({ key: 'template_is_set_up', value: true })) // .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
                     .pipe(gulp.dest('./'));
 
                 cb();
@@ -491,7 +505,7 @@ function jsHandler(useUglify = false) {
 
     return gulp.src(paths.filesJs)
         .pipe($.changed(paths.distJs))
-        .pipe(vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
+        .pipe(vars.enable_babel ? $.babel(babelOptions) : $.gutil.noop())
         .pipe(useUglify ? $.uglify() : $.gutil.noop())
         .pipe(gulp.dest(bases.build + 'js/uglify'))
         .pipe(gulp.dest(paths.distJs));
