@@ -20,7 +20,7 @@
       background-size: 15px 15px !important;
       cursor: pointer;
 
-      @at-root #{&}--active {
+      &.active {
         @extend .icon_minus;
       }
     }
@@ -32,7 +32,7 @@
       opacity: 0;
       transition: opacity .3s ease-out, transform .3s ease-out;
 
-      @at-root #{&}--active {
+      &.active {
         height: auto;
         border-top-color: lighten($color_black_default, 90);
         opacity: 1;

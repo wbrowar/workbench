@@ -54,9 +54,9 @@ Vue.component('accordion-tab', {
         }
     },
     template: `
-    <div class="tab">
-        <div class="title" :class="{ active:isActive }" @click="onTabSelected">{{ title }}</div>
-        <div class="content" :class="{ active:isActive }"><div class="inner"><slot></slot></div></div>
+    <div class="vue_accordion__tab">
+        <div class="vue_accordion__tab__title" :class="{ active:isActive }" @click="onTabSelected">{{ title }}</div>
+        <div class="vue_accordion__tab__content" :class="{ active:isActive }"><div class="vue_accordion__tab__content__inner"><slot></slot></div></div>
     </div>
     `,
 });
@@ -102,12 +102,12 @@ Vue.component('overlay', {
     },
     template: `
     <div class="vue_overlay" v-show="isActive">
-        <div class="mask" @click="closeOverlay"></div>
-        <div class="content">
-            <div class="inner" v-if="isActive">
+        <div class="vue_overlay__mask" @click="closeOverlay"></div>
+        <div class="vue_overlay__content">
+            <div class="vue_overlay__content__inner" v-if="isActive">
                 <slot></slot>
             </div>
-            <div class="close icon_close" @click="closeOverlay">Close</div>
+            <div class="vue_overlay__content__close icon_close" @click="closeOverlay">Close</div>
         </div>
     </div>
     `,

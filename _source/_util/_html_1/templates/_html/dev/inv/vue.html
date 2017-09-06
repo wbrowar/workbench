@@ -44,11 +44,11 @@
   "description": "Sets the global `scrollY` variable in the root Vue instance. This can be used for things like animation or sticky navigation.",
   "background": "light",
   "demoCode":
-`<div class="styles_demo_box_wrapper">
-  <div class="styles_demo_box flex">
+`<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex">
     <p>Current Scroll<br>Position: \${ scrollY }</p>
   </div>
-  <div class="styles_demo_box flex" :class="{ active: scrollY > 600 && scrollY < 1100 }">
+  <div class="styles__box styles__box--flex" :class="{ active: scrollY > 600 && scrollY < 1100 }">
     <p>Scroll between<br>600 and 1100</p>
   </div>
 </div>`,
@@ -65,8 +65,8 @@
 `<button @click="showMobileNav()">Toggle Mobile Nav</button>
 <br>
 <div class="mobile_nav" :class="{ active: mobileNavActive }">
-  <div class="styles_demo_box_wrapper">
-    <div class="styles_demo_box" :class="{ active: mobileNavActive }">
+  <div class="styles__box_wrapper">
+    <div class="styles__box styles__box--flex" :class="{ active: mobileNavActive }">
       <ul>
         <li>Home</li>
         <li>About</li>
@@ -90,7 +90,7 @@
   "code":
 `<button @click="showOverlay('overlay_1')">Show Overlay</button>
 <overlay overlay-id="overlay_1" v-cloak>
-  <div class="video">
+  <div class="c_video">
     <iframe :src="overlayIsVisible ? 'https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0' : null" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
   </div>
 </overlay>`,
