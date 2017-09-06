@@ -32,8 +32,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-2790">
-                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <first_editor relative-caret-position="210">
+                <caret line="200" column="10" lean-forward="true" selection-start-line="200" selection-start-column="10" selection-end-line="200" selection-end-column="10" />
                 <folding>
                   <marker date="1504620085000" expanded="true" signature="9603:9682" ph="{...}" />
                   <marker date="1504620085000" expanded="true" signature="9629:9680" ph="{&quot;fadePageBgColor&quot;: fadePageBgColor...}" />
@@ -717,12 +717,12 @@
       <workItem from="1497356877817" duration="1544000" />
       <workItem from="1504189392185" duration="28252000" />
       <workItem from="1504400623567" duration="17011000" />
-      <workItem from="1504620296588" duration="9000" />
+      <workItem from="1504620296588" duration="1218000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55032000" />
+    <option name="totallyTimeSpent" value="56241000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1151" height="900" extended-state="6" />
@@ -1109,8 +1109,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-2790">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <first_editor relative-caret-position="210">
+            <caret line="200" column="10" lean-forward="true" selection-start-line="200" selection-start-column="10" selection-end-line="200" selection-end-column="10" />
             <folding>
               <marker date="1504620085000" expanded="true" signature="9603:9682" ph="{...}" />
               <marker date="1504620085000" expanded="true" signature="9629:9680" ph="{&quot;fadePageBgColor&quot;: fadePageBgColor...}" />
