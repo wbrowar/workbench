@@ -45,6 +45,7 @@ const paths = {
     srcJs:                  bases.source + '_js/',
     srcUtil:                bases.source + '_util/',
     filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/**/*'],
+    filesEjsIncludes:       bases.source + '_html/ejs_includes/**/*',
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
     filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/_lib/**/*'],
     filesJsLib:             [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
@@ -276,12 +277,12 @@ gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release']
 
 // [gulp watch]
 gulp.task('watch', function() {
-    //$.livereload.listen(35729);
-    var watchCss          = gulp.watch(paths.filesScss, ['css']),
-        watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
-        watchImg          = gulp.watch(paths.filesImg, ['img']),
-        watchJs           = gulp.watch(paths.filesJs, ['js']),
-        watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
+    const watchCss          = gulp.watch(paths.filesScss, ['css']),
+          watchEjsIncludes  = gulp.watch(paths.filesEjsIncludes, ['ejs:quick:full']),
+          watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
+          watchImg          = gulp.watch(paths.filesImg, ['img']),
+          watchJs           = gulp.watch(paths.filesJs, ['js']),
+          watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
 
     if (vars.browserSync.url === 'https://starter.wbrowar.com/') {
         $.gutil.log($.gutil.colors.inverse(' Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json. '));
@@ -294,6 +295,9 @@ gulp.task('watch', function() {
 
     watchCss.on('change', function(event) {
         notifier.notify({ 'title': name, 'message': 'CSS Updated' });
+    });
+    watchEjsIncludes.on('change', function(event) {
+        notifier.notify({ 'title': name, 'message': 'HTML Updated' });
     });
     watchHtml.on('change', function(event) {
         notifier.notify({ 'title': name, 'message': 'HTML Updated' });
