@@ -1,0 +1,158 @@
+$color_dev_black: rgb(43, 48, 59);
+$color_dev_black_border: lighten($color_dev_black, 35);
+$color_dev_black_bg: lighten($color_dev_black, 15);
+$color_dev_grey: rgb(211, 220, 231);
+$color_dev_grey_links: lighten($color_dev_grey, 20);
+$color_dev_grey_outline: $color_dev_grey;
+$color_dev_grey_text: darken($color_dev_grey, 20);
+$color_dev_white: rgb(255, 255, 255);
+$color_dev_red_default: rgb(188, 66, 0);
+$color_dev_green: rgb(211, 231, 220);
+$color_dev_green_text: darken($color_dev_green, 20);
+$color_dev_demo_active: rgb(6, 187, 27);
+
+$padding_dev_spacing: 20px;
+$border_radius: 4px;
+
+.styles {
+  @at-root #{&}__menu {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: $color_dev_black;
+    box-sizing: border-box;
+    color: $color_dev_grey;
+
+    & > a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-flow: column nowrap;
+      flex: 1 1 140px;
+      padding: $padding_dev_spacing;
+      box-sizing: border-box;
+      text-align: center;
+      text-decoration: none;
+      color: $color_dev_grey_links;
+      transition: color .2s ease-out, background .2s ease-out;
+
+      @at-root #{&}__active_spacer, & > #{&}__active_indicator {
+        display: block;
+        width: 6px;
+        height: 6px;
+      }
+      @at-root #{&}__active_spacer {
+        bottom: 2px;
+      }
+      @at-root #{&}__active_indicator {
+        margin-top: 2px;
+        background-image: url('data:image/svg+xml;utf8,<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.6 10.6"><defs><style>.cls-1{fill:#7a869e;}</style></defs><title>Untitled-1</title><circle class="cls-1" cx="5.3" cy="5.3" r="5.3"/></svg>');
+      }
+      &.active {
+        color: $color_dev_black_border;
+      }
+      &:not(.active):hover {
+        background-color: $color_dev_black_bg;
+        color: lighten($color_dev_black, 60);
+      }
+    }
+  }
+  @at-root #{&}__example {
+    display: block;
+    margin-bottom: 60px;
+
+    @at-root #{&}__title {
+      display: block;
+      padding: 0 $padding_dev_spacing;
+      box-sizing: border-box;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+    @at-root #{&}__description {
+      display: block;
+      padding: 0 $padding_dev_spacing;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+      font-size: .9rem;
+
+      a {
+        font-weight: 500;
+        color: $color_dev_black;
+      }
+    }
+    @at-root #{&}__display {
+      display: block;
+      padding: $padding_dev_spacing;
+      box-sizing: border-box;
+      border: 1px solid transparentize($color_dev_grey_outline, .3);
+      border-radius: $border_radius $border_radius 0 0;
+    }
+    @at-root #{&}__code {
+      display: block;
+      padding: $padding_dev_spacing;
+      background-color: transparentize($color_dev_grey_outline, .7);
+      box-sizing: border-box;
+      border: 1px solid transparentize($color_dev_grey_outline, .3);
+      border-top: none;
+      font-size: 14px;
+      color: $color_dev_grey_text;
+      z-index: 10;
+
+      ::selection {
+        background-color: $color_dev_grey_text;
+      }
+      &:last-child {
+        border-radius: 0 0 $border_radius $border_radius;
+      }
+      @at-root #{&}--twig {
+        background-color: transparentize($color_dev_green, .7);
+        border-color: transparentize($color_dev_green, .3);;
+        color: $color_dev_green_text;
+
+        ::selection {
+          background-color: $color_dev_green_text;
+        }
+      }
+      & > pre {
+        & > code {
+          white-space: pre-wrap;
+        }
+      }
+    }
+  }
+
+  @at-root #{&}__box_wrapper {
+    display: block;
+    flex-flow: row wrap;
+    margin: 0 -($padding_dev_spacing / 2);
+    perspective: 800px;
+  }
+  @at-root #{&}__box {
+    display: inline-block;
+    flex: 1 1 300px;
+    margin: ($padding_dev_spacing / 2);
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+    background-color: $color_dev_red_default;
+    color: $color_dev_white;
+
+    &.active {
+      background-color: $color_dev_demo_active;
+    }
+    @at-root #{&}--flex, #{&}__flex {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @at-root #{&}--flex {
+      display: inline-flex;
+    }
+    @at-root #{&}--no_margin {
+      margin: 0;
+    }
+    @at-root #{&}--padding, #{&}__padding {
+      padding: 20px;
+    }
+  }
+}

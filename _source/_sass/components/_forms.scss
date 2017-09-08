@@ -1,0 +1,25 @@
+.c_form {
+  @at-root #{&}--flex {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  @at-root #{&}__hidden {
+    @include hide_text;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  @at-root #{&}__input {
+    @include placeholder {
+    }
+
+    input {
+      &[type="text"],
+      &[type="password"] {
+        width: 100%;
+        //-webkit-appearance: none;
+      }
+    }
+  }
+}

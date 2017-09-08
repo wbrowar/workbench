@@ -80,8 +80,6 @@ $_dot_size: 10px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: center;
-  padding: 6px;
 
   @at-root #{&}__back {
     cursor: pointer;
@@ -89,13 +87,12 @@ $_dot_size: 10px;
   @at-root #{&}__indicators {
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
   }
   @at-root #{&}__indicator_dot {
     @include hide_text;
     position: relative;
     padding: 4px;
-    margin: 0 3px;
+    margin: 0 2px;
     width: $_dot_size;
     height: $_dot_size;
     cursor: pointer;
@@ -104,12 +101,11 @@ $_dot_size: 10px;
       content: "";
       display: block;
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: -50%;
+      left: -50%;
       width: $_dot_size;
       height: $_dot_size;
       border: 2px solid lighten($color_black_default, 50);
-      border-radius: 50%;
       transform: translateX(-50%) translateY(-50%);
     }
     &.active {

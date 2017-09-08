@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a7c9e20a-fdec-47d2-8b17-99f7aa6e1731" name="Default" comment="" />
+    <list default="true" id="a7c9e20a-fdec-47d2-8b17-99f7aa6e1731" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/vue.html" afterPath="$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/vue.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_source/_util/_html_1/templates/_js/vue-components.js" afterPath="$PROJECT_DIR$/_source/_util/_html_1/templates/_js/vue-components.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_source/_util/_html_1/templates/_sass/components/_vue.scss" afterPath="$PROJECT_DIR$/_source/_util/_html_1/templates/_sass/components/_vue.scss" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,12 +33,53 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../testing-starter/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1504837813000" expanded="true" signature="0:5023" ph="{&quot;name&quot;: &quot;example-project&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="414:485" ph="{&quot;browser&quot;: &quot;google chrome&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="500:755" ph="[...]" />
+                <marker date="1504837813000" expanded="true" signature="506:626" ph="{&quot;src&quot;: &quot;https://starter.wbrowar.com/critcss/&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="632:751" ph="{&quot;src&quot;: &quot;https://starter.wbrowar.com/critcss/&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="780:846" ph="[...]" />
+                <marker date="1504837813000" expanded="true" signature="870:1305" ph="[...]" />
+                <marker date="1504837813000" expanded="true" signature="1320:1388" ph="{&quot;stylemarkup&quot;: &quot;/html/ejs/ejs_includes/_style_markup.html&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="1401:3085" ph="[...]" />
+                <marker date="1504837813000" expanded="true" signature="1407:1643" ph="{&quot;name&quot;: &quot;avinir&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="1649:1892" ph="{&quot;name&quot;: &quot;avinir_italic&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="1898:2168" ph="{&quot;name&quot;: &quot;apple&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="2174:2620" ph="{&quot;name&quot;: &quot;eaves&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="2402:2614" ph="{&quot;eot&quot;: &quot;/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="2626:3081" ph="{&quot;name&quot;: &quot;eaves_italic&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="2863:3075" ph="{&quot;eot&quot;: &quot;/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3114:3799" ph="[...]" />
+                <marker date="1504837813000" expanded="true" signature="3120:3183" ph="{&quot;name&quot;: &quot;index&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3189:3252" ph="{&quot;name&quot;: &quot;animations&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3258:3315" ph="{&quot;name&quot;: &quot;buttons&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3321:3373" ph="{&quot;name&quot;: &quot;grid&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3379:3432" ph="{&quot;name&quot;: &quot;icons&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3438:3493" ph="{&quot;name&quot;: &quot;images&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3499:3552" ph="{&quot;name&quot;: &quot;media&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3558:3617" ph="{&quot;name&quot;: &quot;messages&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3623:3679" ph="{&quot;name&quot;: &quot;nav&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3685:3740" ph="{&quot;name&quot;: &quot;tables&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3746:3795" ph="{&quot;name&quot;: &quot;vue&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="3819:4020" ph="{&quot;es6-promise&quot;: &quot;^4.1.1&quot;...}" />
+                <marker date="1504837813000" expanded="true" signature="4043:5021" ph="{&quot;babel-preset-es2015&quot;: &quot;^6.24.1&quot;...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="210">
-                <caret line="200" column="10" lean-forward="true" selection-start-line="200" selection-start-column="10" selection-end-line="200" selection-end-column="10" />
+              <first_editor relative-caret-position="240">
+                <caret line="202" column="7" lean-forward="false" selection-start-line="202" selection-start-column="7" selection-end-line="202" selection-end-column="7" />
                 <folding>
                   <marker date="1504620085000" expanded="true" signature="9603:9682" ph="{...}" />
                   <marker date="1504620085000" expanded="true" signature="9629:9680" ph="{&quot;fadePageBgColor&quot;: fadePageBgColor...}" />
@@ -41,6 +87,58 @@
                 </folding>
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gulpfile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gulpfile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="235">
+              <caret line="214" column="55" lean-forward="false" selection-start-line="214" selection-start-column="55" selection-end-line="214" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vue.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/vue.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_vue.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_sass/components/_vue.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="83" column="14" lean-forward="false" selection-start-line="83" selection-start-column="14" selection-end-line="83" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vue-components.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_js/vue-components.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="383">
+              <caret line="179" column="44" lean-forward="true" selection-start-line="179" selection-start-column="44" selection-end-line="179" selection-end-column="44" />
+              <folding>
+                <marker date="1504874516000" expanded="true" signature="625:658" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="1239:1519" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="4225:4250" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="5389:6258" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="5615:5814" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="5923:6126" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="7400:7450" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="7410:7443" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="8256:8610" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="8367:8599" ph="..." />
+                <marker date="1504874516000" expanded="true" signature="8437:8486" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -73,6 +171,10 @@
       <find>siteRoot</find>
       <find>&lt;%- include('../../ejs_includes/style_inventory/_wrapper', {&quot;activeItem&quot;: currentSection, &quot;intro&quot;: intro, &quot;modules&quot;: modules, &quot;sections&quot;: styleTemplateSections, &quot;siteRoot&quot;: site_root, &quot;styleTemplatePrefix&quot;: styleTemplatePrefix, &quot;styleTemplateSuffix&quot;: styleTemplateSuffix}) %&gt;</find>
       <find>styles__box flex</find>
+      <find>nav</find>
+      <find>mobile</find>
+      <find>total</find>
+      <find>id</find>
     </findStrings>
     <replaceStrings>
       <replace>modules</replace>
@@ -88,10 +190,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../test-starter/_source/_util/_html_1/templates/_html/dev/inv/components/_messages.ejs" />
-        <option value="$PROJECT_DIR$/../test-starter/_source/_util/_html_1/templates/_html/dev/inv/components/_nav.ejs" />
-        <option value="$PROJECT_DIR$/../test-starter/_source/_util/_html_1/templates/_html/dev/inv/components/_tables.ejs" />
-        <option value="$PROJECT_DIR$/../test-starter/_source/_util/_html_1/templates/_html/dev/inv/components/_vue.ejs" />
         <option value="$PROJECT_DIR$/../test-starter/_source/_util/_default/templates/_html/ejs_includes/style_inventory/_wrapper.ejs" />
         <option value="$PROJECT_DIR$/../test-starter/_source/_util/_html_1/templates/_html/dev/inv/animations.html" />
         <option value="$PROJECT_DIR$/../test-starter/_source/_util/_html_1/templates/_html/dev/inv/buttons.html" />
@@ -109,10 +207,8 @@
         <option value="$PROJECT_DIR$/_source/_sass/base/_animations.scss" />
         <option value="$PROJECT_DIR$/_source/_util/_html_1/templates/_sass/base/_animations.scss" />
         <option value="$PROJECT_DIR$/_source/_util/_default/templates/_js/home.js" />
-        <option value="$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/vue.html" />
         <option value="$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_style_inv.twig" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/Gulpfile.js" />
         <option value="$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_style_inv/animations.twig" />
         <option value="$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_style_inv/buttons.twig" />
         <option value="$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/buttons.html" />
@@ -139,6 +235,12 @@
         <option value="$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_style_inv/nav.twig" />
         <option value="$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_style_inv/tables.twig" />
         <option value="$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_style_inv/vue.twig" />
+        <option value="$PROJECT_DIR$/Gulpfile.js" />
+        <option value="$PROJECT_DIR$/../testing-starter/package.json" />
+        <option value="$PROJECT_DIR$/_source/_util/_html_1/templates/_js/vue-components.js" />
+        <option value="$PROJECT_DIR$/_source/_sass/components/_vue.scss" />
+        <option value="$PROJECT_DIR$/_source/_util/_html_1/templates/_sass/components/_vue.scss" />
+        <option value="$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/vue.html" />
       </list>
     </option>
   </component>
@@ -162,7 +264,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="width" value="1151" />
+    <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectView">
@@ -180,424 +282,22 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
+              <option name="myItemId" value="WB-Starter" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html_1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html_1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html_1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dev" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="inv" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_default" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_sass" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_default" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_sass" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_default" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_sass" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_default" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_sass" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_default" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_default" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_js" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_craft2_1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_craft2_1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dev" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testing-starter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_source" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_util" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_craft2_1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_html" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dev" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_style_inv" />
+              <option name="myItemId" value="WB-Starter" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -718,18 +418,19 @@
       <workItem from="1504189392185" duration="28252000" />
       <workItem from="1504400623567" duration="17011000" />
       <workItem from="1504620296588" duration="1218000" />
+      <workItem from="1504822688824" duration="12251000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56241000" />
+    <option name="totallyTimeSpent" value="68492000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1151" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17355044" sideWeight="0.5743007" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18935978" sideWeight="0.4256993" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15236051" sideWeight="0.4256993" order="2" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -784,34 +485,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_sass/base/_animations.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="124" column="39" lean-forward="false" selection-start-line="124" selection-start-column="39" selection-end-line="124" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_source/_util/_default/templates/_js/global.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_source/_util/_default/templates/_js/home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="28" lean-forward="false" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_dev_page.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/inv/grid.twig" />
     <entry file="file://$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/inv/animations.twig" />
     <entry file="file://$PROJECT_DIR$/_source/_html/dev/inv/animations.html" />
@@ -882,14 +555,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
           <caret line="31" column="31" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="217" column="18" lean-forward="true" selection-start-line="217" selection-start-column="18" selection-end-line="217" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -998,13 +663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/images.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="50" column="5" lean-forward="false" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_source/_util/_default/templates/_sass/components/_messages.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -1070,13 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/vue.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="12" lean-forward="true" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_source/_util/_craft2_1/templates/_html/dev/_style_inv/vue.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1098,6 +749,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="240">
+            <caret line="202" column="7" lean-forward="false" selection-start-line="202" selection-start-column="7" selection-end-line="202" selection-end-column="7" />
+            <folding>
+              <marker date="1504620085000" expanded="true" signature="9603:9682" ph="{...}" />
+              <marker date="1504620085000" expanded="true" signature="9629:9680" ph="{&quot;fadePageBgColor&quot;: fadePageBgColor...}" />
+              <marker date="1504620085000" expanded="true" signature="13770:13919" ph="{...}" />
+            </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../testing-starter/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1504837813000" expanded="true" signature="0:5023" ph="{&quot;name&quot;: &quot;example-project&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="414:485" ph="{&quot;browser&quot;: &quot;google chrome&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="500:755" ph="[...]" />
+            <marker date="1504837813000" expanded="true" signature="506:626" ph="{&quot;src&quot;: &quot;https://starter.wbrowar.com/critcss/&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="632:751" ph="{&quot;src&quot;: &quot;https://starter.wbrowar.com/critcss/&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="780:846" ph="[...]" />
+            <marker date="1504837813000" expanded="true" signature="870:1305" ph="[...]" />
+            <marker date="1504837813000" expanded="true" signature="1320:1388" ph="{&quot;stylemarkup&quot;: &quot;/html/ejs/ejs_includes/_style_markup.html&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="1401:3085" ph="[...]" />
+            <marker date="1504837813000" expanded="true" signature="1407:1643" ph="{&quot;name&quot;: &quot;avinir&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="1649:1892" ph="{&quot;name&quot;: &quot;avinir_italic&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="1898:2168" ph="{&quot;name&quot;: &quot;apple&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="2174:2620" ph="{&quot;name&quot;: &quot;eaves&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="2402:2614" ph="{&quot;eot&quot;: &quot;/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="2626:3081" ph="{&quot;name&quot;: &quot;eaves_italic&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="2863:3075" ph="{&quot;eot&quot;: &quot;/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3114:3799" ph="[...]" />
+            <marker date="1504837813000" expanded="true" signature="3120:3183" ph="{&quot;name&quot;: &quot;index&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3189:3252" ph="{&quot;name&quot;: &quot;animations&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3258:3315" ph="{&quot;name&quot;: &quot;buttons&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3321:3373" ph="{&quot;name&quot;: &quot;grid&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3379:3432" ph="{&quot;name&quot;: &quot;icons&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3438:3493" ph="{&quot;name&quot;: &quot;images&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3499:3552" ph="{&quot;name&quot;: &quot;media&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3558:3617" ph="{&quot;name&quot;: &quot;messages&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3623:3679" ph="{&quot;name&quot;: &quot;nav&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3685:3740" ph="{&quot;name&quot;: &quot;tables&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3746:3795" ph="{&quot;name&quot;: &quot;vue&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="3819:4020" ph="{&quot;es6-promise&quot;: &quot;^4.1.1&quot;...}" />
+            <marker date="1504837813000" expanded="true" signature="4043:5021" ph="{&quot;babel-preset-es2015&quot;: &quot;^6.24.1&quot;...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -1106,18 +811,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="210">
-            <caret line="200" column="10" lean-forward="true" selection-start-line="200" selection-start-column="10" selection-end-line="200" selection-end-column="10" />
-            <folding>
-              <marker date="1504620085000" expanded="true" signature="9603:9682" ph="{...}" />
-              <marker date="1504620085000" expanded="true" signature="9629:9680" ph="{&quot;fadePageBgColor&quot;: fadePageBgColor...}" />
-              <marker date="1504620085000" expanded="true" signature="13770:13919" ph="{...}" />
-            </folding>
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/images.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="77" lean-forward="true" selection-start-line="21" selection-start-column="77" selection-end-line="21" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="214" column="55" lean-forward="false" selection-start-line="214" selection-start-column="55" selection-end-line="214" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_source/_sass/components/_vue.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="76" column="1" lean-forward="true" selection-start-line="76" selection-start-column="1" selection-end-line="119" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_js/vue-components.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="179" column="44" lean-forward="true" selection-start-line="179" selection-start-column="44" selection-end-line="179" selection-end-column="44" />
+          <folding>
+            <marker date="1504874516000" expanded="true" signature="625:658" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="1239:1519" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="4225:4250" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="5389:6258" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="5615:5814" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="5923:6126" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="7400:7450" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="7410:7443" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="8256:8610" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="8367:8599" ph="..." />
+            <marker date="1504874516000" expanded="true" signature="8437:8486" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_sass/components/_vue.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="83" column="14" lean-forward="false" selection-start-line="83" selection-start-column="14" selection-end-line="83" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_source/_util/_html_1/templates/_html/dev/inv/vue.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>

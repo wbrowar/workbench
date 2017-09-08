@@ -88,7 +88,7 @@ Vue.component('slider', {
         }
     },
     props: {
-        sliderId: { default: true },
+        id: { default: true },
         interval: false,
         startingHeight: { default: 500 },
         startingSlide: { default: 0 },
@@ -99,7 +99,7 @@ Vue.component('slider', {
         updateCurrentSlide() {
             const newIndex = this.currentSlide;
 
-            VueEvent.$emit('slider-update-control-index', this.sliderId, newIndex);
+            VueEvent.$emit('slider-update-control-index', this.id, newIndex);
 
             for(let i=0; i<this.slides.length; i++) {
                 if (i<newIndex) {
@@ -134,14 +134,14 @@ Vue.component('slider', {
         }
 
         // set total slides for controller
-        VueEvent.$emit('slider-update-total-slides', this.sliderId, this.slides.length);
+        VueEvent.$emit('slider-update-total-slides', this.id, this.slides.length);
 
         // set current slide
         VueEvent.$on('slider-set-slide-index', (sliderId, newIndex) => {
             // stop slider from playing
             clearInterval(this.playInterval);
 
-            if (this.sliderId === sliderId) {
+            if (this.id === sliderId) {
                 this.currentSlide = this.validateNewIndex(newIndex);
                 this.updateCurrentSlide();
             }

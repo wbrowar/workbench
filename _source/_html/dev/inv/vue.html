@@ -62,10 +62,10 @@
   "description": "A slider that can be used for images, video, or html content. Requires `slider-slide` components as children.",
   "background": "light",
 "demoCode":
-`<slider slider-id="slider_1" interval="5000">
+`<slider id="slider_1" interval="5000">
   <slider-slide :background-images="[{ src:'/img/FPO.png' },{ mq:'(min-width: 400px)', src:'/img/FPO@2x.png' }]"></slider-slide>
   <slider-slide class="c_video_bg">
-    <video class="c_video_bg__video" src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
+    <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
   </slider-slide>
   <slider-slide>
     <div class="styles__box_wrapper">
@@ -84,9 +84,9 @@
     </div>
   </slider-slide>
 </slider>
-<slider-control slider-id="slider_1" :show-back="false" :show-next="false"></slider-control>`,
+<slider-control slider-id="slider_1"></slider-control>`,
 "code":
-`<slider slider-id="slider_1" interval="5000">
+`<slider id="slider_1" interval="5000">
   <slider-slide :background-images="[{ src:'/img/FPO.png' },{ mq:'(min-width: 400px)', src:'/img/FPO@2x.png' }]"></slider-slide>
   <slider-slide class="c_video_bg">
     <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
@@ -95,7 +95,7 @@
     <!-- ... -->
   </slider-slide>
 </slider>
-<slider-control slider-id="slider_1" :show-back="false" :show-next="false"></slider-control>`
+<slider-control slider-id="slider_1"></slider-control>`
 }); %>
 
 <% modules.push({

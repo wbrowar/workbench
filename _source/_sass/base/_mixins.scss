@@ -1,0 +1,146 @@
+// SASS FUNCTIONS
+@function rwd_ratio_width($object_px, $container_px) {
+  @return $object_px / $container_px * 100%;
+}
+
+// SITE VARIABLES
+// ANIMATIONS
+$anim_duration_default: 0.3s;
+$anim_duration_fade: $anim_duration_default;
+$anim_duration_slide: $anim_duration_default;
+
+// COLORS
+$color_white_default: rgb(255, 255, 255);
+$color_black_default: rgb(0, 0, 0);
+$color_alert_success: rgb(45, 176, 51);
+$color_alert_error: rgb(176, 25, 22);
+$color_alert_warning: rgb(238, 199, 0);
+
+// LAYOUT
+$grid_gap_default: 20px;
+$margin_bottom_default: 30px;
+
+// MEDIA QUERIES
+$mq_grid_start: 700px;
+
+// SITE MIXINS
+// FONTS
+// For the font() mixin, see _source/automated/_fonts
+// If this file is empty, run `gulp first` to populate it
+
+// Set scalable font size (in vw units) and set fallback
+// @include fz(7, 5rem, 700px);
+// $font_vw_unit = value for vw unit
+// $font_fallback_size = fallback size used if vw units are not supported by the browser
+// $font_fallback_mq = at this width, the texrt will stop scaling up
+@mixin fz($font_vw_unit, $font_fallback_size: '', $font_fallback_mq: '') {
+  @if $font_fallback_size != '' {
+    font-size: $font_fallback_size;
+  }
+  font-size: $font_vw_unit + vw;
+
+  @if $font_fallback_mq != '' {
+    @include mq($font_fallback_mq) {
+      font-size: $font_fallback_size;
+    }
+  }
+}
+
+// MEDIA QUERIES
+// Quickly write simple media queries
+// @include mq(600px) {  }
+@mixin mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '') {
+  @if $additional_media != '' {
+    @media (#{$mq_min_max}-#{$mq_direction}: $breakpoint, $additional_media) {
+      @content;
+    }
+  } @else {
+    @media (#{$mq_min_max}-#{$mq_direction}: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin mq($breakpoint, $additional_media: '') {
+  @include mq_handler('min', 'width', $breakpoint, $additional_media) {
+    @content;
+  }
+}
+
+@mixin mq_max($breakpoint, $additional_media: '') {
+  @include mq_handler('max', 'width', $breakpoint, $additional_media) {
+    @content;
+  }
+}
+
+@mixin mq_v($breakpoint, $additional_media: '') {
+  @include mq_handler('min', 'height', $breakpoint, $additional_media) {
+    @content;
+  }
+}
+
+@mixin mq_vmax($breakpoint, $additional_media: '') {
+  @include mq_handler('max', 'height', $breakpoint, $additional_media) {
+    @content;
+  }
+}
+
+@mixin bg_2x {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi) {
+    @content;
+  }
+}
+
+// PLACEHOLDER
+// Style placeholder
+@mixin placeholder {
+  ::-webkit-input-placeholder {
+    @content;
+  }
+  :-moz-placeholder {
+    @content;
+  }
+  ::-moz-placeholder {
+    @content;
+  }
+}
+
+// TEXT
+// Hide text for things like buttons or links that are replaced with a background image
+@mixin hide_text {
+  text-indent: -99999px;
+}
+
+// TRANSITIONS/ANIMATIONS
+@mixin transition($property, $duration: $anim_duration_default, $delay: 0, $timing: ease-out) {
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-delay: $delay;
+  transition-timing-function: $timing;
+}
+
+// PLACEHOLDERS
+// Put clearfix on wrapper elements for floats
+%clearfix {
+  &:before, &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  &:after {
+    clear: both;
+  }
+  & {
+    zoom: 1;
+  }
+}
+
+%margin-bottom {
+  margin-bottom: $margin_bottom_default;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

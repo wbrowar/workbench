@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <title></title>
+        <meta name="description" content="">
+<%- include('ejs_includes/_head_meta') %>
+<%- include('ejs_includes/_head_scripts') %>
+<%- include('ejs_includes/_head_tracking') %>
+    </head>
+    <body>
+        <div id="page">
+            <a href="/dev/inv/index.html">Style Inventory</a>
+        <%- include('ejs_includes/_style_markup') %>
+        </div>
+
+<%- include('ejs_includes/_body_bottom_scripts') %>
+        <% if (enable_system_js === 'true') { %><script>
+            SystemJS.import('home');
+        </script><% } %>
+    </body>
+</html>

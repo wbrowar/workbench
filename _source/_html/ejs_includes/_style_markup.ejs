@@ -1,0 +1,170 @@
+    <h1>Header Style One</h1>
+    <h2>Header Style Two</h2>
+    <h3>Header Style Three</h3>
+    <h4>Header Style Four</h4>
+    <h5>Header Style Five</h5>
+    <h6>Header Style Six</h6>
+
+    <p><b>bold</b><br>
+    <i>italic</i><br>
+    <b><i>bold italic</i></b><br>
+    <i><b>italic bold</b></i><br>
+    <strong>strong</strong><br>
+    <em>em</em><br>
+    <strong><em>strong em</em></strong><br>
+    <em><strong>em strong</strong></em><br>
+    <a href="#">link</a><br>
+    <small>small</small><br>
+    <code>code</code></p>
+
+    <h2>Examples of Bold, Italic, and Links</h2>
+    <p>Lorem ipsum <b>dolor sit</b> amet, consectetur adipiscing elit, sed do <i>eiusmod tempor</i> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation <b><i>ullamco laboris</i></b> nisi ut aliquip ex ea <i><b>commodo consequat</b></i>. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <a href="#">Excepteur sint occaecat cupidatat</a> non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, <strong>totam rem aperiam</strong>, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae <em>vitae dicta</em> sunt explicabo. <strong><em>Nemo enim ipsam voluptatem</em></strong> quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui <em><strong>ratione voluptatem sequi nesciunt</strong></em>.</p>
+    <code>function foo() {
+      // do something
+    }</code>
+    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+
+    <hr />
+
+    <h2>Audio</h2>
+    <audio src="" controls>
+      Your browser does not support audio.
+    </audio>
+
+    <h2>Buttons</h2>
+    <a href="#" class="button">Class Button</a>
+    <form action="">
+      <input type="submit" value="Form Button" />
+    </form>
+
+    <h2>Forms</h2>
+    <form action="">
+      <label for="text">type="text"</label><br>
+      <input type="text" name="text" placeholder="Text Input" /><br>
+      <label for="password">type="password"</label><br>
+      <input type="password" name="password" placeholder="Password Input" /><br>
+      <label for="email">type="email"</label><br>
+      <input type="email" name="email" placeholder="Email Input" /><br>
+      <label for="tel">type="tel"</label><br>
+      <input type="tel" name="tel" placeholder="Telephone Input" /><br>
+      <label for="url">type="url"</label><br>
+      <input type="url" name="url" placeholder="Telephone Input" /><br>
+      <label for="search">type="search"</label><br>
+      <input type="search" name="search" placeholder="Search Input" /><br>
+      <label for="number">type="number"</label><br>
+      <input type="number" name="number" placeholder="Number Input" min="1" max="1000" /><br>
+      <input type="radio" name="gender" value="male" checked> Male<br>
+      <input type="radio" name="gender" value="female"> Female<br>
+      <input type="radio" name="gender" value="other"> Other<br>
+      <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+      <input type="checkbox" name="vehicle2" value="Car"> I have a car<br>
+      <textarea name="textarea" placeholder="Textarea"></textarea>
+    </form>
+
+    <h2>Image</h2>
+    <img src="<%= site_root %>img/FPO.png" srcset="<%= site_root %>img/FPO.png 1x, <%= site_root %>img/FPO@2x.png 2x" alt="For Placement Only" />
+
+    <h3>Lazy-Loaded</h3>
+    <img data-emergence="hidden" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="<%= site_root %>img/FPO.png 1x, <%= site_root %>img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only" />
+
+    <h2>Lists</h2>
+    <ul>
+      <li>This is an unordered list.</li>
+      <li>It has two items.</li>
+    </ul>
+
+    <ol>
+      <li>This is an ordered list.</li>
+      <li>It has two items.</li>
+      <li>No, I lied, it has three.</li>
+    </ol>
+
+    <ul>
+      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus condimentum venenatis eros ac condimentum. Morbi elit odio, imperdiet at ornare vel, auctor in turpis. In hac habitasse platea dictumst. Nulla facilisi. Aliquam fermentum lobortis turpis non porttitor.</li>
+      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus condimentum venenatis eros ac condimentum. Morbi elit odio, imperdiet at ornare vel, auctor in turpis. In hac habitasse platea dictumst. Nulla facilisi. Aliquam fermentum lobortis turpis non porttitor.</li>
+    </ul>
+
+    <h2>Tables</h2>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Ingredients</th>
+          <th scope="col">Serves 12</th>
+          <th scope="col">Serves 24</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Milk</td>
+          <td>1 quart</td>
+          <td>2 quart</td>
+        </tr>
+        <tr>
+          <td>Cinnamon Sticks</td>
+          <td>2</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Vanilla Bean, Split</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Cloves</td>
+          <td>5</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Mace</td>
+          <td>10 blades</td>
+          <td>20 blades</td>
+        </tr>
+        <tr>
+          <td>Egg Yolks</td>
+          <td>12</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>Cups Sugar</td>
+          <td>1 ½ cups</td>
+          <td>3 cups</td>
+        </tr>
+        <tr>
+          <td>Dark Rum</td>
+          <td>1 ½ cups</td>
+          <td>3 cups</td>
+        </tr>
+        <tr>
+          <td>Brandy</td>
+          <td>1 ½ cups</td>
+          <td>3 cups</td>
+        </tr>
+        <tr>
+          <td>Vanilla</td>
+          <td>1 tbsp</td>
+          <td>2 tbsp</td>
+        </tr>
+        <tr>
+          <td>Half-and-half or Light Cream</td>
+          <td>1 quart</td>
+          <td>2 quart</td>
+        </tr>
+        <tr>
+          <td>Freshly grated nutmeg to taste</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Video</h2>
+    <h3>From Server</h3>
+    <video width="320" height="240" src="" controls>
+      Your browser does not support video.
+    </video>
+
+    <h3>From YouTube</h3>
+    <div class="video">
+      <iframe width="853" height="480" src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    </div>
