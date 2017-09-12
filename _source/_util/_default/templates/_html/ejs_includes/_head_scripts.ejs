@@ -1,20 +1,23 @@
     <!-- scripts -->
     <script type="text/javascript">
-        var jsSection = 'home',
+        var jsSection = '{{ jsSection }}',
             jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
             jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Math.floor(new Date().getTime() / 1000)<% } %>,
             jsThemePath = '<%= site_root %>';
 
         var jsModulePaths = {
-            'idealimageslider': '_lib/idealimageslider.js?v=' + jsVersion,
-            'jquery': '_lib/jquery.js?v=' + jsVersion,
-            'scrollmonitor': '_lib/scrollMonitor.js?v=' + jsVersion,
+            'axios': '_lib/axios.min.js?v=' + jsVersion,
+            'countup': '_lib/countUp.min.js?v=' + jsVersion,
+            'fontfaceobserver': '_lib/fontfaceobserver.min.js?v=' + jsVersion,
+            'scrollmonitor': '_lib/scrollMonitor.min.js?v=' + jsVersion,
             'vue': jsDevMode ? '_lib/vue.js?v=' + jsVersion : '_lib/vue.min.js?v=' + jsVersion,
-            'global': 'global.js?v=' + jsVersion,
-            'home': 'home.js?v=' + jsVersion,
-            'inside': 'inside.js?v=' + jsVersion,
-            'lazy': 'lazy.js?v=' + jsVersion,
-            'vuecomponents': 'vue-components.js?v=' + jsVersion,
+            'global': 'global.min.js?v=' + jsVersion,
+            'home': 'home.min.js?v=' + jsVersion,
+            'inside': 'home.min.js?v=' + jsVersion,
+            'lazy': 'lazy.min.js?v=' + jsVersion,
+            'scrollto': 'scrollto.min.js?v=' + jsVersion,
+            'typewriter': 'typewriter.min.js?v=' + jsVersion,
+            'vuecomponents': 'vue-components.min.js?v=' + jsVersion,
         };
 
         // remove no-js class for when Javascript is enabled

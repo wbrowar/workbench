@@ -140,6 +140,10 @@ $border_radius: 4px;
     &.active {
       background-color: $color_dev_demo_active;
     }
+    @at-root #{&}--clear {
+      background-color: transparent;
+      color: $color_dev_grey;
+    }
     @at-root #{&}--flex, #{&}__flex {
       display: flex;
       align-items: center;
