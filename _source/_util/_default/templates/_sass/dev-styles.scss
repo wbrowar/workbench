@@ -142,7 +142,7 @@ $border_radius: 4px;
     }
     @at-root #{&}--clear {
       background-color: transparent;
-      color: $color_dev_grey;
+      color: $color_dev_black;
     }
     @at-root #{&}--flex, #{&}__flex {
       display: flex;
