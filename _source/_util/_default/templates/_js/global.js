@@ -92,6 +92,11 @@ function activeToggleSetup() {
         el.addEventListener('click', activeToggleHandler);
     });
 }
+function sliderLoaded(el, args) {
+    if (VueEvent !== undefined) {
+        VueEvent.$emit('slider-loaded', args.id);
+    }
+}
 
 
 // BROWSER EVENTS
@@ -115,9 +120,14 @@ export function setupJsComponents() {
 }
 export function setupEnhancements() {
     if (typeof QueryString.enhanced === 'undefined') {
+        const lazyConfig = {
+            animationFunctions: {
+                'sliderLoaded': sliderLoaded
+            }
+        };
         ready(function() {
             addClass(document.documentElement, 'enhanced');
-            lazy();
+            lazy(lazyConfig);
         });
     }
 }

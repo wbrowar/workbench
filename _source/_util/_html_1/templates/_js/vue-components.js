@@ -82,20 +82,35 @@ Vue.component('slider', {
     data() {
         return {
             currentSlide: 0,
+            isLoaded: false,
             playInterval: false,
             totalSlides: 0,
             slides: []
         }
     },
     props: {
-        sliderId: { default: true },
+        sliderId: { required: true },
         interval: false,
-        startingHeight: { default: 500 },
+        sliderHeight: false,
         startingSlide: { default: 0 },
-    },
-    created() {
+        waitForLoad: { default: false }
     },
     methods: {
+        onLoad() {
+            for(let i=0; i<this.slides.length; i++) {
+                this.slides[i].sliderLoaded = true;
+            }
+        },
+        onSwipeLeft() {
+            console.log('swipped left');
+            this.currentSlide = this.validateNewIndex(this.currentSlide + 1);
+            this.updateCurrentSlide();
+        },
+        onSwipeRight() {
+            console.log('swipped right');
+            this.currentSlide = this.validateNewIndex(this.currentSlide - 1);
+            this.updateCurrentSlide();
+        },
         updateCurrentSlide() {
             const newIndex = this.currentSlide;
 
@@ -122,6 +137,7 @@ Vue.component('slider', {
         }
     },
     mounted() {
+        this.isLoaded = !this.waitForLoad;
         this.slides = this.$children;
         this.totalSlides = this.slides.length;
         this.currentSlide = this.startingSlide;
@@ -135,7 +151,6 @@ Vue.component('slider', {
 
         // set total slides for controller
         VueEvent.$emit('slider-update-total-slides', this.sliderId, this.slides.length);
-
         // set current slide
         VueEvent.$on('slider-set-slide-index', (sliderId, newIndex) => {
             // stop slider from playing
@@ -147,11 +162,21 @@ Vue.component('slider', {
             }
         });
 
+        if (this.isLoaded) {
+            this.onLoad();
+        } else {
+            VueEvent.$on('slider-loaded', (sliderId) => {
+                if (this.sliderId === sliderId) {
+                    this.onLoad();
+                }
+            });
+        }
+
         // set initial slide
         this.updateCurrentSlide();
     },
     template:
-`<div class="vue_slider" :style="{ height: startingHeight + 'px' }">
+`<div class="vue_slider" :style="{ height: sliderHeight + 'px' }" @swipeleft="onSwipeLeft" @swiperight="onSwipeRight">
     <slot></slot>
 </div>`,
 });
@@ -208,16 +233,17 @@ Vue.component('slider-slide', {
     data() {
         return {
             backgroundImageSrc: false,
-            currentStatus: 'after'
+            currentStatus: 'after',
+            sliderLoaded: false
         }
     },
     props: {
         backgroundImages: false,
         focalPoint: { default: '50% 50%' },
     },
-    mounted() {
-        if (this.backgroundImages) {
-            VueEvent.$on('window-resized', () => {
+    methods: {
+        updateSlideSrc() {
+            if (this.backgroundImages) {
                 let src = '';
                 for (let i=0; i<this.backgroundImages.length; i++) {
                     if (this.backgroundImages[i].mq !== undefined) {
@@ -230,11 +256,15 @@ Vue.component('slider-slide', {
                 }
 
                 this.backgroundImageSrc = src;
-            });
+            }
         }
     },
+    mounted() {
+        VueEvent.$on('window-resized', this.updateSlideSrc);
+        this.updateSlideSrc();
+    },
     template:
-`<div class="vue_slider__slide" :class="'vue_slider__slide--' + currentStatus" :style="{ 'background-image': (backgroundImageSrc ? 'url(' + backgroundImageSrc + ')' : false), 'background-position': focalPoint }">
+`<div class="vue_slider__slide" :class="'vue_slider__slide--' + currentStatus" :style="{ 'background-image': ((backgroundImageSrc && sliderLoaded) ? 'url(' + backgroundImageSrc + ')' : false), 'background-position': focalPoint }">
     <div>
         <slot></slot>
     </div>
