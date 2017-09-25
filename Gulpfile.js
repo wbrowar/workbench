@@ -276,7 +276,7 @@ gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release']
 });
 
 // [gulp watch]
-gulp.task('watch', function() {
+gulp.task('watch', ['ejs:quick:full'], function() {
     const watchCss          = gulp.watch(paths.filesScss, ['css']),
           watchEjsIncludes  = gulp.watch(paths.filesEjsIncludes, ['ejs:quick:full']),
           watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
@@ -426,7 +426,7 @@ function cssHandler() {
         .pipe($.sass({outputStyle: 'compressed'}).on('error', $.sass.logError))
         .pipe(gulp.dest(bases.build + 'css/sass'))
         .pipe($.autoprefixer({
-            browsers: ['last 2 versions'],
+            browsers: vars.browserlist,
             cascade: false
         }))
         .pipe(gulp.dest(bases.build + 'css/autoprefixer'))
@@ -503,9 +503,15 @@ gulp.task('svg', function() {
 
 // Uglify JS
 function jsHandler(useUglify = false) {
-    var babelOptions = {
-        presets: ['es2015'],
-    }
+    const babelOptions = {
+        "presets": [
+            ["env", {
+                "targets": {
+                    "browsers": vars.browserlist
+                }
+            }]
+        ]
+    };
 
     return gulp.src(paths.filesJs)
         .pipe($.changed(paths.distJs))

@@ -8,6 +8,7 @@
   "site_root": "/",
   "style_template_url_prefix": "dev/inv/",
   "style_template_url_suffix": ".html",
+  "browserlist": ["last 2 versions", "IE 11"],
   "enable_babel": true,
   "enable_ssi": false,
   "enable_system_js": "true",
@@ -15,7 +16,7 @@
   "template_is_set_up": false,
   "browserSync": {
     "browser": "google chrome",
-    "url": "https://starter.wbrowar.com/"
+    "url": "https://starter.wbrowar.com/"Ø
   },
   "critcss": [
     {
@@ -157,13 +158,14 @@
     "vue": "^2.4.2"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.24.1",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "browser-sync": "^2.18.13",
     "critical": "^0.9.0",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^7.0.0",
     "gulp-bump": "^2.7.0",
     "gulp-changed": "^3.1.0",
     "gulp-clean": "^0.3.2",
