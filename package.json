@@ -16,7 +16,7 @@
   "template_is_set_up": false,
   "browserSync": {
     "browser": "google chrome",
-    "url": "https://starter.wbrowar.com/"Ø
+    "url": "https://starter.wbrowar.com/"
   },
   "critcss": [
     {
