@@ -198,6 +198,13 @@ scrollToElement(el);
 
 ---
 ## Release Notes
+#### 4.8.1
+- :rocket: Added the ability to show arguments accepted by components in Style Inventories
+  - Add an `options` array into a style inventory to show argument names, required or not, type, default value, and a description
+  - Look at `_source/_util/_craft2_1/templates/_html/dev/_style_inv/buttons.twig` for an example of the `options` array
+  - More will be added later
+- :fire: Removed Ideal Image Slider from `package.json` and other associated files
+
 #### 4.8.0
 - :rocket: Added `gulp setup` task
 - :wrench: Refactored `_source/_util` folder to make editing Style Inventories easier

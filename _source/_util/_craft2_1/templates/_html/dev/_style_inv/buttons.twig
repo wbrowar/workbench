@@ -9,7 +9,13 @@
   "background": "light",
   "twigCode":
 `{% import 'macros/buttons' as buttons %}
-{{ buttons.default({ label: 'Button', url: 'http://google.com' }) }}`
+{{ buttons.default({ label: 'Button', url: 'http://google.com' }) }}`,
+  "options": [
+    { "name": 'label', "required": true, "type": 'string', "default": `''`, "description": `Text that appears on the button.` },
+    { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added to the button that allow for variations in styles or functionality.` },
+    { "name": 'target', "required": false, "type": 'string', "description": `Adds a target attribute to the button.` },
+    { "name": 'url', "required": true, "type": 'string', "default": `'#'`, "description": `URL that th user will be sent to upon clicking button.` }
+  ]
 }); %>
 <% modules.push({
   "title": "Button Element",

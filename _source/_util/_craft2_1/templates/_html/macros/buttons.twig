@@ -1,7 +1,8 @@
 {% macro default(options) %}{% spaceless %}
     {% set label = options.label ?? '' %}
     {% set modifiers = options.modifiers ?? '' %}
+    {% set target = options.target ?? null %}
     {% set url = options.url ?? '#' %}
 
-    <a class="c_button {{ modifiers }}" href="{{ url(url) }}">{{ label }}</a>
+    <a class="c_button {{ modifiers }}" href="{{ url(url) }}"{% if target ?? false %} target="{{ target }}"{% endif %}>{{ label }}</a>
 {% endspaceless %}{% endmacro %}

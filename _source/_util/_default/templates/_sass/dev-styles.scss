@@ -119,6 +119,28 @@ $border_radius: 4px;
         }
       }
     }
+    @at-root #{&}__table {
+      width: 100%;
+
+      td {
+        padding: .4em $padding_dev_spacing;
+        font-size: .8rem;
+        border: 1px solid transparentize($color_dev_grey_outline, .3);
+        background-color: transparentize($color_dev_grey_outline, .4);
+        color: transparentize($color_dev_black, .3);
+
+        b {
+          font-weight: bold;
+        }
+      }
+
+      thead {
+        td {
+          background-color: transparentize($color_dev_grey_outline, .1);
+          color: $color_dev_black;
+        }
+      }
+    }
   }
 
   @at-root #{&}__box_wrapper {
