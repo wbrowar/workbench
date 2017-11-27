@@ -21,7 +21,11 @@
         'email': 'hello@example.com',
     }
 } %}
-{{ icons.socialLinks(options) }}`
+{{ icons.socialLinks(options) }}`,
+    "options": [
+        { "name": 'links', "required": true, "type": 'object', "default": `{}`, "description": `List of URLs to social media properties. For example: <b>links: { facebook: 'https://facebook.com/example' }</b>` }
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` }
+    ]
 }); %>
 
 <% modules.push({
@@ -34,7 +38,13 @@
     title: 'Title of Article',
     url: craft.request.url,
 } %}
-{{ icons.socialShare(options) }}`
+{{ icons.socialShare(options) }}`,
+    "options": [
+{ "name": 'image', "required": false, "type": 'AssetFileModel', "description": `An image that can be passed into social sharing tools that allow for images. For example, Twitter Cards will show an image if passed in. <i>NOTE: While image is not required for this component, it is required for the Pinterest sharing icon to appear.</i>` }
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` }
+        { "name": 'title', "required": true, "type": 'string', "default": `''`, "description": `The title of the post as shown on Twitter Cards, LinkedIn posts, etc...` }
+        { "name": 'url', "required": true, "type": 'string', "default": `'#'`, "description": `The URL of the page being shared.` }
+    ]
 }); %>
 
 <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

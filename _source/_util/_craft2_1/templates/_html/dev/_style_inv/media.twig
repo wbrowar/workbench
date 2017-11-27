@@ -9,7 +9,11 @@
     "background": "light",
     "twigCode":
 `{% import 'macros/media' as media %}
-{{ media.audio({ 'url': 'https://starter.wbrowar.com/audio/clip.mp3' }) }}`
+{{ media.audio({ 'url': 'https://starter.wbrowar.com/audio/clip.mp3' }) }}`,
+    "options": [
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'url', "required": true, "type": 'string', "default": `#`, "description": `URL of audio file.` }
+    ]
 }); %>
 
 <% modules.push({
@@ -18,7 +22,14 @@
     "background": "light",
     "twigCode":
 `{% import 'macros/media' as media %}
-{{ media.video({ 'id': 'G4Sn91t1V4g', 'source': 'youtube' }) }}`
+{{ media.video({ 'id': 'G4Sn91t1V4g', 'source': 'youtube' }) }}`,
+    "options": [
+        { "name": 'controls', "required": false, "type": 'boolean', "default": `true`, "description": `Display controls on or off.` },
+        { "name": 'id', "required": false, "type": 'string', "default": ``, "description": `ID of video as found on video hosting sites. Usually can be pulled from a URL or video embed tag.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'source', "required": false, "type": 'string', "default": `'file'`, "description": `Changes embed code based on source of the video. Options include: <b>youtube</b>, <b>vimeo</b>, or <b>file</b>.` },
+        { "name": 'url', "required": false, "type": 'string', "default": `#`, "description": `URL of video file used when the source option is set to 'file'.` }
+    ]
 }); %>
 
 <% modules.push({
@@ -27,7 +38,14 @@
     "background": "light",
     "twigCode":
 `{% import 'macros/media' as media %}
-{{ media.video({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`
+{{ media.video({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`,
+    "options": [
+        { "name": 'controls', "required": false, "type": 'boolean', "default": `true`, "description": `Display controls on or off.` },
+        { "name": 'id', "required": false, "type": 'string', "default": ``, "description": `ID of video as found on video hosting sites. Usually can be pulled from a URL or video embed tag.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'source', "required": false, "type": 'string', "default": `'file'`, "description": `Changes embed code based on source of the video. Options include: <b>youtube</b>, <b>vimeo</b>, or <b>file</b>.` },
+        { "name": 'url', "required": false, "type": 'string', "default": `#`, "description": `URL of video file used when the source option is set to 'file'.` }
+    ]
 }); %>
 
 <% modules.push({
@@ -40,7 +58,14 @@
 </div>`,
     "twigCode":
 `{% import 'macros/media' as media %}
-{{ media.videoBg({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`
+{{ media.videoBg({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`,
+    "options": [
+        { "name": 'autoplay', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
+        { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
+        { "name": 'loop', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'url', "required": true, "type": 'string', "default": `#`, "description": `URL of video file.` }
+    ]
 }); %>
 
 <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

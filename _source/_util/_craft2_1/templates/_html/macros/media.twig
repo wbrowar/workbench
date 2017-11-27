@@ -1,9 +1,9 @@
 {# AUDIO #}
 {% macro audio(options) %}{% spaceless %}
-    {% set classes = options.classes ?? '' %}
+    {% set modifiers = options.modifiers ?? '' %}
     {% set url = options.url ?? '#' %}
 
-    <div class="c_audio{% if classes|length %} {{ classes }}{% endif %}">
+    <div class="c_audio{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
         <audio data-lazy-load data-src="{{ url }}" controls></audio>
         <noscript><audio src="{{ url }}" controls></audio></noscript>
     </div>
@@ -16,13 +16,13 @@
 
 {# VIDEO #}
 {% macro video(options) %}{% spaceless %}
-    {% set classes = options.classes ?? '' %}
     {% set controls = options.controls ?? true %}
     {% set id = options.id ?? '' %}
+    {% set modifiers = options.modifiers ?? '' %}
     {% set source = options.source ?? 'file' %}
     {% set url = options.url ?? '#' %}
 
-    <div class="c_video{% if classes|length %} {{ classes }}{% endif %}">
+    <div class="c_video{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
         {% if source == 'youtube' %}
             <iframe data-lazy-load data-src="https://www.youtube.com/embed/{{ id }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
             <noscript><iframe src="https://www.youtube.com/embed/{{ id }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
@@ -38,12 +38,14 @@
 
 {% macro videoBg(options) %}{% spaceless %}
     {% set autoplay = options.autoplay ?? true %}
-    {% set classes = options.classes ?? '' %}
     {% set lazyLoad = options.lazyLoad ?? true %}
     {% set loop = options.loop ?? true %}
+    {% set modifiers = options.modifiers ?? '' %}
     {% set url = options.url ?? '#' %}
 
-    <div class="c_video_bg{% if classes|length %} {{ classes }}{% endif %}">
-        <video class="c_video_bg__video" {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ url }}" preload muted {{ autoplay ? 'autoplay' : '' }} {{ loop ? 'loop' : '' }}></video>
-    </div>
+    {% if url ?? false %}
+        <div class="c_video_bg{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+            <video class="c_video_bg__video" {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ url }}" preload muted {{ autoplay ? 'autoplay' : '' }} {{ loop ? 'loop' : '' }}></video>
+        </div>
+    {% endif %}
 {% endspaceless %}{% endmacro %}

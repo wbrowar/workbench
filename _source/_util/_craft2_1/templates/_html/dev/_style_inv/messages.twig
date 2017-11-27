@@ -9,7 +9,13 @@
     "background": "light",
     "twigCode":
 `{% import 'macros/messages' as messages %}
-{{ messages.alertBar({ summary: 'There is an outage in our production.' }) }}`
+{{ messages.alertBar({ summary: 'There is an outage in our production.' }) }}`,
+    "options": [
+        { "name": 'body', "required": false, "type": 'string', "default": `''`, "description": `URL of audio file.` },
+        { "name": 'ctaUrl', "required": false, "type": 'string', "default": `'#'`, "description": `URL of audio file.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'summary', "required": true, "type": 'string', "default": `''`, "description": `URL of audio file.` }
+    ]
 }); %>
 
 <% modules.push({
