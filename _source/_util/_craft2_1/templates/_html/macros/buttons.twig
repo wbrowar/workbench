@@ -4,5 +4,5 @@
     {% set target = options.target ?? null %}
     {% set url = options.url ?? '#' %}
 
-    <a class="c_button {{ modifiers }}" href="{{ url(url) }}"{% if target ?? false %} target="{{ target }}"{% endif %}>{{ label }}</a>
+    <a class="c_button{% if modifiers ?? false %} {{ modifiers }}{% endif %}" href="{{ url(url) }}"{% if target ?? false %} target="{{ target }}"{% endif %}>{{ label }}</a>
 {% endspaceless %}{% endmacro %}

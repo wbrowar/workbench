@@ -8,8 +8,10 @@
   "description": "Plays an audio file using default browser controls. Waits until user has scrolled down to the element to load the audio file.",
   "background": "light",
   "code":
-`<audio data-lazy-load data-src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio>
-<noscript><audio src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio></noscript>`
+`<div class="c_audio">
+  <audio data-lazy-load data-src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio>
+  <noscript><audio src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio></noscript>
+</div>`
 }); %>
 
 <% modules.push({
@@ -41,13 +43,13 @@
   "demoCode":
 `<div class="styles__box_wrapper">
   <div class="styles__box" style="padding: 0;">
-    <div class="c_video_bg" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.png" },{ "retina": true, "url": "/img/FPO@2x.png" }] }'>
+    <div class="c_video_bg">
       <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
     </div>
   </div>
 </div>`,
 "code":
-`<div class="c_video_bg" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.png" },{ "retina": true, "url": "/img/FPO@2x.png" }] }'>
+`<div class="c_video_bg">
   <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
 </div>`
 }); %>

@@ -11,3 +11,29 @@ html {
   color: $color_black_default;
   //-webkit-font-smoothing: antialiased;
 }
+
+.c_header {
+  @include font('apple_bold');
+  @include fz(8, 4rem, '900px');
+}
+.c_subheader {
+  @include font('apple_bold');
+  @include fz(4, 2rem, '700px');
+}
+p {
+  margin-bottom: 2em;
+  line-height: 1.6;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+  b, strong {
+    @include font('apple_bold');
+  }
+  i, em {
+    @include font('apple_italic');
+  }
+  b i, i b, strong em, em strong {
+    @include font('apple_bold_italic');
+  }
+}

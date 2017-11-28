@@ -9,7 +9,12 @@
   "background": "light",
   "code":
 `<figure>
-  <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" data-width="1000" data-height="1000" alt="For Placement Only">
+  <picture>
+    <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+         sizes="100vw"
+         alt="Fpo"
+         data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+  </picture>
 </figure>`
 }); %>
 
@@ -19,12 +24,30 @@
   "background": "light",
   "demoCode":
 `<div class="styles__box_wrapper">
-  <div data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.png" },{ "retina": true, "url": "/img/FPO@2x.png" }] }' class="styles__box" style="background-size: cover;"></div>
-  <div data-lazy-load data-bg-array='{ "class": "image_2", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" },{ "mq": "(min-width: 700px)", "url": "/img/FPO.png" },{ "mq": "(min-width: 700px)", "retina": true, "url": "/img/FPO@2x.png" }] }' class="styles__box" style="background-size: cover;"></div>
+  <div class="styles__box" style="padding: 0px;">
+    <div class="c_image_bg">
+      <figure class="c_image_bg__image">
+        <picture>
+          <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+               sizes="100vw"
+               alt="Fpo"
+               data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+        </picture>
+      </figure>
+    </div>
+  </div>
 </div>`,
   "code":
-`<div data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.png" },{ "retina": true, "url": "/img/FPO@2x.png" }] }'></div>
-<div data-lazy-load data-bg-array='{ "class": "image_2", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" },{ "mq": "(min-width: 700px)", "url": "/img/FPO.png" },{ "mq": "(min-width: 700px)", "retina": true, "url": "/img/FPO@2x.png" }] }'></div>`
+`<div class="c_image_bg">
+  <figure class="c_image_bg__image">
+    <picture>
+      <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+           sizes="100vw"
+           alt="Fpo"
+           data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+    </picture>
+  </figure>
+</div>`
 }); %>
 
 

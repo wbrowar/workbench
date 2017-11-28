@@ -57,7 +57,7 @@ const QueryString = function () {
     return query_string;
 }();
 function ready(fn) {
-    if (document.readyState != 'loading'){
+    if (document.readyState !== 'loading'){
         fn();
     } else {
         document.addEventListener('DOMContentLoaded', fn);
@@ -93,8 +93,8 @@ function activeToggleSetup() {
     });
 }
 function sliderLoaded(el, args) {
-    if (VueEvent !== undefined) {
-        VueEvent.$emit('slider-loaded', args.id);
+    if (window.VueEvent !== undefined) {
+        window.VueEvent.$emit('slider-loaded', args.id);
     }
 }
 

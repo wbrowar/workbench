@@ -68,7 +68,16 @@
          data-lazy-animate="sliderLoaded"
          data-lazy-animate-args='{ "id": "slider_1" }'
          data-lazy-animate-offset="500">
-  <slider-slide :background-images="[{ src:'/img/FPO.png' },{ mq:'(min-width: 400px)', src:'/img/FPO@2x.png' }]"></slider-slide>
+  <slider-slide class="c_image_bg">
+    <figure class="c_image_bg__image">
+      <picture>
+        <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+             sizes="100vw"
+             alt="Fpo"
+             data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+      </picture>
+    </figure>
+  </slider-slide>
   <slider-slide class="c_video_bg">
     <video class="c_video_bg__video" src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
   </slider-slide>
@@ -97,7 +106,16 @@
          data-lazy-animate="sliderLoaded"
          data-lazy-animate-args='{ "id": "slider_1" }'
          data-lazy-animate-offset="500">
-  <slider-slide :background-images="[{ src:'/img/FPO.png' },{ mq:'(min-width: 400px)', src:'/img/FPO@2x.png' }]"></slider-slide>
+  <slider-slide class="c_image_bg">
+      <figure class="c_image_bg__image">
+      <picture>
+        <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+             sizes="100vw"
+             alt="Fpo"
+             data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+      </picture>
+    </figure>
+  </slider-slide>
   <slider-slide class="c_video_bg">
     <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
   </slider-slide>

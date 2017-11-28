@@ -50,6 +50,7 @@
 .vue_slider {
   position: relative;
   overflow: hidden;
+  height: 30vw;
 
   @at-root #{&}__slide {
     position: absolute;

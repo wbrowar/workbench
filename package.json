@@ -47,30 +47,39 @@
   },
   "fonts": [
     {
-      "name": "avinir",
-      "source": "system",
-      "fontFamily": "'Avinir Next'",
-      "fallbackStack": "'Avinir', Helvetica, Arial, sans-serif",
-      "fontStyle": "normal",
-      "fontWeight": "normal",
-      "files": {}
-    },
-    {
-      "name": "avinir_italic",
-      "source": "system",
-      "fontFamily": "'Avinir Next'",
-      "fallbackStack": "'Avinir', Helvetica, Arial, sans-serif",
-      "fontStyle": "italic",
-      "fontWeight": "normal",
-      "files": {}
-    },
-    {
       "name": "apple",
       "source": "system",
       "fontFamily": "-apple-system",
       "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
       "fontStyle": "normal",
       "fontWeight": "normal",
+      "files": {}
+    },
+    {
+      "name": "apple_bold",
+      "source": "system",
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "700",
+      "files": {}
+    },
+    {
+      "name": "apple_italic",
+      "source": "system",
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "italic",
+      "fontWeight": "normal",
+      "files": {}
+    },
+    {
+      "name": "apple_bold_italic",
+      "source": "system",
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "italic",
+      "fontWeight": "700",
       "files": {}
     },
     {
@@ -114,6 +123,10 @@
       "name": "buttons"
     },
     {
+      "label": "Forms",
+      "name": "forms"
+    },
+    {
       "label": "Grids",
       "name": "grid"
     },
@@ -132,10 +145,6 @@
     {
       "label": "Messages",
       "name": "messages"
-    },
-    {
-      "label": "Navigation",
-      "name": "nav"
     },
     {
       "label": "Tables",
