@@ -5,8 +5,10 @@
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
 
 import lazy from 'lazy';
+import * as vc from 'vuecomponents';
 
 // export var windowWidth = 0, windowHeight = 0;
+const isIE = /MSIE \d|Trident.*rv:/.test(navigator.userAgent);
 
 // UTILITY FUNCTIONS
 export function addClass(el, className) {
@@ -126,7 +128,26 @@ export function setupEnhancements() {
             }
         };
         ready(function() {
+            // add fix for background images
+            if (isIE) {
+                const imageBgImages = document.querySelectorAll('.c_image_bg__image');
+
+                for (let i = 0, l = imageBgImages.length; i<l; i++) {
+                    const el = imageBgImages[i];
+                    const image = el.querySelector('img');
+
+                    if (image.getAttribute('data-src')) {
+                        el.style.backgroundImage = 'url(' + image.getAttribute('data-src') + ')';
+                    } else if (image.getAttribute('src')) {
+                        el.style.backgroundImage = 'url(' + image.getAttribute('src') + ')';
+                    }
+                }
+            }
+
+            // add class to html element for styling purposes
             addClass(document.documentElement, 'enhanced');
+
+            // lazy load images and media
             lazy(lazyConfig);
         });
     }
