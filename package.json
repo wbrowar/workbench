@@ -197,5 +197,10 @@
     "imagemin-svgo": "^6.0.0",
     "inquirer": "^4.0.0",
     "node-notifier": "^5.1.2"
+  },
+  "scripts": {
+    "prod": "gulp release",
+    "dev": "gulp run",
+    "watch": "gulp watch"
   }
 }
