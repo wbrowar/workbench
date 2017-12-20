@@ -1,0 +1,20 @@
+{% macro alertBar(options) %}{% spaceless %}
+    {% set body = options.body ?? '' %}
+    {% set ctaUrl = options.url ?? '#' %}
+    {% set modifiers = options.modifiers ?? '' %}
+    {% set summary = options.summary ?? '' %}
+
+    {% if summary ?? false %}
+        <div id="alert_bar" class="c_alert_bar{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+            <div class="c_alert_bar__summary c_alert_bar--message"{% if body ?? false %} data-active-toggle="#alert_bar"{% endif %}>{{ summary }}</div>
+            {% if body ?? false %}
+                <div class="c_alert_bar__message">
+                    {{ body|raw }}
+                </div>
+                <noscript>
+                    {{ body|raw }}
+                </noscript>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endspaceless %}{% endmacro %}

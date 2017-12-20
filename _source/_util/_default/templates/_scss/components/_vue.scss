@@ -1,0 +1,4 @@
+// hide items with v-cloak attribute until vue is loaded and ready to go
+[v-cloak] {
+  display: none;
+}

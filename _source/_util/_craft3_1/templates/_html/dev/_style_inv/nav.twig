@@ -1,0 +1,32 @@
+<% const currentSection = 'nav' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+"title": "Mobile Nav Toggle",
+"description": "An example of `data-active-toggle`. This attribute can toggle an `active` class when the element is clicked. By setting the attribute to a query selector string, clicking this element will use `querySelectorAll` to toggle the `active` class on all applicable targets.",
+"background": "light",
+"demoCode":
+`<button data-active-toggle="#mobile_nav .styles__box">Toggle Mobile Nav</button>
+<br>
+<div id="mobile_nav" class="mobile_nav">
+    <div class="styles__box_wrapper">
+        <div class="styles__box styles__box--flex">
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>News</li>
+                <li>Contact</li>
+            </ul>
+        </div>
+    </div>
+</div>`,
+"code":
+`<button data-active-toggle="#mobile_nav">Toggle Mobile Nav</button>
+<div id="mobile_nav" class="mobile_nav">
+    <!-- content -->
+</div>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

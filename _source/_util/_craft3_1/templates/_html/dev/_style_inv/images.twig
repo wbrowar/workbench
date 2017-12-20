@@ -1,0 +1,58 @@
+<% const currentSection = 'images' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+"title": "Lazy-loading Image",
+"description": "An image loaded when the user scrolls down to its location on the page.",
+"background": "light",
+"twigCode":
+`{% import 'macros/images' as images %}
+{% set image = craft.assets.title('Fpo').first() %}
+{% set config = {
+    'width': 500,
+    'height': 500,
+    'sizes': [
+        { width: 500, height: 500, jpegQuality: 80 },
+        { width: 1000, height: 1000, jpegQuality: 70 }
+    ]
+} %}
+{{ images.lazyLoadImage(image, config) }}`
+}); %>
+
+<% modules.push({
+"title": "Lazy-loading Background Image",
+"description": "Loads a background image when the user scrolls down to its location on the page. Uses a JSON object in the `data-bg-array` attribute to create CSS that laods the background image. Multiple images can be loaded via media queries defined in the JSON object.",
+"background": "light",
+"demoCode":
+`{% import 'macros/images' as images %}
+{% set image = craft.assets.title('Fpo').first() %}
+{% set config = {
+    'class': 'image_1',
+    'sizes': [
+        { width: 300, height: 300, jpegQuality: 80, },
+        { width: 600, height: 600, jpegQuality: 70, retina: true },
+        { width: 500, height: 500, jpegQuality: 80, mq: '(min-width: 700px)' },
+        { width: 1000, height: 1000, jpegQuality: 70, mq: '(min-width: 700px)', retina: true }
+    ]
+} %}
+
+<div class="styles__box" {{ images.lazyLoadBgImage(image, config) }}></div>`,
+"twigCode":
+`{% import 'macros/images' as images %}
+{% set image = craft.assets.title('Fpo').first() %}
+{% set config = {
+    'class': 'image_1',
+    'sizes': [
+        { width: 300, height: 300, jpegQuality: 80, },
+        { width: 600, height: 600, jpegQuality: 70, retina: true },
+        { width: 500, height: 500, jpegQuality: 80, mq: '(min-width: 700px)' },
+        { width: 1000, height: 1000, jpegQuality: 70, mq: '(min-width: 700px)', retina: true }
+    ]
+} %}
+
+<div {{ images.lazyLoadBgImage(image, config) }}></div>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

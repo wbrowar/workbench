@@ -1,0 +1,66 @@
+{# HELPERS #}
+{% macro backgroundImageCss(selector, imageUrl, position, retina, minWidth) %}
+  {% if minWidth|length and retina %}
+    @media (min-width: {{ minWidth }}) and (-webkit-min-device-pixel-ratio: 2), 
+           (min-width: {{ minWidth }}) and (min-resolution: 192dpi) {
+  {% elseif minWidth|length %}
+    @media (min-width:{{ minWidth }}) {
+  {% elseif retina %}
+    @media (-webkit-min-device-pixel-ratio: 2), 
+           (min-resolution: 192dpi) {
+  {% endif %}
+    {{ selector }} {
+      background-image: url({{ imageUrl }});
+      background-position: {{ position }};
+    }
+  {% if minWidth|length or retina %}
+    }
+  {% endif %}
+{% endmacro %}
+
+{% macro nextScheduledDate(sectionHandle) %}
+  {% set firstPending = craft.entries({
+    section: sectionHandle,
+    status: 'pending',
+    order: 'postDate asc'
+  }).first %}
+  {{ firstPending ? firstPending.postDate : now|date_modify('+1 year') }}
+{% endmacro %}
+
+{% macro splitText(text) %}
+  {% set text = text|nl2br|raw %}
+  {% set text = '<span class="split_text">' ~ text|replace('<br />', '</span> <span class="split_text">') ~ '</span>' %}
+  {{ text|raw }}
+{% endmacro %}
+
+{# PAGINATION #}
+{% macro pager(paginate, max) %}
+  {% set maxRange = ((max - 1) / 2)|round %}
+  {% set queryString = craft.request.getQueryStringWithoutPath|length ? '?' ~ craft.request.getQueryStringWithoutPath : '' %}
+
+  <div class="pager_wrapper">
+  {% if paginate.prevUrl %}
+    <a class="pager_prev" href="{{ url(paginate.prevUrl) }}{{ queryString }}">Back</a>
+  {% endif %}
+
+  <div class="pager">
+    {% spaceless %}
+    {% if paginate.totalPages != 1 %}
+      {% if paginate.currentPage < (max - 1) %}
+        {% for page, url in paginate.getRangeUrls(1, max) %}
+        <a {% if page == paginate.currentPage %}class="active"{% endif %} href="{{ url(url) }}{{ queryString }}">{% if loop.first and page != 1 %}&hellip;{% endif %}{{ page }}{% if loop.last and page != paginate.totalPages %}&hellip;{% endif %}</a>
+        {% endfor %}
+      {% else %}
+        {% for page, url in paginate.getRangeUrls(paginate.currentPage - maxRange, paginate.currentPage + maxRange) %}
+        <a {% if page == paginate.currentPage %}class="active"{% endif %} href="{{ url(url) }}{{ queryString }}">{% if loop.first and page != 1 %}&hellip;{% endif %}{{ page }}{% if loop.last and page != paginate.totalPages %}&hellip;{% endif %}</a>
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+    {% endspaceless %}
+  </div>
+
+  {% if paginate.nextUrl %}
+    <a class="pager_next" href="{{ url(paginate.nextUrl) }}{{ queryString }}">Next</a>
+  {% endif %}
+  </div>
+{% endmacro %}

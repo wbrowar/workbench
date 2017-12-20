@@ -1,0 +1,112 @@
+<% const currentSection = 'animations' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+  "title": "Rollover Pop Up",
+  "description": "Simple roll-over animations.",
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex c_animate c_animate--rollover--pop--up">Roll over me.</div>
+  <div class="styles__box styles__box--flex c_animate c_animate--rollover--pop--down">Roll over me.</div>
+  <div class="styles__box styles__box--flex c_animate c_animate--rollover--pop--forward">Roll over me.</div>
+</div>`,
+  "code":
+`<div class="c_animate c_animate--rollover--pop--up">Roll over me.</div>
+<div class="c_animate c_animate--rollover--pop--down">Roll over me.</div>
+<div class="c_animate c_animate--rollover--pop--forward">Roll over me.</div>`
+}); %>
+
+<% modules.push({
+  "title": "Rollover Scale",
+  "description": "Roll over to zoom in on an image. Content placed in the `foreground` will remain static, where content in the background will scale with the background image.",
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div class="styles__box c_animate c_animate--rollover--scale">
+    <div class="c_animate c_animate--rollover--scale__background styles__box--flex" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
+  </div>
+  <div class="styles__box c_animate c_animate--rollover--scale">
+    <div class="c_animate c_animate--rollover--scale__background" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
+    <div class="c_animate c_animate--rollover--scale__foreground styles__box--flex">Roll over me.</div>
+  </div>
+</div>`,
+  "code":
+`<div class="c_animate c_animate--rollover--scale">
+  <div class="c_animate c_animate--rollover--scale__background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
+</div>
+<div class="c_animate c_animate--rollover--scale">
+  <div class="c_animate c_animate--rollover--scale__background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
+  <div class="c_animate c_animate--rollover--scale__foreground">Roll over me.</div>
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "Push in on Click",
+  "description": "Used to show the action of a button being pushed.",
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex animate c_animate c_animate--click--push_in">Click me.</div>
+</div>`,
+  "code": `<div class="animate c_animate c_animate--click--push_in">Click me.</div>`
+}); %>
+
+<% modules.push({
+  "title": "Fade on Scroll",
+  "description": "Animated page elements in and out when the user scrolls down to them. Note the optional `data-lazy-animate-offset` attribute is used here, but it's not required.",
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex c_animate c_animate--fade--in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
+  <div class="styles__box styles__box--flex c_animate c_animate--fade--out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>
+</div>`,
+  "code":
+`<div class="c_animate c_animate--fade--in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
+<div class="c_animate c_animate--fade--out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>`
+}); %>
+
+<% modules.push({
+  "title": "Slide in on Scroll",
+  "description": "Animated in page elements when the user scrolls down to them.",
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--left" data-lazy-animate>Content</div>
+  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--bottom" data-lazy-animate>Content</div>
+  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--right" data-lazy-animate>Content</div>
+  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--top" data-lazy-animate>Content</div>
+</div>`,
+  "code":
+`<div class="c_animate c_animate--fade--in--from--left" data-lazy-animate>Content</div>
+<div class="c_animate c_animate--fade--in--from--bottom" data-lazy-animate>Content</div>
+<div class="c_animate c_animate--fade--in--from--right" data-lazy-animate>Content</div>
+<div class="c_animate c_animate--fade--in--from--top" data-lazy-animate>Content</div>`
+}); %>
+
+<% modules.push({
+  "title": "JS Callback Function on Scroll",
+  "description": 'Fire a function when element is scolled into the viewport. In the format, "function|argumentsAsAString", you can call a function and pass in a string that can be processed as arguments by your function. The function needs to be passed into the `lazy.js` default function when `lazy()` is first fired. EXAMPLE: Check Console to see the results of the function fired.',
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div id="js_animation" class="styles__box styles__box--flex" data-lazy-animate="rotateBox">Content</div>
+</div>`,
+  "code":
+`<div id="js_animation" data-lazy-animate="rotateBox">Content</div>`
+}); %>
+
+<% modules.push({
+  "title": "Repeated JS Callback Function on Scroll",
+  "description": "Fire a function when element is scolled into the viewport. By including the `data-lazy-animate-reset` attribute, the function will continue to fire every time the element leaves and re-enters the viewport. EXAMPLE: Check Console to see the results of the function fired.",
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div id="js_animation_update" class="styles__box styles__box--flex" data-lazy-animate="rotateBox" data-lazy-animate-reset>Content</div>
+</div>`,
+  "code": `<div id="js_animation_update" data-lazy-animate="rotateBox" data-lazy-animate-reset>Content</div>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

@@ -198,6 +198,50 @@ scrollToElement(el);
 
 ---
 ## Release Notes
+#### 4.9.0
+- :rocket: Added NPM scripts to replace Gulp commands
+  - Use the following replacements when needed:
+    - `npm run dev`: replaces `gulp run`
+    - `npm run prod`: replaces `gulp release`
+    - `npm run watch`: replaces `gulp watch`
+    - `npm run list`: replaces `gulp`
+  - Other commands can still be run, but using NPM scripts for standard commands allows us to run non-gulp commands, as well
+  - Suggested aliases to make typing easier:
+  
+  ```
+  alias dev="npm run dev"
+  alias list="npm run list"
+  alias prod="npm run prod"
+  alias watch="npm run watch"
+  ```
+- :rocket: Replaced SystemJS with Webpack
+  - Module loading via `import` statements at the top of your Javascript file
+    - For NPM packages, you can refer to it by name (for example, `css-loader`)
+    - For custom libraries, import using a relative path (for example, `./lazy.js`)
+  - Webpack runs on `npm run dev`, `npm run prod`, and `npm run watch`
+  - Removed SystemJS code from templates
+  - Removed path settings in `_head_scripts.ejs`
+- :rocket: Converted Vue components in `vue-components.js` to Single File Components
+  - Uses scoped SCSS for easier CSS defaults
+  - SCSS imports `_source/_scss/base/mixins.scss` so variables can be used
+  - A "Hello, World" component is available as a skeleton for future components
+- :rocket: Added `webkit.config.js`
+  - Javascript files get compiled according to Webpack configuration
+  - Other Webpack plugins and configurations can be added
+- :rocket: Added `loadJS` for JS loading – Welcome back :tada:
+  - Loading uses filename of set in the `jsSection` variable in `head_scripts`
+- :rocket: Added new folder for Craft 3 templates, but it's only a copy of Craft 2 for now
+- :rocket: Added new `template_directory` variable to `package.json` in case template, specific EJS code is desired
+- :wrench: Changed `home.js` to `app.js` and removed `inside.js`
+  - Most sites don't need page specific js bundles, but if you need to split code into several files, save a new Javascript file and configure webpack to handle it
+- :wrench: Changed `_source/_sass` to `_source/_scss`
+- :wrench: Changed filename from `all.css` to `app.css`
+- :wrench: Moved filepaths for `loadCSS` and `loadJS` from `Gulpfile.js` to `package.json` so they can be updated if needed
+- :fire: Removed `body_bottom_scripts.ejs`
+- :fire: Removed `gulp first` and related tasks
+- :fire: Removed tasks that moved files from `node_modules`
+  - Use webpack or relative paths to include libraries directly from `node_modules`
+
 #### 4.8.1
 - :rocket: Added the ability to show arguments accepted by components in Style Inventories
   - Add an `options` array into a style inventory to show argument names, required or not, type, default value, and a description

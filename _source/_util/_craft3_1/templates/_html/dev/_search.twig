@@ -1,0 +1,35 @@
+{% extends "dev/_dev_page" %}
+
+{% block content %}
+  <br><br>
+
+  {% set query = craft.request.getParam('q') %}
+  {% set entries = craft.entries({
+    search: {
+      query: query,
+      subLeft: true,
+      subRight: true,
+    }
+  }).order('score') %}
+
+  <form action="{{ url('dev/search') }}">
+    <input type="search" name="q" placeholder="Search"{% if query|length %}value={{ query }}{% endif %}>
+    <input type="submit" value="Search">
+  </form>
+
+  {% if query|length %}
+    <h1>Search Results</h1>
+
+    {% if entries|length %}
+      <p>{{ entries|length }} results:</p>
+
+      <ul>
+      {% for entry in entries %}
+        <li><a href="{{ entry.url }}">{{ entry.title }}</a></li>
+      {% endfor %}
+        </ul>
+      {% else %}
+      <p>Your search for “{{ query }}” didn’t return any results.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% macro lazyLoadImage(image, config = {}) %}
+    {% if image ?? false %}
+        {% set global = config.global ?? {} %}
+        {% set position = config.position ?? '50% 50%' %}
+        {% set sizes = config.sizes ?? [] %}
+        {% set width = config.width ?? null %}
+        {% set height = config.height ?? null %}
+
+        {% set transformedImages = craft.imager.transformImage(image, sizes, global) %}
+
+        {% if image ?? false %}
+            <figure>
+                <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ craft.imager.srcset(transformedImages) }}"{% if width ?? false %} data-width="{{ width }}"{% endif %}{% if height ?? false %} data-height="{{ height }}"{% endif %} alt="{{ image.title }}">
+            </figure>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro lazyLoadBgImage(image, config = {}) %}{% spaceless %}
+    {% if image ?? false %}
+        {% set class = config.class ?? '.image_' ~ image.id %}
+        {% set cover = config.cover ?? true %}
+        {% set global = config.global ?? {} %}
+        {% set position = config.position ?? image.focalPoint ??  '50% 50%' %}
+        {% set sizes = config.sizes ?? [] %}
+
+        {% set transformedImages = craft.imager.transformImage(image, sizes, global) %}
+
+        {% set css %}
+            {% for size in sizes %}
+                {% set hasMq = false %}
+                {% if (size.retina ?? false) %}
+                    {% set hasMq = true %}
+                    @media (-webkit-min-device-pixel-ratio: 2){% if (size.mq ?? false) %} and {{ size.mq }}{% endif %},
+                    (min-resolution: 192dpi){% if (size.mq ?? false) %} and {{ size.mq }}{% endif %} {
+                {% elseif (size.mq ?? false) %}
+                    {% set hasMq = true %}
+                    @media {{ size.mq }} {
+                {% endif %}
+                    .{{ class }}:not([data-lazy-load]) {
+                        {% if loop.first %}
+                            background-position: {{ position }};
+                            {{ cover ? 'background-size: cover;' : '' }}
+                        {% endif %}
+                        background-image: url({{ transformedImages[(loop.index - 1)] }});
+                    }
+                {% if hasMq %} } {% endif %}
+            {% endfor %}
+        {% endset %}
+        {% includeCss css %}
+
+        data-lazy-load data-bg-array='{ "class": "{{ class }}", "css": [] }'
+    {% endif %}
+{% endspaceless %}{% endmacro %}

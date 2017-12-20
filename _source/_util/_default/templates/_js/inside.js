@@ -1,7 +1,7 @@
 //  INSIDE
 //  🛋 Scripts specific to interior pages
 
-import * as g from 'global';
+import * as g from './global.js';
 
 // CUSTOM FUNCTIONS
 

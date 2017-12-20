@@ -1,7 +1,7 @@
 //  HOME
 //  🏡 Scripts specific to the home page of the website
 
-import * as g from 'global';
+import * as g from './global.js';
 
 // CUSTOM FUNCTIONS
 

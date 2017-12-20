@@ -1,0 +1,37 @@
+<% const currentSection = 'index' %>
+<% const modules = [] %>
+
+<% const intro = `<div class="c_text">
+    <h1 class="c_header">Style Inventory</h1>
+    <p>Websites are marketing tools that evolve as business needs change. A style inventory ensures elements and components stay consistent as code is added and modified over time. The goal of a style inventory is to give designers and developers a place to begin when adding or changing page elements that are used in several contexts of the website.</p>
+    <p>For example, a button may be added as link at the bottom of a paragraph, as part of a call to action lockup, and as the submit trigger for a form. In all of these situations we want our audience to understand that that tapping this button performs an action. Instead of styling three different buttons, we can use one style that is used across all palces. To see all styles at once, the Buttons page in the style inventory shows how these buttons will look—as well as any future variations that may arise.</p>
+    <h2 class="c_subheader">Designers</h2>
+    <p>The style inventory can be used to reference current element styles and functionality.</p>
+    <h2 class="c_subheader">Developers</h2>
+    <p>The style inventory uses the \`all.css\` stylesheet and default javascript modules to display elements and components as they would look and work on the website. Copy the markup from the style inventory to add an element or component to the website.</p>
+</div>` %>
+
+<% modules.push({
+    "title": "Page Header",
+    "description": "",
+    "background": "light",
+    "code": `<h1 class="c_header">Page<br>Header</h1>`
+}); %>
+
+<% modules.push({
+    "title": "Page Subheader",
+    "description": "",
+    "background": "light",
+    "code": `<h2 class="c_subheader">Page<br>Subheader</h2>`
+}); %>
+
+<% modules.push({
+    "title": "Default Paragraph",
+    "description": "",
+    "background": "light",
+    "code":
+`<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p>Excepteur sint occaecat cupidatat non <b>proident</b>, sunt in culpa qui <i>officia deserunt</i> mollit <i><b>anim</b></i> id <b><i>est laborum</i></b>.</p>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

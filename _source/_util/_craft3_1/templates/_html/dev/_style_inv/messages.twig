@@ -1,0 +1,55 @@
+<% const currentSection = 'messages' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+    "title": "Alert Bar",
+    "description": "Used to display a timely message to users.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/messages' as messages %}
+{{ messages.alertBar({ summary: 'There is an outage in our production.' }) }}`,
+    "options": [
+        { "name": 'body', "required": false, "type": 'string', "default": `''`, "description": `URL of audio file.` },
+        { "name": 'ctaUrl', "required": false, "type": 'string', "default": `'#'`, "description": `URL of audio file.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'summary', "required": true, "type": 'string', "default": `''`, "description": `URL of audio file.` }
+    ]
+}); %>
+
+<% modules.push({
+    "title": "Alert Bar",
+    "description": "Used to display a timely message to users. The summary can be clicked on to reveal more information.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/messages' as messages %}
+{% set body %}
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+{% endset %}
+{{ messages.alertBar({ body: body, summary: 'There is an outage in our production.' }) }}`
+}); %>
+
+<% modules.push({
+    "title": "Success Alert Message",
+    "description": "Default style for a success message—letting the user know the intended action occurred.",
+    "background": "light",
+    "code": `<div class="c_message c_message--success">Congrats! This was successful!</div>`
+}); %>
+
+<% modules.push({
+    "title": "Error Alert Message",
+    "description": "Default style for an error message—letting the user know the intended action failed, providing them with instructions on how to proceed.",
+    "background": "light",
+    "code": `<div class="c_message c_message--error">I&rsquo;m sorry, Dave. I&rsquo;m afraid I can&rsquo;t do that.</div>`
+}); %>
+
+<% modules.push({
+    "title": "Warning Alert Message",
+    "description": "Default style for an warning message—should be used when an intended action can succeed, but it is not optimized.",
+    "background": "light",
+    "code": `<div class="c_message c_message--warning">Houston we have a problem ...</div>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

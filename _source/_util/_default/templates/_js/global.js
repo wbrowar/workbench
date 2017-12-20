@@ -4,8 +4,8 @@
 //  🛣 Functionality in nagivation used accross all pages on the site
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
 
-import lazy from 'lazy';
-import * as vc from 'vuecomponents';
+import lazy from './lazy.js';
+import * as vc from './vue-components.js';
 
 // export var windowWidth = 0, windowHeight = 0;
 const isIE = /MSIE \d|Trident.*rv:/.test(navigator.userAgent);

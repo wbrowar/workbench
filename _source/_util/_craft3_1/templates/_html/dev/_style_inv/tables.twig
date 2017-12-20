@@ -1,0 +1,64 @@
+<% const currentSection = 'tables' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+"title": "Default Table",
+"description": "A normal table of varying columns and rows.",
+"background": "light",
+"code":
+`<table class="c_table">
+    <thead>
+    <tr>
+        <th scope="col">Ingredients</th>
+        <th scope="col">Serves 12</th>
+        <th scope="col">Serves 24</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Milk</td>
+        <td>1 quart</td>
+        <td>2 quart</td>
+    </tr>
+    <tr>
+        <td>Cinnamon Sticks</td>
+        <td>2</td>
+        <td>1</td>
+    </tr>
+    <!-- ... -->
+    </tbody>
+</table>`
+}); %>
+
+<% modules.push({
+"title": "Table with zebra striping",
+"description": "A table that helps readability by alternating a background color for each row.",
+"background": "light",
+"code":
+`<table class="c_table c_table--zebra">
+    <thead>
+    <tr>
+        <th scope="col">Ingredients</th>
+        <th scope="col">Serves 12</th>
+        <th scope="col">Serves 24</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Milk</td>
+        <td>1 quart</td>
+        <td>2 quart</td>
+    </tr>
+    <tr>
+        <td>Cinnamon Sticks</td>
+        <td>2</td>
+        <td>1</td>
+    </tr>
+    <!-- ... -->
+    </tbody>
+</table>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

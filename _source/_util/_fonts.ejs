@@ -14,6 +14,7 @@ $font_embedded_<%= fonts[i].name %>: false;<% }; %><% }; %>
                  url('<%= fonts[i].files.woff %>') format('woff')<% } %>;
             font-style: <%= fonts[i].fontStyle %>;
             font-weight: <%= fonts[i].fontWeight %>;
+            font-display: swap;
         }
       }
     }<% first = false %><% }; %><% }; %>
@@ -39,7 +40,6 @@ $font_embedded_<%= fonts[i].name %>: false;<% }; %><% }; %>
     weight: $font_weight;
     style: $font_style;
   }
-  font-display: swap;
   
   @include embed_font($font_name);
 }

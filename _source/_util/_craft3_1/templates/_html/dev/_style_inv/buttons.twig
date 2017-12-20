@@ -1,0 +1,21 @@
+<% const currentSection = 'buttons' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+  "title": "Class",
+  "description": "A call-to-action button, used to encourage user interaction.",
+  "background": "light",
+  "twigCode":
+`{% import 'macros/buttons' as buttons %}
+{{ buttons.default({ label: 'Button', url: 'http://google.com' }) }}`,
+  "options": [
+    { "name": 'label', "required": true, "type": 'string', "default": `''`, "description": `Text that appears on the button.` },
+    { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+    { "name": 'target', "required": false, "type": 'string', "description": `Adds a target attribute to the button.` },
+    { "name": 'url', "required": true, "type": 'string', "default": `'#'`, "description": `URL that th user will be sent to upon clicking button.` }
+  ]
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

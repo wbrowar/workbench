@@ -1,6 +1,6 @@
 {
   "name": "example-project",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "source_path": "_source/",
   "build_path": "_build/",
   "theme_path": "public/",
@@ -8,12 +8,14 @@
   "site_root": "/",
   "style_template_url_prefix": "dev/inv/",
   "style_template_url_suffix": ".html",
-  "browserlist": ["last 2 versions", "IE 11"],
-  "enable_babel": true,
+  "browserlist": [
+    "last 2 versions",
+    "ie 11"
+  ],
   "enable_ssi": false,
-  "enable_system_js": "true",
   "minify_html": true,
-  "template_is_set_up": false,
+  "template_is_set_up": true,
+  "template_directory": "_html_1",
   "browserSync": {
     "browser": "google chrome",
     "url": "https://starter.wbrowar.com/"
@@ -21,29 +23,13 @@
   "critcss": [
     {
       "src": "https://starter.wbrowar.com/critcss/",
-      "cssFilename": "all",
+      "cssFilename": "app",
       "critCssFilename": "home"
-    },
-    {
-      "src": "https://starter.wbrowar.com/critcss/",
-      "cssFilename": "all",
-      "critCssFilename": "amp"
     }
   ],
-  "copyFirstCssFiles": [
-  ],
-  "copyFirstJsFiles": [
-    "node_modules/es6-promise/dist/es6-promise.auto.js",
-    "node_modules/jquery/dist/jquery.js",
-    "node_modules/fg-loadcss/src/loadCSS.js",
-    "node_modules/scrollmonitor/scrollMonitor.js",
-    "node_modules/systemjs/dist/system.js",
-    "node_modules/systemjs/dist/system-polyfills.js",
-    "node_modules/vue/dist/vue.min.js",
-    "node_modules/vue/dist/vue.js"
-  ],
   "ejsVars": {
-    "stylemarkup": "/html/ejs/ejs_includes/_style_markup.html"
+    "loadcss": "./../../../node_modules/fg-loadcss/dist/loadCSS.min.js",
+    "loadjs": "./../../../node_modules/fg-loadjs/loadJS.js"
   },
   "fonts": [
     {
@@ -157,7 +143,8 @@
   ],
   "dependencies": {
     "es6-promise": "^4.1.1",
-    "fg-loadcss": "^1.3.1",
+    "fg-loadcss": "^2.0.1",
+    "fg-loadjs": "^1.0.0",
     "jquery": "^3.2.1",
     "scrollmonitor": "^1.2.4",
     "systemjs": "^0.20.19",
@@ -165,13 +152,14 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "browser-sync": "^2.18.13",
     "critical": "^1.0.0",
+    "css-loader": "^0.28.7",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-babel": "^7.0.0",
     "gulp-bump": "^2.8.0",
     "gulp-changed": "^3.1.1",
     "gulp-clean": "^0.3.2",
@@ -188,7 +176,6 @@
     "gulp-sass": "^3.1.0",
     "gulp-sass-glob": "^1.0.8",
     "gulp-svg-inline-css": "^1.3.3",
-    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "imagemin-gifsicle": "^5.2.0",
     "imagemin-jpegtran": "^5.0.2",
@@ -196,11 +183,18 @@
     "imagemin-pngquant": "^5.0.1",
     "imagemin-svgo": "^6.0.0",
     "inquirer": "^4.0.0",
-    "node-notifier": "^5.1.2"
+    "node-notifier": "^5.1.2",
+    "sass-loader": "^6.0.6",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "vue-loader": "^13.6.0",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0"
   },
   "scripts": {
-    "prod": "gulp release",
     "dev": "gulp run",
+    "list": "gulp",
+    "prod": "NODE_ENV=production gulp release",
+    "setup": "gulp setup",
     "watch": "gulp watch"
   }
 }

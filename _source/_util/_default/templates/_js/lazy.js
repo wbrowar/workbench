@@ -1,7 +1,7 @@
 //  LAZY
 // Utility library used to lazy load front-end assets as well as perform animations based on page scroll position
 
-import { addClass } from 'global';
+import { addClass } from './global.js';
 import 'scrollmonitor';
 
 let config = {

@@ -1,57 +1,40 @@
     <!-- scripts -->
     <script type="text/javascript">
-        var jsSection = '{{ jsSection }}',
-            jsDevMode = <% if (release) { %>false<% } else { %>true<% } %>,
+        var jsSection = <% if (templateDirectory === '_craft3_1') { %>'{{ jsSection }}'<% } else { %>'app'<% } %>,
+            jsDevMode = <% if (templateDirectory === '_craft3_1') { %>{{ craft.app.config.general.devMode }}<% } else { %><% if (release) { %>false<% } else { %>true<% } %><% } %>,
             jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Math.floor(new Date().getTime() / 1000)<% } %>,
             jsThemePath = '<%= site_root %>';
 
-        var jsModulePaths = {
-            'axios': '_lib/axios.js?v=' + jsVersion,
-            'countup': '_lib/countUp.js?v=' + jsVersion,
-            'fontfaceobserver': '_lib/fontfaceobserver.js?v=' + jsVersion,
-            'scrollmonitor': '_lib/scrollMonitor.js?v=' + jsVersion,
-            'vue': jsDevMode ? '_lib/vue.js?v=' + jsVersion : '_lib/vue.min.js?v=' + jsVersion,
-            'global': 'global.js?v=' + jsVersion,
-            'home': 'home.js?v=' + jsVersion,
-            'inside': 'home.js?v=' + jsVersion,
-            'lazy': 'lazy.js?v=' + jsVersion,
-            'scrollto': 'scrollto.js?v=' + jsVersion,
-            'typewriter': 'typewriter.js?v=' + jsVersion,
-            'vuecomponents': 'vue-components.js?v=' + jsVersion,
-        };
-
         // remove no-js class for when Javascript is enabled
         document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
-
-        <%- include(loadcss) %>
-
-        // load CSS
-        loadCSS("<%= site_root %>css/all.css?v=" + jsVersion);
     </script>
 
     <% if (enable_ssi && release) { %>
     <!--#if expr="$HTTP_COOKIE=/critical\-css\=<%= version %>/" -->
-    <link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>">
+    <link rel="stylesheet" href="<%= site_root %>css/app.css?v=<%= version %>">
     <!--#else -->
     <!-- critcss -->
     <% if (critCssEnabled) { %><!-- SET COOKIE, THEN CHECK FOR IT. IF COOKIE IS FOUND, SKIP CRITCSS BECAUSE CSS FILE SHOULD ALREADY BE CACHED -->
     <style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
     <script>
       <%- include(loadcss) %>
-      loadCSS("<%= site_root %>css/all.css?v=" + '<%= version %>');
+      <%- include(loadjs) %>
+
+      loadCSS("<%= site_root %>css/app.css?v=" + '<%= version %>');
       var cookieExpiration = new Date();
       cookieExpiration.setDate(cookieExpiration.getDate() + 7);
 
       document.cookie = 'critical-css=<%= version %>; expires=' + cookieExpiration.toUTCString() + '; path=/';
     </script>
-    <noscript><link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>"></noscript>
+    <noscript><link rel="stylesheet" href="<%= site_root %>css/app.css?v=<%= version %>"></noscript>
     <!--#endif -->
     <% } else { %>
     <script>
       <%- include(loadcss) %>
+      <%- include(loadjs) %>
 
       // load CSS
-      loadCSS("<%= site_root %>css/all.css?v=" + jsVersion);
+      loadCSS("<%= site_root %>css/app.css?v=" + jsVersion);
     </script>
-    <noscript><link rel="stylesheet" href="<%= site_root %>css/all.css?v=<%= version %>"></noscript>
+    <noscript><link rel="stylesheet" href="<%= site_root %>css/app.css?v=<%= version %>"></noscript>
     <% } %>

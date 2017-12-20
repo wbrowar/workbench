@@ -18,20 +18,19 @@ for (let k in interfaces) {
 const fs = require('fs'),
     varsJsonRaw = JSON.parse(fs.readFileSync('./package.json')),
     varsJsonString = JSON.stringify(varsJsonRaw).replace(/LOCAL_IP/g, addresses[0]),
-    vars = JSON.parse(varsJsonString);
+    vars = JSON.parse(varsJsonString),
+    webpackConfig = require('./webpack.config.js');
 
 const name = vars.name,
-    copyFirstCssFiles = vars.copyFirstCssFiles,
-    copyFirstJsFiles = vars.copyFirstJsFiles,
     critCssTasks = [],
     release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false;
 
 // Paths
 const bases = {
-    source: vars.source_path, // './' + vars.source_path,
-    build:  vars.build_path, // './' + vars.build_path,
-    theme:  vars.theme_path, // './' + vars.theme_path,
-    html:   vars.html_path, // './' + vars.html_path,
+    source: vars.source_path,
+    build:  vars.build_path,
+    theme:  vars.theme_path,
+    html:   vars.html_path,
     site:   vars.site_root,
 };
 const paths = {
@@ -39,7 +38,7 @@ const paths = {
     distImg:                bases.theme + 'img/',
     distJs:                 bases.theme + 'js/',
     distIcon:               bases.theme + 'icon/',
-    srcCss:                 bases.source + '_sass/',
+    srcCss:                 bases.source + '_scss/',
     srcHtml:                bases.source + '_html/',
     srcImg:                 bases.source + '_img/',
     srcJs:                  bases.source + '_js/',
@@ -47,10 +46,8 @@ const paths = {
     filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/**/*'],
     filesEjsIncludes:       bases.source + '_html/ejs_includes/**/*',
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
-    filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/_lib/**/*'],
-    filesJsLib:             [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
-    filesJsLibMin:          bases.source + '_js/_lib/**/*.min.js',
-    filesScss:              bases.source + '_sass/**/*.scss',
+    filesJs:                bases.source + '_js/**/*.{js,vue}',
+    filesScss:              bases.source + '_scss/**/*.scss',
     filesSvg:               bases.source + '_img/icons/**/*.{svg}',
     utilFonts:              bases.source + '_util/_fonts.ejs',
 };
@@ -64,6 +61,7 @@ const browserSync     = require('browser-sync').create(),
       inquirer        = require('inquirer'),
       notifier        = require('node-notifier'),
       semver          = require('semver'),
+      webpack = require('webpack'),
       $               = gulpLoadPlugins({
           rename: {
               'gulp-json-modify':    'jsonModify',
@@ -75,16 +73,14 @@ const browserSync     = require('browser-sync').create(),
 
 const ejsVars = {
     enable_ssi:            vars.enable_ssi,
-    enable_system_js:      vars.enable_system_js,
     favicons:              '/favicon/favicons.html',
     fonts:                 vars.fonts,
-    loadcss:               '/js/uglify/_lib/loadCSS.js',
     release:               release,
     site_root:             bases.site,
     styleTemplateSections: vars.styleTemplateSections,
     styleTemplatePrefix:   vars.style_template_url_prefix,
     styleTemplateSuffix:   vars.style_template_url_suffix,
-    systemjs:              '/js/uglify/_lib/system.js',
+    templateDirectory:     vars.template_directory,
     version:               release ? vars.version : Math.floor(new Date().getTime() / 1000),
 };
 const ejsOptions = {
@@ -98,78 +94,20 @@ const ejsOptions = {
 gulp.task('default',function() {
     var text  = `\n\n${$.gutil.colors.inverse('        COMMANDS        ')}`
         + `\n––––––––––––––––––––––––\n`
-        + `\n${$.gutil.colors.inverse(' gulp first ')}`
-        + `\n${$.gutil.colors.bold('└─ Moves all important files from npm to _source/_js/_lib/ and _source/_sass/lib/')}\n`
         + `\n${$.gutil.colors.inverse(' gulp font ')}`
-        + `\n${$.gutil.colors.bold('└─ Uses info in \`package.json\` to generate _source/_sass/automated/_fonts.scss')}\n`
+        + `\n${$.gutil.colors.bold('└─ Uses info in \`package.json\` to generate _source/_scss/automated/_fonts.scss')}\n`
         + `\n${$.gutil.colors.inverse(' gulp run ')}`
         + `\n${$.gutil.colors.bold('└─ Processes CSS, JS, and image files.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp release ')}`
         + `\n${$.gutil.colors.bold('└─ Performs all tasks, including Critical CSS and processing HTML files.\n\n\`gulp release\` advances the version number in \`package.json\` by 0.0.1. Running \`gulp releasefeature\` will advance it by 0.1.0; and running \`gulp releasemajor\` will advance it by 1.0.0.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp setup ')}`
-        + `\n${$.gutil.colors.bold('└─ Moves files from _source/_util/ into _source/ based on answers you provide when prompted then runs [gulp first] and [gulp font]. Before running this task, modify settings in \`package.json\` for you project. This task should only be run one time at the beginning of development and once it is run, it will put a lock in package.json so it cannot be accidentally run again.')}\n`
-        + `\n${$.gutil.colors.inverse(' gulp vars ')}`
-        + `\n${$.gutil.colors.bold('└─ Descriptions of variables found in \`package.json\`.')}\n`
+        + `\n${$.gutil.colors.bold('└─ Moves files from _source/_util/ into _source/ based on answers you provide when prompted then runs [gulp font]. Before running this task, modify settings in \`package.json\` for you project. This task should only be run one time at the beginning of development and once it is run, it will put a lock in package.json so it cannot be accidentally run again.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp watch ')}`
         + `\n${$.gutil.colors.bold('└─ Watches source folders and runs tasks based on the type of file changed.')}\n`;
     $.gutil.log(text);
     $.gutil.beep();
 });
 
-// [gulp vars]
-gulp.task('vars',function() {
-    var text  = `\n\n${$.gutil.colors.inverse('        VARIABLES        ')}`
-        + `\n–––––––––––––––––––––––––`
-        + `\n${$.gutil.colors.italic('NOTE: all paths start from the root folder and should not include a leading slash. Example: "source_path": "_source/"')}\n`
-        + `\n${$.gutil.colors.inverse(' version ')}`
-        + `\n${$.gutil.colors.bold('└─ Project version number in SEMVER format: 1.1.1 = Major.Feature.Fixes')}\n`
-        + `\n${$.gutil.colors.inverse(' source_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Path to the \`_source\` folder. Edit all theme files in the \`_source\` folder.')}\n`
-        + `\n${$.gutil.colors.inverse(' build_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Location of \`_build\` folder. When commands fail, look in the \`_build\` folder to see what went wrong.')}\n`
-        + `\n${$.gutil.colors.inverse(' theme_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Path to where the \`css\`, \`js\`, and \`img\` theme folders will be placed.')}\n`
-        + `\n${$.gutil.colors.inverse(' html_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Path to where HTML, PHP, or Twig template files will be placed.')}\n`
-        + `\n${$.gutil.colors.inverse(' site_root ')}`
-        + `\n${$.gutil.colors.bold('└─ A string prepended to paths when linking to \`.css\` and \`.js\` files in the template.')}\n`
-        + `\n${$.gutil.colors.inverse(' style_template_url_prefix ')}`
-        + `\n${$.gutil.colors.bold('└─ Prepends this string to navigation links used in the style inventory.')}\n`
-        + `\n${$.gutil.colors.inverse(' style_template_url_suffix ')}`
-        + `\n${$.gutil.colors.bold('└─ Appends a file extension or another string if needed to link to style inventory pages.')}\n`
-        + `\n${$.gutil.colors.inverse(' style_template ')}`
-        + `\n${$.gutil.colors.bold('└─ Select the folder to pull template overrides from when running \`gulp template\`.')}\n`
-        + `\n${$.gutil.colors.inverse(' enable_babel ')}`
-        + `\n${$.gutil.colors.bold('└─ When running the \`gulp release\` task, babel can be used to process ES6 Javascript into ES5 Javascript for older browsers.')}\n`
-        + `\n${$.gutil.colors.inverse(' enable_ssi ')}`
-        + `\n${$.gutil.colors.bold('└─ Adjust template files to support Server Side Includes. Good for when using FastCGI to cache template files.')}\n`
-        + `\n${$.gutil.colors.inverse(' enable_system_js ')}`
-        + `\n${$.gutil.colors.bold('└─ Enable SystemJS to polyfill ES6 module loading of JS files.')}\n`
-        + `\n${$.gutil.colors.inverse(' minify_html ')}`
-        + `\n${$.gutil.colors.bold('└─ Enable minification of HTML in the \`gulp release\` task. Turn this off when theming with PHP and Twig files.')}\n`
-        + `\n${$.gutil.colors.inverse(' template_is_set_up ')}`
-        + `\n${$.gutil.colors.bold('└─ Puts a lock on the [gulp setup] task so it cannot be run more than once. Set it to false to allow [gulp setup] to be run again.')}\n`
-        + `\n${$.gutil.colors.inverse(' browserSync ')}`
-        + `\n${$.gutil.colors.bold('└─ Configure BrowserSync to reload your website as \`watch\` tasks are run. Change \`url\` to the page on your site that you want to start on when \`gulp watch\` is run.')}\n`
-        + `\n${$.gutil.colors.inverse(' critcss ')}`
-        + `\n${$.gutil.colors.bold('└─ Settings used to run Crtitical CSS for muliple page templates. \`"critCssFilename"\` is used in the \`ejs\` task to include the CSS. For example, to include the Critical CSS for \`"home"\`, use this in your theme file: \`<%- include(critcsshome) %>\`')}\n`
-        + `\n${$.gutil.colors.inverse(' copyFirstCssFiles ')}`
-        + `\n${$.gutil.colors.bold('└─ Array of files to be pulled into \`_source/_sass\` when running \`gulp first\`. CSS files will be have \`_\` prepended so they will not compile when the \`sass\` task is run unless they are included into another \`.scss\` file.')}\n`
-        + `\n${$.gutil.colors.inverse(' copyFirstJsFiles ')}`
-        + `\n${$.gutil.colors.bold('└─ Array of files to be pulled into \`_source/_js/_lib\` when running \`gulp first\`.')}\n`
-        + `\n${$.gutil.colors.inverse(' ejsVars ')}`
-        + `\n${$.gutil.colors.bold('└─ Additional files and settings for use in the \`ejs\` task. All paths must start from the \`_build\` folder.')}\n`
-        + `\n${$.gutil.colors.inverse(' fonts ')}`
-        + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`
-        + `\n${$.gutil.colors.inverse(' styleTemplateSections ')}`
-        + `\n${$.gutil.colors.bold('└─ An array used to build out the navigation for Style Inventory pages. Edit this as you add and remove pages in the Style Inventory.')}\n`;
-    $.gutil.log(text);
-    $.gutil.beep();
-});
-
-
-// [gulp first]
-gulp.task('first', ['copyFirstCss', 'copyFirstJs']);
 
 // [gulp template]
 gulp.task('source:backup', function() {
@@ -187,9 +125,9 @@ gulp.task('setup:move:default', ['source:backup'], function(cb) {
             .pipe(gulp.dest(bases.source));
 
         $.gutil.log('Moved default source files');
-
-        cb();
     }
+
+    cb();
 });
 gulp.task('setup', ['setup:move:default'], function(cb) {
     if (!vars.template_is_set_up) {
@@ -199,6 +137,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             message: 'What kind of project are you developing?',
             choices: [
                 { name: 'HTML', value: '_html_1' },
+                { name: 'Craft 3 Website', value: '_craft3_1' },
                 { name: 'Craft 2 Website', value: '_craft2_1' }
             ]
         }];
@@ -210,17 +149,19 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
 
             switch (answers['templateType']) {
                 case '_html_1':
-                    templateQuestions = [{
-                        type: 'confirm',
-                        name: 'animations',
-                        message: 'Include Animations?',
-                        default: true
-                    },{
-                        type: 'confirm',
-                        name: 'vueComponents',
-                        message: 'Include Vue Components?',
-                        default: true
-                    }];
+                    // templateQuestions = [{
+                    //     type: 'confirm',
+                    //     name: 'animations',
+                    //     message: 'Include Animations?',
+                    //     default: true
+                    // },{
+                    //     type: 'confirm',
+                    //     name: 'vueComponents',
+                    //     message: 'Include Vue Components?',
+                    //     default: true
+                    // }];
+                    break;
+                case '_craft3_1':
                     break;
                 case '_craft2_1':
                     break;
@@ -229,12 +170,14 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             inquirer.prompt(templateQuestions).then(function (templateAnswers) {
                 switch (answers['templateType']) {
                     case '_html_1':
-                        if (!templateAnswers['animations']) {
-                            projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/base/_animations.scss');
-                        }
-                        if (!templateAnswers['vueComponents']) {
-                            projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/components/_vue.scss');
-                        }
+                        // if (!templateAnswers['animations']) {
+                        //     projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_scss/base/_animations.scss');
+                        // }
+                        // if (!templateAnswers['vueComponents']) {
+                        //     projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_scss/components/_vue.scss');
+                        // }
+                        break;
+                    case '_craft3_1':
                         break;
                     case '_craft2_1':
                         break;
@@ -245,13 +188,12 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
 
                 $.gutil.log('Moved template files');
 
-                gulp.start('first');
-
                 gulp.start('font');
 
                 gulp.src('./package.json')
                     .pipe(gulp.dest(bases.build + 'package'))
                     .pipe($.jsonModify({ key: 'template_is_set_up', value: true })) // .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
+                    .pipe($.jsonModify({ key: 'template_directory', value: answers['templateType'] }))
                     .pipe(gulp.dest('./'));
 
                 cb();
@@ -263,7 +205,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
 });
 
 // [gulp run]
-gulp.task('run', ['css:cleaned', 'img:cleaned', 'js:cleaned'], function() {
+gulp.task('run', ['css:cleaned', 'img:cleaned', 'webpack'], function() {
     return notifier.notify({ 'title': name, 'message': 'Run Complete' });
 });
 
@@ -271,7 +213,7 @@ gulp.task('run', ['css:cleaned', 'img:cleaned', 'js:cleaned'], function() {
 gulp.task('release', ['bump:patch', 'release:tasks']);
 gulp.task('releasefeature', ['bump:minor', 'release:tasks']);
 gulp.task('releasemajor', ['bump:major', 'release:tasks']);
-gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release'], function() {
+gulp.task('release:tasks', ['critCss', 'img:cleaned', 'ejs:release', 'webpack'], function() {
     return notifier.notify({ 'title': name, 'message': 'Release Complete' });
 });
 
@@ -281,7 +223,7 @@ gulp.task('watch', ['ejs:quick:full'], function() {
           watchEjsIncludes  = gulp.watch(paths.filesEjsIncludes, ['ejs:quick:full']),
           watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
           watchImg          = gulp.watch(paths.filesImg, ['img']),
-          watchJs           = gulp.watch(paths.filesJs, ['js']),
+          watchJs           = gulp.watch(paths.filesJs, ['webpack']),
           watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
 
     if (vars.browserSync.url === 'https://starter.wbrowar.com/') {
@@ -373,21 +315,6 @@ gulp.task('cleanFavicon', function() {
 gulp.task('cleanImg', function() {
     return gulp.src([paths.distImg, bases.build + 'img', '!' + paths.distImg + 'icons/'], {read: false})
         .pipe($.clean({force: true}));
-});
-gulp.task('cleanJs', function() {
-    return gulp.src([paths.distJs, bases.build + 'js'], {read: false})
-        .pipe($.clean({force: true}));
-});
-
-// Copy files from `node_modules` folder
-gulp.task('copyFirstCss', function() {
-    return gulp.src(copyFirstCssFiles)
-        .pipe($.rename({ extname: '.scss', prefix: '_' }))
-        .pipe(gulp.dest(paths.srcCss + 'lib/'));
-});
-gulp.task('copyFirstJs', function() {
-    return gulp.src(copyFirstJsFiles)
-        .pipe(gulp.dest(paths.srcJs + '_lib/'));
 });
 
 // Run Critical CSS and place in build folder
@@ -502,48 +429,48 @@ gulp.task('svg', function() {
 });
 
 // Uglify JS
-function jsHandler(useUglify = false) {
-    const babelOptions = {
-        "presets": [
-            ["env", {
-                "targets": {
-                    "browsers": vars.browserlist
-                }
-            }]
-        ]
-    };
-
-    return gulp.src(paths.filesJs)
-        .pipe($.changed(paths.distJs))
-        .pipe(vars.enable_babel ? $.babel(babelOptions) : $.gutil.noop())
-        .pipe(useUglify ? $.uglify() : $.gutil.noop())
-        .pipe(gulp.dest(bases.build + 'js/uglify'))
-        .pipe(gulp.dest(paths.distJs));
-};
-function jsLibHandler(useUglify = false) {
-    gulp.src(paths.filesJsLibMin)
-        .pipe($.changed(paths.distJs + '_lib/'))
-        .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
-        .pipe(gulp.dest(paths.distJs + '_lib/'));
-
-    return gulp.src(paths.filesJsLib)
-        .pipe($.changed(paths.distJs + '_lib/'))
-        .pipe(useUglify ? $.uglify() : $.gutil.noop())
-        .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
-        .pipe(gulp.dest(paths.distJs + '_lib/'));
-};
-gulp.task('js:babel', ['cleanJs'], function() {
-    jsHandler(true);
-    jsLibHandler(true);
-});
-gulp.task('js:cleaned', ['cleanJs'], function() {
-    jsHandler();
-    jsLibHandler();
-});
-gulp.task('js', function() {
-    jsHandler(false);
-    jsLibHandler();
-});
+// function jsHandler(useUglify = false) {
+//     const babelOptions = {
+//         "presets": [
+//             ["env", {
+//                 "targets": {
+//                     "browsers": vars.browserlist
+//                 }
+//             }]
+//         ]
+//     };
+//
+//     return gulp.src(paths.filesJs)
+//         .pipe($.changed(paths.distJs))
+//         .pipe(vars.enable_babel ? $.babel(babelOptions) : $.gutil.noop())
+//         .pipe(useUglify ? $.uglify() : $.gutil.noop())
+//         .pipe(gulp.dest(bases.build + 'js/uglify'))
+//         .pipe(gulp.dest(paths.distJs));
+// };
+// function jsLibHandler(useUglify = false) {
+//     gulp.src(paths.filesJsLibMin)
+//         .pipe($.changed(paths.distJs + '_lib/'))
+//         .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
+//         .pipe(gulp.dest(paths.distJs + '_lib/'));
+//
+//     return gulp.src(paths.filesJsLib)
+//         .pipe($.changed(paths.distJs + '_lib/'))
+//         .pipe(useUglify ? $.uglify() : $.gutil.noop())
+//         .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
+//         .pipe(gulp.dest(paths.distJs + '_lib/'));
+// };
+// gulp.task('js:babel', ['cleanJs'], function() {
+//     jsHandler(true);
+//     jsLibHandler(true);
+// });
+// gulp.task('js:cleaned', ['cleanJs'], function() {
+//     jsHandler();
+//     jsLibHandler();
+// });
+// gulp.task('js', function() {
+//     jsHandler(false);
+//     jsLibHandler();
+// });
 
 // Compile HTML, TWIG, and PHP files
 for (var val in vars.ejsVars) {
@@ -605,4 +532,25 @@ gulp.task('favicons:generate', ['cleanFavicon'], function() {
             path: bases.site + 'img/meta',
         }))
         .pipe(gulp.dest(bases.build + 'favicon'));
+});
+
+// Run webpack
+gulp.task('webpack', function(cb) {
+    webpack(webpackConfig, function (err, stats) {
+        if (err) {
+            throw new gutil.PluginError('webpack:build', err);
+        }
+
+        $.gutil.log('[webpack:build] Completed\n' + stats.toString({
+            assets: true,
+            chunks: false,
+            chunkModules: false,
+            colors: true,
+            hash: false,
+            timings: false,
+            version: false
+        }));
+
+        cb();
+    });
 });

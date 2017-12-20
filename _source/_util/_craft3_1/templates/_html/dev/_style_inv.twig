@@ -1,0 +1,7 @@
+{% extends "dev/_dev_page" %}
+
+{% set currentStylesNavItem = craft.request.getSegment(3) ?? 'index' %}
+
+{% block content %}
+    {% include 'dev/_style_inv/' ~ currentStylesNavItem %}
+{% endblock %}

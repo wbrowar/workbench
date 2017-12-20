@@ -1,0 +1,71 @@
+<% const currentSection = 'media' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+    "title": "Lazy-Loading Audio File",
+    "description": "Plays an audio file using default browser controls. Waits until user has scrolled down to the element to load the audio file.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/media' as media %}
+{{ media.audio({ 'url': 'https://starter.wbrowar.com/audio/clip.mp3' }) }}`,
+    "options": [
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'url', "required": true, "type": 'string', "default": `#`, "description": `URL of audio file.` }
+    ]
+}); %>
+
+<% modules.push({
+    "title": "Lazy-Loading Iframe",
+    "description": "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio. Waits until user has scrolled down to the element to load iframe content.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/media' as media %}
+{{ media.video({ 'id': 'G4Sn91t1V4g', 'source': 'youtube' }) }}`,
+    "options": [
+        { "name": 'controls', "required": false, "type": 'boolean', "default": `true`, "description": `Display controls on or off.` },
+        { "name": 'id', "required": false, "type": 'string', "default": ``, "description": `ID of video as found on video hosting sites. Usually can be pulled from a URL or video embed tag.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'source', "required": false, "type": 'string', "default": `'file'`, "description": `Changes embed code based on source of the video. Options include: <b>youtube</b>, <b>vimeo</b>, or <b>file</b>.` },
+        { "name": 'url', "required": false, "type": 'string', "default": `#`, "description": `URL of video file used when the source option is set to 'file'.` }
+    ]
+}); %>
+
+<% modules.push({
+    "title": "Lazy-loading Video File",
+    "description": "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag. Waits until user has scrolled down to the element to load the video file.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/media' as media %}
+{{ media.video({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`,
+    "options": [
+        { "name": 'controls', "required": false, "type": 'boolean', "default": `true`, "description": `Display controls on or off.` },
+        { "name": 'id', "required": false, "type": 'string', "default": ``, "description": `ID of video as found on video hosting sites. Usually can be pulled from a URL or video embed tag.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'source', "required": false, "type": 'string', "default": `'file'`, "description": `Changes embed code based on source of the video. Options include: <b>youtube</b>, <b>vimeo</b>, or <b>file</b>.` },
+        { "name": 'url', "required": false, "type": 'string', "default": `#`, "description": `URL of video file used when the source option is set to 'file'.` }
+    ]
+}); %>
+
+<% modules.push({
+    "title": "Video Background",
+    "description": "Fills the background of an element with a responsive video file that autoplays and loops.",
+    "background": "light",
+    "demoCode":
+`<div class="styles__box c_video_bg">
+    <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload muted autoplay loop></video>
+</div>`,
+    "twigCode":
+`{% import 'macros/media' as media %}
+{{ media.videoBg({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`,
+    "options": [
+        { "name": 'autoplay', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
+        { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
+        { "name": 'loop', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
+        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'url', "required": true, "type": 'string', "default": `#`, "description": `URL of video file.` }
+    ]
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

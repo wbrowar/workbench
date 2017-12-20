@@ -1,0 +1,78 @@
+<% const currentSection = 'grid' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+  "title": "2-Column Grid",
+  "description": "Split content into two columns at a defined media query.",
+  "background": "light",
+  "demoCode":
+`<div class="c_grid c_grid--2_column">
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">1</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">2</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">3</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">4</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">5</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">6</div>
+</div>`,
+  "code":
+`<div class="c_grid c_grid--2_column">
+  <div class="c_grid__item">1</div>
+  <div class="c_grid__item">2</div>
+  <!-- ... -->
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "3-Column Grid",
+  "description": "Split content into three columns at a defined media query.",
+  "background": "light",
+  "demoCode":
+`<div class="c_grid c_grid--3_column">
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">1</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">2</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">3</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">4</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">5</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">6</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">7</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">8</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">9</div>
+</div>`,
+  "code":
+`<div class="c_grid c_grid--3_column">
+  <div class="c_grid__item">1</div>
+  <div class="c_grid__item">2</div>
+  <!-- ... -->
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "4-Column Grid",
+  "description": "Split content into four columns at a defined media query.",
+  "background": "light",
+  "demoCode":
+`<div class="c_grid c_grid--4_column">
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">1</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">2</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">3</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">4</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">5</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">6</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">7</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">8</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">9</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">10</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">11</div>
+  <div class="c_grid__item styles__box styles__box--flex styles__box--no_margin" style="display: flex; width: auto;">12</div>
+</div>`,
+  "code":
+`<div class="c_grid c_grid--4_column">
+  <div class="c_grid__item">1</div>
+  <div class="c_grid__item">2</div>
+  <!-- ... -->
+</div>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

@@ -1,0 +1,45 @@
+{% macro button(options) %}{% spaceless %}
+    {% set label = options.label ?? '' %}
+    {% set modifiers = options.modifiers ?? null %}
+    {% set name = options.name ?? null %}
+    {% set type = options.type ?? 'submit' %}
+
+    <div class="c_form__button c_form__button--{{ type }}">
+        <input class="c_button" type="{{ type }}"{% if name ?? false %} name="{{ name }}"{% endif %} value="{{ label }}">
+    </div>
+{% endspaceless %}{% endmacro %}
+
+{% macro buttons(buttons = []) %}{% spaceless %}
+    {% if buttons|length %}
+        <div class="c_form__buttons">
+            {% for item in buttons %}
+                {% if item.options ?? false %}
+                    {{ _self.button(item.options) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro field(options) %}{% spaceless %}
+    {% set label = options.label ?? null %}
+    {% set modifiers = options.modifiers ?? null %}
+    {% set name = options.name ?? null %}
+    {% set placeholder = options.placeholder ?? null %}
+    {% set required = options.required ?? false %}
+    {% set type = options.type ?? null %}
+    {% set value = options.value ?? null %}
+
+    {% set id = options.id ?? name ?? null %}
+
+    {% if (name ?? false) and (type ?? false) %}
+        <div class="c_form__input c_form__input--{{ type }}{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+            {% if label ?? false %}<label{% if id ?? false %} for="{{ id }}"{% endif %}>{{ label }}</label>{% endif %}
+            {% if type in ['text','email'] %}
+                <input id="{{ id }}" type="{{ type }}" name="{{ name }}" {% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if value ?? false %} value="{{ value }}"{% endif %}{% if required %} required{% endif %}>
+            {% elseif type == 'textarea' %}
+                <textarea id="text_area" name="text_area" cols="30" rows="10" {% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if required %} required{% endif %}>{% if value ?? false %}{{ value }}{% endif %}</textarea>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endspaceless %}{% endmacro %}
