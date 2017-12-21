@@ -21,42 +21,39 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 1. In Terminal, `cd` to your project root
 2. Run `yarn`
 3. Update the `package.json` file to fit your project's needs. See `package.json` below
-4. Run `gulp setup` to perform the default task and to do an initial setup
+4. Run `npm run setup` to perform the default task and to do an initial setup
 
 ---
 ## When to Use What
 ### Beginning a project
-- When starting a project, run the helper task, `gulp`, to see what commands are available.
-- When editing the `package.json` file, run `gulp vars` for a description of each variable.
-- `gulp setup` should be run at the beginning of the project to pull together template files based on the type of project your are developing. In this task, you will be prompted to answer some questions that will customize the components and templates added to your `_source` folder. *NOTE: because this task overrides files in your `_source` folder, it should only be run once, at the beginning of a project.*
-- `gulp first` moves the npm files out of the `node_modules` folder. In order to keep files up-to-date, and to make working with git easier, edit the `package.json` file to include paths to JS and CSS files and re-run `gulp first` to update front-end libraries.
+- When starting a project, run the helper task, `npm run list`, to see what commands are available.
+- `npm run setup` should be run at the beginning of the project to pull together template files based on the type of project your are developing. In this task, you will be prompted to answer some questions that will customize the components and templates added to your `_source` folder. *NOTE: because this task overrides files in your `_source` folder, it should only be run once, at the beginning of a project.*
 - `gulp font` can be run anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
-- To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `gulp run` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `gulp release` for a more thorough check.
+- To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `npm run dev` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `npm run prod` for a more thorough check.
 
 ### During Development
-- Every time you begin to write code, run `gulp watch` first. This will watch the `_source` folder and update theme files as you save them.
-- At any given time, run `gulp run` to reprocess basic theme assets (JS, CSS, and images). This is not as good as running `gulp release` but it will clean out old JS, CSS, and image files and replace them with up-to-date versions.
+- Every time you begin to write code, run `npm run watch` first. This will watch the `_source` folder and update theme files as you save them.
+- At any given time, run `npm run dev` to reprocess basic theme assets (JS, CSS, and images). Doing this will clean out old JS, CSS, and image files and replace them with up-to-date versions.
 
 ### Staging and Testing
-- When staging files for review or testing, run `gulp release`—every time—before deploying to a staging server. `gulp release` includes extra tasks, such as Babel transpiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
+- When staging files for review or testing, run `npm run prod`—every time—before deploying to a staging server. `npm run prod` includes extra tasks, such as Babel transpiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
 
 ### Going Live
-- When preparing to go live, run the `gulp release` task. This will increase the version number in the `package.json` file, which will cause cache-busting to occur on static files that are loaded using version number parameters.
-- For feature releases (when you're adding new sections and features), run `gulp releasefeature`. This bumps the version number up by one SEMVER minor version.
-- Running `gulp release` cleans out all CSS, JS, SVG, and image files and replaces them with fresh builds.
-- `gulp release` also creates favicons, adds Critical CSS, processes SVG icons and processes template files.
+- When preparing to go live, run the `npm run prod` task. This will increase the version number in the `package.json` file, which will cause cache-busting to occur on static files that are loaded using version number parameters.
+- Running `npm run prod` cleans out all CSS, JS, SVG, and image files and replaces them with fresh builds.
+- `npm run prod` also creates favicons, adds Critical CSS, processes SVG icons and processes template files.
 
 ---
 ## Theme Components
 ### SCSS Framework
-- In `_source/sass` there are a several files with underscores in front. These all get compiled into `all.css`, by default.
+- In `_source/scss` there are a several files with underscores in front. These all get compiled into `app.css`, by default.
 - Sass will compile all `.scss` files that do note contain an underscore in front of the filename.
 - Files are organized into folders:
   - `automated` – For files generated by Gulp. We can assume these will update on their own, so we wouldn’t edit these manually.
   - `base` – Global CSS that is used across all pages of the site. Animations, variables, mixins, and global styles are all organized here so they’re in one place.
   - `compontents` – base CSS for HTML components, such as forms, buttons, tables, images, etc… These should be abstracted and modular so these elements can be dropped anywhere in the site and still look the same.
   - `layout` – Layout areas and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
-  - `lib` – For code pulled in using `gulp first` (as set in `package.json`). Also, any other CSS that we receive from vendors (like our clients) can go here.
+  - `lib` – For any CSS that we receive from vendors (like our clients) can go here. These should not be edited by us, so it can be assumed than any file here can be updated at any time.
   - `pages` – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
 - CSS follows the [BEM naming convention](http://getbem.com/naming/) to reduce accidental mixing of styles.
 - Elements with class names that are prefixed with `c_` indicate this is a CSS component that is part of the Style Inventory.
@@ -79,27 +76,32 @@ In your `package.json`, here are the options you can use. Options marked with °
 
 ---
 ### Javascript
-- All of the JS is configured to be loaded using [SystemJS](https://github.com/systemjs/systemjs), unless disabled in the `package.json` file.
-- Edit the paths found in `_source/_html/ejs_includes/_head_scripts.ejs` to add or remove JS files loaded by SystemJS.
+- All of the JS is configured to be compiled using [Webpack](https://webpack.js.org/) and then loaded using [loadJS](https://github.com/filamentgroup/loadJS).
 
-#### Using SystemJS
-SystemJS is a module loader, just like RequireJS. Where require uses AMD modules, SystemJS supports AMD, but also supports the ES6 module loading spec. Since ES6 is not yet supported, SystemJS—along with code that's transpiled through Babel in this Gulp process—allows you to follow the spec for loading modules and to set your javascript code up for how you would want to load it in the future. The idea is that when the ES6 spec is more supported, we could remove SystemJS and there would be very little work required to load our javascript the native way.
+#### Using Webpack
+For Javascript files, Webpack is used to uglify, transpile and concatenate our files into bundles. It pulls directly from `_source/_js/` and `node_modules` and creates single Javascript files in `public/js/`.
 
-To load a Javascript file, first start by adding the key and the path of the file into `_source/_html/ejs_includes/_head_scripts.ejs`. The key must be unique and it should point to path, relative to the `public/js` directory.
-
-If a script is an external library, you may need to add dependencies into the `meta` object. For example, the FitVids jQuery plugin depends on jQuery, so in order to make sure the dependency is loaded first, add it to the `meta` object:
+Currently, there is one file, `app.js`, but if you need to split out code into additional bundles, you can configure Webpack in the `webpack.config.js` file. To add another Javascript file, modify the `entry` object:
 
 ```
-meta: {
-  'fitvids': {
-    deps: ['jquery'],
-  },
+entry: {
+    app: paths.srcJs + "app.js",
 },
 ```
 
-You can now use `SystemJS.import('fitvids');` to load both FitVids and jQuery.
+Adding a line to `entry` requires that you give it a name (as the key), and point to the source file. Whatever you name the key will become the name of the bundle when it is created in `public/js/`.
 
-Take a look at [this overview in the SystemJS docs](https://github.com/systemjs/systemjs/blob/master/docs/es6-modules-overview.md) to learn more about module loading.
+When `npm run prod` is run, Webpack will know it is preparing files for release, so it will uglify your code within `plugins`.
+
+```
+plugins: (env === 'production') ? [
+    new UglifyJsPlugin({
+        sourceMap: true
+    })
+] : [],
+```
+
+You can add more plugins here, if you'd like.
 
 ### lazy.js
 Include `lazy.js` into a JS document and call the default, `lazy()` function to init. An optional `config` object can be passed into the `lazy()` function.
@@ -188,11 +190,11 @@ scrollToElement(el);
   - **2x** Putting 2x-resolution images in the `2x` folder will result in both a 2x image and a 1x image being placed into your `img` directory. The 2x image will be suffixed with `@2x`.
   - **icons** All .svg images in the `icons` folder will be base64-encoded and added using `background-image` to a file in the `_source/sass/automated/` folder, called `_icons.scss`. This will be compiled when the `sass` task is run. A file, named `logo.svg` will access using the class, `.icon_logo`.
   - Images located directly in the `_source/_img`, or folders not listed above will only be minimized and moved into your theme's `img` folder.
-- **_favicons** Adding a 512x512 .png into the `_source/_favicons` folder, and running `gulp release`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
+- **_favicons** Adding a 512x512 .png into the `_source/_favicons` folder, and running `npm run prod`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
 
 ---
 ### Gulp HTML Builder
-- Uses [ejs](http://ejs.co) to process HTML files when the `gulp release` task is run.
+- Uses [ejs](http://ejs.co) to process HTML files when the `npm run prod` task is run.
 - Using `ejs` allows you to include files, use conditionals, and replace strings—like IDs and classes.
 - There are default replacements included in the Gulpfile, and additional replacements can be added to the `ejsVars` setting in `package.json`. If the replacement is for an include, the file must be included based on the root of the `_build` folder.
 
@@ -202,7 +204,7 @@ scrollToElement(el);
 - :rocket: Added NPM scripts to replace Gulp commands
   - Use the following replacements when needed:
     - `npm run dev`: replaces `gulp run`
-    - `npm run prod`: replaces `gulp release`
+    - `npm run prod`: replaces `npm run prod`
     - `npm run watch`: replaces `gulp watch`
     - `npm run list`: replaces `gulp`
   - Other commands can still be run, but using NPM scripts for standard commands allows us to run non-gulp commands, as well
@@ -288,14 +290,14 @@ scrollToElement(el);
 - :wrench: Improved style inventory styles
 
 #### 4.5.1
-- :rocket: `jsDevMode` now gets set to false when running `gulp release`
-- :rocket: `jsVersion` gets set to the package version number upon `gulp release`, otherwise it is set to the current timestamp and files that use `<%= version %>` will be forced to reload during development
+- :rocket: `jsDevMode` now gets set to false when running `npm run prod`
+- :rocket: `jsVersion` gets set to the package version number upon `npm run prod`, otherwise it is set to the current timestamp and files that use `<%= version %>` will be forced to reload during development
 - :wrench: Added support for `.min` files in the `_js/_lib` folder
   - `.min.js` files do not get uglified or renamed. They are just moved to your `js/_lib` folder in your theme path
 - :wrench: Moved SystemJS `<script>` tag, system config code, and font events code down to bottom of the `<body>` tag. I'm not sure if this will have an impact either way, but it seems like it's safe to move to speed up loading
 - :rocket: Added `vue.js` to default libraries
   - Vue is not turned on by default, but it'll be there in case you'd like to use it
-  - Because of the way Vue's libraries are named (dev = `.js`, prod = `.min.js`), moving only one file during `gulp first` gets messed up, so conditional loading—based on whether or not `jsDevMode` is true—makes it so development Vue is loaded via their CDN, and when `gulp release` is run, the local, production version is used
+  - Because of the way Vue's libraries are named (dev = `.js`, prod = `.min.js`), moving only one file during `gulp first` gets messed up, so conditional loading—based on whether or not `jsDevMode` is true—makes it so development Vue is loaded via their CDN, and when `npm run prod` is run, the local, production version is used
 
 #### 4.5.0
 - :wrench: Replaced `emergence` with `scrollMonitor` for lazy loading
