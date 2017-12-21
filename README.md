@@ -204,7 +204,7 @@ scrollToElement(el);
 - :rocket: Added NPM scripts to replace Gulp commands
   - Use the following replacements when needed:
     - `npm run dev`: replaces `gulp run`
-    - `npm run prod`: replaces `npm run prod`
+    - `npm run prod`: replaces `gulp release`
     - `npm run watch`: replaces `gulp watch`
     - `npm run list`: replaces `gulp`
   - Other commands can still be run, but using NPM scripts for standard commands allows us to run non-gulp commands, as well
