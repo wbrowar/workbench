@@ -51,7 +51,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "./../../_scss/base/mixins.scss";
+    @import "./../../_scss/base/_mixins.scss";
 
     $_dot_size: 10px;
     .vue_slider_control {

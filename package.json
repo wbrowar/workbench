@@ -28,7 +28,7 @@
     }
   ],
   "ejsVars": {
-    "loadcss": "./../../../node_modules/fg-loadcss/dist/loadCSS.min.js",
+    "loadcss": "./../../../node_modules/fg-loadcss/src/loadCSS.js",
     "loadjs": "./../../../node_modules/fg-loadjs/loadJS.js"
   },
   "fonts": [

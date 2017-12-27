@@ -45,7 +45,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "./../../_scss/base/mixins.scss";
+    @import "./../../_scss/base/_mixins.scss";
 
     .vue_slider__slide {
         position: absolute;

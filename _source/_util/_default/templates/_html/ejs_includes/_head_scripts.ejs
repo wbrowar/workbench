@@ -1,6 +1,6 @@
     <!-- scripts -->
     <script type="text/javascript">
-        var jsSection = <% if (templateDirectory === '_craft3_1') { %>'{{ jsSection }}'<% } else { %>'app'<% } %>,
+        var jsSection = <% if (templateDirectory === '_craft3_1') { %>'{{ jsSection ?? "app" }}'<% } else { %>'app'<% } %>,
             jsDevMode = <% if (templateDirectory === '_craft3_1') { %>{{ craft.app.config.general.devMode }}<% } else { %><% if (release) { %>false<% } else { %>true<% } %><% } %>,
             jsVersion = <% if (release) { %>'<%= version %>'<% } else { %>Math.floor(new Date().getTime() / 1000)<% } %>,
             jsThemePath = '<%= site_root %>';

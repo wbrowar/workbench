@@ -35,7 +35,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "./../../_scss/base/mixins.scss";
+    @import "./../../_scss/base/_mixins.scss";
 
     $_mq_overlay_1: 700px;
     .vue_overlay {

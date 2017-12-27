@@ -21,7 +21,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "./../../_scss/base/mixins.scss";
+    @import "./../../_scss/base/_mixins.scss";
 
     p {
         color: red;
