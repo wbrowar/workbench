@@ -148,7 +148,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             type: 'list',
             name: 'templateType',
             message: 'What kind of project are you developing?',
-            default: argv.options.gitorg || null,
+            default: argv.options.template || null,
             choices: [
                 { name: 'HTML', value: '_html_1' },
                 { name: 'Craft 3 Website', value: '_craft3_1' },
@@ -159,6 +159,12 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
             let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
             let projectTemplateSetup = [projectTemplatPath + 'setup/**/*'];
+            let packageThemePath = 'public/',
+                packageHtmlPath = 'public/',
+                packageStyleTemplateUrlPrefix = 'dev/inv/',
+                packageStyleTemplateUrlSuffix = '.html',
+                packageEnableSsi = false,
+                packageMinifyHtml = true;
 
             let templateQuestions = [];
 
@@ -204,6 +210,11 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                     case '_craft3_1':
                         setupVars['chwonUser'] = templateAnswers['chwonUser'];
                         setupVars['chwonGroup'] = templateAnswers['chwonGroup'];
+                        packageThemePath = 'web/';
+                        packageHtmlPath = 'web/';
+                        packageStyleTemplateUrlPrefix = 'dev/inv/';
+                        packageStyleTemplateUrlSuffix = '';
+                        packageMinifyHtml = false;
                         break;
                     case '_craft2_1':
                         break;
@@ -226,7 +237,13 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
 
                 gulp.src('./package.json')
                     .pipe(gulp.dest(bases.build + 'package'))
-                    .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
+                    .pipe($.jsonModify({ key: 'name', value: name }))
+                    .pipe($.jsonModify({ key: 'theme_path', value: packageThemePath }))
+                    .pipe($.jsonModify({ key: 'html_path', value: packageHtmlPath }))
+                    .pipe($.jsonModify({ key: 'style_template_url_prefix', value: packageStyleTemplateUrlPrefix }))
+                    .pipe($.jsonModify({ key: 'style_template_url_suffix', value: packageStyleTemplateUrlSuffix }))
+                    .pipe($.jsonModify({ key: 'enable_ssi', value: packageEnableSsi }))
+                    .pipe($.jsonModify({ key: 'minify_html', value: packageMinifyHtml }))
                     .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
                     .pipe($.jsonModify({ key: 'template_directory', value: answers['templateType'] }))
                     .pipe(gulp.dest('./'));

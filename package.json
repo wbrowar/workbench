@@ -15,7 +15,7 @@
   "enable_ssi": false,
   "minify_html": true,
   "template_is_set_up": false,
-  "template_directory": "_html_1",
+  "template_directory": "",
   "browserSync": {
     "browser": "google chrome",
     "url": "https://starter.wbrowar.com/"
