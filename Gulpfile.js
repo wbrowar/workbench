@@ -224,7 +224,8 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
 
                 gulp.src('./package.json')
                     .pipe(gulp.dest(bases.build + 'package'))
-                    .pipe($.jsonModify({ key: 'template_is_set_up', value: true })) // .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
+                    .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
+                    .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
                     .pipe($.jsonModify({ key: 'template_directory', value: answers['templateType'] }))
                     .pipe(gulp.dest('./'));
 
