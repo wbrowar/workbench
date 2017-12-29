@@ -93,7 +93,8 @@ const ejsOptions = {
 let setupVars = {
     gitorg:                gitorg,
     name:                  name,
-    projectDir:            __dirname
+    projectDir:            __dirname,
+    securityKey:           _randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 };
 
 
@@ -620,4 +621,9 @@ function _parseArgv() {
         args: args,
         options: options
     }
+}
+function _randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
 }
