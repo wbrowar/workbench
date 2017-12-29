@@ -90,10 +90,14 @@ const ejsVars = {
 const ejsOptions = {
     root:                  bases.build,
 };
-const setupVars = {
+let setupVars = {
     gitorg:                gitorg,
-    name:                  name
-}
+    name:                  name,
+    projectDir:            __dirname
+};
+
+
+
 
 
 
@@ -171,6 +175,15 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                     // }];
                     break;
                 case '_craft3_1':
+                    templateQuestions = [{
+                        type: 'input',
+                        name: 'chwonUser',
+                        message: 'CHOWN User'
+                    },{
+                        type: 'input',
+                        name: 'chwonGroup',
+                        message: 'CHOWN Group'
+                    }];
                     break;
                 case '_craft2_1':
                     break;
@@ -187,6 +200,8 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                         // }
                         break;
                     case '_craft3_1':
+                        setupVars['chwonUser'] = templateAnswers['chwonUser'];
+                        setupVars['chwonGroup'] = templateAnswers['chwonGroup'];
                         break;
                     case '_craft2_1':
                         break;
@@ -201,7 +216,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                 // move files from setup folder in seleted directory
                 gulp.src(projectTemplateSetup)
                     .pipe($.ejs(setupVars))
-                    .pipe(gulp.dest('/'));
+                    .pipe(gulp.dest('./'));
 
                 $.gutil.log('Moved setup files');
 
