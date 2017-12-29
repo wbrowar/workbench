@@ -14,6 +14,9 @@ for (let k in interfaces) {
     }
 }
 
+// get arguments from command line
+const argv = _parseArgv();
+
 // Package Variables
 const fs = require('fs'),
     varsJsonRaw = JSON.parse(fs.readFileSync('./package.json')),
@@ -21,8 +24,9 @@ const fs = require('fs'),
     vars = JSON.parse(varsJsonString),
     webpackConfig = require('./webpack.config.js');
 
-const name = vars.name,
+const name = argv.options.name || vars.name,
     critCssTasks = [],
+    gitorg = argv.options.gitorg || '',
     release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false;
 
 // Paths
@@ -86,6 +90,10 @@ const ejsVars = {
 const ejsOptions = {
     root:                  bases.build,
 };
+const setupVars = {
+    gitorg:                gitorg,
+    name:                  name
+}
 
 
 
@@ -144,6 +152,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
         inquirer.prompt(questions).then(function (answers) {
             const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
             let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
+            let projectTemplateSetup = [projectTemplatPath + 'setup/**/*'];
 
             let templateQuestions = [];
 
@@ -183,10 +192,18 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                         break;
                 }
 
+                // move template files from selected template
                 gulp.src(projectTemplateTemplates)
                     .pipe(gulp.dest(bases.source));
 
                 $.gutil.log('Moved template files');
+
+                // move files from setup folder in seleted directory
+                gulp.src(projectTemplateSetup)
+                    .pipe($.ejs(setupVars))
+                    .pipe(gulp.dest('/'));
+
+                $.gutil.log('Moved setup files');
 
                 gulp.start('font');
 
@@ -554,3 +571,36 @@ gulp.task('webpack', function(cb) {
         cb();
     });
 });
+
+
+// UTILITY FUNCTIONS
+function _parseArgv() {
+
+    let args = [];
+    let options = {};
+
+    process.argv.forEach(function(arg, i) {
+        if(i > 1) {
+            if (arg.substr(0, 2) === "--") {
+                // remove leading dashes
+                const str = arg.substr(2);
+
+                // split out to key/value pairs
+                if (str.indexOf("=") !== -1) {
+                    const strSplit = str.split('=');
+                    options[strSplit[0]] = strSplit[1];
+                } else {
+                    options[str] = true;
+                }
+            }
+            else {
+                args.push(arg);
+            }
+        }
+    });
+
+    return {
+        args: args,
+        options: options
+    }
+}

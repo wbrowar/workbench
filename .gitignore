@@ -5,10 +5,11 @@
 .DS_Store
 .idea
 logs/*
+vendor/*
 Thumbs.db
+composer.lock
 yarn.lock
 
 # BUILD FILES
 _build/*
 node_modules/*
-EXTRAS/*
