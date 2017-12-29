@@ -1,0 +1,8 @@
+{
+  "installPlugins": [
+    "admin-bar",
+    "minify",
+    "redactor",
+    "typography"
+  ]
+}
