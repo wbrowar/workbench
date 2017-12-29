@@ -1,0 +1,20 @@
+# CRAFT DEFAULTS
+/.env
+/.idea
+/composer.lock
+/vendor
+.DS_Store
+
+# BUILD FILES
+.cache
+_build/*
+node_modules/*
+Thumbs.db
+yarn.lock
+
+# ENVIRONMENT CONFIG FILES
+.env.php
+scripts/.env.sh
+
+# USER UPLOADS
+web/u/*
