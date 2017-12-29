@@ -156,7 +156,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             ]
         }];
         inquirer.prompt(questions).then(function (answers) {
-            const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
+            const projectTemplatPath = paths.srcUtil + answers['templateType'] + '/';
             let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
             let projectTemplateSetup = [projectTemplatPath + 'setup/**/*'];
             let packageThemePath = 'public/',
