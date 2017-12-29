@@ -147,6 +147,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             type: 'list',
             name: 'templateType',
             message: 'What kind of project are you developing?',
+            default: argv.options.gitorg || null,
             choices: [
                 { name: 'HTML', value: '_html_1' },
                 { name: 'Craft 3 Website', value: '_craft3_1' },
