@@ -143,18 +143,23 @@ gulp.task('setup:move:default', ['source:backup'], function(cb) {
 });
 gulp.task('setup', ['setup:move:default'], function(cb) {
     if (!vars.template_is_set_up) {
-        const questions = [{
-            type: 'list',
-            name: 'templateType',
-            message: 'What kind of project are you developing?',
-            choices: [
-                { name: 'HTML', value: '_html_1' },
-                { name: 'Craft 3 Website', value: '_craft3_1' },
-                { name: 'Craft 2 Website', value: '_craft2_1' }
-            ]
-        }];
+        let questions = [];
+
+        if (argv.options.template !== undefined ) {
+            questions.push({
+                type: 'list',
+                    name: 'templateType',
+                message: 'What kind of project are you developing?',
+                choices: [
+                    { name: 'HTML', value: '_html_1' },
+                    { name: 'Craft 3 Website', value: '_craft3_1' },
+                    { name: 'Craft 2 Website', value: '_craft2_1' }
+                ]
+            });
+        }
         inquirer.prompt(questions).then(function (answers) {
-            const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
+            const templateFromQuestionOrArg = argv.options.template || answers['templateType'];
+            const projectTemplatPath     = paths.srcUtil + templateFromQuestionOrArg + '/';
             let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
             let projectTemplateSetup = [projectTemplatPath + 'setup/**/*'];
 
