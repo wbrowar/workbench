@@ -19,27 +19,7 @@
  */
 
 return [
-
-
-    // All environments
-    '*' => [
-    ],
-
-    // Live (production) environment
-    'live'  => [
-    ],
-
-    // Staging (pre-production) environment
-    'staging'  => [
-      'dev/search' => ['template' => 'dev/_search'],
-      'dev/inv' => ['template' => 'dev/_style_inv'],
-      'dev/inv/<invPage:(.*)>' => ['template' => 'dev/_style_inv'],
-    ],
-
-    // Local (development) environment
-    'local'  => [
-      'dev/search' => ['template' => 'dev/_search'],
-      'dev/inv' => ['template' => 'dev/_style_inv'],
-      'dev/inv/<invPage:(.*)>' => ['template' => 'dev/_style_inv'],
-    ],
+    'dev/search' => ['template' => 'dev/_search'],
+    'dev/inv' => ['template' => 'dev/_style_inv'],
+    'dev/inv/<invPage:(.*)>' => ['template' => 'dev/_style_inv'],
 ];
