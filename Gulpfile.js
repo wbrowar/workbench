@@ -26,7 +26,6 @@ const fs = require('fs'),
 
 const name = argv.options.name || vars.name,
     critCssTasks = [],
-    gitorg = argv.options.gitorg || '',
     release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false;
 
 // Paths
@@ -91,9 +90,9 @@ const ejsOptions = {
     root:                  bases.build,
 };
 let setupVars = {
-    gitorg:                gitorg,
     name:                  name,
     projectDir:            __dirname,
+    cpTrigger:             argv.options.cptrigger || 'admin',
     securityKey:           _randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 };
 

@@ -1,5 +1,5 @@
 {
-  "name": "<%- gitorg %>/<%- name %>",
+  "name": "<%- name %>",
   "description": "Craft CMS",
   "keywords": [
     "craft",

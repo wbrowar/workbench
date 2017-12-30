@@ -1,3 +1,5 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
 {% macro lazyLoadImage(image, config = {}) %}
     {% if image ?? false %}
         {% set global = config.global ?? {} %}
