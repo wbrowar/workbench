@@ -211,7 +211,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                         setupVars['chwonUser'] = templateAnswers['chwonUser'];
                         setupVars['chwonGroup'] = templateAnswers['chwonGroup'];
                         packageThemePath = 'web/';
-                        packageHtmlPath = 'web/';
+                        packageHtmlPath = 'templates/';
                         packageStyleTemplateUrlPrefix = 'dev/inv/';
                         packageStyleTemplateUrlSuffix = '';
                         packageMinifyHtml = false;
