@@ -147,7 +147,9 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             type: 'list',
             name: 'templateType',
             message: 'What kind of project are you developing?',
-            default: argv.options.template || null,
+            when: (answers) => {
+                return argv.options.template === undefined;
+            },
             choices: [
                 { name: 'HTML', value: '_html_1' },
                 { name: 'Craft 3 Website', value: '_craft3_1' },
@@ -155,9 +157,10 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             ]
         }];
         inquirer.prompt(questions).then(function (answers) {
-            const projectTemplatPath = paths.srcUtil + answers['templateType'] + '/';
-            let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
-            let projectTemplateSetup = [projectTemplatPath + 'setup/**/*'];
+            const projectTemplate = argv.options.template || answers['templateType'];
+            const projectTemplatePath = paths.srcUtil + projectTemplate + '/';
+            let projectTemplateTemplates = [projectTemplatePath + 'templates/**/*'];
+            let projectTemplateSetup = [projectTemplatePath + 'setup/**/*'];
             let packageThemePath = 'public/',
                 packageHtmlPath = 'public/',
                 packageStyleTemplateUrlPrefix = 'dev/inv/',
@@ -191,15 +194,13 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                 switch (answers['templateType']) {
                     case '_html_1':
                         // if (!templateAnswers['animations']) {
-                        //     projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_scss/base/_animations.scss');
+                        //     projectTemplateTemplates.push('!' + projectTemplatePath + 'templates/_scss/base/_animations.scss');
                         // }
                         // if (!templateAnswers['vueComponents']) {
-                        //     projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_scss/components/_vue.scss');
+                        //     projectTemplateTemplates.push('!' + projectTemplatePath + 'templates/_scss/components/_vue.scss');
                         // }
                         break;
                     case '_craft3_1':
-                        setupVars['chwonUser'] = templateAnswers['chwonUser'];
-                        setupVars['chwonGroup'] = templateAnswers['chwonGroup'];
                         packageThemePath = 'web/';
                         packageHtmlPath = 'templates/';
                         packageStyleTemplateUrlPrefix = 'dev/inv/';
