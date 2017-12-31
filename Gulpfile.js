@@ -92,7 +92,7 @@ const ejsOptions = {
 let setupVars = {
     name:                  name,
     projectDir:            __dirname,
-    options:               argv,
+    options:               argv.options,
     securityKey:           _randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 };
 

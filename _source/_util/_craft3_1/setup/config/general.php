@@ -11,7 +11,7 @@ return [
     '*' => [
 
         'cacheDuration' => false,
-        'cpTrigger' => '<%- options.cptrigger %>',
+        'cpTrigger' => '<%- cptrigger %>',
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
