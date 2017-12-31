@@ -170,7 +170,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
 
             let templateQuestions = [];
 
-            switch (answers['templateType']) {
+            switch (projectTemplate) {
                 case '_html_1':
                     // templateQuestions = [{
                     //     type: 'confirm',
@@ -191,7 +191,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             }
 
             inquirer.prompt(templateQuestions).then(function (templateAnswers) {
-                switch (answers['templateType']) {
+                switch (projectTemplate) {
                     case '_html_1':
                         // if (!templateAnswers['animations']) {
                         //     projectTemplateTemplates.push('!' + projectTemplatePath + 'templates/_scss/base/_animations.scss');
