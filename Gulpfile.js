@@ -236,7 +236,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                     .pipe($.jsonModify({ key: 'enable_ssi', value: packageEnableSsi }))
                     .pipe($.jsonModify({ key: 'minify_html', value: packageMinifyHtml }))
                     .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
-                    .pipe($.jsonModify({ key: 'template_directory', value: answers['templateType'] }))
+                    .pipe($.jsonModify({ key: 'template_directory', value: projectTemplate }))
                     .pipe(gulp.dest('./'));
 
                 cb();
@@ -631,7 +631,7 @@ function _parseArgv() {
     }
 }
 function _randomString(length, chars) {
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    let result = '';
+    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
 }
