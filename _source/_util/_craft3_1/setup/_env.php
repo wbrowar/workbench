@@ -47,7 +47,7 @@ $craftEnvVars = [
     'DB_PASSWORD' => "",
 
     // The name of the database to select
-    'DB_DATABASE' => "<%- name.replace('-', '_') %>",
+    'DB_DATABASE' => "<%- name %>",
 
     // The database schema that will be used (PostgreSQL only)
     'DB_SCHEMA' => "public",
