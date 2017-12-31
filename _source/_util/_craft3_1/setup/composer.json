@@ -47,6 +47,9 @@
     "post-create-project-cmd": [
       "@composer dump-autoload -o",
       "@php craft setup/welcome"
+    ],
+    "post-update-cmd": [
+      "if [ -f scripts/.env.sh ] && [ ! -L vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then ln -s scripts/.env.sh vendor/nystudio107/craft-scripts/scripts/.env.sh; fi"
     ]
   }
 }

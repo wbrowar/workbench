@@ -92,7 +92,7 @@ const ejsOptions = {
 let setupVars = {
     name:                  name,
     projectDir:            __dirname,
-    cpTrigger:             argv.options.cptrigger || 'admin',
+    options:               argv.options,
     securityKey:           _randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 };
 
@@ -182,15 +182,6 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                     // }];
                     break;
                 case '_craft3_1':
-                    templateQuestions = [{
-                        type: 'input',
-                        name: 'chwonUser',
-                        message: 'CHOWN User'
-                    },{
-                        type: 'input',
-                        name: 'chwonGroup',
-                        message: 'CHOWN Group'
-                    }];
                     break;
                 case '_craft2_1':
                     break;
