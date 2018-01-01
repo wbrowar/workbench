@@ -14,22 +14,12 @@
  * project directory.  Add '/.env.php' to your .gitignore.  See below for production
  * usage notes.
  */
-// Determine the incoming protocol
-if (isset($_SERVER['HTTPS']) && (strcasecmp($_SERVER['HTTPS'], 'on') === 0 || $_SERVER['HTTPS'] == 1)
-    || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0
-) {
-    $protocol = "https://";
-} else {
-    $protocol = "http://";
-}
-// Determine the server hostname
-$httpHost = $_SERVER['HTTP_HOST'] ?? '';
 
 // The $craftEnvVars are all auto-prefixed with CRAFTENV_ -- you can add
 // whatever you want here and access them via getenv() using the prefixed name
 $craftEnvVars = [
-    // The environment Craft is currently running in ('dev', 'staging', 'production', etc.)
-    'ENVIRONMENT' => "dev",
+    // The environment Craft is currently running in ('dev', 'staging', 'live')
+    'CRAFT_ENVIRONMENT' => "dev",
 
     // The secure key Craft will use for hashing and encrypting data
     'SECURITY_KEY' => "<%- securityKey %>",
@@ -60,9 +50,9 @@ $craftEnvVars = [
 
     'BASE_PATH' => $_SERVER["DOCUMENT_ROOT"] . '/',
 
-    'BASE_URL' => $protocol . $httpHost . '/',
+    'BASE_URL' => 'http://<%- name %>.test/',
 
-    'SITE_URL' => $protocol . $httpHost . '/',
+    'SITE_URL' => 'http://<%- name %>.test/',
 ];
 
 // Set all of the .env values, auto-prefixed with `CRAFTENV_`

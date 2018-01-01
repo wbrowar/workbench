@@ -44,6 +44,6 @@ return [
     ],
 
     // Local (development) environment
-    'local'  => [
+    'dev'  => [
     ],
 ];

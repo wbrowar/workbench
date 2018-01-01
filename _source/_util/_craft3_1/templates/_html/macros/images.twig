@@ -1,56 +1,63 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 
-{% macro lazyLoadImage(image, config = {}) %}
+{% macro getSrcSetFromObject(options) %}{% spaceless %}
+    {% set image = options.image ?? null %}
+    {% set object = options.object ?? {} %}
+    {% set suffix = options.suffix ?? null %}
+
+    {% if (image ?? false) and (object|length) %}
+        {% for transform in object %}{% if not loop.first %}, {% endif %}{{ image.getUrl(transform) }}{{ suffix }}{{ transform.width ?? false ? ' ' ~ transform.width ~ 'w' : '' }}{% endfor %}
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro image(image, options = {}) %}
+    {% import _self as images %}
+
+    {% set classes = options.classes ?? '' %}
+    {% set height = options.height ?? null %}
+    {% set lazyLoad = options.lazyLoad ?? true %}
+    {% set placeholder = options.placeholder ?? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' %}
+    {% set sizes = options.sizes ?? '100vw' %}
+    {% set styles = options.styles ?? '' %}
+    {% set title = options.title ?? '' %}
+    {% set transforms = options.transforms ?? [] %}
+    {% set width = options.width ?? null %}
+
     {% if image ?? false %}
-        {% set global = config.global ?? {} %}
-        {% set position = config.position ?? '50% 50%' %}
-        {% set sizes = config.sizes ?? [] %}
-        {% set width = config.width ?? null %}
-        {% set height = config.height ?? null %}
-
-        {% set transformedImages = craft.imager.transformImage(image, sizes, global) %}
-
-        {% if image ?? false %}
-            <figure>
-                <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ craft.imager.srcset(transformedImages) }}"{% if width ?? false %} data-width="{{ width }}"{% endif %}{% if height ?? false %} data-height="{{ height }}"{% endif %} alt="{{ image.title }}">
-            </figure>
-        {% endif %}
+        <figure{% if classes|length %} class="{{ classes }}"{% endif %}{% if styles|length %} style="{{ styles }}"{% endif %}>
+            <picture>
+                {% if transforms|length %}
+                    <% if (release) { %><sources {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ images.getSrcSetFromObject({ image: image, object: transforms, suffix: '.webp' }) }}" sizes="{{ sizes }}" type="image/webp" /><% } %>
+                    <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ images.getSrcSetFromObject({ image: image, object: transforms }) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ title }}" />
+                {% endif %}
+            </picture>
+        </figure>
     {% endif %}
 {% endmacro %}
 
-{% macro lazyLoadBgImage(image, config = {}) %}{% spaceless %}
+{% macro imageBg(options) %}{% spaceless %}
+    {% import _self as images %}
+
+    {% set classes = options.classes ?? '' %}
+    {% set image = options.image ?? null %}
+    {% set imageOptions = options.imageOptions ?? {} %}
+    {% set positionX = options.positionX ?? '-50%' %}
+    {% set positionY = options.positionY ?? '-50%' %}
+
+    {% set styles = options.styles ?? 'transform: translateX(' ~ positionX ~ ') translateY(' ~ positionY ~ ');' %}
+
     {% if image ?? false %}
-        {% set class = config.class ?? '.image_' ~ image.id %}
-        {% set cover = config.cover ?? true %}
-        {% set global = config.global ?? {} %}
-        {% set position = config.position ?? image.focalPoint ??  '50% 50%' %}
-        {% set sizes = config.sizes ?? [] %}
-
-        {% set transformedImages = craft.imager.transformImage(image, sizes, global) %}
-
-        {% set css %}
-            {% for size in sizes %}
-                {% set hasMq = false %}
-                {% if (size.retina ?? false) %}
-                    {% set hasMq = true %}
-                    @media (-webkit-min-device-pixel-ratio: 2){% if (size.mq ?? false) %} and {{ size.mq }}{% endif %},
-                    (min-resolution: 192dpi){% if (size.mq ?? false) %} and {{ size.mq }}{% endif %} {
-                {% elseif (size.mq ?? false) %}
-                    {% set hasMq = true %}
-                    @media {{ size.mq }} {
-                {% endif %}
-                    .{{ class }}:not([data-lazy-load]) {
-                        {% if loop.first %}
-                            background-position: {{ position }};
-                            {{ cover ? 'background-size: cover;' : '' }}
-                        {% endif %}
-                        background-image: url({{ transformedImages[(loop.index - 1)] }});
-                    }
-                {% if hasMq %} } {% endif %}
-            {% endfor %}
-        {% endset %}
-        {% includeCss css %}
-
-        data-lazy-load data-bg-array='{ "class": "{{ class }}", "css": [] }'
+        <div class="c_image_bg{% if classes|length %} {{ classes }}{% endif %}">
+            {% set imageOptions = {
+                classes: options.imageOptions.classes ?? 'c_image_bg__image',
+                height: options.imageOptions.height ?? null,
+                lazyLoad: options.imageOptions.lazyLoad ?? true,
+                styles: options.imageOptions.styles ?? null,
+                title: options.imageOptions.title ?? null,
+                transforms: options.imageOptions.transforms ?? [],
+                width: options.imageOptions.width ?? null,
+            } %}
+            {{ images.image(image, imageOptions) }}
+        </div>
     {% endif %}
 {% endspaceless %}{% endmacro %}

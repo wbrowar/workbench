@@ -2,7 +2,7 @@
 
 {% extends "pages/basic_page" %}
 
-{% if craft.config.devMode %}
+{% if craft.app.config.general.devMode %}
   {% block content %}{% endblock %}
 {% else %}
   {% redirect url(siteUrl) %}

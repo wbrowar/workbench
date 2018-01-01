@@ -38,7 +38,7 @@
 `{% import 'macros/icons' as icons %}
 {% set options = {
     title: 'Title of Article',
-    url: craft.request.url,
+    url: url(craft.app.request.pathInfo),
 } %}
 {{ icons.socialShare(options) }}`,
     "options": [

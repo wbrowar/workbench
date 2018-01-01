@@ -48,7 +48,7 @@ return [
     ],
 
     // Local (development) environment
-    'local' => [
+    'dev' => [
         // Craft defined config settings
         'allowAutoUpdates' => true,
         'backupOnUpdate' => true,

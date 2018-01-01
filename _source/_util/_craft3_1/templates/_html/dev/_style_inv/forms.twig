@@ -9,7 +9,7 @@
     "title": "Form Field",
     "description": "Text-based input field. NOTE: all options below are applicable for all form input fields.",
     "background": "light",
-    "code":
+    "twigCode":
 `{% import 'macros/forms' as forms %}
 <form class="c_form">
     {{ forms.field({
@@ -34,7 +34,7 @@
     "title": "Text Area Field",
     "description": "Input field for longer text.",
     "background": "light",
-    "code":
+    "twigCode":
 `{% import 'macros/forms' as forms %}
 <form class="c_form">
     {{ forms.field({
@@ -49,7 +49,7 @@
     "title": "Invalid Form Field",
     "description": "Style for when an input field is not correctly filled out based on HTML5 type validation.",
     "background": "light",
-    "code":
+    "twigCode":
 `{% import 'macros/forms' as forms %}
 <form class="c_form">
     {{ forms.field({
@@ -65,7 +65,7 @@
     "title": "Button",
     "description": "A single submit button with no wrapper.",
     "background": "light",
-    "code":
+    "twigCode":
 `{% import 'macros/forms' as forms %}
 {{ forms.button({ label: 'Send' }) }}`
 }); %>
@@ -74,7 +74,7 @@
     "title": "Buttons",
     "description": "Markup for multiple submit buttons wrapped in a container for easier styling.",
     "background": "light",
-    "code":
+    "twigCode":
 `{% import 'macros/forms' as forms %}
 
 {% set button1 = { options: {
@@ -93,7 +93,7 @@
     "title": "Example Form",
     "description": "A basic contact form example.",
     "background": "light",
-    "code":
+    "twigCode":
 `{% import 'macros/forms' as forms %}
 <form class="c_form" action="">
     {{ forms.field({
@@ -111,6 +111,7 @@
         name: 'comments',
         type: 'textarea'
     }) }}
+    {{ forms.button({ label: 'Send' }) }}
 </form>`
 }); %>
 

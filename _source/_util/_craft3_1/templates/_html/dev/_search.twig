@@ -3,20 +3,25 @@
 {% extends "dev/_dev_page" %}
 
 {% block content %}
+  {% import 'macros/forms' as forms %}
+
   <br><br>
 
-  {% set query = craft.request.getParam('q') %}
+  {% set query = craft.app.request.getParam('q') %}
   {% set entries = craft.entries({
     search: {
-      query: query,
-      subLeft: true,
-      subRight: true,
+      query: query ?? '',
     }
-  }).order('score') %}
+  }).orderBy('score').all() %}
 
-  <form action="{{ url('dev/search') }}">
-    <input type="search" name="q" placeholder="Search"{% if query|length %}value={{ query }}{% endif %}>
-    <input type="submit" value="Search">
+  <form class="c_form" action="{{ url('dev/search') }}">
+      {{ forms.field({
+          name: 'q',
+          placeholder: "Search",
+          type: 'search',
+          value: query ?? '',
+      }) }}
+      {{ forms.button({ label: 'Search' }) }}
   </form>
 
   {% if query|length %}

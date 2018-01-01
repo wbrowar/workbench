@@ -22,23 +22,27 @@
 {% endspaceless %}{% endmacro %}
 
 {% macro socialLinks(options = { links: {} }) %}{% spaceless %}
+    {% import _self as icons %}
+
     {% set modifiers = options.modifiers ?? '' %}
 
     {% if options.links|length %}
         <nav class="c_nav_social{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
-            {% if options.links.facebook ?? false %}<a class="c_nav_social--facebook" href="{{ url(options.links.facebook) }}">{{ _self.socialIcon('facebook') }}</a>{% endif %}
-            {% if options.links.twitter ?? false %}<a class="c_nav_social--twitter" href="{{ url(options.links.twitter) }}">{{ _self.socialIcon('twitter') }}</a>{% endif %}
-            {% if options.links.linkedin ?? false %}<a class="c_nav_social--linkedin" href="{{ url(options.links.linkedin) }}">{{ _self.socialIcon('linkedin') }}</a>{% endif %}
-            {% if options.links.youtube ?? false %}<a class="c_nav_social--youtube" href="{{ url(options.links.youtube) }}">{{ _self.socialIcon('youtube') }}</a>{% endif %}
-            {% if options.links.pinterest ?? false %}<a class="c_nav_social--pinterest" href="{{ url(options.links.pinterest) }}">{{ _self.socialIcon('pinterest') }}</a>{% endif %}
-            {% if options.links.instagram ?? false %}<a class="c_nav_social--instagram" href="{{ url(options.links.instagram) }}">{{ _self.socialIcon('instagram') }}</a>{% endif %}
-            {% if options.links.snapchat ?? false %}<a class="c_nav_social--snapchat" href="{{ url(options.links.snapchat) }}">{{ _self.socialIcon('snapchat') }}</a>{% endif %}
-            {% if options.links.email ?? false %}<a class="c_nav_social--email" href="{{ 'mailto:' not in options.links.email ? 'mailto:' : '' }}{{ options.links.email }}">{{ _self.socialIcon('email') }}</a>{% endif %}
+            {% if options.links.facebook ?? false %}<a class="c_nav_social--facebook" href="{{ url(options.links.facebook) }}">{{ icons.socialIcon('facebook') }}</a>{% endif %}
+            {% if options.links.twitter ?? false %}<a class="c_nav_social--twitter" href="{{ url(options.links.twitter) }}">{{ icons.socialIcon('twitter') }}</a>{% endif %}
+            {% if options.links.linkedin ?? false %}<a class="c_nav_social--linkedin" href="{{ url(options.links.linkedin) }}">{{ icons.socialIcon('linkedin') }}</a>{% endif %}
+            {% if options.links.youtube ?? false %}<a class="c_nav_social--youtube" href="{{ url(options.links.youtube) }}">{{ icons.socialIcon('youtube') }}</a>{% endif %}
+            {% if options.links.pinterest ?? false %}<a class="c_nav_social--pinterest" href="{{ url(options.links.pinterest) }}">{{ icons.socialIcon('pinterest') }}</a>{% endif %}
+            {% if options.links.instagram ?? false %}<a class="c_nav_social--instagram" href="{{ url(options.links.instagram) }}">{{ icons.socialIcon('instagram') }}</a>{% endif %}
+            {% if options.links.snapchat ?? false %}<a class="c_nav_social--snapchat" href="{{ url(options.links.snapchat) }}">{{ icons.socialIcon('snapchat') }}</a>{% endif %}
+            {% if options.links.email ?? false %}<a class="c_nav_social--email" href="{{ 'mailto:' not in options.links.email ? 'mailto:' : '' }}{{ options.links.email }}">{{ icons.socialIcon('email') }}</a>{% endif %}
         </nav>
     {% endif %}
 {% endspaceless %}{% endmacro %}
 
 {% macro socialShare(options = {}) %}
+    {% import _self as icons %}
+
     {% set image = options.image ?? null %}
     {% set modifiers = options.modifiers ?? '' %}
     {% set title = options.title ?? '' %}
@@ -56,6 +60,6 @@
         {% endif %}
         {% set options = options|merge({ 'links': links, 'modifiers': modifiers, 'title': title }) %}
 
-        {{ _self.socialLinks(options) }}
+        {{ icons.socialLinks(options) }}
     {% endif %}
 {% endmacro %}
