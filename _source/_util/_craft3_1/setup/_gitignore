@@ -11,6 +11,9 @@ _build/*
 node_modules/*
 Thumbs.db
 yarn.lock
+storage/backups
+storage/logs
+storage/runtime
 
 # ENVIRONMENT CONFIG FILES
 .env.php

@@ -15,7 +15,7 @@
 
 return [
     'modules' => [
-        'my-module' => \modules\Module::class,
+        'site-module' => \modules\SiteModule::class,
     ],
-    //'bootstrap' => ['my-module'],
+    //'bootstrap' => ['site-module'],
 ];

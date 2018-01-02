@@ -20,7 +20,7 @@ use Craft;
  * Learn more about Yii module development in Yii's documentation:
  * http://www.yiiframework.com/doc-2.0/guide-structure-modules.html
  */
-class Module extends \yii\base\Module
+class SiteModule extends \yii\base\Module
 {
     /**
      * Initializes the module.
