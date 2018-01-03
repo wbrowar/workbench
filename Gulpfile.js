@@ -393,7 +393,7 @@ function cssHandler() {
     return gulp.src(paths.filesScss)
         .pipe($.changed(paths.distCss))
         .pipe($.sassGlob())
-        .pipe($.sass({outputStyle: 'compressed'}).on('error', $.sass.logError))
+        .pipe($.sass({outputStyle: (release ? 'compressed' : 'expanded')}).on('error', $.sass.logError))
         .pipe(gulp.dest(bases.build + 'css/sass'))
         .pipe($.autoprefixer({
             browsers: vars.browserlist,
