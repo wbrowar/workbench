@@ -2,11 +2,11 @@
 
 {% macro getSrcSetFromObject(options) %}{% spaceless %}
     {% set image = options.image ?? null %}
-    {% set object = options.object ?? {} %}
+    {% set transforms = options.transforms ?? {} %}
     {% set suffix = options.suffix ?? null %}
 
-    {% if (image ?? false) and (object|length) %}
-        {% for transform in object %}{% if not loop.first %}, {% endif %}{{ image.getUrl(transform) }}{{ suffix }}{{ transform.width ?? false ? ' ' ~ transform.width ~ 'w' : '' }}{% endfor %}
+    {% if (image ?? false) and (transforms|length) %}
+        {% for transform in transforms %}{% if not loop.first %}, {% endif %}{{ image.getUrl(transform) }}{{ suffix }}{{ (transform.width ?? false) ? ' ' ~ transform.width ~ 'w' : '' }}{% endfor %}
     {% endif %}
 {% endspaceless %}{% endmacro %}
 
@@ -14,49 +14,49 @@
     {% import _self as images %}
 
     {% set classes = options.classes ?? '' %}
-    {% set height = options.height ?? null %}
     {% set lazyLoad = options.lazyLoad ?? true %}
     {% set placeholder = options.placeholder ?? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' %}
     {% set sizes = options.sizes ?? '100vw' %}
     {% set styles = options.styles ?? '' %}
     {% set title = options.title ?? '' %}
     {% set transforms = options.transforms ?? [] %}
-    {% set width = options.width ?? null %}
 
     {% if image ?? false %}
         <figure{% if classes|length %} class="{{ classes }}"{% endif %}{% if styles|length %} style="{{ styles }}"{% endif %}>
             <picture>
                 {% if transforms|length %}
-                    <% if (release) { %><sources {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ images.getSrcSetFromObject({ image: image, object: transforms, suffix: '.webp' }) }}" sizes="{{ sizes }}" type="image/webp" /><% } %>
-                    <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ images.getSrcSetFromObject({ image: image, object: transforms }) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ title }}" />
+                    {% set newTransforms = [] %}
+                    {% for transform in transforms %}
+                        {% if (transform.width ?? false) and (transform.aspect ?? false) %}
+                            {% set transform = transform|merge({ height: (transform.width * transform.aspect)|round })|without(transform.aspect) %}
+                        {% endif %}
+                        {% set newTransforms = newTransforms|merge([transform]) %}
+                    {% endfor %}
+
+                    <% if (release) { %><source {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ images.getSrcSetFromObject({ image: image, transforms: newTransforms, suffix: '.webp' }) }}" sizes="{{ sizes }}" type="image/webp" /><% } %>
+                    <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ images.getSrcSetFromObject({ image: image, transforms: newTransforms }) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ title }}" />
+                {% else %}
+                    <img {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ image.url }}" alt="{{ title }}" />
                 {% endif %}
             </picture>
         </figure>
     {% endif %}
 {% endmacro %}
 
-{% macro imageBg(options) %}{% spaceless %}
+{% macro imageBg(image, options) %}{% spaceless %}
     {% import _self as images %}
 
     {% set classes = options.classes ?? '' %}
-    {% set image = options.image ?? null %}
     {% set imageOptions = options.imageOptions ?? {} %}
-    {% set positionX = options.positionX ?? '-50%' %}
-    {% set positionY = options.positionY ?? '-50%' %}
-
-    {% set styles = options.styles ?? 'transform: translateX(' ~ positionX ~ ') translateY(' ~ positionY ~ ');' %}
 
     {% if image ?? false %}
         <div class="c_image_bg{% if classes|length %} {{ classes }}{% endif %}">
-            {% set imageOptions = {
-                classes: options.imageOptions.classes ?? 'c_image_bg__image',
-                height: options.imageOptions.height ?? null,
-                lazyLoad: options.imageOptions.lazyLoad ?? true,
-                styles: options.imageOptions.styles ?? null,
-                title: options.imageOptions.title ?? null,
-                transforms: options.imageOptions.transforms ?? [],
-                width: options.imageOptions.width ?? null,
-            } %}
+            {% set imageOptionClasses = imageOptions.classes ?? '' %}
+            {% set imageOptionStyles = imageOptions.styles ?? '' %}
+            {% set imageOptions = imageOptions|merge({
+                classes: imageOptionClasses ~ ' c_image_bg__image',
+            }) %}
+
             {{ images.image(image, imageOptions) }}
         </div>
     {% endif %}

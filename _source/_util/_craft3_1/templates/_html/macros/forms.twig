@@ -2,7 +2,7 @@
 
 {% macro button(options) %}{% spaceless %}
     {% set label = options.label ?? '' %}
-    {% set modifiers = options.modifiers ?? null %}
+    {% set classes = options.classes ?? null %}
     {% set name = options.name ?? null %}
     {% set type = options.type ?? 'submit' %}
 
@@ -26,7 +26,7 @@
 
 {% macro field(options) %}{% spaceless %}
     {% set label = options.label ?? null %}
-    {% set modifiers = options.modifiers ?? null %}
+    {% set classes = options.classes ?? null %}
     {% set name = options.name ?? null %}
     {% set placeholder = options.placeholder ?? null %}
     {% set required = options.required ?? false %}
@@ -36,7 +36,7 @@
     {% set id = options.id ?? name ?? null %}
 
     {% if (name ?? false) and (type ?? false) %}
-        <div class="c_form__input c_form__input--{{ type }}{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+        <div class="c_form__input c_form__input--{{ type }}{% if classes ?? false %} {{ classes }}{% endif %}">
             {% if label ?? false %}<label{% if id ?? false %} for="{{ id }}"{% endif %}>{{ label }}</label>{% endif %}
             {% if type in ['email', 'number', 'tel', 'text', 'search', 'url'] %}
                 <input id="{{ id }}" type="{{ type }}" name="{{ name }}" {% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if value ?? false %} value="{{ value }}"{% endif %}{% if required %} required{% endif %}>

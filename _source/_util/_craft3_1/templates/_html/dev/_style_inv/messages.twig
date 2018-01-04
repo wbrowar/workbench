@@ -10,12 +10,12 @@
     "description": "Used to display a timely message to users.",
     "background": "light",
     "twigCode":
-`{% import 'macros/messages' as messages %}
+`{% import 'macros/messages.twig' as messages %}
 {{ messages.alertBar({ summary: 'There is an outage in our production.' }) }}`,
     "options": [
         { "name": 'body', "required": false, "type": 'string', "default": `''`, "description": `URL of audio file.` },
         { "name": 'ctaUrl', "required": false, "type": 'string', "default": `'#'`, "description": `URL of audio file.` },
-        { "name": 'modifiers', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
         { "name": 'summary', "required": true, "type": 'string', "default": `''`, "description": `URL of audio file.` }
     ]
 }); %>
@@ -25,7 +25,7 @@
     "description": "Used to display a timely message to users. The summary can be clicked on to reveal more information.",
     "background": "light",
     "twigCode":
-`{% import 'macros/messages' as messages %}
+`{% import 'macros/messages.twig' as messages %}
 {% set body %}
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>

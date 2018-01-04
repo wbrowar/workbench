@@ -10,7 +10,7 @@
     "description": "Text-based input field. NOTE: all options below are applicable for all form input fields.",
     "background": "light",
     "twigCode":
-`{% import 'macros/forms' as forms %}
+`{% import 'macros/forms.twig' as forms %}
 <form class="c_form">
     {{ forms.field({
         label: 'Text Input',
@@ -19,9 +19,9 @@
     }) }}
 </form>`,
     "options": [
+        { "name": 'classes', "required": false, "type": 'string', "description": `Classes added that allow for variations in styles or functionality.` },
         { "name": 'id', "required": false, "type": 'string', "description": `The id attribute for the form field. This will default to the name option if an id is not given.` },
         { "name": 'label', "required": false, "type": 'string', "description": `Text used for the field label.` },
-        { "name": 'modifiers', "required": false, "type": 'string', "description": `Classes added that allow for variations in styles or functionality.` },
         { "name": 'name', "required": true, "type": 'string', "description": `The name attribute of the form field.` },
         { "name": 'placeholder', "required": false, "type": 'string', "description": `Text ` },
         { "name": 'required', "required": false, "type": 'boolean', "default": `false`, "description": `Adds a required attribute to the input field.` },
@@ -35,7 +35,7 @@
     "description": "Input field for longer text.",
     "background": "light",
     "twigCode":
-`{% import 'macros/forms' as forms %}
+`{% import 'macros/forms.twig' as forms %}
 <form class="c_form">
     {{ forms.field({
         label: 'Text Area',
@@ -50,7 +50,7 @@
     "description": "Style for when an input field is not correctly filled out based on HTML5 type validation.",
     "background": "light",
     "twigCode":
-`{% import 'macros/forms' as forms %}
+`{% import 'macros/forms.twig' as forms %}
 <form class="c_form">
     {{ forms.field({
         label: 'Invalid Input',
@@ -66,7 +66,7 @@
     "description": "A single submit button with no wrapper.",
     "background": "light",
     "twigCode":
-`{% import 'macros/forms' as forms %}
+`{% import 'macros/forms.twig' as forms %}
 {{ forms.button({ label: 'Send' }) }}`
 }); %>
 
@@ -75,7 +75,7 @@
     "description": "Markup for multiple submit buttons wrapped in a container for easier styling.",
     "background": "light",
     "twigCode":
-`{% import 'macros/forms' as forms %}
+`{% import 'macros/forms.twig' as forms %}
 
 {% set button1 = { options: {
     label: 'Reset',
@@ -94,7 +94,7 @@
     "description": "A basic contact form example.",
     "background": "light",
     "twigCode":
-`{% import 'macros/forms' as forms %}
+`{% import 'macros/forms.twig' as forms %}
 <form class="c_form" action="">
     {{ forms.field({
         label: 'Name',

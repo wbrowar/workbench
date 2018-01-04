@@ -17,17 +17,17 @@
         {% case 'snapchat' %}
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.32 53"><title>social_snapchat</title><path d="M43.1 30.5a3 3 0 0 1-.29-2.56c.55-1.29 2.34-1.86 3.52-2.24.29-.09.57-.18.78-.26 2.07-.82 2.5-1.65 2.48-2.2a1.76 1.76 0 0 0-1.34-1.43 2.55 2.55 0 0 0-1-.18 2 2 0 0 0-.83.16 7.12 7.12 0 0 1-2.68.75 2.27 2.27 0 0 1-1.53-.54c0-.49.06-1 .09-1.53v-.16c.24-3.77.53-8.47-.66-11.15A14.48 14.48 0 0 0 28.2.46h-1.11a14.45 14.45 0 0 0-13.42 8.66c-1.2 2.68-.9 7.37-.66 11.15 0 .58.07 1.15.1 1.69a2.35 2.35 0 0 1-1.7.54 6.88 6.88 0 0 1-2.85-.75 1.52 1.52 0 0 0-.65-.13A2.23 2.23 0 0 0 5.74 23c-.09.49.1 1.45 2.47 2.38.22.09.49.17.78.26 1.18.38 3 .94 3.52 2.24a3 3 0 0 1-.29 2.56c-.15.35-3.73 8.51-11.72 9.83a.58.58 0 0 0-.49.61 1 1 0 0 0 .08.33c.33.78 1.82 1.87 7 2.67.45.07.61.72.84 1.79.09.41.18.84.31 1.28a.73.73 0 0 0 .81.58 6.83 6.83 0 0 0 1.16-.17 15.41 15.41 0 0 1 3.12-.35 13.85 13.85 0 0 1 2.25.19 10.81 10.81 0 0 1 4.29 2.19c2 1.44 4.14 2.92 7.41 2.92H28c3.28 0 5.38-1.49 7.42-2.93a10.8 10.8 0 0 1 4.29-2.19 13.87 13.87 0 0 1 2.29-.11 15.53 15.53 0 0 1 3.12.33 6.5 6.5 0 0 0 1.16.15h.06a.69.69 0 0 0 .74-.56c.13-.44.22-.85.31-1.27.25-1.16.42-1.71.84-1.78 5.2-.8 6.69-1.9 7-2.67a1 1 0 0 0 .08-.33.59.59 0 0 0-.49-.61C46.83 39 43.25 30.85 43.1 30.5z" fill="#fff"></path></svg>
         {% case 'email' %}
-            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.97 53"><defs><style>.cls-1{fill:#fff;}</style></defs><title>social_email</title><polygon class="cls-1" points="71.97 50.24 71.97 3.6 50.85 25.12 71.97 50.24"/><polygon class="cls-1" points="69.57 0.28 2.89 0.28 36.45 34.04 69.57 0.28"/><polygon class="cls-1" points="0 3.1 0 50.72 21.32 24.55 0 3.1"/><polygon class="cls-1" points="48.03 28 36.47 39.78 24.16 27.4 3.39 52.91 68.97 52.91 48.03 28"/></svg>
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.97 53"><defs></defs><title>social_email</title><polygon points="71.97 50.24 71.97 3.6 50.85 25.12 71.97 50.24" fill="#fff"/><polygon points="69.57 0.28 2.89 0.28 36.45 34.04 69.57 0.28" fill="#fff"/><polygon points="0 3.1 0 50.72 21.32 24.55 0 3.1" fill="#fff"/><polygon points="48.03 28 36.47 39.78 24.16 27.4 3.39 52.91 68.97 52.91 48.03 28" fill="#fff"/></svg>
     {% endswitch %}
 {% endspaceless %}{% endmacro %}
 
 {% macro socialLinks(options = { links: {} }) %}{% spaceless %}
     {% import _self as icons %}
 
-    {% set modifiers = options.modifiers ?? '' %}
+    {% set classes = options.classes ?? '' %}
 
     {% if options.links|length %}
-        <nav class="c_nav_social{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+        <nav class="c_nav_social{% if classes ?? false %} {{ classes }}{% endif %}">
             {% if options.links.facebook ?? false %}<a class="c_nav_social--facebook" href="{{ url(options.links.facebook) }}">{{ icons.socialIcon('facebook') }}</a>{% endif %}
             {% if options.links.twitter ?? false %}<a class="c_nav_social--twitter" href="{{ url(options.links.twitter) }}">{{ icons.socialIcon('twitter') }}</a>{% endif %}
             {% if options.links.linkedin ?? false %}<a class="c_nav_social--linkedin" href="{{ url(options.links.linkedin) }}">{{ icons.socialIcon('linkedin') }}</a>{% endif %}
@@ -44,7 +44,7 @@
     {% import _self as icons %}
 
     {% set image = options.image ?? null %}
-    {% set modifiers = options.modifiers ?? '' %}
+    {% set classes = options.classes ?? '' %}
     {% set title = options.title ?? '' %}
     {% set url = options.url ?? '#' %}
 
@@ -58,7 +58,7 @@
         {% if image ?? false %}
             {% set links = links|merge({ 'pinterest': 'http://pinterest.com/pin/create/button/?url=' ~ url(url) ~ '&media=' ~ image ~ '&description=' ~ title, }) %}
         {% endif %}
-        {% set options = options|merge({ 'links': links, 'modifiers': modifiers, 'title': title }) %}
+        {% set options = options|merge({ links: links, classes: classes, title: title }) %}
 
         {{ icons.socialLinks(options) }}
     {% endif %}

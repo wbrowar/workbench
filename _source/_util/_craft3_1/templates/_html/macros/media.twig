@@ -2,10 +2,10 @@
 
 {# AUDIO #}
 {% macro audio(options) %}{% spaceless %}
-    {% set modifiers = options.modifiers ?? '' %}
+    {% set classes = options.classes ?? '' %}
     {% set url = options.url ?? '#' %}
 
-    <div class="c_audio{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+    <div class="c_audio{% if classes ?? false %} {{ classes }}{% endif %}">
         <audio data-lazy-load data-src="{{ url }}" controls></audio>
         <noscript><audio src="{{ url }}" controls></audio></noscript>
     </div>
@@ -20,11 +20,11 @@
 {% macro video(options) %}{% spaceless %}
     {% set controls = options.controls ?? true %}
     {% set id = options.id ?? '' %}
-    {% set modifiers = options.modifiers ?? '' %}
+    {% set classes = options.classes ?? '' %}
     {% set source = options.source ?? 'file' %}
     {% set url = options.url ?? '#' %}
 
-    <div class="c_video{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+    <div class="c_video{% if classes ?? false %} {{ classes }}{% endif %}">
         {% if source == 'youtube' %}
             <iframe data-lazy-load data-src="https://www.youtube.com/embed/{{ id }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
             <noscript><iframe src="https://www.youtube.com/embed/{{ id }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
@@ -42,11 +42,11 @@
     {% set autoplay = options.autoplay ?? true %}
     {% set lazyLoad = options.lazyLoad ?? true %}
     {% set loop = options.loop ?? true %}
-    {% set modifiers = options.modifiers ?? '' %}
+    {% set classes = options.classes ?? '' %}
     {% set url = options.url ?? '#' %}
 
     {% if url ?? false %}
-        <div class="c_video_bg{% if modifiers ?? false %} {{ modifiers }}{% endif %}">
+        <div class="c_video_bg{% if classes ?? false %} {{ classes }}{% endif %}">
             <video class="c_video_bg__video" {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ url }}" preload muted {{ autoplay ? 'autoplay' : '' }} {{ loop ? 'loop' : '' }}></video>
         </div>
     {% endif %}

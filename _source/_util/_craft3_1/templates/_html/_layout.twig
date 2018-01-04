@@ -39,7 +39,7 @@
       {% endminify %}
 
       {% block jsFooter %}
-        <script>loadJS('<%= site_root %>js/{{ jsSection }}.js?v=' + jsVersion);</script>
+        <script>loadJS('{{ siteUrl }}js/{{ jsSection }}.js?v=' + jsVersion);</script>
       {% endblock %}
     </body>
   </html>

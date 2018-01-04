@@ -191,10 +191,13 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
+    "cssd": "./vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh",
+    "cssdb": "./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh",
     "dev": "gulp run",
     "list": "gulp",
     "prod": "NODE_ENV=production gulp release",
     "setup": "gulp setup",
+    "update": "yarn && composer update",
     "watch": "gulp watch"
   }
 }
