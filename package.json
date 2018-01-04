@@ -197,6 +197,7 @@
     "list": "gulp",
     "prod": "NODE_ENV=production gulp release",
     "setup": "gulp setup",
+    "start": "npm run update && npm run cssd",
     "update": "yarn && composer update",
     "watch": "gulp watch"
   }
