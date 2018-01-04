@@ -95,6 +95,7 @@ let setupVars = {
     options:               argv.options,
     securityKey:           _randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 };
+const notifyIconPath = bases.source + '_favicon/favicon.png';
 
 
 
@@ -104,7 +105,7 @@ let setupVars = {
 // COMMANDS
 // [gulp]
 gulp.task('default',function() {
-    var text  = `\n\n${$.gutil.colors.inverse('        COMMANDS        ')}`
+    const text  = `\n\n${$.gutil.colors.inverse('        COMMANDS        ')}`
         + `\n––––––––––––––––––––––––\n`
         + `\n${$.gutil.colors.inverse(' gulp font ')}`
         + `\n${$.gutil.colors.bold('└─ Uses info in \`package.json\` to generate _source/_scss/automated/_fonts.scss')}\n`
@@ -249,7 +250,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
 
 // [gulp run]
 gulp.task('run', ['css:cleaned', 'img:cleaned', 'webpack'], function() {
-    return notifier.notify({ 'title': name, 'message': 'Run Complete' });
+    return notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'Run Complete' });
 });
 
 // [gulp release]
@@ -257,7 +258,7 @@ gulp.task('release', ['bump:patch', 'release:tasks']);
 gulp.task('releasefeature', ['bump:minor', 'release:tasks']);
 gulp.task('releasemajor', ['bump:major', 'release:tasks']);
 gulp.task('release:tasks', ['critCss', 'img:cleaned', 'ejs:release', 'webpack'], function() {
-    return notifier.notify({ 'title': name, 'message': 'Release Complete' });
+    return notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'Release Complete' });
 });
 
 // [gulp watch]
@@ -279,24 +280,24 @@ gulp.task('watch', ['ejs:quick:full'], function() {
     }
 
     watchCss.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'CSS Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'CSS Updated' });
     });
     watchEjsIncludes.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'HTML Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'HTML Updated' });
     });
     watchHtml.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'HTML Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'HTML Updated' });
     });
     watchImg.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'Images Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'Images Updated' });
         browserSync.reload();
     });
     watchJs.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'JS Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'JS Updated' });
         browserSync.reload();
     });
     watchSvg.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'SVG and CSS Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'SVG and CSS Updated' });
         browserSync.reload();
     });
 });
@@ -569,7 +570,7 @@ gulp.task('favicons', ['favicons:generate'], function() {
         .pipe(gulp.dest(paths.distImg + 'meta/'));
 });
 gulp.task('favicons:generate', ['cleanFavicon'], function() {
-    return gulp.src(bases.source + '_favicon/favicon.png')
+    return gulp.src(notifyIconPath)
         .pipe($.favicons({
             html: bases.build + 'favicon/favicons.html',
             path: bases.site + 'img/meta',
