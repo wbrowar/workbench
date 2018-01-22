@@ -40,9 +40,9 @@
 
 {% macro videoBg(options) %}{% spaceless %}
     {% set autoplay = options.autoplay ?? true %}
+    {% set classes = options.classes ?? '' %}
     {% set lazyLoad = options.lazyLoad ?? true %}
     {% set loop = options.loop ?? true %}
-    {% set classes = options.classes ?? '' %}
     {% set url = options.url ?? '#' %}
 
     {% if url ?? false %}

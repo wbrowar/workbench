@@ -22,6 +22,10 @@ return [
         'securityKey' => getenv('CRAFTENV_SECURITY_KEY'),
         'siteUrl' => getenv('CRAFTENV_SITE_URL'),
         'usePathInfo' => true,
+        'aliases' => [
+            '@basePath' => getenv('CRAFTENV_BASE_PATH'),
+            '@baseUrl' => getenv('CRAFTENV_BASE_URL'),
+        ],
         'custom' => [
             'basePath' => getenv('CRAFTENV_BASE_PATH'),
             'baseUrl' => getenv('CRAFTENV_BASE_URL'),
