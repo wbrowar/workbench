@@ -1,7 +1,6 @@
 {
   "installPlugins": [
     "admin-bar",
-    "guide",
     "minify",
     "redactor",
     "typogrify"
