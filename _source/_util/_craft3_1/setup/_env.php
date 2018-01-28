@@ -48,7 +48,7 @@ $craftEnvVars = [
     // The port to connect to the database with. Will default to 5432 for PostgreSQL and 3306 for MySQL.
     'DB_PORT' => "",
 
-    'BASE_PATH' => realpath(dirname(__FILE__)) . '/',
+    'BASE_PATH' => realpath(dirname(__FILE__)) . '/web/',
 
     'BASE_URL' => 'http://<%- name %>.test/',
 
