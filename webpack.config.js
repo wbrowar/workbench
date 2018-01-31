@@ -33,17 +33,37 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        js: 'babel-loader'
+                use: {
+                    loader: 'vue-loader',
+                    options: {
+                        loaders: {
+                            js: 'babel-loader'
+                        },
+                        presets: [
+                            ["env", {
+                                targets: {
+                                    browsers: vars.browserList
+                                }
+                            }]
+                        ]
                     }
                 }
             },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: "babel-loader"
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            ["env", {
+                                targets: {
+                                    browsers: vars.browserList
+                                }
+                            }]
+                        ]
+                    }
+                }
             }
         ]
     },
