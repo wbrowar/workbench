@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="<% if (templateDirectory === '_craft3_1') { %>{{ siteUrl }}<% } else { %><%= site_root %><% } %>css/app.css?v=<%= version %>">
     <!--#else -->
     <!-- critcss -->
+    <% if (templateDirectory === '_craft3_1') { %>{% block critcss %}<% if (critCssEnabled) { %><style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>{% endblock %}<% } else { %>
     <% if (critCssEnabled) { %><!-- SET COOKIE, THEN CHECK FOR IT. IF COOKIE IS FOUND, SKIP CRITCSS BECAUSE CSS FILE SHOULD ALREADY BE CACHED -->
-    <style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+    <%- include(critcsshome) %><% } else { %><!-- CRITICAL CSS --><% } %><% } %>
     <script>
       <%- include(loadcss) %>
       <%- include(loadjs) %>
