@@ -25,12 +25,14 @@
     "roave/security-advisories": "dev-master",
     "nystudio107/craft-scripts": "^1.2.4",
     "craftcms/redactor": "1.0.1",
+    "mmikkel/cp-field-inspect": "1.0.2",
     "nystudio107/craft-fastcgicachebust": "1.0.4",
     "nystudio107/craft-imageoptimize": "1.3.6",
     "nystudio107/craft-minify": "1.2.7",
     "nystudio107/craft-typogrify": "1.1.7",
-    "wbrowar/adminbar": "3.1.2",
-    "wbrowar/guide": "1.1.2"
+    "verbb/image-resizer": "2.0.1",
+    "wbrowar/adminbar": "3.1.4",
+    "wbrowar/guide": "1.1.3"
   },
   "autoload": {
     "psr-4": {

@@ -33,19 +33,21 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                use: {
-                    loader: 'vue-loader',
-                    options: {
-                        loaders: {
-                            js: 'babel-loader'
-                        },
-                        presets: [
-                            ["env", {
-                                targets: {
-                                    browsers: vars.browserList
-                                }
-                            }]
-                        ]
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        js: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [
+                                    ["env", {
+                                        targets: {
+                                            browsers: vars.browserList
+                                        }
+                                    }]
+                                ]
+                            }
+                        }
                     }
                 }
             },

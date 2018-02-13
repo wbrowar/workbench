@@ -1,7 +1,9 @@
 {
   "installPlugins": [
     "admin-bar",
+    "cp-field-inspect",
     "guide",
+    "image-resizer",
     "minify",
     "redactor",
     "typogrify"
