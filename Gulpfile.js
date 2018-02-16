@@ -345,7 +345,7 @@ gulp.task('cleanBuild', function() {
         .pipe($.clean({force: true}));
 });
 gulp.task('cleanCritCss', function() {
-    return gulp.src(bases.build + 'critcss/', {read: false})
+    return gulp.src([bases.build + 'critcss/', bases.html + '_critcss/'], {read: false})
         .pipe($.clean({force: true}));
 });
 gulp.task('cleanCss', function() {
@@ -380,7 +380,8 @@ for (let i=0; i<vars.critcss.length; i++) {
         }, function (err, output) {
             gulp.src(bases.build + 'critcss/' + vars.critcss[i].critCssFilename + '.css')
                 .pipe($.replace('{#', '{ #'))
-                .pipe(gulp.dest(bases.build + 'critcss/'));
+                .pipe(gulp.dest(bases.build + 'critcss/'))
+                .pipe(gulp.dest(bases.html + '_critcss/'));
             cb();
         });
     });

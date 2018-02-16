@@ -5,7 +5,7 @@
 {% set pageSection = 'home' %}
 
 {% block critcss %}
-    <% if (critCssEnabled) { %><style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
+    <style>{{ source('_critcss/home.css') }}</style>
 {% endblock %}
 
 {% block content %}
