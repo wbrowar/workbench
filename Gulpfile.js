@@ -294,7 +294,6 @@ gulp.task('watch', ['ejs:quick:full'], function() {
     });
     watchJs.on('change', function(event) {
         notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'JS Updated' });
-        browserSync.reload();
     });
     watchSvg.on('change', function(event) {
         notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'SVG and CSS Updated' });
@@ -597,6 +596,8 @@ gulp.task('webpack', function(cb) {
         }));
 
         cb();
+        
+        browserSync.reload();
     });
 });
 
