@@ -1,25 +1,27 @@
 .c_grid {
+  $self: &;
+
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: $grid_gap_default;
 
   @include mq($mq_grid_start) {
-    @at-root #{&}--2_column {
+    @at-root #{$self}--2_column {
       grid-template-columns: repeat(2, 1fr);
     }
-    @at-root #{&}--3_column {
+    @at-root #{$self}--3_column {
       grid-template-columns: repeat(3, 1fr);
     }
-    @at-root #{&}--4_column {
+    @at-root #{$self}--4_column {
       grid-template-columns: repeat(4, 1fr);
     }
-    @at-root #{&}--2_row {
+    @at-root #{$self}--2_row {
       grid-template-rows: repeat(2, auto);
     }
   }
 
-  @at-root #{&}__item {
+  @at-root #{$self}__item {
     @at-root #{&}--span_2_column {
       grid-column-end: span 2;
     }

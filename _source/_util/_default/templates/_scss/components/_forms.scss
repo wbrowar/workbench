@@ -13,19 +13,21 @@
 }
 
 .c_form {
-  @at-root #{&}--flex {
+  $self: &;
+
+  @at-root #{$self}--flex {
     display: flex;
     flex-flow: row wrap;
   }
-  @at-root #{&}__hidden {
+  @at-root #{$self}__hidden {
     @include hide_text;
     width: 0;
     height: 0;
     overflow: hidden;
   }
 
-  @at-root #{&}__input {
-    .c_form--flex & {
+  @at-root #{$self}__input {
+    #{$self}--flex & {
       flex: 1 1 400px;
     }
   }

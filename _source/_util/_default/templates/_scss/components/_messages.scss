@@ -1,10 +1,12 @@
 // MESSAGES
 // ALERT BAR
 .c_alert_bar {
+  $self: &;
+
   background-color: $color_alert_error;
   color: $color_white_default;
 
-  @at-root #{&}__summary {
+  @at-root #{$self}__summary {
     padding: 15px;
     text-align: center;
 
@@ -12,13 +14,13 @@
       cursor: pointer;
     }
   }
-  @at-root #{&}__message {
+  @at-root #{$self}__message {
     display: none;
     padding: 15px;
     background-color: transparentize(lighten($color_alert_error, 20), .1);
   }
   @at-root &.active {
-    .c_alert_bar__message {
+    #{$self}__message {
       display: block;
     }
   }
@@ -26,23 +28,25 @@
 
 // ALERT MESSAGES
 .c_message {
+  $self: &;
+
   display: block;
   padding: 25px;
   border: 1px solid transparent;
   border-radius: 3px;
   color: $color_white_default;
 
-  @at-root #{&}--success {
+  @at-root #{$self}--success {
     border-color: $color_alert_success;
     background-color: transparentize(lighten($color_alert_success, 20), .1);
     color: lighten($color_alert_success, 50);
   }
-  @at-root #{&}--error {
+  @at-root #{$self}--error {
     border-color: $color_alert_error;
     background-color: transparentize(lighten($color_alert_error, 20), .1);
     color: lighten($color_alert_error, 50);
   }
-  @at-root #{&}--warning {
+  @at-root #{$self}--warning {
     border-color: $color_alert_warning;
     background-color: transparentize(lighten($color_alert_warning, 20), .1);
     color: darken($color_alert_warning, 10);
