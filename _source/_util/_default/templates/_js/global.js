@@ -11,6 +11,21 @@ import * as vc from './vue-components.js';
 const isIE = /MSIE \d|Trident.*rv:/.test(navigator.userAgent);
 
 // UTILITY FUNCTIONS
+export function log(...args) {
+    if (jsDevMode) {
+        for (let i=0; i<args.length; i++) {
+            const spacer = i>0 ? '•' : '';
+            console.log(spacer + '🚀', args[i]);
+        }
+    }
+}
+export function warn(...args) {
+    if (jsDevMode) {
+        for (let i=0; i<args.length; i++) {
+            console.warn(args);
+        }
+    }
+}
 export function addClass(el, className) {
     if (el.classList) {
         el.classList.add(className);
