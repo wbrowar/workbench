@@ -53,7 +53,7 @@
     ],
     "post-update-cmd": [
       "if [ -f ./scripts/.env.sh ] && [ ! -L ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then cp -fp ./scripts/.env.sh ./vendor/nystudio107/craft-scripts/scripts/.env.sh; fi",
-      "if [ -L ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh; fi"
+      "if [ -f ./scripts/.env.sh ] && [ -L ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh; fi"
     ]
   }
 }
