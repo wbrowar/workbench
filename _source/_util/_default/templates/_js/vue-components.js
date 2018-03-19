@@ -1,7 +1,7 @@
 //  VUE COMPONENTS
 //  🌄 Vue components and methods to manage state in the UI and on the page
 
-import * as g from './global.js';
+import { gaTrack, log, warn } from './global.js';
 import Vue from 'vue';
 
 import Accordion from './components/Accordion.vue'
@@ -38,7 +38,7 @@ vueData['overlayIsVisible'] = false;
 vueMethods['showOverlay'] = function(overlayTitle) {
     VueEvent.$emit('show-overlay', overlayTitle);
     this.overlayIsVisible = true;
-    g.gaTrack('overlay', 'shown', overlayTitle);
+    gaTrack('overlay', 'shown', overlayTitle);
 };
 
 // VUE INSTANCE
@@ -73,5 +73,5 @@ new Vue({
 
 // INIT FUNCTIONS
 if (jsDevMode) {
-  console.log('Vue Components');
+  log('Vue Components');
 }

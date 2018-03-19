@@ -1,3 +1,5 @@
+import { log, warn } from './global.js';
+
 const TxtType = function(el, toRotate, speed, period) {
     this.toRotate = toRotate;
     this.el = el;
@@ -52,5 +54,5 @@ for (let i=0; i<elements.length; i++) {
 }
 
 if (jsDevMode) {
-    console.log('Typewriter');
+    log('Typewriter');
 }

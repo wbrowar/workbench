@@ -12,7 +12,7 @@ import * as g from './global.js';
 
 // INIT FUNCTIONS
 if (jsDevMode) {
-    console.log('Home');
+    g.log('Home');
 }
 
 g.setupJsComponents();

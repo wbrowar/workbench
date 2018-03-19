@@ -1,6 +1,8 @@
 //  SCROLL TO
 //  🛋 Scripts specific to interior pages
 
+import { log, warn } from './global.js';
+
 // UTILITY FUNCTIONS
 export default function(config = {}) {
     const destination = config.destination || 0,
@@ -90,5 +92,5 @@ export default function(config = {}) {
 
 // INIT FUNCTIONS
 if (jsDevMode) {
-    console.log('Scroll To');
+    log('Scroll To');
 }
