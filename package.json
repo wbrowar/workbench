@@ -206,6 +206,6 @@
     "setup": "gulp setup",
     "start": "git pull && npm run update && npm run cssd && npm run watch",
     "update": "yarn && composer update",
-    "watch": "NODE_ENV=development gulp ejs:quick:full && gulp watch"=
+    "watch": "NODE_ENV=development gulp ejs:quick:full && gulp watch"
   }
 }

@@ -235,9 +235,9 @@ scrollToElement(el);
 	- If you will not be using this file, comment it out in `global.js`
 	- If you don't need `TweenMax`, change the import and tweens to use `TweenLite`
 - :wrench: Moved all svg files from the `icons` folder to the `_source/_icon` folder
-	- Files placed in the `_source/_icon/css` folder will be included in the `SCSS` build as background images (TL;DR these continue to work like they did, but only on these .svg files)
+	- Files placed in the `_source/_icon/css` folder will be included in the `SCSS` build as background images
 - :rocket: Added form and form input components
-	- Components can be used as plain Twig elements or switched over to Vue components
+	- Input components can be used as plain Twig elements or switched over to Vue components
 	- When using Vue, inputs can self-validate and self-format
 - :wrench: Updated the Vue Slider with the following changes:
   - The slider now accepts a JSON-based array of HTML elements and will distribute the elements into `SliderSlide.vue` components based on a new `slides-layout` prop
