@@ -1,32 +1,3 @@
-// MESSAGES
-// ALERT BAR
-.c_alert_bar {
-  $self: &;
-
-  background-color: $color_alert_error;
-  color: $color_white_default;
-
-  @at-root #{$self}__summary {
-    padding: 15px;
-    text-align: center;
-
-    @at-root #{&}--message {
-      cursor: pointer;
-    }
-  }
-  @at-root #{$self}__message {
-    display: none;
-    padding: 15px;
-    background-color: transparentize(lighten($color_alert_error, 20), .1);
-  }
-  @at-root &.active {
-    #{$self}__message {
-      display: block;
-    }
-  }
-}
-
-// ALERT MESSAGES
 .c_message {
   $self: &;
 

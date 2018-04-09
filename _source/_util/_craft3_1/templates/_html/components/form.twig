@@ -1,0 +1,46 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{% import 'macros/component.twig' as component %}
+
+{# Component element overrides #}
+{% set element = 'form' %}
+
+{# Variables #}
+{% set ajaxSubmitUrl = ajaxSubmitUrl ?? null %}
+{% set actionUrl = actionUrl ?? '' %}
+{% set afterFields = afterFields ?? null %}
+{% set beforeFields = beforeFields ?? null %}
+{% set fields = fields ?? [] %}
+{% set formId = formId ?? 'form_1' %}
+{% set method = method ?? 'post' %}
+{% set validate = validate ?? false %}
+{% set vue = vue ?? false %}
+
+{% set attributes -%}
+    action="{{ actionUrl }}" method="{{ method }}" {{ attributes ?? null }}
+{%- endset %}
+
+{% if vue or validate or (ajaxSubmitUrl ?? false) %}
+    {% set vue = true %}
+    {% set element = 'validated-form' %}
+    {% set attributes = attributes ~ ' form-id="' ~ formId ~ '" :validate="' ~ (validate ? 'true' : 'false') ~ '"' %}
+
+    {% if ajaxSubmitUrl ?? false %}
+        {% set attributes = attributes ~ ' ajax-submit-url="' ~ ajaxSubmitUrl ~ '"' %}
+    {% endif %}
+{% endif %}
+
+{% block content -%}
+    {{ beforeFields|raw }}
+
+    {% for item in fields %}
+        {% if vue and (item.validate ?? false) and (item.name ?? false) and (item.type ?? false) %}
+            {% set item = (item.attributes ?? false) ? item|merge({ attributes: item.attributes ~ ' form-id="' ~ formId ~ '"' }) : item|merge({ attributes: 'form-id="' ~ formId ~ '"' }) %}
+        {% endif %}
+        {{ component.c('form_input', item) }}
+    {% endfor %}
+
+    {{ afterFields|raw }}
+{%- endblock %}

@@ -4,12 +4,14 @@
 import { gaTrack, log, warn } from './global.js';
 import Vue from 'vue';
 
-import Accordion from './components/Accordion.vue'
-import AccordionTab from './components/AccordionTab.vue'
-import Overlay from './components/Overlay.vue'
-import Slider from './components/Slider.vue'
-import SliderControl from './components/SliderControl.vue'
-import SliderSlide from './components/SliderSlide.vue'
+import Accordion from './components/Accordion.vue';
+import AccordionTab from './components/AccordionTab.vue';
+import Overlay from './components/Overlay.vue';
+import Slider from './components/Slider.vue';
+import SliderControl from './components/SliderControl.vue';
+import SliderSlide from './components/SliderSlide.vue';
+import ValidatedForm from './components/ValidatedForm.vue';
+import ValidatedFormInput from './components/ValidatedFormInput.vue';
 
 // VARIABLES
 let vueData = {};
@@ -17,6 +19,12 @@ let vueMethods = {};
 window.VueEvent = new Vue();
 
 // ROOT VARIABLES AND FUNCTIONS
+// Alert bar
+vueData['alertBarIsVisible'] = false;
+vueMethods['toggleAlertBar'] = function() {
+    this.alertBarIsVisible = !this.alertBarIsVisible;
+};
+
 // Detect resize
 vueData['windowWidth'] = false;
 vueData['windowHeight'] = false;
@@ -24,7 +32,7 @@ vueMethods['resizeHandler'] = function() {
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
 
-    VueEvent.$emit('window-resized');
+    VueEvent.$emit('window-resized', this.windowWidth, this.windowHeight);
 };
 
 // Detect scroll
@@ -51,7 +59,9 @@ new Vue({
         Overlay,
         Slider,
         SliderControl,
-        SliderSlide
+        SliderSlide,
+        ValidatedForm,
+        ValidatedFormInput,
     },
     created: function () {
         // Hide overlay and remove content
@@ -72,6 +82,4 @@ new Vue({
 
 
 // INIT FUNCTIONS
-if (jsDevMode) {
-  log('Vue Components');
-}
+log('Vue Components');

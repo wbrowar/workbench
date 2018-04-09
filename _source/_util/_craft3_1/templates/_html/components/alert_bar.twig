@@ -1,0 +1,24 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{% set body = body ?? null %}
+{% set summary = summary %}
+
+{% if body ?? false %}
+    {% set modifiers = (modifiers ?? false) ? modifiers|merge(['message']) : ['message'] %}
+{% endif %}
+
+{% block content -%}
+    <div class="{{ rootClass }}__summary" @click="toggleAlertBar">{{ summary|raw }}</div>
+    {% if body ?? false %}
+        <div class="{{ rootClass }}__message" v-show="alertBarIsVisible" v-cloak>
+            <div>{{ body|raw }}</div>
+        </div>
+        <noscript>
+            <div class="{{ rootClass }}__message">
+                <div>{{ body|raw }}</div>
+            </div>
+        </noscript>
+    {% endif %}
+{%- endblock %}

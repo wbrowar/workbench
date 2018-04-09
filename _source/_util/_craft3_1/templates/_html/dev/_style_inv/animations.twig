@@ -62,12 +62,12 @@
   "background": "light",
   "demoCode":
 `<div class="styles__box_wrapper">
-  <div class="styles__box styles__box--flex c_animate c_animate--fade--in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
-  <div class="styles__box styles__box--flex c_animate c_animate--fade--out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-in", "delay": [0.1, 0.9] }' :style="{ opacity: 0 }" data-lazy-animate-offset="-300" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-out", "delay": [0.1, 0.9] }' data-lazy-animate-offset="-500" v-cloak>Content</div>
 </div>`,
   "code":
-`<div class="c_animate c_animate--fade--in" data-lazy-animate data-lazy-animate-offset="-300">Content</div>
-<div class="c_animate c_animate--fade--out" data-lazy-animate data-lazy-animate-offset="-400">Content</div>`
+`<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-in" }' :style="{ opacity: 0 }" data-lazy-animate-offset="-300" v-cloak>Content</div>
+<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-out" }' data-lazy-animate-offset="-500">Content</div>`
 }); %>
 
 <% modules.push({
@@ -76,16 +76,17 @@
   "background": "light",
   "demoCode":
 `<div class="styles__box_wrapper">
-  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--left" data-lazy-animate>Content</div>
-  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--bottom" data-lazy-animate>Content</div>
-  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--right" data-lazy-animate>Content</div>
-  <div class="styles__box styles__box--flex c_animate c_animate--fade--in--from--top" data-lazy-animate>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "x": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "y": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "x": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "y": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
 </div>`,
   "code":
-`<div class="c_animate c_animate--fade--in--from--left" data-lazy-animate>Content</div>
-<div class="c_animate c_animate--fade--in--from--bottom" data-lazy-animate>Content</div>
-<div class="c_animate c_animate--fade--in--from--right" data-lazy-animate>Content</div>
-<div class="c_animate c_animate--fade--in--from--top" data-lazy-animate>Content</div>`
+`
+<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "x": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "y": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "x": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "slide-in", "delay": [0.1, 0.9], "y": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>`
 }); %>
 
 <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

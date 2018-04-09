@@ -1,0 +1,13 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{# Variables #}
+{% set lazyLoad = lazyLoad ?? true %}
+{% set loop = loop ?? false %}
+{% set url = url %}
+
+{% block content -%}
+    <audio {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ url }}"{{ loop ? ' loop' : '' }} controls></audio>
+    <noscript><audio src="{{ url }}"{{ loop ? ' loop' : '' }} controls></audio></noscript>
+{%- endblock %}

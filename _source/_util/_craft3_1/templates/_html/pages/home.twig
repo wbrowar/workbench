@@ -1,6 +1,9 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
+{# @var entry \craft\elements\Entry #}
 
 {% extends "_layout.twig" %}
+
+{% import 'macros/component.twig' as component %}
 
 {% set pageSection = 'home' %}
 
@@ -9,7 +12,5 @@
 {% endblock %}
 
 {% block content %}
-    <div style="padding: 30vh 30vw; text-align: center;">
-        <p style="font-size: 2.4rem;">{{ pageSection|upper }}</p>
-    </div>
+    <br><br><br><br><br><br><br><br><br><p>HOME</p><br><br><br><br><br><br><br><br><br>
 {% endblock %}

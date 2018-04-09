@@ -20,20 +20,19 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "craftcms/cms": "^3.0.0-RC15",
+    "craftcms/cms": "^3.0.1",
     "vlucas/phpdotenv": "^2.4.0",
-    "nystudio107/craft-scripts": "^1.2.4",
-    "craftcms/redactor": "1.0.1",
-    "mmikkel/cp-field-inspect": "1.0.2",
-    "nystudio107/craft-fastcgicachebust": "1.0.4",
-    "nystudio107/craft-imageoptimize": "1.4.23",
+    "nystudio107/craft-scripts": "^1.2.6",
+    "craftcms/redactor": "1.1.0",
+    "mmikkel/cp-field-inspect": "1.0.4",
+    "nystudio107/craft-fastcgicachebust": "1.0.7",
     "nystudio107/craft-minify": "1.2.8",
-    "nystudio107/craft-seomatic": "3.0.0-beta.8",
-    "nystudio107/craft-typogrify": "1.1.8",
+    "nystudio107/craft-typogrify": "1.1.9",
+    "nystudio107/craft-seomatic": "3.0.0-beta.21",
     "verbb/image-resizer": "2.0.2",
     "wbrowar/adminbar": "3.1.5",
-    "wbrowar/contentstats": "2.0.0",
-    "wbrowar/guide": "1.2.0"
+    "wbrowar/contentstats": "2.0.1",
+    "wbrowar/guide": "1.2.1"
   },
   "autoload": {
     "psr-4": {
@@ -53,7 +52,13 @@
     ],
     "post-update-cmd": [
       "if [ -f ./scripts/.env.sh ] && [ ! -L ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then cp -fp ./scripts/.env.sh ./vendor/nystudio107/craft-scripts/scripts/.env.sh; fi",
-      "if [ -f ./scripts/.env.sh ] && [ -L ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh; fi"
+      "if [ -f ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh; fi",
+      "./craft migrate/all"
+    ],
+    "post-install-cmd": [
+      "if [ -f ./scripts/.env.sh ] && [ ! -L ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then cp -fp ./scripts/.env.sh ./vendor/nystudio107/craft-scripts/scripts/.env.sh; fi",
+      "if [ -f ./vendor/nystudio107/craft-scripts/scripts/.env.sh ]; then ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh; fi",
+      "./craft migrate/all"
     ]
   }
 }

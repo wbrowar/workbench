@@ -1,0 +1,38 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{# Variables #}
+{% set pageInfo = pageInfo %}
+{% set maxLinks = maxLinks ?? 5 %}
+
+{% block content -%}
+    {% set maxRange = ((maxLinks - 1) / 2)|round %}
+    {% set queryString = craft.request.getQueryStringWithoutPath|length ? '?' ~ craft.request.getQueryStringWithoutPath : '' %}
+
+    <div class="pager_wrapper">
+        {% if pageInfo.prevUrl %}
+            <a class="pager_prev" href="{{ url(pageInfo.prevUrl) }}{{ queryString }}">Back</a>
+        {% endif %}
+
+        <div class="pager">
+            {% spaceless %}
+                {% if pageInfo.totalPages != 1 %}
+                    {% if pageInfo.currentPage < (maxLinks - 1) %}
+                        {% for page, url in pageInfo.getRangeUrls(1, maxLinks) %}
+                            <a {% if page == pageInfo.currentPage %}class="active"{% endif %} href="{{ url(url) }}{{ queryString }}">{% if loop.first and page != 1 %}&hellip;{% endif %}{{ page }}{% if loop.last and page != pageInfo.totalPages %}&hellip;{% endif %}</a>
+                        {% endfor %}
+                    {% else %}
+                        {% for page, url in pageInfo.getRangeUrls(pageInfo.currentPage - maxRange, pageInfo.currentPage + maxRange) %}
+                            <a {% if page == pageInfo.currentPage %}class="active"{% endif %} href="{{ url(url) }}{{ queryString }}">{% if loop.first and page != 1 %}&hellip;{% endif %}{{ page }}{% if loop.last and page != pageInfo.totalPages %}&hellip;{% endif %}</a>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            {% endspaceless %}
+        </div>
+
+        {% if pageInfo.nextUrl %}
+            <a class="pager_next" href="{{ url(pageInfo.nextUrl) }}{{ queryString }}">Next</a>
+        {% endif %}
+    </div>
+{%- endblock %}

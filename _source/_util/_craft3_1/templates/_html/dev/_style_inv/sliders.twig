@@ -1,0 +1,116 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+<% const currentSection = 'sliders' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+    "title": "Image Slider",
+    "description": "A slider that displays images, videos, and custom HTML.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/component.twig' as component %}
+
+{% set slides = [] %}
+
+{# image slide #}
+{% set image = craft.assets.title('fpo').one() %}
+{% set options = {
+    image: image,
+    title: image.title ?? '',
+    transforms: [
+        { width: 500, height: 500 },
+        { width: 800, quality: 75 },
+    ]
+} %}
+
+{% set slides = slides|merge([{
+    image: options
+}]) %}
+
+{# video slide #}
+{% set slides = slides|merge([{
+    video: { url: 'https://starter.wbrowar.com/video/clip.mp4' }
+}]) %}
+
+{# image slide with text in front of it #}
+{% set image = craft.assets.title('fpo').one() %}
+{% set options = {
+    image: image,
+    title: image.title ?? '',
+    transforms: [
+        { width: 500, height: 500 },
+        { width: 800, quality: 75 },
+    ]
+} %}
+
+{% set foreground -%}
+    <h2 class="c_subheader">Title of this element</h2>
+{%- endset %}
+
+{% set slides = slides|merge([{
+    foreground: foreground,
+    image: options,
+    url: 'http://google.com',
+}]) %}
+
+{{ component.c('image_slider', { slides: slides }) }}`,
+    "options": [
+        { "name": 'controllerAttributes', "required": false, "type": 'string', "default": `':show-back="false" :show-next="false"'`, "description": `Attributes added to the controller Vue component. This allows you to change the appearance of the default controller. Multiple controllers can be added as long as they use the same ID as the sliderId.` },
+        { "name": 'sliderAttributes', "required": false, "type": 'string', "description": `Attributes added to the slider Vue component. This allows you to modify the slider settings.` },
+        { "name": 'sliderClasses', "required": false, "type": 'string', "description": `Classes added to the slider Vue component.` },
+        { "name": 'sliderId', "required": false, "type": 'string', "default": `image_slider`, "description": `The ID that connects the Vue slider with controllers and other slider elements.` },
+        { "name": 'sliderInterval', "required": false, "type": 'integer', "default": `5000`, "description": `Speed—in milliseconds—between each slide transition.` },
+        { "name": 'slides', "required": true, "type": 'array', "description": `Objects that make up the slides within the slider. Use the attributes below to add features to the slides.` },
+        { "name": 'slides > image', "required": true, "type": 'object', "description": `A background image that takes up the full size of the slide. Pass in the options you would use for an 'image' component.` },
+        { "name": 'slides > video', "required": true, "type": 'object', "description": `Use a video as the slide background instead of an image. Pass in the options you would use for a 'video' component.` },
+        { "name": 'slides > middle', "required": true, "type": 'string', "description": `HTML content that sits in front of the background image or video layers.` },
+        { "name": 'slides > foreground', "required": true, "type": 'string', "description": `HTML that is centered and appears in front of the 'middle' layer.` },
+        { "name": 'slides > url', "required": true, "type": 'string', "description": `A click-through URL that is activated by clicking on any area of the slider.` }
+    ]
+}); %>
+
+<% modules.push({
+    "title": "Vue Slider",
+    "description": "A slider that can be used for images, video, or html content. Requires `slider-slide` components as children.",
+    "background": "light",
+    "twigCode":
+`{% set slideContent = [
+    '<div>1</div>',
+    '<div>2</div>',
+    '<div>3</div>',
+    '<div>4</div>',
+    '<div>5</div>',
+    '<div>6</div>',
+    '<div>7</div>',
+    '<div>8</div>',
+    '<div>9</div>',
+    '<div>10</div>',
+    '<div>11</div>',
+] %}
+
+<slider slider-id="slider_1"
+        :auto-height="true"
+        interval="5000"
+        slides-content="{{ slideContent|json_encode }}"
+        slides-layout='[{ "count": 1 },{ "count": 3, "width": 800 },{ "count": 6, "width": 1100 }]'>
+</slider>
+<slider-control slider-id="slider_1" :show-back="false" :show-next="false"></slider-control>`
+}); %>
+
+<% modules.push({
+    "title": "Slider Controls",
+    "description": "Controls for `slider` componenets. Require `slider-id` attribute that matches the id of the `slider` component.",
+    "background": "light",
+    "code":
+`<slider-control slider-id="slider_1"></slider-control>
+
+<slider-control slider-id="slider_1" indicator-type="numbers"></slider-control>
+
+<slider-control slider-id="slider_1" label-back="Go Back" :show-indicators="false" :show-next="false"></slider-control>
+
+<slider-control slider-id="slider_1" label-next="Go Forward" :show-back="false" :show-indicators="false"></slider-control>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

@@ -1,0 +1,99 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+<% const currentSection = 'globals' %>
+<% const modules = [] %>
+
+<% const intro = `<div class="c_text">
+    <h1 class="c_header">Globals</h1>
+    <p>Styles found throughout the website.</p>
+</div>` %>
+
+<% modules.push({
+    "title": "Colors",
+    "description": "The colors used throughout the website.",
+    "background": "light",
+    "twigCode":
+`<div class="styles__color_swatches">
+    {% set colors = [
+        { color: 'rgb(255, 255, 255)', variable: '$color_white_default' },
+        { color: 'rgb(0, 0, 0)', variable: '$color_black_default' },
+        { color: 'rgb(45, 176, 51)', variable: '$color_alert_success' },
+        { color: 'rgb(176, 25, 22)', variable: '$color_alert_error' },
+        { color: 'rgb(238, 199, 0)', variable: '$color_alert_warning' },
+    ] %}
+
+    {% for item in colors %}
+        <div class="styles__color_swatch" style="--style-color-swatch-color: {{ item.color }};">
+            <div class="styles__color_swatch__color"></div>
+            <div class="styles__color_swatch__variable">{{ item.variable }}</div>
+            <div class="styles__color_swatch__value">{{ item.color }}</div>
+        </div>
+    {% endfor %}
+</div>`
+}); %>
+
+<% modules.push({
+    "title": "Page Header",
+    "description": "",
+    "background": "light",
+    "code": `<h1 class="c_header">Page<br>Header</h1>`
+}); %>
+
+<% modules.push({
+    "title": "Page Subheader",
+    "description": "",
+    "background": "light",
+    "code": `<h2 class="c_subheader">Page<br>Subheader</h2>`
+}); %>
+
+<% modules.push({
+    "title": "General Text Styles",
+    "description": "",
+    "background": "light",
+    "code":
+`<h1 class="c_header">Page Header</h1>
+<div class="c_text">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <p>Excepteur sint occaecat cupidatat non <b>proident</b>, sunt in culpa qui <i>officia deserunt</i> mollit <i><b>anim</b></i> id <b><i>est laborum</i></b>.</p>
+    <ul>
+        <li>List item I</li>
+        <li>List item II</li>
+        <li>List item III</li>
+    </ul>
+</div>
+<h2 class="c_subheader">Section Subheader</h2>
+<div class="c_text">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <ol>
+        <li>List item I</li>
+        <li>List item II</li>
+        <li>List item III</li>
+    </ol>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Ingredients</th>
+            <th scope="col">Serves 12</th>
+            <th scope="col">Serves 24</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Milk</td>
+            <td>1 quart</td>
+            <td>2 quart</td>
+        </tr>
+        <tr>
+            <td>Cinnamon Sticks</td>
+            <td>2</td>
+            <td>1</td>
+        </tr>
+        <!-- ... -->
+        </tbody>
+    </table>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+</div>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

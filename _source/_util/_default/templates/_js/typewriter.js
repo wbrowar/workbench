@@ -53,6 +53,5 @@ for (let i=0; i<elements.length; i++) {
     }
 }
 
-if (jsDevMode) {
-    log('Typewriter');
-}
+// INIT FUNCTIONS
+log('Typewriter');

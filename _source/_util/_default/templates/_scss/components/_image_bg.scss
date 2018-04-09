@@ -1,20 +1,3 @@
-figure {
-  line-height: 0;
-}
-img {
-  height: auto;
-  max-width: 100%;
-  width: 100%;
-  transition: filter $anim_duration_fade ease-out, opacity $anim_duration_fade ease-out;
-
-  &[data-lazy-load] {
-    width: 100%;
-    height: 0;
-    background-color: lighten($color_black_default, 50);
-    filter: blur(20px);
-    opacity: 0;
-  }
-}
 .c_image_bg {
   $self: &;
 

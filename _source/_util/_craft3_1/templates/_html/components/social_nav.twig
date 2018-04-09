@@ -1,0 +1,19 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{# Component element overrides #}
+{% set element = 'nav' %}
+
+{% block content -%}
+    {% import 'macros/icons.twig' as icons %}
+
+    {% if links.facebook ?? false %}<a class="c_{{ class }}__link--facebook" href="{{ url(links.facebook) }}">{{ svg('icon/social_facebook.svg') }}</a>{% endif %}
+    {% if links.twitter ?? false %}<a class="c_{{ class }}__link--twitter" href="{{ url(links.twitter) }}">{{ svg('icon/social_twitter.svg') }}</a>{% endif %}
+    {% if links.linkedin ?? false %}<a class="c_{{ class }}__link--linkedin" href="{{ url(links.linkedin) }}">{{ svg('icon/social_linkedin.svg') }}</a>{% endif %}
+    {% if links.youtube ?? false %}<a class="c_{{ class }}__link--youtube" href="{{ url(links.youtube) }}">{{ svg('icon/social_youtube.svg') }}</a>{% endif %}
+    {% if links.pinterest ?? false %}<a class="c_{{ class }}__link--pinterest" href="{{ url(links.pinterest) }}">{{ svg('icon/social_pinterest.svg') }}</a>{% endif %}
+    {% if links.instagram ?? false %}<a class="c_{{ class }}__link--instagram" href="{{ url(links.instagram) }}">{{ svg('icon/social_instagram.svg') }}</a>{% endif %}
+    {% if links.snapchat ?? false %}<a class="c_{{ class }}__link--snapchat" href="{{ url(links.snapchat) }}">{{ svg('icon/social_snapchat.svg') }}</a>{% endif %}
+    {% if links.email ?? false %}<a class="c_{{ class }}__link--email" href="{{ 'mailto:' not in links.email ? 'mailto:' : '' }}{{ links.email }}">{{ svg('icon/social_email.svg') }}</a>{% endif %}
+{%- endblock %}

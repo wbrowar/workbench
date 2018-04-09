@@ -6,47 +6,111 @@
 <% const intro = false %>
 
 <% modules.push({
-    "title": "Lazy-Loading Audio File",
-    "description": "Plays an audio file using default browser controls. Waits until user has scrolled down to the element to load the audio file.",
+    "title": "Audio File",
+    "description": "Plays an audio file using default browser controls.",
     "background": "light",
     "twigCode":
-`{% import 'macros/media.twig' as media %}
-{{ media.audio({ 'url': 'https://starter.wbrowar.com/audio/clip.mp3' }) }}`,
+`{% import 'macros/component.twig' as component %}
+{{ component.c('audio', { url: 'https://starter.wbrowar.com/audio/clip.mp3' }) }}`,
     "options": [
-        { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
-        { "name": 'url', "required": true, "type": 'string', "default": `#`, "description": `URL of audio file.` }
+        { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `Adds the data attributes used by lazy.js to load the file when the user scrolls to it on the page.` },
+        { "name": 'loop', "required": false, "type": 'boolean', "default": `true`, "description": `Loops the audio file.` },
+        { "name": 'url', "required": true, "type": 'string', "description": `URL of audio file.` }
     ]
 }); %>
 
 <% modules.push({
-    "title": "Lazy-Loading Iframe",
-    "description": "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio. Waits until user has scrolled down to the element to load iframe content.",
+    "title": "Image",
+    "description": "An image loaded when the user scrolls down to its location on the page.",
     "background": "light",
     "twigCode":
-`{% import 'macros/media.twig' as media %}
-{{ media.video({ 'id': 'G4Sn91t1V4g', 'source': 'youtube' }) }}`,
+`{% import 'macros/component.twig' as component %}
+{% set image = craft.assets.title('fpo').one() %}
+{% set options = {
+    image: image,
+    title: image.title ?? '',
+    transforms: [
+        { width: 500, height: 500 },
+        { width: 800, quality: 75 },
+    ]
+} %}
+{{ component.c('image', options) }}`,
     "options": [
-        { "name": 'controls', "required": false, "type": 'boolean', "default": `true`, "description": `Display controls on or off.` },
-        { "name": 'id', "required": false, "type": 'string', "default": ``, "description": `ID of video as found on video hosting sites. Usually can be pulled from a URL or video embed tag.` },
-        { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
-        { "name": 'source', "required": false, "type": 'string', "default": `'file'`, "description": `Changes embed code based on source of the video. Options include: <b>youtube</b>, <b>vimeo</b>, or <b>file</b>.` },
-        { "name": 'url', "required": false, "type": 'string', "default": `#`, "description": `URL of video file used when the source option is set to 'file'.` }
+        { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `Adds the data attributes used by lazy.js to load the image when the user scrolls to it on the page.` },
+        { "name": 'placeholder', "required": false, "type": 'string', "default": `blank png data url`, "description": `The value of the image src attribute when srcset is used. This can be a blank png string or the url of an image.` },
+        { "name": 'sizes', "required": false, "type": 'string', "default": `'100vw'`, "description": `The value of the img sizes attribute.` },
+        { "name": 'styles', "required": false, "type": 'string', "default": `''`, "description": `Inline styles that are added to the figure wrapper of the image.` },
+        { "name": 'title', "required": false, "type": 'string', "default": `''`, "description": `The value of the img alt attribute.` },
+        { "name": 'transforms', "required": false, "type": 'array', "default": `[]`, "description": `An array of objects that create a Craft image transform.` }
     ]
 }); %>
 
 <% modules.push({
-    "title": "Lazy-loading Video File",
-    "description": "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag. Waits until user has scrolled down to the element to load the video file.",
+    "title": "Image Background",
+    "description": "Fills the background of an element with a responsive video file that autoplays and loops.",
+    "background": "light",
+    "demoCode":
+`<div class="styles__box_wrapper">
+    <div class="styles__box" style="padding: 0;">
+        {% import 'macros/component.twig' as component %}
+        {% set image = craft.assets.title('fpo').one() %}
+        {% set options = {
+            image: image,
+            title: image.title ?? '',
+            transforms: [
+                { width: 500, height: 500 },
+                { width: 800, quality: 75 },
+            ]
+        } %}
+        {{ component.c('image_bg', { image: options }) }}
+    </div>
+</div>`,
+    "twigCode":
+`{% import 'macros/component.twig' as component %}
+{% set image = craft.assets.title('fpo').one() %}
+{% set options = {
+    image: image,
+    title: image.title ?? '',
+    transforms: [
+        { width: 500, height: 500 },
+        { width: 800, quality: 75 },
+    ]
+} %}
+{{ component.c('image_bg', { image: options }) }}`,
+    "options": [
+        { "name": 'image', "required": true, "type": 'object', "default": `{}`, "description": `Options for the image element. See options above.` },
+    ]
+}); %>
+
+<% modules.push({
+    "title": "Video File",
+    "description": "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag.",
     "background": "light",
     "twigCode":
-`{% import 'macros/media.twig' as media %}
-{{ media.video({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`,
+`{% import 'macros/component.twig' as component %}
+{{ component.c('video', { url: 'https://starter.wbrowar.com/video/clip.mp4' }) }}`,
     "options": [
+        { "name": 'autoplay', "required": false, "type": 'boolean', "default": `false`, "description": `If set to true, video will play when it is loaded.` },
         { "name": 'controls', "required": false, "type": 'boolean', "default": `true`, "description": `Display controls on or off.` },
-        { "name": 'id', "required": false, "type": 'string', "default": ``, "description": `ID of video as found on video hosting sites. Usually can be pulled from a URL or video embed tag.` },
-        { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
+        { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `Adds the data attributes used by lazy.js to load the file when the user scrolls to it on the page.` },
+        { "name": 'loop', "required": false, "type": 'boolean', "default": `false`, "description": `Loops the video file.` },
+        { "name": 'muted', "required": false, "type": 'boolean', "default": `false`, "description": `Mutes the video's audio.` },
+        { "name": 'poster', "required": false, "type": 'string', "description": `Url of an image to show when the video is loading and before the video is played.` },
         { "name": 'source', "required": false, "type": 'string', "default": `'file'`, "description": `Changes embed code based on source of the video. Options include: <b>youtube</b>, <b>vimeo</b>, or <b>file</b>.` },
-        { "name": 'url', "required": false, "type": 'string', "default": `#`, "description": `URL of video file used when the source option is set to 'file'.` }
+        { "name": 'url', "required": true, "type": 'string', "default": ``, "description": `URL of video file used when the source option is set to 'file'.` }
+    ]
+}); %>
+
+<% modules.push({
+    "title": "Iframe Video (YouTube, Vimeo, etc ...)",
+    "description": "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/component.twig' as component %}
+{{ component.c('video', { source: 'youtube', videoId: 'G4Sn91t1V4g' }) }}`,
+    "options": [
+        { "name": 'source', "required": false, "type": 'string', "default": `'file'`, "description": `Changes embed code based on source of the video. Options include: <b>youtube</b>, <b>vimeo</b>, or <b>file</b>.` },
+        { "name": 'videoId', "required": false, "type": 'string', "default": ``, "description": `ID of video as found on video hosting sites. Usually can be pulled from a URL or video embed tag.` },
     ]
 }); %>
 
@@ -55,18 +119,17 @@
     "description": "Fills the background of an element with a responsive video file that autoplays and loops.",
     "background": "light",
     "demoCode":
-`<div class="styles__box c_video_bg">
-    <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload muted autoplay loop></video>
+`<div class="styles__box_wrapper">
+    <div class="styles__box">
+        {% import 'macros/component.twig' as component %}
+        {{ component.c('video_bg', { video: { url: 'https://starter.wbrowar.com/video/clip.mp4' } }) }}
+    </div>
 </div>`,
     "twigCode":
-`{% import 'macros/media.twig' as media %}
-{{ media.videoBg({ 'url': 'https://starter.wbrowar.com/video/clip.mp4' }) }}`,
+`{% import 'macros/component.twig' as component %}
+{{ component.c('video_bg', { video: { url: 'https://starter.wbrowar.com/video/clip.mp4' } }) }}`,
     "options": [
-        { "name": 'autoplay', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
-        { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `Adds the data attributes used by lazy.js to load the video when the user scrolls to it on the page.` },
-        { "name": 'loop', "required": false, "type": 'boolean', "default": `true`, "description": `URL of audio file.` },
-        { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
-        { "name": 'url', "required": true, "type": 'string', "default": `#`, "description": `URL of video file.` }
+        { "name": 'video', "required": true, "type": 'object', "default": `{}`, "description": `Options for the video element. See options above.` },
     ]
 }); %>
 

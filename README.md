@@ -186,9 +186,11 @@ scrollToElement(el);
 
 ---
 ### Image Processing
+- **_icon** Images will be processed differently depending on where they are located in the `_source/_icon` folder:
+  - **css** All .svg images in the `css` folder will be base64-encoded and added using `background-image` to a file in the `_source/scss/automated/` folder, called `_icon_sprite.scss`. This will be compiled when the `sass` task is run.
+  - All .svg files in the `_source/_icon` folder will be moved to your theme's `icon` folder so they can be linked to or embedded from the front-end.
 - **_img** Images will be processed differently depending on where they are located in the `_source/_img` folder:
   - **2x** Putting 2x-resolution images in the `2x` folder will result in both a 2x image and a 1x image being placed into your `img` directory. The 2x image will be suffixed with `@2x`.
-  - **icons** All .svg images in the `icons` folder will be base64-encoded and added using `background-image` to a file in the `_source/sass/automated/` folder, called `_icons.scss`. This will be compiled when the `sass` task is run. A file, named `logo.svg` will access using the class, `.icon_logo`.
   - Images located directly in the `_source/_img`, or folders not listed above will only be minimized and moved into your theme's `img` folder.
 - **_favicons** Adding a 512x512 .png into the `_source/_favicons` folder, and running `npm run prod`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
 
@@ -199,7 +201,60 @@ scrollToElement(el);
 - There are default replacements included in the Gulpfile, and additional replacements can be added to the `ejsVars` setting in `package.json`. If the replacement is for an include, the file must be included based on the root of the `_build` folder.
 
 ---
+### Style Inventory
+- To get to the Style Inventory, go to `/dev/inv`
+- In Craft websites, the Style Inventory section is available in `dev`, and `staging` environments and will redirect you to the home page in a `live` environment
+- Components are either based on Twig, Vue components, or plain HTML patterns
+- Components are separated so they can easily be moved from one project to another
+- Components should be edited to meet the needs of the project
+- Components that are not in use should be removed by doing the following:
+  1. Delete the component example code and documentation from the Style Inventory or hide the page by removing it from the `styleTemplateSections` array in `package.json`
+  2. Move the `SCSS` file that matches up with the component name to `_source/_scss/_unused` so it won't get compiled with other `CSS` code
+  3. If a Vue component is no longer needed, comment out the import and remove its registration from the root Vue instance in `_source/_js/vue-components`
+
+#### Twig Components
+- Twig components are displayed by including the `macros/component.twig` macro and by calling the `c()` macro while passing in a component name and the appropriate arguments
+- Each component name is matched up with the name of an `SCSS` file, found in `_source/scss/components` (unless the component doesn't require external SCSS)
+- Some components are wrappers for Vue components with some Twig-based helpers
+  - For example, the `image_slider` makes it easy to create common slides used in carousels, and its output is based on a `Slider.vue` component
+  - Vue components can still be used in place of the Twig version when more flexibility is needed
+
+#### Vue Components
+- Vue components are split into Single File Components
+- Examples in the Style Inventory show common uses of the components
+  - To see more available options, open the `.vue` file used in a component and look for available `props`
+
+
+---
 ## Release Notes
+#### 4.10.0
+- :wrench: Refactored all components in Craft 3 templates
+  - :rocket: Added default options that can be applied to all components (classes, attributes, id, etc...)
+  - All components are split up to make it easier to move them from one site to another
+- :rocket: Added `_source/_js/animation.js` to store page animations that are driven by Greensock
+	- If you will not be using this file, comment it out in `global.js`
+	- If you don't need `TweenMax`, change the import and tweens to use `TweenLite`
+- :wrench: Moved all svg files from the `icons` folder to the `_source/_icon` folder
+	- Files placed in the `_source/_icon/css` folder will be included in the `SCSS` build as background images (TL;DR these continue to work like they did, but only on these .svg files)
+- :rocket: Added form and form input components
+	- Components can be used as plain Twig elements or switched over to Vue components
+	- When using Vue, inputs can self-validate and self-format
+- :wrench: Updated the Vue Slider with the following changes:
+  - The slider now accepts a JSON-based array of HTML elements and will distribute the elements into `SliderSlide.vue` components based on a new `slides-layout` prop
+  - The `slides-layout` is a JSON array that allows you to set the amount of elements per slide (the `count` property) and if you pass in a `width` property it will change the amount when the slider is above the given width
+  - When the `auto-height` prop is set to `true`, the slider will now adjust it's height based on the height of the content of its slides
+  - The slider will now loop between the last slide and the first slide in both directions
+  - The slider uses `Hammer.js` to enable swipe on touch devices
+  - Slides that are not the current, previous, or next slides are set to `visibility: invisible` so they do not appear when other slides are animating
+  - `SliderControl.vue` components now allow you to hide the indicators when a maximum number of slides is shown
+  - Removed the background image prop on `SliderSlide.vue` components
+- :rocket: Added color swatches to the Style Inventory!
+- :rocket: Added an `SCSS` mixin to make it easy to create a thumbnail where text is centered in front of a background image and there is a click-through link
+- :rocket: Updated all Composer and NPM components
+  - Webpack has been updated to Webpack 4, which now passed in 'development' or 'production' modes (the webpack.config.json files has been updated for this)
+- :fire: Removed default Site Module
+  - Instead of using this, build a module with the components you need at the [Plugin Factory](https://pluginfactory.io)
+
 #### 4.9.0
 - :rocket: Added NPM scripts to replace Gulp commands
   - Use the following replacements when needed:

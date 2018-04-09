@@ -1,4 +1,5 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
+{# @var entry \craft\elements\Entry #}
 
 {#
  # The default page layout used for Basic Page entries.
@@ -7,6 +8,8 @@
 
 {% extends "_layout.twig" %}
 
+{% import 'macros/component.twig' as component %}
+
 {% set pageSection = pageSection ?? 'inside' %}
 
 {% block critcss %}
@@ -14,9 +17,6 @@
 {% endblock %}
 
 {% block content %}
-    <div style="padding: 30vh 30vw; text-align: center;">
-        <p style="font-size: 2.4rem;">{{ pageSection|upper }}</p>
-    </div>
     <article class="body">
         {#
         {% for block in entry.bodyContent %}

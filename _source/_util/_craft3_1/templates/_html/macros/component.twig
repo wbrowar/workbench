@@ -1,0 +1,13 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% macro c(name, options = {}) -%}
+    {% set options = options|merge({
+        class: options.class ?? name,
+        classPrefix: options.classPrefix ?? 'c',
+        element: options.element ?? 'div',
+    }) %}
+
+    {% set options = options|merge({ rootClass: options.classPrefix ~ '_' ~ options.class }) %}
+
+    {% include 'components/' ~ name ignore missing with options only %}
+{%- endmacro %}

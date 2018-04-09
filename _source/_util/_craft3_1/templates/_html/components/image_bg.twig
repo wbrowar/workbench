@@ -1,0 +1,13 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{# Variables #}
+{% set image = (image ?? false) ? image|merge({ class: class ~ '__image' }) : { class: class ~ '__image' } %}
+{#{% set image = image ?? {} %}#}
+{#{% set image = (image.classes ?? false) ? image|merge({ classes: image.classes ~ ' ' ~ rootClass ~ '__image' }) : image|merge({ classes: rootClass ~ '__image' }) %}#}
+
+{% block content -%}
+    {% import 'macros/component.twig' as component %}
+    {{ component.c('image', image) }}
+{%- endblock %}

@@ -15,7 +15,9 @@ $padding_dev_spacing: 20px;
 $border_radius: 4px;
 
 .styles {
-  @at-root #{&}__menu {
+  $self: &;
+
+  @at-root #{$self}__menu {
     display: flex;
     flex-flow: row wrap;
     background-color: $color_dev_black;
@@ -56,7 +58,76 @@ $border_radius: 4px;
       }
     }
   }
-  @at-root #{&}__example {
+  @at-root #{$self}__box_wrapper {
+    display: grid;
+    grid-gap: $padding_dev_spacing;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-auto-rows: 200px;
+    perspective: 800px;
+  }
+  @at-root #{$self}__box {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    box-sizing: border-box;
+    background-color: $color_dev_red_default;
+    color: $color_dev_white;
+
+    &.active {
+      background-color: $color_dev_demo_active;
+    }
+    @at-root #{&}--clear {
+      background-color: transparent;
+      color: $color_dev_black;
+    }
+    @at-root #{&}--flex, #{&}__flex {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @at-root #{&}--flex {
+      display: inline-flex;
+    }
+    @at-root #{&}--padding, #{&}__padding {
+      padding: 20px;
+    }
+  }
+  @at-root #{$self}__color_swatches {
+    display: grid;
+    grid-gap: $padding_dev_spacing;
+    grid-template-columns: repeat(auto-fit, 170px);
+    grid-auto-rows: 230px;
+  }
+  @at-root #{$self}__color_swatch {
+    padding: 12px;
+    //border: 1px solid lighten($color_dev_black, 76);
+    box-shadow: 0 2px 10px transparentize($color_dev_black, .8);
+    box-sizing: border-box;
+
+    @at-root #{&}__color {
+      margin-bottom: 6px;
+      padding-top: 100%;
+      position: relative;
+      background-color: var(--style-color-swatch-color);
+    }
+    @at-root #{&}__variable, #{&}__value {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @at-root #{&}__variable {
+      margin-bottom: 2px;
+      font-weight: 700;
+      font-size: .7rem;
+      color: $color_dev_black;
+    }
+    @at-root #{&}__value {
+      font-size: .6rem;
+      color: $color_dev_black;
+    }
+  }
+  @at-root #{$self}__example {
     display: block;
     margin-bottom: 60px;
 
@@ -141,44 +212,19 @@ $border_radius: 4px;
         }
       }
     }
+
+    // SPECIAL OVERRIDES
+    .c_slider:not(.c_image_slider__slider) .c_slider__slide__content {
+      @extend #{$self}__box_wrapper;
+
+      & > div {
+        @extend #{$self}__box;
+        @extend #{$self}__box--flex;
+      }
+    }
   }
 
-  @at-root #{&}__box_wrapper {
-    display: block;
-    flex-flow: row wrap;
-    margin: 0 -($padding_dev_spacing / 2);
-    perspective: 800px;
-  }
-  @at-root #{&}__box {
-    display: inline-block;
-    flex: 1 1 300px;
-    margin: ($padding_dev_spacing / 2);
-    width: 200px;
-    height: 200px;
-    box-sizing: border-box;
-    background-color: $color_dev_red_default;
-    color: $color_dev_white;
+  @at-root #{$self}__color_swatch {
 
-    &.active {
-      background-color: $color_dev_demo_active;
-    }
-    @at-root #{&}--clear {
-      background-color: transparent;
-      color: $color_dev_black;
-    }
-    @at-root #{&}--flex, #{&}__flex {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    @at-root #{&}--flex {
-      display: inline-flex;
-    }
-    @at-root #{&}--no_margin {
-      margin: 0;
-    }
-    @at-root #{&}--padding, #{&}__padding {
-      padding: 20px;
-    }
   }
 }

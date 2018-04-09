@@ -1,0 +1,20 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+<% const currentSection = 'overlays' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+    "title": "Overlay",
+    "description": "Display content in front of the current page. The `overlayIsVisible` global variable is available to the Vue root and it changes based on the `show-overlay` and `hide-overlay` events.",
+    "background": "light",
+    "twigCode":
+`<button @click="showOverlay('overlay_1')">Show Overlay</button>
+<overlay overlay-id="overlay_1" v-cloak>
+    {% import 'macros/component.twig' as component %}
+    {{ component.c('video', { lazyLoad: false, source: 'youtube', videoId: 'G4Sn91t1V4g' }) }}
+</overlay>`,
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

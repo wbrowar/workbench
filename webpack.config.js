@@ -1,4 +1,4 @@
-const env = process.env.NODE_ENV || 'dev',
+const env = process.env.NODE_ENV || 'development',
       fs = require('fs'),
       path = require('path'),
       varsJsonRaw = JSON.parse(fs.readFileSync('./package.json')),
@@ -29,6 +29,7 @@ module.exports = {
         path: path.resolve(__dirname, paths.distJs),
         filename: '[name].js'
     },
+    mode: env || 'development',
     module: {
         rules: [
             {

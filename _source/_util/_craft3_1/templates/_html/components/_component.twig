@@ -1,0 +1,10 @@
+{% set modifierClasses = [] %}
+{% if modifiers ?? false %}
+    {% for item in modifiers %}
+        {% set modifierClasses = modifierClasses|merge([rootClass ~ '--' ~ item]) %}
+    {% endfor %}
+{% endif %}
+
+{% block before %}{{ before ?? null }}{% endblock %}
+<{{ element }}{% if id ?? false %} id="{{ id }}"{% endif %} class="{{ classPrefix }}_{{ class }}{% if modifierClasses|length %} {{ modifierClasses|join(' ') }}{% endif %}{% if classes ?? false %} {{ classes }}{% endif %}"{% if styles ?? false %} style="{{ styles }}"{% endif %}{% if attributes ?? false %} {{ attributes|raw }}{% endif %}>{% block content %}{{ content ?? null }}{% endblock %}</{{ element }}>
+{% block after %}{{ after ?? null }}{% endblock %}

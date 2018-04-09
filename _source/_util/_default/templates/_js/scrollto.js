@@ -91,6 +91,4 @@ export default function(config = {}) {
 
 
 // INIT FUNCTIONS
-if (jsDevMode) {
-    log('Scroll To');
-}
+log('Scroll To');

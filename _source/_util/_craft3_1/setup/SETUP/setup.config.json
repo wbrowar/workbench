@@ -1,11 +1,13 @@
 {
   "installPlugins": [
     "admin-bar",
+    "content-stats",
     "cp-field-inspect",
     "guide",
     "image-resizer",
     "minify",
     "redactor",
-    "typogrify"
+    "typogrify",
+    "seomatic"
   ]
 }

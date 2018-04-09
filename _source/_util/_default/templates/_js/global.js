@@ -4,6 +4,7 @@
 //  🛣 Functionality in nagivation used accross all pages on the site
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
 
+import * as animation from './animation.js';
 import lazy from './lazy.js';
 import * as vc from './vue-components.js';
 
@@ -131,7 +132,7 @@ function sliderLoaded(el, args) {
 // });
 
 
-// INIT FUNCTIONS
+// SETUP FUNCTIONS
 export function setupJsComponents() {
     activeToggleSetup();
 }
@@ -139,7 +140,8 @@ export function setupEnhancements() {
     if (typeof QueryString.enhanced === 'undefined') {
         const lazyConfig = {
             animationFunctions: {
-                'sliderLoaded': sliderLoaded
+                'introduceElement': animation.introduceElement,
+                'sliderLoaded': sliderLoaded,
             }
         };
         ready(function() {
@@ -167,6 +169,6 @@ export function setupEnhancements() {
         });
     }
 }
-if (jsDevMode) {
-    console.log('Global');
-}
+
+// INIT FUNCTIONS
+log('Global');

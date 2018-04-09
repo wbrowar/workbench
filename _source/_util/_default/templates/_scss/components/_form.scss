@@ -1,0 +1,8 @@
+.c_form {
+  $self: &;
+
+  @at-root #{$self}--flex {
+    display: flex;
+    flex-flow: row wrap;
+  }
+}

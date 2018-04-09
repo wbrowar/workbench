@@ -6,29 +6,22 @@
 <% const intro = false %>
 
 <% modules.push({
-"title": "Mobile Nav Toggle",
-"description": "An example of `data-active-toggle`. This attribute can toggle an `active` class when the element is clicked. By setting the attribute to a query selector string, clicking this element will use `querySelectorAll` to toggle the `active` class on all applicable targets.",
-"background": "light",
-"demoCode":
-`<button data-active-toggle="#mobile_nav .styles__box">Toggle Mobile Nav</button>
-<br>
-<div id="mobile_nav" class="mobile_nav">
-    <div class="styles__box_wrapper">
-        <div class="styles__box styles__box--flex">
-            <ul>
-                <li>Home</li>
-                <li>About</li>
-                <li>News</li>
-                <li>Contact</li>
-            </ul>
-        </div>
-    </div>
-</div>`,
-"code":
-`<button data-active-toggle="#mobile_nav">Toggle Mobile Nav</button>
-<div id="mobile_nav" class="mobile_nav">
-    <!-- content -->
-</div>`
+    "title": "Pager",
+    "description": "Navigate through pages of news items and other content types.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/component.twig' as component %}
+
+{% paginate craft.entries.limit(20) as pageInfo, pageEntries %}
+{% for item in pageEntries %}
+    {{ item.title }}<br>
+{% endfor %}
+
+{{ component.c('pager', { pageInfo: pageInfo, maxLinks: 5 }) }}`,
+    "options": [
+        { "name": 'pageInfo', "required": true, "type": 'pageInfo object from `paginate` tag', "description": `The info used to let the pager know what the current page is.` },
+        { "name": 'maxLinks', "required": false, "type": 'integer', "default": `5`, "description": `The amount of links to show in the middle of the pager.` }
+    ]
 }); %>
 
 <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

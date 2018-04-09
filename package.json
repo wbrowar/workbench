@@ -101,6 +101,10 @@
       "name": "index"
     },
     {
+      "label": "Globals",
+      "name": "globals"
+    },
+    {
       "label": "Animations",
       "name": "animations"
     },
@@ -121,10 +125,6 @@
       "name": "icons"
     },
     {
-      "label": "Images",
-      "name": "images"
-    },
-    {
       "label": "Media",
       "name": "media"
     },
@@ -133,72 +133,79 @@
       "name": "messages"
     },
     {
-      "label": "Tables",
-      "name": "tables"
+      "label": "Navigation",
+      "name": "nav"
     },
     {
-      "label": "Vue",
-      "name": "vue"
+      "label": "Overlays",
+      "name": "overlays"
+    },
+    {
+      "label": "Sliders",
+      "name": "sliders"
     }
   ],
   "dependencies": {
-    "es6-promise": "^4.1.1",
+    "axios": "^0.18.0",
+    "cleave.js": "^1.3.1",
+    "es6-promise": "^4.2.4",
     "fg-loadcss": "^2.0.1",
     "fg-loadjs": "^1.0.0",
-    "jquery": "^3.2.1",
+    "gsap": "^1.20.4",
+    "hammerjs": "^2.0.8",
     "scrollmonitor": "^1.2.4",
-    "systemjs": "^0.20.19",
-    "vue": "^2.5.6"
+    "vue": "^2.5.16"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
-    "browser-sync": "^2.18.13",
-    "critical": "^1.0.0",
-    "css-loader": "^0.28.7",
+    "browser-sync": "^2.23.6",
+    "critical": "^1.2.2",
+    "css-loader": "^0.28.11",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^4.0.0",
-    "gulp-bump": "^2.8.0",
-    "gulp-changed": "^3.1.1",
-    "gulp-clean": "^0.3.2",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-bump": "^3.1.0",
+    "gulp-changed": "^3.2.0",
+    "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
-    "gulp-ejs": "3.1.0",
+    "gulp-ejs": "^3.1.2",
     "gulp-favicons": "^2.2.7",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-imagemin": "^4.0.0",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^4.1.0",
     "gulp-json-modify": "^1.0.2",
     "gulp-load-plugins": "^1.5.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
-    "gulp-responsive": "^2.8.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sass-glob": "^1.0.8",
+    "gulp-responsive": "^2.9.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sass-glob": "^1.0.9",
     "gulp-svg-inline-css": "^1.3.3",
     "gulp-util": "^3.0.8",
     "imagemin-gifsicle": "^5.2.0",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-optipng": "^5.2.1",
-    "imagemin-pngquant": "^5.0.1",
+    "imagemin-pngquant": "^5.1.0",
     "imagemin-svgo": "^6.0.0",
-    "inquirer": "^4.0.0",
-    "node-notifier": "^5.1.2",
-    "sass-loader": "^6.0.6",
-    "uglifyjs-webpack-plugin": "^1.1.4",
-    "vue-loader": "^13.6.0",
-    "vue-template-compiler": "^2.5.13",
-    "webpack": "^3.10.0"
+    "inquirer": "^5.2.0",
+    "node-notifier": "^5.2.1",
+    "sass-loader": "^6.0.7",
+    "uglifyjs-webpack-plugin": "^1.2.4",
+    "vue-loader": "^14.2.2",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.5.0"
   },
   "scripts": {
     "cssd": "./vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh",
     "cssdb": "./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh",
     "dev": "gulp run && gulp ejs:quick:full",
+    "feature": "NODE_ENV=production gulp release:feature",
     "list": "gulp",
     "prod": "NODE_ENV=production gulp release",
     "setup": "gulp setup",
-    "start": "npm run update && npm run cssd",
+    "start": "git pull && npm run update && npm run cssd && npm run watch",
     "update": "yarn && composer update",
-    "watch": "gulp watch"
+    "watch": "NODE_ENV=development gulp ejs:quick:full && gulp watch"=
   }
 }

@@ -2,7 +2,7 @@
 // Utility library used to lazy load front-end assets as well as perform animations based on page scroll position
 
 import { addClass, log, warn } from './global.js';
-import 'scrollmonitor';
+import scrollMonitor from 'scrollmonitor';
 
 let config = {
     animationFunctions: {
@@ -74,7 +74,7 @@ function lazyLoadHandler(element, watcher = null) {
     //   - REQUIRED `url` is the path to the image that will be displayed in the background of the element
     if (element.hasAttribute('data-bg-array')) {
         const bgData = JSON.parse(element.getAttribute('data-bg-array'));
-        if (bgData.class != undefined && bgData.css != undefined) {
+        if (bgData.class !== undefined && bgData.css !== undefined) {
             let css = '';
             const elementClass = bgData.class;
             for (let i = 0, l = bgData.css.length; i<l; i++) {
@@ -170,6 +170,4 @@ export default function(lazyConfig = {}) {
 
 
 // INIT FUNCTIONS
-if (jsDevMode) {
-    log('Lazy Loading');
-}
+log('Lazy Loading');

@@ -12,28 +12,82 @@ html {
   //-webkit-font-smoothing: antialiased;
 }
 
+// GLOBAL ELEMENTS
+button {
+  @include buttons_default;
+  appearance: none;
+}
+figure {
+  line-height: 0;
+}
+img {
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+video {
+  width: 100%;
+}
+// hide items with v-cloak attribute until vue is loaded and ready to go
+[v-cloak] {
+  display: none;
+}
+
+// GLOBAL COMPONENTS
 .c_header {
+  $self: &;
+
   @include font('apple_bold');
   @include fz(8, 4rem, '900px');
+
+  @include text_modifiers($self);
 }
 .c_subheader {
+  $self: &;
+
   @include font('apple_bold');
   @include fz(4, 2rem, '700px');
-}
-p {
-  margin-bottom: 2em;
-  line-height: 1.6;
 
-  &:last-child {
-    margin-bottom: 0;
+  @include text_modifiers($self);
+}
+.c_text {
+  $self: &;
+
+  @include text_modifiers($self);
+
+  p {
+    margin-bottom: 2em;
+    line-height: 1.6;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+    b, strong {
+      @include font('apple_bold');
+    }
+    i, em {
+      @include font('apple_italic');
+    }
+    b i, i b, strong em, em strong {
+      @include font('apple_bold_italic');
+    }
   }
-  b, strong {
-    @include font('apple_bold');
-  }
-  i, em {
-    @include font('apple_italic');
-  }
-  b i, i b, strong em, em strong {
-    @include font('apple_bold_italic');
+
+  table {
+    width: 100%;
+
+    td {
+      padding: 7px 0;
+    }
+
+    thead {
+      td {
+        padding-right: 10px;
+
+        &:first-child {
+          padding-left: 0;
+        }
+      }
+    }
   }
 }

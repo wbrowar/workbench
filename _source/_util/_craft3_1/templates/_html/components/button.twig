@@ -1,0 +1,19 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{# Component element overrides #}
+{% set element = 'a' %}
+
+{# Variables #}
+{% set label = label ?? '' %}
+{% set target = target ?? '' %}
+{% set url = url ?? '#' %}
+
+{% set attributes -%}
+    href="{{ url }}"{% if target ?? false %} target="{{ target }}"{% endif %} {{ attributes ?? null }}
+{%- endset %}
+
+{% block content -%}
+    {{ label }}
+{%- endblock %}

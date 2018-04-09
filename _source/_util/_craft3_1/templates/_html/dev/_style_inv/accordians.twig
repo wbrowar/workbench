@@ -1,0 +1,44 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+<% const currentSection = 'accordians' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+    "title": "Accordion",
+    "description": "Show and hide one element at a time.",
+    "background": "light",
+    "demoCode":
+`<accordion>
+    <accordion-tab title="Optimized Google My Business listing" :selected="true" v-cloak>
+        <p>When people search for a business, Google scans its database so that local results appear first. However, if a business’s data is out of date or inaccurate, they may not appear at all. Bad data for your business can show up with no explanation of who posted it or why, and getting your business’ data updated and indexed correctly can be a complicated, time-consuming process. We’ll help you ensure that potential customers find your correct, up-to-date information on Google Search, Google Maps and Google+, every time on every device they use.</p>
+    </accordion-tab>
+    <accordion-tab title="Real-time local directory" v-cloak>
+        <p>Google’s great for providing an endless list of websites, but many consumers prefer to search in directories that are tailored to their needs or location. CenturyLink’s online marketing platform will allow you to optimize your business on more than 100 local directories as well as major directories like Yelp, Foursquare, Bing and Yahoo. With clear, high-rank listings, you improve your local online visibility so your business gets noticed.</p>
+    </accordion-tab>
+    <accordion-tab title="Social media marketing" v-cloak>
+        <p>We’ll help you establish a presence on must-have sites like Facebook, Twitter, LinkedIn, Google+ and Yelp, and assist you in building your base of followers. We’ll show you how to grow that base with pinpoint, targeted ads and how to keep them engaged with your brand with regular updates that you can post from your desktop or phone. It’s as fun as it is effective—and it’s very effective!</p>
+    </accordion-tab>
+    <accordion-tab title="Content marketing" v-cloak>
+        <p>Research (and common sense) shows that customers feel connected to businesses that connect with them. Our content marketing program simplifies the process, enabling you to manage your business’ entire web presence—including all social media platforms—all in one place. You’ll be able to update your website, create an email newsletter, post to local news networks and online directories, and more from any device. Our team of account coordinators will help you get started and will provide ongoing support to ensure you make the most of the program.</p>
+    </accordion-tab>
+    <accordion-tab title="Curated newswire access" v-cloak>
+        <p>CenturyLink’s online marketing platform gets you direct access to NearSay, a curated online newswire that you can use to publish articles, promote special offers and connect with the local community. The content of everything you post on NearSay is automatically optimized by location, right down to the neighborhood, so that your business will be found fast by customers in your area.</p>
+    </accordion-tab>
+</accordion>`,
+"code":
+`<accordion>
+    <accordion-tab title="Title of Accordian I" :selected="true">
+        <!-- content -->
+    </accordion-tab>
+    <accordion-tab title="Title of Accordian II" v-cloak>
+        <!-- add as many -->
+    </accordion-tab>
+    <accordion-tab title="Title of Accordian III" v-cloak>
+        <!-- as you'd like -->
+    </accordion-tab>
+</accordion>`
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

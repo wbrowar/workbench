@@ -24,6 +24,31 @@ $margin_bottom_default: 30px;
 $mq_grid_start: 700px;
 
 // SITE MIXINS
+// BUTTONS
+@mixin buttons_default {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  padding: .8em 20px .7em;
+  width: 100%;
+  max-width: 300px;
+  background-color: $color_black_default;
+  border: none;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: $color_white_default;
+
+  &:hover {
+    opacity: .7;
+  }
+}
+
 // FONTS
 // For the font() mixin, see _source/automated/_fonts
 // If this file is empty, run `gulp first` to populate it
@@ -43,6 +68,35 @@ $mq_grid_start: 700px;
     @include mq($font_fallback_mq) {
       font-size: $font_fallback_size;
     }
+  }
+}
+
+// LAYOUT
+// Places centers three divs with a background, middle, and foreground layers
+@mixin layout_centered_image_text {
+  position: relative;
+
+  @at-root #{&}__background, #{&}__middle, #{&}__foreground, #{&}__url_mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  @at-root #{&}__background {
+    z-index: 1;
+  }
+  @at-root #{&}__middle {
+    z-index: 2;
+  }
+  @at-root #{&}__foreground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+  @at-root #{&}__url_mask {
+    z-index: 4;
   }
 }
 
@@ -108,6 +162,11 @@ $mq_grid_start: 700px;
 
 // TEXT
 // Hide text for things like buttons or links that are replaced with a background image
+@mixin text_modifiers($self) {
+  @at-root #{$self}--center {
+    text-align: center;
+  }
+}
 @mixin hide_text {
   text-indent: -99999px;
 }

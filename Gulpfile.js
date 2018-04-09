@@ -26,7 +26,7 @@ const fs = require('fs'),
 
 const name = argv.options.name || vars.name,
     critCssTasks = [],
-    release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false;
+    release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'release:feature' || process.argv[2] === 'release:major')) ? true : false;
 
 // Paths
 const bases = {
@@ -43,6 +43,7 @@ const paths = {
     distIcon:               bases.theme + 'icon/',
     srcCss:                 bases.source + '_scss/',
     srcHtml:                bases.source + '_html/',
+    srcIcon:                bases.source + '_icon/',
     srcImg:                 bases.source + '_img/',
     srcJs:                  bases.source + '_js/',
     srcUtil:                bases.source + '_util/',
@@ -51,14 +52,15 @@ const paths = {
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
     filesJs:                bases.source + '_js/**/*.{js,vue}',
     filesScss:              bases.source + '_scss/**/*.scss',
-    filesSvg:               bases.source + '_img/icons/**/*.{svg}',
+    filesIcon:              bases.source + '_icon/**/*.svg',
+    filesIconCss:           bases.source + '_icon/css/**/*.svg',
     utilFonts:              bases.source + '_util/_fonts.ejs',
 };
 
 // Gulp Variables
 const browserSync     = require('browser-sync').create(),
       critical        = require('critical'),
-      glob            = require("glob"),
+      glob            = require('glob'),
       gulp            = require('gulp'),
       gulpLoadPlugins = require('gulp-load-plugins'),
       inquirer        = require('inquirer'),
@@ -255,8 +257,8 @@ gulp.task('run', ['css:cleaned', 'img:cleaned', 'webpack'], function() {
 
 // [gulp release]
 gulp.task('release', ['bump:patch', 'release:tasks']);
-gulp.task('releasefeature', ['bump:minor', 'release:tasks']);
-gulp.task('releasemajor', ['bump:major', 'release:tasks']);
+gulp.task('release:feature', ['bump:minor', 'release:tasks']);
+gulp.task('release:major', ['bump:major', 'release:tasks']);
 gulp.task('release:tasks', ['critCss', 'img:cleaned', 'ejs:release', 'webpack'], function() {
     return notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'Release Complete' });
 });
@@ -268,7 +270,8 @@ gulp.task('watch', ['ejs:quick:full'], function() {
           watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
           watchImg          = gulp.watch(paths.filesImg, ['img']),
           watchJs           = gulp.watch(paths.filesJs, ['webpack']),
-          watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
+          watchIcon         = gulp.watch(paths.filesIcon, ['icon']),
+          watchIconCss      = gulp.watch(paths.filesIconCss, ['css:cleaned']);
 
     if (vars.browserSync.url === 'https://starter.wbrowar.com/') {
         $.gutil.log($.gutil.colors.inverse(' Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json. '));
@@ -295,7 +298,11 @@ gulp.task('watch', ['ejs:quick:full'], function() {
     watchJs.on('change', function(event) {
         notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'JS Updated' });
     });
-    watchSvg.on('change', function(event) {
+    watchIcon.on('change', function(event) {
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'SVGs Updated' });
+        browserSync.reload();
+    });
+    watchIconCss.on('change', function(event) {
         notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'SVG and CSS Updated' });
         browserSync.reload();
     });
@@ -355,8 +362,12 @@ gulp.task('cleanFavicon', function() {
     return gulp.src([paths.distImg + 'meta/', bases.build + 'favicon'], {read: false})
         .pipe($.clean({force: true}));
 });
+gulp.task('cleanIcon', function() {
+    return gulp.src([paths.distIcon, bases.build + 'icon'], {read: false})
+        .pipe($.clean({force: true}));
+});
 gulp.task('cleanImg', function() {
-    return gulp.src([paths.distImg, bases.build + 'img', '!' + paths.distImg + 'icons/'], {read: false})
+    return gulp.src([paths.distImg, bases.build + 'img'], {read: false})
         .pipe($.clean({force: true}));
 });
 
@@ -406,7 +417,7 @@ function cssHandler() {
         .pipe(gulp.dest(paths.distCss))
         .pipe(browserSync.stream());
 }
-gulp.task('css:cleaned', ['cleanCss', 'svg'], function(cb) {
+gulp.task('css:cleaned', ['cleanCss', 'icon', 'icon:css'], function(cb) {
     return cssHandler();
 });
 gulp.task('css', function() {
@@ -421,11 +432,25 @@ gulp.task('font', function() {
       .pipe(gulp.dest(paths.srcCss + 'automated/'));
 });
 
+// Move icons
+gulp.task('icon', ['cleanIcon'], function() {
+    return gulp.src([paths.filesIcon])
+        .pipe(gulp.dest(paths.distIcon));
+});
+gulp.task('icon:css', function() {
+    return gulp.src(paths.filesIconCss)
+        .pipe($.imagemin())
+        .pipe($.svgInline({ className: '.icon_%s' }))
+        .pipe($.replace('background-image', 'background-position: center center; background-repeat: no-repeat; background-size: contain; background-image'))
+        .pipe($.concat('_icon_sprite.scss'))
+        .pipe(gulp.dest(paths.srcCss + 'automated/'));
+});
+
 // Resize 2x images
 // Turn SVGs into CSS sprite
 // Losslessly compress images
 function imgMoveHandler(cb = null) {
-    gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*', '!' + paths.srcImg + 'icons/**/*'])
+    gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*'])
         .pipe($.changed(paths.distImg))
         .pipe(gulp.dest(bases.build + 'img/moved'))
         .pipe($.imagemin())
@@ -461,60 +486,6 @@ gulp.task('img', function(cb) {
     imgMoveHandler();
     imgResizeHandler(cb);
 });
-gulp.task('svg', function() {
-    return gulp.src(paths.srcImg + 'icons/**/*.svg')
-        .pipe($.imagemin())
-        .pipe(gulp.dest(bases.build + 'icons/minimized'))
-        .pipe(gulp.dest(paths.distIcon))
-        .pipe($.svgInline({ className: '.icon_%s' }))
-        .pipe($.replace('background-image', 'background-position: center center; background-repeat: no-repeat; background-size: contain; background-image'))
-        .pipe($.concat('_icon_sprite.scss'))
-        .pipe(gulp.dest(paths.srcCss + 'automated/'));
-});
-
-// Uglify JS
-// function jsHandler(useUglify = false) {
-//     const babelOptions = {
-//         "presets": [
-//             ["env", {
-//                 "targets": {
-//                     "browsers": vars.browserlist
-//                 }
-//             }]
-//         ]
-//     };
-//
-//     return gulp.src(paths.filesJs)
-//         .pipe($.changed(paths.distJs))
-//         .pipe(vars.enable_babel ? $.babel(babelOptions) : $.gutil.noop())
-//         .pipe(useUglify ? $.uglify() : $.gutil.noop())
-//         .pipe(gulp.dest(bases.build + 'js/uglify'))
-//         .pipe(gulp.dest(paths.distJs));
-// };
-// function jsLibHandler(useUglify = false) {
-//     gulp.src(paths.filesJsLibMin)
-//         .pipe($.changed(paths.distJs + '_lib/'))
-//         .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
-//         .pipe(gulp.dest(paths.distJs + '_lib/'));
-//
-//     return gulp.src(paths.filesJsLib)
-//         .pipe($.changed(paths.distJs + '_lib/'))
-//         .pipe(useUglify ? $.uglify() : $.gutil.noop())
-//         .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
-//         .pipe(gulp.dest(paths.distJs + '_lib/'));
-// };
-// gulp.task('js:babel', ['cleanJs'], function() {
-//     jsHandler(true);
-//     jsLibHandler(true);
-// });
-// gulp.task('js:cleaned', ['cleanJs'], function() {
-//     jsHandler();
-//     jsLibHandler();
-// });
-// gulp.task('js', function() {
-//     jsHandler(false);
-//     jsLibHandler();
-// });
 
 // Compile HTML, TWIG, and PHP files
 for (var val in vars.ejsVars) {

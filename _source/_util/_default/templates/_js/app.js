@@ -1,8 +1,7 @@
 //  APP
 //  🏡 Custom Javascript used for UI and other functionality
-//     If
 
-import * as g from './global.js';
+import { log, warn, setupJsComponents, setupEnhancements } from './global.js';
 
 // CUSTOM FUNCTIONS
 
@@ -11,9 +10,7 @@ import * as g from './global.js';
 
 
 // INIT FUNCTIONS
-if (jsDevMode) {
-    g.log('Home');
-}
+log('Home');
 
-g.setupJsComponents();
-g.setupEnhancements();
+setupJsComponents();
+setupEnhancements();

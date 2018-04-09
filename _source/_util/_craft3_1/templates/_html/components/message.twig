@@ -1,0 +1,13 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{# Variables #}
+{% set level = level ?? 'success' %}
+{% set message = message ?? '' %}
+
+{% set modifiers = (modifiers ?? false) ? modifiers|merge([level]) : [level] %}
+
+{% block content -%}
+    {{ message|raw }}
+{%- endblock %}

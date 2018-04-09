@@ -1,0 +1,43 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{% import 'macros/component.twig' as component %}
+
+{# Variables #}
+{% set controllerAttributes = controllerAttributes ?? ':show-back="false" :show-next="false"' %}
+{% set sliderAttributes = sliderAttributes ?? null %}
+{% set sliderClasses = sliderClasses ?? null %}
+{% set sliderId = sliderId ?? 'image_slider' %}
+{% set sliderInterval = sliderInterval ?? 5000 %}
+{% set slides = slides %}
+
+{% block content -%}
+    <slider class="c_image_slider__slider{% if sliderClasses ?? false %} {{ sliderClasses }}{% endif %}"
+            slider-id="{{ sliderId }}"
+            interval="{{ sliderInterval }}"{% if sliderAttributes ?? false %} {{ sliderAttributes|raw }}{% endif %}>
+        {% for item in slides %}
+            <slider-slide class="c_image_slider__slide">
+                {% if (item.image ?? false) or (item.video ?? false) %}
+                    <div class="c_image_slider__slide__background">
+                        {% if item.video ?? false %}
+                            {{ component.c('video_bg', { video: item.video }) }}
+                        {% elseif item.image ?? false %}
+                            {{ component.c('image_bg', { image: item.image }) }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if item.middle ?? false %}
+                    <div class="c_image_slider__slide__middle">{{ item.middle|raw }}</div>
+                {% endif %}
+                {% if item.foreground ?? false %}
+                    <div class="c_image_slider__slide__foreground">{{ item.foreground|raw }}</div>
+                {% endif %}
+                {% if item.url ?? false %}
+                    <a class="c_image_slider__slide__url_mask" href="{{ item.url }}"></a>
+                {% endif %}
+            </slider-slide>
+        {% endfor %}
+    </slider>
+    <slider-control slider-id="{{ sliderId }}" {{ controllerAttributes|raw }}></slider-control>
+{%- endblock %}

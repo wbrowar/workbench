@@ -1,0 +1,37 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{% import 'macros/icons.twig' as icons %}
+
+{# Component element overrides #}
+{% set element = 'nav' %}
+{% set class = 'social_nav' %}
+
+{% set image = image ?? null %}
+{% set title = title %}
+{% set url = url %}
+
+{% block content -%}
+    {% set links = {
+        'facebook': 'https://www.facebook.com/sharer.php?app_id=828593323821891&display=popup&u=' ~ url,
+        'twitter': 'https://twitter.com/intent/tweet?url=' ~ url ~ '&related=dixonschwabl&text=' ~ title,
+        'linkedin': 'http://www.linkedin.com/shareArticle?mini=true&amp;url=' ~ url ~ '&amp;title=' ~ title,
+        'email': 'mailto:?subject=' ~ title ~ '&body=' ~ url,
+    } %}
+
+    {% if image ?? false %}
+        {% set links = links|merge({ 'pinterest': 'http://pinterest.com/pin/create/button/?url=' ~ url(url) ~ '&media=' ~ image ~ '&description=' ~ title, }) %}
+    {% endif %}
+
+    {% set options = { links: links, title: title } %}
+
+    {% if links.facebook ?? false %}<a class="c_{{ class }}__link--facebook" href="{{ url(links.facebook) }}">{{ svg('icon/social_facebook.svg') }}</a>{% endif %}
+    {% if links.twitter ?? false %}<a class="c_{{ class }}__link--twitter" href="{{ url(links.twitter) }}">{{ svg('icon/social_twitter.svg') }}</a>{% endif %}
+    {% if links.linkedin ?? false %}<a class="c_{{ class }}__link--linkedin" href="{{ url(links.linkedin) }}">{{ svg('icon/social_linkedin.svg') }}</a>{% endif %}
+    {% if links.youtube ?? false %}<a class="c_{{ class }}__link--youtube" href="{{ url(links.youtube) }}">{{ svg('icon/social_youtube.svg') }}</a>{% endif %}
+    {% if links.pinterest ?? false %}<a class="c_{{ class }}__link--pinterest" href="{{ url(links.pinterest) }}">{{ svg('icon/social_pinterest.svg') }}</a>{% endif %}
+    {% if links.instagram ?? false %}<a class="c_{{ class }}__link--instagram" href="{{ url(links.instagram) }}">{{ svg('icon/social_instagram.svg') }}</a>{% endif %}
+    {% if links.snapchat ?? false %}<a class="c_{{ class }}__link--snapchat" href="{{ url(links.snapchat) }}">{{ svg('icon/social_snapchat.svg') }}</a>{% endif %}
+    {% if links.email ?? false %}<a class="c_{{ class }}__link--email" href="{{ 'mailto:' not in links.email ? 'mailto:' : '' }}{{ links.email }}">{{ svg('icon/social_email.svg') }}</a>{% endif %}
+{%- endblock %}

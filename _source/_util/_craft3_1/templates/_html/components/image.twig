@@ -1,0 +1,48 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'components/_component.twig' %}
+
+{# Component element overrides #}
+{% set element = 'figure' %}
+
+{# Variables #}
+{% set caption = caption ?? null %}
+{% set image = image %}
+{% set lazyLoad = lazyLoad ?? true %}
+{% set placeholder = placeholder ?? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' %}
+{% set optimize = optimize ?? [] %}
+{% set sizes = sizes ?? '100vw' %}
+{% set transforms = transforms ?? [] %}
+
+{% set alt = alt ?? image.title ?? '' %}
+
+{% set attributes -%}
+    {% if lazyLoad ?? false %} data-lazy-load{% endif %} {{ attributes ?? null }}
+{%- endset %}
+
+{% block content -%}
+    {% import _self as self %}
+
+    <picture>
+        {% if transforms|length %}
+            {# Add webp images back in if there is a plugin—like Image Optimize—or another way to create them #}
+            {#<source {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ self.getSrcSetFromObject({ image: image, transforms: transforms, suffix: '.webp' }) }}" sizes="{{ sizes }}" type="image/webp" />#}
+            <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ self.getSrcSetFromObject({ image: image, transforms: transforms }) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
+        {% else %}
+            <img {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ image.url }}" alt="{{ alt }}" />
+        {% endif %}
+    </picture>
+    {% if caption ?? false -%}
+        <figcaption>{{ caption }}</figcaption>
+    {%- endif %}
+{%- endblock %}
+
+{% macro getSrcSetFromObject(options) %}{% spaceless %}
+    {% set image = options.image ?? null %}
+    {% set transforms = options.transforms ?? {} %}
+    {% set suffix = options.suffix ?? null %}
+
+    {% if (image ?? false) and (transforms|length) %}
+        {% for transform in transforms %}{% if not loop.first %}, {% endif %}{{ image.getUrl(transform) }}{{ suffix }}{{ (transform.width ?? false) ? ' ' ~ transform.width ~ 'w' : '' }}{% endfor %}
+    {% endif %}
+{% endspaceless %}{% endmacro %}

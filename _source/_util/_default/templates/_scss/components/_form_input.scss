@@ -1,0 +1,48 @@
+@mixin _field_default {
+  display: block;
+  width: 100%;
+
+  &::placeholder{
+    color: $color_black_default;
+  }
+}
+
+.c_form_input {
+  $self: &;
+
+  margin-bottom: 15px;
+
+  @at-root input[type="text"],
+           input[type="email"],
+           input[type="password"],
+           input[type="search"],
+           input[type="tel"],
+           input[type="url"] {
+    @include _field_default;
+  }
+  textarea {
+    @include _field_default;
+  }
+
+  @at-root #{$self}__required_indicator {
+    display: inline-block;
+    margin-left: .3em;
+    font-size: .9em;
+    color: $color_alert_error;
+    transform: translateY(-.1em);
+  }
+  @at-root #{$self}__error {
+    font-size: .8em;
+    color: $color_alert_error;
+  }
+  @at-root #{$self}--hidden {
+    @include hide_text;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  @at-root #{$self}--invalid {
+      background-color: lighten($color_alert_error, 40);
+      border-color: $color_alert_error;
+  }
+}

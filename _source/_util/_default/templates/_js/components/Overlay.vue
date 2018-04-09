@@ -88,6 +88,7 @@
             @include mq($_mq_overlay_1) {
                 width: 80%;
                 height: auto;
+                background-color: transparent;
             }
         }
     }

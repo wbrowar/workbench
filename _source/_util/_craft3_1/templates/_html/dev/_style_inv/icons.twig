@@ -10,7 +10,7 @@
     "description": `Links to social media proporties`,
     "background": "dark",
     "twigCode":
-`{% import 'macros/icons.twig' as icons %}
+`{% import 'macros/component.twig' as component %}
 {% set options = {
     links: {
         'facebook': 'https://www.facebook.com/username',
@@ -23,10 +23,9 @@
         'email': 'hello@example.com',
     }
 } %}
-{{ icons.socialLinks(options) }}`,
+{{ component.c('social_nav', options) }}`,
     "options": [
-        { "name": 'links', "required": true, "type": 'object', "default": `{}`, "description": `List of URLs to social media properties. For example: <b>links: { facebook: 'https://facebook.com/example' }</b>` },
-        { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` }
+        { "name": 'links', "required": true, "type": 'object', "default": `{}`, "description": `List of URLs to social media properties. For example: <b>links: { facebook: 'https://facebook.com/example' }</b>` }
     ]
 }); %>
 
@@ -35,15 +34,14 @@
     "description": `Share a URL on a default set of social media platforms. Add an image to allow for sharing on more networks.`,
     "background": "dark",
     "twigCode":
-`{% import 'macros/icons.twig' as icons %}
+`{% import 'macros/component.twig' as component %}
 {% set options = {
     title: 'Title of Article',
     url: url(craft.app.request.pathInfo),
 } %}
-{{ icons.socialShare(options) }}`,
+{{ component.c('social_share', options) }}`,
     "options": [
         { "name": 'image', "required": false, "type": 'AssetFileModel', "description": `An image that can be passed into social sharing tools that allow for images. For example, Twitter Cards will show an image if passed in. <i>NOTE: While image is not required for this component, it is required for the Pinterest sharing icon to appear.</i>` },
-        { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Classes added that allow for variations in styles or functionality.` },
         { "name": 'title', "required": true, "type": 'string', "default": `''`, "description": `The title of the post as shown on Twitter Cards, LinkedIn posts, etc...` },
         { "name": 'url', "required": true, "type": 'string', "default": `'#'`, "description": `The URL of the page being shared.` }
     ]

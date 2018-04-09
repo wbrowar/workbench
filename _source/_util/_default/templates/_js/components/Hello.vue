@@ -20,7 +20,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     @import "./../../_scss/base/_mixins.scss";
 
     p {

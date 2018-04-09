@@ -43,8 +43,16 @@
         <% } %>
     </div>
 </div>
-<script>loadCSS("<%= site_root %>css/dev-styles.css?v=<%= version %>");</script>
-<noscript>
-    <!-- backup for critcss -->
-    <link rel="stylesheet" href="<%= site_root %>css/dev-styles.css?v=<%= version %>">
-</noscript>
+
+<% if (templateDirectory === '_craft3_1') { %>
+    {% set devStyleJs -%}
+        loadCSS("<%= site_root %>css/dev-styles.css?v=<%= version %>");
+    {%- endset %}
+    {% js devStyleJs %}
+<% } else { %>
+    <script>loadCSS("<%= site_root %>css/dev-styles.css?v=<%= version %>");</script>
+    <noscript>
+        <!-- backup for critcss -->
+        <link rel="stylesheet" href="<%= site_root %>css/dev-styles.css?v=<%= version %>">
+    </noscript>
+<% } %>
