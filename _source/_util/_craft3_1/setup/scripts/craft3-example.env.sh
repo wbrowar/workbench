@@ -15,7 +15,7 @@
 # -- GLOBAL settings --
 
 # What to prefix the database table names with
-GLOBAL_DB_TABLE_PREFIX=""
+GLOBAL_DB_TABLE_PREFIX="craft"
 
 # The path of the `craft` folder, relative to the root path; paths should always have a trailing /
 GLOBAL_CRAFT_PATH="./"

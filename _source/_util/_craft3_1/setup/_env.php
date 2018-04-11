@@ -43,7 +43,7 @@ $craftEnvVars = [
     'DB_SCHEMA' => "public",
 
     // The prefix that should be added to generated table names (only necessary if multiple things are sharing the same database)
-    'DB_TABLE_PREFIX' => "",
+    'DB_TABLE_PREFIX' => "craft",
 
     // The port to connect to the database with. Will default to 5432 for PostgreSQL and 3306 for MySQL.
     'DB_PORT' => "",

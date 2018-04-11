@@ -39,7 +39,7 @@
             sliderId: { required: true },
             slidesLayout: false,
             slidesContent: false,
-            startingSlide: 0,
+            startingSlide: { default: 0 },
             waitForLoad: false,
         },
         methods: {

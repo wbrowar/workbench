@@ -17,7 +17,10 @@
 {% endblock %}
 
 {% block content %}
-    <article class="body">
+    <article>
+        <div style="padding: 30vh 0; text-align: center;">
+            <p style="font-size: 2.4rem;">{{ pageSection|upper }}</p>
+        </div>
         {#
         {% for block in entry.bodyContent %}
             {% switch block.type %}
