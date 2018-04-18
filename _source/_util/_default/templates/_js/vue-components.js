@@ -4,15 +4,6 @@
 import { gaTrack, log, warn } from './global.js';
 import Vue from 'vue';
 
-import Accordion from './components/Accordion.vue';
-import AccordionTab from './components/AccordionTab.vue';
-import Overlay from './components/Overlay.vue';
-import Slider from './components/Slider.vue';
-import SliderControl from './components/SliderControl.vue';
-import SliderSlide from './components/SliderSlide.vue';
-import ValidatedForm from './components/ValidatedForm.vue';
-import ValidatedFormInput from './components/ValidatedFormInput.vue';
-
 // VARIABLES
 let vueData = {};
 let vueMethods = {};
@@ -49,19 +40,37 @@ vueMethods['showOverlay'] = function(overlayTitle) {
     gaTrack('overlay', 'shown', overlayTitle);
 };
 
+// Lazy load Vue components
+Vue.component('accordion', function (resolve) {
+    require(['./components/Accordion.vue'], resolve)
+});
+Vue.component('accordion-tab', function (resolve) {
+    require(['./components/AccordionTab.vue'], resolve)
+});
+Vue.component('overlay', function (resolve) {
+    require(['./components/Overlay.vue'], resolve)
+});
+Vue.component('slider', function (resolve) {
+    require(['./components/Slider.vue'], resolve)
+});
+Vue.component('slider-control', function (resolve) {
+    require(['./components/SliderControl.vue'], resolve)
+});
+Vue.component('slider-slide', function (resolve) {
+    require(['./components/SliderSlide.vue'], resolve)
+});
+Vue.component('validated-form', function (resolve) {
+    require(['./components/ValidatedForm.vue'], resolve)
+});
+Vue.component('validated-form-input', function (resolve) {
+    require(['./components/ValidatedFormInput.vue'], resolve)
+});
+
 // VUE INSTANCE
 new Vue({
     el: '#page',
     data: vueData,
     components: {
-        Accordion,
-        AccordionTab,
-        Overlay,
-        Slider,
-        SliderControl,
-        SliderSlide,
-        ValidatedForm,
-        ValidatedFormInput,
     },
     created: function () {
         // Hide overlay and remove content

@@ -26,8 +26,10 @@ module.exports = {
         app:   paths.srcJs + "app.js",
     },
     output: {
+        chunkFilename: '[id].' + vars.version,
+        filename: '[name].js',
         path: path.resolve(__dirname, paths.distJs),
-        filename: '[name].js'
+        publicPath: "/js/",
     },
     mode: env || 'development',
     module: {

@@ -21,9 +21,11 @@
                 {% if (item.image ?? false) or (item.video ?? false) %}
                     <div class="c_image_slider__slide__background">
                         {% if item.video ?? false %}
-                            {{ component.c('video_bg', { video: item.video }) }}
+                            {% set video = item.video|merge({ lazyLoad: false }) %}
+                            {{ component.c('video_bg', { video: video }) }}
                         {% elseif item.image ?? false %}
-                            {{ component.c('image_bg', { image: item.image }) }}
+                            {% set image = item.image|merge({ lazyLoad: false }) %}
+                            {{ component.c('image_bg', { image: image }) }}
                         {% endif %}
                     </div>
                 {% endif %}

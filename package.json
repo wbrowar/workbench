@@ -10,7 +10,7 @@
   "style_template_url_suffix": ".html",
   "browserlist": [
     "last 2 versions",
-    "ie 11"
+    "not ie > 0"
   ],
   "enable_ssi": false,
   "minify_html": true,
