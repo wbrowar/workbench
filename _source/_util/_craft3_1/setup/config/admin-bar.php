@@ -98,6 +98,12 @@ return [
                 'type' => 'cpUrl',
                 'admin' => true,
             ],
+            [
+                'title' => 'Clear Caches',
+                'url' => 'utilities/clear-caches',
+                'type' => 'cpUrl',
+                'admin' => true,
+            ],
         ],
     ],
 

@@ -15,7 +15,7 @@
 # -- GLOBAL settings --
 
 # What to prefix the database table names with
-GLOBAL_DB_TABLE_PREFIX="craft"
+GLOBAL_DB_TABLE_PREFIX="<%- options.dbprefix %>"
 
 # The path of the `craft` folder, relative to the root path; paths should always have a trailing /
 GLOBAL_CRAFT_PATH="./"
@@ -33,8 +33,8 @@ LOCAL_ROOT_PATH="<%- projectDir %>/"
 LOCAL_ASSETS_PATH=${LOCAL_ROOT_PATH}"u/"
 
 # Local user & group that should own the Craft CMS install
-LOCAL_CHOWN_USER="<%- options.chwonuser %>"
-LOCAL_CHOWN_GROUP="<%- options.chwongroup %>"
+LOCAL_CHOWN_USER=""
+LOCAL_CHOWN_GROUP=""
 
 # Local directories relative to LOCAL_ROOT_PATH that should be writeable by the $CHOWN_GROUP
 LOCAL_WRITEABLE_DIRS=(

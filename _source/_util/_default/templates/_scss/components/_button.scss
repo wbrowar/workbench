@@ -1,0 +1,5 @@
+.c_button {
+  $self: &;
+
+  @include buttons_default;
+}
