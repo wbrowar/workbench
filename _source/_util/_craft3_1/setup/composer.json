@@ -20,7 +20,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "craftcms/cms": "^3.0.1",
+    "craftcms/cms": "^3.0.0",
     "vlucas/phpdotenv": "^2.4.0",
     "nystudio107/craft-scripts": "^1.2.6",
     "craftcms/redactor": "1.1.0",
