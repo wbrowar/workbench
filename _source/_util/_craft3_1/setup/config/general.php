@@ -27,8 +27,6 @@ return [
             '@baseUrl' => getenv('CRAFTENV_BASE_URL'),
         ],
         'custom' => [
-            'basePath' => getenv('CRAFTENV_BASE_PATH'),
-            'baseUrl' => getenv('CRAFTENV_BASE_URL'),
             'craftEnv' => CRAFT_ENVIRONMENT,
         ]
     ],
@@ -58,5 +56,7 @@ return [
         'backupOnUpdate' => true,
         'devMode' => true,
         'enableTemplateCaching' => false,
+        'rememberedUserSessionDuration' => 31557600,
+        'userSessionDuration' => 31557600,
     ],
 ];

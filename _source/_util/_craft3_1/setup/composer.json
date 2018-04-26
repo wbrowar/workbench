@@ -20,7 +20,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "craftcms/cms": "^3.0.1",
+    "craftcms/cms": "^3.0.0",
     "vlucas/phpdotenv": "^2.4.0",
     "nystudio107/craft-scripts": "^1.2.6",
     "craftcms/redactor": "1.1.0",
@@ -28,7 +28,7 @@
     "nystudio107/craft-fastcgicachebust": "1.0.7",
     "nystudio107/craft-minify": "1.2.8",
     "nystudio107/craft-typogrify": "1.1.9",
-    "nystudio107/craft-seomatic": "3.0.0-beta.21",
+    "nystudio107/craft-seomatic": "3.0.1",
     "verbb/image-resizer": "2.0.2",
     "wbrowar/adminbar": "3.1.5",
     "wbrowar/contentstats": "2.0.1",

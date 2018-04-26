@@ -21,3 +21,5 @@ scripts/.env.sh
 
 # USER UPLOADS
 web/u/*
+web/imager/*
+backups/*
