@@ -4,10 +4,9 @@
 
 {# Component element overrides #}
 {% set element = 'nav' %}
+{% set links = links %}
 
 {% block content -%}
-    {% import 'macros/icons.twig' as icons %}
-
     {% if links.facebook ?? false %}<a class="c_{{ class }}__link--facebook" href="{{ url(links.facebook) }}">{{ svg('icon/social_facebook.svg') }}</a>{% endif %}
     {% if links.twitter ?? false %}<a class="c_{{ class }}__link--twitter" href="{{ url(links.twitter) }}">{{ svg('icon/social_twitter.svg') }}</a>{% endif %}
     {% if links.linkedin ?? false %}<a class="c_{{ class }}__link--linkedin" href="{{ url(links.linkedin) }}">{{ svg('icon/social_linkedin.svg') }}</a>{% endif %}
