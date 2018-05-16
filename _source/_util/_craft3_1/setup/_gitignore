@@ -1,7 +1,6 @@
 # CRAFT DEFAULTS
 /.env
 /.idea
-/composer.lock
 /vendor
 .DS_Store
 
@@ -21,5 +20,6 @@ scripts/.env.sh
 
 # USER UPLOADS
 web/u/*
+web/uploads/*
 web/imager/*
 backups/*
