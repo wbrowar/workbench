@@ -1,5 +1,23 @@
-.c_button {
+$_margin_ver: 10px;
+$_margin_hor: 10px;
+
+.c_buttons {
   $self: &;
 
-  @include buttons_default;
+  display: flex;
+  margin: 0 -$_margin_hor;
+
+  @at-root #{&}--left {
+    justify-content: flex-start;
+  }
+  @at-root #{&}--center {
+    justify-content: center;
+  }
+  @at-root #{&}--right {
+    justify-content: flex-end;
+  }
+
+  & > * {
+    margin: $_margin_ver $_margin_hor;
+  }
 }
