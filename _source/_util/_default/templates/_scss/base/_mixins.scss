@@ -160,6 +160,31 @@ $mq_grid_start: 700px;
   }
 }
 
+// SVG
+// Turn SVG fill to color
+@mixin svg_color($color: $color_white_default, $color_paths: true, $color_polygons: true, $color_rects: true, $color_circles: true) {
+  @if $color_paths == true {
+    path {
+      fill: $color;
+    }
+  }
+  @if $color_polygons == true {
+    polygon {
+      fill: $color;
+    }
+  }
+  @if $color_rects == true {
+    rect {
+      fill: $color;
+    }
+  }
+  @if $color_circles == true {
+    circle {
+      fill: $color;
+    }
+  }
+}
+
 // TEXT
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin text_modifiers($self) {
