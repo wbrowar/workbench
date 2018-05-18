@@ -1,0 +1,33 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+<% const currentSection = 'accordians' %>
+<% const modules = [] %>
+
+<% const intro = false %>
+
+<% modules.push({
+    "title": "Accordion",
+    "description": "Show and hide one element at a time.",
+    "background": "light",
+    "twigCode":
+`{% import 'macros/component.twig' as component %}
+
+{% set options = {
+    columns: 2,
+    data: [
+        { title: 'Epander line of text 1', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud eiusmod tempor.' },
+        { title: 'Epander line of text 2', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud eiusmod tempor.' },
+        { title: 'Epander line of text 3', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud eiusmod tempor.' },
+        { title: 'Epander line of text 4', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud eiusmod tempor.' },
+    ],
+} %}
+
+{{ component.c('accordion', options) }}`,
+    "options": [
+        { "name": 'accordionId', "required": true, "type": 'string', "default": `'accordion'`, "description": `The id that connects the accordion with its tabs.` },
+        { "name": 'columns', "required": false, "type": 'integer', "description": `Splits the content into columns. Accepts the number of columns allowed in the 'c_grid' component.` },
+        { "name": 'data', "required": true, "type": 'array of objects', "description": `The content of the accordions. Requires a 'title' and 'content' parameter for each row.` }
+    ]
+}); %>
+
+<%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

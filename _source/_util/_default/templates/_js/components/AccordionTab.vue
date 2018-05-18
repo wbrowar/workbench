@@ -16,13 +16,14 @@
             this.isActive = this.selected;
         },
         props: {
-            title: {},
+            accordionId: { required: true },
+            title: false,
             selected: { default: false },
         },
         methods: {
             onTabSelected() {
                 if (!this.isActive) {
-                    VueEvent.$emit('tab-selected', this.title);
+                    VueEvent.$emit('tab-selected', this.accordionId, this.title);
                     g.gaTrack('accordion', 'clicked', this.title);
                 } else {
                     this.isActive = false;
