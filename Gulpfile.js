@@ -14,24 +14,27 @@ for (let k in interfaces) {
     }
 }
 
+// get arguments from command line
+const argv = _parseArgv();
+
 // Package Variables
 const fs = require('fs'),
+    path = require('path'),
     varsJsonRaw = JSON.parse(fs.readFileSync('./package.json')),
     varsJsonString = JSON.stringify(varsJsonRaw).replace(/LOCAL_IP/g, addresses[0]),
-    vars = JSON.parse(varsJsonString);
+    vars = JSON.parse(varsJsonString),
+    webpackConfig = require('./webpack.config.js');
 
-const name = vars.name,
-    copyFirstCssFiles = vars.copyFirstCssFiles,
-    copyFirstJsFiles = vars.copyFirstJsFiles,
+const name = argv.options.name || vars.name,
     critCssTasks = [],
-    release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'releasefeature' || process.argv[2] === 'releasemajor')) ? true : false;
+    release = (process.argv[2] && (process.argv[2] === 'release' || process.argv[2] === 'release:feature' || process.argv[2] === 'release:major')) ? true : false;
 
 // Paths
 const bases = {
-    source: vars.source_path, // './' + vars.source_path,
-    build:  vars.build_path, // './' + vars.build_path,
-    theme:  vars.theme_path, // './' + vars.theme_path,
-    html:   vars.html_path, // './' + vars.html_path,
+    source: vars.source_path,
+    build:  vars.build_path,
+    theme:  vars.theme_path,
+    html:   vars.html_path,
     site:   vars.site_root,
 };
 const paths = {
@@ -39,129 +42,88 @@ const paths = {
     distImg:                bases.theme + 'img/',
     distJs:                 bases.theme + 'js/',
     distIcon:               bases.theme + 'icon/',
-    srcCss:                 bases.source + '_sass/',
+    srcCss:                 bases.source + '_scss/',
     srcHtml:                bases.source + '_html/',
+    srcIcon:                bases.source + '_icon/',
     srcImg:                 bases.source + '_img/',
     srcJs:                  bases.source + '_js/',
     srcUtil:                bases.source + '_util/',
-    filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/*.{html,php,twig,ejs}'],
-    filesHtmlIncludes:      bases.source + '_html/ejs_includes/*.{html,php,twig,ejs}',
-    filesHtmlStyleTemplate: vars.style_template !== '' ? bases.source + '_util/' + vars.style_template + '**/*.ejs' : '',
+    filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/**/*'],
+    filesEjsIncludes:       bases.source + '_html/ejs_includes/**/*',
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
-    filesJs:                [bases.source + '_js/**/*.js', '!' + bases.source + '_js/_lib/**/*'],
-    filesJsLib:             [bases.source + '_js/_lib/**/*', '!' + bases.source + '_js/_lib/**/*.min.js'],
-    filesJsLibMin:          bases.source + '_js/_lib/**/*.min.js',
-    filesScss:              bases.source + '_sass/**/*.scss',
-    filesSvg:               bases.source + '_img/icons/**/*.{svg}',
+    filesJs:                bases.source + '_js/**/*.{js,vue}',
+    filesScss:              bases.source + '_scss/**/*.scss',
+    filesIcon:              bases.source + '_icon/**/*.svg',
+    filesIconCss:           bases.source + '_icon/css/**/*.svg',
     utilFonts:              bases.source + '_util/_fonts.ejs',
 };
 
 // Gulp Variables
 const browserSync     = require('browser-sync').create(),
-      critical        = require('critical'),
-      glob            = require("glob"),
-      gulp            = require('gulp'),
-      gulpLoadPlugins = require('gulp-load-plugins'),
-      inquirer        = require('inquirer'),
-      notifier        = require('node-notifier'),
-      semver          = require('semver'),
-      $               = gulpLoadPlugins({
-          rename: {
-              'gulp-sass-glob':      'sassGlob',
-              'gulp-svg-inline-css': 'svgInline',
-              'gulp-util':           'gutil',
-          }
-      });
+    critical        = require('critical'),
+    glob            = require('glob'),
+    gulp            = require('gulp'),
+    gulpLoadPlugins = require('gulp-load-plugins'),
+    inquirer        = require('inquirer'),
+    notifier        = require('node-notifier'),
+    semver          = require('semver'),
+    webpack = require('webpack'),
+    $               = gulpLoadPlugins({
+        rename: {
+            'gulp-json-modify':    'jsonModify',
+            'gulp-sass-glob':      'sassGlob',
+            'gulp-svg-inline-css': 'svgInline',
+            'gulp-util':           'gutil',
+        }
+    });
 
 const ejsVars = {
-    enable_system_js:    vars.enable_system_js,
-    favicons:            '/favicon/favicons.html',
-    fonts:               vars.fonts,
-    loadcss:             '/js/uglify/_lib/loadCSS.min.js',
-    release:             release,
-    site_root:           bases.site,
-    systemjs:            '/js/uglify/_lib/system.min.js',
-    version:             release ? vars.version : Math.floor(new Date().getTime() / 1000),
+    enable_ssi:            vars.enable_ssi,
+    favicons:              '/favicon/favicons.html',
+    fonts:                 vars.fonts,
+    release:               release,
+    site_root:             bases.site,
+    styleTemplateSections: vars.styleTemplateSections,
+    styleTemplatePrefix:   vars.style_template_url_prefix,
+    styleTemplateSuffix:   vars.style_template_url_suffix,
+    templateDirectory:     vars.template_directory,
+    version:               release ? vars.version : Math.floor(new Date().getTime() / 1000),
 };
 const ejsOptions = {
-    root:                bases.build,
+    root:                  bases.build,
 };
+let setupVars = {
+    name:                  name,
+    projectDir:            __dirname,
+    options:               argv.options,
+    securityKey:           _randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+};
+const notifyIconPath = bases.source + '_favicon/favicon.png';
+
+
+
 
 
 
 // COMMANDS
 // [gulp]
 gulp.task('default',function() {
-    var text  = `\n\n${$.gutil.colors.inverse('        COMMANDS        ')}`
+    const text  = `\n\n${$.gutil.colors.inverse('        COMMANDS        ')}`
         + `\n––––––––––––––––––––––––\n`
-        + `\n${$.gutil.colors.inverse(' gulp first ')}`
-        + `\n${$.gutil.colors.bold('└─ Moves all important files from npm to _source/_js/_lib/')}\n`
-        + `\n${$.gutil.colors.inverse(' gulp template ')}`
-        + `\n${$.gutil.colors.bold('└─ Moves files from _source/_util/ into _source/ based on the folder set for "style_template" in \`package.json\`. Before running this task, modify settings in the template\'s config.json. This task should only be run one time at the beginning of development.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp font ')}`
-        + `\n${$.gutil.colors.bold('└─ Uses info in \`package.json\` to generate _source/_sass/automated/_fonts.scss')}\n`
+        + `\n${$.gutil.colors.bold('└─ Uses info in \`package.json\` to generate _source/_scss/automated/_fonts.scss')}\n`
         + `\n${$.gutil.colors.inverse(' gulp run ')}`
         + `\n${$.gutil.colors.bold('└─ Processes CSS, JS, and image files.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp release ')}`
         + `\n${$.gutil.colors.bold('└─ Performs all tasks, including Critical CSS and processing HTML files.\n\n\`gulp release\` advances the version number in \`package.json\` by 0.0.1. Running \`gulp releasefeature\` will advance it by 0.1.0; and running \`gulp releasemajor\` will advance it by 1.0.0.')}\n`
-        + `\n${$.gutil.colors.inverse(' gulp vars ')}`
-        + `\n${$.gutil.colors.bold('└─ Descriptions of variables found in \`package.json\`.')}\n`
+        + `\n${$.gutil.colors.inverse(' gulp setup ')}`
+        + `\n${$.gutil.colors.bold('└─ Moves files from _source/_util/ into _source/ based on answers you provide when prompted then runs [gulp font]. Before running this task, modify settings in \`package.json\` for you project. This task should only be run one time at the beginning of development and once it is run, it will put a lock in package.json so it cannot be accidentally run again.')}\n`
         + `\n${$.gutil.colors.inverse(' gulp watch ')}`
         + `\n${$.gutil.colors.bold('└─ Watches source folders and runs tasks based on the type of file changed.')}\n`;
     $.gutil.log(text);
     $.gutil.beep();
 });
 
-// [gulp vars]
-gulp.task('vars',function() {
-    var text  = `\n\n${$.gutil.colors.inverse('        VARIABLES        ')}`
-        + `\n–––––––––––––––––––––––––`
-        + `\n${$.gutil.colors.italic('NOTE: all paths start from the root folder and should not include a leading slash. Example: "source_path": "_source/"')}\n`
-        + `\n${$.gutil.colors.inverse(' version ')}`
-        + `\n${$.gutil.colors.bold('└─ Project version number in SEMVER format: 1.1.1 = Major.Feature.Fixes')}\n`
-        + `\n${$.gutil.colors.inverse(' source_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Path to the \`_source\` folder. Edit all theme files in the \`_source\` folder.')}\n`
-        + `\n${$.gutil.colors.inverse(' build_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Location of \`_build\` folder. When commands fail, look in the \`_build\` folder to see what went wrong.')}\n`
-        + `\n${$.gutil.colors.inverse(' theme_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Path to where the \`css\`, \`js\`, and \`img\` theme folders will be placed.')}\n`
-        + `\n${$.gutil.colors.inverse(' html_path ')}`
-        + `\n${$.gutil.colors.bold('└─ Path to where HTML, PHP, or Twig template files will be placed.')}\n`
-        + `\n${$.gutil.colors.inverse(' site_root ')}`
-        + `\n${$.gutil.colors.bold('└─ A string prepended to paths when linking to \`.css\` and \`.js\` files in the template.')}\n`
-        + `\n${$.gutil.colors.inverse(' style_template_url_prefix ')}`
-        + `\n${$.gutil.colors.bold('└─ Prepends this string to navigation links used in the style inventory.')}\n`
-        + `\n${$.gutil.colors.inverse(' style_template_url_suffix ')}`
-        + `\n${$.gutil.colors.bold('└─ Appends a file extension or another string if needed to link to style inventory pages.')}\n`
-        + `\n${$.gutil.colors.inverse(' style_template ')}`
-        + `\n${$.gutil.colors.bold('└─ Select the folder to pull template overrides from when running \`gulp template\`.')}\n`
-        + `\n${$.gutil.colors.inverse(' enable_babel ')}`
-        + `\n${$.gutil.colors.bold('└─ When running the \`gulp release\` task, babel can be used to process ES6 Javascript into ES5 Javascript for older browsers.')}\n`
-        + `\n${$.gutil.colors.inverse(' enable_font_events ')}`
-        + `\n${$.gutil.colors.bold('└─ Turn on Font Events for fonts loaded from this server.')}\n`
-        + `\n${$.gutil.colors.inverse(' enable_system_js ')}`
-        + `\n${$.gutil.colors.bold('└─ Enable SystemJS for async loading of JS files.')}\n`
-        + `\n${$.gutil.colors.inverse(' minify_html ')}`
-        + `\n${$.gutil.colors.bold('└─ Enable minification of HTML in the \`gulp release\` task. Turn this off when theming with PHP and Twig files.')}\n`
-        + `\n${$.gutil.colors.inverse(' browserSync ')}`
-        + `\n${$.gutil.colors.bold('└─ Configure BrowserSync to reload your website as \`watch\` tasks are run. Change \`url\` to the page on your site that you want to start on when \`gulp watch\` is run.')}\n`
-        + `\n${$.gutil.colors.inverse(' critcss ')}`
-        + `\n${$.gutil.colors.bold('└─ Settings used to run Crtitical CSS for muliple page templates. \`"critCssFilename"\` is used in the \`ejs\` task to include the CSS. For example, to include the Critical CSS for \`"home"\`, use this in your theme file: \`<%- include(critcsshome) %>\`')}\n`
-        + `\n${$.gutil.colors.inverse(' copyFirstCssFiles ')}`
-        + `\n${$.gutil.colors.bold('└─ Array of files to be pulled into \`_source/_sass\` when running \`gulp first\`. CSS files will be have \`_\` prepended so they will not compile when the \`sass\` task is run unless they are included into another \`.scss\` file.')}\n`
-        + `\n${$.gutil.colors.inverse(' copyFirstJsFiles ')}`
-        + `\n${$.gutil.colors.bold('└─ Array of files to be pulled into \`_source/_js/_lib\` when running \`gulp first\`.')}\n`
-        + `\n${$.gutil.colors.inverse(' ejsVars ')}`
-        + `\n${$.gutil.colors.bold('└─ Additional files and settings for use in the \`ejs\` task. All paths must start from the \`_build\` folder.')}\n`
-        + `\n${$.gutil.colors.inverse(' fonts ')}`
-        + `\n${$.gutil.colors.bold('└─ Configuration options used to generate font() SASS mixin. See README for more details.')}\n`;
-    $.gutil.log(text);
-    $.gutil.beep();
-});
-
-
-// [gulp first]
-gulp.task('first', ['copyFirstCss', 'copyFirstJs']);
 
 // [gulp template]
 gulp.task('source:backup', function() {
@@ -170,90 +132,147 @@ gulp.task('source:backup', function() {
 });
 
 // [gulp setup]
-gulp.task('setup', ['source:backup'], function(cb) {
-    const questions = [{
-        type: 'list',
-        name: 'templateType',
-        message: 'What kind of project are you developing?',
-        choices: [{ name: 'HTML', value: '_html_1' },{ name: 'Craft 2 Website', value: '_craft2_1' }]
-    }];
-    inquirer.prompt(questions).then(function (answers) {
-        const defaultsPath           = paths.srcUtil + '_default/';
-        const defaultsTemplates      = defaultsPath + 'templates/**/*';
-        const projectTemplatPath     = paths.srcUtil + answers['templateType'] + '/';
-        let projectTemplateTemplates = [projectTemplatPath + 'templates/**/*'];
+gulp.task('setup:move:default', ['source:backup'], function(cb) {
+    if (!vars.template_is_set_up) {
+        const defaultsPath = paths.srcUtil + '_default/';
+        const defaultsTemplates = defaultsPath + 'templates/**/*';
 
         gulp.src(defaultsTemplates)
             .pipe(gulp.dest(bases.source));
 
         $.gutil.log('Moved default source files');
+    }
 
-        let templateQuestions = [];
+    cb();
+});
+gulp.task('setup', ['setup:move:default'], function(cb) {
+    if (!vars.template_is_set_up) {
+        const questions = [{
+            type: 'list',
+            name: 'templateType',
+            message: 'What kind of project are you developing?',
+            when: (answers) => {
+                return argv.options.template === undefined;
+            },
+            choices: [
+                { name: 'HTML', value: '_html_1' },
+                { name: 'Craft 3 Website', value: '_craft3_1' },
+                { name: 'Craft 2 Website', value: '_craft2_1' }
+            ]
+        }];
+        inquirer.prompt(questions).then(function (answers) {
+            const projectTemplate = argv.options.template || answers['templateType'];
+            const projectTemplatePath = paths.srcUtil + projectTemplate + '/';
+            let projectTemplateTemplates = [projectTemplatePath + 'templates/**/*'];
+            let projectTemplateSetup = [projectTemplatePath + 'setup/**/*'];
+            let packageThemePath = 'public/',
+                packageHtmlPath = 'public/',
+                packageStyleTemplateUrlPrefix = 'dev/inv/',
+                packageStyleTemplateUrlSuffix = '.html',
+                packageEnableSsi = false,
+                packageMinifyHtml = true;
 
-        switch (answers['templateType']) {
-            case '_html_1':
-                templateQuestions = [{
-                    type: 'confirm',
-                    name: 'animations',
-                    message: 'Include Animations?',
-                    default: true
-                },{
-                    type: 'confirm',
-                    name: 'vueComponents',
-                    message: 'Include Vue Components?',
-                    default: true
-                }];
-                break;
-            case '_craft2_1':
-                break;
-        }
+            let templateQuestions = [];
 
-        inquirer.prompt(templateQuestions).then(function (templateAnswers) {
-            switch (answers['templateType']) {
+            switch (projectTemplate) {
                 case '_html_1':
-                    if (!templateAnswers['animations']) {
-                        projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/base/_animations.scss');
-                    }
-                    if (!templateAnswers['vueComponents']) {
-                        projectTemplateTemplates.push('!' + projectTemplatPath + 'templates/_sass/components/_vue.scss');
-                    }
+                    // templateQuestions = [{
+                    //     type: 'confirm',
+                    //     name: 'animations',
+                    //     message: 'Include Animations?',
+                    //     default: true
+                    // },{
+                    //     type: 'confirm',
+                    //     name: 'vueComponents',
+                    //     message: 'Include Vue Components?',
+                    //     default: true
+                    // }];
+                    break;
+                case '_craft3_1':
                     break;
                 case '_craft2_1':
                     break;
             }
 
-            gulp.src(projectTemplateTemplates)
-                .pipe(gulp.dest(bases.source));
+            inquirer.prompt(templateQuestions).then(function (templateAnswers) {
+                switch (projectTemplate) {
+                    case '_html_1':
+                        // if (!templateAnswers['animations']) {
+                        //     projectTemplateTemplates.push('!' + projectTemplatePath + 'templates/_scss/base/_animations.scss');
+                        // }
+                        // if (!templateAnswers['vueComponents']) {
+                        //     projectTemplateTemplates.push('!' + projectTemplatePath + 'templates/_scss/components/_vue.scss');
+                        // }
+                        break;
+                    case '_craft3_1':
+                        packageThemePath = 'web/';
+                        packageHtmlPath = 'templates/';
+                        packageStyleTemplateUrlPrefix = 'dev/inv/';
+                        packageStyleTemplateUrlSuffix = '';
+                        packageMinifyHtml = false;
+                        break;
+                    case '_craft2_1':
+                        break;
+                }
 
-            $.gutil.log('Moved template files');
+                // move template files from selected template
+                gulp.src(projectTemplateTemplates)
+                    .pipe(gulp.dest(bases.source));
 
-            cb();
+                $.gutil.log('Moved template files');
+
+                // move files from setup folder in seleted directory
+                gulp.src(projectTemplateSetup)
+                    .pipe($.ejs(setupVars))
+                    .pipe(gulp.dest('./'));
+
+                $.gutil.log('Moved setup files');
+
+                gulp.start('font');
+
+                gulp.src('./package.json')
+                    .pipe(gulp.dest(bases.build + 'package'))
+                    .pipe($.jsonModify({ key: 'name', value: name }))
+                    .pipe($.jsonModify({ key: 'theme_path', value: packageThemePath }))
+                    .pipe($.jsonModify({ key: 'html_path', value: packageHtmlPath }))
+                    .pipe($.jsonModify({ key: 'style_template_url_prefix', value: packageStyleTemplateUrlPrefix }))
+                    .pipe($.jsonModify({ key: 'style_template_url_suffix', value: packageStyleTemplateUrlSuffix }))
+                    .pipe($.jsonModify({ key: 'enable_ssi', value: packageEnableSsi }))
+                    .pipe($.jsonModify({ key: 'minify_html', value: packageMinifyHtml }))
+                    .pipe($.jsonModify({ key: 'template_is_set_up', value: true }))
+                    .pipe($.jsonModify({ key: 'template_directory', value: projectTemplate }))
+                    .pipe(gulp.dest('./'));
+
+                cb();
+            });
         });
-    });
+    } else {
+        $.gutil.log($.gutil.colors.inverse(' [gulp setup] has already been run and is now disabled. If you need to run [gulp setup] again, open `package.json` and change "template_is_set_up" to false. '));
+    }
 });
 
 // [gulp run]
-gulp.task('run', ['css:cleaned', 'img:cleaned', 'js:cleaned'], function() {
-    return notifier.notify({ 'title': name, 'message': 'Run Complete' });
+gulp.task('run', ['css:cleaned', 'img:cleaned', 'webpack'], function() {
+    return notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'Run Complete' });
 });
 
 // [gulp release]
 gulp.task('release', ['bump:patch', 'release:tasks']);
-gulp.task('releasefeature', ['bump:minor', 'release:tasks']);
-gulp.task('releasemajor', ['bump:major', 'release:tasks']);
-gulp.task('release:tasks', ['critCss', 'img:cleaned', 'js:babel', 'ejs:release'], function() {
-    return notifier.notify({ 'title': name, 'message': 'Release Complete' });
+gulp.task('release:feature', ['bump:minor', 'release:tasks']);
+gulp.task('release:major', ['bump:major', 'release:tasks']);
+gulp.task('release:tasks', ['critCss', 'img:cleaned', 'ejs:release', 'webpack'], function() {
+    return notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'Release Complete' });
 });
 
 // [gulp watch]
-gulp.task('watch', function() {
-    //$.livereload.listen(35729);
-    var watchCss          = gulp.watch(paths.filesScss, ['css']),
+gulp.task('watch', ['ejs:quick:full'], function() {
+    const watchCss          = gulp.watch(paths.filesScss, ['css']),
+        watchEjsIncludes  = gulp.watch(paths.filesEjsIncludes, ['ejs:quick:full']),
         watchHtml         = gulp.watch(paths.filesHtml, ['ejs:quick']),
-        watchHtmlIncludes = gulp.watch([paths.filesHtmlIncludes, paths.filesHtmlStyleTemplate], ['ejs:quick:full']),
         watchImg          = gulp.watch(paths.filesImg, ['img']),
-        watchJs           = gulp.watch(paths.filesJs, ['js']),
-        watchSvg          = gulp.watch(paths.filesSvg, ['css:cleaned']);
+        watchJs           = gulp.watch(paths.filesJs, ['webpack']),
+        watchIcon         = gulp.watch(paths.filesIcon, ['icon']),
+        watchIconCss      = gulp.watch(paths.filesIconCss, ['css:cleaned']);
 
     if (vars.browserSync.url === 'https://starter.wbrowar.com/') {
         $.gutil.log($.gutil.colors.inverse(' Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json. '));
@@ -265,24 +284,27 @@ gulp.task('watch', function() {
     }
 
     watchCss.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'CSS Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'CSS Updated' });
+    });
+    watchEjsIncludes.on('change', function(event) {
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'HTML Updated' });
     });
     watchHtml.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'HTML Updated' });
-    });
-    watchHtmlIncludes.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'HTML Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'HTML Updated' });
     });
     watchImg.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'Images Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'Images Updated' });
         browserSync.reload();
     });
     watchJs.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'JS Updated' });
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'JS Updated' });
+    });
+    watchIcon.on('change', function(event) {
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'SVGs Updated' });
         browserSync.reload();
     });
-    watchSvg.on('change', function(event) {
-        notifier.notify({ 'title': name, 'message': 'SVG and CSS Updated' });
+    watchIconCss.on('change', function(event) {
+        notifier.notify({ 'title': name, 'icon': notifyIconPath, 'message': 'SVG and CSS Updated' });
         browserSync.reload();
     });
 });
@@ -330,7 +352,7 @@ gulp.task('cleanBuild', function() {
         .pipe($.clean({force: true}));
 });
 gulp.task('cleanCritCss', function() {
-    return gulp.src(bases.build + 'critcss/', {read: false})
+    return gulp.src([bases.build + 'critcss/', bases.html + '_critcss/'], {read: false})
         .pipe($.clean({force: true}));
 });
 gulp.task('cleanCss', function() {
@@ -341,24 +363,13 @@ gulp.task('cleanFavicon', function() {
     return gulp.src([paths.distImg + 'meta/', bases.build + 'favicon'], {read: false})
         .pipe($.clean({force: true}));
 });
+gulp.task('cleanIcon', function() {
+    return gulp.src([paths.distIcon, bases.build + 'icon'], {read: false})
+        .pipe($.clean({force: true}));
+});
 gulp.task('cleanImg', function() {
-    return gulp.src([paths.distImg, bases.build + 'img', '!' + paths.distImg + 'icons/'], {read: false})
+    return gulp.src([paths.distImg, bases.build + 'img'], {read: false})
         .pipe($.clean({force: true}));
-});
-gulp.task('cleanJs', function() {
-    return gulp.src([paths.distJs, bases.build + 'js'], {read: false})
-        .pipe($.clean({force: true}));
-});
-
-// Copy files from `node_modules` folder
-gulp.task('copyFirstCss', function() {
-    return gulp.src(copyFirstCssFiles)
-        .pipe($.rename({ extname: '.scss', prefix: '_' }))
-        .pipe(gulp.dest(paths.srcCss + 'lib/'));
-});
-gulp.task('copyFirstJs', function() {
-    return gulp.src(copyFirstJsFiles)
-        .pipe(gulp.dest(paths.srcJs + '_lib/'));
 });
 
 // Run Critical CSS and place in build folder
@@ -380,7 +391,8 @@ for (let i=0; i<vars.critcss.length; i++) {
         }, function (err, output) {
             gulp.src(bases.build + 'critcss/' + vars.critcss[i].critCssFilename + '.css')
                 .pipe($.replace('{#', '{ #'))
-                .pipe(gulp.dest(bases.build + 'critcss/'));
+                .pipe(gulp.dest(bases.build + 'critcss/'))
+                .pipe(gulp.dest(bases.html + '_critcss/'));
             cb();
         });
     });
@@ -394,10 +406,10 @@ function cssHandler() {
     return gulp.src(paths.filesScss)
         .pipe($.changed(paths.distCss))
         .pipe($.sassGlob())
-        .pipe($.sass({outputStyle: 'compressed'}).on('error', $.sass.logError))
+        .pipe($.sass({outputStyle: (release ? 'compressed' : 'expanded')}).on('error', $.sass.logError))
         .pipe(gulp.dest(bases.build + 'css/sass'))
         .pipe($.autoprefixer({
-            browsers: ['last 2 versions'],
+            browsers: vars.browserlist,
             cascade: false
         }))
         .pipe(gulp.dest(bases.build + 'css/autoprefixer'))
@@ -406,7 +418,7 @@ function cssHandler() {
         .pipe(gulp.dest(paths.distCss))
         .pipe(browserSync.stream());
 }
-gulp.task('css:cleaned', ['cleanCss', 'svg'], function(cb) {
+gulp.task('css:cleaned', ['cleanCss', 'icon', 'icon:css'], function(cb) {
     return cssHandler();
 });
 gulp.task('css', function() {
@@ -415,24 +427,51 @@ gulp.task('css', function() {
 
 // Create _fonts.scss file from package.json settings
 gulp.task('font', function() {
-  return gulp.src(paths.utilFonts)
-      .pipe($.ejs(ejsVars, ejsOptions))
-      .pipe($.rename({ extname: '.scss' }))
-      .pipe(gulp.dest(paths.srcCss + 'automated/'));
+    return gulp.src(paths.utilFonts)
+        .pipe($.ejs(ejsVars, ejsOptions))
+        .pipe($.rename({ extname: '.scss' }))
+        .pipe(gulp.dest(paths.srcCss + 'automated/'));
+});
+
+// Move icons
+gulp.task('icon', ['cleanIcon'], function() {
+    return gulp.src([paths.filesIcon])
+        .pipe(gulp.dest(function(file) {
+            // if icon is in the css directory move it out to the root, but leave other directory structures intact
+            const pathDir = path.dirname(file.path);
+
+            if (pathDir.substr(pathDir.length - 4) == '/css') {
+                file.path = file.base + path.basename(file.path);
+            }
+
+            return paths.distIcon;
+        }));
+});
+gulp.task('icon:css', function() {
+    return gulp.src(paths.filesIconCss)
+        .pipe($.imagemin())
+        .pipe($.svgInline({ className: '.icon_%s' }))
+        .pipe($.replace('background-image', 'background-position: center center; background-repeat: no-repeat; background-size: contain; background-image'))
+        .pipe($.concat('_icon_sprite.scss'))
+        .pipe(gulp.dest(paths.srcCss + 'automated/'));
 });
 
 // Resize 2x images
 // Turn SVGs into CSS sprite
 // Losslessly compress images
-function imgMoveHandler() {
-    return gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*', '!' + paths.srcImg + 'icons/**/*'])
+function imgMoveHandler(cb = null) {
+    gulp.src([paths.srcImg + '**/*.{png,jpg,gif,svg}', '!' + paths.srcImg + '2x/**/*'])
         .pipe($.changed(paths.distImg))
         .pipe(gulp.dest(bases.build + 'img/moved'))
         .pipe($.imagemin())
         .pipe(gulp.dest(paths.distImg));
+
+    if (cb !== null) {
+        cb();
+    }
 }
-function imgResizeHandler() {
-    return gulp.src(paths.srcImg + '2x/**/*.{png,jpg,gif}')
+function imgResizeHandler(cb = null) {
+    gulp.src(paths.srcImg + '2x/**/*.{png,jpg,gif}')
         .pipe($.changed(paths.distImg))
         .pipe($.responsive({
             '*': [{
@@ -444,81 +483,25 @@ function imgResizeHandler() {
         .pipe(gulp.dest(bases.build + 'img/resized'))
         .pipe($.imagemin())
         .pipe(gulp.dest(paths.distImg));
-};
-gulp.task('img:cleaned', ['cleanImg'], function() {
-    imgMoveHandler();
-    imgResizeHandler();
-});
-gulp.task('img', function() {
-    imgMoveHandler();
-    imgResizeHandler();
-});
-gulp.task('svg', function() {
-    return gulp.src(paths.srcImg + 'icons/**/*.svg')
-        .pipe($.imagemin())
-        .pipe(gulp.dest(bases.build + 'icons/minimized'))
-        .pipe(gulp.dest(paths.distIcon))
-        .pipe($.svgInline({ className: '.icon_%s' }))
-        .pipe($.replace('background-image', 'background-position: center center; background-repeat: no-repeat; background-size: contain; background-image'))
-        .pipe($.concat('_icon_sprite.scss'))
-        .pipe(gulp.dest(paths.srcCss + 'automated/'));
-});
 
-// Uglify JS
-function jsHandler(useUglify = false) {
-    var babelOptions = {
-        presets: ['es2015'],
+    if (cb !== null) {
+        cb();
     }
-
-    return gulp.src(paths.filesJs)
-        .pipe($.changed(paths.distJs, {extension: '.min.js'}))
-        .pipe(vars.enable_babel === "true" ? $.babel(babelOptions) : $.gutil.noop())
-        .pipe(useUglify ? $.uglify() : $.gutil.noop())
-        .pipe(gulp.dest(bases.build + 'js/uglify'))
-        .pipe(gulp.dest(paths.distJs));
 };
-function jsLibHandler(useUglify = false) {
-    gulp.src(paths.filesJsLibMin)
-        .pipe($.changed(paths.distJs + '_lib/'))
-        .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
-        .pipe(gulp.dest(paths.distJs + '_lib/'));
-
-    return gulp.src(paths.filesJsLib)
-        .pipe($.changed(paths.distJs + '_lib/', {extension: '.min.js'}))
-        .pipe(useUglify ? $.uglify() : $.gutil.noop())
-        .pipe(gulp.dest(bases.build + 'js/uglify/_lib/'))
-        .pipe(gulp.dest(paths.distJs + '_lib/'));
-};
-gulp.task('js:babel', ['cleanJs'], function() {
-    jsHandler(true);
-    jsLibHandler(true);
+gulp.task('img:cleaned', ['cleanImg'], function(cb) {
+    imgMoveHandler();
+    imgResizeHandler(cb);
 });
-gulp.task('js:cleaned', ['cleanJs'], function() {
-    jsHandler();
-    jsLibHandler();
-});
-gulp.task('js', function() {
-    jsHandler(false);
-    jsLibHandler();
+gulp.task('img', function(cb) {
+    imgMoveHandler();
+    imgResizeHandler(cb);
 });
 
 // Compile HTML, TWIG, and PHP files
 for (var val in vars.ejsVars) {
     ejsVars[val] = vars.ejsVars[val];
 }
-gulp.task('ejs:includes', function() {
-    ejsVars.critCssEnabled = false;
-
-    return gulp.src(paths.filesHtmlIncludes)
-        .pipe($.changed(bases.html))
-        .pipe($.ejs(ejsVars, ejsOptions))
-        .pipe(gulp.dest(bases.build + 'html/ejs/ejs_includes'));
-});
-gulp.task('ejs:templates', function() {
-    return gulp.src(paths.filesHtmlStyleTemplate)
-        .pipe(gulp.dest(bases.build + 'html/templates/'));
-});
-gulp.task('ejs', ['favicons', 'ejs:includes', 'ejs:templates'], function() {
+gulp.task('ejs', ['favicons'], function() {
     ejsVars.critCssEnabled = false;
 
     return gulp.src(paths.filesHtml)
@@ -526,7 +509,7 @@ gulp.task('ejs', ['favicons', 'ejs:includes', 'ejs:templates'], function() {
         .pipe($.ejs(ejsVars, ejsOptions))
         .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes', 'ejs:templates'], function() {
+gulp.task('ejs:release', ['critCss', 'favicons'], function() {
     ejsVars.critCssEnabled = true;
     var minOptions = {
         collapseWhitespace: true,
@@ -538,7 +521,7 @@ gulp.task('ejs:release', ['critCss', 'favicons', 'ejs:includes', 'ejs:templates'
         .pipe(vars.minify_html === "true" ? $.htmlmin(minOptions) : $.gutil.noop())
         .pipe(gulp.dest(bases.html));
 });
-gulp.task('ejs:quick:full', ['ejs:includes', 'ejs:templates'], function(cb) {
+gulp.task('ejs:quick:full', function(cb) {
     ejsVars.critCssEnabled = false;
 
     gulp.src(paths.filesHtml)
@@ -549,7 +532,7 @@ gulp.task('ejs:quick:full', ['ejs:includes', 'ejs:templates'], function(cb) {
 
     cb();
 });
-gulp.task('ejs:quick', ['ejs:includes', 'ejs:templates'], function(cb) {
+gulp.task('ejs:quick', function(cb) {
     ejsVars.critCssEnabled = false;
 
     gulp.src(paths.filesHtml)
@@ -568,10 +551,71 @@ gulp.task('favicons', ['favicons:generate'], function() {
         .pipe(gulp.dest(paths.distImg + 'meta/'));
 });
 gulp.task('favicons:generate', ['cleanFavicon'], function() {
-    return gulp.src(bases.source + '_favicon/favicon.png')
+    return gulp.src(notifyIconPath)
         .pipe($.favicons({
             html: bases.build + 'favicon/favicons.html',
             path: bases.site + 'img/meta',
         }))
         .pipe(gulp.dest(bases.build + 'favicon'));
 });
+
+// Run webpack
+gulp.task('webpack', function(cb) {
+    webpack(webpackConfig, function (err, stats) {
+        if (err) {
+            throw new gutil.PluginError('webpack:build', err);
+        }
+
+        $.gutil.log('[webpack:build] Completed\n' + stats.toString({
+            assets: true,
+            chunks: false,
+            chunkModules: false,
+            colors: true,
+            hash: false,
+            timings: false,
+            version: false
+        }));
+
+        cb();
+
+        browserSync.reload();
+    });
+});
+
+
+// UTILITY FUNCTIONS
+function _parseArgv() {
+
+    let args = [];
+    let options = {};
+
+    process.argv.forEach(function(arg, i) {
+        if(i > 1) {
+            if (arg.substr(0, 2) === "--") {
+                // remove leading dashes
+                const str = arg.substr(2);
+
+                // split out to key/value pairs
+                if (str.indexOf("=") !== -1) {
+                    const strSplit = str.split('=');
+                    options[strSplit[0]] = strSplit[1];
+                } else {
+                    options[str] = true;
+                }
+            }
+            else {
+                args.push(arg);
+            }
+        }
+    });
+
+    return {
+        args: args,
+        options: options
+    }
+}
+function _randomString(length, chars) {
+    let result = '';
+    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}

@@ -3,6 +3,7 @@
 # ------------------------------------------------------------
 .cache
 .DS_Store
+.idea
 logs/*
 Thumbs.db
 yarn.lock
