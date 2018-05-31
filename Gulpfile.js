@@ -19,6 +19,7 @@ const argv = _parseArgv();
 
 // Package Variables
 const fs = require('fs'),
+    path = require('path'),
     varsJsonRaw = JSON.parse(fs.readFileSync('./package.json')),
     varsJsonString = JSON.stringify(varsJsonRaw).replace(/LOCAL_IP/g, addresses[0]),
     vars = JSON.parse(varsJsonString),
@@ -426,16 +427,25 @@ gulp.task('css', function() {
 
 // Create _fonts.scss file from package.json settings
 gulp.task('font', function() {
-  return gulp.src(paths.utilFonts)
-      .pipe($.ejs(ejsVars, ejsOptions))
-      .pipe($.rename({ extname: '.scss' }))
-      .pipe(gulp.dest(paths.srcCss + 'automated/'));
+    return gulp.src(paths.utilFonts)
+        .pipe($.ejs(ejsVars, ejsOptions))
+        .pipe($.rename({ extname: '.scss' }))
+        .pipe(gulp.dest(paths.srcCss + 'automated/'));
 });
 
 // Move icons
 gulp.task('icon', ['cleanIcon'], function() {
     return gulp.src([paths.filesIcon])
-        .pipe(gulp.dest(paths.distIcon));
+        .pipe(gulp.dest(function(file) {
+            // if icon is in the css directory move it out to the root, but leave other directory structures intact
+            const pathDir = path.dirname(file.path);
+
+            if (pathDir.substr(pathDir.length - 4) == '/css') {
+                file.path = file.base + path.basename(file.path);
+            }
+
+            return paths.distIcon;
+        }));
 });
 gulp.task('icon:css', function() {
     return gulp.src(paths.filesIconCss)
@@ -567,7 +577,7 @@ gulp.task('webpack', function(cb) {
         }));
 
         cb();
-        
+
         browserSync.reload();
     });
 });
