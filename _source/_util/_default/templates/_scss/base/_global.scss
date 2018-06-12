@@ -8,6 +8,7 @@
 html {
   @include font('apple');
   line-height: 1.4;
+  background-color: $color_white_default;
   color: $color_black_default;
   //-webkit-font-smoothing: antialiased;
 }
