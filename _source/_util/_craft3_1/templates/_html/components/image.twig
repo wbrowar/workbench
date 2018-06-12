@@ -8,6 +8,7 @@
 {# Variables #}
 {% set caption = caption ?? null %}
 {% set image = image %}
+{% set imager = imager ?? null %}
 {% set lazyLoad = lazyLoad ?? true %}
 {% set placeholder = placeholder ?? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' %}
 {% set optimize = optimize ?? [] %}
@@ -24,7 +25,10 @@
     {% import _self as self %}
 
     <picture>
-        {% if transforms|length %}
+        {% if imager ?? false %}
+            {% set transformedImages = craft.imager.transformImage(image, imager.transforms ?? {}, imager.globals ?? {}) %}
+            <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ craft.imager.srcset(transformedImages) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
+        {% elseif transforms|length %}
             {# Add webp images back in if there is a plugin—like Image Optimize—or another way to create them #}
             {#<source {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ self.getSrcSetFromObject({ image: image, transforms: transforms, suffix: '.webp' }) }}" sizes="{{ sizes }}" type="image/webp" />#}
             <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ self.getSrcSetFromObject({ image: image, transforms: transforms }) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
@@ -33,7 +37,7 @@
         {% endif %}
     </picture>
     {% if caption ?? false -%}
-        <figcaption>{{ caption }}</figcaption>
+        <figcaption class="{{ rootClass }}__caption">{{ caption }}</figcaption>
     {%- endif %}
 {%- endblock %}
 
