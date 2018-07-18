@@ -72,6 +72,8 @@
 
                 // set each slide to it's inital position
                 for(let i=0; i<totalSlides; i++) {
+                    this.slides[i].previousStatus = '' + this.slides[i].currentStatus;
+
                     if (i === newIndex - 1) {
                         this.slides[i].currentStatus = 'prev';
                     } else if (i<newIndex) {
