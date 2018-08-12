@@ -246,7 +246,7 @@ scrollToElement(el);
   - If you do not pass anything in, it will look for all registered elements in the viewport
 - :rocket: Vue overlays will lazy load lazy elements once the overlay is displayed
 - :wrench: Swiping left or right now updates all other sliders with the same slide ID
-- Slider controls will be hidden if only one slide is active in its slider
+- :wrench: Slider controls will be hidden if only one slide is active in its slider
 - :fire: Removed `yarn` as a dependency and replaced `yarn` scripts with `npm update`
 
 #### 4.10.0
