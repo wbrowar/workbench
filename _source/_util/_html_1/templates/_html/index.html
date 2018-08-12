@@ -1,58 +1,16 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-    <head>
-        <title></title>
-        <meta name="description" content="">
-<%- include('ejs_includes/_head_meta') %>
-<%- include('ejs_includes/_head_scripts') %>
-<%- include('ejs_includes/_head_tracking') %>
-    </head>
-    <body>
-        <div id="page">
+<head>
+    <title></title>
+    <meta name="description" content="">
+    <%- include('ejs_includes/_head_meta') %>
+    <%- include('ejs_includes/_head_scripts') %>
+    <%- include('ejs_includes/_head_tracking') %>
+</head>
+<body>
+<div id="page">
+</div>
 
-            <div @click="showOverlay('overlay_1')">Open Overlay</div>
-            <overlay overlay-id="overlay_1">This is the content</overlay>
-
-            <slider slider-id="slider_1"
-                    interval="5000"
-                    :wait-for-load="true"
-                    data-lazy-animate="sliderLoaded"
-                    data-lazy-animate-args='{ "id": "slider_1" }'
-                    data-lazy-animate-offset="500">
-                <slider-slide class="c_video_bg">
-                    <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
-                </slider-slide>
-                <slider-slide class="c_video_bg">
-                    <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
-                </slider-slide>
-                <slider-slide class="c_video_bg">
-                    <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
-                </slider-slide>
-            </slider>
-            <slider-control slider-id="slider_1" :show-back="false" :show-next="false"></slider-control>
-
-            <accordion>
-                <accordion-tab title="Title of Accordian I" :selected="true">
-                    <p>Content 1</p>
-                </accordion-tab>
-                <accordion-tab title="Title of Accordian II" v-cloak>
-                    <p>Content 2</p>
-                </accordion-tab>
-                <accordion-tab title="Title of Accordian III" v-cloak>
-                    <p>Content 3</p>
-                </accordion-tab>
-            </accordion>
-
-
-
-
-
-
-
-            <a href="/dev/inv/index.html">Style Inventory</a>
-        <%- include('ejs_includes/_style_markup') %>
-        </div>
-
-        <script>loadJS('<%= site_root %>js/' + jsSection + '.js?v=' + jsVersion);</script>
-    </body>
+<script>loadjs('<%= site_root %>js/app.js?v=' + jsVersion);</script>
+</body>
 </html>

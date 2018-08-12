@@ -12,6 +12,7 @@
     "title": "Colors",
     "description": "The colors used throughout the website.",
     "background": "light",
+    "hideCode": true,
     "twigCode":
 `<div class="styles__color_swatches">
     {% set colors = [
@@ -33,17 +34,17 @@
 }); %>
 
 <% modules.push({
-    "title": "Page Header",
+    "title": "Headers",
     "description": "",
     "background": "light",
-    "code": `<h1 class="c_header">Page<br>Header</h1>`
+    "code": `<h1 class="c_header c_header--1">Page<br>Header</h1>`
 }); %>
 
 <% modules.push({
-    "title": "Page Subheader",
+    "title": "Header 2",
     "description": "",
     "background": "light",
-    "code": `<h2 class="c_subheader">Page<br>Subheader</h2>`
+    "code": `<h2 class="c_header c_header--2">Page<br>Subheader</h2>`
 }); %>
 
 <% modules.push({
@@ -51,7 +52,7 @@
     "description": "",
     "background": "light",
     "code":
-`<h1 class="c_header">Page Header</h1>
+`<h1 class="c_header c_header--1">Page Header</h1>
 <div class="c_text">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     <p>Excepteur sint occaecat cupidatat non <b>proident</b>, sunt in culpa qui <i>officia deserunt</i> mollit <i><b>anim</b></i> id <b><i>est laborum</i></b>.</p>
@@ -61,7 +62,7 @@
         <li>List item III</li>
     </ul>
 </div>
-<h2 class="c_subheader">Section Subheader</h2>
+<h2 class="c_header c_header--2">Section Subheader</h2>
 <div class="c_text">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     <ol>
@@ -70,28 +71,6 @@
         <li>List item III</li>
     </ol>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-    <table>
-        <thead>
-        <tr>
-            <th scope="col">Ingredients</th>
-            <th scope="col">Serves 12</th>
-            <th scope="col">Serves 24</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Milk</td>
-            <td>1 quart</td>
-            <td>2 quart</td>
-        </tr>
-        <tr>
-            <td>Cinnamon Sticks</td>
-            <td>2</td>
-            <td>1</td>
-        </tr>
-        <!-- ... -->
-        </tbody>
-    </table>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 </div>`
 }); %>

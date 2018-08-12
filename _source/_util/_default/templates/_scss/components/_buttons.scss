@@ -1,11 +1,11 @@
-$_margin_ver: 10px;
-$_margin_hor: 10px;
-
 .c_buttons {
   $self: &;
 
-  display: flex;
-  margin: 0 -$_margin_hor;
+  @include box_modifiers($self);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+  grid-gap: $grid_gap_default;
 
   @at-root #{&}--left {
     justify-content: flex-start;
@@ -15,9 +15,5 @@ $_margin_hor: 10px;
   }
   @at-root #{&}--right {
     justify-content: flex-end;
-  }
-
-  & > * {
-    margin: $_margin_ver $_margin_hor;
   }
 }

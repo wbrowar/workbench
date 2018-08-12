@@ -1,6 +1,6 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 
-{% extends 'components/_component.twig' %}
+{% extends 'partials/_component.twig' %}
 
 {# Variables #}
 {% set video = (video ?? false) ? video|merge({ class: class ~ '__video' }) : { class: class ~ '__video' } %}

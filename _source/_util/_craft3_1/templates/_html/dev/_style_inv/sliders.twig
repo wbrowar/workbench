@@ -15,14 +15,16 @@
 {% set slides = [] %}
 
 {# image slide #}
-{% set image = craft.assets.title('fpo').one() %}
+{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO@2x.png') %}
 {% set options = {
     image: image,
     title: image.title ?? '',
-    transforms: [
-        { width: 500, height: 500 },
-        { width: 800, quality: 75 },
-    ]
+    imager: {
+        transforms: [
+            { width: 500 },
+            { width: 800 },
+        ],
+    }
 } %}
 
 {% set slides = slides|merge([{
@@ -35,14 +37,16 @@
 }]) %}
 
 {# image slide with text in front of it #}
-{% set image = craft.assets.title('fpo').one() %}
+{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO@2x.png') %}
 {% set options = {
     image: image,
     title: image.title ?? '',
-    transforms: [
-        { width: 500, height: 500 },
-        { width: 800, quality: 75 },
-    ]
+    imager: {
+        transforms: [
+            { width: 500 },
+            { width: 800 },
+        ],
+    }
 } %}
 
 {% set foreground -%}

@@ -7,6 +7,8 @@
 
         // remove no-js class for when Javascript is enabled
         document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+
+        <%- include(loadjs) %>
     </script>
 
     <% if (enable_ssi && release) { %>
@@ -18,7 +20,6 @@
     <style><%- include(critcsshome) %></style><% } else { %><!-- CRITICAL CSS --><% } %>
     <script>
       <%- include(loadcss) %>
-      <%- include(loadjs) %>
 
       loadCSS("<%= site_root %>css/app.css?v=" + '<%= version %>');
       var cookieExpiration = new Date();
@@ -31,7 +32,6 @@
     <% } else { %>
     <script>
       <%- include(loadcss) %>
-      <%- include(loadjs) %>
 
       // load CSS
       loadCSS("<%= site_root %>css/app.css?v=" + jsVersion);

@@ -1,7 +1,0 @@
-{% extends "pages/basic_page" %}
-
-{% if craft.config.devMode %}
-  {% block content %}{% endblock %}
-{% else %}
-  {% redirect url(siteUrl) %}
-{% endif %}

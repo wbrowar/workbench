@@ -5,9 +5,11 @@
     "cp-field-inspect",
     "guide",
     "image-resizer",
+    "imager",
     "minify",
     "redactor",
     "typogrify",
+    "typedlinkfield",
     "seomatic"
   ]
 }

@@ -1,9 +1,9 @@
 WB-Starter
 ==========
 
-My personal framework for front-end development includes some SASS, HTML, and JS snippits that I use on a regular basis. This framework is built using NPM and Gulp and it is meant to be pulled apart or modified for the project at hand. By changing settings in the `package.json` file, this can be used for one-page landing pages, as well as used in full-fledged CMS themes.
+My personal framework for front-end development includes some SASS, HTML, and JS snippets that I use on a regular basis. This framework is built using NPM, Gulp, and Webpack and it is meant to be pulled apart or modified for the project at hand. By changing settings in the `package.json` file, this can be used for one-page landing pages, as well as used in full-fledged CMS themes.
 
-This is here for my own storage, but please let me know if you have any feedback or suggestions.
+This is here for my own storage, but please [let me know if you have any feedback or suggestions](https://github.com/wbrowar/WB-Starter/issues).
 
 ## Installation
 NOTE: these instructions are for a Mac. Commands for PC or Linux might be slightly different.
@@ -15,11 +15,11 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 4. If you don't have Homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 5. Install ImageMagick, run this command: `brew install imagemagick`
 6. Run `npm install -g gulp-cli`.
-7. Go to your site's root folder and run the command: `yarn`. This will do the same thing as `npm install`, but faster. If you don't have yarn installed, globally, run `npm install --global yarn`
+7. Go to your site's root folder and run the command: `npm install`
 
 ### Setting Up Each Project
 1. In Terminal, `cd` to your project root
-2. Run `yarn`
+2. Run `npm install`
 3. Update the `package.json` file to fit your project's needs. See `package.json` below
 4. Run `npm run setup` to perform the default task and to do an initial setup
 
@@ -27,13 +27,13 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 ## When to Use What
 ### Beginning a project
 - When starting a project, run the helper task, `npm run list`, to see what commands are available.
-- `npm run setup` should be run at the beginning of the project to pull together template files based on the type of project your are developing. In this task, you will be prompted to answer some questions that will customize the components and templates added to your `_source` folder. *NOTE: because this task overrides files in your `_source` folder, it should only be run once, at the beginning of a project.*
+- Run `npm run setup` at the beginning of the project to pull together template files based on the type of project your are developing. In this task, you will be prompted to answer some questions that will customize the components and templates added to your `_source` folder. *NOTE: because this task overrides files in your `_source` folder, it should only be run once, at the beginning of a project.*
 - `gulp font` can be run anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
 - To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `npm run dev` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `npm run prod` for a more thorough check.
 
 ### During Development
 - Every time you begin to write code, run `npm run watch` first. This will watch the `_source` folder and update theme files as you save them.
-- At any given time, run `npm run dev` to reprocess basic theme assets (JS, CSS, and images). Doing this will clean out old JS, CSS, and image files and replace them with up-to-date versions.
+- At any given time, run `npm run dev` to reprocess basic theme assets (JS, CSS, and images). Doing this will clean out old JS, CSS, and image files and replace them with up-to-date versions. It will also do a quick update of templates files (in the `_html` directory).
 
 ### Staging and Testing
 - When staging files for review or testing, run `npm run prod`—every time—before deploying to a staging server. `npm run prod` includes extra tasks, such as Babel transpiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
@@ -47,16 +47,25 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 ## Theme Components
 ### SCSS Framework
 - In `_source/scss` there are a several files with underscores in front. These all get compiled into `app.css`, by default.
-- Sass will compile all `.scss` files that do note contain an underscore in front of the filename.
+- Sass will compile all `.scss` files that do not contain an underscore in front of the filename.
 - Files are organized into folders:
   - `automated` – For files generated by Gulp. We can assume these will update on their own, so we wouldn’t edit these manually.
   - `base` – Global CSS that is used across all pages of the site. Animations, variables, mixins, and global styles are all organized here so they’re in one place.
-  - `compontents` – base CSS for HTML components, such as forms, buttons, tables, images, etc… These should be abstracted and modular so these elements can be dropped anywhere in the site and still look the same.
+  - `compontents` – base CSS for HTML components, such as forms, buttons, tables, images, etc… These should be abstracted and modular so these elements can be dropped anywhere in the site and still look the same. Modifier classes can be used to make general adjustments within a component. One-off adjustments should be made by adding a new class to the component's wrapper and adding the adjustments to the new class.
   - `layout` – Layout areas and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
   - `lib` – For any CSS that we receive from vendors (like our clients) can go here. These should not be edited by us, so it can be assumed than any file here can be updated at any time.
   - `pages` – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
 - CSS follows the [BEM naming convention](http://getbem.com/naming/) to reduce accidental mixing of styles.
-- Elements with class names that are prefixed with `c_` indicate this is a CSS component that is part of the Style Inventory.
+
+#### Styling Components
+- Elements with class names that are prefixed with `c_` indicate this is a CSS, JS, or Twig component that is part of the Style Inventory. Styles for components can appear in one of three places:
+  - Twig components should have a handle associated with them (for example, 'button' or 'alert_bar'). The name of the `.twig` file should also be the name of the `.scss` file that styles that component.
+    - The styles for `_html/components/button.twig` should appear in `_scss/components/button.scss` and the root class should be `c_button`.
+  - Vue components can have styles within the component themselves OR in an `.scss` file.
+    - Styles in the Vue component should be styles that would not likely be overridden. Use modifiers when possible instead of writing one-off styles when changing theme colors and spacing.
+    - Styles from the Vue component are inserted as if they were a `<style>` tag in the `<head>`, so they will overwrite styles written in `app.css`.
+    - Components that are lazy loaded through Webkit code splitting, that require a lot of styles, can benefit the site by lowering the size of `app.css`. This is especially helpful if the component is only used on a small number of pages.
+  - Some CSS-only components could be styled within `base/_globals.scss`. This includes styles for things like general text sizes and page wrappers.
 
 #### Using Fonts in CSS
 - A `font()` mixin is available to optimize the use of custom `@font-face` fonts, and to making changes to fonts and font stacks consistent in your CSS. Here are the advantages of using this mixin:
@@ -73,13 +82,12 @@ In your `package.json`, here are the options you can use. Options marked with °
   - `files` – Pairs up font file types and their locations. This is only applicable for fonts that need a `@font-face` declaration. In most situations, you'll want an `.eot` and a `.woff` file for cross-browser compatibility. A `.woff2` file can be included for better performance.
 
 
-
 ---
 ### Javascript
-- All of the JS is configured to be compiled using [Webpack](https://webpack.js.org/) and then loaded using [loadJS](https://github.com/filamentgroup/loadJS).
+- All of the JS is configured to be compiled using [Webpack](https://webpack.js.org/) and then loaded using [loadjs](https://github.com/muicss/loadjs).
 
 #### Using Webpack
-For Javascript files, Webpack is used to uglify, transpile and concatenate our files into bundles. It pulls directly from `_source/_js/` and `node_modules` and creates single Javascript files in `public/js/`.
+For Javascript files, Webpack is used to uglify, transpile, and concatenate our files into bundles. It pulls directly from `_source/_js/` and `node_modules` and creates single Javascript files in `public/js/`.
 
 Currently, there is one file, `app.js`, but if you need to split out code into additional bundles, you can configure Webpack in the `webpack.config.js` file. To add another Javascript file, modify the `entry` object:
 
@@ -104,7 +112,7 @@ plugins: (env === 'production') ? [
 You can add more plugins here, if you'd like.
 
 ### lazy.js
-Include `lazy.js` into a JS document and call the default, `lazy()` function to init. An optional `config` object can be passed into the `lazy()` function.
+Include `lazy.js` into a JS document and create a new instance using `window.lazy = new Lazy(config)`.
 
 ```javascript
 import lazy from 'lazy';
@@ -112,10 +120,11 @@ import lazy from 'lazy';
 const config = {
     animationFunctions: {
         'fadePageBgColor': fadePageBgColor,
-    }
+    },
+    container: '#page',
 };
 
-lazy(config);
+window.lazy = new Lazy(config);
 ```
 
 #### Lazy Loading
@@ -127,25 +136,6 @@ To use Lazy Loading for better loading performance, add the `data-lazy-load` att
 | `data-srcset` | `/img/FPO.png 1x, /img/FPO@2x.png 2x` | Changes to the `srcset` tag uses in `<img>` tags. |
 | `data-width` | `2048` | Setting both `data-width` and `data-height` on an element will add inline styles to the element that allow it to proportionately take up as much room as an image would in that space. This can be used for placeholder images styled in CSS. |
 | `data-height` | `2048` |  |
-| `data-bg-array` | See below | Uses a JSON string to generate CSS in a `<style>` tag below the element that populates the element's `background-image` property. |
-
-The value of `data-bg-array` is converted from a string into a JSON object. Here's an example JSON string:
-`{ "class": "image_2", "css": [{ "url": "/img/FPO.jpg", "extra": "background-position: 50% 50%;"" },{ "retina": true, "url": "/img/FPO@2x.jpg" },{ "mq": "(min-width: 700px)", "url": "/img/FPO.png" },{ "mq": "(min-width: 700px)", "retina": true, "url": "/img/FPO@2x.png" }] }`
-
-In this example, here are a few things to note:
- - `class`
-   - Adds a class to your element that is used as the CSS selector in the generated CSS. This should be unique so that the class can be selected on it's own. One way to make this unique is to pass in a `{{ block.id }}` or `{{ image.id }}` (in Craft), or make a unique class name that's descriptive of the use of the image element.
- - `css`
-   - An array of properties that build out the CSS.
-   - This array is looped in order, so it will cascade in the order of each object in the array.
-   - `url`
-     - The URL of the background image.
-   - `extra`
-     - Any extra CSS that needs to be included or overridden for this object. Useful for using `{{ image.focalPoint }}` (in Craft) to set the `background-position` property.
-   - `retina`
-     - Includes a check for 2x pixel density in the media query wrapping the CSS.
-   - `mq`
-     - A media query that wraps the CSS generated for this image. Can be combined with `retina` to also require that the screen resolution is at least 2x.
 
 #### On-scroll Animations
 When used with no value, `data-lazy-animate` simply adds the class `animated` to an element. In your CSS, a transition or CSS animation can fire when `animated` is added. You can also register a function that can be fired by setting the name of the function to the value of `data-lazy-animate`.
@@ -154,10 +144,7 @@ When used with no value, `data-lazy-animate` simply adds the class `animated` to
 | --- | --- | --- |
 | `data-lazy-animate` | **NONE** or `myFunction` | When the user scrolls to the element, a function registered in `config.animationFunctions` (see example above), will be fired. |
 | `data-lazy-animate-args` | `{ "id": 23, "option": "value" }` | Arguments that will be passed into the function registered in `data-lazy-animate` as an object. |
-| `data-lazy-animate-exit` | `myExitFunction` | When the element scrolls out of the viewport, a function registerd in `config.animationFunctions` will be fired. |
-| `data-lazy-animate-args-exit` | `{ "option": "value" }` | Arguments for the function in the `data-lazy-animate-exit` attribute. |
 | `data-lazy-animate-delay` | `500` | Uses `setTimeOut()` to delay the firing of a function set in `data-lazy-animate`. |
-| `data-lazy-animate-offset` | `-200` | Used to determine how much outside or inside an element needs to be within the viewport before activating. |
 | `data-lazy-animate-reset` | **NONE** | Add this attribute to allow a JS animation to continue firing as the element re-enters the viewport. |
 
 ### scrollto.js
@@ -186,13 +173,13 @@ scrollToElement(el);
 
 ---
 ### Image Processing
-- **_icon** Images will be processed differently depending on where they are located in the `_source/_icon` folder:
-  - **css** All .svg images in the `css` folder will be base64-encoded and added using `background-image` to a file in the `_source/scss/automated/` folder, called `_icon_sprite.scss`. This will be compiled when the `sass` task is run.
-  - All .svg files in the `_source/_icon` folder will be moved to your theme's `icon` folder so they can be linked to or embedded from the front-end.
+- **_icon** SVGs will be processed differently depending on where they are located in the `_source/_icon` folder:
+  - **css** All `.svg` images in the `css` folder will be base64-encoded and added using `background-image` to a file in the `_source/scss/automated/` folder, called `_icon_sprite.scss`. This will be compiled when the `sass` task is run.
+  - All `.svg` files in the `_source/_icon` folder will be moved to your theme's `icon` folder so they can be linked to or embedded from the front-end.
 - **_img** Images will be processed differently depending on where they are located in the `_source/_img` folder:
   - **2x** Putting 2x-resolution images in the `2x` folder will result in both a 2x image and a 1x image being placed into your `img` directory. The 2x image will be suffixed with `@2x`.
   - Images located directly in the `_source/_img`, or folders not listed above will only be minimized and moved into your theme's `img` folder.
-- **_favicons** Adding a 512x512 .png into the `_source/_favicons` folder, and running `npm run prod`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
+- **_favicons** Adding a 512x512 `.png` into the `_source/_favicons` folder, and running `npm run prod`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
 
 ---
 ### Gulp HTML Builder
@@ -227,6 +214,41 @@ scrollToElement(el);
 
 ---
 ## Release Notes
+#### 4.11.0
+- :fire: :fire: :fire: Removed all Internet Explorer-specific code :fire: :fire: :fire:
+- :rocket: Added the ability to hide all code output in Style Inventory modules
+- :rocket: Added a display for component modifier classes in Style Inventory modules
+- :rocket: Added imager to installed plugins and added imager support to image component
+- :rocket: Added CSS Custom Properties to `_mixins.scss`
+- :rocket: Added mixins that provide default class modifiers for box model elements and text-based elements
+  - `box_modifiers` and `text_modifiers` mixins
+- :rocket: Added `marketo_reset` mixin to remove default styles from Marketo forms
+- :rocket: Added `c_buttons` CSS component
+- :rocket: Added `c_wrapper` CSS component
+- :wrench: Changed `c_subheader` to numbered `c_header` components
+- :fire: Removed default body classes from `_layout.twig`
+- :wrench: Changed `page_ui.twig` to `ui.twig`
+- :wrench: Changed `page_footer.twig` to `footer.twig`
+- :rocket: Added `partials/_component_template.twig` for situations where a Twig component should be rendered in a module
+  - To use this, call `Craft::$app->view->renderTemplate('partials/_component_template', ['name' => 'button', 'options' => $options])`
+- :fire: Removed all Craft 2 templates
+- :wrench: Updated Greensock to 2.0
+- :wrench: Changed `loadJS` to `loadjs`
+  - This `loadjs` library supports sequential loading for situations where a dependency needs to be loaded before another script
+- :wrench: Removed `scrollMonitor` and replaced its functionality with Intersection Observer
+  - Added an Intersection Observer polyfill for Safari support
+- :wrench: Moved `vue-components.js` to `app.js` and updated module imports
+- :rocket: Added `requestAnimationFrame` to the default Resize and scroll handlers
+- :wrench: Refactored the default export of `lazy.js` to work as a Class
+  - This allows for more flexibility before Lazy's default function is fired
+- :rocket: Added the ability to manually handle Lazy load and animation via `lazy.updateAnimate()` and `lazy.updateLoad()`
+  - You can pass in a selector string and Lazy will look for lazy elements within that selector and it's children
+  - If you do not pass anything in, it will look for all registered elements in the viewport
+- :rocket: Vue overlays will lazy load lazy elements once the overlay is displayed
+- :wrench: Swiping left or right now updates all other sliders with the same slide ID
+- Slider controls will be hidden if only one slide is active in its slider
+- :fire: Removed `yarn` as a dependency and replaced `yarn` scripts with `npm update`
+
 #### 4.10.0
 - :wrench: Refactored all components in Craft 3 templates
   - :rocket: Added default options that can be applied to all components (classes, attributes, id, etc...)
@@ -317,7 +339,7 @@ scrollToElement(el);
 - :fire: Stopped adding `.min` to uglified JS files
 
 #### 4.7.1
-- :wrench: Updated all NPM libraries. **This now requires the latest Node 7.x and all `node_modules` should be deleted and `yarn` (or `npm install`) should be run to update dependencies.**
+- :wrench: Updated all NPM libraries. **This now requires the latest Node 7.x and all `node_modules` should be deleted and `npm install` should be run to update dependencies.**
 - :wrench: Split index.html into ejs partials for better portability when creating multiple pages
 - :rocket: Added an `index` section to default style inventory to explain what a style inventory does
 - :wrench: Bug fixes and minor tweaks in `Gulpfile.js`

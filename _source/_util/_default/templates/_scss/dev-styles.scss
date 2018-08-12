@@ -190,6 +190,21 @@ $border_radius: 4px;
         }
       }
     }
+    @at-root #{&}__modifiers {
+      display: flex;
+      flex-flow: row wrap;
+      background-color: transparentize($color_dev_red_default, .7);
+      border-color: transparentize($color_dev_red_default, .3);
+      font-size: .8em;
+      color: $color_dev_red_default;
+
+      & > * {
+        padding: 5px 10px;
+      }
+      ::selection {
+        background-color: $color_dev_red_default;
+      }
+    }
     @at-root #{&}__table {
       width: 100%;
 

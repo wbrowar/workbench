@@ -22,30 +22,6 @@
 }); %>
 
 <% modules.push({
-  "title": "Rollover Scale",
-  "description": "Roll over to zoom in on an image. Content placed in the `foreground` will remain static, where content in the background will scale with the background image.",
-  "background": "light",
-  "demoCode":
-`<div class="styles__box_wrapper">
-  <div class="styles__box c_animate c_animate--rollover--scale">
-    <div class="c_animate c_animate--rollover--scale__background styles__box--flex" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
-  </div>
-  <div class="styles__box c_animate c_animate--rollover--scale">
-    <div class="c_animate c_animate--rollover--scale__background" style="background-size: cover;" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
-    <div class="c_animate c_animate--rollover--scale__foreground styles__box--flex">Roll over me.</div>
-  </div>
-</div>`,
-  "code":
-`<div class="c_animate c_animate--rollover--scale">
-  <div class="c_animate c_animate--rollover--scale__background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'>Roll over me.</div>
-</div>
-<div class="c_animate c_animate--rollover--scale">
-  <div class="c_animate c_animate--rollover--scale__background" data-lazy-load data-bg-array='{ "class": "image_1", "css": [{ "url": "/img/FPO.jpg" },{ "retina": true, "url": "/img/FPO@2x.jpg" }] }'></div>
-  <div class="c_animate c_animate--rollover--scale__foreground">Roll over me.</div>
-</div>`
-}); %>
-
-<% modules.push({
   "title": "Push in on Click",
   "description": "Used to show the action of a button being pushed.",
   "background": "light",
@@ -62,12 +38,12 @@
   "background": "light",
   "demoCode":
 `<div class="styles__box_wrapper">
-  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-in", "delay": [0.1, 0.9] }' :style="{ opacity: 0 }" data-lazy-animate-offset="-300" v-cloak>Content</div>
-  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-out", "delay": [0.1, 0.9] }' data-lazy-animate-offset="-500" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-in", "delay": [0.1, 0.5] }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-out", "delay": [0.5, 0.9] }' v-cloak>Content</div>
 </div>`,
   "code":
-`<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-in" }' :style="{ opacity: 0 }" data-lazy-animate-offset="-300" v-cloak>Content</div>
-<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-out" }' data-lazy-animate-offset="-500">Content</div>`
+`<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-in", "delay": [0.1, 0.5] }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate="introduceElement" data-lazy-animate-args='{ "effect": "fade-out", "delay": [0.5, 0.9] }' v-cloak>Content</div>`
 }); %>
 
 <% modules.push({

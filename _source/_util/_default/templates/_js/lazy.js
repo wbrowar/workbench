@@ -1,16 +1,22 @@
 //  LAZY
-// Utility library used to lazy load front-end assets as well as perform animations based on page scroll position
+//  🏖 Utility library used to lazy load front-end assets as well as perform animations based on page scroll position
 
 import { addClass, log, warn } from './global.js';
-import scrollMonitor from 'scrollmonitor';
+import * as io from 'intersection-observer';
 
-let config = {
-    animationFunctions: {
-        'rotateBox': testFunction,
-    }
-};
+// UTILITY FUNCTIONS
+function isElementInViewport (el) {
+    var rect = el.getBoundingClientRect();
 
-// FUNCTIONS
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+    );
+}
+
+// CUSTOM FUNCTIONS
 function testFunction(el, rotation = '15') {
     const currentDegrees = el.hasAttribute('data-rotation-degrees') ? parseFloat(el.getAttribute('data-rotation-degrees')) : '0';
     const degrees = currentDegrees + parseFloat(rotation);
@@ -19,21 +25,9 @@ function testFunction(el, rotation = '15') {
     el.setAttribute('data-rotation-degrees', degrees);
 }
 
-// Adds max-width and padding-top to images for easier styling of placeholder images
-function createImagePlaceholders() {
-    const images = document.querySelectorAll('img[data-lazy-load]');
-    Array.prototype.forEach.call(images, function(el, i){
-        if (el.getAttribute('data-width') && el.getAttribute('data-height')) {
-            const width = el.getAttribute('data-width'),
-                height = el.getAttribute('data-height');
-            el.style.paddingTop = (height / width * 100) + '%';
-            el.style.maxWidth = el.getAttribute('data-width') + 'px';
-        }
-    });
-}
-function lazyAnimateHandler(element, watcher = null, viewportEvent = 'enter') {
-    // call a javascript animation that has been passed into config.animationFunctions
-    // EXAMPLE data-lazy-animate="animateIcon|arguments"
+function animateHandler(element, watcher, animationFunctions, viewportEvent = 'enter') {
+    // call a javascript animation that has been passed into animationFunctions
+    // EXAMPLE data-lazy-animate="introduceElement"
     if (element.getAttribute('data-lazy-animate') !== '' || element.getAttribute('data-lazy-animate-exit') !== '') {
         let func, args;
         switch (viewportEvent) {
@@ -43,53 +37,28 @@ function lazyAnimateHandler(element, watcher = null, viewportEvent = 'enter') {
                 break;
             case 'exit':
                 func = element.getAttribute('data-lazy-animate-exit');
-                args = element.hasAttribute('data-lazy-animate-args-exit') ? JSON.parse(element.getAttribute('data-lazy-animate-args-exit')) : null;
+                args = element.hasAttribute('data-lazy-animate-exit-args') ? JSON.parse(element.getAttribute('data-lazy-animate-exit-args')) : null;
                 break;
         }
 
-        if (typeof config.animationFunctions[func] === "function") {
+        if (typeof animationFunctions[func] === "function") {
             if (args !== null) {
-                requestAnimationFrame(() => config.animationFunctions[func](element, args));
+                requestAnimationFrame(() => animationFunctions[func](element, args));
             } else {
-                requestAnimationFrame(() => config.animationFunctions[func](element));
+                requestAnimationFrame(() => animationFunctions[func](element));
             }
         }
     }
 
     // in CSS use a class, called 'animated', for CSS transforms and keyframe animations
     addClass(element, 'animated');
-    if (!element.hasAttribute('data-lazy-animate-reset')) {
+    if (watcher !== null && !element.hasAttribute('data-lazy-animate-reset')) {
         element.removeAttribute('data-lazy-animate');
-        watcher.destroy();
+        element.removeAttribute('data-lazy-animate-exit');
+        watcher.unobserve(element);
     }
 }
-function lazyLoadHandler(element, watcher = null) {
-    // lazy load background images
-    // EXAMPLE: data-bg-array='{ "selector": ".image_1", "css": [{ "mq": "(min-width: 300px)", "url": "/img/FPO.png" },{ "mq": "(min-width: 300px)", "retina": true, "url": "/img/FPO@2x.png" }] }'
-    // REQUIRED 'data-bg-array'  JSON string that contains information needed to create and append a style tag with lazy loaded styles
-    // - REQUIRED `selector` is required and it is used as the selector for the CSS
-    // - REQUIRED `css` is an array that will be looped through, allowing for multiple sized images at different media queries
-    //   - OPTIONAL `mq` is all of the qualifying media queries for this image size
-    //   - OPTIONAL `retina` adds a media query for 2x sized screens
-    //   - REQUIRED `url` is the path to the image that will be displayed in the background of the element
-    if (element.hasAttribute('data-bg-array')) {
-        const bgData = JSON.parse(element.getAttribute('data-bg-array'));
-        if (bgData.class !== undefined && bgData.css !== undefined) {
-            let css = '';
-            const elementClass = bgData.class;
-            for (let i = 0, l = bgData.css.length; i<l; i++) {
-                const mq = bgData.css[i].mq != undefined ? bgData.css[i].mq : '';
-                const retina = bgData.css[i].retina != undefined ? bgData.css[i].retina : false;
-                const media = ((mq != '') || retina);
-                const extra = bgData.css[i].extra != undefined ? bgData.css[i].extra : '';
-                css += `${media ? `@media ${retina ? `${mq != '' ? `${ mq } and ` : '' }(-webkit-min-device-pixel-ratio: 2), ${mq != '' ? `${ mq } and ` : '' }(min-resolution: 192dpi)` : mq } { ` : ''}.${elementClass} { background-image: url('${bgData.css[i].url}');${extra} }${media ? ' }' : ''}`;
-            }
-            element.insertAdjacentHTML('afterend', `<style>${css}</style>`);
-            addClass(element, elementClass);
-        }
-        element.removeAttribute('data-bg-array');
-    }
-
+function loadHandler(element, watcher) {
     // lazy load images via srcset
     // EXAMPLE: data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x"
     // REQUIRED `data-srcset` will be swapped to `srcset` attribute
@@ -110,64 +79,107 @@ function lazyLoadHandler(element, watcher = null) {
     }
 
     element.removeAttribute('data-lazy-load');
-    watcher.destroy();
+    if (watcher !== null) {
+        watcher.unobserve(element);
+    }
 }
 function removeImagePlaceholder(el) {
     el.style.paddingTop = '';
     el.style.maxWidth = '';
 }
-export default function(lazyConfig = {}) {
-    Object.keys(lazyConfig).forEach(function(key) { config[key] = lazyConfig[key]; });
 
-    createImagePlaceholders();
+export default class Scene {
+    constructor(args = {}) {
+        this.animateMargin = args.animateMargin || '-100px';
+        this.animateThreshold = args.animateThreshold || 0;
+        this.animationFunctions = args.animationFunctions || { 'rotateBox': testFunction };
+        this.loadMargin = args.loadMargin || '50%';
+        this.loadThreshold = args.loadThreshold || 0;
 
-    // loops through elements with `data-lazy-load` and adds a `scrollMonitor` watcher to each element
-    // when the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
-    const lazyLoadElements = document.querySelectorAll('[data-lazy-load]');
-    for (let i = 0, l = lazyLoadElements.length; i<l; i++) {
-        const elementOffset = lazyLoadElements[i].hasAttribute('data-lazy-load-offset') ? lazyLoadElements[i].getAttribute('data-lazy-load-offset') : 500;
-        const elementWatcher = scrollMonitor.create(lazyLoadElements[i], elementOffset);
-        elementWatcher.enterViewport(function() {
-            lazyLoadHandler(this.watchItem, this);
-        });
-        elementWatcher.update();
-        elementWatcher.triggerCallbacks();
-    }
+        this.createImagePlaceholders();
 
-    // loops through elements with `data-lazy-animate` and adds a `scrollMonitor` watcher to each element
-    // when the element scrolls into view, a CSS class will be added to the element and an animation can be done in CSS or Javascript
-    const lazyAnimateElements = document.querySelectorAll('[data-lazy-animate]');
-    for (let i = 0, l = lazyAnimateElements.length; i<l; i++) {
-        const elementOffset = lazyAnimateElements[i].hasAttribute('data-lazy-animate-offset') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-offset')) : -200;
-        const elementDelay = lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay') ? parseFloat(lazyAnimateElements[i].getAttribute('data-lazy-animate-delay')) : 0;
-        const elementWatcher = scrollMonitor.create(lazyAnimateElements[i], elementOffset);
-        elementWatcher.enterViewport(function() {
-            if (lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay')) {
-                const watchItem = this.watchItem;
-                setTimeout(function() {
-                    lazyAnimateHandler(watchItem, elementWatcher, 'enter');
-                }, elementDelay);
-            } else {
-                lazyAnimateHandler(this.watchItem, this, 'enter');
-            }
-        });
-        if (lazyAnimateElements[i].hasAttribute('data-lazy-animate-exit')) {
-            elementWatcher.exitViewport(function() {
-                if (lazyAnimateElements[i].hasAttribute('data-lazy-animate-delay')) {
-                    const watchItem = this.watchItem;
-                    setTimeout(function() {
-                        lazyAnimateHandler(watchItem, elementWatcher, 'exit');
-                    }, elementDelay);
+        // loops through elements with `data-lazy-load` and adds each element to the observer
+        // when the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
+        this.loadElements = args.loadElements || document.querySelectorAll('[data-lazy-load]');
+        if (this.loadElements.length > 0) {
+            this.loadObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    log('Lazy loading element', entry);
+                    if (entry.intersectionRatio === 0) {
+                        loadHandler(entry.target, this.loadObserver);
+                    }
+                });
+            }, {
+                rootMargin: this.loadMargin,
+                threshold: this.loadThreshold,
+            });
+            this.loadElements.forEach(element => {
+                if (isElementInViewport(element)) {
+                    loadHandler(element, null);
                 } else {
-                    lazyAnimateHandler(this.watchItem, this, 'exit');
+                    this.loadObserver.observe(element);
                 }
             });
         }
-        elementWatcher.update();
-        elementWatcher.triggerCallbacks();
+
+        // loops through elements with `data-lazy-load` and adds each element to the observer
+        // when the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
+        this.animateElements = args.animateElements || document.querySelectorAll('[data-lazy-animate]');
+        if (this.animateElements.length > 0) {
+            this.animateObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    log('Lazy animating element', entry);
+                    if (entry.isIntersecting) {
+                        animateHandler(entry.target, this.animateObserver, this.animationFunctions);
+                    }
+                });
+            }, {
+                rootMargin: this.animateMargin,
+                threshold: this.animateThreshold,
+            });
+            this.animateElements.forEach(element => {
+                if (isElementInViewport(element)) {
+                    animateHandler(element, null, this.animationFunctions);
+                } else {
+                    this.animateObserver.observe(element);
+                }
+            });
+        }
+    }
+    createImagePlaceholders() {
+        const images = document.querySelectorAll('img[data-lazy-load]');
+        Array.prototype.forEach.call(images, function(el, i){
+            if (el.getAttribute('data-width') && el.getAttribute('data-height')) {
+                const width = el.getAttribute('data-width'),
+                    height = el.getAttribute('data-height');
+                el.style.paddingTop = (height / width * 100) + '%';
+                el.style.maxWidth = el.getAttribute('data-width') + 'px';
+            }
+        });
+    }
+    updateAnimate(selector = false) {
+        const elements = selector ? document.querySelectorAll(selector + ' [data-lazy-animate],' + selector + '[data-lazy-animate]') : this.animateElements;
+
+        elements.forEach((element) => {
+            if (selector) {
+                animateHandler(element, null, this.animationFunctions);
+            } else if (isElementInViewport(element)) {
+                animateHandler(element, this.animateObserver, this.animationFunctions);
+            }
+        });
+    }
+    updateLoad(selector = false) {
+        const elements = selector ? document.querySelectorAll(selector + ' [data-lazy-load],' + selector + '[data-lazy-load]') : this.loadElements;
+
+        elements.forEach((element) => {
+            if (selector) {
+                loadHandler(element, null);
+            } else if (isElementInViewport(element)) {
+                loadHandler(element, this.loadObserver);
+            }
+        });
     }
 }
-
 
 // INIT FUNCTIONS
 log('Lazy Loading');

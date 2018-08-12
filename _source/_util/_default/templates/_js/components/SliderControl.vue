@@ -1,5 +1,5 @@
 <template>
-    <div class="c_slider_control">
+    <div class="c_slider_control" v-if="totalSlides > 1">
         <div class="c_slider_control__back" v-html="labelBack" v-if="showBack" @click="setSlideIndex(currentSlide - 1)"></div>
         <div class="c_slider_control__indicators" v-if="showIndicators && (indicatorType === 'dots') && (maxNodes >= totalSlides)">
             <div class="c_slider_control__indicator_dot" :class="{ active: index === currentSlide }" v-for="(item, index) in totalSlides" @click="setSlideIndex(index)">{{ index + 1 }}</div>
@@ -87,13 +87,13 @@
                 left: 50%;
                 width: $_dot_size;
                 height: $_dot_size;
-                border: 2px solid lighten($color_black_default, 50);
+                border: 2px solid $color_black_default;
                 border-radius: 50%;
                 transform: translateX(-50%) translateY(-50%);
             }
             &.active {
                 &:before {
-                    background-color: lighten($color_black_default, 50);
+                    background-color: $color_black_default;
                 }
             }
         }

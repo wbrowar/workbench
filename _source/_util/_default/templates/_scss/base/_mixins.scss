@@ -1,6 +1,9 @@
-// SASS FUNCTIONS
-@function rwd_ratio_width($object_px, $container_px) {
-  @return $object_px / $container_px * 100%;
+// CSS CUSTOM PROPERTIES
+:root {
+  --spacing-box: 50px;
+  --spacing-text: 30px;
+  --max-width: 1100px;
+  --max-width-text: 700px;
 }
 
 // SITE VARIABLES
@@ -18,34 +21,58 @@ $color_alert_warning: rgb(238, 199, 0);
 
 // LAYOUT
 $grid_gap_default: 20px;
-$margin_bottom_default: 30px;
+$spacing_box: var(--spacing-box);
+$spacing_text: var(--spacing-text);
+$max_width: var(--max-width);
+$max_width_text: var(--max-width-text);
 
 // MEDIA QUERIES
 $mq_grid_start: 700px;
 
 // SITE MIXINS
-// BUTTONS
-@mixin buttons_default {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center;
-  padding: .8em 20px .7em;
-  width: 100%;
-  max-width: 300px;
-  background-color: $color_black_default;
-  border: none;
-  box-sizing: border-box;
-  letter-spacing: 1px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1.1rem;
-  line-height: 1;
-  color: $color_white_default;
+// BOX
+// Default modifiers that affect spacing and layout of box elements
+@mixin box_modifiers($self: &) {
+  @at-root #{$self}--center {
+    text-align: center;
+  }
+  @at-root #{$self}--margin {
+    margin-top: $spacing_text;
+    margin-bottom: $spacing_text;
 
-  &:hover {
-    opacity: .7;
+    @at-root #{&}--auto {
+      margin-right: auto;
+      margin-left: auto;
+    }
+    @at-root #{&}--top {
+      margin-top: $spacing_text;
+    }
+    @at-root #{&}--right {
+      margin-right: $spacing_text;
+    }
+    @at-root #{&}--bottom {
+      margin-bottom: $spacing_text;
+    }
+    @at-root #{&}--left {
+      margin-left: $spacing_text;
+    }
+  }
+  @at-root #{$self}--padding {
+    padding-top: $spacing_text;
+    padding-bottom: $spacing_text;
+
+    @at-root #{&}--top {
+      padding-top: $spacing_text;
+    }
+    @at-root #{&}--right {
+      padding-right: $spacing_text;
+    }
+    @at-root #{&}--bottom {
+      padding-bottom: $spacing_text;
+    }
+    @at-root #{&}--left {
+      padding-left: $spacing_text;
+    }
   }
 }
 
@@ -72,7 +99,7 @@ $mq_grid_start: 700px;
 }
 
 // LAYOUT
-// Places centers three divs with a background, middle, and foreground layers
+// Centers three divs with a background, middle, and foreground layers
 @mixin layout_centered_image_text {
   position: relative;
 
@@ -100,10 +127,50 @@ $mq_grid_start: 700px;
   }
 }
 
+// MARKETO
+// Remove Marketo's default styles on embedded forms
+@mixin marketo_reset {
+  &.mktoForm {
+    padding: 0 !important;
+    width: 100% !important;
+
+    div {
+      float: none !important;
+      min-height: 0 !important;
+    }
+    .mktoFormCol {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .mktoFormRow {
+      margin-bottom: 14px;
+    }
+    .mktoOffset, .mktoGutter, .mktoClear {
+      display: none !important;
+    }
+    .mktoTextField, .mktoTelField, .mktoEmailField, textarea, select {
+      float: none !important;
+      width: 100% !important;
+      box-sizing: border-box;
+    }
+    .mktoButtonWrap {
+      margin-left: 0 !important;
+    }
+    .mktoLabel {
+      display: block !important;
+      float: none !important;
+      width: 100% !important;
+    }
+    .mktoAsterix {
+      display: none !important;
+    }
+  }
+}
+
 // MEDIA QUERIES
 // Quickly write simple media queries
 // @include mq(600px) {  }
-@mixin mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '') {
+@mixin _mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '') {
   @if $additional_media != '' {
     @media (#{$mq_min_max}-#{$mq_direction}: $breakpoint, $additional_media) {
       @content;
@@ -116,25 +183,25 @@ $mq_grid_start: 700px;
 }
 
 @mixin mq($breakpoint, $additional_media: '') {
-  @include mq_handler('min', 'width', $breakpoint, $additional_media) {
+  @include _mq_handler('min', 'width', $breakpoint, $additional_media) {
     @content;
   }
 }
 
 @mixin mq_max($breakpoint, $additional_media: '') {
-  @include mq_handler('max', 'width', ($breakpoint - 1px), $additional_media) {
+  @include _mq_handler('max', 'width', ($breakpoint - 1px), $additional_media) {
     @content;
   }
 }
 
 @mixin mq_v($breakpoint, $additional_media: '') {
-  @include mq_handler('min', 'height', $breakpoint, $additional_media) {
+  @include _mq_handler('min', 'height', $breakpoint, $additional_media) {
     @content;
   }
 }
 
 @mixin mq_vmax($breakpoint, $additional_media: '') {
-  @include mq_handler('max', 'height', ($breakpoint - 1px), $additional_media) {
+  @include _mq_handler('max', 'height', ($breakpoint - 1px), $additional_media) {
     @content;
   }
 }
@@ -186,45 +253,58 @@ $mq_grid_start: 700px;
 }
 
 // TEXT
-// Hide text for things like buttons or links that are replaced with a background image
-@mixin text_modifiers($self) {
+// Default modifiers that affect spacing and layout of text
+@mixin text_modifiers($self: &) {
   @at-root #{$self}--center {
     text-align: center;
   }
+  @at-root #{$self}--margin {
+    margin-top: $spacing_text;
+    margin-bottom: $spacing_text;
+
+    @at-root #{&}--auto {
+      margin-right: auto;
+      margin-left: auto;
+    }
+    @at-root #{&}--top {
+      margin-top: $spacing_text;
+    }
+    @at-root #{&}--right {
+      margin-right: $spacing_text;
+    }
+    @at-root #{&}--bottom {
+      margin-bottom: $spacing_text;
+    }
+    @at-root #{&}--left {
+      margin-left: $spacing_text;
+    }
+  }
+  @at-root #{$self}--padding {
+    padding-top: $spacing_text;
+    padding-bottom: $spacing_text;
+
+    @at-root #{&}--top {
+      padding-top: $spacing_text;
+    }
+    @at-root #{&}--right {
+      padding-right: $spacing_text;
+    }
+    @at-root #{&}--bottom {
+      padding-bottom: $spacing_text;
+    }
+    @at-root #{&}--left {
+      padding-left: $spacing_text;
+    }
+  }
 }
+// Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
   text-indent: -99999px;
 }
-
-// TRANSITIONS/ANIMATIONS
-@mixin transition($property, $duration: $anim_duration_default, $delay: 0, $timing: ease-out) {
-  transition-property: $property;
-  transition-duration: $duration;
-  transition-delay: $delay;
-  transition-timing-function: $timing;
-}
-
-// PLACEHOLDERS
-// Put clearfix on wrapper elements for floats
-%clearfix {
-  &:before, &:after {
-    content: "\0020";
-    display: block;
-    height: 0;
-    overflow: hidden;
-  }
-  &:after {
-    clear: both;
-  }
-  & {
-    zoom: 1;
-  }
-}
-
-%margin-bottom {
-  margin-bottom: $margin_bottom_default;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+// Add ellipsis to a single line of text when the amount of text no longer fits
+@mixin truncate {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

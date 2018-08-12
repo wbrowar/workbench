@@ -13,13 +13,17 @@
                 <div class="styles__example__description"><p><%- modules[module].description %></p></div>
                 <div class="styles__example__display" style="background-color: <% if (modules[module].background === 'dark') { %>#2B303B<% } else if (modules[module].background === 'light') { %>#FFFFFF<% } else { %><%- modules[module].background %><% } %>;">
                   <% if (modules[module].demoCode) { %><%- modules[module].demoCode %><% } else if (modules[module].twigCode) { %><%- modules[module].twigCode %><% } else { %><%- modules[module].code %><% } %>
-                </div><% if (modules[module].code) { %>
+                </div><% if (!modules[module].hideCode) { %><% if (modules[module].code) { %>
                 <div class="styles__example__code">
                     <pre><code v-pre><%= modules[module].code %></code></pre>
                 </div><% } %><% if (modules[module].twigCode) { %>
                 <div class="styles__example__code styles__example__code--twig">
                     {% verbatim %}<pre><code><%= modules[module].twigCode %></code></pre>{% endverbatim %}
-                </div><% } %><% if (modules[module].options) { %>
+                </div><% } %><% if (modules[module].modifiers) { %>
+                <ul class="styles__example__modifiers">
+                    <li style="font-weight: bold;">Modifiers:</li>
+                    <% for(var i=0; i<modules[module].modifiers.length; i++) { %><li><%= modules[module].modifiers[i] %></li><% } %>
+                </ul><% } %><% if (modules[module].options) { %>
                 <table class="styles__example__table">
                     <thead>
                         <td><b>Name</b></td>
@@ -38,7 +42,7 @@
                         <% } %>
                     </tbody>
                 </table>
-                <% } %>
+                <% } %><% } %>
             </div>
         <% } %>
     </div>

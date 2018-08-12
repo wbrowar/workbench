@@ -15,24 +15,71 @@
 }); %>
 
 <% modules.push({
-  "title": "Lazy-Loading Iframe",
-  "description": "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio. Waits until user has scrolled down to the element to load iframe content.",
+  "title": "Lazy-loading Image",
+  "description": "An image loaded when the user scrolls down to its location on the page.",
   "background": "light",
   "code":
-`<div class="c_video">
-  <iframe data-lazy-load data-src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
-  <noscript><iframe src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
+`<figure class="c_image">
+  <picture>
+    <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+         sizes="100vw"
+         alt="Fpo"
+         data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+  </picture>
+</figure>`
+}); %>
+
+<% modules.push({
+  "title": "Lazy-loading Background Image",
+  "description": "Loads a background image when the user scrolls down to its location on the page. Uses a JSON object in the `data-bg-array` attribute to create CSS that laods the background image. Multiple images can be loaded via media queries defined in the JSON object.",
+  "background": "light",
+  "demoCode":
+`<div class="styles__box_wrapper">
+  <div class="styles__box" style="padding: 0px;">
+    <div class="c_image_bg">
+      <figure class="c_image_bg__image c_image">
+        <picture>
+          <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+               sizes="100vw"
+               alt="Fpo"
+               data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+        </picture>
+      </figure>
+    </div>
+  </div>
+</div>`,
+  "code":
+`<div class="c_image_bg">
+  <figure class="c_image_bg__image c_image">
+    <picture>
+      <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+           sizes="100vw"
+           alt="Fpo"
+           data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+    </picture>
+  </figure>
 </div>`
 }); %>
 
 <% modules.push({
-  "title": "Lazy-loading Video File",
-  "description": "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag. Waits until user has scrolled down to the element to load the video file.",
+  "title": "Video File",
+  "description": "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag.",
   "background": "light",
   "code":
 `<div class="c_video">
   <video data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" controls></video>
   <noscript><video src="https://starter.wbrowar.com/video/clip.mp4" controls></video></noscript>
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "Iframe Video (YouTube, Vimeo, etc ...)",
+  "description": "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio.",
+  "background": "light",
+  "code":
+`<div class="c_video">
+  <iframe data-lazy-load data-src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
+  <noscript><iframe src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
 </div>`
 }); %>
 
@@ -70,6 +117,6 @@
   <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
 </div>
 
-<script>loadJS('<%= site_root %>js/' + jsSection + '.js?v=' + jsVersion);</script>
+<script>loadjs('<%= site_root %>js/app.js?v=' + jsVersion);</script>
 </body>
 </html>

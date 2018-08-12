@@ -4,12 +4,12 @@
 <% const modules = [] %>
 
 <% const intro = `<div class="c_text">
-    <h1 class="c_header">Style Inventory</h1>
+    <h1 class="c_header c_header--1">Style Inventory</h1>
     <p>Websites are marketing tools that evolve as business needs change. A style inventory ensures elements and components stay consistent as code is added and modified over time.</p>
     <p>For example, a button may be added as link at the bottom of a paragraph, as part of a call to action lockup, and as the submit trigger for a form. In all of these situations we want our audience to understand that that tapping this button performs an action. Instead of styling three different buttons, we can use one style that is used across all places. To see all styles at once, the <a href="dev/inv/buttons">Buttons</a> page in the style inventory shows how these buttons will look—as well as any future variations that may arise.</p>
-    <h2 class="c_subheader">Designers</h2>
+    <h2 class="c_header c_header--2">Designers</h2>
     <p>The style inventory is like a living style guide for the website, and can be referred to when new design elements are needed.</p>
-    <h2 class="c_subheader">Developers</h2>
+    <h2 class="c_header c_header--2">Developers</h2>
     <p>The style inventory uses the \`app.css\` stylesheet and javascript modules to display elements and components as they would look and work on the website. Copy the markup from the style inventory to add an element or component to the website.</p>
 </div>` %>
 
@@ -49,6 +49,24 @@
         { "name": 'modifiers', "required": false, "type": 'array', "default": `[]`, "description": `Add component modifier classes. For example, on the 'c_button' component, setting modifiers to ['red'] would result in the class 'c_button--red' being added.` },
         { "name": 'styles', "required": false, "type": 'string', "default": `''`, "description": `Adds inline styles to the component element.` },
     ]
+}); %>
+
+<% modules.push({
+    "title": "CSS Components",
+    "description": `In addition to component-specific modifiers, general CSS modifiers are available for many box and text elements.`,
+    "background": "dark",
+    "modifiers": ['center', 'margin', 'margin--auto', 'margin--top', 'margin--right', 'margin--bottom', 'margin--left', 'padding', 'padding--top', 'padding--right', 'padding--bottom', 'padding--left'],
+    "code": `<div class="c_header c_header--1 c_header--center c_header--padding">🔥</div>`
+}); %>
+
+<% modules.push({
+    "title": "Vue Components",
+    "description": `For easier development, duplicate the Hello.vue component as a starter for new components.`,
+    "background": "dark",
+    "code":
+`<hello></hello>
+<hello new-greeting="Hi"></hello>
+<hello :new-greeting="'It‘s 📆 ' + (new Date()).getFullYear()"></hello>`
 }); %>
 
 <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

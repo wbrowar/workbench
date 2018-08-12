@@ -1,6 +1,6 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 
-{% extends 'components/_component.twig' %}
+{% extends 'partials/_component.twig' %}
 
 {# Component element overrides #}
 {% set element = 'figure' %}
@@ -26,7 +26,18 @@
 
     <picture>
         {% if imager ?? false %}
-            {% set transformedImages = craft.imager.transformImage(image, imager.transforms ?? {}, imager.globals ?? {}) %}
+            {# Make sure the default focal point is passed #}
+            {% set position = imager.globals.position ?? image.getFocalPoint() ?? '50% 50%' %}
+            {% set globals = (imager.globals ?? false) ? imager.globals|merge({ position: position }) : { position: position } %}
+            {% set transformedImages = craft.imager.transformImage(image, imager.transforms ?? {}, globals) %}
+
+            {# Add WEBP format if server allows #}
+            {% if craft.imager.serverSupportsWebp() %}
+                {% set webpGlobals = globals|merge({ format: 'webp' }) %}
+                {% set webpTransformedImages = craft.imager.transformImage(image, imager.transforms ?? {}, webpGlobals) %}
+                <source {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ craft.imager.srcset(webpTransformedImages) }}" sizes="{{ sizes }}" type="image/webp" />
+            {% endif %}
+
             <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ craft.imager.srcset(transformedImages) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
         {% elseif transforms|length %}
             {# Add webp images back in if there is a plugin—like Image Optimize—or another way to create them #}

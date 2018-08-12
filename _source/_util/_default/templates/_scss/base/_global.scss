@@ -15,7 +15,6 @@ html {
 
 // GLOBAL ELEMENTS
 button {
-  @include buttons_default;
   appearance: none;
 }
 figure {
@@ -33,23 +32,45 @@ video {
 [v-cloak] {
   display: none;
 }
+.fpo {
+  background-color: fuchsia;
+  outline: 5px solid fuchsia;
+  color: $color_white_default;
+}
 
 // GLOBAL COMPONENTS
+.c_wrapper {
+  $self: &;
+
+  @include box_modifiers($self);
+
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing_box;
+  padding-right: $spacing_box;
+  max-width: $max_width;
+
+  @at-root #{&}--no_padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  @at-root #{&}--text {
+    max-width: $max_width_text;
+  }
+}
 .c_header {
   $self: &;
 
-  @include font('apple_bold');
-  @include fz(8, 4rem, '900px');
-
   @include text_modifiers($self);
-}
-.c_subheader {
-  $self: &;
 
-  @include font('apple_bold');
-  @include fz(4, 2rem, '700px');
-
-  @include text_modifiers($self);
+  @at-root #{$self}--1 {
+    @include font('apple_bold');
+    @include fz(8, 4rem, '900px');
+  }
+  @at-root #{$self}--2 {
+    @include font('apple_bold');
+    @include fz(4, 2rem, '700px');
+  }
 }
 .c_text {
   $self: &;
@@ -57,7 +78,7 @@ video {
   @include text_modifiers($self);
 
   p {
-    margin-bottom: 2em;
+    margin-bottom: $spacing_text;
     line-height: 1.6;
 
     &:last-child {
@@ -73,22 +94,37 @@ video {
       @include font('apple_bold_italic');
     }
   }
+  ol, ul {
+    margin-bottom: $spacing_text;
 
-  table {
-    width: 100%;
-
-    td {
-      padding: 7px 0;
+    &:last-child {
+      margin-bottom: 0;
     }
 
-    thead {
-      td {
-        padding-right: 10px;
-
-        &:first-child {
-          padding-left: 0;
-        }
+    li {
+      margin-bottom: .6em;
+      margin-left: 1.5em;
+      break-inside: avoid;
+    }
+  }
+  ol {
+    @at-root #{$self}--2_column_lists#{&} {
+      @include mq(500px) {
+        column-count: 2;
+        column-gap: 50px;
       }
+    }
+  }
+  ul {
+    @at-root #{$self}--2_column_lists#{&} {
+      @include mq(500px) {
+        column-count: 2;
+        column-gap: 50px;
+      }
+    }
+
+    li {
+      list-style: disc outside;
     }
   }
 }

@@ -1,7 +1,9 @@
 .c_image_slider {
   $self: &;
 
-  height: 50vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50vw auto;
 
   @at-root #{$self}__slider {
     width: 100%;

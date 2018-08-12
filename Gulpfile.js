@@ -48,7 +48,7 @@ const paths = {
     srcImg:                 bases.source + '_img/',
     srcJs:                  bases.source + '_js/',
     srcUtil:                bases.source + '_util/',
-    filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs}', '!' + bases.source + '_html/ejs_includes/**/*'],
+    filesHtml:              [bases.source + '_html/**/*.{html,php,twig,ejs,csv,json,xml,rss}', '!' + bases.source + '_html/ejs_includes/**/*'],
     filesEjsIncludes:       bases.source + '_html/ejs_includes/**/*',
     filesImg:               bases.source + '_img/**/*.{png,jpg,gif}',
     filesJs:                bases.source + '_js/**/*.{js,vue}',
@@ -156,8 +156,7 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
             },
             choices: [
                 { name: 'HTML', value: '_html_1' },
-                { name: 'Craft 3 Website', value: '_craft3_1' },
-                { name: 'Craft 2 Website', value: '_craft2_1' }
+                { name: 'Craft 3 Website', value: '_craft3_1' }
             ]
         }];
         inquirer.prompt(questions).then(function (answers) {
@@ -190,8 +189,6 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                     break;
                 case '_craft3_1':
                     break;
-                case '_craft2_1':
-                    break;
             }
 
             inquirer.prompt(templateQuestions).then(function (templateAnswers) {
@@ -210,8 +207,6 @@ gulp.task('setup', ['setup:move:default'], function(cb) {
                         packageStyleTemplateUrlPrefix = 'dev/inv/';
                         packageStyleTemplateUrlSuffix = '';
                         packageMinifyHtml = false;
-                        break;
-                    case '_craft2_1':
                         break;
                 }
 

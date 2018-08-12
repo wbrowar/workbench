@@ -5,15 +5,27 @@
 
 <% modules.push({
   "title": "Social Media Icons",
-  "description": `Social Media icon links.</a>`,
-  "background": "dark",
+  "description": `Social Media icon links.`,
+  "background": "light",
+  "demoCode":
+`<nav class="c_social_nav">
+  <a href="https://www.facebook.com/username" class="c_social_nav__link--facebook">${ include('../../../_icon/social_facebook.svg') }</a>
+  <a href="https://twitter.com/username" class="c_social_nav__link--twitter">${ include('../../../_icon/social_twitter.svg') }</a>
+  <a href="https://www.linkedin.com/company/username" class="c_social_nav__link--linkedin">${ include('../../../_icon/social_linkedin.svg') }</a>
+  <a href="https://www.youtube.com/user/username" class="c_social_nav__link--youtube">${ include('../../../_icon/social_youtube.svg') }</a>
+  <a href="https://www.pinterest.com/username" class="c_social_nav__link--pinterest">${ include('../../../_icon/social_pinterest.svg') }</a>
+  <a href="https://www.instagram.com/username" class="c_social_nav__link--instagram">${ include('../../../_icon/social_instagram.svg') }</a>
+  <a href="mailto:hello@example.com" class="c_social_nav__link--email">${ include('../../../_icon/social_email.svg') }</a>
+</nav>`,
   "code":
-`<nav class="c_nav_social">
-  <a href="https://www.facebook.com/username" target="_blank" class="c_nav_social__icon icon_social_facebook" title="Facebook">Facebook</a>
-  <a href="https://twitter.com/username" target="_blank" class="c_nav_social__icon icon_social_twitter" title="Twitter">Twitter</a>
-  <a href="https://www.instagram.com/username" target="_blank" class="c_nav_social__icon icon_social_instagram" title="Instagram">Instagram</a>
-  <a href="https://www.linkedin.com/company/username" target="_blank" class="c_nav_social__icon icon_social_linkedin" title="LinkedIn">LinkedIn</a>
-  <a href="https://www.youtube.com/user/username" target="_blank" class="c_nav_social__icon icon_social_youtube" title="YouTube">YouTube</a>
+`<nav class="c_social_nav">
+  <a href="https://www.facebook.com/username" class="c_social_nav__link--facebook">${ ('< % -').replace(/ /gi, '') } include('../../../_icon/social_facebook.svg') ${ ('% >').replace(/ /gi, '') }</a>
+  <a href="https://twitter.com/username" class="c_social_nav__link--twitter">${ ('< % -').replace(/ /gi, '') } include('../../../_icon/social_twitter.svg') ${ ('% >').replace(/ /gi, '') }</a>
+  <a href="https://www.linkedin.com/company/username" class="c_social_nav__link--linkedin">${ ('< % -').replace(/ /gi, '') } include('../../../_icon/social_linkedin.svg') ${ ('% >').replace(/ /gi, '') }</a>
+  <a href="https://www.youtube.com/user/username" class="c_social_nav__link--youtube">${ ('< % -').replace(/ /gi, '') } include('../../../_icon/social_youtube.svg') ${ ('% >').replace(/ /gi, '') }</a>
+  <a href="https://www.pinterest.com/username" class="c_social_nav__link--pinterest">${ ('< % -').replace(/ /gi, '') } include('../../../_icon/social_pinterest.svg') ${ ('% >').replace(/ /gi, '') }</a>
+  <a href="https://www.instagram.com/username" class="c_social_nav__link--instagram">${ ('< % -').replace(/ /gi, '') } include('../../../_icon/social_instagram.svg') ${ ('% >').replace(/ /gi, '') }</a>
+  <a href="mailto:hello@example.com" class="c_social_nav__link--email">${ ('< % -').replace(/ /gi, '') } include('../../../_icon/social_email.svg') ${ ('% >').replace(/ /gi, '') }</a>
 </nav>`
 }); %>
 
@@ -33,6 +45,6 @@
   <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
 </div>
 
-<script>loadJS('<%= site_root %>js/' + jsSection + '.js?v=' + jsVersion);</script>
+<script>loadjs('<%= site_root %>js/app.js?v=' + jsVersion);</script>
 </body>
 </html>

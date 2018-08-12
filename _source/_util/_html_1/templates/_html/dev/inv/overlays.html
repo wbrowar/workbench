@@ -1,29 +1,21 @@
-<% const currentSection = 'buttons' %>
+<% const currentSection = 'overlays' %>
 <% const modules = [] %>
 
 <% const intro = false %>
 
 <% modules.push({
-  "title": "Button",
-  "description": "A call-to-action button, used to encourage user interaction.",
+  "title": "Overlay",
+  "description": "Display content in front of the current page. The `overlayIsVisible` global variable is available to the Vue root and it changes based on the `show-overlay` and `hide-overlay` events.",
   "background": "light",
-  "code": `<a href="http://google.com" class="c_button">Button</a>`
+  "code":
+`<button @click="showOverlay('overlay_1')">Show Overlay</button>
+<overlay overlay-id="overlay_1" v-cloak>
+  <div class="c_video">
+    <video data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" controls></video>
+    <noscript><video src="https://starter.wbrowar.com/video/clip.mp4" controls></video></noscript>
+  </div>
+</overlay>`,
 }); %>
-
-<% modules.push({
-"title": "Buttons",
-"description": "Quickly layout multiple buttons.",
-"background": "light",
-"modifiers": ['left', 'center', 'right'],
-"code":
-`<div class="c_buttons c_buttons--center">
-  <a href="http://google.com" class="c_button">First Button</a>
-  <a href="http://google.com" class="c_button">Second Button</a>
-  <a href="http://google.com" class="c_button">Third Button</a>
-</div>`
-}); %>
-
-
 
 
 

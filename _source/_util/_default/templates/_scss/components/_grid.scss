@@ -1,6 +1,8 @@
 .c_grid {
   $self: &;
 
+  @include box_modifiers($self);
+
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
@@ -15,21 +17,6 @@
     }
     @at-root #{$self}--4_column {
       grid-template-columns: repeat(4, 1fr);
-    }
-    @at-root #{$self}--2_row {
-      grid-template-rows: repeat(2, auto);
-    }
-  }
-
-  @at-root #{$self}__item {
-    @at-root #{&}--span_2_column {
-      grid-column-end: span 2;
-    }
-    @at-root #{&}--span_3_column {
-      grid-column-end: span 3;
-    }
-    @at-root #{&}--span_4_column {
-      grid-column-end: span 4;
     }
   }
 }

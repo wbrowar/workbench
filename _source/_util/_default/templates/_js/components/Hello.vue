@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="c_hello c_text">
         <p>{{ greeting }}, World.</p>
     </div>
 </template>
@@ -8,14 +8,16 @@
     export default {
         data() {
             return {
-                greeting: 'Hello'
+                greeting: false,
             }
         },
         props: {
-            newGreeting: false
+            newGreeting: { default: 'Hello' },
         },
         mounted() {
-            this.greeting = this.newGreeting;
+            if (this.newGreeting) {
+                this.greeting = this.newGreeting;
+            }
         }
     }
 </script>
@@ -23,7 +25,8 @@
 <style lang="scss">
     @import "./../../_scss/base/_mixins.scss";
 
-    p {
-        color: red;
+    .c_hello {
+        font-size: 2rem;
+        color: #bdc7ff;
     }
 </style>

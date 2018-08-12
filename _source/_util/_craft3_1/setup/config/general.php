@@ -9,7 +9,6 @@
 return [
     // Global settings
     '*' => [
-
         'cacheDuration' => false,
         'cpTrigger' => '<%- options.cptrigger %>',
         'defaultSearchTermOptions' => array(
@@ -47,6 +46,8 @@ return [
         'backupOnUpdate' => false,
         'devMode' => false,
         'enableTemplateCaching' => true,
+        'rememberedUserSessionDuration' => 31557600,
+        'userSessionDuration' => 31557600,
     ],
 
     // Local (development) environment

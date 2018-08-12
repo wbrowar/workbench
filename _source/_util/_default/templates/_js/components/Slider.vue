@@ -53,14 +53,16 @@
                 clearInterval(this.playInterval);
 
                 this.currentSlide = this.validateNewIndex(this.currentSlide + 1);
-                this.updateCurrentSlide();
+                // this.updateCurrentSlide();
+                VueEvent.$emit('slider-set-slide-index', this.sliderId, this.currentSlide);
             },
             onSwipeRight() {
                 // stop slider from playing
                 clearInterval(this.playInterval);
 
                 this.currentSlide = this.validateNewIndex(this.currentSlide - 1);
-                this.updateCurrentSlide();
+                // this.updateCurrentSlide();
+                VueEvent.$emit('slider-set-slide-index', this.sliderId, this.currentSlide);
             },
             updateCurrentSlide() {
                 const newIndex = this.currentSlide;
@@ -208,7 +210,7 @@
 
                 mc.add(Swipe);
 
-                mc.on('swipeleft', () =>{
+                mc.on('swipeleft', () => {
                     this.onSwipeLeft();
                 });
 
@@ -222,6 +224,9 @@
                 this.playInterval = setInterval(() => {
                     this.currentSlide = ((this.currentSlide + 1) < this.slides.length) ? this.currentSlide + 1 : 0;
                     this.updateCurrentSlide();
+
+                    // let other sliders with the same ID know which slide is the current slide
+                    VueEvent.$emit('slider-set-slide-index', this.sliderId, this.currentSlide);
                 }, this.interval);
             }
 
@@ -245,6 +250,15 @@
                     }
                 });
             }
+        },
+        watch: {
+            slides: function() {
+                if (!this.slidesContent) {
+                    this.updateTotalSlides();
+
+                    this.updateCurrentSlide();
+                }
+            }
         }
     }
 </script>
@@ -253,6 +267,8 @@
     @import "./../../_scss/base/_mixins.scss";
 
     .c_slider {
+        $self: &;
+
         position: relative;
         overflow: hidden;
     }

@@ -6,7 +6,7 @@
 <% const intro = false %>
 
 <% modules.push({
-    "title": "Class",
+    "title": "Button",
     "description": "A call-to-action button, used to encourage user interaction.",
     "background": "light",
     "twigCode":
@@ -17,6 +17,20 @@
         { "name": 'target', "required": false, "type": 'string', "description": `Adds a target attribute to the button.` },
         { "name": 'url', "required": false, "type": 'string', "description": `URL that th user will be sent to upon clicking button.` }
 ]
+}); %>
+
+<% modules.push({
+    "title": "Buttons",
+    "description": "Quickly layout multiple buttons.",
+    "background": "light",
+    "modifiers": ['left', 'center', 'right'],
+    "twigCode":
+`{% import 'macros/component.twig' as component %}
+<div class="c_buttons c_buttons--center">
+    {{ component.c('button', { label: 'First Button', url: 'http://google.com' }) }}
+    {{ component.c('button', { label: 'Second Button', url: 'http://google.com' }) }}
+    {{ component.c('button', { label: 'Third Button', url: 'http://google.com' }) }}
+</div>`
 }); %>
 
 <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>

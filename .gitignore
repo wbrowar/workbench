@@ -7,7 +7,6 @@
 logs/*
 vendor/*
 Thumbs.db
-yarn.lock
 
 # BUILD FILES
 _build/*

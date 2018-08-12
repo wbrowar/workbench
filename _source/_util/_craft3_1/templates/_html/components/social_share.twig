@@ -1,6 +1,6 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 
-{% extends 'components/_component.twig' %}
+{% extends 'partials/_component.twig' %}
 
 {# Component element overrides #}
 {% set element = 'nav' %}
@@ -16,6 +16,7 @@
         twitter: 'https://twitter.com/home?status=' ~ url,
         linkedin: 'https://www.linkedin.com/shareArticle?mini=true&url=' ~ url ~ '&amp;title=' ~ title,
         email: 'mailto:?subject=' ~ title ~ '&body=' ~ url,
+        url: url,
     } %}
 
     {% if image ?? false %}
@@ -29,4 +30,5 @@
     {% if links.linkedin ?? false %}<a class="c_{{ class }}__link--linkedin" href="{{ url(links.linkedin) }}">{{ svg('icon/social_linkedin.svg') }}</a>{% endif %}
     {% if links.pinterest ?? false %}<a class="c_{{ class }}__link--pinterest" href="{{ url(links.pinterest) }}">{{ svg('icon/social_pinterest.svg') }}</a>{% endif %}
     {% if links.email ?? false %}<a class="c_{{ class }}__link--email" href="{{ 'mailto:' not in links.email ? 'mailto:' : '' }}{{ links.email }}">{{ svg('icon/social_email.svg') }}</a>{% endif %}
+    {% if links.url ?? false %}<a class="c_{{ class }}__link--email" href="{{ links.url }}">{{ svg('icon/social_link.svg') }}</a>{% endif %}
 {%- endblock %}

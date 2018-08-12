@@ -1,11 +1,11 @@
 <template>
-    <div class="vue_overlay" v-show="isActive">
-        <div class="vue_overlay__mask" @click="closeOverlay"></div>
-        <div class="vue_overlay__content">
-            <div class="vue_overlay__content__inner" v-if="isActive">
+    <div class="c_overlay" :class="{ 'c_overlay--active': isActive }" v-show="isActive">
+        <div class="c_overlay__mask" @click="closeOverlay"></div>
+        <div class="c_overlay__content">
+            <div class="c_overlay__content__inner" v-if="isActive">
                 <slot></slot>
             </div>
-            <div class="vue_overlay__content__close icon_close" @click="closeOverlay">Close</div>
+            <div class="c_overlay__content__close icon_close" @click="closeOverlay">Close</div>
         </div>
     </div>
 </template>
@@ -16,7 +16,15 @@
             return { isActive: false };
         },
         created() {
-            VueEvent.$on('show-overlay', (id) => this.isActive = (id === this.overlayId));
+            VueEvent.$on('show-overlay', (id) => {
+                this.isActive = (id === this.overlayId);
+
+                this.$nextTick(function () {
+                    if (window.lazy !== undefined) {
+                        window.lazy.updateLoad('.c_overlay--active');
+                    }
+                });
+            });
         },
         mounted() {
             this.isActive = this.active;
@@ -38,7 +46,7 @@
     @import "./../../_scss/base/_mixins.scss";
 
     $_mq_overlay_1: 700px;
-    .vue_overlay {
+    .c_overlay {
         display: flex;
         align-items: center;
         justify-content: center;
