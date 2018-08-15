@@ -28,13 +28,13 @@ $craftEnvVars = [
     'DB_DRIVER' => "mysql",
 
     // The database server name or IP address (usually this is 'localhost' or '127.0.0.1')
-    'DB_SERVER' => "127.0.0.1",
+    'DB_SERVER' => "<%- options.dbhost %>",
 
     // The database username to connect with
-    'DB_USER' => "root",
+    'DB_USER' => "<%- options.dbuser %>",
 
     // The database password to connect with
-    'DB_PASSWORD' => "",
+    'DB_PASSWORD' => "<%- options.dbpass %>",
 
     // The name of the database to select
     'DB_DATABASE' => "<%- name %>",
@@ -46,7 +46,7 @@ $craftEnvVars = [
     'DB_TABLE_PREFIX' => "<%- options.dbprefix %>",
 
     // The port to connect to the database with. Will default to 5432 for PostgreSQL and 3306 for MySQL.
-    'DB_PORT' => "",
+    'DB_PORT' => "<%- options.dbport %>",
 
     'BASE_PATH' => realpath(dirname(__FILE__)) . '/web/',
 
