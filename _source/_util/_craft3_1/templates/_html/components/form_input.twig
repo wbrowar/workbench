@@ -1,6 +1,6 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 
-{% extends 'partials/_component.twig' %}
+{% extends 'components/_component.twig' %}
 
 {% set inputBody = null %}
 
@@ -17,6 +17,7 @@
 {% set validate = validate ?? false %}
 {% set value = value ?? null %}
 {% set vue = vue ?? false %}
+{% set inputId = inputId ?? rootClass ~ '--' ~ name %}
 
 {% set classes = (classes ?? false) ? classes ~ ' ' ~ rootClass ~ '--' ~ type : rootClass ~ '--' ~ type %}
 
@@ -51,9 +52,9 @@
 {% else %}
     {% set inputBody -%}
         {% if type in ['email', 'number', 'password', 'tel', 'text', 'search', 'submit', 'url'] %}
-            <input{% if inputClasses ?? false %} class="{{ inputClasses }}"{% endif %} id="{{ rootClass }}--{{ name }}" name="{{ name }}" type="{{ type }}" {% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if value ?? false %} value="{{ value }}"{% endif %}{% if inputAttributes ?? false %} {{ inputAttributes|raw }}{% endif %}{% if required %} required{% endif %}>
+            <input id="{{ inputId }}"{% if inputClasses ?? false %} class="{{ inputClasses }}"{% endif %} aria-label="{{ label ?? name }}" name="{{ name }}" type="{{ type }}"{% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if value ?? false %} value="{{ value }}"{% endif %}{% if inputAttributes ?? false %} {{ inputAttributes|raw }}{% endif %}{% if required %} required{% endif %}>
         {% elseif type == 'textarea' %}
-            <textarea{% if inputClasses ?? false %} class="{{ inputClasses }}"{% endif %}{% if name ?? false %} name="{{ name }}"{% endif %}{% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if inputAttributes ?? false %} {{ inputAttributes|raw }}{% endif %}{% if required %} required{% endif %}>{% if value ?? false %}{{ value }}{% endif %}</textarea>
+            <textarea id="{{ inputId }}"{% if inputClasses ?? false %} class="{{ inputClasses }}"{% endif %} aria-label="{{ label ?? name }}" name="{{ name }}"{% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if inputAttributes ?? false %} {{ inputAttributes|raw }}{% endif %}{% if required %} required{% endif %}>{% if value ?? false %}{{ value }}{% endif %}</textarea>
         {% endif %}
     {%- endset %}
 {% endif %}
