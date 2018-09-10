@@ -1,0 +1,10 @@
+.home {
+  $self: &;
+
+  // @at-root #{$self}__selector {
+  //   // will compile to .home__selector
+  //   @at-root #{&}--modifier {
+  //     // will compile to .home__selector--modifier
+  //   }
+  // }
+}

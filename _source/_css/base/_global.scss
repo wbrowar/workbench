@@ -1,0 +1,39 @@
+// GLOBAL
+
+::selection {
+  background-color: transparentize($color_black, .5);
+  color: $color_white;
+}
+
+html {
+  @include font('apple');
+  line-height: 1.4;
+  background-color: $color_white;
+  color: $color_black;
+  //-webkit-font-smoothing: antialiased;
+}
+
+// GLOBAL ELEMENTS
+button {
+  appearance: none;
+}
+figure {
+  line-height: 0;
+}
+img {
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+video {
+  width: 100%;
+}
+// hide items with v-cloak attribute until vue is loaded and ready to go
+[v-cloak] {
+  display: none;
+}
+.fpo {
+  background-color: fuchsia;
+  outline: 5px solid fuchsia;
+  color: $color_white;
+}

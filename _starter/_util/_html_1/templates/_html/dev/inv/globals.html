@@ -1,0 +1,103 @@
+<% const currentSection = 'globals' %>
+<% const modules = [] %>
+
+<% const intro = `<div class="c_text">
+  <h1 class="c_header">Globals</h1>
+  <p>Styles found throughout the website.</p>
+</div>` %>
+
+<% modules.push({
+  "title": "Colors",
+  "description": "The colors used throughout the website.",
+  "background": "light",
+  "hideCode": true,
+  "code":
+`<div class="styles__color_swatches">
+  <div class="styles__color_swatch" style="--style-color-swatch-color:rgb(255, 255, 255);">
+    <div class="styles__color_swatch__color"></div>
+    <div class="styles__color_swatch__variable">$color_white</div>
+    <div class="styles__color_swatch__value">rgb(255, 255, 255)</div>
+  </div>
+  <div class="styles__color_swatch" style="--style-color-swatch-color:rgb(0, 0, 0);">
+    <div class="styles__color_swatch__color"></div>
+    <div class="styles__color_swatch__variable">$color_black</div>
+    <div class="styles__color_swatch__value">rgb(0, 0, 0)</div>
+  </div>
+  <div class="styles__color_swatch" style="--style-color-swatch-color:rgb(45, 176, 51);">
+    <div class="styles__color_swatch__color"></div>
+    <div class="styles__color_swatch__variable">$color_alert_success</div>
+    <div class="styles__color_swatch__value">rgb(45, 176, 51)</div>
+  </div>
+  <div class="styles__color_swatch" style="--style-color-swatch-color:rgb(176, 25, 22);">
+    <div class="styles__color_swatch__color"></div>
+    <div class="styles__color_swatch__variable">$color_alert_error</div>
+    <div class="styles__color_swatch__value">rgb(176, 25, 22)</div>
+  </div>
+  <div class="styles__color_swatch" style="--style-color-swatch-color:rgb(238, 199, 0);">
+    <div class="styles__color_swatch__color"></div>
+    <div class="styles__color_swatch__variable">$color_alert_warning</div>
+    <div class="styles__color_swatch__value">rgb(238, 199, 0)</div>
+  </div>
+</div>`
+}); %>
+
+<% modules.push({
+  "title": "Headers",
+  "description": "",
+  "background": "light",
+  "code": `<h1 class="c_header c_header--1">Page<br>Header</h1>`
+}); %>
+
+<% modules.push({
+  "title": "Header 2",
+  "description": "",
+  "background": "light",
+  "code": `<h2 class="c_header c_header--2">Page<br>Subheader</h2>`
+}); %>
+
+<% modules.push({
+  "title": "General Text Styles",
+  "description": "",
+  "background": "light",
+  "code":
+`<h1 class="c_header c_header--1">Page Header</h1>
+<div class="c_text">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+  <p>Excepteur sint occaecat cupidatat non <b>proident</b>, sunt in culpa qui <i>officia deserunt</i> mollit <i><b>anim</b></i> id <b><i>est laborum</i></b>.</p>
+  <ul>
+    <li>List item I</li>
+    <li>List item II</li>
+    <li>List item III</li>
+  </ul>
+</div>
+<h2 class="c_header c_header--2">Section Subheader</h2>
+<div class="c_text">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+  <ol>
+    <li>List item I</li>
+    <li>List item II</li>
+    <li>List item III</li>
+  </ol>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+</div>`
+}); %>
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <title></title>
+  <meta name="description" content="">
+  <%- include('../../ejs_includes/_head_meta') %>
+  <%- include('../../ejs_includes/_head_scripts') %>
+  <%- include('../../ejs_includes/_head_tracking') %>
+</head>
+<body>
+<div id="page">
+  <%- include('../../ejs_includes/style_inventory/_wrapper', {"activeItem": currentSection, "intro": intro, "modules": modules}) %>
+</div>
+
+<script>loadjs('<%= site_root %>js/app.js?v=' + jsVersion);</script>
+</body>
+</html>

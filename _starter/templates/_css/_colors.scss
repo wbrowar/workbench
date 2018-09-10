@@ -1,0 +1,9 @@
+// COLORS
+:root {
+<% for (const color in pkg.colors) { %>  --color-<%- color %>: <%- pkg.colors[color] %>;
+<% } %>}
+
+<% for (const color in pkg.colors) { %>$color_<%- color %>: var(--color-<%- color %>);
+<% } %>
+<% for (const color in pkg.colors) { %>$color_<%- color %>_raw: <%- pkg.colors[color] %>;
+<% } %>

@@ -1,0 +1,62 @@
+<div class="styles">
+    <%- include('_nav', {"activeItem": activeItem}) %>
+    <div>
+        <% if (intro) { %><div class="styles_example">
+          <div class="styles__example__display">
+            <%- intro %>
+          </div>
+        </div><% } %>
+
+        <% for(var module in modules) { %>
+            <div class="styles__example">
+                <div class="styles__example__title"><h2><%- modules[module].title %></h2></div>
+                <div class="styles__example__description"><p><%- modules[module].description %></p></div>
+                <div class="styles__example__display" style="background-color: <% if (modules[module].background === 'dark') { %>#2B303B<% } else if (modules[module].background === 'light') { %>#FFFFFF<% } else { %><%- modules[module].background %><% } %>;">
+                  <% if (modules[module].demoCode) { %><%- modules[module].demoCode %><% } else if (modules[module].twigCode) { %><%- modules[module].twigCode %><% } else { %><%- modules[module].code %><% } %>
+                </div><% if (!modules[module].hideCode) { %><% if (modules[module].code) { %>
+                <div class="styles__example__code">
+                    <pre><code v-pre><%= modules[module].code %></code></pre>
+                </div><% } %><% if (modules[module].twigCode) { %>
+                <div class="styles__example__code styles__example__code--twig">
+                    {% verbatim %}<pre><code><%= modules[module].twigCode %></code></pre>{% endverbatim %}
+                </div><% } %><% if (modules[module].modifiers) { %>
+                <ul class="styles__example__modifiers">
+                    <li style="font-weight: bold;">Modifiers:</li>
+                    <% for(var i=0; i<modules[module].modifiers.length; i++) { %><li><%= modules[module].modifiers[i] %></li><% } %>
+                </ul><% } %><% if (modules[module].options) { %>
+                <table class="styles__example__table">
+                    <thead>
+                        <td><b>Name</b></td>
+                        <td><b>Type</b></td>
+                        <td><b>Default</b></td>
+                        <td><b>Description</b></td>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<modules[module].options.length; i++) { %>
+                            <tr>
+                                <td><b><%= modules[module].options[i].name %></b><%= modules[module].options[i].required ? ' (required)' : '' %></td>
+                                <td><%= modules[module].options[i].type %></td>
+                                <td><i><%= modules[module].options[i].default || 'null' %></i></td>
+                                <td><%= modules[module].options[i].description %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <% } %><% } %>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<% if (templateDirectory === '_craft3_1') { %>
+    {% set devStyleJs -%}
+        loadCSS("<%= site_root %>css/dev-styles.css?v=<%= version %>");
+    {%- endset %}
+    {% js devStyleJs %}
+<% } else { %>
+    <script>loadCSS("<%= site_root %>css/dev-styles.css?v=<%= version %>");</script>
+    <noscript>
+        <!-- backup for critcss -->
+        <link rel="stylesheet" href="<%= site_root %>css/dev-styles.css?v=<%= version %>">
+    </noscript>
+<% } %>

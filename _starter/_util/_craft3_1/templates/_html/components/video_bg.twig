@@ -1,0 +1,15 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'partials/_component.twig' %}
+
+{# Variables #}
+{% set video = (video ?? false) ? video|merge({ class: class ~ '__video' }) : { class: class ~ '__video' } %}
+{% set video = (video.autoplay ?? false) ? video : video|merge({ autoplay: true }) %}
+{% set video = (video.controls ?? false) ? video : video|merge({ controls: false }) %}
+{% set video = (video.loop ?? false) ? video : video|merge({ loop: true }) %}
+{% set video = (video.playsinline ?? false) ? video : video|merge({ playsinline: true }) %}
+
+{% block content -%}
+    {% import 'macros/component.twig' as component %}
+    {{ component.c('video', video) }}
+{%- endblock %}

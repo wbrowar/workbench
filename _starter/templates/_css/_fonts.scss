@@ -1,0 +1,45 @@
+<% for (const font in pkg.fonts) { %><% if (pkg.fonts[font].files !== undefined) { %>$font_embedded_<%- font %>: false;<% }; %>
+<% }; %>
+
+@mixin embed_font($font_name) {
+  <% let first = true %>@at-root {<% for (const font in pkg.fonts) { %><% if (pkg.fonts[font].files !== undefined) { %>
+    @<% if (!first) { %>else <% } %>if $font_name == '<%- font %>' {
+      @if $font_embedded_<%- font %> == false {
+        $font_embedded_<%- font %>: true;
+        @font-face {
+            font-family: <%- pkg.fonts[font].fontFamily %>;
+            src: url('<%= pkg.fonts[font].files.eot %>');
+            src: url('<%= pkg.fonts[font].files.eot %>?#iefix') format('embedded-opentype')<% if (pkg.fonts[font].files.woff2 !== undefined) { %>,
+                 url('<%= pkg.fonts[font].files.woff2 %>') format('woff2')<% } %><% if (pkg.fonts[font].files.woff !== undefined) { %>,
+                 url('<%= pkg.fonts[font].files.woff %>') format('woff')<% } %>;
+            font-style: <%= pkg.fonts[font].fontStyle %>;
+            font-weight: <%= pkg.fonts[font].fontWeight %>;
+            font-display: swap;
+        }
+      }
+    }<% first = false %><% }; %><% }; %>
+  }
+}
+
+// Embed fonts from font service or hosted locally
+@mixin font($font_name) {
+  $font_family: '';
+  $font_fallbacks: sans-serif !default;
+  $font_weight: normal !default;
+  $font_style: normal !default;
+<% first = true %><% for (const font in pkg.fonts) { %>
+  @<% if (!first) { %>else <% } %>if $font_name == '<%- font %>' {
+    $font_family: <%- pkg.fonts[font].fontFamily %>;
+    $font_fallbacks: <%- pkg.fonts[font].fallbackStack %>;
+    $font_style: <%- pkg.fonts[font].fontStyle %>;
+    $font_weight: <%- pkg.fonts[font].fontWeight %>;
+  }<% first = false %><% }; %>
+
+  font: {
+    family: $font_family, $font_fallbacks;
+    weight: $font_weight;
+    style: $font_style;
+  }
+
+  @include embed_font($font_name);
+}

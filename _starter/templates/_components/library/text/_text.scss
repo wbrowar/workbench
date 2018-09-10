@@ -1,0 +1,56 @@
+.c_text {
+  $self: &;
+
+  @include text_modifiers($self);
+
+  p {
+    margin-bottom: $spacing_text;
+    line-height: 1.6;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+    b, strong {
+      @include font('apple_bold');
+    }
+    i, em {
+      @include font('apple_italic');
+    }
+    b i, i b, strong em, em strong {
+      @include font('apple_bold_italic');
+    }
+  }
+  ol, ul {
+    margin-bottom: $spacing_text;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    li {
+      margin-bottom: .6em;
+      margin-left: 1.5em;
+      break-inside: avoid;
+    }
+  }
+  ol {
+    @at-root #{$self}--2_column_lists#{&} {
+      @include mq(500px) {
+        column-count: 2;
+        column-gap: 50px;
+      }
+    }
+  }
+  ul {
+    @at-root #{$self}--2_column_lists#{&} {
+      @include mq(500px) {
+        column-count: 2;
+        column-gap: 50px;
+      }
+    }
+
+    li {
+      list-style: disc outside;
+    }
+  }
+}

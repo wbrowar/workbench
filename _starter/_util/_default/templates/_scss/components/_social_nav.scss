@@ -1,0 +1,26 @@
+$_margin: 5px;
+$_width: 30px;
+$_height: 30px;
+.c_social_nav {
+  $self: &;
+
+  margin-right: -$_margin;
+  margin-left: -$_margin;
+
+  @at-root #{$self}__icon {
+    @include hide_text;
+    display: inline-block;
+    margin-right: $_margin;
+    margin-left: $_margin;
+    width: $_width;
+    height: $_height;
+  }
+
+  svg {
+    display: inline-block;
+    margin-right: $_margin;
+    margin-left: $_margin;
+    width: $_width;
+    height: $_height;
+  }
+}

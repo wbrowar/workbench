@@ -1,0 +1,25 @@
+.c_button {
+  $self: &;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  padding: .8em 20px .7em;
+  width: 100%;
+  max-width: 300px;
+  background-color: $color_black;
+  border: none;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: $color_white;
+
+  &:hover {
+    opacity: .7;
+  }
+}

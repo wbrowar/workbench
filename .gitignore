@@ -11,3 +11,6 @@ Thumbs.db
 # BUILD FILES
 _build/*
 node_modules/*
+
+# DEV FILES
+public
