@@ -31,8 +31,9 @@ let paths = getPaths(pkg.paths),
 // set variables to be processed by EJS
 let ejsVars = Object.assign({
     favicons: [],
-    pkg: pkg,
     filenameVersion: filenameVersion('.'),
+    paths: paths,
+    pkg: pkg,
     release: release,
     version: version,
 }, pkg.ejsVars);
@@ -76,31 +77,35 @@ async function run() {
     if (runBuild) {
         log('title', `Running Build`);
 
-        const buildCleanAll                  = clean();
-        let buildCleanComplete               = await buildCleanAll;
+        const buildCleanAll                      = clean();
+        let buildCleanComplete                   = await buildCleanAll;
 
         if (release) {
-            const buildCompileFavicon        = compileFavicon();
-            let buildCompileFaviconComplete  = await buildCompileFavicon;
+            const buildCompileFavicon            = compileFavicon();
+            let buildCompileFaviconComplete      = await buildCompileFavicon;
         }
 
-        const buildCompileCssTemplates       = compileCssTemplates();
-        const buildUpdateComponents          = updateComponents();
+        const buildCompileCssTemplates           = compileCssTemplates();
+        const buildUpdateComponents              = updateComponents();
+        let buildCompileCssTemplatesComplete     = await buildCompileCssTemplates;
+        let buildUpdateComponentsComplete        = await buildUpdateComponents;
 
-        let buildCompileCssTemplatesComplete = await buildCompileCssTemplates;
-        let buildUpdateComponentsComplete    = await buildUpdateComponents;
+        const buildCompileCss                    = compileCss();
+        const buildCompileJs                     = compileJs();
+        let buildCompileCssComplete              = await buildCompileCss;
+        let buildCompileJsComplete               = await buildCompileJs;
 
-        const buildCompileCss                = compileCss();
-        const buildCompileJs                 = compileJs();
-        const buildCompileTemplates          = compileTemplates();
+        const buildUpdateStyleInventory          = updateStyleInventory();
+        let buildUpdateStyleInventoryComplete    = await buildUpdateStyleInventory;
 
-        let buildCompileCssComplete          = await buildCompileCss;
-        let buildCompileJsComplete           = await buildCompileJs;
-        let buildCompileTemplatesComplete    = await buildCompileTemplates;
+        const buildCompileTemplates              = compileTemplates();
+        let buildCompileTemplatesComplete        = await buildCompileTemplates;
 
         if (!runWatch) {
-            const buildCleanComponents       = clean('components');
-            let buildCleanComponentsComplete = await buildCleanComponents;
+            const buildCleanComponents           = clean('components');
+            const buildCleanStyleInventory       = clean('style_inventory');
+            let buildCleanComponentsComplete     = await buildCleanComponents;
+            let buildCleanStyleInventoryComplete = await buildCleanStyleInventory;
         }
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Build Complete' });
@@ -152,7 +157,7 @@ async function run() {
         log('title', `Running Watch`);
 
         if (pkg.browserSync.url === 'CHANGE_ME') {
-            $.gutil.log($.gutil.colors.inverse(' Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json. '));
+            log('warn', 'Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json.')
         } else {
             browserSync.init({
                 browser: pkg.browserSync.browser,
@@ -167,11 +172,21 @@ async function run() {
         });
 
         const watchComponents = watch(paths.components.src, async () => {
-            const watchUpdateComponents          = updateComponents();
-            let watchUpdateComponentsComplete    = await watchUpdateComponents;
+            const watchUpdateComponents           = updateComponents();
+            let watchUpdateComponentsComplete     = await watchUpdateComponents;
 
-            const watchCompileCssTemplates       = compileCssTemplates();
-            let watchCompileCssTemplatesComplete = await watchCompileCssTemplates;
+            const watchCompileCssTemplates        = compileCssTemplates();
+            let watchCompileCssTemplatesComplete  = await watchCompileCssTemplates;
+
+            const watchUpdateStyleInventory       = updateStyleInventory();
+            let watchUpdateStyleInventoryComplete = await watchUpdateStyleInventory;
+
+            const watchCompileCss                 = compileCss();
+            const watchCompileJs                  = compileJs();
+            const watchCompileTemplates           = compileTemplates();
+            let watchCompileCssComplete           = await watchCompileCss;
+            let watchCompileJsComplete            = await watchCompileJs;
+            let watchCompileTemplatesComplete     = await watchCompileTemplates;
 
             browserSync.reload();
             notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Components Updated' });
@@ -214,6 +229,8 @@ async function run() {
 }
 
 
+
+
 async function clean(type = 'all') {
     log('title', `Cleaning ${ type }`);
 
@@ -222,12 +239,13 @@ async function clean(type = 'all') {
 
         switch (type) {
             case 'components':
-                cleanPaths.push(paths.css.src + 'components');
-                cleanPaths.push(paths.js.src + 'components');
-                cleanPaths.push(paths.templates.src + 'components');
+                cleanPaths.push(paths.css.src + `components`);
+                cleanPaths.push(paths.js.src + `components`);
+                cleanPaths.push(paths.templates.src + `components`);
                 break;
             case 'css':
                 cleanPaths.push(paths.css.dist + `**/*`);
+                cleanPaths.push(paths.templates.src + `_css`);
                 break;
             case 'icon':
                 cleanPaths.push(paths.icon.dist + `**/*`);
@@ -241,15 +259,20 @@ async function clean(type = 'all') {
             case 'templates':
                 cleanPaths.push(paths.templates.dist + `**/*.{${ pkg.templateExtensions }}`);
                 break;
+            case 'style_inventory':
+                cleanPaths.push(paths.templates.src + `dev/inv`);
+                break;
             default:
-                cleanPaths.push(paths.css.src + 'components/**/*');
-                cleanPaths.push(paths.js.src + 'components/**/*');
-                cleanPaths.push(paths.templates.src + 'components/**/*');
+                cleanPaths.push(paths.css.src + `components`);
+                cleanPaths.push(paths.js.src + `components`);
+                cleanPaths.push(paths.templates.src + `components`);
                 cleanPaths.push(paths.css.dist + `**/*`);
+                cleanPaths.push(paths.templates.src + `_css`);
                 cleanPaths.push(paths.icon.dist + `**/*`);
                 cleanPaths.push(paths.img.dist + `**/*`);
                 cleanPaths.push(paths.js.dist + `**/*`);
                 cleanPaths.push(paths.templates.dist + `**/*.{${ pkg.templateExtensions }}`);
+                cleanPaths.push(paths.templates.src + `dev/inv`);
         }
 
         let tasks = cleanPaths.length; // count of tasks below
@@ -292,13 +315,16 @@ async function compileCssTemplates() {
             let count = files.length;
             files.forEach((item) => {
                 ejs.renderFile(item, ejsVars, {}, function(err, str) {
+                    if (err) {
+                        log('warn', err);
+                    }
                     fs.outputFile(paths.css.src + 'automated/' + path.basename(item), str, (err) => {
-                        if(!err){
+                        if(!err) {
                             log('verbose', `CSS templates compiled: ${ item }`, verbose);
-                        }
-                        count--;
-                        if (count === 0) {
-                            resolve();
+                            count--;
+                            if (count === 0) {
+                                resolve();
+                            }
                         }
                     });
                 });
@@ -308,12 +334,13 @@ async function compileCssTemplates() {
     log('title', `CSS Components Moved`);
     return p;
 }
+
 async function compileCss() {
     log('title', `Compiling CSS`);
 
     const p = await new Promise(resolve => {
-        glob(`${ paths.css.src }/*.scss`, async function (er, files) {
-            let compileTemplatesComplete = await compileTemplates;
+        glob(`${ paths.css.src }/*.scss`, function (er, files) {
+            let count = files.length;
             files.forEach((item) => {
                 log('verbose', `CSS: compiling ${ item }`, verbose);
 
@@ -323,20 +350,26 @@ async function compileCss() {
                     outputStyle: release ? 'compressed' : 'expanded',
                 }, function(error, result) { // node-style callback from v3.0.0 onwards
                     if (error) {
-                        log('verbose', `SASS Error: ${ error.status }`); // used to be "code" in v2x and below
-                        log('verbose', `SASS Error: ${ error.column }`);
-                        log('verbose', `SASS Error: ${ error.message }`);
-                        log('verbose', `SASS Error: ${ error.line }`);
+                        log('warn', `SASS Error: ${ error.file }`);
+                        log('warn', `Line: ${ error.line }`);
+                        log('warn', `Column: ${ error.column }`);
+                        log('warn', `Error: ${ error.message }`);
                     }
                     else {
-                        const outputFilename = `${ paths.css.dist }${ path.basename(item, path.extname(item)) }${ filenameVersion('.') }.css`;
-                        fs.outputFile(outputFilename, result.css, (err) => {
-                            if(!err){
-                                log('verbose', `SASS compiled: ${ item } → ${ outputFilename }`, verbose);
+                        const outputFilename = `${ path.basename(item, path.extname(item)) }${ filenameVersion('.') }.css`;
+                        fs.outputFile(paths.css.dist + outputFilename, result.css, (err) => {
+                            if(!err) {
+                                fs.outputFile(`${ paths.templates.src }_css/${ outputFilename }`, result.css, (err) => {
+                                    if(!err) {
+                                        log('verbose', `SASS compiled: ${ item } → ${ outputFilename }`, verbose);
+                                        count--;
+                                        if (count === 0) {
+                                            resolve();
+                                        }
+                                    }
+                                });
                             }
                         });
-
-                        resolve();
                     }
                 });
             });
@@ -418,19 +451,22 @@ async function compileJs() {
                     chunkFilename: '[id].js',
                     filename: `[name]${ legacySuffix + filenameVersion('.') }.js`,
                     path: paths.js.dist,
+                    publicPath: "/js/",
                 };
             });
 
-            log('verbose', `JS Webpack config: ${ JSON.stringify(webpackConfig, null, 2) }`, verbose);
+            log('verbose', `JS Webpack config:`, verbose);
+            log('dump', webpackConfig, verbose);
 
             webpack(webpackConfig, function (err, stats) {
-                if (err || stats.hasErrors()) {
-                    throw new Error(err);
+                if (err) {
+                    // throw new Error(err);
+                    log('warn', err);
                 }
 
                 log('verbose', `JS compiled: ${ stats.toString({
                     assets: true,
-                    chunks: false,
+                    chunks: true,
                     chunkModules: false,
                     colors: true,
                     hash: false,
@@ -456,8 +492,11 @@ async function compileTemplates() {
             let count = files.length;
             files.forEach((item) => {
                 ejs.renderFile(item, ejsVars, {}, function(err, str) {
+                    if (err) {
+                        log('warn', err);
+                    }
                     fs.outputFile(item.replace(paths.templates.src, paths.templates.dist), str, (err) => {
-                        if(!err){
+                        if(!err) {
                             log('verbose', `EJS compiled: ${ item }`, verbose);
                             count--;
                             if (count === 0) {
@@ -507,8 +546,11 @@ async function updateComponents() {
             if (count > 0) {
                 files.forEach((item) => {
                     ejs.renderFile(item, ejsVars, {}, function(err, str) {
+                        if (err) {
+                            log('warn', err);
+                        }
                         fs.outputFile(`${ paths.css.src }components/${ path.basename(item) }`, str, (err) => {
-                            if(!err){
+                            if(!err) {
                                 log('verbose', `Component style updated: ${ item }`, verbose);
                             }
                             count--;
@@ -528,8 +570,11 @@ async function updateComponents() {
             if (count > 0) {
                 files.forEach((item) => {
                     ejs.renderFile(item, ejsVars, {}, function(err, str) {
+                        if (err) {
+                            log('warn', err);
+                        }
                         fs.outputFile(`${ paths.js.src }components/${ path.basename(item) }`, str, (err) => {
-                            if(!err){
+                            if(!err) {
                                 log('verbose', `Component script updated: ${ item }`, verbose);
                                 count--;
                                 if (count === 0) {
@@ -548,6 +593,40 @@ async function updateComponents() {
     return p;
 }
 
+async function updateStyleInventory() {
+    if (pkg.styleInventory.enabled) {
+        log('title', `Generating Style Inventory`);
+
+        const p = await new Promise(resolve => {
+            let count = Object.keys(pkg.styleInventory.pages).length;
+            Object.keys(pkg.styleInventory.pages).forEach((item) => {
+                const vars = Object.assign({
+                    page: item,
+                }, ejsVars);
+
+                ejs.renderFile(`${ paths.starter.styleInventory }_page.ejs`, vars, {}, function(err, str) {
+                    if (err) {
+                        log('warn', err);
+                    }
+                    fs.outputFile(`${ paths.templates.src }dev/inv/${ item }.${ pkg.projectTemplateLanguage }`, str, (err) => {
+                        if(!err) {
+                            log('verbose', `Style Inventory : ${ item }`, verbose);
+                            count--;
+                            if (count === 0) {
+                                resolve();
+                            }
+                        }
+                    });
+                });
+            });
+        }).then(()=>'');
+        log('title', `Style Inventory Generated`);
+        return p;
+    } else {
+        return true;
+    }
+}
+
 function watch(directory, callback) {
     if (fs.existsSync(directory)) {
         let fsWait = false;
@@ -556,7 +635,7 @@ function watch(directory, callback) {
                 if (fsWait) return;
                 fsWait = setTimeout(() => {
                     fsWait = false;
-                }, 500);
+                }, 1000);
                 callback(filename);
             }
         });
@@ -629,6 +708,7 @@ function getPaths(paths) {
         starter: {
             backups: process.cwd() + '/_starter/backups/',
             templates: process.cwd() + '/_starter/templates/',
+            styleInventory: process.cwd() + '/_starter/style_inventory/',
         }
     }
 }
@@ -642,23 +722,26 @@ function getVersion(version, env) {
 function log(type = 'message', message, verbose = false) {
     switch (type) {
         case 'app':
-            console.log(chalk.bgRed(`  ${ message }  `));
+            console.log(chalk.bgRgb(230, 20, 20)(`  ${ message }  `));
             break;
         case 'dump':
             if (verbose) {
-                console.log(chalk.magenta.bold(`Dump: ${ JSON.stringify(message, null, 2) }`) + chalk.red(message));
+                console.log(chalk.magenta.bold(`📦 ${ JSON.stringify(message, null, 2) }`));
             }
             break;
         case 'running':
-            console.log(chalk.green.bold('Running: ') + chalk.green(message));
+            console.log(chalk.green.bold('💻 ') + chalk.green(message));
             break;
         case 'title':
-            console.log(chalk.blue.bold('[ ' + message + ' ]'));
+            console.log(chalk.blue.bold('🛠 ' + message));
             break;
         case 'verbose':
             if (verbose) {
-                console.log(chalk.red.bold('Build: ') + chalk.red(message));
+                console.log(chalk.keyword('orange')('🕵 ' + message));
             }
+            break;
+        case 'warn':
+            console.warn(chalk.red.bold('🚧 ' + message));
             break;
         default:
             console.log(message);

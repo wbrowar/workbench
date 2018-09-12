@@ -18,6 +18,8 @@ $border_radius: 4px;
   $self: &;
 
   @at-root #{$self}__menu {
+    $menu: &;
+
     display: flex;
     flex-flow: row wrap;
     background-color: $color_dev_black;
@@ -37,17 +39,17 @@ $border_radius: 4px;
       color: $color_dev_grey_links;
       transition: color .2s ease-out, background .2s ease-out;
 
-      @at-root #{&}__active_spacer, & > #{&}__active_indicator {
+      @at-root #{$menu}__active_spacer, & > #{$menu}__active_indicator {
         display: block;
         width: 6px;
         height: 6px;
       }
-      @at-root #{&}__active_spacer {
+      @at-root #{$menu}__active_spacer {
         bottom: 2px;
       }
-      @at-root #{&}__active_indicator {
+      @at-root #{$menu}__active_indicator {
         margin-top: 2px;
-        background-image: url('data:image/svg+xml;utf8,<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.6 10.6"><defs><style>.cls-1{fill:#7a869e;}</style></defs><title>Untitled-1</title><circle class="cls-1" cx="5.3" cy="5.3" r="5.3"/></svg>');
+        background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10.6 10.6'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%237a869e;%7D%3C/style%3E%3C/defs%3E%3Ctitle%3EUntitled-1%3C/title%3E%3Ccircle class='cls-1' cx='5.3' cy='5.3' r='5.3'/%3E%3C/svg%3E");
       }
       &.active {
         color: $color_dev_black_border;
@@ -237,9 +239,5 @@ $border_radius: 4px;
         @extend #{$self}__box--flex;
       }
     }
-  }
-
-  @at-root #{$self}__color_swatch {
-
   }
 }

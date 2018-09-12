@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <title></title>
+        <meta name="description" content="">
+        <!-- styles -->
+        <link rel="preload" href="/css/app.css" as="style" onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/css/app.css"></noscript>
+
+        <!-- critcss -->
+
+        <!-- scripts -->
+        <script type="text/javascript">
+            var jsDevMode = true;
+
+            // remove no-js class for when Javascript is enabled
+            document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+        </script>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- meta icons -->
+    <script>
+        
+    </script>
+    </head>
+    <body>
+        <div id="page">
+
+<div class="styles">
+    <div class="styles__menu">
+        <a href="/dev/inv/index.html">Style Inventory</a>
+        <a href="/dev/inv/globals.html">Globals</a>
+        <a href="/dev/inv/buttons.html">Buttons</a>
+        <a href="/dev/inv/forms.html">Forms</a>
+        <a href="/dev/inv/grid.html">Grids</a>
+        <a href="/dev/inv/icons.html">Icons</a>
+        <a href="/dev/inv/media.html">Media</a>
+        <a href="/dev/inv/messages.html">Messages</a>
+        <a class="active" href="/dev/inv/overlays.html"><span class="styles__menu__active_spacer"></span>Overlays<span class="styles__menu__active_indicator"></span></a>
+        <a href="/dev/inv/sliders.html">Sliders</a>
+    </div>
+    <div>
+        
+            
+                
+
+<div class="styles__example">
+    <div class="styles__example__title"><h2>Overlay</h2></div>
+    <div class="styles__example__description"><p>Display content in front of the current page. The `overlayIsVisible` global variable is available to the Vue root and it changes based on the `show-overlay` and `hide-overlay` events.</p></div>
+    <div class="styles__example__display" style="background-color: #FFFFFF;">
+        <button @click="showOverlay('overlay_1')">Show Overlay</button>
+<overlay overlay-id="overlay_1" v-cloak>
+  <div class="c_video">
+    <video data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" controls></video>
+    <noscript><video src="https://starter.wbrowar.com/video/clip.mp4" controls></video></noscript>
+  </div>
+</overlay>
+    </div>
+    <div class="styles__example__code styles__example__code--html">
+        <pre><code v-pre>&lt;button @click=&#34;showOverlay(&#39;overlay_1&#39;)&#34;&gt;Show Overlay&lt;/button&gt;
+&lt;overlay overlay-id=&#34;overlay_1&#34; v-cloak&gt;
+  &lt;div class=&#34;c_video&#34;&gt;
+    &lt;video data-lazy-load data-src=&#34;https://starter.wbrowar.com/video/clip.mp4&#34; controls&gt;&lt;/video&gt;
+    &lt;noscript&gt;&lt;video src=&#34;https://starter.wbrowar.com/video/clip.mp4&#34; controls&gt;&lt;/video&gt;&lt;/noscript&gt;
+  &lt;/div&gt;
+&lt;/overlay&gt;</code></pre>
+    </div>
+</div>
+            
+        
+    </div>
+</div>
+
+
+    <link rel="preload" href="/css/dev-styles.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/css/dev-styles.css"></noscript>
+
+
+        </div>
+    <script type="module" src="/js/app.js"></script>
+    <script nomodule src="/js/app-legacy.js"></script>
+    </body>
+</html>

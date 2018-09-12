@@ -1,0 +1,23 @@
+<% let component = {
+  title: "Audio File",
+  description: "Plays an audio file using default browser controls.",
+  background: "light",
+  html: {
+    code:
+`<div class="c_audio">
+  <audio data-lazy-load data-src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio>
+  <noscript><audio src="https://starter.wbrowar.com/audio/clip.mp3" controls></audio></noscript>
+</div>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{{ component.c('audio', { url: 'https://starter.wbrowar.com/audio/clip.mp3' }) }}`,
+    options: [
+      { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `Adds the data attributes used by lazy.js to load the file when the user scrolls to it on the page.` },
+      { "name": 'loop', "required": false, "type": 'boolean', "default": `true`, "description": `Loops the audio file.` },
+      { "name": 'url', "required": true, "type": 'string', "description": `URL of audio file.` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

@@ -1,0 +1,61 @@
+<%- include(paths.starter.styleInventory + '_intro.ejs', { text: `
+            <h1 class="c_header c_header--1">Style Inventory</h1>
+            <p>Websites are marketing tools that evolve as business needs change. A style inventory ensures elements and components stay consistent as code is added and modified over time.</p>
+            <p>For example, a button may be added as link at the bottom of a paragraph, as part of a call to action lockup, and as the submit trigger for a form. In all of these situations we want our audience to understand that that tapping this button performs an action. Instead of styling three different buttons, we can use one style that is used across all places. To see all styles at once, the <a href="dev/inv/buttons">Buttons</a> page in the style inventory shows how these buttons will look—as well as any future variations that may arise.</p>
+            <h2 class="c_header c_header--2">Designers</h2>
+            <p>The style inventory is like a living style guide for the website, and can be referred to when new design elements are needed.</p>
+            <h2 class="c_header c_header--2">Developers</h2>
+            <p>The style inventory uses the \`app.css\` stylesheet and javascript modules to display elements and components as they would look and work on the website. Copy the markup from the style inventory to add an element or component to the website.</p>
+` }) %>
+
+<% if (pkg.projectTemplateLanguage === 'twig') { %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: {
+    "title": "Twig Components",
+    "description": "These options can be added to the configuration of any component that is called through `component.c()`.",
+    background: "light",
+    twig: {
+        code:
+`{% import 'macros/component.twig' as component %}
+
+{% set afterTwig -%}
+    ••• AFTER •••
+{%- endset %}
+{% set beforeTwig -%}
+    +++ BEFORE +++
+{%- endset %}
+
+{{ component.c('button', {
+    after: afterTwig,
+    attributes: 'data-hello',
+    before: beforeTwig,
+    classes: 'red',
+    label: 'Example',
+    modifiers: ['red', 'green'],
+    styles: 'background-color: red;',
+    target: '_blank',
+    url: 'http://google.com'
+}) }}`,
+        "options": [
+            { "name": 'after', "required": false, "type": 'block', "description": `Code that's outputted after the component element.` },
+            { "name": 'attributes', "required": false, "type": 'string', "default": `''`, "description": `Additional attributes added to the component element. This can be used to add Vue functionality to a component.` },
+            { "name": 'before', "required": false, "type": 'block', "description": `Code that's outputted before the component element.` },
+            { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Add classes to the component element.` },
+            { "name": 'content', "required": false, "type": 'block', "description": `Code that goes directly inside the component element.` },
+            { "name": 'element', "required": false, "type": 'string', "default": `'div'`, "description": `Allows you to change the element type of the component.` },
+            { "name": 'id', "required": false, "type": 'string', "description": `The id of the component element.` },
+            { "name": 'modifiers', "required": false, "type": 'array', "default": `[]`, "description": `Add component modifier classes. For example, on the 'c_button' component, setting modifiers to ['red'] would result in the class 'c_button--red' being added.` },
+            { "name": 'styles', "required": false, "type": 'string', "default": `''`, "description": `Adds inline styles to the component element.` },
+        ],
+    },
+}, paths: paths, pkg: pkg, release: release }) %>
+<% } %>
+
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: {
+    "title": "CSS Components",
+    "description": `In addition to component-specific modifiers, general CSS modifiers are available for many box and text elements.`,
+    "background": "dark",
+    "modifiers": ['center', 'margin', 'margin--auto', 'margin--top', 'margin--right', 'margin--bottom', 'margin--left', 'padding', 'padding--top', 'padding--right', 'padding--bottom', 'padding--left'],
+    html: {
+        code: `<div class="c_header c_header--1 c_header--center c_header--padding">🔥</div>`,
+    },
+}, paths: paths, pkg: pkg, release: release }) %>

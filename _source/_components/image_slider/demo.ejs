@@ -1,0 +1,121 @@
+<% let component = {
+  title: "Image Slider",
+  description: "A slider that displays images, videos, and custom HTML.",
+  background: "light",
+  html: {
+    code:
+`<div class="c_image_slider">
+  <slider class="c_image_slider__slider"
+          slider-id="image_slider"
+          interval="5000">
+    <slider-slide class="c_image_slider__slide">
+      <div class="c_image_slider__slide__background">
+        <div class="c_image_bg">
+          <figure class="c_image_bg__image c_image">
+            <picture>
+              <source srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" sizes="100vw" type="image/webp"/>
+              <img srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sizes="100vw" alt=""/>
+            </picture>
+          </figure>
+        </div>
+      </div>
+    </slider-slide>
+    <slider-slide class="c_image_slider__slide">
+      <div class="c_image_slider__slide__background">
+        <div class="c_video_bg">
+          <div class="c_video_bg__video">
+            <video src="https://starter.wbrowar.com/video/clip.mp4" autoplay loop playsinline></video>
+            <noscript>
+              <video src="https://starter.wbrowar.com/video/clip.mp4" autoplay loop></video>
+            </noscript>
+          </div>
+        </div>
+      </div>
+    </slider-slide>
+    <slider-slide class="c_image_slider__slide">
+      <div class="c_image_slider__slide__background">
+        <div class="c_image_bg">
+          <figure class="c_image_bg__image c_image">
+            <picture>
+              <source srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" sizes="100vw" type="image/webp"/>
+              <img srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sizes="100vw" alt=""/>
+            </picture>
+          </figure>
+        </div>
+      </div>
+      <div class="c_image_slider__slide__foreground">
+        <h2 class="c_subheader">Title of this element</h2></div>
+      <a class="c_image_slider__slide__url_mask" href="http://google.com"></a>
+    </slider-slide>
+  </slider>
+  <slider-control slider-id="image_slider" :show-back="false" :show-next="false"></slider-control>
+</div>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+
+{% set slides = [] %}
+
+{# image slide #}
+{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO@2x.png') %}
+{% set options = {
+    image: image,
+    title: image.title ?? '',
+    imager: {
+        transforms: [
+            { width: 500 },
+            { width: 800 },
+        ],
+    }
+} %}
+
+{% set slides = slides|merge([{
+    image: options
+}]) %}
+
+{# video slide #}
+{% set slides = slides|merge([{
+    video: { url: 'https://starter.wbrowar.com/video/clip.mp4' }
+}]) %}
+
+{# image slide with text in front of it #}
+{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO@2x.png') %}
+{% set options = {
+    image: image,
+    title: image.title ?? '',
+    imager: {
+        transforms: [
+            { width: 500 },
+            { width: 800 },
+        ],
+    }
+} %}
+
+{% set foreground -%}
+    <h2 class="c_subheader">Title of this element</h2>
+{%- endset %}
+
+{% set slides = slides|merge([{
+    foreground: foreground,
+    image: options,
+    url: 'http://google.com',
+}]) %}
+
+{{ component.c('image_slider', { slides: slides }) }}`,
+    options: [
+      { "name": 'controllerAttributes', "required": false, "type": 'string', "default": `':show-back="false" :show-next="false"'`, "description": `Attributes added to the controller Vue component. This allows you to change the appearance of the default controller. Multiple controllers can be added as long as they use the same ID as the sliderId.` },
+      { "name": 'sliderAttributes', "required": false, "type": 'string', "description": `Attributes added to the slider Vue component. This allows you to modify the slider settings.` },
+      { "name": 'sliderClasses', "required": false, "type": 'string', "description": `Classes added to the slider Vue component.` },
+      { "name": 'sliderId', "required": false, "type": 'string', "default": `image_slider`, "description": `The ID that connects the Vue slider with controllers and other slider elements.` },
+      { "name": 'sliderInterval', "required": false, "type": 'integer', "default": `5000`, "description": `Speed—in milliseconds—between each slide transition.` },
+      { "name": 'slides', "required": true, "type": 'array', "description": `Objects that make up the slides within the slider. Use the attributes below to add features to the slides.` },
+      { "name": 'slides > image', "required": true, "type": 'object', "description": `A background image that takes up the full size of the slide. Pass in the options you would use for an 'image' component.` },
+      { "name": 'slides > video', "required": true, "type": 'object', "description": `Use a video as the slide background instead of an image. Pass in the options you would use for a 'video' component.` },
+      { "name": 'slides > middle', "required": true, "type": 'string', "description": `HTML content that sits in front of the background image or video layers.` },
+      { "name": 'slides > foreground', "required": true, "type": 'string', "description": `HTML that is centered and appears in front of the 'middle' layer.` },
+      { "name": 'slides > url', "required": true, "type": 'string', "description": `A click-through URL that is activated by clicking on any area of the slider.` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

@@ -1,0 +1,19 @@
+<% let component = {
+  title: "Headers",
+  description: "Styles for headers.",
+  background: "light",
+  "modifiers": ['center', 'margin', 'margin--auto', 'margin--top', 'margin--right', 'margin--bottom', 'margin--left', 'padding', 'padding--top', 'padding--right', 'padding--bottom', 'padding--left'],
+  html: {
+    code: `<h1 class="c_header c_header--1">Page<br>Header</h1>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+
+<% component = {
+  title: "Header 2",
+  background: "light",
+  html: {
+    code: `<h1 class="c_header c_header--2">Page<br>Subheader</h1>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

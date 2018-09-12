@@ -63,72 +63,81 @@
     }
   },
   "styleInventory": {
-    "pages": [
-      {
+    "enabled": true,
+    "pages": {
+      "index": {
         "label": "Style Inventory",
-        "slug": "index",
         "components": [
-          "style_inventory"
+          "@style_inventory"
         ]
       },
-      {
+      "globals": {
         "label": "Globals",
-        "slug": "globals",
         "components": [
-          "globals"
+          "@colors",
+          "header",
+          "text",
+          "wrapper"
         ]
       },
-      {
-        "label": "Animations",
-        "slug": "animations",
-        "components": [
-
-        ]
-      },
-      {
+      "buttons": {
         "label": "Buttons",
-        "slug": "buttons",
         "components": [
           "button",
           "buttons"
         ]
       },
-      {
+      "forms": {
         "label": "Forms",
-        "slug": "forms",
-        "components": []
+        "components": [
+
+        ]
       },
-      {
+      "grid": {
         "label": "Grids",
-        "slug": "grid",
-        "components": []
+        "components": [
+          "grid"
+        ]
       },
-      {
+      "icons": {
         "label": "Icons",
-        "slug": "icons",
-        "components": []
+        "components": [
+          "social_nav",
+          "social_share"
+        ]
       },
-      {
+      "media": {
         "label": "Media",
-        "slug": "media",
-        "components": []
+        "components": [
+          "audio",
+          "image",
+          "image_bg",
+          "video",
+          "video_bg"
+        ]
       },
-      {
+      "messages": {
         "label": "Messages",
-        "slug": "messages",
-        "components": []
+        "components": [
+          "alert_bar",
+          "message"
+        ]
       },
-      {
+      "overlays": {
         "label": "Overlays",
-        "slug": "overlays",
-        "components": []
+        "components": [
+          "overlay"
+        ]
       },
-      {
+      "sliders": {
         "label": "Sliders",
-        "slug": "sliders",
-        "components": []
+        "components": [
+          "image_slider",
+          "slider_control",
+          "slider"
+        ]
       }
-    ],
+    },
     "urlPrefix": "dev/inv/",
     "urlSuffix": ".html"
   },
@@ -202,7 +211,7 @@
   "projectTemplateLanguage": "html",
   "projectType": "html",
   "templateExtensions": "html,twig,php,json,csv,css,js",
-  "verboseOverride": true,
+  "verboseOverride": false,
   "dependencies": {
     "axios": "^0.18.0",
     "cleave.js": "^1.4.4",

@@ -241,23 +241,26 @@ function getVersion(version, env) {
 function log(type = 'message', message, verbose = false) {
     switch (type) {
         case 'app':
-            console.log(chalk.bgRed(`  ${ message }  `));
+            console.log(chalk.bgRgb(230, 20, 20)(`  ${ message }  `));
             break;
         case 'dump':
             if (verbose) {
-                console.log(chalk.magenta.bold(`Dump: ${ JSON.stringify(message, null, 2) }`) + chalk.red(message));
+                console.log(chalk.magenta.bold(`📦 ${ JSON.stringify(message, null, 2) }`));
             }
             break;
         case 'running':
-            console.log(chalk.green.bold('Running: ') + chalk.green(message));
+            console.log(chalk.green.bold('💻 ') + chalk.green(message));
             break;
         case 'title':
-            console.log(chalk.blue.bold('[ ' + message + ' ]'));
+            console.log(chalk.blue.bold('🛠 ' + message));
             break;
         case 'verbose':
             if (verbose) {
-                console.log(chalk.red.bold('Build: ') + chalk.red(message));
+                console.log(chalk.keyword('orange')('🕵 ' + message));
             }
+            break;
+        case 'warn':
+            console.warn(chalk.red.bold('🚧 ' + message));
             break;
         default:
             console.log(message);

@@ -1,0 +1,30 @@
+<% let component = {
+  title: "Vue Slider",
+  description: "A slider that can be used for images, video, or html content. Requires `slider-slide` components as children.",
+  background: "light",
+  twig: {
+    code:
+`{% set slideContent = [
+    '<div>1</div>',
+    '<div>2</div>',
+    '<div>3</div>',
+    '<div>4</div>',
+    '<div>5</div>',
+    '<div>6</div>',
+    '<div>7</div>',
+    '<div>8</div>',
+    '<div>9</div>',
+    '<div>10</div>',
+    '<div>11</div>',
+] %}
+
+<slider slider-id="slider_1"
+        :auto-height="true"
+        interval="5000"
+        slides-content="{{ slideContent|json_encode }}"
+        slides-layout='[{ "count": 1 },{ "count": 3, "width": 800 },{ "count": 6, "width": 1100 }]'>
+</slider>
+<slider-control slider-id="slider_1" :show-back="false" :show-next="false"></slider-control>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

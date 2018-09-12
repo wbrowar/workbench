@@ -1,0 +1,55 @@
+<% let component = {
+  title: "Button",
+  description: "A call-to-action button, used to encourage user interaction.",
+  background: "light",
+  demo: {
+    code:
+`<div class="styles__box_wrapper">
+  <div class="styles__box" style="padding: 0px;">
+    <div class="c_image_bg">
+      <figure class="c_image_bg__image c_image">
+        <picture>
+          <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+               sizes="100vw"
+               alt="Fpo"
+               data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+        </picture>
+      </figure>
+    </div>
+  </div>
+</div>`
+  },
+  html: {
+    code:
+`<div class="c_image_bg">
+  <figure class="c_image_bg__image c_image">
+    <picture>
+      <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+           sizes="100vw"
+           alt="Fpo"
+           data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x">
+    </picture>
+  </figure>
+</div>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{% set image = craft.assets.title('fpo').one() %}
+{% set options = {
+    image: image,
+    title: image.title ?? '',
+    imager: {
+        transforms: [
+            { width: 500 },
+            { width: 800 },
+        ],
+    }
+} %}
+{{ component.c('image_bg', { image: options }) }}`,
+    options: [
+      { "name": 'image', "required": true, "type": 'object', "default": `{}`, "description": `Options for the image element. See options above.` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

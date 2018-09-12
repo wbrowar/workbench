@@ -1,0 +1,9 @@
+<div class="styles__color_swatches">
+    <% Object.keys(pkg.colors).forEach(function(item) { %>
+    <div class="styles__color_swatch" style="--style-color-swatch-color:<%- pkg.colors[item] %>;">
+        <div class="styles__color_swatch__color"></div>
+        <div class="styles__color_swatch__variable">$color_<%- item %></div>
+        <div class="styles__color_swatch__value"><%- pkg.colors[item] %></div>
+    </div>
+    <% }) %>
+</div>

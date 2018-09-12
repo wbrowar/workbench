@@ -1,0 +1,32 @@
+<% let component = {
+  title: "Video Background",
+  description: "Fills the background of an element with a responsive video file that autoplays and loops.",
+  background: "light",
+  demo: {
+    code:
+`<div class="styles__box_wrapper">
+  <div class="styles__box" style="padding: 0;">
+    <div class="c_video_bg">
+      <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
+    </div>
+  </div>
+</div>`
+  },
+  html: {
+    code:
+`<div class="c_video_bg">
+  <video class="c_video_bg__video" data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" preload autoplay muted loop></video>
+</div>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{{ component.c('video_bg', { video: { url: 'https://starter.wbrowar.com/video/clip.mp4' } }) }}`,
+    options: [
+      { "name": 'label', "required": false, "type": 'string', "description": `Text that appears on the button.` },
+      { "name": 'target', "required": false, "type": 'string', "description": `Adds a target attribute to the button.` },
+      { "name": 'url', "required": false, "type": 'string', "description": `URL that th user will be sent to upon clicking button.` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

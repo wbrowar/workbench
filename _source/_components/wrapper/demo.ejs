@@ -1,0 +1,10 @@
+<% let component = {
+  title: "Wrapper",
+  description: "Helper class that provides general modifiers.",
+  background: "dark",
+  "modifiers": ['center', 'margin', 'margin--auto', 'margin--top', 'margin--right', 'margin--bottom', 'margin--left', 'padding', 'padding--top', 'padding--right', 'padding--bottom', 'padding--left'],
+  html: {
+    code: `<div class="c_wrapper c_wrapper--1 c_wrapper--center c_wrapper--padding">🌎🐵🕋⚔️⏱🚀🛰🚀🌑🕋⏱🚀🤖🔧📡🤖☠️👄👂🤖☠️☠️🤖🎤☠️🕋✨🌈🏠😐🌎👶</div>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

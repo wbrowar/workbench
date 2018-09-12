@@ -1,0 +1,16 @@
+<% let component = {
+  title: "Slider Controls",
+  description: "Controls for `slider` components. Require `slider-id` attribute that matches the id of the `slider` component.",
+  background: "light",
+  html: {
+    code:
+`<slider-control slider-id="image_slider"></slider-control>
+
+<slider-control slider-id="image_slider" indicator-type="numbers"></slider-control>
+
+<slider-control slider-id="image_slider" label-back="Go Back" :show-indicators="false" :show-next="false"></slider-control>
+
+<slider-control slider-id="image_slider" label-next="Go Forward" :show-back="false" :show-indicators="false"></slider-control>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

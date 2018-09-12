@@ -34,13 +34,25 @@ const configureBabelLoader = (browserList) => {
                     'syntax-dynamic-import',
                     [
                         "transform-runtime", {
-                        "polyfill": false,
-                        "regenerator": true
-                    }
+                            "polyfill": false,
+                            "regenerator": true
+                        }
                     ]
                 ],
             },
         },
+    };
+};
+
+// SCSS loader
+const configureScssLoader = () => {
+    return {
+        test: /\.scss$/,
+        use: [
+            'vue-style-loader',
+            'css-loader',
+            'sass-loader'
+        ]
     };
 };
 
@@ -74,6 +86,7 @@ const baseConfig = {
     },
     module: {
         rules: [
+            configureScssLoader(),
             configureVueLoader(),
         ],
     },

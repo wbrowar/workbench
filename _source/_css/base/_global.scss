@@ -1,7 +1,7 @@
 // GLOBAL
 
 ::selection {
-  background-color: transparentize($color_black, .5);
+  background-color: transparentize($color_black_raw, .5);
   color: $color_white;
 }
 

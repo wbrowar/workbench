@@ -1,0 +1,50 @@
+<% let component = {
+  title: "Social Media Icons",
+  description: "Social Media icon links.",
+  background: "light",
+  demo: {
+    code:
+`<nav class="c_social_nav">
+    <a href="https://www.facebook.com/username" class="c_social_nav__link--facebook">${ include(paths.icon.src + 'social_facebook.svg') }</a>
+    <a href="https://twitter.com/username" class="c_social_nav__link--twitter">${ include(paths.icon.src + 'social_twitter.svg') }</a>
+    <a href="https://www.linkedin.com/company/username" class="c_social_nav__link--linkedin">${ include(paths.icon.src + 'social_linkedin.svg') }</a>
+    <a href="https://www.youtube.com/user/username" class="c_social_nav__link--youtube">${ include(paths.icon.src + 'social_youtube.svg') }</a>
+    <a href="https://www.pinterest.com/username" class="c_social_nav__link--pinterest">${ include(paths.icon.src + 'social_pinterest.svg') }</a>
+    <a href="https://www.instagram.com/username" class="c_social_nav__link--instagram">${ include(paths.icon.src + 'social_instagram.svg') }</a>
+    <a href="mailto:hello@example.com" class="c_social_nav__link--email">${ include(paths.icon.src + 'social_email.svg') }</a>
+</nav>`
+  },
+  html: {
+    code:
+`<nav class="c_social_nav">
+    <a href="https://www.facebook.com/username" class="c_social_nav__link--facebook">${ ('< % -').replace(/ /gi, '') } include(paths.icon.src + 'social_facebook.svg') ${ ('% >').replace(/ /gi, '') }</a>
+    <a href="https://twitter.com/username" class="c_social_nav__link--twitter">${ ('< % -').replace(/ /gi, '') } include(paths.icon.src + 'social_twitter.svg') ${ ('% >').replace(/ /gi, '') }</a>
+    <a href="https://www.linkedin.com/company/username" class="c_social_nav__link--linkedin">${ ('< % -').replace(/ /gi, '') } include(paths.icon.src + 'social_linkedin.svg') ${ ('% >').replace(/ /gi, '') }</a>
+    <a href="https://www.youtube.com/user/username" class="c_social_nav__link--youtube">${ ('< % -').replace(/ /gi, '') } include(paths.icon.src + 'social_youtube.svg') ${ ('% >').replace(/ /gi, '') }</a>
+    <a href="https://www.pinterest.com/username" class="c_social_nav__link--pinterest">${ ('< % -').replace(/ /gi, '') } include(paths.icon.src + 'social_pinterest.svg') ${ ('% >').replace(/ /gi, '') }</a>
+    <a href="https://www.instagram.com/username" class="c_social_nav__link--instagram">${ ('< % -').replace(/ /gi, '') } include(paths.icon.src + 'social_instagram.svg') ${ ('% >').replace(/ /gi, '') }</a>
+    <a href="mailto:hello@example.com" class="c_social_nav__link--email">${ ('< % -').replace(/ /gi, '') } include(paths.icon.src + 'social_email.svg') ${ ('% >').replace(/ /gi, '') }</a>
+</nav>`
+  },
+  twig: {
+      code:
+`{% import 'macros/component.twig' as component %}
+{% set options = {
+    links: {
+        'facebook': 'https://www.facebook.com/username',
+        'twitter': 'https://twitter.com/username',
+        'linkedin': 'https://www.linkedin.com/company/username',
+        'youtube': 'https://www.youtube.com/user/username',
+        'pinterest': 'https://www.pinterest.com/username',
+        'instagram': 'https://www.instagram.com/username',
+        'snapchat': 'https://www.snapchat.com/add/username',
+        'email': 'hello@example.com',
+    }
+} %}
+{{ component.c('social_nav', options) }}`,
+    options: [
+      { "name": 'links', "required": true, "type": 'object', "default": `{}`, "description": `List of URLs to social media properties. For example: <b>links: { facebook: 'https://facebook.com/example' }</b>` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
