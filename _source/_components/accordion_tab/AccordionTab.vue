@@ -39,7 +39,7 @@
 
     .vue_accordion__tab {
         margin-bottom: 20px;
-        border: 1px solid lighten($color_black, 90);
+        border: 1px solid lighten($color_black_raw, 90);
         border-radius: 2px;
 
         @at-root #{&}__title {
@@ -64,7 +64,7 @@
 
             &.active {
                 height: auto;
-                border-top-color: lighten($color_black, 90);
+                border-top-color: lighten($color_black_raw, 90);
                 opacity: 1;
                 transform: translateY(0);
             }
