@@ -1,6 +1,6 @@
 <template>
     <div class="c_<%- handle %>">
-        <p>{{ greeting }}</p>
+
     </div>
 </template>
 
@@ -8,27 +8,26 @@
     export default {
         data() {
             return {
-                greeting: false,
             }
         },
         props: {
-            newGreeting: { default: 'Hello' },
+        },
+        methods: {
+        },
+        created() {
         },
         mounted() {
-            if (this.newGreeting) {
-                this.greeting = this.newGreeting;
-            }
         }
     }
 </script>
 
 <style lang="scss">
-    @import "./../../_scss/base/_mixins.scss";
+    // include variables and mixins if needed
+    <%- ('< %-').replace(' ', '') + ' include(paths.css.src + \'automated/_colors.scss\') ' + ('% >').replace(' ', '') %>
+    <%- ('< %-').replace(' ', '') + ' include(paths.css.src + \'base/_mixins.scss\') ' + ('% >').replace(' ', '') %>
 
     .c_<%- handle %> {
         $self: &;
 
-        font-size: 2rem;
-        color: #bdc7ff;
     }
 </style>
