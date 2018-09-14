@@ -1,0 +1,10 @@
+<% pkg.cssIcons.forEach(function(icon) { %>
+@mixin icon_<%- icon %>($map: ()) {
+  background-image: url("data:image/svg+xml;base64,<%- new Buffer(include(paths.icon.src + icon + '.svg') || '').toString('base64') %>");
+}
+.icon_<%- icon %> {
+  background-image: url("data:image/svg+xml;base64,<%- new Buffer(include(paths.icon.src + icon + '.svg') || '').toString('base64') %>");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+<% }) %>

@@ -1,5 +1,6 @@
 // import node modules
-const browserSync = require('browser-sync').create(),
+const autoprefixer = require('autoprefixer'),
+      browserSync = require('browser-sync').create(),
       critical = require('critical'),
       chalk = require('chalk'),
       exec = require('child_process'),
@@ -8,25 +9,37 @@ const browserSync = require('browser-sync').create(),
       fs = require('fs-extra'),
       glob = require('glob'),
       inquirer = require('inquirer'),
+      mqpacker = require("css-mqpacker"),
       notifier = require('node-notifier'),
       path = require('path'),
+      postcss = require('postcss'),
+      purgecss = require('@fullhuman/postcss-purgecss'),
       sass = require('node-sass'),
       sassGlobImporter = require('node-sass-glob-importer'),
+      sharp = require('sharp'),
       semver = require('semver'),
       webpack = require('webpack');
 
-// set variables
-let env = process.env.NODE_ENV || 'development',
-    release = env === 'production',
-    runBuild,
-    runPublish,
-    runWatch,
-    verbose; // whether or not commands are displayed in terminal output
+// HELLO
+log('app', `Beginning`);
 
 // load package file
 let pkg = require(`${ process.cwd() }/package.json`);
+
+// set variables
+const argv = parseArgv(),
+      env = process.env.NODE_ENV || 'development',
+      release = env === 'production';
+
+// use CLI arguments to set variables
+const runBuild   = argv.options.build || false,
+      runPublish = argv.options.publish || false,
+      runWatch   = argv.options.watch || false,
+      verbose    = pkg.verboseOverride || argv.options.verbose || false;
+
+// set variables based on pkg options
 let paths = getPaths(pkg.paths),
-    version = getVersion(pkg.version, env);
+    version = getVersion(pkg.version);
 
 // set variables to be processed by EJS
 let ejsVars = Object.assign({
@@ -36,7 +49,7 @@ let ejsVars = Object.assign({
     pkg: pkg,
     release: release,
     version: version,
-}, pkg.ejsVars);
+}, pkg.ejs);
 
 // set notify configs
 const notify = {
@@ -45,34 +58,6 @@ const notify = {
 };
 
 async function run() {
-    // HELLO
-    log('app', `Beginning`);
-
-    // INIT
-    // get command line arguments and set default config variables
-    const argv = parseArgv();
-    runBuild   = argv.options.build || false;
-    runPublish = argv.options.publish || false;
-    runWatch   = argv.options.watch || false;
-    verbose    = pkg.verboseOverride || argv.options.verbose || false;
-
-    // backup package file then overwrite the version number
-    if (release) {
-        log('title', `Bumping version number`);
-        version = bumpVersion(pkg.version);
-        pkg.version = version;
-        ejsVars.pkg = pkg;
-
-        fs.copy(`${ process.cwd() }/package.json`, `${ paths.starter.backups }package.json`)
-            .then(() => {
-                fs.outputFile(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2), function (err) {
-                    if (err) return console.log(err);
-                    log('verbose', `Version changed to: ${ version }`, verbose);
-                });
-            })
-            .catch(err => console.error(err))
-    }
-
     // run build tasks
     if (runBuild) {
         log('title', `Running Build`);
@@ -81,6 +66,9 @@ async function run() {
         let buildCleanComplete                   = await buildCleanAll;
 
         if (release) {
+            const buildBumpPackage               = bumpPackage();
+            let buildBumpPackageComplete         = await buildBumpPackage;
+
             const buildCompileFavicon            = compileFavicon();
             let buildCompileFaviconComplete      = await buildCompileFavicon;
         }
@@ -91,8 +79,12 @@ async function run() {
         let buildUpdateComponentsComplete        = await buildUpdateComponents;
 
         const buildCompileCss                    = compileCss();
+        const buildCompileIcon                   = compileIcon();
+        const buildCompileImg                    = compileImg();
         const buildCompileJs                     = compileJs();
         let buildCompileCssComplete              = await buildCompileCss;
+        let buildCompileIconComplete             = await buildCompileIcon;
+        let buildCompileImgComplete              = await buildCompileImg;
         let buildCompileJsComplete               = await buildCompileJs;
 
         const buildUpdateStyleInventory          = updateStyleInventory();
@@ -100,6 +92,14 @@ async function run() {
 
         const buildCompileTemplates              = compileTemplates();
         let buildCompileTemplatesComplete        = await buildCompileTemplates;
+
+        if (release) {
+            const buildPostCss                   = postCss();
+            let buildPostCssComplete             = await buildPostCss;
+
+            const buildCritcss                   = critCss();
+            let buildCritcssComplete             = await buildCritcss;
+        }
 
         if (!runWatch) {
             const buildCleanComponents           = clean('components');
@@ -193,15 +193,15 @@ async function run() {
         });
 
         const watchIcon = watch(paths.icon.src, async () => {
-            // const watchCompileIcon       = compileIcon();
-            // let watchCompileIconComplete = await watchCompileIcon;
+            const watchCompileIcon       = compileIcon();
+            let watchCompileIconComplete = await watchCompileIcon;
             browserSync.reload();
             notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Icons Updated' });
         });
 
         const watchImg = watch(paths.img.src, async () => {
-            // const watchCompileImg       = compileImg();
-            // let watchCompileImgComplete = await watchCompileImg;
+            const watchCompileImg       = compileImg();
+            let watchCompileImgComplete = await watchCompileImg;
             browserSync.reload();
             notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'JS Updated' });
         });
@@ -231,8 +231,37 @@ async function run() {
 
 
 
+async function bumpPackage() {
+    log('title', `Compiling Images`);
+
+    const p = await new Promise(resolve => {
+        log('title', `Bumping version number`);
+        version = bumpVersion(pkg.version);
+        pkg.version = version;
+        ejsVars.pkg = pkg;
+        ejsVars.filenameVersion = filenameVersion('.');
+
+        // backup package file then overwrite the version number
+        fs.copy(`${ process.cwd() }/package.json`, `${ paths.starter.backups }package.json`, (err) => {
+            if (err) {
+                log('warn', err, verbose);
+            }
+            log('verbose', `Package File Backed Up`, verbose);
+            fs.outputFile(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2), function (err) {
+                if (err) {
+                    log('warn', err, verbose);
+                }
+                log('verbose', `Version changed to: ${ version }`, verbose);
+                resolve();
+            });
+        });
+    }).then(()=>'');
+    log('title', `Images Compiled`);
+    return p;
+}
+
 async function clean(type = 'all') {
-    log('title', `Cleaning ${ type }`);
+    log('title', `Cleaning "${ type }"`);
 
     const p = await new Promise(resolve => {
         let cleanPaths = [];
@@ -275,7 +304,7 @@ async function clean(type = 'all') {
                 cleanPaths.push(paths.templates.src + `dev/inv`);
         }
 
-        let tasks = cleanPaths.length; // count of tasks below
+        let tasks = cleanPaths.length;
         let removeTaskIndex = () => {
             tasks--;
             if (tasks === 0) {
@@ -302,7 +331,49 @@ async function clean(type = 'all') {
             });
         });
     }).then(()=>'');
-    log('title', `${ type } Cleaned`);
+    log('title', `"${ type }" Cleaned`);
+    return p;
+}
+
+async function critCss() {
+    log('title', `Starting Critical CSS`);
+
+    const p = await new Promise(resolve => {
+        let count = pkg.critcss.length;
+
+        if (count > 0) {
+            pkg.critcss.forEach((item) => {
+                if (item.src !== 'CHANGE_ME') {
+                    critical.generate({
+                        css: [paths.css.dist + item.css + filenameVersion('.') + '.css'],
+                        src: item.src,
+                        dest: `${ paths.templates.dist }_css/critcss/${ item.filename }.css`,
+                        include: item.include || [],
+                        ignore: item.ignore || [],
+                        width: item.width || 1440,
+                        height: item.height || 900
+                    }, function (err, output) {
+                        if (err) {
+                            log('warn', err);
+                        }
+                        log('verbose', `Critical CSS compiled: ${ item }`, verbose);
+                        count--;
+                        if (count === 0) {
+                            resolve();
+                        }
+                    });
+                } else {
+                    count--;
+                    if (count === 0) {
+                        resolve();
+                    }
+                }
+            });
+        } else {
+            resolve();
+        }
+    }).then(()=>'');
+    log('title', `Critical CSS Generated`);
     return p;
 }
 
@@ -429,6 +500,96 @@ async function compileFavicon() {
     return p;
 }
 
+async function compileIcon() {
+    log('title', `Compiling Images`);
+
+    const p = await new Promise(resolve => {
+        glob(`${ paths.icon.src }*.svg`, function (er, files) {
+            let count = files.length;
+            if (count > 0) {
+                files.forEach((item) => {
+                    fs.copy(item, item.replace(paths.icon.src, paths.icon.dist)).then(() => {
+                            count--;
+                            if (count === 0) {
+                                resolve();
+                            }
+                        });
+                });
+            } else {
+                resolve();
+            }
+        });
+    }).then(()=>'');
+    log('title', `Images Compiled`);
+    return p;
+}
+
+async function compileImg() {
+    log('title', `Compiling Images`);
+
+    const p = await new Promise(resolve => {
+        let tasks = 2;
+        let removeTaskIndex = () => {
+            tasks--;
+            if (tasks === 0) {
+                resolve();
+            }
+        };
+        let compressMove = (image) => {
+            sharp(image)
+                .toFile(paths.img.dist + path.basename(image));
+        };
+        let convertWebp = (image) => {
+            sharp(image)
+                .webp({ lossless: true })
+                .toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }.webp`);
+        };
+        let resizeImage = (image, options) => {
+            log('verbose', `Resizing: ${ image }`, verbose);
+            const resize = size => {
+                const resizedImage = sharp(image).resize(size);
+                    resizedImage.toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }-${ size + path.extname(image) }`);
+                    resizedImage.toFormat(sharp.format.webp).toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }-${ size }.webp`);
+            };
+
+            Promise.all(options.sizes.map(resize))
+                .then(() => {
+                    log('verbose', `IMG resized: ${ image }`, verbose);
+                    removeTaskIndex();
+                });
+        };
+
+        // move and compress images in image source root
+        glob(`${ paths.img.src }*.{jpg,gif,png,webp}`, { nodir: true }, function (er, files) {
+            let count = files.length;
+            if (count > 0) {
+                files.forEach((item) => {
+                    compressMove(item);
+                    convertWebp(item);
+                    log('verbose', `IMG moved: ${ item }`, verbose);
+                    count--;
+                    if (count === 0) {
+                        removeTaskIndex();
+                    }
+                });
+            } else {
+                removeTaskIndex();
+            }
+        });
+
+        // resize images as defined in package.json
+        Object.keys(pkg.imageResize).forEach((directory) => {
+            const files = glob.sync(`${ paths.img.src + directory }/**/*.{jpg,gif,png,webp}`);
+
+            files.forEach((item) => {
+                resizeImage(item, pkg.imageResize[directory])
+            });
+        });
+    }).then(()=>'');
+    log('title', `Images Compiled`);
+    return p;
+}
+
 async function compileJs() {
     log('title', `Compiling JS`);
 
@@ -490,25 +651,77 @@ async function compileTemplates() {
     const p = await new Promise(resolve => {
         glob(`${ paths.templates.src }**/*.{${ pkg.templateExtensions }}`, function (er, files) {
             let count = files.length;
-            files.forEach((item) => {
-                ejs.renderFile(item, ejsVars, {}, function(err, str) {
-                    if (err) {
-                        log('warn', err);
-                    }
-                    fs.outputFile(item.replace(paths.templates.src, paths.templates.dist), str, (err) => {
-                        if(!err) {
-                            log('verbose', `EJS compiled: ${ item }`, verbose);
-                            count--;
-                            if (count === 0) {
-                                resolve();
-                            }
+
+            if (count > 0) {
+                files.forEach((item) => {
+                    ejs.renderFile(item, ejsVars, {}, function(err, str) {
+                        if (err) {
+                            log('warn', err);
                         }
+                        fs.outputFile(item.replace(paths.templates.src, paths.templates.dist), str, (err) => {
+                            if(!err) {
+                                log('verbose', `EJS compiled: ${ item }`, verbose);
+                                count--;
+                                if (count === 0) {
+                                    resolve();
+                                }
+                            }
+                        });
                     });
                 });
-            });
+            } else {
+                count--;
+                if (count === 0) {
+                    resolve();
+                }
+            }
         });
     }).then(()=>'');
     log('title', `Templates Compiled`);
+    return p;
+}
+
+async function postCss() {
+    log('title', `Post CSS Started`);
+
+    const p = await new Promise(resolve => {
+        let count = pkg.postcss.length;
+
+        if (count > 0) {
+            pkg.postcss.forEach((item) => {
+                fs.readFile(paths.css.dist + item + filenameVersion('.') + '.css', (err, css) => {
+                    postcss([
+                        purgecss({
+                            content: [`${ paths.templates.dist }**/*.${ pkg.projectTemplateLanguage }`]
+                        }),
+                        mqpacker,
+                        autoprefixer({
+                            browsers: pkg.browserlist.autoprefix
+                        })
+                        ])
+                        .process(css)
+                        .then(result => {
+                            fs.outputFile(paths.css.dist + item + filenameVersion('.') + '.css', result.css, (err) => {
+                                if (err) {
+                                    log('warn', err, verbose);
+                                }
+                                log('verbose', `POST CSS ran: ${ item }`, verbose);
+                                count--;
+                                if (count === 0) {
+                                    resolve();
+                                }
+                            });
+                        })
+                })
+            });
+        } else {
+            count--;
+            if (count === 0) {
+                resolve();
+            }
+        }
+    }).then(()=>'');
+    log('title', `Post CSS Complete`);
     return p;
 }
 
@@ -610,7 +823,7 @@ async function updateStyleInventory() {
                     }
                     fs.outputFile(`${ paths.templates.src }dev/inv/${ item }.${ pkg.projectTemplateLanguage }`, str, (err) => {
                         if(!err) {
-                            log('verbose', `Style Inventory : ${ item }`, verbose);
+                            log('verbose', `Style Inventory Page: ${ item }`, verbose);
                             count--;
                             if (count === 0) {
                                 resolve();
@@ -707,6 +920,7 @@ function getPaths(paths) {
         },
         starter: {
             backups: process.cwd() + '/_starter/backups/',
+            build: process.cwd() + paths.base.build,
             templates: process.cwd() + '/_starter/templates/',
             styleInventory: process.cwd() + '/_starter/style_inventory/',
         }
@@ -714,7 +928,7 @@ function getPaths(paths) {
 }
 
 // get version number based on build environment
-function getVersion(version, env) {
+function getVersion(version) {
     return release ? version : null;
 }
 

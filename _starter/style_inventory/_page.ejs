@@ -21,8 +21,8 @@
         <%- ('< %-').replace(' ', '') + ' include(paths.templates.src + \'_css/dev-styles.css\') ' + ('% >').replace(' ', '') %>
     {% endcss %}
 <% } else { %>
-    <link rel="preload" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- version %>.css" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- version %>.css"></noscript>
+    <link rel="preload" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css"></noscript>
 <% } %>
 <% if (pkg.projectTemplateLanguage === 'html') { %>
 <%- include(paths.templates.src + '_layout_bottom') %>
