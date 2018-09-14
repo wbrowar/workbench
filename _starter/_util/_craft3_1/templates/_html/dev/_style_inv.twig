@@ -1,9 +1,0 @@
-{# @var craft \craft\web\twig\variables\CraftVariable #}
-
-{% extends "dev/_dev_page.twig" %}
-
-{% set currentStylesNavItem = craft.app.request.getSegment(3) ?? 'index' %}
-
-{% block content %}
-    {% include 'dev/_style_inv/' ~ currentStylesNavItem %}
-{% endblock %}

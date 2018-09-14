@@ -26,7 +26,7 @@ log('app', `Beginning`);
 // load package file
 let pkg = require(`${ process.cwd() }/package.json`);
 
-// set variables
+// set constants
 const argv = parseArgv(),
       env = process.env.NODE_ENV || 'development',
       release = env === 'production';

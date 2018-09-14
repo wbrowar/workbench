@@ -7,13 +7,23 @@ const chalk = require('chalk'),
       notifier = require('node-notifier'),
       path = require('path');
 
-// set variables
-let env = process.env.NODE_ENV || 'development',
-    verbose; // whether or not commands are displayed in terminal output
+// HELLO
+log('app', `Create a New Component`);
 
 // load package file
 let pkg = require(`${ process.cwd() }/package.json`);
-let paths = getPaths(pkg.paths);
+
+// set constants
+const argv = parseArgv(),
+      env = process.env.NODE_ENV || 'development';
+
+// use CLI arguments to set variables
+const action  = (argv.options.mv || false) ? 'move' : 'new',
+      verbose = pkg.verboseOverride || argv.options.verbose || false;
+
+// set variables based on pkg options
+let paths = getPaths(pkg.paths),
+    questions;
 
 // set notify configs
 const notify = {
@@ -22,16 +32,6 @@ const notify = {
 };
 
 async function run() {
-    // HELLO
-    log('app', `Create a New Component`);
-
-    // INIT
-    // get command line arguments and set default config variables
-    const argv = parseArgv();
-    action     = (argv.options.mv || false) ? 'move' : 'new';
-    verbose    = pkg.verboseOverride || argv.options.verbose || false;
-
-    let questions;
 
     if (action === 'move') {
         if (argv.options.mv !== true) {
@@ -235,8 +235,8 @@ function getPaths(paths) {
 }
 
 // get version number based on build environment
-function getVersion(version, env) {
-    return env === 'production' ? version : null;
+function getVersion(version) {
+    return release ? version : null;
 }
 
 // display a message in the command line
