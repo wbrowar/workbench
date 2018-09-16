@@ -3,7 +3,7 @@
     <div class="styles__example__title"><h2><%- component.title %></h2></div>
     <div class="styles__example__description"><p><%- component.description %></p></div>
     <div class="styles__example__display" style="background-color: <% if (component.background === 'dark') { %>#2B303B<% } else if (component.background === 'light') { %>#FFFFFF<% } else { %><%- component.background %><% } %>;">
-        <% if (component.demo) { %><%- component.demo.code%><% } else { if (pkg.projectTemplateLanguage === 'html' && component.html) { %><%- component.html.code %><% } else if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %><%- component.twig.code %><% } %><% } %>
+        <% if (component.demo) { %><%- component.demo.code%><% } else { if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %><%- component.twig.code %><% } else if (component.html) { %><%- component.html.code %><% } %><% } %>
     </div><% if (!component.hideCode) { %><% if (component.html) { %>
     <div class="styles__example__code styles__example__code--html">
         <pre><code v-pre><%= component.html.code %></code></pre>

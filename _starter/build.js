@@ -32,7 +32,8 @@ const argv = parseArgv(),
       release = env === 'production';
 
 // use CLI arguments to set variables
-const runBuild   = argv.options.build || false,
+const enableImg  = argv.options.noimg ? false : true,
+      runBuild   = argv.options.build || false,
       runPublish = argv.options.publish || false,
       runWatch   = argv.options.watch || false,
       verbose    = pkg.verboseOverride || argv.options.verbose || false;
@@ -51,6 +52,9 @@ let ejsVars = Object.assign({
     version: version,
 }, pkg.ejs);
 
+// other variables
+let publishAnswers = {};
+
 // set notify configs
 const notify = {
     icon: `${ pkg.paths.base.src }_favicon/favicon.png`,
@@ -58,6 +62,61 @@ const notify = {
 };
 
 async function run() {
+    if (release) {
+        const bumpPackageVersion       = bumpPackage();
+        let bumpPackageVersionComplete = await bumpPackageVersion;
+    }
+
+    // ask questions related to build task
+    if (runPublish) {
+        const askPublishQuestions = asyncFunction(
+            `Publish Options`, `Publish Options Set`, (resolve) => {
+
+                const publishQuestions = [
+                    {
+                        type: 'confirm',
+                        name: 'enableTag',
+                        message: 'Tag commit for release?',
+                        default: false,
+                    },
+                    {
+                        type: 'input',
+                        name: 'message',
+                        message: 'Commit message',
+                        default: (answers) => {
+                            return answers.enableTag ? `Version ${ version }` : '';
+                        },
+                        validate: (answer) => {
+                            return answer !== '';
+                        },
+                    },
+                    {
+                        type: 'input',
+                        name: 'tag',
+                        message: 'Release tag',
+                        default: (answers) => {
+                            return version;
+                        },
+                        validate: (answer) => {
+                            return answer !== '';
+                        },
+                        when: (answers) => {
+                            return answers.enableTag;
+                        },
+                    },
+                ];
+
+                inquirer.prompt(publishQuestions).then((answers) => {
+                    log('verbose', `Publishing with settings:`, verbose);
+                    log('dump', answers, verbose);
+
+                    publishAnswers = answers;
+                    resolve();
+                });
+            });
+        let askPublishQuestionsComplete = await askPublishQuestions;
+    }
+
     // run build tasks
     if (runBuild) {
         log('title', `Running Build`);
@@ -66,9 +125,6 @@ async function run() {
         let buildCleanComplete                   = await buildCleanAll;
 
         if (release) {
-            const buildBumpPackage               = bumpPackage();
-            let buildBumpPackageComplete         = await buildBumpPackage;
-
             const buildCompileFavicon            = compileFavicon();
             let buildCompileFaviconComplete      = await buildCompileFavicon;
         }
@@ -80,12 +136,16 @@ async function run() {
 
         const buildCompileCss                    = compileCss();
         const buildCompileIcon                   = compileIcon();
-        const buildCompileImg                    = compileImg();
         const buildCompileJs                     = compileJs();
+        if (enableImg) {
+            const buildCompileImg                = compileImg();
+        }
         let buildCompileCssComplete              = await buildCompileCss;
         let buildCompileIconComplete             = await buildCompileIcon;
-        let buildCompileImgComplete              = await buildCompileImg;
         let buildCompileJsComplete               = await buildCompileJs;
+        if (enableImg && typeof buildCompileImg != 'undefined') {
+            let buildCompileImgComplete          = await buildCompileImg;
+        }
 
         const buildUpdateStyleInventory          = updateStyleInventory();
         let buildUpdateStyleInventoryComplete    = await buildUpdateStyleInventory;
@@ -114,43 +174,14 @@ async function run() {
     if (runPublish) {
         log('title', `Running Publish`);
 
-        const publishQuestions = [
-            {
-                type: 'confirm',
-                name: 'enableTag',
-                message: 'Tag commit for release?',
-                default: false,
-            },
-            {
-                type: 'input',
-                name: 'message',
-                message: 'Commit message',
-                default: (answers) => {
-                    return answers.enableTag ? `Version ${ version }` : '';
-                },
-                validate: (answer) => {
-                    return answer !== '';
-                },
-            },
-            {
-                type: 'input',
-                name: 'tag',
-                message: 'Release tag',
-                default: (answers) => {
-                    return version;
-                },
-                validate: (answer) => {
-                    return answer !== '';
-                },
-                when: (answers) => {
-                    return answers.enableTag;
-                },
-            },
-        ];
+        verboseExec(`git pull`, verbose);
+        verboseExec(`git status`, verbose);
+        verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
 
-        const askPublishQuestions = await inquirer.prompt(publishQuestions).then(function (answers) {
-            log('verbose', `Component Options: ${ JSON.stringify(answers, null, 2) }`, verbose);
-        });
+        if (publishAnswers.enableTag) {
+            verboseExec(`git tag -a ${ publishAnswers.tag } -m "${ publishAnswers.message }"`, verbose);
+            verboseExec(`git push --follow-tags`, verbose);
+        }
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Project Published' });
     } else if (runWatch) {
@@ -232,7 +263,7 @@ async function run() {
 
 
 async function bumpPackage() {
-    log('title', `Compiling Images`);
+    log('title', `Increasing Version Number`);
 
     const p = await new Promise(resolve => {
         log('title', `Bumping version number`);
@@ -256,7 +287,7 @@ async function bumpPackage() {
             });
         });
     }).then(()=>'');
-    log('title', `Images Compiled`);
+    log('title', `Version Number Set to "${ version }"`);
     return p;
 }
 
@@ -280,7 +311,9 @@ async function clean(type = 'all') {
                 cleanPaths.push(paths.icon.dist + `**/*`);
                 break;
             case 'img':
-                cleanPaths.push(paths.img.dist + `**/*`);
+                if (enableImg) {
+                    cleanPaths.push(paths.img.dist + `**/*`);
+                }
                 break;
             case 'js':
                 cleanPaths.push(paths.js.dist + `**/*`);
@@ -298,7 +331,9 @@ async function clean(type = 'all') {
                 cleanPaths.push(paths.css.dist + `**/*`);
                 cleanPaths.push(paths.templates.src + `_css`);
                 cleanPaths.push(paths.icon.dist + `**/*`);
-                cleanPaths.push(paths.img.dist + `**/*`);
+                if (enableImg) {
+                    cleanPaths.push(paths.img.dist + `**/*`);
+                }
                 cleanPaths.push(paths.js.dist + `**/*`);
                 cleanPaths.push(paths.templates.dist + `**/*.{${ pkg.templateExtensions }}`);
                 cleanPaths.push(paths.templates.src + `dev/inv`);
@@ -501,7 +536,7 @@ async function compileFavicon() {
 }
 
 async function compileIcon() {
-    log('title', `Compiling Images`);
+    log('title', `Compiling Icons`);
 
     const p = await new Promise(resolve => {
         glob(`${ paths.icon.src }*.svg`, function (er, files) {
@@ -520,7 +555,7 @@ async function compileIcon() {
             }
         });
     }).then(()=>'');
-    log('title', `Images Compiled`);
+    log('title', `Icons Compiled`);
     return p;
 }
 
@@ -884,6 +919,17 @@ async function asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
         await callback(array[index], index, array)
     }
+}
+
+// Synchronously run a function and wait for a callback to fire
+async function asyncFunction(startMessage, endMessage, func) {
+    log('title', startMessage);
+
+    const p = await new Promise(resolve => {
+        func(resolve);
+    }).then(()=>'');
+    log('title', endMessage);
+    return p;
 }
 
 // bump version

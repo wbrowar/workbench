@@ -422,7 +422,7 @@ async function run() {
             log('verbose', `added .gitignore file`, verbose);
             verboseExec(`git commit -m "initial commit"`, verbose);
             log('verbose', `created first commit`, verbose);
-            verboseExec(`git push origin master`, verbose);
+            verboseExec(`git push --set-upstream origin master`, verbose);
             log('verbose', `pushed first commit to GitHub`, verbose);
         }
 
@@ -436,16 +436,6 @@ async function run() {
 
 
 // CUSTOM FUNCTIONS
-async function asyncFunction(startMessage, endMessage, func) {
-    log('title', startMessage);
-
-    const p = await new Promise(resolve => {
-        func(resolve);
-    }).then(()=>'');
-    log('title', endMessage);
-    return p;
-}
-
 function globEjs(pattern, replaceSrc, replaceDist, resolve) {
     glob(pattern, { dot:true, nodir: true }, function (er, files) {
         let count = files.length;
@@ -526,6 +516,17 @@ async function asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
         await callback(array[index], index, array)
     }
+}
+
+// Synchronously run a function and wait for a callback to fire
+async function asyncFunction(startMessage, endMessage, func) {
+    log('title', startMessage);
+
+    const p = await new Promise(resolve => {
+        func(resolve);
+    }).then(()=>'');
+    log('title', endMessage);
+    return p;
 }
 
 // bump version
@@ -640,9 +641,9 @@ function parseArgv() {
 
 function snake(text) {
     return text.toString().toLowerCase()
-        .replace(/\s+/g, '_')           // Replace spaces with -
+        .replace(/\s+/g, '_')           // Replace spaces with _
         .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        .replace(/\-\-+/g, '_')         // Replace multiple - with single -
+        .replace(/\-\-+/g, '_')         // Replace multiple - with single _
         .replace(/^-+/, '')             // Trim - from start of text
         .replace(/-+$/, '');            // Trim - from end of text
 }

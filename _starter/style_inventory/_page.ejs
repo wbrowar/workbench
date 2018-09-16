@@ -1,5 +1,5 @@
 <% if (pkg.projectTemplateLanguage === 'html') { %>
-<%- include(paths.templates.src + '_layout_top') %>
+<%- include(paths.templates.src + '_ejs/_layout_top') %>
 <% } %>
 <div class="styles">
     <div class="styles__menu"><% var pages = pkg.styleInventory['pages'] %><% for (var item in pages) { %>
@@ -18,12 +18,12 @@
 
 <% if (pkg.projectType === 'craft3') { %>
     {% css %}
-        <%- ('< %-').replace(' ', '') + ' include(paths.templates.src + \'_css/dev-styles.css\') ' + ('% >').replace(' ', '') %>
+        <%- ('< %-').replace(' ', '') + ' include(paths.templates.src + "_css/dev-styles\" + filenameVersion + \".css") ' + ('% >').replace(' ', '') %>
     {% endcss %}
 <% } else { %>
     <link rel="preload" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css" as="style" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css"></noscript>
 <% } %>
 <% if (pkg.projectTemplateLanguage === 'html') { %>
-<%- include(paths.templates.src + '_layout_bottom') %>
+<%- include(paths.templates.src + '_ejs/_layout_bottom') %>
 <% } %>

@@ -189,6 +189,17 @@ async function asyncForEach(array, callback) {
     }
 }
 
+// Synchronously run a function and wait for a callback to fire
+async function asyncFunction(startMessage, endMessage, func) {
+    log('title', startMessage);
+
+    const p = await new Promise(resolve => {
+        func(resolve);
+    }).then(()=>'');
+    log('title', endMessage);
+    return p;
+}
+
 // bump version
 function bumpVersion(version, release = 'patch') {
     return semver.inc(version, release);

@@ -41,7 +41,7 @@
   twig: {
     code:
 `{% import 'macros/component.twig' as component %}
-{% set image = craft.assets.title('fpo').one() %}
+{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png') %}
 {% set options = {
     image: image,
     title: image.title ?? '',

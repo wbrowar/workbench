@@ -1,115 +1,202 @@
 WB-Starter
 ==========
 
-My personal framework for front-end development includes some SASS, HTML, and JS snippets that I use on a regular basis. This framework is built using NPM, Gulp, and Webpack and it is meant to be pulled apart or modified for the project at hand. By changing settings in the `package.json` file, this can be used for one-page landing pages, as well as used in full-fledged CMS themes.
+My personal framework for front-end development includes some SASS, HTML, and JS snippets that I use on a regular basis. This framework is built using Node and Webpack and it is meant to be pulled apart or modified for the project at hand. By changing settings in the `package.json` file, this can be used for one-page landing pages, as well as used in full-fledged CMS themes.
 
 This is here for my own storage, but please [let me know if you have any feedback or suggestions](https://github.com/wbrowar/WB-Starter/issues).
+
+## Requirements
+- [Node.js](https://nodejs.org/en/) (requires v10+)
+- [Composer](https://getcomposer.org)
 
 ## Installation
 NOTE: these instructions are for a Mac. Commands for PC or Linux might be slightly different.
 
-### Setting Up for the First Time
-1. Clone the repo into your site's root folder. You may move your `_source` and `_build` folders if needed
-2. Install [Node](http://nodejs.org/) (requires v7+)
-3. Make sure Ruby is installed, then install [SASS](http://sass-lang.com/) by running the command `gem install sass`
-4. If you don't have Homebrew, you can install it using this command: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-5. Install ImageMagick, run this command: `brew install imagemagick`
-6. Run `npm install -g gulp-cli`.
-7. Go to your site's root folder and run the command: `npm install`
+1. Install [new-wb](https://www.npmjs.com/package/new-wb) by running `npm install -g new-wb`.
+1. Run `new-wb` in the directory of your choice.
+1. Enter in the required information requested by various sets of prompts.
 
-### Setting Up Each Project
-1. In Terminal, `cd` to your project root
-2. Run `npm install`
-3. Update the `package.json` file to fit your project's needs. See `package.json` below
-4. Run `npm run setup` to perform the default task and to do an initial setup
+**OR**
+
+1. Create a new project folder and `cd` into it.
+1. Clone this repo or download the [master.zip](https://github.com/wbrowar/WB-Starter/archive/master.zip) and unzip it.
+1. Run `npm install` or `yarn` to download Node modules.
+1. Run `node ./_starter/install.js --handle='CHANGE_ME'` and change `CHANGE_ME` to the name of your directory.
+1. Enter in the required information requested by various sets of prompts.
+
+### NPM Scripts
+NPM Scripts may be added depending on what type of project you are creating. Check the `package.json` file to see what scripts are available after installation is complete.
+
+| Script | Description |
+| --- | --- |
+| `component` | Add or move a component into your project‘s `_source/_components` directory. |
+| `cssd` | Use Craft Scripts to pull down uploaded assets and the specified database. |
+| `cssdb` | Pulls down only the database using Craft Scripts. |
+| `dev` | Development build that processes templates and theme files. |
+| `prod` | Completes the build script in `production` mode. |
+| `pub` | Completes the build script in `production` mode, then does a GIT commit and push. |
+| `pubd` | Does the same as `pub` but merges files from `dev` to `master` and does the commit from `master`. |
+| `start` | Does a `git pull`, updates NPM and Composer dependencies, then runs the `watch` script. |
+| `update` | Updates NPM and Composer dependencies. |
+| `watch` | Completes the Development build, then watches files in the `_source` folder for changes. |
+
+### Local Config
+If you have some default values that you prefer to use for every project, you may create a local config file that will provide defaults to the questions asked during installation.
+
+This file will be created during the first time `new-wb` is ran, in your machine’s home folder: `~/.wb-starter.config.json`.
+
+Once it has been created, you may edit it with the following options:
+
+| Option | Description |
+| --- | --- |
+| `cpTrigger` | For Craft projects, this replaces the path to Craft’s CP. |
+| `dbHost` | Host where databases will be created. |
+| `dbUser` | Database user. |
+| `dbPort` | Port used to connect to your location database. |
+| `gitUser` | Your GitHub username. |
+| `gitOrg` | A GitHub organization name, if you plan to create sites for an organization. Leave this blank to create repos in your personal profile. |
+| `gitPrivate` | Set this to `true` to create private GitHub repos. |
+
+Remove any options you don’t want to create a preset for. You will still be able to overwrite any of these presets when setting up a new project. If you delete this file from your home directory you can re-create it during your next installation.
 
 ---
 ## When to Use What
-### Beginning a project
-- When starting a project, run the helper task, `npm run list`, to see what commands are available.
-- Run `npm run setup` at the beginning of the project to pull together template files based on the type of project your are developing. In this task, you will be prompted to answer some questions that will customize the components and templates added to your `_source` folder. *NOTE: because this task overrides files in your `_source` folder, it should only be run once, at the beginning of a project.*
-- `gulp font` can be run anytime you'd like when you need to add fonts to your project. See Using Fonts in CSS, below for configuration options.
-- To make sure everything is working right, finish setting up your theme files and your `package.json` settings and run the `npm run dev` task. This will give you a good idea of any errors you might run into right off the bat. Even better, run `npm run prod` for a more thorough check.
 
 ### During Development
-- Every time you begin to write code, run `npm run watch` first. This will watch the `_source` folder and update theme files as you save them.
-- At any given time, run `npm run dev` to reprocess basic theme assets (JS, CSS, and images). Doing this will clean out old JS, CSS, and image files and replace them with up-to-date versions. It will also do a quick update of templates files (in the `_html` directory).
+- At any given time, run `npm run dev` to reprocess JS, SCSS, templates, SVG icons, and image files.
+- Every time you begin to write code, run `npm run watch` first. This will run `npm run dev`, then watch the `_source` folder and update theme files as you save them.
 
 ### Staging and Testing
 - When staging files for review or testing, run `npm run prod`—every time—before deploying to a staging server. `npm run prod` includes extra tasks, such as Babel transpiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
 
 ### Going Live
 - When preparing to go live, run the `npm run prod` task. This will increase the version number in the `package.json` file, which will cause cache-busting to occur on static files that are loaded using version number parameters.
-- Running `npm run prod` cleans out all CSS, JS, SVG, and image files and replaces them with fresh builds.
-- `npm run prod` also creates favicons, adds Critical CSS, processes SVG icons and processes template files.
+- Running `npm run prod` cleans out all CSS, JS, SVG, templates, and image files and replaces them with fresh builds.
+- `npm run prod` also creates favicons and adds Critical CSS.
 
 ---
-## Theme Components
-### SCSS Framework
-- In `_source/scss` there are a several files with underscores in front. These all get compiled into `app.css`, by default.
-- Sass will compile all `.scss` files that do not contain an underscore in front of the filename.
-- Files are organized into folders:
-  - `automated` – For files generated by Gulp. We can assume these will update on their own, so we wouldn’t edit these manually.
-  - `base` – Global CSS that is used across all pages of the site. Animations, variables, mixins, and global styles are all organized here so they’re in one place.
-  - `compontents` – base CSS for HTML components, such as forms, buttons, tables, images, etc… These should be abstracted and modular so these elements can be dropped anywhere in the site and still look the same. Modifier classes can be used to make general adjustments within a component. One-off adjustments should be made by adding a new class to the component's wrapper and adding the adjustments to the new class.
-  - `layout` – Layout areas and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
-  - `lib` – For any CSS that we receive from vendors (like our clients) can go here. These should not be edited by us, so it can be assumed than any file here can be updated at any time.
-  - `pages` – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
-- CSS follows the [BEM naming convention](http://getbem.com/naming/) to reduce accidental mixing of styles.
+## Style Inventory
+- The Style Inventory displays the code and an example of the components available in your project.
+- To get to the Style Inventory, go to `/dev/inv/index.html` or `/dev/inv/` in a Craft 3 project.
+- In Craft websites, the Style Inventory section is available in `dev`, and `staging` environments and will redirect you to the home page in a `live` environment.
+- The Style Inventory is generated from settings in the `package.json`, `styleInventory.pages` object, and the `demo.ejs` files in component folders.
+- Based on the code snippet below:
+  - The URL for each page is generated using the key in the `styleInventory.pages` object. In the code below, the URL of this page would be `/dev/inv/globals.html`
+  - In `components`, the item `@colors` will pull its code from WB Starter, from `_starter/style_inventory/defaults/colors.ejs`
+    - Files in this directory shouldn‘t be edited, but they can serve as examples as to what can be done in `demo.ejs` files.
+  - The `header` item will pull from the `_source/_components/header/demo.ejs` file.
+    - This file can be changed as needed to fit your project.
+
+```json
+{
+  "globals": {
+    "label": "Globals",
+    "components": [
+      "@colors",
+      "header"
+    ]
+  }
+}
+```
+
+---
+## Source Structure
+### Components
+- During installation you will be asked to select which components you would like to use in your project. The components will appear in this directory.
+- Components can include the following file:
+  - *.html* - Used to include the component via [EJS](http://ejs.co)
+  - *.scss* - Styles for the component
+  - *.twig* - A twig version that can be included via Twig `{{ component.c('COMPONENT_HANDLE', config) }}`
+  - *.vue* - A [Vue](https://vuejs.org) single file component file
+  - *demo.ejs* - An EJS file used to demonstrate the component‘s styling and functionality in the project‘s Style Inventory
+
+#### Adding Components
+- To move an existing component run `npm run component -- --mv` and select which component you would like to move from the list.
+- To create a new component run `npm run component` and answer the questions when prompted.
 
 #### Styling Components
-- Elements with class names that are prefixed with `c_` indicate this is a CSS, JS, or Twig component that is part of the Style Inventory. Styles for components can appear in one of three places:
-  - Twig components should have a handle associated with them (for example, 'button' or 'alert_bar'). The name of the `.twig` file should also be the name of the `.scss` file that styles that component.
-    - The styles for `_html/components/button.twig` should appear in `_scss/components/button.scss` and the root class should be `c_button`.
-  - Vue components can have styles within the component themselves OR in an `.scss` file.
-    - Styles in the Vue component should be styles that would not likely be overridden. Use modifiers when possible instead of writing one-off styles when changing theme colors and spacing.
-    - Styles from the Vue component are inserted as if they were a `<style>` tag in the `<head>`, so they will overwrite styles written in `app.css`.
-    - Components that are lazy loaded through Webkit code splitting, that require a lot of styles, can benefit the site by lowering the size of `app.css`. This is especially helpful if the component is only used on a small number of pages.
-  - Some CSS-only components could be styled within `base/_globals.scss`. This includes styles for things like general text sizes and page wrappers.
+- Component all have a wrapper element with a class that is prefixed with `c_`.
+- When styling a component, use BEM-like modifiers to add styles within the component.
+  - For example, `<div class="c_text c_text--red"></div>` could make the color of text red.
+- When adding or overriding component styles for a page layout or another component, create a new class and place your styles in the appropriate `.scss` file.
+  - For example, styles for `<div class="home__header c_text"></div>` would go in `_css/pages/home.scss`.
+  - In this case the CSS selector should be `.home__header` and not `.home .c_text`.
+- Styles for Vue components may go in either the `.vue` file or in the component‘s `.scss` file, depending on whether or not the CSS should be processed by SASS with the rest of the project‘s styles.
+
+### SCSS Framework
+- In `_source/_css` there are a several files with underscores in front. These all get compiled into `app.css`, by default.
+- Sass will compile all `.scss` files in the root of `_source/_css` that do not contain an underscore in front of the filename.
+- Files are organized into folders:
+  - *automated* – For files generated based on `package.json` settings. We can assume these will update on their own, so we wouldn’t edit these manually.
+  - *base* – Global CSS that is used across all pages of the site. Animations, variables, mixins, and global styles are all organized here so they’re in one place.
+  - *layout* – Layout areas and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
+  - *lib* – For any CSS that we receive from vendors (like our clients) can go here. These should not be edited by us, so it can be assumed than any file here can be updated at any time.
+  - *pages* – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
+- CSS follows the [BEM naming convention](http://getbem.com/naming/) to reduce accidental mixing of styles.
+
+#### PostCSS
+- PostCSS is used to run
+- The following plugins are used in PostCSS:
+  - *purgecss* – Removes all CSS that isn‘t used in in your template files
+  - *mqpacker* – Combines media queries while keeping existing source order
+  - *automated* – Adds browser prefixes when needed
+
+#### Using Colors in CSS
+- Colors that are defined in `package.json`, in the `colors` object, will be generated as SCSS variables.
+  - For example, `"blue": "rgb(0, 0, 255)"` can be used in the following ways in SCSS files:
+    - `$color_blue` will output `var(--color-blue)`
+    - Suffixing `_raw`, as in `$color_blue_raw`, will allow you to use SASS‘s color functions. For example, `transparentize($color_blue_raw, .4)` will output `rgba(0, 0, 255, .6)`
+    - Setting the color value using CSS Custom Properties can override a color for easier theming. For example:
+```scss
+  .parent {
+    --color-blue: rgb(100, 100, 255);
+    
+    .child {
+      color: $color_blue;
+    }
+  }
+```
+
+Will output:
+
+```css
+  .parent .child {
+    color: rgb(100, 100, 255);
+  }
+```
 
 #### Using Fonts in CSS
 - A `font()` mixin is available to optimize the use of custom `@font-face` fonts, and to making changes to fonts and font stacks consistent in your CSS. Here are the advantages of using this mixin:
   - Only fonts that are used within your SCSS are given a `@font-face` declaration.
   - `@font-face` declarations are only made once, on the first time that `font()` appears in SCSS. This reduces the amount of CSS code.
 
-In your `package.json`, here are the options you can use. Options marked with ° are required:
-  - °`name` – Used to identify the font when using the `font()` mixin. For example, in your SCSS you could write `@include font('avinir');`.
-  - °`source` – Determines whether or not a font needs a `@font-face` declaration. Options are `system` or `fontface`.
+In your `package.json`, in the `fonts` object, here are the options you can use. Options marked with ° are required:
   - °`fontFamily` – The font family used in CSS to refer to the font. If quotes are needed, use single quotes. For example: `"fontFamily": "'Avinir Next'",`
   - °`fallbackStack` – Fallbacks used in order in case the font is not loaded.
   - °`fontStyle` – CSS value for the `font-style` property. The output in CSS will be `font-style: normal;`, by default.
   - °`fontWeight` – CSS value for the `font-weight` property. The output in CSS will be `font-weight: normal;`, by default. You can use any CSS-valid value, such as `100` or `bold`.
   - `files` – Pairs up font file types and their locations. This is only applicable for fonts that need a `@font-face` declaration. In most situations, you'll want an `.eot` and a `.woff` file for cross-browser compatibility. A `.woff2` file can be included for better performance.
 
+The key for each item is used to identify the font when using the `font()` mixin. For example, if the key is `avinir`, in your SCSS you would write `@include font('avinir');`.
+
+#### Using SVGs in CSS
+- All SVG files in the `_source/_icon` directory will be moved to the `icon` directory in your theme folder.
+- To use an SVG as a background image in CSS, add the filename of the icon to `package.json`, in the `cssIcons` array.
+- These icons can be used in two ways:
+  - To add an SVG background image to an element, add `icon_` + the CSV name to the class attribute. For example, to add a `location` SVG to a `div`, use `<div class="icon_location"></div>`
+  - To modify an SVG you can add CSS Custom Properties to `fill` and other attributes within the SVG, then use a custom mixin for each SVG.
+    - Call `@include icon_location((MAP_KEY: MAP_VALUE))` and replace `MAP_KEY` and `MAP_VALUE` as desired.
+    - In your SVG, use `map-get($map, MAP_KEY)` and change `MAP_KEY` to the key passed into the mixin.
 
 ---
 ### Javascript
-- All of the JS is configured to be compiled using [Webpack](https://webpack.js.org/) and then loaded using [loadjs](https://github.com/muicss/loadjs).
+- All of the JS is configured to be compiled using [Webpack](https://webpack.js.org/).
+- JS will be compiled for both modern browsers and legacy browsers. The modern JS will be based around using ES6 Modules, whereas the legacy JS will include polyfills and JS transpiled for older browsers.
 
 #### Using Webpack
 For Javascript files, Webpack is used to uglify, transpile, and concatenate our files into bundles. It pulls directly from `_source/_js/` and `node_modules` and creates single Javascript files in `public/js/`.
 
-Currently, there is one file, `app.js`, but if you need to split out code into additional bundles, you can configure Webpack in the `webpack.config.js` file. To add another Javascript file, modify the `entry` object:
-
-```
-entry: {
-    app: paths.srcJs + "app.js",
-},
-```
-
-Adding a line to `entry` requires that you give it a name (as the key), and point to the source file. Whatever you name the key will become the name of the bundle when it is created in `public/js/`.
-
-When `npm run prod` is run, Webpack will know it is preparing files for release, so it will uglify your code within `plugins`.
-
-```
-plugins: (env === 'production') ? [
-    new UglifyJsPlugin({
-        sourceMap: true
-    })
-] : [],
-```
-
-You can add more plugins here, if you'd like.
+Currently, there is one file, `app.js`, but if you need to split out code into additional bundles, you can configure Webpack's entries in the `package.json` file. To add another Javascript file, modify the `webpack.entries.js` object.
 
 ### lazy.js
 Include `lazy.js` into a JS document and create a new instance using `window.lazy = new Lazy(config)`.
@@ -173,233 +260,43 @@ scrollToElement(el);
 
 ---
 ### Image Processing
-- **_icon** SVGs will be processed differently depending on where they are located in the `_source/_icon` folder:
-  - **css** All `.svg` images in the `css` folder will be base64-encoded and added using `background-image` to a file in the `_source/scss/automated/` folder, called `_icon_sprite.scss`. This will be compiled when the `sass` task is run.
-  - All `.svg` files in the `_source/_icon` folder will be moved to your theme's `icon` folder so they can be linked to or embedded from the front-end.
-- **_img** Images will be processed differently depending on where they are located in the `_source/_img` folder:
-  - **2x** Putting 2x-resolution images in the `2x` folder will result in both a 2x image and a 1x image being placed into your `img` directory. The 2x image will be suffixed with `@2x`.
-  - Images located directly in the `_source/_img`, or folders not listed above will only be minimized and moved into your theme's `img` folder.
-- **_favicons** Adding a 512x512 `.png` into the `_source/_favicons` folder, and running `npm run prod`, will result in a set of meta images placed in `img/meta`. HTML for these images will be generated in `_build/html/meta.html`. This code will be included as part of the HTML build process.
+- Root images
+  - Images located directly in the `_source/_img` will be minimized and moved into your theme's `img` folder.
+  - A `.webp` variant of each image will be created and placed alongside the original.
+- Resized Images
+  - In `package.json`, in the `imageResize` object, you can define a set of widths to resize an image to. All images in the folder indicated will be resized to each size.
+    - All resizes will be based on the image‘s aspect ratio.
+    - A `.webp` variant of each resize will be created.
+    - For example, to resize all of the images in `_source/_img/resized` to the widths, 500, 1024, and 2048, use the following configuration:
+      ```json
+      {
+        "imageResize": {
+          "resized": {
+            "sizes": [
+              500,
+              1024,
+              2048
+            ]
+          }
+        }
+       }
+      ```
 
 ---
-### Gulp HTML Builder
-- Uses [ejs](http://ejs.co) to process HTML files when the `npm run prod` task is run.
-- Using `ejs` allows you to include files, use conditionals, and replace strings—like IDs and classes.
-- There are default replacements included in the Gulpfile, and additional replacements can be added to the `ejsVars` setting in `package.json`. If the replacement is for an include, the file must be included based on the root of the `_build` folder.
+### Favicons
+- Adding a 512x512 `.png` into the `_source/_favicons` folder, and running `npm run prod`, will result in a set of meta images placed in your theme‘s `favicon` folder. HTML for these images will be generated when `_source/_templates/_ejs/_head_meta.ejs` is compiled.
+- Settings in `package.json`, in the `favicon` object, can be changed to set the background color and the theme color used for various favicons files.
 
 ---
-### Style Inventory
-- To get to the Style Inventory, go to `/dev/inv`
-- In Craft websites, the Style Inventory section is available in `dev`, and `staging` environments and will redirect you to the home page in a `live` environment
-- Components are either based on Twig, Vue components, or plain HTML patterns
-- Components are separated so they can easily be moved from one project to another
-- Components should be edited to meet the needs of the project
-- Components that are not in use should be removed by doing the following:
-  1. Delete the component example code and documentation from the Style Inventory or hide the page by removing it from the `styleTemplateSections` array in `package.json`
-  2. Move the `SCSS` file that matches up with the component name to `_source/_scss/_unused` so it won't get compiled with other `CSS` code
-  3. If a Vue component is no longer needed, comment out the import and remove its registration from the root Vue instance in `_source/_js/vue-components`
-
-#### Twig Components
-- Twig components are displayed by including the `macros/component.twig` macro and by calling the `c()` macro while passing in a component name and the appropriate arguments
-- Each component name is matched up with the name of an `SCSS` file, found in `_source/scss/components` (unless the component doesn't require external SCSS)
-- Some components are wrappers for Vue components with some Twig-based helpers
-  - For example, the `image_slider` makes it easy to create common slides used in carousels, and its output is based on a `Slider.vue` component
-  - Vue components can still be used in place of the Twig version when more flexibility is needed
-
-#### Vue Components
-- Vue components are split into Single File Components
-- Examples in the Style Inventory show common uses of the components
-  - To see more available options, open the `.vue` file used in a component and look for available `props`
+### Templates
+- Templates are processed using [EJS](http://ejs.co).
+  - Using `ejs` allows you to include files, use conditionals, and replace strings—like IDs and classes.
+  - The entire `package.json` file is passed into the files processed through EJS.
+    - The `ejs` object in `package.json` gives you a convenient place to store EJS variables, however, any variable defined in `package.json` is accessible.
+    - To use variables stored in `package.json`, use `pkg` then the variable name. For example, to print out the site URL path, use `<%- pkg.paths.base.siteUrl %>`
 
 
 ---
 ## Release Notes
-#### 4.11.0
-- :fire: :fire: :fire: Removed all Internet Explorer-specific code :fire: :fire: :fire:
-- :rocket: Added the ability to hide all code output in Style Inventory modules
-- :rocket: Added a display for component modifier classes in Style Inventory modules
-- :rocket: Added imager to installed plugins and added imager support to image component
-- :rocket: Added CSS Custom Properties to `_mixins.scss`
-- :rocket: Added mixins that provide default class modifiers for box model elements and text-based elements
-  - `box_modifiers` and `text_modifiers` mixins
-- :rocket: Added `marketo_reset` mixin to remove default styles from Marketo forms
-- :rocket: Added `c_buttons` CSS component
-- :rocket: Added `c_wrapper` CSS component
-- :wrench: Changed `c_subheader` to numbered `c_header` components
-- :fire: Removed default body classes from `_layout.twig`
-- :wrench: Changed `page_ui.twig` to `ui.twig`
-- :wrench: Changed `page_footer.twig` to `footer.twig`
-- :rocket: Added `partials/_component_template.twig` for situations where a Twig component should be rendered in a module
-  - To use this, call `Craft::$app->view->renderTemplate('partials/_component_template', ['name' => 'button', 'options' => $options])`
-- :fire: Removed all Craft 2 templates
-- :wrench: Updated Greensock to 2.0
-- :wrench: Changed `loadJS` to `loadjs`
-  - This `loadjs` library supports sequential loading for situations where a dependency needs to be loaded before another script
-- :wrench: Removed `scrollMonitor` and replaced its functionality with Intersection Observer
-  - Added an Intersection Observer polyfill for Safari support
-- :wrench: Moved `vue-components.js` to `app.js` and updated module imports
-- :rocket: Added `requestAnimationFrame` to the default Resize and scroll handlers
-- :wrench: Refactored the default export of `lazy.js` to work as a Class
-  - This allows for more flexibility before Lazy's default function is fired
-- :rocket: Added the ability to manually handle Lazy load and animation via `lazy.updateAnimate()` and `lazy.updateLoad()`
-  - You can pass in a selector string and Lazy will look for lazy elements within that selector and it's children
-  - If you do not pass anything in, it will look for all registered elements in the viewport
-- :rocket: Vue overlays will lazy load lazy elements once the overlay is displayed
-- :wrench: Swiping left or right now updates all other sliders with the same slide ID
-- :wrench: Slider controls will be hidden if only one slide is active in its slider
-- :fire: Removed `yarn` as a dependency and replaced `yarn` scripts with `npm update`
-
-#### 4.10.0
-- :wrench: Refactored all components in Craft 3 templates
-  - :rocket: Added default options that can be applied to all components (classes, attributes, id, etc...)
-  - All components are split up to make it easier to move them from one site to another
-- :rocket: Added `_source/_js/animation.js` to store page animations that are driven by Greensock
-	- If you will not be using this file, comment it out in `global.js`
-	- If you don't need `TweenMax`, change the import and tweens to use `TweenLite`
-- :wrench: Moved all svg files from the `icons` folder to the `_source/_icon` folder
-	- Files placed in the `_source/_icon/css` folder will be included in the `SCSS` build as background images
-- :rocket: Added form and form input components
-	- Input components can be used as plain Twig elements or switched over to Vue components
-	- When using Vue, inputs can self-validate and self-format
-- :wrench: Updated the Vue Slider with the following changes:
-  - The slider now accepts a JSON-based array of HTML elements and will distribute the elements into `SliderSlide.vue` components based on a new `slides-layout` prop
-  - The `slides-layout` is a JSON array that allows you to set the amount of elements per slide (the `count` property) and if you pass in a `width` property it will change the amount when the slider is above the given width
-  - When the `auto-height` prop is set to `true`, the slider will now adjust it's height based on the height of the content of its slides
-  - The slider will now loop between the last slide and the first slide in both directions
-  - The slider uses `Hammer.js` to enable swipe on touch devices
-  - Slides that are not the current, previous, or next slides are set to `visibility: invisible` so they do not appear when other slides are animating
-  - `SliderControl.vue` components now allow you to hide the indicators when a maximum number of slides is shown
-  - Removed the background image prop on `SliderSlide.vue` components
-- :rocket: Added color swatches to the Style Inventory!
-- :rocket: Added an `SCSS` mixin to make it easy to create a thumbnail where text is centered in front of a background image and there is a click-through link
-- :rocket: Updated all Composer and NPM components
-  - Webpack has been updated to Webpack 4, which now passed in 'development' or 'production' modes (the webpack.config.json files has been updated for this)
-- :fire: Removed default Site Module
-  - Instead of using this, build a module with the components you need at the [Plugin Factory](https://pluginfactory.io)
-
-#### 4.9.0
-- :rocket: Added NPM scripts to replace Gulp commands
-  - Use the following replacements when needed:
-    - `npm run dev`: replaces `gulp run`
-    - `npm run prod`: replaces `gulp release`
-    - `npm run watch`: replaces `gulp watch`
-    - `npm run list`: replaces `gulp`
-  - Other commands can still be run, but using NPM scripts for standard commands allows us to run non-gulp commands, as well
-  - Suggested aliases to make typing easier:
-  
-  ```
-  alias dev="npm run dev"
-  alias list="npm run list"
-  alias prod="npm run prod"
-  alias watch="npm run watch"
-  ```
-- :rocket: Replaced SystemJS with Webpack
-  - Module loading via `import` statements at the top of your Javascript file
-    - For NPM packages, you can refer to it by name (for example, `css-loader`)
-    - For custom libraries, import using a relative path (for example, `./lazy.js`)
-  - Webpack runs on `npm run dev`, `npm run prod`, and `npm run watch`
-  - Removed SystemJS code from templates
-  - Removed path settings in `_head_scripts.ejs`
-- :rocket: Converted Vue components in `vue-components.js` to Single File Components
-  - Uses scoped SCSS for easier CSS defaults
-  - SCSS imports `_source/_scss/base/mixins.scss` so variables can be used
-  - A "Hello, World" component is available as a skeleton for future components
-- :rocket: Added `webkit.config.js`
-  - Javascript files get compiled according to Webpack configuration
-  - Other Webpack plugins and configurations can be added
-- :rocket: Added `loadJS` for JS loading – Welcome back :tada:
-  - Loading uses filename of set in the `jsSection` variable in `head_scripts`
-- :rocket: Added new folder for Craft 3 templates, but it's only a copy of Craft 2 for now
-- :rocket: Added new `template_directory` variable to `package.json` in case template, specific EJS code is desired
-- :wrench: Changed `home.js` to `app.js` and removed `inside.js`
-  - Most sites don't need page specific js bundles, but if you need to split code into several files, save a new Javascript file and configure webpack to handle it
-- :wrench: Changed `_source/_sass` to `_source/_scss`
-- :wrench: Changed filename from `all.css` to `app.css`
-- :wrench: Moved filepaths for `loadCSS` and `loadJS` from `Gulpfile.js` to `package.json` so they can be updated if needed
-- :fire: Removed `body_bottom_scripts.ejs`
-- :fire: Removed `gulp first` and related tasks
-- :fire: Removed tasks that moved files from `node_modules`
-  - Use webpack or relative paths to include libraries directly from `node_modules`
-
-#### 4.8.1
-- :rocket: Added the ability to show arguments accepted by components in Style Inventories
-  - Add an `options` array into a style inventory to show argument names, required or not, type, default value, and a description
-  - Look at `_source/_util/_craft2_1/templates/_html/dev/_style_inv/buttons.twig` for an example of the `options` array
-  - More will be added later
-- :fire: Removed Ideal Image Slider from `package.json` and other associated files
-
-#### 4.8.0
-- :rocket: Added `gulp setup` task
-- :wrench: Refactored `_source/_util` folder to make editing Style Inventories easier
-- :wrench: Moved everything from `_source/_js/system-config.js` to `_source/_html/ejs_includes/_body_bottom_scripts.ejs` or `_source/_html/ejs_includes/_head_scripts.ejs`
-- :fire: Removed `gulp template` task
-- :fire: Removed `importPageSpecificModule` function
-- :fire: Deleted `_source/_js/system-config.js`
-- :fire: Deleted `_source/_js/modernizr.custom.js`
-- :fire: Stopped adding `.min` to uglified JS files
-
-#### 4.7.1
-- :wrench: Updated all NPM libraries. **This now requires the latest Node 7.x and all `node_modules` should be deleted and `npm install` should be run to update dependencies.**
-- :wrench: Split index.html into ejs partials for better portability when creating multiple pages
-- :rocket: Added an `index` section to default style inventory to explain what a style inventory does
-- :wrench: Bug fixes and minor tweaks in `Gulpfile.js`
-
-#### 4.7.0
-- :rocket: Added new templates to the default style inventory
-  - **Animations** - Added the option to use javascript functions when an element is scrolled into view
-    - A function must be passed into the defaul `lazy()` function. Follow the example in `_source/_js/global.js`
-    - Add `data-lazy-animate="animationFunction"` to call a function registered as `animationFunction`
-    - Adding a pipe after the function name allows you to pass in arguments as a string. For example, `data-lazy-animate="animationFunction|Function Argument"`
-  - **CSS Grid** - Added a default "Holy Grail" grid layout
-  - **Icons** - Added default Social Media icons
-  - **Images** - Added lazy-loading for content images and background images
-  - **Media** - Added lazy-loading audio, iframe, and video files
-  - **Messages** - Added styles for default messages, used to convey info upon user interaction. Added default "Alert Bar" markup and styles
-  - **Naviagtion** - Added example of typical hamburger functionality
-  - **Vue Components** - Added accordion and overlay Vue components
-- :rocket: Added default function for toggling an `active` class on elements
-  - To toggle an `active` class on click on an element, add the attribute `data-active-toggle`
-  - To toggle an `active` class on another element, add a CSS selector to the vaulue of the `data-active-toggle` attrbiute. For example, `data-active-toggle="#mobile_nav"`
-- :rocket: Added `_source/layout/_grid.scss` for all CSS Grid styles
-- :rocket: Added `_source/modules/_messages.scss` to style alert messages
-- :rocket: Added `_source/modules/_vue.scss` to style vue components
-- :rocket: Added `_js/vue-compontents.js` to add Vue components, an event handler, and to create a root Vue Instance on the `#page` element
-- :wrench: Improved style inventory styles
-
-#### 4.5.1
-- :rocket: `jsDevMode` now gets set to false when running `npm run prod`
-- :rocket: `jsVersion` gets set to the package version number upon `npm run prod`, otherwise it is set to the current timestamp and files that use `<%= version %>` will be forced to reload during development
-- :wrench: Added support for `.min` files in the `_js/_lib` folder
-  - `.min.js` files do not get uglified or renamed. They are just moved to your `js/_lib` folder in your theme path
-- :wrench: Moved SystemJS `<script>` tag, system config code, and font events code down to bottom of the `<body>` tag. I'm not sure if this will have an impact either way, but it seems like it's safe to move to speed up loading
-- :rocket: Added `vue.js` to default libraries
-  - Vue is not turned on by default, but it'll be there in case you'd like to use it
-  - Because of the way Vue's libraries are named (dev = `.js`, prod = `.min.js`), moving only one file during `gulp first` gets messed up, so conditional loading—based on whether or not `jsDevMode` is true—makes it so development Vue is loaded via their CDN, and when `npm run prod` is run, the local, production version is used
-
-#### 4.5.0
-- :wrench: Replaced `emergence` with `scrollMonitor` for lazy loading
-- :rocket: Added `_source/_js/lazy.js` to handle lazy loading
-  - `lazy.js` relies on `data` attributes. See comments in the code for required attributes and data types
-  - Check `lazy.js` comments for more information
-- :fire: Removed webshot from `Gulpfile.js`
-  
-#### 4.4.0
-- :rocket: Added font configuration settings to `package.json`
-- :rocket: Added `gulp font` task to automate `@font-face` declarations and performance enhancements in `_source/automated/_fonts.scss`
-  - Configure font settings in `package.json` and run `gulp font` anytime you update fonts you want available in the `font()` mixin
-- :rocket: Added style template settings to `package.json`
-- :rocket: Added files to create default style inventory sections
-  - To add a style inventory section to a page, use `<%- include(styletemplate____) %>` and replace blank with name of the section. For example, to embed the icons section, use `<%- include(styletemplateicons) %>`
-
-#### 4.3.0
-- :rocket: Added `browserSync` settings to `package.json`
-- :rocket: Added Browsersync support
-  - Run `gulp watch` and Browsersync will open a new tab at the URL you set
-  - When you save any HTML or Javascript file that is watched, Browsersync will reload the page
-  - Saving a SCSS file will automatically update the CSS on the page without reloading
-
-#### 4.2.0
-- :wrench: Replaced `RequireJS` with `SystemJS` for Javascript module loading
-
-#### 4.1.0
-- :wrench: Removed bower to use npm for front-end libraries
+#### 5.0.0
+- :rocket: Complete rewrite from Gulp to Node!

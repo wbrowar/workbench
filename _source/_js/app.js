@@ -41,30 +41,30 @@ vueMethods['showOverlay'] = function(overlayTitle) {
 };
 
 // Lazy load Vue components
-Vue.component('accordion', function (resolve) {
-    require(['./components/Accordion.vue'], resolve)
-});
-Vue.component('accordion-tab', function (resolve) {
-    require(['./components/AccordionTab.vue'], resolve)
-});
-Vue.component('overlay', function (resolve) {
-    require(['./components/Overlay.vue'], resolve)
-});
-Vue.component('slider', function (resolve) {
-    require(['./components/Slider.vue'], resolve)
-});
-Vue.component('slider-control', function (resolve) {
-    require(['./components/SliderControl.vue'], resolve)
-});
-Vue.component('slider-slide', function (resolve) {
-    require(['./components/SliderSlide.vue'], resolve)
-});
-Vue.component('validated-form', function (resolve) {
-    require(['./components/ValidatedForm.vue'], resolve)
-});
-Vue.component('validated-form-input', function (resolve) {
-    require(['./components/ValidatedFormInput.vue'], resolve)
-});
+// Vue.component('accordion', function (resolve) {
+//     require(['./components/Accordion.vue'], resolve)
+// });
+// Vue.component('accordion-tab', function (resolve) {
+//     require(['./components/AccordionTab.vue'], resolve)
+// });
+// Vue.component('overlay', function (resolve) {
+//     require(['./components/Overlay.vue'], resolve)
+// });
+// Vue.component('slider', function (resolve) {
+//     require(['./components/Slider.vue'], resolve)
+// });
+// Vue.component('slider-control', function (resolve) {
+//     require(['./components/SliderControl.vue'], resolve)
+// });
+// Vue.component('slider-slide', function (resolve) {
+//     require(['./components/SliderSlide.vue'], resolve)
+// });
+// Vue.component('validated-form', function (resolve) {
+//     require(['./components/ValidatedForm.vue'], resolve)
+// });
+// Vue.component('validated-form-input', function (resolve) {
+//     require(['./components/ValidatedFormInput.vue'], resolve)
+// });
 
 // VUE INSTANCE
 new Vue({
