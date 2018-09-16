@@ -6,12 +6,12 @@
 {% minify %}
   <html class="no-js" lang="en">
     <head>
-<%- include('ejs_includes/_head_meta') %>
+<%- include('_ejs/_head_meta') %>
       {{ adminbar() }}
 
-<%- include('ejs_includes/_head_scripts') %>
+<%- include('_ejs/_head_scripts') %>
 
-<%- include('ejs_includes/_head_tracking') %>
+<%- include('_ejs/_head_tracking') %>
     </head>
     <body>
       {% minify %}
@@ -33,7 +33,7 @@
       {% endminify %}
 
       {% block jsFooter %}
-        <script>loadjs('{{ siteUrl }}js/app.js?v=' + jsVersion);</script>
+<%- include('_ejs/_body_load_js') %>
       {% endblock %}
     </body>
   </html>

@@ -7,7 +7,7 @@
     </div><% if (!component.hideCode) { %><% if (component.html) { %>
     <div class="styles__example__code styles__example__code--html">
         <pre><code v-pre><%= component.html.code %></code></pre>
-    </div><% } %><% if (pkg.projectTemplateLanguage === 'twig' && component.twig.code) { %>
+    </div><% } %><% if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %>
     <div class="styles__example__code styles__example__code--twig">
         {% verbatim %}<pre><code><%= component.twig.code %></code></pre>{% endverbatim %}
     </div><% } %><% if (component.modifiers) { %>

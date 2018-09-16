@@ -9,6 +9,11 @@ const chalk = require('chalk'),
       path = require('path'),
       os = require('os');
 
+if (!fs.existsSync(`${ process.cwd() }/_starter/install`)) {
+    log('warn', `Install Has Already Completed and Cannot Be Run Again`);
+    process.exit();
+}
+
 // HELLO
 console.log(`Installing WB-Starter`);
 
@@ -357,6 +362,7 @@ async function run() {
             pkg.paths.img.dist = `web/img/`;
             pkg.paths.js.dist = `web/js/`;
             pkg.paths.templates.dist = `templates/`;
+            pkg.styleInventory.urlSuffix = '';
             pkg.projectTemplateLanguage = 'twig';
             pkg.projectType = 'craft3';
         } else if (answers.projectType === 'html') {
@@ -410,6 +416,10 @@ async function run() {
             verboseExec(`git push origin master`, verbose);
             log('verbose', `pushed first commit to GitHub`, verbose);
         }
+
+        log('title', `Cleaning Up`);
+        verboseExec(`rm -r ${ process.cwd() }/_starter/install`, verbose);
+        log('verbose', `Install directory deleted`, verbose);
     });
 }
 
