@@ -401,11 +401,11 @@ async function run() {
             log('title', 'Setting up GitHub repo');
             const gitHubEndPoint = answers.gitOrg || false ? `https://api.github.com/orgs/${answers.gitOrg}/repos` : `https://api.github.com/user/repos`;
 
-            verboseExec(`curl -X POST -u ${gitUser}:${gitPass} -H "Content-Type: application/json" -d '{ "name": "${name}", "private": ${ gitPrivate ? "true" : "false" } }' ${gitHubEndPoint}`, verbose);
-            log('verbose', `Created ${ gitOrg ? gitOrg : gitUser }/${name} repo on GitHub`, verbose);
+            verboseExec(`curl -X POST -u ${ answers.gitUser }:${ answers.gitPass } -H "Content-Type: application/json" -d '{ "name": "${ handle }", "private": ${ answers.gitPrivate ? "true" : "false" } }' ${gitHubEndPoint}`, verbose);
+            log('verbose', `Created ${ answers.gitOrg ? answers.gitOrg : answers.gitUser }/${ handle } repo on GitHub`, verbose);
             verboseExec(`git init`, verbose);
             log('verbose', `ran git init`, verbose);
-            verboseExec(`git remote add origin https://github.com/${ gitOrg ? gitOrg : gitUser }/${name}.git`, verbose);
+            verboseExec(`git remote add origin https://github.com/${ answers.gitOrg ? answers.gitOrg : answers.gitUser }/${ handle }.git`, verbose);
             log('verbose', `set remote origin, verbose`, verbose);
             verboseExec(`git add -A`, verbose);
             log('verbose', `added all files`, verbose);
