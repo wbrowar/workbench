@@ -7,9 +7,6 @@ const chalk = require('chalk'),
       notifier = require('node-notifier'),
       path = require('path');
 
-// HELLO
-log('app', `Create a New Component`);
-
 // load package file
 let pkg = require(`${ process.cwd() }/package.json`);
 
@@ -32,7 +29,6 @@ const notify = {
 };
 
 async function run() {
-
     if (action === 'move') {
         if (argv.options.mv !== true) {
             if (fs.statSync(`${ paths.starter.templates }_components/library/${ argv.options.mv }`)) {
@@ -73,6 +69,9 @@ async function run() {
             }
         }
     } else if (action === 'new') {
+        // HELLO
+        log('app', `Create a New Component`);
+
         questions = [
             {
                 type: 'input',
@@ -251,18 +250,18 @@ function log(type = 'message', message, verbose = false) {
             }
             break;
         case 'running':
-            console.log(chalk.green.bold('💻 ') + chalk.green(message));
+            console.log(chalk.green.bold(`💻 ${ chalk.green(message) }`));
             break;
         case 'title':
-            console.log(chalk.blue.bold('🛠 ' + message));
+            console.log(chalk.blue.bold(`🛠 ${ message }`));
             break;
         case 'verbose':
             if (verbose) {
-                console.log(chalk.keyword('orange')('🕵 ' + message));
+                console.log(chalk.keyword('orange')(`🕵 ${ message }`));
             }
             break;
         case 'warn':
-            console.warn(chalk.red.bold('🚧 ' + message));
+            console.warn(chalk.red.bold(`🚧 ${ message }`));
             break;
         default:
             console.log(message);

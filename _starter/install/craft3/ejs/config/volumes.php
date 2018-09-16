@@ -30,9 +30,9 @@ return [
 
     // All environments
     '*' => [
-        'ASSET_HANDLE' => [
-            'path' => '@basePath/ASSET_PATH',
-            'url' => '@baseUrl/ASSET_PATH',
+        'guide' => [
+            'path' => '@basePath/guide',
+            'url' => '@baseUrl/guide',
         ],
     ],
 

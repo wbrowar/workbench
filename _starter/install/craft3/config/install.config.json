@@ -1,0 +1,17 @@
+{
+  "plugins": {
+    "install": [
+      "admin-bar",
+      "content-stats",
+      "cp-field-inspect",
+      "guide",
+      "image-resizer",
+      "imager",
+      "minify",
+      "redactor",
+      "typogrify",
+      "typedlinkfield",
+      "seomatic"
+    ]
+  }
+}

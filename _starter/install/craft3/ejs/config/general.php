@@ -10,7 +10,7 @@ return [
     // Global settings
     '*' => [
         'cacheDuration' => false,
-        'cpTrigger' => '<%- options.cptrigger %>',
+        'cpTrigger' => '<%- install.cpTrigger %>',
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,

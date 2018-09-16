@@ -28,31 +28,31 @@ $craftEnvVars = [
     'DB_DRIVER' => "mysql",
 
     // The database server name or IP address (usually this is 'localhost' or '127.0.0.1')
-    'DB_SERVER' => "<%- options.dbhost %>",
+    'DB_SERVER' => "<%- install.dbHost %>",
 
     // The database username to connect with
-    'DB_USER' => "<%- options.dbuser %>",
+    'DB_USER' => "<%- install.dbUser %>",
 
     // The database password to connect with
-    'DB_PASSWORD' => "<%- options.dbpass %>",
+    'DB_PASSWORD' => "<%- install.dbPass %>",
 
     // The name of the database to select
-    'DB_DATABASE' => "<%- name %>",
+    'DB_DATABASE' => "<%- handle %>",
 
     // The database schema that will be used (PostgreSQL only)
     'DB_SCHEMA' => "public",
 
     // The prefix that should be added to generated table names (only necessary if multiple things are sharing the same database)
-    'DB_TABLE_PREFIX' => "<%- options.dbprefix %>",
+    'DB_TABLE_PREFIX' => "<%- install.dbPrefix %>",
 
     // The port to connect to the database with. Will default to 5432 for PostgreSQL and 3306 for MySQL.
-    'DB_PORT' => "<%- options.dbport %>",
+    'DB_PORT' => "<%- install.dbPort %>",
 
     'BASE_PATH' => realpath(dirname(__FILE__)) . '/web/',
 
-    'BASE_URL' => 'http://<%- name %>.test/',
+    'BASE_URL' => 'http://<%- handle %>.test/',
 
-    'SITE_URL' => 'http://<%- name %>.test/',
+    'SITE_URL' => 'http://<%- handle %>.test/',
 ];
 
 // Set all of the .env values, auto-prefixed with `CRAFTENV_`

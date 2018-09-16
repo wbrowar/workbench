@@ -15,7 +15,7 @@
 # -- GLOBAL settings --
 
 # What to prefix the database table names with
-GLOBAL_DB_TABLE_PREFIX="<%- options.dbprefix %>"
+GLOBAL_DB_TABLE_PREFIX="<%- install.dbPrefix %>"
 
 # The path of the `craft` folder, relative to the root path; paths should always have a trailing /
 GLOBAL_CRAFT_PATH="./"
@@ -65,11 +65,11 @@ LOCAL_FASTCGI_CACHE_DIR=""
 LOCAL_REDIS_DB_ID=""
 
 # Local database constants; default port for mysql is 3306, default port for postgres is 5432
-LOCAL_DB_NAME="<%- name %>"
-LOCAL_DB_PASSWORD=""
-LOCAL_DB_USER="root"
-LOCAL_DB_HOST="localhost"
-LOCAL_DB_PORT="3306"
+LOCAL_DB_NAME="<%- handle %>"
+LOCAL_DB_PASSWORD="<%- install.dbPass || '' %>"
+LOCAL_DB_USER="<%- install.dbUser || 'root' %>"
+LOCAL_DB_HOST="<%- install.dbHost || '127.0.0.1' %>"
+LOCAL_DB_PORT="<%- install.dbPort || '3306' %>"
 LOCAL_DB_SCHEMA="public"
 
 # If you are using mysql 5.6.10 or later and you have `login-path` setup as per:

@@ -528,6 +528,9 @@ async function compileImg() {
     log('title', `Compiling Images`);
 
     const p = await new Promise(resolve => {
+        // if img folder doesn't exist, create it
+        fs.ensureDirSync(paths.img.dist, 0o2755);
+
         let tasks = 2;
         let removeTaskIndex = () => {
             tasks--;
@@ -944,18 +947,18 @@ function log(type = 'message', message, verbose = false) {
             }
             break;
         case 'running':
-            console.log(chalk.green.bold('💻 ') + chalk.green(message));
+            console.log(chalk.green.bold(`💻 ${ chalk.green(message) }`));
             break;
         case 'title':
-            console.log(chalk.blue.bold('🛠 ' + message));
+            console.log(chalk.blue.bold(`🛠 ${ message }`));
             break;
         case 'verbose':
             if (verbose) {
-                console.log(chalk.keyword('orange')('🕵 ' + message));
+                console.log(chalk.keyword('orange')(`🕵 ${ message }`));
             }
             break;
         case 'warn':
-            console.warn(chalk.red.bold('🚧 ' + message));
+            console.warn(chalk.red.bold(`🚧 ${ message }`));
             break;
         default:
             console.log(message);
