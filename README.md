@@ -10,7 +10,7 @@ This is here for my own storage, but please [let me know if you have any feedbac
 - [Composer](https://getcomposer.org)
 
 ## Installation
-NOTE: these instructions are for a Mac. Commands for PC or Linux might be slightly different.
+NOTE: these instructions are for macOS. Commands for Linux might be slightly different. I don‘t *think* Windows OS is supported.
 
 1. Install [new-wb](https://www.npmjs.com/package/new-wb) by running `npm install -g new-wb`.
 1. Run `new-wb` in the directory of your choice.
@@ -24,7 +24,7 @@ NOTE: these instructions are for a Mac. Commands for PC or Linux might be slight
 1. Run `node ./_starter/install.js --handle='CHANGE_ME'` and change `CHANGE_ME` to the name of your directory.
 1. Enter in the required information requested by various sets of prompts.
 
-### NPM Scripts
+## NPM Scripts
 NPM Scripts may be added depending on what type of project you are creating. Check the `package.json` file to see what scripts are available after installation is complete.
 
 | Script | Description |
@@ -38,12 +38,27 @@ NPM Scripts may be added depending on what type of project you are creating. Che
 | `pubd` | Does the same as `pub` but merges files from `dev` to `master` and does the commit from `master`. |
 | `start` | Does a `git pull`, updates NPM and Composer dependencies, then runs the `watch` script. |
 | `update` | Updates NPM and Composer dependencies. |
-| `watch` | Completes the Development build, then watches files in the `_source` folder for changes. |
+| `watch` | Completes the development build, then watches files in the `_source` folder for changes. |
 
-### Local Config
+If you use an `.alias` file for command line aliases, here are shortcuts for these scripts.
+
+```bash
+alias comp="npm run component"
+alias cssd="npm run cssd"
+alias cssdb="npm run cssdb"
+alias dev="npm run dev"
+alias prod="npm run prod"
+alias pub="npm run pub"
+alias pubd="npm run pubd"
+alias start="npm run start"
+alias update="npm run update"
+alias watch="npm run watch"
+```
+
+## Local Config
 If you have some default values that you prefer to use for every project, you may create a local config file that will provide defaults to the questions asked during installation.
 
-This file will be created during the first time `new-wb` is ran, in your machine’s home folder: `~/.wb-starter.config.json`.
+This file will be created during the first time `new-wb` is ran and it will be saved in your machine’s home folder as: `~/.wb-starter.config.json`.
 
 Once it has been created, you may edit it with the following options:
 
@@ -58,6 +73,8 @@ Once it has been created, you may edit it with the following options:
 | `gitPrivate` | Set this to `true` to create private GitHub repos. |
 
 Remove any options you don’t want to create a preset for. You will still be able to overwrite any of these presets when setting up a new project. If you delete this file from your home directory you can re-create it during your next installation.
+
+*NOTE: Passwords are not saved for security reasons.*
 
 ---
 ## When to Use What
@@ -74,41 +91,44 @@ Remove any options you don’t want to create a preset for. You will still be ab
 - Running `npm run prod` cleans out all CSS, JS, SVG, templates, and image files and replaces them with fresh builds.
 - `npm run prod` also creates favicons and adds Critical CSS.
 
----
+### Publishing a New Release
+- Use `npm run pub` to commit a new release via that command line. This will run `npm run prod` first, then push your changes to GitHub.
+- If you would like to tag your commit for release you can add it through the command line prompts.
+
 ## Style Inventory
 - The Style Inventory displays the code and an example of the components available in your project.
 - To get to the Style Inventory, go to `/dev/inv/index.html` or `/dev/inv/` in a Craft 3 project.
 - In Craft websites, the Style Inventory section is available in `dev`, and `staging` environments and will redirect you to the home page in a `live` environment.
 - The Style Inventory is generated from settings in the `package.json`, `styleInventory.pages` object, and the `demo.ejs` files in component folders.
-- Based on the code snippet below:
-  - The URL for each page is generated using the key in the `styleInventory.pages` object. In the code below, the URL of this page would be `/dev/inv/globals.html`
+- Based on this code snippet:
+    ```json
+    {
+      "globals": {
+        "label": "Globals",
+        "components": [
+          "@colors",
+          "header"
+        ]
+      }
+    }
+    ```
+  - The URL for each page is generated using the key in the `styleInventory.pages` object. In the code above, the URL of this page would be `/dev/inv/globals.html`
   - In `components`, the item `@colors` will pull its code from WB Starter, from `_starter/style_inventory/defaults/colors.ejs`
     - Files in this directory shouldn‘t be edited, but they can serve as examples as to what can be done in `demo.ejs` files.
   - The `header` item will pull from the `_source/_components/header/demo.ejs` file.
     - This file can be changed as needed to fit your project.
-
-```json
-{
-  "globals": {
-    "label": "Globals",
-    "components": [
-      "@colors",
-      "header"
-    ]
-  }
-}
-```
 
 ---
 ## Source Structure
 ### Components
 - During installation you will be asked to select which components you would like to use in your project. The components will appear in this directory.
 - Components can include the following file:
-  - *.html* - Used to include the component via [EJS](http://ejs.co)
-  - *.scss* - Styles for the component
-  - *.twig* - A twig version that can be included via Twig `{{ component.c('COMPONENT_HANDLE', config) }}`
-  - *.vue* - A [Vue](https://vuejs.org) single file component file
-  - *demo.ejs* - An EJS file used to demonstrate the component‘s styling and functionality in the project‘s Style Inventory
+  - *`.html`* - Used to include the component via [EJS](http://ejs.co)
+  - *`.scss`* - Styles for the component
+  - *`.twig`* - A twig version that can be included via Twig `{{ component.c('COMPONENT_HANDLE', config) }}`
+  - *`.vue`* - A [Vue](https://vuejs.org) single file component file
+  - *`demo.ejs`* - An EJS file used to demonstrate the component‘s styling and functionality in the project‘s Style Inventory
+- All files in `_source/_components/` will be processed with EJS during the build process. Even SCSS and JS files will be processed with EJS.
 
 #### Adding Components
 - To move an existing component run `npm run component -- --mv` and select which component you would like to move from the list.
@@ -127,19 +147,20 @@ Remove any options you don’t want to create a preset for. You will still be ab
 - In `_source/_css` there are a several files with underscores in front. These all get compiled into `app.css`, by default.
 - Sass will compile all `.scss` files in the root of `_source/_css` that do not contain an underscore in front of the filename.
 - Files are organized into folders:
-  - *automated* – For files generated based on `package.json` settings. We can assume these will update on their own, so we wouldn’t edit these manually.
-  - *base* – Global CSS that is used across all pages of the site. Animations, variables, mixins, and global styles are all organized here so they’re in one place.
-  - *layout* – Layout areas and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
-  - *lib* – For any CSS that we receive from vendors (like our clients) can go here. These should not be edited by us, so it can be assumed than any file here can be updated at any time.
-  - *pages* – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
+  - *`automated`* – For files generated based on `package.json` settings. We can assume these will update on their own, so we wouldn’t edit these manually.
+  - *`base`* – Global CSS that is used across all pages of the site. Animations, variables, mixins, and global styles are all organized here so they’re in one place.
+  - *`layout`* – Layout areas and re-usable sections get styled here (as opposed to putting styles for these in the `base/_globals.scss`). Other layout elements can be added by just adding another .scss file here. It will automatically get compiled just by being in the folder.
+  - *`lib`* – For any CSS that we receive from vendors (like our clients) can go here. These should not be edited by us, so it can be assumed than any file here can be updated at any time.
+  - *`pages`* – Code specific to a particular page. If code is part of a re-usable component (like a “Meet the Team” layout that can be used on several pages), it should go in `layout`, but if it’s only used on one page (like code specific to the “Homepage”), it should go here.’
 - CSS follows the [BEM naming convention](http://getbem.com/naming/) to reduce accidental mixing of styles.
 
 #### PostCSS
-- PostCSS is used to run
 - The following plugins are used in PostCSS:
-  - *purgecss* – Removes all CSS that isn‘t used in in your template files
-  - *mqpacker* – Combines media queries while keeping existing source order
-  - *automated* – Adds browser prefixes when needed
+  - *`purgecss`* – Removes all CSS that isn‘t used in in your template files
+  - *`mqpacker`* – Combines media queries while keeping existing source order
+  - *`automated`* – Adds browser prefixes when needed
+  
+To add a file for PostCSS processing, add its filename to the `postcss` array in `package.json`.
 
 #### Using Colors in CSS
 - Colors that are defined in `package.json`, in the `colors` object, will be generated as SCSS variables.
@@ -157,7 +178,7 @@ Remove any options you don’t want to create a preset for. You will still be ab
   }
 ```
 
-Will output:
+Will compute to the following in the browser:
 
 ```css
   .parent .child {
@@ -202,7 +223,7 @@ Currently, there is one file, `app.js`, but if you need to split out code into a
 Include `lazy.js` into a JS document and create a new instance using `window.lazy = new Lazy(config)`.
 
 ```javascript
-import lazy from 'lazy';
+import Lazy from 'lazy';
 
 const config = {
     animationFunctions: {
@@ -261,7 +282,7 @@ scrollToElement(el);
 ---
 ### Image Processing
 - Root images
-  - Images located directly in the `_source/_img` will be minimized and moved into your theme's `img` folder.
+  - Images located in the root of the `_source/_img` directory will be minimized and moved into your theme's `img` folder.
   - A `.webp` variant of each image will be created and placed alongside the original.
 - Resized Images
   - In `package.json`, in the `imageResize` object, you can define a set of widths to resize an image to. All images in the folder indicated will be resized to each size.
@@ -290,7 +311,7 @@ scrollToElement(el);
 ---
 ### Templates
 - Templates are processed using [EJS](http://ejs.co).
-  - Using `ejs` allows you to include files, use conditionals, and replace strings—like IDs and classes.
+  - Using EJS allows you to include files, use conditionals, and replace strings—like IDs and classes.
   - The entire `package.json` file is passed into the files processed through EJS.
     - The `ejs` object in `package.json` gives you a convenient place to store EJS variables, however, any variable defined in `package.json` is accessible.
     - To use variables stored in `package.json`, use `pkg` then the variable name. For example, to print out the site URL path, use `<%- pkg.paths.base.siteUrl %>`
@@ -300,3 +321,12 @@ scrollToElement(el);
 ## Release Notes
 #### 5.0.0
 - :rocket: Complete rewrite from Gulp to Node!
+
+## Credits
+This project has been created with help and advice from @khalwat, @MarcHartwig13, @zsackett-dixonschwabl, @ds-mfoster, @muneath.
+
+It‘s inspired by many project, including:
+- [nystudio107/craft](https://github.com/nystudio107/craft)
+- [Craft CMS 3](https://github.com/craftcms/craft)
+- [Craft Scripts](https://github.com/nystudio107/craft-scripts)
+- [Craft3-Multi-Environment](https://github.com/nystudio107/craft3-multi-environment)
