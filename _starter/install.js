@@ -390,8 +390,17 @@ async function run() {
             });
         let editPkgComponentsComplete = await editPkgComponents;
 
+        log('title', `Filtering NPM Scripts in package.json`);
+        if (['craft3'].includes(answers.projectType)) {
+            pkg.scripts['cssd'] = './vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
+            pkg.scripts['cssdb'] = './vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
+            pkg.scripts['update'] = 'git pull && npm run update && npm run cssd && npm run watch';
+            pkg.scripts['update'] = 'npm update && composer update';
+        }
+
         fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
-        log('verbose', `package.json updated`, verbose);
+        log('verbose', `package.json updated:`, verbose);
+        log('dump', pkg, verbose);
 
         log('title', 'Running Initial Build Script', verbose);
         verboseExec(`npm run dev${ verbose ? ' --verbose' : '' }`, verbose);

@@ -1,14 +1,12 @@
 {
   "scripts": {
     "component": "node ./_starter/component.js",
-    "cssd": "./vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh",
-    "cssdb": "./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh",
     "dev": "node ./_starter/build.js --build",
     "prod": "NODE_ENV=production node ./_starter/build.js --build",
     "pub": "NODE_ENV=production node ./_starter/build.js --build --publish",
     "pubd": "git checkout master && npm run pub && git checkout dev",
-    "start": "git pull && npm run update && npm run cssd && npm run watch",
-    "update": "npm update && composer update",
+    "start": "git pull && npm run update && npm run watch",
+    "update": "npm update",
     "watch": "node ./_starter/build.js --build --watch"
   },
   "browserSync": {
