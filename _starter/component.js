@@ -60,7 +60,8 @@ async function run() {
                 ];
 
                 inquirer.prompt(questions).then(function (answers) {
-                    log('verbose', `Component Options: ${ JSON.stringify(answers, null, 2) }`, verbose);
+                    log('verbose', `Answers:`, verbose);
+                    log('dump', answers, verbose);
                     log('verbose', `Moving ${ answers.component }`, verbose);
                     moveExistingComponent(answers.component);
                 });
@@ -104,13 +105,14 @@ async function run() {
                     { name: 'Vue', value: 'vue' },
                 ],
                 validate: (answer) => {
-                    return answer !== [];
+                    return answer.length > 0;
                 },
             },
         ];
 
         inquirer.prompt(questions).then(function (answers) {
-            log('verbose', `Component Options: ${ JSON.stringify(answers, null, 2) }`, verbose);
+            log('verbose', `Answers:`, verbose);
+            log('dump', answers, verbose);
 
             answers.templates.forEach((item) => {
                 let config = answers;
@@ -144,11 +146,28 @@ async function run() {
 
                 moveFile(config);
             });
+
+            // move demo.ejs
+            const demoCode =
+`<% let component = {
+  title: "${ answers.name }",
+  description: "A new component.",
+  background: "light",
+  html: {
+    code:
+\`<div class="c_${ answers.handle }">DEMO CODE</div>\`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>`;
+
+            fs.outputFileSync(`${ paths.components.src }${ answers.handle }/demo.ejs`, demoCode);
+
+            addComponentToStyleInventory(answers.handle);
         });
 
 
         // BYE
-        log('app', `End`);
+        // log('app', `End`);
     }
 }
 
@@ -164,17 +183,97 @@ async function run() {
 
 
 // FUNCTIONS
-function moveExistingComponent(handle) {
-    fs.moveSync(`${ paths.starter.templates }_components/library/${ handle }`, paths.components.src + handle, { overwrite: false })
-}
-function moveFile(config) {
-    ejs.renderFile(config.src, config, {}, function(err, str) {
-        fs.outputFile(config.dist, str, (err) => {
-            if(!err){
-                log('verbose', `Added : ${ config.dist }`, verbose);
+function addComponentToStyleInventory(handle) {
+    let styleInventoryPages = [
+        { name: 'Create a New Page', value: '__new__' }
+    ];
+    Object.keys(pkg.styleInventory['pages']).forEach((key) => {
+        styleInventoryPages.push({ name: pkg.styleInventory['pages'][key].label, value: key });
+    });
+
+    let questions = [
+        {
+            type: 'list',
+            name: 'targetPage',
+            message: 'Style Inventory Page',
+            choices: styleInventoryPages,
+            validate: (answer) => {
+                return answer !== [];
+            },
+        },
+        {
+            type: 'input',
+            name: 'newTitle',
+            message: 'Page Title',
+            when: (answers) => {
+                return answers.targetPage === '__new__';
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
+        },
+        {
+            type: 'input',
+            name: 'newHandle',
+            message: 'Slug',
+            when: (answers) => {
+                return answers.targetPage === '__new__';
+            },
+            default: (answers) => {
+                return slugify(answers.newTitle);
+            },
+            validate: (answer) => {
+                return answer.length > 0;
+            },
+        },
+    ];
+
+    inquirer.prompt(questions).then(function (answers) {
+        log('verbose', `Answers:`, verbose);
+        log('dump', answers, verbose);
+
+        if (answers.targetPage === '__new__') {
+            pkg.styleInventory['pages'][answers.newHandle] = {
+                label: answers.newTitle,
+                components: [handle]
+            };
+            log('verbose', `Created a new page:`, verbose);
+            log('dump', pkg.styleInventory['pages'][answers.newHandle], verbose);
+        } else {
+            pkg.styleInventory['pages'][answers.targetPage].components.push(handle);
+            log('verbose', `Added to page:`, verbose);
+            log('dump', pkg.styleInventory['pages'][answers.targetPage], verbose);
+        }
+
+        // backup package file then overwrite the version number
+        fs.copy(`${ process.cwd() }/package.json`, `${ paths.starter.backups }package.json`, (err) => {
+            if (err) {
+                log('warn', err, verbose);
             }
+            log('verbose', `Package File Backed Up`, verbose);
+            fs.outputFile(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2), function (err) {
+                if (err) {
+                    log('warn', err, verbose);
+                }
+                log('verbose', `Package file updated.`, verbose);
+            });
         });
     });
+}
+function moveExistingComponent(handle) {
+    addComponentToStyleInventory(handle);
+    fs.moveSync(`${ paths.starter.templates }_components/library/${ handle }`, paths.components.src + handle, { overwrite: false })
+}
+function moveFile(config, process = true) {
+    if (process) {
+        ejs.renderFile(config.src, config, {}, function(err, str) {
+            fs.outputFile(config.dist, str, (err) => {
+                if(!err){
+                    log('verbose', `Added : ${ config.dist }`, verbose);
+                }
+            });
+        });
+    }
 }
 
 
@@ -308,6 +407,15 @@ function parseArgv() {
         args: args,
         options: options
     }
+}
+
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
 }
 
 function snake(text) {
