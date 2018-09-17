@@ -1,7 +1,7 @@
 # CRAFT DEFAULTS
-/.env
-/.idea
-/vendor
+.env
+.idea
+vendor
 .DS_Store
 
 # BUILD FILES
@@ -17,6 +17,10 @@ storage/runtime
 # ENVIRONMENT CONFIG FILES
 .env.php
 scripts/.env.sh
+
+# PHPSTORM FILES
+# Keep track of the marked directories
+!.idea/<%- handle %>.iml
 
 # USER UPLOADS
 web/u/*
