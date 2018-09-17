@@ -103,6 +103,15 @@ async function run() {
             },
         },
         {
+            type: 'input',
+            name: 'localUrl',
+            message: 'Local Dev URL',
+            default: (answers) => {
+                const url = handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
+                return `http://${ url }.test`;
+            },
+        },
+        {
             type: 'list',
             name: 'projectType',
             message: 'What kind of project are you building?',
@@ -355,7 +364,8 @@ async function run() {
 
         log('title', 'Changing package.json Defaults', verbose);
         if (answers.projectType === 'craft3') {
-            pkg.paths.base.siteUrl = `http://${ handle }.test/`;
+            pkg.browserSync.url = answers.localUrl;
+            pkg.paths.base.siteUrl = answers.localUrl;
             pkg.paths.css.dist = `web/css/`;
             pkg.paths.favicon.dist = `web/favicon/`;
             pkg.paths.icon.dist = `web/icon/`;
@@ -366,7 +376,8 @@ async function run() {
             pkg.projectTemplateLanguage = 'twig';
             pkg.projectType = 'craft3';
         } else if (answers.projectType === 'html') {
-            pkg.paths.base.siteUrl = `http://${ handle }.test/`;
+            pkg.browserSync.url = answers.localUrl;
+            pkg.paths.base.siteUrl = answers.localUrl;
             pkg.projectTemplateLanguage = 'html';
             pkg.projectType = 'html';
         }
