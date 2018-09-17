@@ -108,7 +108,7 @@ async function run() {
             message: 'Local Dev URL',
             default: (answers) => {
                 const url = handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
-                return `http://${ url }.test`;
+                return `http://${ url }.test/`;
             },
         },
         {
