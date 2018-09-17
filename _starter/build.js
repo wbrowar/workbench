@@ -190,66 +190,79 @@ async function run() {
         if (pkg.browserSync.url === 'CHANGE_ME') {
             log('warn', 'Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json.')
         } else {
+            browserSync.watch(paths.css.src + '**/*', async (event, file) => {
+                if (event === "change") {
+                    const watchCompileCss       = compileCss();
+                    let watchCompileCssComplete = await watchCompileCss;
+                    browserSync.reload();
+                    notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'CSS Updated' });
+                }
+            });
+
+            browserSync.watch(paths.components.src + '**/*', async (event, file) => {
+                if (event === "change") {
+                    const watchUpdateComponents           = updateComponents();
+                    let watchUpdateComponentsComplete     = await watchUpdateComponents;
+
+                    const watchCompileCssTemplates        = compileCssTemplates();
+                    let watchCompileCssTemplatesComplete  = await watchCompileCssTemplates;
+
+                    const watchUpdateStyleInventory       = updateStyleInventory();
+                    let watchUpdateStyleInventoryComplete = await watchUpdateStyleInventory;
+
+                    const watchCompileCss                 = compileCss();
+                    const watchCompileJs                  = compileJs();
+                    const watchCompileTemplates           = compileTemplates();
+                    let watchCompileCssComplete           = await watchCompileCss;
+                    let watchCompileJsComplete            = await watchCompileJs;
+                    let watchCompileTemplatesComplete     = await watchCompileTemplates;
+
+                    browserSync.reload();
+                    notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Components Updated' });
+                }
+            });
+
+            browserSync.watch(paths.icon.src + '**/*', async (event, file) => {
+                if (event === "change") {
+                    const watchCompileIcon       = compileIcon();
+                    let watchCompileIconComplete = await watchCompileIcon;
+                    browserSync.reload();
+                    notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Icons Updated' });
+                }
+            });
+
+            browserSync.watch(paths.img.src + '**/*', async (event, file) => {
+                if (event === "change") {
+                    const watchCompileImg       = compileImg();
+                    let watchCompileImgComplete = await watchCompileImg;
+                    browserSync.reload();
+                    notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Images Updated' });
+                }
+            });
+
+            browserSync.watch(paths.js.src + '**/*', async (event, file) => {
+                if (event === "change") {
+                    const watchCompileJs       = compileJs();
+                    let watchCompileJsComplete = await watchCompileJs;
+                    browserSync.reload();
+                    notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'JS Updated' });
+                }
+            });
+
+            browserSync.watch(paths.templates.src + '**/*', async (event, file) => {
+                if (event === "change") {
+                    const watchCompileTemplates       = compileTemplates();
+                    let watchCompileTemplatesComplete = await watchCompileTemplates;
+                    browserSync.reload();
+                    notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Templates Updated' });
+                }
+            });
+
             browserSync.init({
                 browser: pkg.browserSync.browser,
                 proxy: pkg.browserSync.url,
             });
         }
-
-        const watchCss = watch(paths.css.src, async () => {
-            const watchCompileCss       = compileCss();
-            let watchCompileCssComplete = await watchCompileCss;
-            notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'CSS Updated' });
-        });
-
-        const watchComponents = watch(paths.components.src, async () => {
-            const watchUpdateComponents           = updateComponents();
-            let watchUpdateComponentsComplete     = await watchUpdateComponents;
-
-            const watchCompileCssTemplates        = compileCssTemplates();
-            let watchCompileCssTemplatesComplete  = await watchCompileCssTemplates;
-
-            const watchUpdateStyleInventory       = updateStyleInventory();
-            let watchUpdateStyleInventoryComplete = await watchUpdateStyleInventory;
-
-            const watchCompileCss                 = compileCss();
-            const watchCompileJs                  = compileJs();
-            const watchCompileTemplates           = compileTemplates();
-            let watchCompileCssComplete           = await watchCompileCss;
-            let watchCompileJsComplete            = await watchCompileJs;
-            let watchCompileTemplatesComplete     = await watchCompileTemplates;
-
-            browserSync.reload();
-            notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Components Updated' });
-        });
-
-        const watchIcon = watch(paths.icon.src, async () => {
-            const watchCompileIcon       = compileIcon();
-            let watchCompileIconComplete = await watchCompileIcon;
-            browserSync.reload();
-            notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Icons Updated' });
-        });
-
-        const watchImg = watch(paths.img.src, async () => {
-            const watchCompileImg       = compileImg();
-            let watchCompileImgComplete = await watchCompileImg;
-            browserSync.reload();
-            notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'JS Updated' });
-        });
-
-        const watchJs = watch(paths.js.src, async () => {
-            const watchCompileJs       = compileJs();
-            let watchCompileJsComplete = await watchCompileJs;
-            browserSync.reload();
-            notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'JS Updated' });
-        });
-
-        const watchTemplates = watch(paths.templates.src, async () => {
-            const watchCompileTemplates       = compileTemplates();
-            let watchCompileTemplatesComplete = await watchCompileTemplates;
-            browserSync.reload();
-            notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Templates Updated' });
-        });
     }
 
 
