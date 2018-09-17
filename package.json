@@ -4,7 +4,7 @@
     "dev": "node ./_starter/build.js --build",
     "prod": "NODE_ENV=production node ./_starter/build.js --build",
     "pub": "NODE_ENV=production node ./_starter/build.js --build --publish",
-    "pubd": "git checkout master && git merge dev && npm run pub && git checkout dev",
+    "pubd": "npm run pub && git checkout master && git merge dev && git push && git checkout dev",
     "start": "git pull && npm run update && npm run watch",
     "update": "npm update",
     "watch": "node ./_starter/build.js --build --watch"
