@@ -12,14 +12,14 @@ window.VueEvent = new Vue();
 // ROOT VARIABLES AND FUNCTIONS
 // Alert bar
 vueData['alertBarIsVisible'] = false;
-vueMethods['toggleAlertBar'] = function() {
+vueMethods['toggleAlertBar'] = function () {
     this.alertBarIsVisible = !this.alertBarIsVisible;
 };
 
 // Detect resize
 vueData['windowWidth'] = false;
 vueData['windowHeight'] = false;
-vueMethods['resizeHandler'] = function() {
+vueMethods['resizeHandler'] = function () {
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
 
@@ -28,16 +28,32 @@ vueMethods['resizeHandler'] = function() {
 
 // Detect scroll
 vueData['scrollY'] = false;
-vueMethods['scrollHandler'] = function() {
+vueMethods['scrollHandler'] = function () {
     this.scrollY = window.scrollY;
 };
 
 // Display overlay
 vueData['overlayIsVisible'] = false;
-vueMethods['showOverlay'] = function(overlayTitle) {
+vueMethods['showOverlay'] = function (overlayTitle) {
     VueEvent.$emit('show-overlay', overlayTitle);
     this.overlayIsVisible = true;
     gaTrack('overlay', 'shown', overlayTitle);
+};
+
+// Generic class toggle utility
+// @click="classtoggle('id','class')"
+vueMethods['classToggle'] = function (getID, getClass) {
+    var el = document.getElementById(getID);
+    var actv = el.classList.contains(getClass)
+    switch (actv) {
+    case true:
+        el.classList.remove(getClass);
+        break;
+    case false:
+        el.classList.add(getClass);
+    default:
+        el.classList.add(getClass);
+    }
 };
 
 // Lazy load Vue components
