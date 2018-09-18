@@ -98,7 +98,10 @@
       },
       "forms": {
         "label": "Forms",
-        "components": []
+        "components": [
+          "form_input",
+          "validated_form"
+        ]
       },
       "grid": {
         "label": "Grids",
