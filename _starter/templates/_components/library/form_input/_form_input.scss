@@ -23,6 +23,9 @@
   textarea {
     @include _field_default;
   }
+  & > label {
+    display: block;
+  }
 
   @at-root #{$self}__required_indicator {
     display: inline-block;

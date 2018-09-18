@@ -185,7 +185,8 @@ async function run() {
 // FUNCTIONS
 function addComponentToStyleInventory(handle) {
     let styleInventoryPages = [
-        { name: 'Create a New Page', value: '__new__' }
+        { name: 'Create a New Page', value: '__new__' },
+        { name: 'Do Not Add to Style Inventory', value: '__none__' },
     ];
     Object.keys(pkg.styleInventory['pages']).forEach((key) => {
         styleInventoryPages.push({ name: pkg.styleInventory['pages'][key].label, value: key });
@@ -239,7 +240,7 @@ function addComponentToStyleInventory(handle) {
             };
             log('verbose', `Created a new page:`, verbose);
             log('dump', pkg.styleInventory['pages'][answers.newHandle], verbose);
-        } else {
+        } else if (answers.targetPage !== '__none__') {
             pkg.styleInventory['pages'][answers.targetPage].components.push(handle);
             log('verbose', `Added to page:`, verbose);
             log('dump', pkg.styleInventory['pages'][answers.targetPage], verbose);

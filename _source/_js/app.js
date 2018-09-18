@@ -43,16 +43,16 @@ vueMethods['showOverlay'] = function (overlayTitle) {
 // Generic class toggle utility
 // @click="classtoggle('id','class')"
 vueMethods['classToggle'] = function (getID, getClass) {
-    var el = document.getElementById(getID);
-    var actv = el.classList.contains(getClass)
+    const el = document.getElementById(getID);
+    const actv = el.classList.contains(getClass)
     switch (actv) {
-    case true:
-        el.classList.remove(getClass);
-        break;
-    case false:
-        el.classList.add(getClass);
-    default:
-        el.classList.add(getClass);
+        case true:
+            el.classList.remove(getClass);
+            break;
+        case false:
+            el.classList.add(getClass);
+        default:
+            el.classList.add(getClass);
     }
 };
 
@@ -94,10 +94,10 @@ new Vue({
         VueEvent.$on('hide-overlay', () => this.isActive = (this.overlayIsVisible = false));
 
         // Watch resize
-        window.addEventListener('resize', this.resizeHandler);
+        // window.addEventListener('resize', this.resizeHandler);
 
         // Watch scroll
-        window.addEventListener('scroll', this.scrollHandler);
+        // window.addEventListener('scroll', this.scrollHandler);
     },
     methods: vueMethods,
     mounted: function () {

@@ -1,0 +1,54 @@
+<% let component = {
+  title: "Example Form with Validation",
+  description: "A basic contact form example.",
+  background: "light",
+  html: {
+    code:
+`<form class="c_form" action="">
+  <div class="c_form_input c_form_input--text">
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name">
+  </div>
+  <div class="c_form_input c_form_input--email">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email">
+  </div>
+  <div class="c_form_input c_form_input--textarea">
+    <label for="comments">Comments</label>
+    <textarea id="comments" name="comments" cols="30" rows="10"></textarea>
+  </div>
+  <div class="c_form_input c_form_input--submit">
+    <input class="c_button" type="submit" value="Send">
+  </div>
+</form>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{{ component.c('form', {
+    fields: [
+        { label: 'Name', name: 'name', type: 'text', validate: 'text', required: true },
+        { label: 'Phone', name: 'phone', type: 'tel', format: 'tel', validate: 'tel', required: true },
+        { label: 'Email', name: 'email', type: 'email', validate: 'email', required: true },
+        { label: 'ZIP', name: 'zip', type: 'text', format: 'zip', validate: 'zip', required: true },
+        { label: 'Comments', name: 'comments', type: 'textarea', validate: 'text' },
+        { type: 'submit', value: 'Send' },
+    ],
+    formId: 'example_form',
+    validate: true,
+}) }}`,
+    options: [
+      { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Formats text-like inputs in the format given. Accepts: tel, zip` },
+      { "name": 'inputAttributes', "required": false, "type": 'string', "description": `Attributes added to the input element withing the component.` },
+      { "name": 'inputClasses', "required": false, "type": 'string', "description": `Classes added to the input element withing the component.` },
+      { "name": 'label', "required": false, "type": 'string', "description": `Text used for the field label.` },
+      { "name": 'name', "required": true, "type": 'string', "description": `The name attribute of the form field.` },
+      { "name": 'placeholder', "required": false, "type": 'string', "description": `Text ` },
+      { "name": 'required', "required": false, "type": 'boolean', "default": `false`, "description": `Adds a required attribute to the input field.` },
+      { "name": 'type', "required": true, "type": 'string', "description": `The field type as per HTML input spec.` },
+      { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Validates field against the format given. Accepts: email, tel, text, zip` },
+      { "name": 'value', "required": false, "type": 'string', "description": `Default value for the field.` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

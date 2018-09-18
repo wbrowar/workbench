@@ -1,0 +1,118 @@
+<% let component = {
+  title: "Form Field",
+  description: "Text-based input field. NOTE: all options below are applicable for all form input fields. If `format`, `validate`, or `vue` are passed in, the field will switch over to a Vue component.",
+  background: "light",
+  html: {
+    code:
+`<form class="c_form">
+  <div class="c_form_input  c_form_input--text">
+    <label for="text_input">Text Input</label>
+    <input id="text_input" type="text" name="text_input">
+  </div>
+</form>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+<form class="c_form">
+    {{ component.c('form_input', { label: 'Text Input', name: 'text_input', type: 'text' }) }}
+</form>`,
+    options: [
+      { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Formats text-like inputs in the format given. Accepts: tel, zip` },
+      { "name": 'inputAttributes', "required": false, "type": 'string', "description": `Attributes added to the input element withing the component.` },
+      { "name": 'inputClasses', "required": false, "type": 'string', "description": `Classes added to the input element withing the component.` },
+      { "name": 'label', "required": false, "type": 'string', "description": `Text used for the field label.` },
+      { "name": 'name', "required": true, "type": 'string', "description": `The name attribute of the form field.` },
+      { "name": 'placeholder', "required": false, "type": 'string', "description": `Text ` },
+      { "name": 'required', "required": false, "type": 'boolean', "default": `false`, "description": `Adds a required attribute to the input field.` },
+      { "name": 'type', "required": true, "type": 'string', "description": `The field type as per HTML input spec.` },
+      { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Validates field against the format given. Accepts: email, tel, text, zip` },
+      { "name": 'value', "required": false, "type": 'string', "description": `Default value for the field.` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+
+<% component = {
+  title: "Text Area Field",
+  description: "Input field for longer text.",
+  background: "light",
+  html: {
+    code:
+`<form class="c_form">
+  <div class="c_form_input  c_form_input--textarea">
+    <label for="text_area">Text Area</label>
+    <textarea id="text_area" name="text_area" cols="30" rows="10"></textarea>
+  </div>
+</form>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+<form class="c_form">
+    {{ component.c('form_input', { label: 'Text Area', name: 'textarea', type: 'textarea' }) }}
+</form>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+
+<% if (pkg.projectType === 'craft3') { %>
+  <% component = {
+    title: "Formatted Form Field",
+    description: "Automatically formats a field input based on field type.",
+    background: "light",
+    twig: {
+      code:
+`{% import 'macros/component.twig' as component %}
+<form class="c_form">
+    {{ component.c('form_input', { label: 'Formatted Phone Input', name: 'formatted_input', type: 'tel', format: 'tel' }) }}
+</form>`
+    }
+  } %>
+  <%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+<% } %>
+
+<% component = {
+  title: "Invalid Form Field",
+  description: "Style for when an input field is not correctly filled out based on HTML5 type validation.",
+  background: "light",
+  html: {
+    code:
+`<form class="c_form">
+  <div class="c_form_input  c_form_input--email">
+    <label for="invalid_input">Invalid Input</label>
+    <input id="invalid_input" type="email" name="invalid_input" value="invalid email">
+  </div>
+</form>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+<form class="c_form">
+    {{ component.c('form_input', { label: 'Invalid Input', name: 'invalid_input', type: 'email', validate: 'email', value: 'hello not an email' }) }}
+</form>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+
+<% component = {
+  title: "Submit Button",
+  description: "A single submit button with no wrapper.",
+  background: "light",
+  html: {
+    code:
+`<form class="c_form">
+  <div class="c_form_input c_form_input--submit">
+    <input class="c_button" type="submit" value="Send">
+  </div>
+</form>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+<form class="c_form">
+    {{ component.c('form_input', { type: 'submit', value: 'Send' }) }}
+</form>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
