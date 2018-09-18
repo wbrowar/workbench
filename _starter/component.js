@@ -64,6 +64,7 @@ async function run() {
                     log('dump', answers, verbose);
                     log('verbose', `Moving ${ answers.component }`, verbose);
                     moveExistingComponent(answers.component);
+                    addComponentToStyleInventory(answers.component);
                 });
             } else {
                 console.warn(`No components found in library.`);
@@ -262,7 +263,6 @@ function addComponentToStyleInventory(handle) {
     });
 }
 function moveExistingComponent(handle) {
-    addComponentToStyleInventory(handle);
     fs.moveSync(`${ paths.starter.templates }_components/library/${ handle }`, paths.components.src + handle, { overwrite: false })
 }
 function moveFile(config, process = true) {
