@@ -316,6 +316,12 @@ async function run() {
             });
         let moveAllInstallFilesComplete = await moveAllInstallFiles;
 
+        const compileAllInstallFiles = asyncFunction(
+            `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
+                globEjs(`${ process.cwd() }/_starter/install/all/ejs/**/*`, `_starter/install/all/ejs/`, ``, resolve);
+            });
+        let compileAllInstallFilesComplete = await compileAllInstallFiles;
+
         if (fs.existsSync(`${ projectTypeInstallDirectory }ejs`)) {
             const compileProjectInstallFiles = asyncFunction(
                 `Compiling Project Templates`, `Project Templates Compiled`, (resolve) => {
