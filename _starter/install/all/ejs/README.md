@@ -37,4 +37,4 @@ To update Craft and Craft plugins, you may use composer or Craft‘s CP auto-upd
 
 
 # WB-Starter Documentation
-<%- include(`/README.md`) %>
+<%- include(projectDir + '/README.md') %>
