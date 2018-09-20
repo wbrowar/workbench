@@ -1,0 +1,19 @@
+<% let component = {
+  title: "Tooltips",
+  description: "Utility SCSS for creating tooltips. Tooltips are currently SCSS only and are not aware of their positioning in relation to containers. Can be combined with @click=classToggle to create tooltips that will stay open once clicked using c_tooltip--open.",
+  background: "light",
+  modifiers: [],
+  html: {
+    code:
+`
+<div class="c_tooltip--example c_tooltip--example--padding c_tooltip--example--center">
+  <div><span tabindex="0" data-tooltip="This is a tooltip">Tooltip default (top)</span></div>
+  <div><span tabindex="0" data-tooltip-right="This is a tooltip right">Tooltip right</span></div>
+  <div><span tabindex="0" data-tooltip-left="This is a tooltip left">Tooltip left</span></div>
+  <div><span tabindex="0" data-tooltip-bottom="This is a tooltip bottom">Tooltip bottom</span></div>
+  <div><span id="toolTip" tabindex="0" data-tooltip="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." @click=classToggle('toolTip','c_tooltip--open')>Tooltip will stay open on click</span></div>
+</div>
+`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

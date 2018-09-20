@@ -1,0 +1,14 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'partials/_component.twig' %}
+
+{# Variables #}
+{% set tipID = tipID ?? {{ random() }} %}
+{% set tipCopy = tipCopy %}
+{% set tipData = tipData %}
+{% set tipDir = tipDir ?? 'data-tooltip' %}
+{% set tipClick = tipClick ?? false %}
+
+{% block content -%}
+    <span id="{{ tipID }}" tabindex="0" {{- tipDir -}}="{{ tipData }}" {% if tipClick %}@click=classToggle('{{- tipID -}}','c_tooltip--open'){% endif %}>{{- tipCopy -}}</span>
+{%- endblock %}
