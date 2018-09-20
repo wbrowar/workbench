@@ -43,7 +43,7 @@
     &:hover,
     &:focus,
     &:active,
-    &.tooltip--open {
+    &.c_tooltip--open {
         &:after,
         &:before {
             opacity: 1;
