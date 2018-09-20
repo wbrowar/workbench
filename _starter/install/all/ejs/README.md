@@ -37,4 +37,5 @@ To update Craft and Craft plugins, you may use composer or Craft‘s CP auto-upd
 
 
 # WB-Starter Documentation
+Below is the documentation for WB-Starter at the time of installation (version <%- pkg.version %>).
 <%- include(projectDir + '/README.md') %>

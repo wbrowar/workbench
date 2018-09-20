@@ -164,7 +164,7 @@
     "type": "git",
     "url": "https://github.com/wbrowar/WB-Starter.git"
   },
-  "version": "1.0.0",
+  "version": "5.0.0",
   "browserlist": {
     "autoprefix": [
       "last 2 versions"

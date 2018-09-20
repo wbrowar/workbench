@@ -369,9 +369,11 @@ async function run() {
         }
 
         log('title', 'Changing package.json Defaults', verbose);
+        pkg.version = '1.0.0';
+        pkg.browserSync.url = answers.localUrl;
+        pkg.paths.base.siteUrl = answers.localUrl;
+
         if (answers.projectType === 'craft3') {
-            pkg.browserSync.url = answers.localUrl;
-            pkg.paths.base.siteUrl = answers.localUrl;
             pkg.paths.css.dist = `web/css/`;
             pkg.paths.favicon.dist = `web/favicon/`;
             pkg.paths.icon.dist = `web/icon/`;
@@ -382,8 +384,6 @@ async function run() {
             pkg.projectTemplateLanguage = 'twig';
             pkg.projectType = 'craft3';
         } else if (answers.projectType === 'html') {
-            pkg.browserSync.url = answers.localUrl;
-            pkg.paths.base.siteUrl = answers.localUrl;
             pkg.projectTemplateLanguage = 'html';
             pkg.projectType = 'html';
         }
