@@ -1,4 +1,3 @@
-@import './_source/_css/base/_mixins.scss';
 .c_tooltip--example {
     @include box_modifiers($self: &);
     >div {
