@@ -35,6 +35,7 @@ To update Craft and Craft plugins, you may use composer or Craft‘s CP auto-upd
 > Talk about custom modules or plugins created for this site
 <% } %>
 
+---
 
 # WB-Starter Documentation
 
