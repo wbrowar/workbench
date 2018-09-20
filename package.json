@@ -116,6 +116,14 @@
           "social_share"
         ]
       },
+      "information": {
+        "label": "Information",
+        "components": [
+          "alert_bar",
+          "message",
+          "tooltip"
+        ]
+      },
       "media": {
         "label": "Media",
         "components": [
@@ -124,13 +132,6 @@
           "image_bg",
           "video",
           "video_bg"
-        ]
-      },
-      "messages": {
-        "label": "Messages",
-        "components": [
-          "alert_bar",
-          "message"
         ]
       },
       "overlays": {
