@@ -52,7 +52,7 @@
       &:last-child {
         margin-bottom: 0;
       }
-      & > * {
+      & > *, a {
         @include truncate;
         display: block;
         font-size: .8rem;

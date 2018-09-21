@@ -41,7 +41,10 @@
     {% if info ?? false %}
         <div class="c_card__info">
             {% if info.title ?? false %}
-                <h1 class="c_header c_header--3">{{ info.title }}</h1>
+                <h1 class="c_card__info__title c_header c_header--3">{{ info.title }}</h1>
+            {% endif %}
+            {% if info.subtitle ?? false %}
+                <h1 class="c_card__info__subtitle">{{ info.subtitle }}</h1>
             {% endif %}
             {% if info.phone ?? info.fax ?? info.email ?? false %}
                 <div class="c_card__info__contact">
@@ -53,6 +56,11 @@
                     {% endif %}
                     {% if info.email ?? false %}
                         <a class="c_card__info__email" href="mailto:{{ info.email }}">{{ info.email }}</a>
+                    {% endif %}
+                    {% if info.otherContact %}
+                        {% for item in info.otherContact %}
+                            <span>{{ item|raw }}</span>
+                        {% endfor %}
                     {% endif %}
                 </div>
             {% endif %}
