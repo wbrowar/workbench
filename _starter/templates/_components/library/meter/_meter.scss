@@ -1,0 +1,38 @@
+$_height: 20px;
+
+@keyframes c_meter--bar {
+  0%   { width: 0 }
+  100% { width: calc(1 * var(--progress)) }
+}
+
+.c_meter {
+  $self: &;
+
+  @at-root #{$self}__wrapper {
+    position: relative;
+    width: 100%;
+    height: $_height;
+    background-color: transparentize($color_black_raw, .6);
+  }
+  @at-root #{$self}__label {
+    position: absolute;
+    top: -100%;
+
+    @at-root #{&}--max {
+      right: 0;
+      text-align: right;
+    }
+  }
+  @at-root #{$self}__progress {
+    width: var(--progress);
+    height: $_height;
+    background-color: $color_black;
+
+    @at-root #{$self}--animate & {
+      width: 0;
+    }
+    @at-root #{$self}--animate.animated & {
+      animation: c_meter--bar 1.5s ease-out forwards;
+    }
+  }
+}

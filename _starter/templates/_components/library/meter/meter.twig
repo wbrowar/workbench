@@ -1,0 +1,31 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% extends 'partials/_component.twig' %}
+
+{# Component element overrides #}
+
+{# Variables #}
+{% set animate = animate ?? true %}
+{% set max = max ?? null %}
+{% set min = min ?? null %}
+{% set type = type ?? 'bar' %}
+{% set value = value ?? max %}
+
+{% if animate %}
+    {% set modifiers = (modifiers ?? false) ? modifiers|merge(['animate']) : ['animate'] %}
+    {% set attributes -%}
+        data-lazy-animate {{ attributes ?? null }}
+    {%- endset %}
+{% endif %}
+
+{% block content -%}
+    <div class="c_meter__wrapper" style="--progress: {{ value }};">
+        {% if (min ?? false) or min == '0' %}
+            <div class="c_meter__label c_meter__label--min">{{ min }}</div>
+        {% endif %}
+        {% if (max ?? false) or max == '0' %}
+            <div class="c_meter__label c_meter__label--max">{{ max }}</div>
+        {% endif %}
+        <div class="c_meter__progress"><div class="c_meter__label c_meter__label--progress"></div></div>
+    </div>
+{%- endblock %}

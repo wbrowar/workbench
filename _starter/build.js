@@ -190,17 +190,21 @@ async function run() {
         if (pkg.browserSync.url === 'CHANGE_ME') {
             log('warn', 'Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json.')
         } else {
+            let changing = false;
             browserSync.watch(paths.css.src + '**/*', async (event, file) => {
-                if (event === "change") {
+                if (!changing && event === "change") {
+                    changing = true;
                     const watchCompileCss       = compileCss();
                     let watchCompileCssComplete = await watchCompileCss;
                     browserSync.reload();
                     notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'CSS Updated' });
+                    changing = false;
                 }
             });
 
             browserSync.watch(paths.components.src + '**/*', async (event, file) => {
-                if (event === "change") {
+                if (!changing && event === "change") {
+                    changing = true;
                     const watchUpdateComponents           = updateComponents();
                     let watchUpdateComponentsComplete     = await watchUpdateComponents;
 
@@ -219,42 +223,51 @@ async function run() {
 
                     browserSync.reload();
                     notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Components Updated' });
+                    changing = false;
                 }
             });
 
             browserSync.watch(paths.icon.src + '**/*', async (event, file) => {
-                if (event === "change") {
+                if (!changing && event === "change") {
+                    changing = true;
                     const watchCompileIcon       = compileIcon();
                     let watchCompileIconComplete = await watchCompileIcon;
                     browserSync.reload();
                     notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Icons Updated' });
+                    changing = false;
                 }
             });
 
             browserSync.watch(paths.img.src + '**/*', async (event, file) => {
-                if (event === "change") {
+                if (!changing && event === "change") {
+                    changing = true;
                     const watchCompileImg       = compileImg();
                     let watchCompileImgComplete = await watchCompileImg;
                     browserSync.reload();
                     notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Images Updated' });
+                    changing = false;
                 }
             });
 
             browserSync.watch(paths.js.src + '**/*', async (event, file) => {
-                if (event === "change") {
+                if (!changing && event === "change") {
+                    changing = true;
                     const watchCompileJs       = compileJs();
                     let watchCompileJsComplete = await watchCompileJs;
                     browserSync.reload();
                     notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'JS Updated' });
+                    changing = false;
                 }
             });
 
             browserSync.watch(paths.templates.src + '**/*', async (event, file) => {
-                if (event === "change") {
+                if (!changing && event === "change") {
+                    changing = true;
                     const watchCompileTemplates       = compileTemplates();
                     let watchCompileTemplatesComplete = await watchCompileTemplates;
                     browserSync.reload();
                     notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Templates Updated' });
+                    changing = false;
                 }
             });
 

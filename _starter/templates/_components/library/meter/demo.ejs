@@ -1,0 +1,22 @@
+<% let component = {
+  title: "Meter",
+  description: "A new component.",
+  background: "light",
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{{ component.c('meter', {
+    max: '100',
+    min: '0',
+    value: '78.5%',
+}) }}`,
+    options: [
+      { name: 'animate', required: false, type: 'boolean', default: `true`, description: `Toggle lazy animation.` },
+      { name: 'max', required: false, type: 'number', default: `100`, description: `Label for max value.` },
+      { name: 'min', required: false, type: 'number', default: `0`, description: `Label for min value.` },
+      { name: 'type', required: false, type: 'string', default: `'bar'`, description: `Type of meter shown.` },
+      { name: 'value', required: false, type: 'number', default: `max`, description: `Value that is animated to.` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
