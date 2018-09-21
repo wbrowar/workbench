@@ -67,6 +67,7 @@ function loadHandler(element, watcher) {
         element.setAttribute('srcset', srcset);
         removeImagePlaceholder(element);
         element.removeAttribute('data-srcset');
+        log('Lazy srcset', srcset);
     }
 
     // lazy load videos and audio via src
@@ -76,6 +77,7 @@ function loadHandler(element, watcher) {
         const src = element.getAttribute('data-src');
         element.setAttribute('src', src);
         element.removeAttribute('data-src');
+        log('Lazy src', src);
     }
 
     element.removeAttribute('data-lazy-load');
@@ -105,7 +107,8 @@ export default class Scene {
             this.loadObserver = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     log('Lazy loading element', entry);
-                    if (entry.intersectionRatio === 0) {
+                    if (entry.isIntersecting) {
+                    // if (entry.intersectionRatio === 0) {
                         loadHandler(entry.target, this.loadObserver);
                     }
                 });

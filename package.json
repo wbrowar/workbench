@@ -147,6 +147,12 @@
           "slider_control",
           "slider"
         ]
+      },
+      "thumbnails": {
+        "label": "Thumbnails",
+        "components": [
+          "card"
+        ]
       }
     },
     "urlPrefix": "dev/inv/",

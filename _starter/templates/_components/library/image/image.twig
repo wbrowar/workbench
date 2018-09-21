@@ -17,10 +17,6 @@
 
 {% set alt = alt ?? image.title ?? '' %}
 
-{% set attributes -%}
-    {% if lazyLoad ?? false %} data-lazy-load{% endif %} {{ attributes ?? null }}
-{%- endset %}
-
 {% block content -%}
     {% import _self as self %}
 

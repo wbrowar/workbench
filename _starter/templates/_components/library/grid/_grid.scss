@@ -1,3 +1,15 @@
+@mixin c_grid_columns($columns: 2) {
+  @if $columns == 2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @else if $columns == 3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @else if $columns == 4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .c_grid {
   $self: &;
 
@@ -6,17 +18,44 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-gap: $grid_gap_default;
+  grid-gap: $grid_gap;
 
   @include mq($mq_grid_start) {
-    @at-root #{$self}--2_column {
-      grid-template-columns: repeat(2, 1fr);
+    @at-root #{$self}--2 {
+      @include c_grid_columns(2);
+
+      @at-root #{&}-3 {
+        @include c_grid_columns(2);
+
+        @include mq(900px) {
+          @include c_grid_columns(3);
+        }
+
+        @at-root #{&}-4 {
+          @include c_grid_columns(2);
+
+          @include mq(900px) {
+            @include c_grid_columns(3);
+          }
+          @include mq(1200px) {
+            @include c_grid_columns(4);
+          }
+        }
+      }
     }
-    @at-root #{$self}--3_column {
-      grid-template-columns: repeat(3, 1fr);
+    @at-root #{$self}--3 {
+      @include c_grid_columns(3);
+
+      @at-root #{&}-4 {
+        @include c_grid_columns(3);
+
+        @include mq(1200px) {
+          @include c_grid_columns(4);
+        }
+      }
     }
-    @at-root #{$self}--4_column {
-      grid-template-columns: repeat(4, 1fr);
+    @at-root #{$self}--4 {
+      @include c_grid_columns(4);
     }
   }
 }

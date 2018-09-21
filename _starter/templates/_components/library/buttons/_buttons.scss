@@ -5,7 +5,7 @@
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
-  grid-gap: $grid_gap_default;
+  grid-gap: $grid_gap;
 
   @at-root #{&}--left {
     justify-content: flex-start;

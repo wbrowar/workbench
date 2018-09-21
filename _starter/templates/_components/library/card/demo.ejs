@@ -1,0 +1,74 @@
+<% let component = {
+    title: "Card",
+    description: "A new component.",
+    background: "light",
+    html: {
+        code:
+`<div class="c_card">DEMO CODE</div>`
+    },
+    twig: {
+        code:
+`{% import 'macros/component.twig' as component %}
+
+{% set cardEntries = [
+    {
+        image: craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png'),
+        info: {
+            title: 'Jane Smith',
+            subtitle: 'Assistant to the Regional Manager',
+            fax: '555-200-3456',
+            phone: '555-100-2345',
+            email: 'jane.smith@exampleco.com',
+            other: ['Is awesome', 'Just the best', 'Basically Wonder Woman'],
+            summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid consequatur error eum, exercitationem illo incidunt ipsum magni minima molestias mollitia nulla numquam obcaecati officiis quas quibusdam ratione reprehenderit sequi.',
+            buttonLabel: 'Learn More about Jane',
+            buttonUrl: '#',
+        }
+    },
+    {
+        image: craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png'),
+        imageForeground: '<span>Jane Smith</span>',
+        imageTheme: 'rollover',
+        imageUrl: '#',
+        info: {
+            title: 'Jane Smith',
+            subtitle: 'Assistant to the Regional Manager',
+            fax: '555-200-3456',
+            phone: '555-100-2345',
+            email: 'jane.smith@exampleco.com',
+            other: ['Is awesome', 'Just the best', 'Basically Wonder Woman'],
+            summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid consequatur error eum, exercitationem illo incidunt ipsum magni minima molestias mollitia nulla numquam obcaecati officiis quas quibusdam ratione reprehenderit sequi.',
+            buttonLabel: 'Learn More about Jane',
+            buttonUrl: '#',
+        }
+    },
+    {
+        image: craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png'),
+        imageForeground: '<span>Jane Smith</span>',
+        imageTheme: 'static',
+        imageUrl: '#',
+        info: {
+            title: 'Jane Smith',
+            subtitle: 'Assistant to the Regional Manager',
+            fax: '555-200-3456',
+            phone: '555-100-2345',
+            email: 'jane.smith@exampleco.com',
+            other: ['Is awesome', 'Just the best', 'Basically Wonder Woman'],
+            summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid consequatur error eum, exercitationem illo incidunt ipsum magni minima molestias mollitia nulla numquam obcaecati officiis quas quibusdam ratione reprehenderit sequi.',
+            buttonLabel: 'Learn More about Jane',
+            buttonUrl: '#',
+        }
+    },
+] %}
+
+<div class="c_wrapper c_grid c_grid--2-3">
+    {% for item in cardEntries %}
+        {{ component.c('card', item) }}
+    {% endfor %}
+</div>`
+  },
+    options: [
+        { "name": 'image', "required": true, "type": 'Asset or string', "default": `{}`, "description": `` }
+    ]
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

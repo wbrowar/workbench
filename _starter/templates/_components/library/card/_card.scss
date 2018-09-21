@@ -1,0 +1,71 @@
+.c_card {
+  $self: &;
+
+  margin: 0 auto;
+  max-width: 300px;
+
+  @at-root #{$self}__image {
+    $image: &;
+
+    @include layout_centered_image_text;
+    margin: 0 auto;
+    max-width: 280px;
+
+    @at-root #{$image}--rollover {
+      @at-root & #{$image}__foreground, & #{$image}__middle {
+        transition: opacity $anim_duration_fade ease-out;
+        opacity: 0;
+      }
+
+      &:hover {
+        @at-root & #{$image}__foreground, & #{$image}__middle {
+          opacity: 1;
+        }
+      }
+    }
+    @at-root #{$image}--static {
+      @at-root & #{$image}__foreground, & #{$image}__middle {
+        opacity: 1;
+      }
+    }
+
+    @at-root #{$image}__background {
+      @include aspect(1/1);
+      border-radius: 50%;
+    }
+    @at-root #{$image}__middle {
+      background-color: transparentize($color_black_raw, .6);
+      border-radius: 50%;
+      opacity: 0;
+    }
+    @at-root #{$image}__foreground {
+      color: $color_white;
+    }
+  }
+  @at-root #{$self}__info {
+    padding: 20px 0;
+    text-align: center;
+
+    @at-root #{&}__contact {
+      margin: .5em 0 .8em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+      & > * {
+        @include truncate;
+        display: block;
+        font-size: .8rem;
+        color: $color_black;
+      }
+    }
+    @at-root #{&}__summary {
+      margin-bottom: .9em;
+      font-size: .9rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

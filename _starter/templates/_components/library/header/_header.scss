@@ -11,4 +11,9 @@
     @include font('apple_bold');
     @include fz(4, 2rem, '700px');
   }
+  @at-root #{$self}--3 {
+    @include font('apple_bold');
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
 }
