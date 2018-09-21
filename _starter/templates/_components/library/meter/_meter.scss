@@ -2,7 +2,7 @@ $_height: 20px;
 
 @keyframes c_meter--bar {
   0%   { width: 0 }
-  100% { width: calc(1 * var(--progress)) }
+  100% { width: var(--progress) }
 }
 
 .c_meter {

@@ -10,5 +10,5 @@
 {% set tipClick = tipClick ?? false %}
 
 {% block content -%}
-    <span id="{{ tipID }}" tabindex="0" {{- tipDir -}}="{{ tipData }}" {% if tipClick %}@click=classToggle('{{- tipID -}}','c_tooltip--open'){% endif %}>{{- tipCopy -}}</span>
+    <span id="{{ tipID }}" tabindex="0" {{- tipDir -}}="{{ tipData }}" {% if tipClick %}@click=classToggle('#{{- tipID -}}','c_tooltip--open'){% endif %}>{{- tipCopy -}}</span>
 {%- endblock %}

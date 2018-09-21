@@ -1,5 +1,4 @@
-
-<div class="styles__example">
+<div class="styles--<%- handle %> styles__example<% if (pkg.projectTemplateLanguage !== 'html') { %> styles--html_hidden<% } %>">
     <div class="styles__example__title"><h2><%- component.title %></h2></div>
     <div class="styles__example__description"><p><%- component.description %></p></div>
     <div class="styles__example__display" style="background-color: <% if (component.background === 'dark') { %>#2B303B<% } else if (component.background === 'light') { %>#FFFFFF<% } else { %><%- component.background %><% } %>;">
@@ -7,7 +6,8 @@
     </div><% if (!component.hideCode) { %><% if (component.html) { %>
     <div class="styles__example__code styles__example__code--html">
         <pre><code v-pre><%= component.html.code %></code></pre>
-    </div><% } %><% if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %>
+        <button class="styles__html_button" @click="classToggle('.styles--<%- handle %>','styles--html_hidden')">+ HTML</button><% } %>
+    </div><% if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %>
     <div class="styles__example__code styles__example__code--twig">
         {% verbatim %}<pre><code><%= component.twig.code %></code></pre>{% endverbatim %}
     </div><% } %><% if (component.modifiers) { %>

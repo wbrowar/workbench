@@ -2,7 +2,7 @@
 //  🏡 Custom Javascript used for UI and other functionality
 
 import Vue from 'vue';
-import { gaTrack, log, warn, setupEnhancements } from './global.js';
+import { gaTrack, log, warn, setupEnhancements, addClass, hasClass, removeClass } from './global.js';
 
 // VARIABLES
 let vueData = {};
@@ -41,19 +41,16 @@ vueMethods['showOverlay'] = function (overlayTitle) {
 };
 
 // Generic class toggle utility
-// @click="classtoggle('id','class')"
+// @click="classToggle('id','class')"
 vueMethods['classToggle'] = function (getID, getClass) {
-    const el = document.getElementById(getID);
-    const actv = el.classList.contains(getClass)
-    switch (actv) {
-        case true:
-            el.classList.remove(getClass);
-            break;
-        case false:
-            el.classList.add(getClass);
-        default:
-            el.classList.add(getClass);
-    }
+    const query = document.querySelectorAll(getID);
+    query.forEach((el) => {
+        if (hasClass(el, getClass)) {
+            removeClass(el, getClass);
+        } else {
+            addClass(el, getClass);
+        }
+    });
 };
 
 // Lazy load Vue components

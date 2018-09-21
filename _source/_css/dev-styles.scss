@@ -177,6 +177,13 @@ $border_radius: 4px;
       &:last-child {
         border-radius: 0 0 $border_radius $border_radius;
       }
+      @at-root #{&}--html {
+        pre {
+          @at-root #{$self}--html_hidden & {
+            display: none;
+          }
+        }
+      }
       @at-root #{&}--twig {
         background-color: transparentize($color_dev_green, .7);
         border-color: transparentize($color_dev_green, .3);;
@@ -238,6 +245,26 @@ $border_radius: 4px;
         @extend #{$self}__box;
         @extend #{$self}__box--flex;
       }
+    }
+  }
+  @at-root #{&}__html_button {
+    display: none;
+    padding: .4em .6em;
+    background-color: $color_dev_grey_text;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: $color_dev_white;
+    opacity: .8;
+    transition: background .1s ease-out, opacity .1s ease-out;
+
+    &:hover {
+      background-color: darken($color_dev_grey_text, 5);
+      opacity: 1;
+    }
+
+    @at-root #{$self}--html_hidden & {
+      display: inline;
     }
   }
 }
