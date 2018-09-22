@@ -384,7 +384,7 @@ async function run() {
             pkg.projectTemplateLanguage = 'twig';
             pkg.projectType = 'craft3';
         } else if (answers.projectType === 'html') {
-            pkg.projectTemplateLanguage = 'html';
+            pkg.projectTemplateLanguage = 'ejs';
             pkg.projectType = 'html';
         }
 

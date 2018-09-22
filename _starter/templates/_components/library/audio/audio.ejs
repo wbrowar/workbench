@@ -1,0 +1,4 @@
+<div class="c_audio">
+    <audio <% if (c.lazyLoad || true) { %>data-lazy-load data-<% } %>src="<%- c.url %>"<%- (c.loop || false) ? ' loop' : '' %> controls></audio>
+    <noscript><audio src="<%- c.url %>"<%- (c.loop || false) ? ' loop' : '' %> controls></audio></noscript>
+</div>
