@@ -1,4 +1,12 @@
+<% const lazyLoad = c.lazyLoad || true,
+         loop = c.loop || false,
+         url = c.url || false;
+%>
+
 <div class="c_audio">
-    <audio <% if (c.lazyLoad || true) { %>data-lazy-load data-<% } %>src="<%- c.url %>"<%- (c.loop || false) ? ' loop' : '' %> controls></audio>
-    <noscript><audio src="<%- c.url %>"<%- (c.loop || false) ? ' loop' : '' %> controls></audio></noscript>
+    <% if (url) { %>
+        <audio <% if (lazyLoad) { %>data-lazy-load data-<% } %>src="<%- url %>"<%- loop ? ' loop' : '' %> controls></audio>
+        <noscript><audio src="<%- url %>"<%- loop ? ' loop' : '' %> controls></audio></noscript>
+    <% } %>
 </div>
+
