@@ -801,7 +801,7 @@ async function updateComponents() {
             }
         };
 
-        glob(`${ paths.components.src }**/*.${ pkg.projectTemplateLanguage }`, function (er, files) {
+        glob(`${ paths.components.src }**/*.${ pkg.projectTemplateLanguage }`, { ignore: `${ paths.components.src }**/demo.ejs` }, function (er, files) {
             let count = files.length;
             if (count > 0) {
                 files.forEach((item) => {
@@ -876,6 +876,14 @@ async function updateStyleInventory() {
 
         const p = await new Promise(resolve => {
             let count = Object.keys(pkg.styleInventory.pages).length;
+            let extension = 'html';
+
+            switch (pkg.projectType) {
+                case 'craft3':
+                    extension = 'twig';
+                    break;
+            }
+
             Object.keys(pkg.styleInventory.pages).forEach((item) => {
                 const vars = Object.assign({
                     page: item,
@@ -885,7 +893,7 @@ async function updateStyleInventory() {
                     if (err) {
                         log('warn', err);
                     }
-                    fs.outputFile(`${ paths.templates.src }dev/inv/${ item }.${ pkg.projectTemplateLanguage }`, str, (err) => {
+                    fs.outputFile(`${ paths.templates.src }dev/inv/${ item }.${ extension }`, str, (err) => {
                         if(!err) {
                             log('verbose', `Style Inventory Page: ${ item }`, verbose);
                             count--;

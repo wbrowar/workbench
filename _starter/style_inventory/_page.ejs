@@ -1,4 +1,4 @@
-<% if (pkg.projectTemplateLanguage === 'html') { %>
+<% if (pkg.projectTemplateLanguage === 'ejs') { %>
 <%- include(paths.templates.src + '_ejs/_layout_top') %>
 <% } %>
 <div class="styles styles--<%- pkg.projectTemplateLanguage %>">
@@ -24,6 +24,6 @@
     <link rel="preload" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css" as="style" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css"></noscript>
 <% } %>
-<% if (pkg.projectTemplateLanguage === 'html') { %>
+<% if (pkg.projectTemplateLanguage === 'ejs') { %>
 <%- include(paths.templates.src + '_ejs/_layout_bottom') %>
 <% } %>

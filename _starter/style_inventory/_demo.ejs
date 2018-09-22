@@ -1,4 +1,4 @@
-<div class="styles--<%- handle %> styles__example<% if (pkg.projectTemplateLanguage !== 'html') { %> styles--html_hidden<% } %>">
+<div class="styles--<%- handle %> styles__example<% if (pkg.projectTemplateLanguage !== 'ejs') { %> styles--html_hidden<% } %>">
     <div class="styles__example__title"><h2><%- component.title %></h2></div>
     <div class="styles__example__description"><p><%- component.description %></p></div>
     <div class="styles__example__display" style="background-color: <% if (component.background === 'dark') { %>#2B303B<% } else if (component.background === 'light') { %>#FFFFFF<% } else { %><%- component.background %><% } %>;">
