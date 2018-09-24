@@ -2,7 +2,7 @@
 const chalk = require('chalk'),
       ejs = require('ejs'),
       fs = require('fs-extra'),
-      glob = require('glob'),
+      glob = require('glob-all'),
       inquirer = require('inquirer'),
       notifier = require('node-notifier'),
       path = require('path');

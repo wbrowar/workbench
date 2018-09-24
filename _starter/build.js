@@ -7,13 +7,13 @@ const autoprefixer = require('autoprefixer'),
       ejs = require('ejs'),
       favicons = require('favicons'),
       fs = require('fs-extra'),
-      glob = require('glob'),
+      glob = require('glob-all'),
       inquirer = require('inquirer'),
       mqpacker = require("css-mqpacker"),
       notifier = require('node-notifier'),
       path = require('path'),
       postcss = require('postcss'),
-      purgecss = require('@fullhuman/postcss-purgecss'),
+      purify = require('purify-css'),
       sass = require('node-sass'),
       sassGlobImporter = require('node-sass-glob-importer'),
       sharp = require('sharp'),
@@ -41,6 +41,13 @@ const enableImg  = argv.options.noimg ? false : true,
 // set variables based on pkg options
 let paths = getPaths(pkg.paths),
     version = getVersion(pkg.version);
+
+let templateExtension = 'html';
+switch (pkg.projectType) {
+    case 'craft3':
+        templateExtension = 'twig';
+        break;
+}
 
 // set variables to be processed by EJS
 let ejsVars = Object.assign({
@@ -753,29 +760,30 @@ async function postCss() {
 
         if (count > 0) {
             pkg.postcss.forEach((item) => {
-                fs.readFile(paths.css.dist + item + filenameVersion('.') + '.css', (err, css) => {
+                purify([
+                    `${ paths.templates.dist }**/*.${ templateExtension }`,
+                    `${ paths.js.dist }**/*.js`,
+                    `${ paths.components.src }**/*.vue`,
+                ], [paths.css.dist + item + filenameVersion('.') + '.css'], { info: verbose }, (purifiedCss) => {
                     postcss([
-                        purgecss({
-                            content: [`${ paths.templates.dist }**/*.${ pkg.projectTemplateLanguage }`]
-                        }),
                         mqpacker,
                         autoprefixer({
                             browsers: pkg.browserlist.autoprefix
                         })
-                        ])
-                        .process(css)
-                        .then(result => {
-                            fs.outputFile(paths.css.dist + item + filenameVersion('.') + '.css', result.css, (err) => {
-                                if (err) {
-                                    log('warn', err, verbose);
-                                }
-                                log('verbose', `POST CSS ran: ${ item }`, verbose);
-                                count--;
-                                if (count === 0) {
-                                    resolve();
-                                }
-                            });
-                        })
+                    ])
+                    .process(purifiedCss)
+                    .then(result => {
+                        fs.outputFile(`${ paths.css.dist + item + filenameVersion('.') }.css`, result.css, (err) => {
+                            if (err) {
+                                log('warn', err, verbose);
+                            }
+                            log('verbose', `POST CSS ran: ${ item }`, verbose);
+                            count--;
+                            if (count === 0) {
+                                resolve();
+                            }
+                        });
+                    })
                 })
             });
         } else {
@@ -876,14 +884,6 @@ async function updateStyleInventory() {
 
         const p = await new Promise(resolve => {
             let count = Object.keys(pkg.styleInventory.pages).length;
-            let extension = 'html';
-
-            switch (pkg.projectType) {
-                case 'craft3':
-                    extension = 'twig';
-                    break;
-            }
-
             Object.keys(pkg.styleInventory.pages).forEach((item) => {
                 const vars = Object.assign({
                     page: item,
@@ -893,7 +893,7 @@ async function updateStyleInventory() {
                     if (err) {
                         log('warn', err);
                     }
-                    fs.outputFile(`${ paths.templates.src }dev/inv/${ item }.${ extension }`, str, (err) => {
+                    fs.outputFile(`${ paths.templates.src }dev/inv/${ item }.${ templateExtension }`, str, (err) => {
                         if(!err) {
                             log('verbose', `Style Inventory Page: ${ item }`, verbose);
                             count--;
@@ -939,7 +939,8 @@ function watch(directory, callback) {
 // FUNCTIONS
 // functions used within this script file
 function filenameVersion(prefix = '', suffix = '') {
-    return version ? prefix + version + suffix : '';
+    const newVersion = version || Math.floor(new Date().getTime() / 1000);
+    return prefix + newVersion + suffix;
 }
 
 
