@@ -2,7 +2,7 @@
 //  🖌 Global animations used around the website
 
 import { log, warn } from './global.js';
-import { TweenMax } from 'gsap/all';
+import { TweenMax, Power1 } from 'gsap/TweenMax';
 
 export function introduceElement(el, args) {
     const delay = args.delay !== undefined ? (args.delay.constructor === Array ? Math.random() * (args.delay[1] - args.delay[0]) + args.delay[0] : args.delay) : 0;
