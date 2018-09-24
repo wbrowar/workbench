@@ -29,7 +29,8 @@ let pkg = require(`${ process.cwd() }/package.json`);
 // set constants
 const argv = parseArgv(),
       env = process.env.NODE_ENV || 'development',
-      release = env === 'production';
+      release = env === 'production',
+      timestamp = Math.floor(new Date().getTime() / 1000);
 
 // use CLI arguments to set variables
 const enableImg  = argv.options.noimg ? false : true,
@@ -939,7 +940,7 @@ function watch(directory, callback) {
 // FUNCTIONS
 // functions used within this script file
 function filenameVersion(prefix = '', suffix = '') {
-    const newVersion = version || Math.floor(new Date().getTime() / 1000);
+    const newVersion = version || timestamp;
     return prefix + newVersion + suffix;
 }
 
