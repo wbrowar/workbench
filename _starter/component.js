@@ -31,15 +31,15 @@ const notify = {
 async function run() {
     if (action === 'move') {
         if (argv.options.mv !== true) {
-            if (fs.statSync(`${ paths.starter.templates }_components/library/${ argv.options.mv }`)) {
+            if (fs.statSync(`${ paths.starter.components }${ argv.options.mv }`)) {
                 log('verbose', `Moving ${ argv.options.mv }`, verbose);
                 moveExistingComponent(argv.options.mv);
             }
         } else {
             log('verbose', `Looking for an existing component`, verbose);
 
-            const libraryComponents = glob.sync(`${ paths.starter.templates }_components/library/*`);
-            log('verbose', `${ paths.starter.templates }_components/library/*`, verbose);
+            const libraryComponents = glob.sync(`${ paths.starter.components }*`);
+            log('verbose', `${ paths.starter.components }*`, verbose);
 
             if (libraryComponents.length > 0) {
                 questions = [
@@ -151,6 +151,15 @@ async function run() {
             });
 
             // move demo.ejs
+            const twigCode = answers.templates.includes('twig') ? `,
+  twig: {
+    code:
+\`{% import 'macros/component.twig' as component %}
+{{ component.c('${ answers.name }', {  }) }}\`
+    },
+    options: [
+      { "name": 'example', "required": false, "type": 'string', "": \`''\`, "description": \`Description of example.\` },
+    ]` : '';
             const demoCode =
 `<% let component = {
   title: "${ answers.name }",
@@ -159,7 +168,7 @@ async function run() {
   html: {
     code:
 \`<div class="c_${ answers.handle }">DEMO CODE</div>\`
-  }
+  }${ twigCode }
 } %>
 <%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>`;
 
@@ -265,7 +274,7 @@ function addComponentToStyleInventory(handle) {
     });
 }
 function moveExistingComponent(handle) {
-    fs.moveSync(`${ paths.starter.templates }_components/library/${ handle }`, paths.components.src + handle, { overwrite: false })
+    fs.moveSync(`${ paths.starter.components }${ handle }`, paths.components.src + handle, { overwrite: false })
 }
 function moveFile(config, delimiter = '%') {
     if (process) {
@@ -340,6 +349,7 @@ function getPaths(paths) {
         starter: {
             backups: process.cwd() + '/_starter/backups/',
             build: process.cwd() + paths.base.build,
+            components: process.cwd() + '/_starter/components/',
             templates: process.cwd() + '/_starter/templates/',
             styleInventory: process.cwd() + '/_starter/style_inventory/',
         }
