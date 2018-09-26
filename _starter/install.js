@@ -59,7 +59,7 @@ if (fs.existsSync(`${ os.homedir() }/.wb-starter.config.json`)) {
 async function run() {
     log('title', `Configuring Project`);
 
-    const componentDirectories = glob.sync(`./_starter/templates/_components/library/*/`);
+    const componentDirectories = glob.sync(`./_starter/components/*/`);
 
     let componentOptions = [];
     componentDirectories.forEach((item) => {
