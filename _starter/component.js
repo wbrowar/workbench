@@ -101,7 +101,7 @@ async function run() {
                 message: 'Files',
                 choices: [
                     { name: 'CSS', value: 'css' },
-                    { name: 'HTML', value: 'html' },
+                    { name: 'EJS', value: 'ejs' },
                     { name: 'Twig', value: 'twig' },
                     { name: 'Vue', value: 'vue' },
                 ],
@@ -117,6 +117,7 @@ async function run() {
 
             answers.templates.forEach((item) => {
                 let config = answers;
+                let delimiter = '%';
 
                 switch (item) {
                     case 'css':
@@ -125,11 +126,12 @@ async function run() {
                             dist: `${ paths.components.src }${ answers.handle }/_${ answers.handle }.scss`,
                         }, config);
                         break;
-                    case 'html':
+                    case 'ejs':
                         config = Object.assign({
-                            src: `${ paths.starter.templates }_components/new/HANDLE.html`,
-                            dist: `${ paths.components.src }${ answers.handle }/${ answers.handle }.html`,
+                            src: `${ paths.starter.templates }_components/new/HANDLE.ejs`,
+                            dist: `${ paths.components.src }${ answers.handle }/${ answers.handle }.ejs`,
                         }, config);
+                        delimiter = '?';
                         break;
                     case 'twig':
                         config = Object.assign({
@@ -145,7 +147,7 @@ async function run() {
                         break;
                 }
 
-                moveFile(config);
+                moveFile(config, delimiter);
             });
 
             // move demo.ejs
@@ -265,12 +267,12 @@ function addComponentToStyleInventory(handle) {
 function moveExistingComponent(handle) {
     fs.moveSync(`${ paths.starter.templates }_components/library/${ handle }`, paths.components.src + handle, { overwrite: false })
 }
-function moveFile(config, process = true) {
+function moveFile(config, delimiter = '%') {
     if (process) {
-        ejs.renderFile(config.src, config, {}, function(err, str) {
+        ejs.renderFile(config.src, config, { delimiter: delimiter }, function(err, str) {
             fs.outputFile(config.dist, str, (err) => {
                 if(!err){
-                    log('verbose', `Added : ${ config.dist }`, verbose);
+                    log('verbose', `Compiled : ${ config.dist }`, verbose);
                 }
             });
         });
