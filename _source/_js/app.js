@@ -91,14 +91,14 @@ new Vue({
         VueEvent.$on('hide-overlay', () => this.isActive = (this.overlayIsVisible = false));
 
         // Watch resize
-        // window.addEventListener('resize', this.resizeHandler);
+        window.addEventListener('resize', this.resizeHandler);
 
         // Watch scroll
         // window.addEventListener('scroll', this.scrollHandler);
     },
     methods: vueMethods,
     mounted: function () {
-        VueEvent.$emit('window-resized');
+        this.resizeHandler();
 
         // Initialize
         setupEnhancements();
