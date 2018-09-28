@@ -1,9 +1,11 @@
-<% const lazyLoad = c.lazyLoad || true,
+<% const attributes = c.attributes || '',
+         classes = (c.classes || false) ? ` ${ c.classes }` : '',
+         lazyLoad = c.lazyLoad || true,
          loop = c.loop || false,
          url = c.url || false;
 %>
 
-<div class="c_audio">
+<div class="c_audio<%- classes %>" <%- attributes %>>
     <% if (url) { %>
         <audio <% if (lazyLoad) { %>data-lazy-load data-<% } %>src="<%- url %>"<%- loop ? ' loop' : '' %> controls></audio>
         <noscript><audio src="<%- url %>"<%- loop ? ' loop' : '' %> controls></audio></noscript>

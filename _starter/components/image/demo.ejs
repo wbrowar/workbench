@@ -3,18 +3,17 @@
   description: "An image loaded when the user scrolls down to its location on the page.",
   background: "light",
   html: {
+    demo: `${ include(paths.components.src + 'image/image.ejs', { c: {
+        alt: 'Bike leaned up against a wall that says "Coffee"',
+        srcset: '/img/FPO-500.jpg 500w, /img/FPO-1024.jpg 1024w, /img/FPO-2048.jpg 2048w',
+        webpSrcset: '/img/FPO-500.webp 500w, /img/FPO-1024.webp 1024w, /img/FPO-2048.webp 2048w',
+    } }) }`,
     code:
-`<figure class="c_image">
-  <picture>
-    <source type="image/webp"
-      data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-      data-srcset="/img/FPO-500.webp 500w, /img/FPO-1024.webp 1024w, /img/FPO-2048.webp 2048w">
-    <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-      sizes="100vw"
-      alt="Fpo"
-      data-srcset="/img/FPO-500.jpg 500w, /img/FPO-1024.jpg 1024w, /img/FPO-2048.jpg 2048w">
-  </picture>
-</figure>`
+`${ ('< %-').replace(' ','') } include(paths.components.src + 'image/image.ejs', { c: {
+    alt: 'Bike leaned up against a wall that says ”Coffee”',
+    srcset: '/img/FPO-500.jpg 500w, /img/FPO-1024.jpg 1024w, /img/FPO-2048.jpg 2048w',
+    webpSrcset: '/img/FPO-500.webp 500w, /img/FPO-1024.webp 1024w, /img/FPO-2048.webp 2048w',
+} }) ${ ('% >').replace(' ','') }`
   },
   twig: {
     code:

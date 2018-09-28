@@ -229,7 +229,7 @@
       "src": "_templates/"
     }
   },
-  "projectTemplateLanguage": "html",
+  "projectTemplateLanguage": "ejs",
   "projectType": "html",
   "templateExtensions": "html,twig,php,json,csv,css,js",
   "verboseOverride": false,

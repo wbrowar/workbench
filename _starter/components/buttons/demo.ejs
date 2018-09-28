@@ -4,11 +4,23 @@
   background: "light",
   modifiers: ['center', 'margin', 'margin--auto', 'margin--top', 'margin--right', 'margin--bottom', 'margin--left', 'padding', 'padding--top', 'padding--right', 'padding--bottom', 'padding--left'],
   html: {
+    demo: `<div class="c_buttons c_buttons--center">
+      ${ include(paths.components.src + 'button/button.ejs', { c: {
+        label: 'First Button',
+        url: '#',
+      } }) }
+      ${ include(paths.components.src + 'button/button.ejs', { c: {
+        label: 'Second Button',
+        url: '#',
+      } }) }
+      ${ include(paths.components.src + 'button/button.ejs', { c: {
+        label: 'Third Button',
+        url: '#',
+    } }) }
+</div>`,
     code:
 `<div class="c_buttons c_buttons--center">
-    <a class="c_button" href="#">First Button</a>
-    <a class="c_button" href="#">Second Button</a>
-    <a class="c_button" href="#">Third Button</a>
+    ...
 </div>`
   },
   twig: {

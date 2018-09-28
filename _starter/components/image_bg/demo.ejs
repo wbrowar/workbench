@@ -5,37 +5,27 @@
   demo: {
     code:
 `<div class="styles__box_wrapper">
-  <div class="styles__box" style="padding: 0px;">
-    <div class="c_image_bg">
-      <figure class="c_image_bg__image c_image">
-        <picture>
-          <source type="image/webp"
-            data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-            data-srcset="/img/FPO.webp">
-          <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-            sizes="100vw"
-            alt="Fpo"
-            data-srcset="/img/FPO.png">
-        </picture>
-      </figure>
+    <div class="styles__box" style="padding: 0px;">
+        <div class="c_image_bg">
+            ${ include(paths.components.src + 'image/image.ejs', { c: {
+                classes: 'c_image_bg__image',
+                alt: 'FPO',
+                srcset: '/img/FPO.png',
+                webpSrcset: '/img/FPO.webp',
+            } }) }
+        </div>
     </div>
-  </div>
 </div>`
   },
   html: {
     code:
 `<div class="c_image_bg">
-  <figure class="c_image_bg__image c_image">
-    <picture>
-      <source type="image/webp"
-        data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-        data-srcset="/img/FPO.webp">
-      <img data-lazy-load src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-        sizes="100vw"
-        alt="Fpo"
-        data-srcset="/img/FPO.png">
-    </picture>
-  </figure>
+    ${ ('< %-').replace(' ','') } include(paths.components.src + 'image/image.ejs', { c: {
+        classes: 'c_image_bg__image',
+        alt: 'FPO',
+        srcset: '/img/FPO.png',
+        webpSrcset: '/img/FPO.webp',
+    } }) ${ ('% >').replace(' ','') }
 </div>`
   },
   twig: {

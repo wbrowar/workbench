@@ -1,0 +1,10 @@
+<% const attributes = c.attributes || '',
+         classes = (c.classes || false) ? ` ${ c.classes }` : ''
+         label = c.label || '',
+         target = c.target || false,
+         url = c.url || '';
+%>
+
+<a class="c_button<%- classes %>" href="<%- url %>" <% if (target) { %>target="<%- target %>"<% } %> <%- attributes %>>
+    <%- label %>
+</a>

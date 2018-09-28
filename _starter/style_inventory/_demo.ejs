@@ -2,36 +2,32 @@
     <div class="styles__example__title"><h2><%- component.title %></h2></div>
     <div class="styles__example__description"><p><%- component.description %></p></div>
     <div class="styles__example__display" style="background-color: <% if (component.background === 'dark') { %>#2B303B<% } else if (component.background === 'light') { %>#FFFFFF<% } else { %><%- component.background %><% } %>;">
-        <% if (component.demo) { %><%- component.demo.code%><% } else { if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %><%- component.twig.code %><% } else if (component.html) { %><%- component.html.code %><% } %><% } %>
-    </div><% if (!component.hideCode) { %><% if (component.html) { %>
-    <div class="styles__example__code styles__example__code--html">
-        <pre><code v-pre><%= component.html.code %></code></pre>
-        <button class="styles__html_button" @click="classToggle('.styles--<%- handle %>','styles--html_hidden')">+ HTML</button><% } %>
-    </div><% if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %>
-    <div class="styles__example__code styles__example__code--twig">
-        {% verbatim %}<pre><code><%= component.twig.code %></code></pre>{% endverbatim %}
-    </div><% } %><% if (component.modifiers) { %>
-    <ul class="styles__example__modifiers">
-        <li style="font-weight: bold;">Modifiers:</li>
-        <% for(var i=0; i<component.modifiers.length; i++) { %><li><%= component.modifiers[i] %></li><% } %>
-    </ul><% } %><% if (component[pkg.projectTemplateLanguage]) { %><% if (component[pkg.projectTemplateLanguage].options) { %>
-    <table class="styles__example__table">
-        <thead>
-        <td><b>Name</b></td>
-        <td><b>Type</b></td>
-        <td><b>Default</b></td>
-        <td><b>Description</b></td>
-        </thead>
-        <tbody>
-        <% component[pkg.projectTemplateLanguage].options.forEach(function(item) { %>
-        <tr>
-            <td><b><%= item.name %></b><%= item.required ? ' (required)' : '' %></td>
-            <td><%= item.type %></td>
-            <td><i><%= item.default || 'null' %></i></td>
-            <td><%= item.description %></td>
-        </tr>
-        <% }) %>
-        </tbody>
-    </table>
-    <% } %><% } %><% } %>
+        <% if (component.demo) { %>
+            <%- component.demo.code%>
+        <% } else { %>
+            <% if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %>
+                <%- component.twig.demo || component.twig.code || '' %>
+            <% } else if (component.html) { %>
+                <%- component.html.demo || component.html.code %>
+            <% } %>
+        <% } %>
+    </div>
+    <% if (!component.hideCode) { %>
+        <% if (component.html) { %>
+            <div class="styles__example__code styles__example__code--html">
+                <pre><code v-pre><%= component.html.code || '' %></code></pre>
+                <button class="styles__html_button" @click="classToggle('.styles--<%- handle %>','styles--html_hidden')">+ HTML</button>
+            </div>
+            <% if (component.html.modifiers) { %><%- include('_demo_modifiers', { modifiers: component.html.modifiers }) %><% } %>
+            <% if (component.html.options) { %><%- include('_demo_options', { options: component.html.options }) %><% } %>
+        <% } %>
+        <% if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %>
+            <div class="styles__example__code styles__example__code--twig">
+                {% verbatim %}<pre><code><%= component.twig.code %></code></pre>{% endverbatim %}
+            </div>
+            <% if (component.twig.modifiers) { %><%- include('_demo_modifiers', { modifiers: component.twig.modifiers }) %><% } %>
+            <% if (component.twig.options) { %><%- include('_demo_options', { options: component.twig.options }) %><% } %>
+        <% } %>
+        <%# other languages ... %>
+    <% } %>
 </div>

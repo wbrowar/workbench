@@ -2,12 +2,10 @@
   title: "Audio File",
   description: "Plays an audio file using default browser controls.",
   background: "light",
-  demo: {
-    code: `${ include(paths.components.src + 'audio/audio.ejs', { c: {
-        url: 'https://starter.wbrowar.com/audio/clip.mp3',
-    } }) }`
-  },
   html: {
+    demo: `${ include(paths.components.src + 'audio/audio.ejs', { c: {
+        url: 'https://starter.wbrowar.com/audio/clip.mp3',
+    } }) }`,
     code:
 `${ ('< %-').replace(' ','') } include(paths.components.src + 'audio/audio.ejs', { c: {
     url: 'https://starter.wbrowar.com/audio/clip.mp3',

@@ -3,11 +3,14 @@
   description: "Plays a video file. To allow users to control the video, add the `controls` attribute to the `video` tag.",
   background: "light",
   html: {
+    demo: `${ include(paths.components.src + 'video/video.ejs', { c: {
+        url: 'https://starter.wbrowar.com/video/clip.mp4',
+    } }) }`,
     code:
-`<div class="c_video">
-  <video data-lazy-load data-src="https://starter.wbrowar.com/video/clip.mp4" controls></video>
-  <noscript><video src="https://starter.wbrowar.com/video/clip.mp4" controls></video></noscript>
-</div>`
+`${ ('< %-').replace(' ','') } include(paths.components.src + 'video/video.ejs', { c: {
+    url: 'https://starter.wbrowar.com/video/clip.mp4',
+} }) ${ ('% >').replace(' ','') }`,
+    modifiers: ['no_aspect']
   },
   twig: {
     code:
@@ -32,11 +35,15 @@
   description: "An iframe used to embed video content. Wraps the iframe in a `video` class to resize video in a 16:9 ratio.",
   background: "light",
   html: {
+    demo: `${ include(paths.components.src + 'video/video.ejs', { c: {
+        source: 'youtube',
+        videoId: 'G4Sn91t1V4g',
+    } }) }`,
     code:
-`<div class="c_video">
-  <iframe data-lazy-load data-src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
-  <noscript><iframe src="https://www.youtube.com/embed/G4Sn91t1V4g?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
-</div>`
+`${ ('< %-').replace(' ','') } include(paths.components.src + 'video/video.ejs', { c: {
+    source: 'youtube',
+    videoId: 'G4Sn91t1V4g',
+} }) ${ ('% >').replace(' ','') }`
   },
   twig: {
     code:

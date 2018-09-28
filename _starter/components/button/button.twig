@@ -8,7 +8,7 @@
 {# Variables #}
 {% set label = label ?? '' %}
 {% set target = target ?? '' %}
-{% set url = url ?? '#' %}
+{% set url = url ?? '' %}
 
 {% set attributes -%}
     href="{{ url }}"{% if target ?? false %} target="{{ target }}"{% endif %} {{ attributes ?? null }}

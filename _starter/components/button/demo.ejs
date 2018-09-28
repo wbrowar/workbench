@@ -1,10 +1,22 @@
 <% let component = {
   title: "Button",
-  description: "A call-to-action button, used to encourage user interaction.",
+  description: "A new component.",
   background: "light",
   html: {
+    demo: `${ include(paths.components.src + 'button/button.ejs', { c: {
+      label: 'Button',
+      url: '#',
+    } }) }`,
     code:
-`<a class="c_button" href="#">Button</a>`
+`${ ('< %-').replace(' ','') } include(paths.components.src + 'button/button.ejs', { c: {
+    label: 'Button',
+    url: '#',
+} }) ${ ('% >').replace(' ','') }`,
+    options: [
+      { "name": 'label', "required": false, "type": 'string', "description": `Text that appears on the button.` },
+      { "name": 'target', "required": false, "type": 'string', "description": `Adds a target attribute to the button.` },
+      { "name": 'url', "required": false, "type": 'string', "description": `URL that th user will be sent to upon clicking button.` }
+    ]
   },
   twig: {
     code:
