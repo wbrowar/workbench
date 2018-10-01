@@ -28,6 +28,11 @@ img {
 video {
   width: 100%;
 }
+// removes outline for mouse users, but keeps outline for keyboard users
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 // hide items with v-cloak attribute until vue is loaded and ready to go
 [v-cloak] {
   display: none;

@@ -2,9 +2,9 @@
          classes = (c.classes || false) ? ` ${ c.classes }` : ''
          label = c.label || '',
          target = c.target || false,
-         url = c.url || '';
+         url = c.url || false;
 %>
 
-<a class="c_button<%- classes %>" href="<%- url %>" <% if (target) { %>target="<%- target %>"<% } %> <%- attributes %>>
+<<% if (url) { %>a href="<%- url %>"<% if (target) { %> target="<%- target %>"<% } %><% } else { %>button<% } %> class="c_button<%- classes %>" <%- attributes %>>
     <%- label %>
-</a>
+</<% if (url) { %>a<% } else { %>button<% } %>>

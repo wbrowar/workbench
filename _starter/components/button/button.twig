@@ -2,16 +2,16 @@
 
 {% extends 'partials/_component.twig' %}
 
-{# Component element overrides #}
-{% set element = 'a' %}
-
 {# Variables #}
 {% set label = label ?? '' %}
 {% set target = target ?? '' %}
-{% set url = url ?? '' %}
+{% set url = url ?? null %}
+
+{# Component element overrides #}
+{% set element = (url ?? false) ? 'a' : 'button' %}
 
 {% set attributes -%}
-    href="{{ url }}"{% if target ?? false %} target="{{ target }}"{% endif %} {{ attributes ?? null }}
+    {% if url ?? false %}href="{{ url }}"{% if target ?? false %} target="{{ target }}"{% endif %}{% endif %} {{ attributes ?? null }}
 {%- endset %}
 
 {% block content -%}
