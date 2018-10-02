@@ -123,12 +123,12 @@ Remove any options you don’t want to create a preset for. You will still be ab
 ### Components
 - During installation you will be asked to select which components you would like to use in your project. The components will appear in this directory.
 - Components can include the following file:
-  - *`.html`* - Used to include the component via [EJS](http://ejs.co)
+  - *`.ejs`* - Used to include the component via [EJS](http://ejs.co)
   - *`.scss`* - Styles for the component
   - *`.twig`* - A twig version that can be included via Twig `{{ component.c('COMPONENT_HANDLE', config) }}`
   - *`.vue`* - A [Vue](https://vuejs.org) single file component file
   - *`demo.ejs`* - An EJS file used to demonstrate the component‘s styling and functionality in the project‘s Style Inventory
-- All files in `_source/_components/` will be processed with EJS during the build process. Even SCSS and JS files will be processed with EJS.
+- All `.scss` and `.vue` files in `_source/_components/` will be processed with EJS during the build process.
 
 #### Adding Components
 - To move an existing component run `npm run component -- --mv` and select which component you would like to move from the list.
@@ -156,7 +156,7 @@ Remove any options you don’t want to create a preset for. You will still be ab
 
 #### PostCSS
 - The following plugins are used in PostCSS:
-  - *`purgecss`* – Removes all CSS that isn‘t used in in your template files
+  - *`purifycss`* – Removes all CSS that isn‘t used in in your template files
   - *`mqpacker`* – Combines media queries while keeping existing source order
   - *`automated`* – Adds browser prefixes when needed
   
