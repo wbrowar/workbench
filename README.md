@@ -143,7 +143,7 @@ Remove any options you don’t want to create a preset for. You will still be ab
   - In this case the CSS selector should be `.home__header` and not `.home .c_text`.
 - Styles for Vue components may go in either the `.vue` file or in the component‘s `.scss` file, depending on whether or not the CSS should be processed by SASS with the rest of the project‘s styles.
 
-### SCSS Framework
+### SCSS
 - In `_source/_css` there are a several files with underscores in front. These all get compiled into `app.css`, by default.
 - Sass will compile all `.scss` files in the root of `_source/_css` that do not contain an underscore in front of the filename.
 - Files are organized into folders:
