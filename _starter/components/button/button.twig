@@ -11,7 +11,7 @@
 {% set element = (url ?? false) ? 'a' : 'button' %}
 
 {% set attributes -%}
-    {% if url ?? false %}href="{{ url }}"{% if target ?? false %} target="{{ target }}"{% endif %}{% endif %} {{ attributes ?? null }}
+    {% if url ?? false %}href="{{ url }}"{% if target ?? false %} target="{{ target }}"{% if target == '_blank' %} rel="noopener"{% endif %}{% endif %}{% endif %} {{ attributes ?? null }}
 {%- endset %}
 
 {% block content -%}

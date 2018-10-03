@@ -5,6 +5,6 @@
          url = c.url || false;
 %>
 
-<<% if (url) { %>a href="<%- url %>"<% if (target) { %> target="<%- target %>"<% } %><% } else { %>button<% } %> class="c_button<%- classes %>" <%- attributes %>>
+<<% if (url) { %>a href="<%- url %>"<% if (target) { %> target="<%- target %>"<% if (target === '_blank') { %> rel="noopener"<% } %><% } %><% } else { %>button<% } %> class="c_button<%- classes %>" <%- attributes %>>
     <%- label %>
 </<% if (url) { %>a<% } else { %>button<% } %>>
