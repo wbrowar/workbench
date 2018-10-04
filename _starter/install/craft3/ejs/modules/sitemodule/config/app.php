@@ -12,7 +12,6 @@
  * You can define custom modules and system components, and even override the
  * built-in system components.
  */
-
 return [
     'modules' => [
         'site-module' => [

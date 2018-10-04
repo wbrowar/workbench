@@ -32,10 +32,8 @@
     demo:
 `<div class="styles__box_wrapper">
     <div class="styles__box" style="padding: 0;">
-        <div class="c_video_bg">
-            {% import 'macros/component.twig' as component %}
-            {{ component.c('video_bg', { video: { url: 'https://starter.wbrowar.com/video/clip.mp4' } }) }}
-        </div>
+        {% import 'macros/component.twig' as component %}
+        {{ component.c('video_bg', { video: { url: 'https://starter.wbrowar.com/video/clip.mp4' } }) }}
     </div>
 </div>`,
     code:

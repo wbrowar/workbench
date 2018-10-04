@@ -25,7 +25,7 @@
                     ],
                 }
             } %}
-            {{ component.c('image_bg', { classes: 'c_card__image__background', image: options }) }}
+            {{ component.c('image_bg', { classes: ['c_card__image__background'], image: options }) }}
 
             {% if imageForeground ?? false %}
                 <div class="c_card__image__middle"></div>
@@ -66,7 +66,7 @@
                 <div class="c_card__info__summary c_text">{{ truncateOnWord(info.summary, 200, ' …')|markdown|typogrify }}</div>
             {% endif %}
             {% if (info.buttonLabel ?? false) and (info.buttonUrl ?? false) %}
-                {{ component.c('button', { classes: 'c_card__info__button', label: info.buttonLabel, url: info.buttonUrl }) }}
+                {{ component.c('button', { classes: ['c_card__info__button'], label: info.buttonLabel, url: info.buttonUrl }) }}
             {% endif %}
         </div>
     {% endif %}

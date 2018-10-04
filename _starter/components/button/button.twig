@@ -10,9 +10,13 @@
 {# Component element overrides #}
 {% set element = (url ?? false) ? 'a' : 'button' %}
 
-{% set attributes -%}
-    {% if url ?? false %}href="{{ url }}"{% if target ?? false %} target="{{ target }}"{% if target == '_blank' %} rel="noopener"{% endif %}{% endif %}{% endif %} {{ attributes ?? null }}
-{%- endset %}
+{% if target ?? false %}
+    {% set attrs = attrs|merge({ target: target, rel: "noopener" }) %}
+{% endif %}
+
+{% if url ?? false %}
+    {% set attrs = attrs|merge({ href: url }) %}
+{% endif %}
 
 {% block content -%}
     {{ label }}

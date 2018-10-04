@@ -19,7 +19,7 @@
 {% set vue = vue ?? false %}
 {% set inputId = inputId ?? rootClass ~ '--' ~ name %}
 
-{% set classes = (classes ?? false) ? classes ~ ' ' ~ rootClass ~ '--' ~ type : rootClass ~ '--' ~ type %}
+{% set classes = (classes ?? false) ? classes|merge([rootClass ~ '--' ~ type]) : [rootClass ~ '--' ~ type] %}
 
 {% if type == 'submit' %}
     {% set inputClasses = (inputClasses ~ ' c_button')|trim %}
@@ -28,27 +28,18 @@
 {% if vue or format or validate %}
     {% set vue = true %}
     {% set element = 'validated-form-input' %}
-    {% set attributes = attributes ?? '' %}
-
-    {% set attributes -%}
-        input-classes="{{ inputClasses }}"
-        input-id="{{ rootClass }}--{{ name }}"
-        input-name="{{ name }}"
-        input-type="{{ type }}"
-        input-placeholder="{{ placeholder }}"
-        input-value="{{ value }}"
-        label="{{ label }}"
-        {% if format ?? false %}
-            format="{{ format }}"
-        {% endif %}
-        {% if required ?? false %}
-            :required="true"
-        {% endif %}
-        {% if validate ?? false %}
-            validate="{{ validate }}"
-        {% endif %}
-        {{ attributes|raw }}
-    {%- endset %}
+    {% set attrs = attrs|merge({
+        'input-classes': inputClasses,
+        'input-id': rootClass ~ '--' ~ name,
+        'input-name': name,
+        'input-type': type,
+        'input-placeholder': placeholder,
+        'input-value': value,
+        'label': label,
+        'format': format ?? false,
+        ':required': (required ?? false) ? 'true' : false,
+        'validate': validate ?? false,
+    }) %}
 {% else %}
     {% set inputBody -%}
         {% if type in ['email', 'number', 'password', 'tel', 'text', 'search', 'submit', 'url'] %}

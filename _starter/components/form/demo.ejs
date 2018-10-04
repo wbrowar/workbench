@@ -1,9 +1,9 @@
 <% let component = {
-  title: "Example Form with Validation",
-  description: "A basic contact form example.",
-  background: "light",
-  html: {
-    code:
+    title: "Example Form with Validation",
+    description: "A basic contact form example.",
+    background: "light",
+    html: {
+        code:
 `<form class="c_form" action="">
   <div class="c_form_input c_form_input--text">
     <label for="name">Name</label>
@@ -21,9 +21,9 @@
     <input class="c_button" type="submit" value="Send">
   </div>
 </form>`
-  },
-  twig: {
-    code:
+    },
+    twig: {
+        code:
 `{% import 'macros/component.twig' as component %}
 {{ component.c('form', {
     fields: [
@@ -37,18 +37,139 @@
     formId: 'example_form',
     validate: true,
 }) }}`,
-    options: [
-      { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Formats text-like inputs in the format given. Accepts: tel, zip` },
-      { "name": 'inputAttributes', "required": false, "type": 'string', "description": `Attributes added to the input element withing the component.` },
-      { "name": 'inputClasses', "required": false, "type": 'string', "description": `Classes added to the input element withing the component.` },
-      { "name": 'label', "required": false, "type": 'string', "description": `Text used for the field label.` },
-      { "name": 'name', "required": true, "type": 'string', "description": `The name attribute of the form field.` },
-      { "name": 'placeholder', "required": false, "type": 'string', "description": `Text ` },
-      { "name": 'required', "required": false, "type": 'boolean', "default": `false`, "description": `Adds a required attribute to the input field.` },
-      { "name": 'type', "required": true, "type": 'string', "description": `The field type as per HTML input spec.` },
-      { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Validates field against the format given. Accepts: email, tel, text, zip` },
-      { "name": 'value', "required": false, "type": 'string', "description": `Default value for the field.` }
-    ]
-  }
+        options: [
+            { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Formats text-like inputs in the format given. Accepts: tel, zip` },
+            { "name": 'inputAttributes', "required": false, "type": 'string', "description": `Attributes added to the input element withing the component.` },
+            { "name": 'inputClasses', "required": false, "type": 'string', "description": `Classes added to the input element withing the component.` },
+            { "name": 'label', "required": false, "type": 'string', "description": `Text used for the field label.` },
+            { "name": 'name', "required": true, "type": 'string', "description": `The name attribute of the form field.` },
+            { "name": 'placeholder', "required": false, "type": 'string', "description": `Text ` },
+            { "name": 'required', "required": false, "type": 'boolean', "default": `false`, "description": `Adds a required attribute to the input field.` },
+            { "name": 'type', "required": true, "type": 'string', "description": `The field type as per HTML input spec.` },
+            { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Validates field against the format given. Accepts: email, tel, text, zip` },
+            { "name": 'value', "required": false, "type": 'string', "description": `Default value for the field.` }
+        ]
+    }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+
+<% component = {
+    title: "Example Form with Validation",
+    description: "A basic contact form example.",
+    background: "light",
+    html: {
+        code:
+            `<validated-form class="c_form" action="" method="post"  form-id="example_form" :validate="true">
+
+    <validated-form-input
+        class="c_form_input c_form_input--text"
+        input-classes=""
+        input-id="c_form_input--name"
+        input-name="name"
+        input-type="text"
+        input-placeholder=""
+        input-value=""
+        label="Name"
+        :required="true"
+        validate="text"
+        form-id="example_form">
+            <label for="c_form_input--name">Name</label>
+        </validated-form-input>
+
+    <validated-form-input
+        class="c_form_input c_form_input--tel"
+        input-classes=""
+        input-id="c_form_input--phone"
+        input-name="phone"
+        input-type="tel"
+        input-placeholder=""
+        input-value=""
+        label="Phone"
+        format="tel"
+        :required="true"
+        validate="tel"
+        form-id="example_form">
+            <label for="c_form_input--phone">Phone</label>
+        </validated-form-input>
+
+    <validated-form-input
+        class="c_form_input c_form_input--email"
+        input-classes=""
+        input-id="c_form_input--email"
+        input-name="email"
+        input-type="email"
+        input-placeholder=""
+        input-value=""
+        label="Email"
+        :required="true"
+        validate="email"
+        form-id="example_form">
+            <label for="c_form_input--email">Email</label>
+        </validated-form-input>
+
+    <validated-form-input
+        class="c_form_input c_form_input--text"
+        input-classes=""
+        input-id="c_form_input--zip"
+        input-name="zip"
+        input-type="text"
+        input-placeholder=""
+        input-value=""
+        label="ZIP"
+        format="zip"
+        :required="true"
+        validate="zip"
+        form-id="example_form">
+            <label for="c_form_input--zip">ZIP</label>
+    </validated-form-input>
+
+    <validated-form-input
+        class="c_form_input c_form_input--textarea"
+        input-classes=""
+        input-id="c_form_input--comments"
+        input-name="comments"
+        input-type="textarea"
+        input-placeholder=""
+        input-value=""
+        label="Comments"
+        validate="text"
+        form-id="example_form">
+            <label for="c_form_input--comments">Comments</label>
+    </validated-form-input>
+
+    <div class="c_form_input c_form_input--submit">
+        <input id="c_form_input--" class="c_button" aria-label="" name="" type="submit" value="Send">
+    </div>
+
+</validated-form>`
+    },
+    twig: {
+        code:
+            `{% import 'macros/component.twig' as component %}
+{{ component.c('form', {
+    fields: [
+        { label: 'Name', name: 'name', type: 'text', validate: 'text', required: true },
+        { label: 'Phone', name: 'phone', type: 'tel', format: 'tel', validate: 'tel', required: true },
+        { label: 'Email', name: 'email', type: 'email', validate: 'email', required: true },
+        { label: 'ZIP', name: 'zip', type: 'text', format: 'zip', validate: 'zip', required: true },
+        { label: 'Comments', name: 'comments', type: 'textarea', validate: 'text' },
+        { type: 'submit', value: 'Send' },
+    ],
+    formId: 'example_form',
+    validate: true,
+}) }}`,
+        options: [
+            { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Formats text-like inputs in the format given. Accepts: tel, zip` },
+            { "name": 'inputAttributes', "required": false, "type": 'string', "description": `Attributes added to the input element withing the component.` },
+            { "name": 'inputClasses', "required": false, "type": 'string', "description": `Classes added to the input element withing the component.` },
+            { "name": 'label', "required": false, "type": 'string', "description": `Text used for the field label.` },
+            { "name": 'name', "required": true, "type": 'string', "description": `The name attribute of the form field.` },
+            { "name": 'placeholder', "required": false, "type": 'string', "description": `Text ` },
+            { "name": 'required', "required": false, "type": 'boolean', "default": `false`, "description": `Adds a required attribute to the input field.` },
+            { "name": 'type', "required": true, "type": 'string', "description": `The field type as per HTML input spec.` },
+            { "name": 'format', "required": false, "type": 'string', "default": `false`, "description": `Validates field against the format given. Accepts: email, tel, text, zip` },
+            { "name": 'value', "required": false, "type": 'string', "description": `Default value for the field.` }
+        ]
+    }
 } %>
 <%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

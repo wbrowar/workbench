@@ -9,7 +9,7 @@
   height: 100%;
   background-size: cover;
   overflow: hidden;
-  @include aspect(1/1, #{$self}__video);
+  @include aspect(1/1);
 
   @at-root #{$self}__video, #{$self}__video video {
     padding: 0;

@@ -13,8 +13,8 @@
         <div class="c_image_bg">
           <figure class="c_image_bg__image c_image">
             <picture>
-              <source srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" sizes="100vw" type="image/webp"/>
-              <img srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sizes="100vw" alt=""/>
+              <source srcset="/img/FPO.webp" sizes="100vw" type="image/webp"/>
+              <img srcset="/img/FPO.webp" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sizes="100vw" alt=""/>
             </picture>
           </figure>
         </div>
@@ -37,8 +37,8 @@
         <div class="c_image_bg">
           <figure class="c_image_bg__image c_image">
             <picture>
-              <source srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" sizes="100vw" type="image/webp"/>
-              <img srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sizes="100vw" alt=""/>
+              <source srcset="/img/FPO.webp" sizes="100vw" type="image/webp"/>
+              <img srcset="/img/FPO.webp" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sizes="100vw" alt=""/>
             </picture>
           </figure>
         </div>
@@ -58,7 +58,7 @@
 {% set slides = [] %}
 
 {# image slide #}
-{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO@2x.png') %}
+{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png') %}
 {% set options = {
     image: image,
     title: image.title ?? '',
@@ -80,7 +80,7 @@
 }]) %}
 
 {# image slide with text in front of it #}
-{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO@2x.png') %}
+{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png') %}
 {% set options = {
     image: image,
     title: image.title ?? '',

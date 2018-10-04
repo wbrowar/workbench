@@ -25,7 +25,7 @@ $mq_grid_start: 700px;
 
 // SITE MIXINS
 // ASPECT RATIO
-@mixin aspect($ratio: var(--aspect), $style_child: '& > :first-child') {
+@mixin aspect($ratio: var(--aspect), $style_child: '') {
   @at-root #{&} > :first-child {
     width: 100%;
   }
@@ -41,11 +41,13 @@ $mq_grid_start: 700px;
       display: block;
       padding-bottom: calc(100% / (#{ $ratio }));
     }
-    @at-root #{ $style_child }  {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
+    @if $style_child != '' {
+      @at-root #{ $style_child }  {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+      }
     }
   }
 }

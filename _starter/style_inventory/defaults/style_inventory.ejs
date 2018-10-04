@@ -26,25 +26,24 @@
 
 {{ component.c('button', {
     after: afterTwig,
-    attributes: 'data-hello',
+    attrs: { 'data-hello': true },
     before: beforeTwig,
-    classes: 'red',
+    classes: ['red'],
     label: 'Example',
     modifiers: ['red', 'green'],
-    styles: 'background-color: red;',
+    styles: { 'background-color': 'red' },
     target: '_blank',
     url: 'http://google.com'
 }) }}`,
         "options": [
             { "name": 'after', "required": false, "type": 'block', "description": `Code that's outputted after the component element.` },
-            { "name": 'attributes', "required": false, "type": 'string', "default": `''`, "description": `Additional attributes added to the component element. This can be used to add Vue functionality to a component.` },
+            { "name": 'attrs', "required": false, "type": 'object', "default": `{}`, "description": `A key/value pairing of additional attributes added to the component element. This can be used to add Vue functionality to a component.` },
             { "name": 'before', "required": false, "type": 'block', "description": `Code that's outputted before the component element.` },
-            { "name": 'classes', "required": false, "type": 'string', "default": `''`, "description": `Add classes to the component element.` },
-            { "name": 'content', "required": false, "type": 'block', "description": `Code that goes directly inside the component element.` },
+            { "name": 'classes', "required": false, "type": 'array', "default": `[]`, "description": `Add classes to the component element.` },
             { "name": 'element', "required": false, "type": 'string', "default": `'div'`, "description": `Allows you to change the element type of the component.` },
             { "name": 'id', "required": false, "type": 'string', "description": `The id of the component element.` },
             { "name": 'modifiers', "required": false, "type": 'array', "default": `[]`, "description": `Add component modifier classes. For example, on the 'c_button' component, setting modifiers to ['red'] would result in the class 'c_button--red' being added.` },
-            { "name": 'styles', "required": false, "type": 'string', "default": `''`, "description": `Adds inline styles to the component element.` },
+            { "name": 'styles', "required": false, "type": 'object', "default": `{}`, "description": `Adds inline styles to the component element. Use key/value pairs for each css property.` },
         ],
     },
 }, paths: paths, pkg: pkg, release: release }) %>

@@ -18,17 +18,15 @@
 {% set validate = validate ?? false %}
 {% set vue = vue ?? false %}
 
-{% set attributes -%}
-    action="{{ actionUrl }}" method="{{ method }}" {{ attributes ?? null }}
-{%- endset %}
+{% set attrs = attrs|merge({ action: actionUrl, method: method }) %}
 
 {% if vue or validate or (ajaxSubmitUrl ?? false) %}
     {% set vue = true %}
     {% set element = 'validated-form' %}
-    {% set attributes = attributes ~ ' form-id="' ~ formId ~ '" :validate="' ~ (validate ? 'true' : 'false') ~ '"' %}
+    {% set attrs = attrs|merge({ 'form-id': formId, ':validate': validate ? 'true' : 'false' }) %}
 
     {% if ajaxSubmitUrl ?? false %}
-        {% set attributes = attributes ~ ' ajax-submit-url="' ~ ajaxSubmitUrl ~ '"' %}
+        {% set attrs = attrs|merge({ 'ajax-submit-url': ajaxSubmitUrl }) %}
     {% endif %}
 {% endif %}
 
@@ -37,7 +35,12 @@
 
     {% for item in fields %}
         {% if vue and (item.validate ?? false) and (item.name ?? false) and (item.type ?? false) %}
-            {% set item = (item.attributes ?? false) ? item|merge({ attributes: item.attributes ~ ' form-id="' ~ formId ~ '"' }) : item|merge({ attributes: 'form-id="' ~ formId ~ '"' }) %}
+            {% if item.attr ?? false %}
+                {% set newAttrs = item.attr|merge({ 'form-id': formId }) %}
+                {% set item = item|merge({ attr: newAttrs }) %}
+            {% else %}
+                {% set item = item|merge({ attr: { 'form-id': formId } }) %}
+            {% endif %}
         {% endif %}
         {{ component.c('form_input', item) }}
     {% endfor %}

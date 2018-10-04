@@ -11,7 +11,7 @@
 
 <script>
     import { log } from '../global.js';
-    import Cleave from 'cleave.js';
+    import Cleave from '../../../node_modules/cleave.js/dist/cleave';
     //import * as CleavePhone from '../../../node_modules/cleave.js/dist/addons/cleave-phone.us.js';
 
     export default {

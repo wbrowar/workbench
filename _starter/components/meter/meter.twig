@@ -13,9 +13,7 @@
 
 {% if animate %}
     {% set modifiers = (modifiers ?? false) ? modifiers|merge(['animate']) : ['animate'] %}
-    {% set attributes -%}
-        data-lazy-animate {{ attributes ?? null }}
-    {%- endset %}
+    {% set attrs = attrs|merge({ 'data-lazy-animate': true }) %}
 {% endif %}
 
 {% block content -%}
