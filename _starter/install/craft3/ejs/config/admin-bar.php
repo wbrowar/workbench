@@ -27,7 +27,6 @@ return [
     // All environments
     '*' => [
         // ADMIN BAR
-        'additionalLinks' => [],
         'customCss' => '',
         'displayGreeting' => true,
         'displayDashboardLink' => true,
@@ -40,10 +39,7 @@ return [
         'displayEditDate' => true,
         'displayEditAuthor' => true,
         'displayRevisionNote' => true,
-    ],
 
-    // Live (production) environment
-    'live'  => [
         'additionalLinks' => [
             [
                 'title' => 'Guide',
@@ -72,58 +68,6 @@ return [
             [
                 'title' => 'Clear Caches',
                 'url' => 'utilities/clear-caches',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-        ],
-    ],
-
-    // Staging (pre-production) environment
-    'staging'  => [
-        'additionalLinks' => [
-            [
-                'title' => 'Style Inventory',
-                'url' => 'dev/inv',
-                'type' => 'url',
-            ],
-            [
-                'title' => 'Fields',
-                'url' => 'settings/fields',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-            [
-                'title' => 'Sections',
-                'url' => 'settings/sections',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-            [
-                'title' => 'Clear Caches',
-                'url' => 'utilities/clear-caches',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-        ],
-    ],
-
-    // Local (development) environment
-    'dev'  => [
-        'additionalLinks' => [
-            [
-                'title' => 'Style Inventory',
-                'url' => 'dev/inv',
-                'type' => 'url',
-            ],
-            [
-                'title' => 'Fields',
-                'url' => 'settings/fields',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-            [
-                'title' => 'Sections',
-                'url' => 'settings/sections',
                 'type' => 'cpUrl',
                 'admin' => true,
             ],
