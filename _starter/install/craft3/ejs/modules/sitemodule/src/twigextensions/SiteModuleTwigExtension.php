@@ -106,14 +106,16 @@ class SiteModuleTwigExtension extends \Twig_Extension
      */
     public function checkAccessByIp(array $environments = ['staging'])
     {
-        $accessGranted = !in_array(getenv('CRAFTENV_CRAFT_ENVIRONMENT'), $environments);
+        $accessGranted = !(in_array(getenv('CRAFTENV_CRAFT_ENVIRONMENT'), $environments) && (getenv('CRAFTENV_WHITELISTED_IPS') ?? false));
 
-        if (!Craft::$app->getUser()->getIsGuest()) {
-            // Allow access for logged in users
-            $accessGranted = false;
-        } else if (getenv('CRAFTENV_WHITELISTED_IPS') ?? false) {
-            // Allow access for users that visit the site from an IP address in CRAFTENV_WHITELISTED_IPS, in the env.php file
-            $accessGranted = Craft::dd(in_array(Craft::$app->getRequest()->getUserIP(), json_decode(getenv('CRAFTENV_WHITELISTED_IPS'))));
+        if (!$accessGranted) {
+            if (!Craft::$app->getUser()->getIsGuest()) {
+                // Allow access for logged in users
+                $accessGranted = true;
+            } else {
+                // Allow access for users that visit the site from an IP address in CRAFTENV_WHITELISTED_IPS, in the env.php file
+                $accessGranted = in_array(Craft::$app->getRequest()->getUserIP(), json_decode(getenv('CRAFTENV_WHITELISTED_IPS')));
+            }
         }
 
         // If user cannot access the page, send them to the 503

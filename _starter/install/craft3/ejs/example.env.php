@@ -53,6 +53,9 @@ $craftEnvVars = [
     'BASE_URL' => 'http://<%- handle %>.test/',
 
     'SITE_URL' => 'http://<%- handle %>.test/',
+
+    // Block a staging site from being visible outside of these IP addresses
+    // 'WHITELISTED_IPS' => json_encode(['']),
 ];
 
 // Set all of the .env values, auto-prefixed with `CRAFTENV_`
