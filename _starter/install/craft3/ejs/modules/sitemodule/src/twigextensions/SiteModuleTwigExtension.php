@@ -11,9 +11,11 @@
 namespace modules\sitemodule\twigextensions;
 
 use craft\helpers\Template;
+use craft\helpers\UrlHelper;
 use modules\sitemodule\SiteModule;
 
 use Craft;
+use yii\BaseYii;
 
 /**
  * Twig can be extended in many ways; you can add extra tags, filters, tests, operators,
@@ -60,23 +62,74 @@ class SiteModuleTwigExtension extends \Twig_Extension
      *
      *      {% set this = someFunction('something') %}
      *
-    * @return array
+     * @return array
      */
     public function getFunctions()
     {
         return [
-//            new \Twig_SimpleFunction('addToArray', [$this, 'addToArray']),
+            new \Twig_SimpleFunction('attrAdd', [$this, 'attrAdd']),
+            new \Twig_SimpleFunction('checkAccessByIp', [$this, 'checkAccessByIp']),
         ];
     }
 
     /**
      * Formats HTML attributes and makes it easy to override and add classes and other attributes
      *
-     * @param null $attrs
+     * @param array $attrs
+     * @param array $newItems
+     * @param string $group
      *
      * @return array
      */
-    public function renderHtmlAttributes($attrs)
+    public function attrAdd(array $attrs, array $newItems, string $group = null):array
+    {
+        switch ($group) {
+            case 'class':
+                $attrs['class'] = ($attrs['class'] ?? false) ? array_merge($attrs['class'], $newItems) : $newItems;
+                break;
+            case 'style':
+                $attrs['style'] = ($attrs['style'] ?? false) ? array_merge($attrs['style'], $newItems) : $newItems;
+                break;
+            default:
+                $attrs = array_merge($attrs, $newItems);
+        }
+
+        return $attrs;
+    }
+
+    /**
+     * Allow only visitors that are logged in or visitors visiting from whitelisted IP addresses
+     *
+     * @param array $attrs
+     *
+     * @return mixed
+     */
+    public function checkAccessByIp(array $environments = ['staging'])
+    {
+        $accessGranted = !in_array(getenv('CRAFTENV_CRAFT_ENVIRONMENT'), $environments);
+
+        if (!Craft::$app->getUser()->getIsGuest()) {
+            // Allow access for logged in users
+            $accessGranted = false;
+        } else if (getenv('CRAFTENV_WHITELISTED_IPS') ?? false) {
+            // Allow access for users that visit the site from an IP address in CRAFTENV_WHITELISTED_IPS, in the env.php file
+            $accessGranted = Craft::dd(in_array(Craft::$app->getRequest()->getUserIP(), json_decode(getenv('CRAFTENV_WHITELISTED_IPS'))));
+        }
+
+        // If user cannot access the page, send them to the 503
+        if (!$accessGranted && !in_array(Craft::$app->getRequest()->getUrl(), ['/404', '/503'])) {
+            return BaseYii::$app->getResponse()->redirect(UrlHelper::url('503'));
+        }
+    }
+
+    /**
+     * Formats HTML attributes and makes it easy to override and add classes and other attributes
+     *
+     * @param array $attrs
+     *
+     * @return string
+     */
+    public function renderHtmlAttributes(array $attrs):string
     {
         // Ported from https://github.com/timkelty/htmlattributes-craft
         $str = trim(implode(' ', array_map(function($attrName) use ($attrs) {
