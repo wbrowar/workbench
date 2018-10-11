@@ -55,22 +55,32 @@ vueMethods['classToggle'] = function (getID, getClass) {
 
 // Lazy load Vue components
 // Vue.component('accordion', function (resolve) {
-//     require(['./components/Accordion.vue'], resolve)
+//     require.ensure(['./components/Accordion.vue', './components/AccordionTab.vue'], function(require){
+//         require(['./components/Accordion.vue'], resolve)
+//     });
 // });
 // Vue.component('accordion-tab', function (resolve) {
-//     require(['./components/AccordionTab.vue'], resolve)
+//     require.ensure(['./components/Accordion.vue', './components/AccordionTab.vue'], function(require){
+//         require(['./components/AccordionTab.vue'], resolve)
+//     });
 // });
 // Vue.component('overlay', function (resolve) {
 //     require(['./components/Overlay.vue'], resolve)
 // });
 // Vue.component('slider', function (resolve) {
-//     require(['./components/Slider.vue'], resolve)
+//     require.ensure(['./components/Slider.vue', './components/SliderControl.vue', './components/SliderSlide.vue'], function(require){
+//         require(['./components/Slider.vue'], resolve)
+//     });
 // });
 // Vue.component('slider-control', function (resolve) {
-//     require(['./components/SliderControl.vue'], resolve)
+//     require.ensure(['./components/Slider.vue', './components/SliderControl.vue', './components/SliderSlide.vue'], function(require){
+//         require(['./components/SliderControl.vue'], resolve)
+//     });
 // });
 // Vue.component('slider-slide', function (resolve) {
-//     require(['./components/SliderSlide.vue'], resolve)
+//     require.ensure(['./components/Slider.vue', './components/SliderControl.vue', './components/SliderSlide.vue'], function(require){
+//         require(['./components/SliderSlide.vue'], resolve)
+//     });
 // });
 // Vue.component('validated-form', function (resolve) {
 //     require(['./components/ValidatedForm.vue'], resolve)
