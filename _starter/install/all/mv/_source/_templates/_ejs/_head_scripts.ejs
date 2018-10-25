@@ -1,12 +1,9 @@
-        <!-- styles -->
-        <link rel="preload" href="<%- pkg.paths.base.siteUrl %>css/app<%- filenameVersion %>.css" as="style" onload="this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="<%- pkg.paths.base.siteUrl %>css/app<%- filenameVersion %>.css"></noscript>
-
-        <!-- critcss -->
-
         <!-- scripts -->
         <script type="text/javascript">
             var jsDevMode = <% if (pkg.projectType === 'craft3') { %>{{ craft.app.config.general.devMode ? 'true' : 'false' }}<% } else { %><% if (release) { %>false<% } else { %>true<% } %><% } %>;
+
+            <%- include(loadcss) %>
+            loadCSS('<%- pkg.paths.base.siteUrl %>css/app<%- filenameVersion %>.css');
 
             // remove no-js class for when Javascript is enabled
             document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';

@@ -4,8 +4,10 @@
 import { addClass, log, warn } from './global.js';
 import * as io from 'intersection-observer';
 
+let animations = false;
+
 // UTILITY FUNCTIONS
-function isElementInViewport (el) {
+function isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
 
     return (
@@ -17,49 +19,43 @@ function isElementInViewport (el) {
 }
 
 // CUSTOM FUNCTIONS
-function testFunction(el, rotation = '15') {
-    const currentDegrees = el.hasAttribute('data-rotation-degrees') ? parseFloat(el.getAttribute('data-rotation-degrees')) : '0';
-    const degrees = currentDegrees + parseFloat(rotation);
+function animateHandler(element, watcher = false, onLoad = false) {
+    let reset = false;
 
-    el.style.transform="rotateY(" + degrees + "deg)";
-    el.setAttribute('data-rotation-degrees', degrees);
-}
+    // Call a javascript animation in the animation.js file
+    // EXAMPLE data-lazy-animate="{ "anim": "fade-in", "delay": [0.1, 0.5] }"
+    if (element.getAttribute('data-lazy-animate') !== '' && animations) {
+        let args = JSON.parse(element.getAttribute('data-lazy-animate')) || {};
+        const anim = args.anim || false,
+              el = args.targets ? document.querySelectorAll(args.targets) : args.target ? document.querySelector(args.target) : element;
 
-function animateHandler(element, watcher, animationFunctions, viewportEvent = 'enter') {
-    // call a javascript animation that has been passed into animationFunctions
-    // EXAMPLE data-lazy-animate="introduceElement"
-    if (element.getAttribute('data-lazy-animate') !== '' || element.getAttribute('data-lazy-animate-exit') !== '') {
-        let func, args;
-        switch (viewportEvent) {
-            case 'enter':
-                func = element.getAttribute('data-lazy-animate');
-                args = element.hasAttribute('data-lazy-animate-args') ? JSON.parse(element.getAttribute('data-lazy-animate-args')) : null;
-                break;
-            case 'exit':
-                func = element.getAttribute('data-lazy-animate-exit');
-                args = element.hasAttribute('data-lazy-animate-exit-args') ? JSON.parse(element.getAttribute('data-lazy-animate-exit-args')) : null;
-                break;
+        reset = args.reset || false;
+
+        if (onLoad && (args.staticOnLoad || true)) {
+            args.delay = args.speed = 0;
         }
 
-        if (typeof animationFunctions[func] === "function") {
-            if (args !== null) {
-                requestAnimationFrame(() => animationFunctions[func](element, args));
-            } else {
-                requestAnimationFrame(() => animationFunctions[func](element));
-            }
+        if (anim) {
+            requestAnimationFrame(() => animations.animate(anim, el, args));
+        } else {
+            warn('Animation function not passed in:', anim);
         }
     }
 
-    // in CSS use a class, called 'animated', for CSS transforms and keyframe animations
-    addClass(element, 'animated');
-    if (watcher !== null && !element.hasAttribute('data-lazy-animate-reset')) {
+    // In CSS use a class, called 'c_animate--animated', for CSS transforms and keyframe animations
+    addClass(element, 'c_animate--animated');
+
+    // Turn off observer or leave it on by passing '"reset": true' into args
+    if (!reset) {
         element.removeAttribute('data-lazy-animate');
-        element.removeAttribute('data-lazy-animate-exit');
-        watcher.unobserve(element);
+
+        if (watcher) {
+            watcher.unobserve(element);
+        }
     }
 }
 function loadHandler(element, watcher) {
-    // lazy load images via srcset
+    // Lazy load images via srcset
     // EXAMPLE: data-srcset="/img/FPO.png 1x, /img/FPO@2x.png 2x"
     // REQUIRED `data-srcset` will be swapped to `srcset` attribute
     if (element.hasAttribute('data-srcset')) {
@@ -70,7 +66,7 @@ function loadHandler(element, watcher) {
         log('Lazy srcset', srcset);
     }
 
-    // lazy load videos and audio via src
+    // Lazy load videos and audio via src
     // EXAMPLE: data-src="/video/1.mp4"
     // REQUIRED `data-src` will be swapped to `src` attribute
     if (element.hasAttribute('data-src')) {
@@ -90,18 +86,17 @@ function removeImagePlaceholder(el) {
     el.style.maxWidth = '';
 }
 
-export default class Scene {
+export default class Lazy {
     constructor(args = {}) {
         this.animateMargin = args.animateMargin || '-100px';
         this.animateThreshold = args.animateThreshold || 0;
-        this.animationFunctions = args.animationFunctions || { 'rotateBox': testFunction };
         this.loadMargin = args.loadMargin || '50%';
         this.loadThreshold = args.loadThreshold || 0;
 
         this.createImagePlaceholders();
 
-        // loops through elements with `data-lazy-load` and adds each element to the observer
-        // when the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
+        // Loops through elements with `data-lazy-load` and adds each element to the observer
+        // When the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
         this.loadElements = args.loadElements || document.querySelectorAll('[data-lazy-load]');
         if (this.loadElements.length > 0) {
             this.loadObserver = new IntersectionObserver((entries) => {
@@ -125,28 +120,34 @@ export default class Scene {
             });
         }
 
-        // loops through elements with `data-lazy-load` and adds each element to the observer
-        // when the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
+        // Loops through elements with `data-lazy-load` and adds each element to the observer
+        // When the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
         this.animateElements = args.animateElements || document.querySelectorAll('[data-lazy-animate]');
         if (this.animateElements.length > 0) {
-            this.animateObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    log('Lazy animating element', entry);
-                    if (entry.isIntersecting) {
-                        animateHandler(entry.target, this.animateObserver, this.animationFunctions);
+            import(/* webpackChunkName: "animation" */ './animation.js').then((module) => {
+                animations = module;
+
+                this.animateObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        log('Lazy animating element', entry);
+                        if (entry.isIntersecting) {
+                            animateHandler(entry.target, this.animateObserver);
+                        }
+                    });
+                }, {
+                    rootMargin: this.animateMargin,
+                    threshold: this.animateThreshold,
+                });
+                this.animateElements.forEach(element => {
+                    let args = JSON.parse(element.getAttribute('data-lazy-animate')) || {};
+
+                    if (isElementInViewport(element)) {
+                        animateHandler(element, (args.reset ? this.animateObserver : null), true);
+                    } else {
+                        this.animateObserver.observe(element);
                     }
                 });
-            }, {
-                rootMargin: this.animateMargin,
-                threshold: this.animateThreshold,
-            });
-            this.animateElements.forEach(element => {
-                if (isElementInViewport(element)) {
-                    animateHandler(element, null, this.animationFunctions);
-                } else {
-                    this.animateObserver.observe(element);
-                }
-            });
+            }).catch(error => warn('An error occurred while loading the component'));
         }
     }
     createImagePlaceholders() {
@@ -165,9 +166,9 @@ export default class Scene {
 
         elements.forEach((element) => {
             if (selector) {
-                animateHandler(element, null, this.animationFunctions);
+                animateHandler(element, null, animations);
             } else if (isElementInViewport(element)) {
-                animateHandler(element, this.animateObserver, this.animationFunctions);
+                animateHandler(element, this.animateObserver, animations);
             }
         });
     }

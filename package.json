@@ -89,6 +89,13 @@
           "wrapper"
         ]
       },
+      "animations": {
+        "label": "Animations",
+        "components": [
+          "animate",
+          "@lazy_animations"
+        ]
+      },
       "buttons": {
         "label": "Buttons",
         "components": [

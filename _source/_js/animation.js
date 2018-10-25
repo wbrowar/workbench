@@ -4,12 +4,18 @@
 import { log, warn } from './global.js';
 import { TweenMax, Power1 } from 'gsap/TweenMax';
 
-export function introduceElement(el, args) {
-    const delay = args.delay !== undefined ? (args.delay.constructor === Array ? Math.random() * (args.delay[1] - args.delay[0]) + args.delay[0] : args.delay) : 0;
-    const effect = args.effect || '';
-    const speed = args.speed || 0.5;
+export function animate(animation, el, args) {
+    const delay = args.delay !== undefined ? _randomFromRange(args.delay) : 0,
+          speed = args.speed !== undefined ? _randomFromRange(args.speed) : 0.5;
 
-    switch (effect) {
+    switch (animation) {
+        case 'background-color':
+            TweenMax.to(el, speed, {
+                backgroundColor: args.color || 'transparent',
+                delay: delay,
+                ease: Power1.easeOut,
+            });
+            break;
         case 'fade-in':
             TweenMax.to(el, speed, {
                 delay: delay,
@@ -38,9 +44,15 @@ export function introduceElement(el, args) {
                 },
             });
             break;
+        default:
+            warn('Animation not found in animation.js', animation);
     }
 
-    log('Animation', effect, speed, delay);
+    log('Animation:', animation, args);
+}
+
+function _randomFromRange(arr) {
+    return arr.constructor === Array ? Math.random() * (arr[1] - arr[0]) + arr[0] : arr;
 }
 
 // INIT FUNCTIONS

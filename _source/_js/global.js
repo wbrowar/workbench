@@ -4,7 +4,6 @@
 //  🛣 Functionality in nagivation used accross all pages on the site
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
 
-import * as animation from './animation.js';
 import Lazy from './lazy.js';
 
 // UTILITY FUNCTIONS
@@ -113,19 +112,18 @@ function sliderLoaded(el, args) {
 // SETUP FUNCTIONS
 export function setupEnhancements() {
     if (typeof QueryString.enhanced === 'undefined') {
-        const lazyConfig = {
-            animationFunctions: {
-                'introduceElement': animation.introduceElement,
-                'sliderLoaded': sliderLoaded,
-            },
-            container: '#page',
-        };
         ready(function() {
             // add class to html element for styling purposes
             addClass(document.documentElement, 'enhanced');
 
             // lazy load images and media
-            window.lazy = new Lazy(lazyConfig);
+            window.lazy = new Lazy({
+                // animationFunctions: {
+                //     'introduceElement': animation.introduceElement,
+                //     'sliderLoaded': sliderLoaded,
+                // },
+                container: '#page',
+            });
         });
     }
 }

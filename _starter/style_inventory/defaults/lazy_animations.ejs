@@ -1,0 +1,82 @@
+<% let intro = `
+    <h2 class="c_header c_header--2">Lazy Animations</h2>
+    <p>Animations and functions that fire when an element is brought into the viewport.</p>
+    <p>By default, adding the 'data-lazy-animate' attribute to an element will add a class, 'c_animate--animated', to an element when that element enters the viewport.<br>CSS can be used to change the appearance of the element; or fire a CSS animation or transition.</p>
+    <p>By passing a JSON object into 'data-lazy-animate', a Javascript function can also be fired when the element enters the viewport. Animations can be added and edited in the 'animation.js' file.</p>
+` %>
+<%- include(paths.starter.styleInventory + '_intro.ejs', { text: intro }) %>
+
+<% let component = {
+    title: "GSAP Fade",
+    description: "Fade an element into our out of view when entering the viewport.",
+    background: "light",
+    demo: {
+        code:
+                `<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex" data-lazy-animate='{ "anim": "fade-in", "delay": [0.1, 0.5] }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate='{ "anim": "fade-out", "delay": [0.5, 0.9] }' v-cloak>Content</div>
+</div>`
+    },
+    html: {
+        code:
+                `<div data-lazy-animate='{ "anim": "fade-in", "delay": [0.1, 0.5] }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate='{ "anim": "fade-out", "delay": [0.5, 0.9] }' v-cloak>Content</div>`,
+        options: [
+            { name: 'anim', required: true, type: 'string', description: `The name of the animation fired when the element enters the viewport.` },
+            { name: 'delay', required: false, type: 'number or array', default: "0", description: `Specify the delay that occurs between the element entering the viewport and the beginning of the animation. Only Applicable to animations that use GSAP.` },
+            { name: 'reset', required: false, type: 'boolean', default: "false", description: `Determines if an animation will reset and re-fire when the element leaves then returns into the viewport.` },
+            { name: 'speed', required: false, type: 'number or array', default: "0.5", description: `The duration of the animation.` },
+            { name: 'staticOnLoad', required: false, type: 'boolean', default: "true", description: `Kills the animation if the element is already in the viewport upon load. If combined with 'reset', this will be ignored.` },
+            { name: 'target', required: false, type: 'string', description: `A CSS Selector that the animation is performed on instead of the watched element.` },
+            { name: 'targets', required: false, type: 'string', description: `Works the same way as the 'target' option, but allows selection of multiple elements.` },
+        ]
+    }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component }) %>
+
+<% component = {
+    title: "GSAP Slide In",
+    description: "Fade and slide an element into view.",
+    background: "light",
+    demo: {
+        code:
+                `<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex" data-lazy-animate='{ "anim": "slide-in", "delay": 0, "x": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate='{ "anim": "slide-in", "delay": 0.2, "y": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate='{ "anim": "slide-in", "delay": 0.4, "x": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+  <div class="styles__box styles__box--flex" data-lazy-animate='{ "anim": "slide-in", "delay": 0.6, "y": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+</div>`
+    },
+    html: {
+        code:
+                `<div data-lazy-animate='{ "anim": "slide-in", "delay": 0, "x": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate='{ "anim": "slide-in", "delay": 0.2, "y": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate='{ "anim": "slide-in", "delay": 0.4, "x": 100 }' :style="{ opacity: 0 }" v-cloak>Content</div>
+<div data-lazy-animate='{ "anim": "slide-in", "delay": 0.6, "y": -100 }' :style="{ opacity: 0 }" v-cloak>Content</div>`,
+        options: [
+            { name: 'opacity', required: false, type: 'number', default: "0", description: `The starting opacity of the element.` },
+            { name: 'x', required: false, type: 'number', default: "0", description: `The starting X coordinate of the element.` },
+            { name: 'y', required: false, type: 'number', default: "0", description: `The starting Y coordinate of the element.` },
+        ]
+    }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component }) %>
+
+<% component = {
+    title: "Targeted Animation (GSAP)",
+    description: "Adding the 'target' or 'targets' options allows you to perform an animation on a different element.",
+    background: "light",
+    demo: {
+        code:
+                `<div class="styles__box_wrapper">
+  <div class="styles__box styles__box--flex" data-lazy-animate='{ "anim": "background-color", "target": "#animation_target", "delay": 0, "color": "rgba(40, 0, 255, .5)" }'>Trigger</div>
+  <div class="styles__box styles__box--flex" id="animation_target">Target</div>
+</div>`
+    },
+    html: {
+        code:
+                `<div data-lazy-animate='{ "anim": "background-color", "target": "#animation_target", "delay": 0, "color": "rgba(40, 0, 255, .5)" }'>Trigger</div>
+<div id="animation_target">Target</div>`,
+    }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component }) %>

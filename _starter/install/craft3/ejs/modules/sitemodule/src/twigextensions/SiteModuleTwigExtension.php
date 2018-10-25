@@ -131,7 +131,7 @@ class SiteModuleTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderHtmlAttributes(array $attrs):string
+    public function renderHtmlAttributes(array $attrs)
     {
         // Ported from https://github.com/timkelty/htmlattributes-craft
         $str = trim(implode(' ', array_map(function($attrName) use ($attrs) {
