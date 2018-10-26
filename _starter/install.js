@@ -64,6 +64,7 @@ async function run() {
     let componentOptions = [];
     componentDirectories.forEach((item) => {
         const defaultComponents = [
+            'animate',
             'button',
             'buttons',
             'grid',
