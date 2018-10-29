@@ -96,6 +96,7 @@ new Vue({
     data: vueData,
     components: {
         // 'confetti': () => import(/* webpackChunkName: "confetti" */ '../vue/Confetti.vue'),
+        //Navigation
     },
     created: function () {
         // Hide overlay and remove content
