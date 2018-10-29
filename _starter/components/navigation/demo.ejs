@@ -1,0 +1,48 @@
+<% let component = {
+  title: "Success Alert Message",
+  description: "Default style for a success message—letting the user know the intended action occurred.",
+  background: "light",
+  html: {
+    code: `<div class="c_message c_message--success">Congrats! This was successful!</div>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{{ component.c('message', { message: 'Congrats! This was successful!' }) }}`,
+    options: [
+      { "name": 'level', "required": false, "type": 'string', "default": `'success'`, "description": `Indicates style of message by adding modifiers. Accepts: success, warning, and error.` },
+      { "name": 'message', "required": true, "type": 'string', "description": `Content of the message.` },
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+
+<% component = {
+  title: "Error Alert Message",
+  description: "Default style for an error message—letting the user know the intended action failed, providing them with instructions on how to proceed.",
+  background: "light",
+  html: {
+    code: `<div class="c_message c_message--error">I&rsquo;m sorry, Dave. I&rsquo;m afraid I can&rsquo;t do that.</div>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{{ component.c('message', { level: 'error', message: 'I&rsquo;m sorry, Dave. I&rsquo;m afraid I can&rsquo;t do that.' }) }}`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
+
+<% component = {
+  title: "Warning Alert Message",
+  description: "Default style for an warning message—should be used when an intended action can succeed, but it is not optimized.",
+  background: "light",
+  html: {
+    code: `<div class="c_message c_message--warning">Houston we have a problem ...</div>`
+  },
+  twig: {
+    code:
+`{% import 'macros/component.twig' as component %}
+{{ component.c('message', { level: 'warning', message: 'Houston we have a problem ...' }) }}`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
