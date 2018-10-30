@@ -18,7 +18,7 @@
                             {{ firstLvlItem.label }}
                             <span v-if="firstLvlItem.children" aria-hidden="true">&#x25BC;</span>
             </component>
-            <!--<ul :hidden="firstLvlItem.children ? (firstLvlItem.itemId === currentItemId ? false : true) : true" v-if="firstLvlItem.children">
+            <ul :hidden="firstLvlItem.children ? (firstLvlItem.itemId === currentItemId ? false : true) : true" v-if="firstLvlItem.children">
                 <li v-for="(secondLvlItem, secondLvlIndex) in firstLvlItem.children">
                     <component :is="secondLvlItem.href && !secondLvlItem.children ? 'a' : 'button'"
                                @click="$parent.childNavToggleSubNav({itemId: firstLvlItem.itemId, childItemId: secondLvlItem.itemId, event: $event})"
@@ -53,7 +53,7 @@
                         </li>
                     </ul>
                 </li>
-            </ul>-->
+            </ul>
         </li>
     </ul>
 </template>
