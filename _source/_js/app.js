@@ -2,7 +2,8 @@
 //  🏡 Custom Javascript used for UI and other functionality
 
 import Vue from 'vue';
-//import Navigation from './components/Navigation.vue';
+// import Navigation from './components/Navigation.vue';
+// import ScrollUpdater from './components/ScrollUpdater.vue';
 import { gaTrack, log, warn, setupEnhancements, addClass, hasClass, removeClass } from './global.js';
 
 // VARIABLES
@@ -95,8 +96,8 @@ new Vue({
     el: '#page',
     data: vueData,
     components: {
-        // 'confetti': () => import(/* webpackChunkName: "confetti" */ '../vue/Confetti.vue'),
-        //Navigation
+        //Navigation,
+        //ScrollUpdater,
     },
     created: function () {
         // Hide overlay and remove content

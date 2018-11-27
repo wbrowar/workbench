@@ -1,0 +1,20 @@
+<% let component = {
+  title: "Scroll Updater",
+  description: "A new component.",
+  background: "light",
+  html: {
+      code:
+  `<scroll-updater :scroll-y="scrollY">
+      <div style="transform: translateX(calc(var(--scroll-y-offset) * 0.09px)) translateY(calc(var(--scroll-y-offset) * -0.1px));">🚀</div>
+      <div style="transform: translateX(calc(var(--scroll-y-offset) * 0.09px)); opacity: calc(var(--scroll-y) * 0.0004); filter: blur(calc(var(--scroll-y-offset) * 0.006px));">🕳</div>
+  </scroll-updater>
+  <scroll-updater :scroll-y="scrollY" :keyframes='[{ "handle": "ufo-x", "frames": { 1: 0, 10: 10, 50: 30, 70: 5, 80: -2, 90: 20 } }, { "handle": "ufo-y", "frames": { 1: 0, 50: 10, 80: 5, 100: 10 } }]'>
+      <div style="transform: translateX(calc(var(--ufo-x, 0) * 7px)) translateY(calc(var(--ufo-y, 0) * -8px)); transition: transform .5s ease-in-out;">🛸</div>
+  </scroll-updater>`,
+      options: [
+          { "name": 'detection-offset-y', "required": false, "type": 'number', "default": '100', "description": `Defines a buffer above and below the component element that determines when the animations start or stop.` },
+          { "name": 'scroll-y', "required": true, "type": 'number', "description": `An offset` }
+    ]
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

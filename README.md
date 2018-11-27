@@ -245,15 +245,14 @@ To use Lazy Loading for better loading performance, add the `data-lazy-load` att
 | `data-width` | `2048` | Setting both `data-width` and `data-height` on an element will add inline styles to the element that allow it to proportionately take up as much room as an image would in that space. This can be used for placeholder images styled in CSS. |
 | `data-height` | `2048` |  |
 
-#### On-scroll Animations
-When used with no value, `data-lazy-animate` simply adds the class `animated` to an element. In your CSS, a transition or CSS animation can fire when `animated` is added. You can also register a function that can be fired by setting the name of the function to the value of `data-lazy-animate`.
+#### Lazy Animations
+When used with no value, `data-lazy-animate` simply adds the class `c_animate--animated` to an element. In your CSS, a transition or CSS animation can fire when `c_animate--animated` is added.
 
-| Attribute | Example Value | Description |
-| --- | --- | --- |
-| `data-lazy-animate` | **NONE** or `myFunction` | When the user scrolls to the element, a function registered in `config.animationFunctions` (see example above), will be fired. |
-| `data-lazy-animate-args` | `{ "id": 23, "option": "value" }` | Arguments that will be passed into the function registered in `data-lazy-animate` as an object. |
-| `data-lazy-animate-delay` | `500` | Uses `setTimeOut()` to delay the firing of a function set in `data-lazy-animate`. |
-| `data-lazy-animate-reset` | **NONE** | Add this attribute to allow a JS animation to continue firing as the element re-enters the viewport. |
+You can also configure a function that can be fired when the element is scrolled into the viewport by setting the value of `data-lazy-animate` to a JSON object. The JSON object uses animations defined in `_source/_js/animation.js`—which can be edited as needed. Greensock can be used to animate the object, however, any Javascript code added to `animations.js` can be fired and arbitrary arguments may be passed into your code.
+
+Because Greensock is a decent sized library, `animation.js` is only loaded when it is needed, reducing overhead when it is not required.
+
+See the "Lazy Animations" section in the `animate` component for a full list of accepted JSON arguments.
 
 ### scrollto.js
 Include `scrollto.js` into a JS document and call the default, `scrollto()` function to init.

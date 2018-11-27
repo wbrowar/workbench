@@ -93,6 +93,7 @@
         "label": "Animations",
         "components": [
           "animate",
+          "scroll_updater",
           "@lazy_animations"
         ]
       },
