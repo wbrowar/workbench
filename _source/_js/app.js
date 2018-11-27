@@ -31,7 +31,9 @@ vueMethods['resizeHandler'] = function () {
 // Detect scroll
 vueData['scrollY'] = false;
 vueMethods['scrollHandler'] = function () {
-    this.scrollY = window.scrollY;
+    window.requestAnimationFrame(() => {
+        this.scrollY = window.scrollY;
+    });
 };
 
 // Display overlay
