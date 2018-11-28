@@ -9,30 +9,30 @@
 return [
     // Global settings
     '*' => [
+        'aliases' => [
+            '@basePath' => realpath(dirname(__FILE__)) . getenv('BASE_PATH'),
+            '@baseUrl' => getenv('BASE_URL'),
+        ],
         'cacheDuration' => false,
         'cpTrigger' => '<%- install.cpTrigger %>',
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
         ),
+        'enableStyleInventory' => getenv('STYLE_INVENTORY') ?: false,
         'enableCsrfProtection' => true,
         'generateTransformsBeforePageLoad' => true,
         'omitScriptNameInUrls' => true,
-        'securityKey' => getenv('CRAFTENV_SECURITY_KEY'),
-        'siteUrl' => getenv('CRAFTENV_SITE_URL'),
+        'securityKey' => getenv('SECURITY_KEY'),
+        'siteUrl' => getenv('SITE_URL'),
         'usePathInfo' => true,
-        'aliases' => [
-            '@basePath' => getenv('CRAFTENV_BASE_PATH'),
-            '@baseUrl' => getenv('CRAFTENV_BASE_URL'),
-        ],
-        'custom' => [
-            'craftEnv' => CRAFT_ENVIRONMENT,
-        ]
+        'useProjectConfigFile' => true,
     ],
 
-    // Live (production) environment
-    'live' => [
+    // Production (live) environment
+    'production' => [
         // Craft defined config settings
+        'allowAdminChanges' => false,
         'allowUpdates' => false,
         'backupOnUpdate' => false,
         'devMode' => false,
@@ -42,6 +42,7 @@ return [
     // Staging (pre-production) environment
     'staging' => [
         // Craft defined config settings
+        'allowAdminChanges' => false,
         'allowUpdates' => false,
         'backupOnUpdate' => false,
         'devMode' => false,
@@ -53,6 +54,7 @@ return [
     // Local (development) environment
     'dev' => [
         // Craft defined config settings
+        'allowAdminChanges' => true,
         'allowUpdates' => true,
         'backupOnUpdate' => true,
         'devMode' => true,

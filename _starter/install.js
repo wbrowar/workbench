@@ -349,9 +349,9 @@ async function run() {
 
         if (['craft3'].includes(answers.projectType)) {
             log('title', 'Setting Up Craft Scripts');
-            verboseExec(`cp example.env.php .env.php`, verbose);
-            log('verbose', `.env.php created from example`, verbose);
-            verboseExec(`cp scripts/craft3-example.env.sh scripts/.env.sh`, verbose);
+            verboseExec(`mv example.env .env`, verbose);
+            log('verbose', `.env created from example`, verbose);
+            verboseExec(`mv scripts/craft3-example.env.sh scripts/.env.sh`, verbose);
             log('verbose', `.env.sh created from example`, verbose);
 
             log('title', 'Running Composer Update');

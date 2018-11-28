@@ -34,17 +34,5 @@ return [
             'path' => '@basePath/guide',
             'url' => '@baseUrl/guide',
         ],
-    ],
-
-    // Live (production) environment
-    'live'  => [
-    ],
-
-    // Staging (pre-production) environment
-    'staging'  => [
-    ],
-
-    // Local (development) environment
-    'dev'  => [
-    ],
+    ]
 ];

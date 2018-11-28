@@ -7,8 +7,8 @@ return [
         'cachingEnabled' => true,
     ],
 
-    // Live (production) environment
-    'live'  => [
+    // Production (live) environment
+    'production' => [
         'cachingEnabled' => true,
     ],
 
