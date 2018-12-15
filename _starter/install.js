@@ -98,7 +98,7 @@ async function run() {
                 return handle || false;
             },
             when: (answers) => {
-                return !handle && ['craftplugin'].includes(answers.projectType);
+                return ['craftplugin'].includes(answers.projectType);
             },
             validate: (answer) => {
                 return answer !== '';
@@ -110,7 +110,7 @@ async function run() {
             message: 'Client code',
             default: 'wb',
             when: (answers) => {
-                return !answers.handle && !['craftplugin'].includes(answers.projectType);
+                return !answers.handle;
             },
             validate: (answer) => {
                 return answer !== '';
@@ -122,7 +122,7 @@ async function run() {
             message: 'Project name (machine readable)',
             default: 'test',
             when: (answers) => {
-                return !answers.handle && !['craftplugin'].includes(answers.projectType);
+                return !answers.handle;
             },
             validate: (answer) => {
                 return answer !== '';
@@ -133,7 +133,7 @@ async function run() {
             name: 'localUrl',
             message: `Local Dev URL${ ['craftplugin'].includes(answers.projectType) ? ' (local plugin test URL)' : '' }`,
             default: (answers) => {
-                const url = handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
+                const url = answers.handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
                 return `http://${ url }.test/`;
             },
         },
@@ -271,7 +271,9 @@ async function run() {
 
         ejsVars['install'] = answers;
 
-        if (answers.clientCode && answers.projectName) {
+        if (answers.handle) {
+            ejsVars.handle = answers.handle;
+        } else if (answers.clientCode && answers.projectName) {
             handle = answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
             ejsVars.handle = handle;
         }
