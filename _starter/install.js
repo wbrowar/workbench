@@ -272,10 +272,9 @@ async function run() {
         ejsVars['install'] = answers;
 
         if (answers.handle) {
-            ejsVars.handle = answers.handle;
+            handle = ejsVars.handle = answers.handle;
         } else if (answers.clientCode && answers.projectName) {
-            handle = answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
-            ejsVars.handle = handle;
+            handle = ejsVars.handle = answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
         }
 
         const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ answers.projectType }/`,
@@ -408,10 +407,10 @@ async function run() {
         } else if (answers.projectType === 'craftplugin') {
             pkg.paths.base.dist = 'development/';
             pkg.paths.base.release = 'release/';
-            pkg.paths.css.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/css/`;
-            pkg.paths.icon.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/icon/`;
-            pkg.paths.img.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/img/`;
-            pkg.paths.js.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/js/`;
+            pkg.paths.css.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/css/`;
+            pkg.paths.icon.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/icon/`;
+            pkg.paths.img.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/img/`;
+            pkg.paths.js.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/js/`;
             pkg.paths.templates.dist = `src/templates/`;
             pkg.projectTemplateLanguage = 'twig';
             pkg.projectType = 'craftplugin';
