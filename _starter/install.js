@@ -80,12 +80,37 @@ async function run() {
 
     const questions = [
         {
+            type: 'list',
+            name: 'projectType',
+            message: 'What kind of project are you building?',
+            choices: [
+                { name: 'Craft 3', value: 'craft3' },
+                { name: 'HTML', value: 'html' },
+                { name: 'Craft Plugin', value: 'craftplugin' },
+            ],
+        },
+        {
+            type: 'input',
+            name: 'handle',
+            message: 'Handle',
+            default: 'my-plugin',
+            default: () => {
+                return handle || false;
+            },
+            when: (answers) => {
+                return !handle && ['craftplugin'].includes(answers.projectType);
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
+        },
+        {
             type: 'input',
             name: 'clientCode',
             message: 'Client code',
             default: 'wb',
-            when: () => {
-                return !handle;
+            when: (answers) => {
+                return !answers.handle && !['craftplugin'].includes(answers.projectType);
             },
             validate: (answer) => {
                 return answer !== '';
@@ -96,8 +121,8 @@ async function run() {
             name: 'projectName',
             message: 'Project name (machine readable)',
             default: 'test',
-            when: () => {
-                return !handle;
+            when: (answers) => {
+                return !answers.handle && !['craftplugin'].includes(answers.projectType);
             },
             validate: (answer) => {
                 return answer !== '';
@@ -106,21 +131,11 @@ async function run() {
         {
             type: 'input',
             name: 'localUrl',
-            message: 'Local Dev URL',
+            message: `Local Dev URL${ ['craftplugin'].includes(answers.projectType) ? ' (local plugin test URL)' : '' }`,
             default: (answers) => {
                 const url = handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
                 return `http://${ url }.test/`;
             },
-        },
-        {
-            type: 'list',
-            name: 'projectType',
-            message: 'What kind of project are you building?',
-            choices: [
-                { name: 'Craft 3', value: 'craft3' },
-                { name: 'HTML', value: 'html' },
-                { name: 'Craft Plugin', value: 'craftplugin' },
-            ],
         },
         {
             type: 'input',

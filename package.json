@@ -11,7 +11,7 @@
   },
   "browserSync": {
     "browser": "google chrome",
-    "url": "http://starter.test/"
+    "url": "CHANGE_ME"
   },
   "colors": {
     "white": "rgb(255, 255, 255)",
