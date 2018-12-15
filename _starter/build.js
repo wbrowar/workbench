@@ -1007,6 +1007,7 @@ function getPaths(paths) {
             backups: process.cwd() + '/_starter/backups/',
             build: process.cwd() + paths.base.build,
             components: process.cwd() + '/_starter/components/',
+            release: process.cwd() + paths.base.release,
             templates: process.cwd() + '/_starter/templates/',
             styleInventory: process.cwd() + '/_starter/style_inventory/',
         }

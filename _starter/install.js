@@ -119,6 +119,7 @@ async function run() {
             choices: [
                 { name: 'Craft 3', value: 'craft3' },
                 { name: 'HTML', value: 'html' },
+                { name: 'Craft Plugin', value: 'craftplugin' },
             ],
         },
         {
@@ -387,6 +388,17 @@ async function run() {
         } else if (answers.projectType === 'html') {
             pkg.projectTemplateLanguage = 'ejs';
             pkg.projectType = 'html';
+        } else if (answers.projectType === 'craftplugin') {
+            pkg.paths.base.dist = 'development/';
+            pkg.paths.base.release = 'release/';
+            pkg.paths.css.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/css/`;
+            pkg.paths.icon.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/icon/`;
+            pkg.paths.img.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/img/`;
+            pkg.paths.js.dist = `⁨src/⁨assetbundles/⁨${ handle }/⁨dist⁩/js/`;
+            pkg.paths.templates.dist = `src/templates/`;
+            pkg.projectTemplateLanguage = 'twig';
+            pkg.projectType = 'craftplugin';
+            pkg.styleInventory.enabled = false;
         }
 
         const editPkgComponents = asyncFunction(
