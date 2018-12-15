@@ -153,6 +153,9 @@ async function run() {
             type: 'confirm',
             name: 'setupDb',
             message: 'Setup Database?',
+            when: (answers) => {
+                return !['craftplugin'].includes(answers.projectType);
+            },
         },
         {
             type: 'input',
@@ -206,6 +209,20 @@ async function run() {
             type: 'confirm',
             name: 'setupRepo',
             message: 'Setup GitHub repo?',
+        },
+        {
+            type: 'input',
+            name: 'gitRepo',
+            message: 'Local Dev URL',
+            default: (answers) => {
+                return answers.handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
+            },
+            when: (answers) => {
+                return answers.setupRepo;
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
         },
         {
             type: 'input',
@@ -456,7 +473,7 @@ async function run() {
             log('title', 'Setting up GitHub repo');
             const gitHubEndPoint = answers.gitOrg || false ? `https://api.github.com/orgs/${answers.gitOrg}/repos` : `https://api.github.com/user/repos`;
 
-            verboseExec(`curl -X POST -u ${ answers.gitUser }:${ answers.gitPass } -H "Content-Type: application/json" -d '{ "name": "${ handle }", "private": ${ answers.gitPrivate ? "true" : "false" } }' ${gitHubEndPoint}`, verbose);
+            verboseExec(`curl -X POST -u ${ answers.gitUser }:${ answers.gitPass } -H "Content-Type: application/json" -d '{ "name": "${ answers.gitRepo }", "private": ${ answers.gitPrivate ? "true" : "false" } }' ${gitHubEndPoint}`, verbose);
             log('verbose', `Created ${ answers.gitOrg ? answers.gitOrg : answers.gitUser }/${ handle } repo on GitHub`, verbose);
             verboseExec(`git init`, verbose);
             log('verbose', `ran git init`, verbose);
