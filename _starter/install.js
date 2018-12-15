@@ -131,7 +131,7 @@ async function run() {
         {
             type: 'input',
             name: 'localUrl',
-            message: `Local Dev URL${ ['craftplugin'].includes(answers.projectType) ? ' (local plugin test URL)' : '' }`,
+            message: 'Local Dev URL',
             default: (answers) => {
                 const url = answers.handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
                 return `http://${ url }.test/`;
