@@ -429,6 +429,7 @@ async function run() {
             pkg.paths.img.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/img/`;
             pkg.paths.js.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/js/`;
             pkg.paths.templates.dist = `src/templates/`;
+            pkg.postcss = [];
             pkg.projectTemplateLanguage = 'twig';
             pkg.projectType = 'craftplugin';
             pkg.styleInventory.enabled = false;
