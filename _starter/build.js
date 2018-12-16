@@ -1,24 +1,24 @@
 // import node modules
 const autoprefixer = require('autoprefixer'),
-      browserSync = require('browser-sync').create(),
-      critical = require('critical'),
-      chalk = require('chalk'),
-      exec = require('child_process'),
-      ejs = require('ejs'),
-      favicons = require('favicons'),
-      fs = require('fs-extra'),
-      glob = require('glob-all'),
-      inquirer = require('inquirer'),
-      mqpacker = require("css-mqpacker"),
-      notifier = require('node-notifier'),
-      path = require('path'),
-      postcss = require('postcss'),
-      purify = require('purify-css'),
-      sass = require('node-sass'),
-      sassGlobImporter = require('node-sass-glob-importer'),
-      sharp = require('sharp'),
-      semver = require('semver'),
-      webpack = require('webpack');
+    browserSync = require('browser-sync').create(),
+    critical = require('critical'),
+    chalk = require('chalk'),
+    exec = require('child_process'),
+    ejs = require('ejs'),
+    favicons = require('favicons'),
+    fs = require('fs-extra'),
+    glob = require('glob-all'),
+    inquirer = require('inquirer'),
+    mqpacker = require("css-mqpacker"),
+    notifier = require('node-notifier'),
+    path = require('path'),
+    postcss = require('postcss'),
+    purify = require('purify-css'),
+    sass = require('node-sass'),
+    sassGlobImporter = require('node-sass-glob-importer'),
+    sharp = require('sharp'),
+    semver = require('semver'),
+    webpack = require('webpack');
 
 // HELLO
 log('app', `Beginning`);
@@ -28,16 +28,16 @@ let pkg = require(`${ process.cwd() }/package.json`);
 
 // set constants
 const argv = parseArgv(),
-      env = process.env.NODE_ENV || 'development',
-      release = env === 'production',
-      timestamp = Math.floor(new Date().getTime() / 1000);
+    env = process.env.NODE_ENV || 'development',
+    release = env === 'production',
+    timestamp = Math.floor(new Date().getTime() / 1000);
 
 // use CLI arguments to set variables
 const enableImg  = argv.options.noimg ? false : true,
-      runBuild   = argv.options.build || false,
-      runPublish = argv.options.publish || false,
-      runWatch   = argv.options.watch || false,
-      verbose    = pkg.verboseOverride || argv.options.verbose || false;
+    runBuild   = argv.options.build || false,
+    runPublish = argv.options.publish || false,
+    runWatch   = argv.options.watch || false,
+    verbose    = pkg.overrideVerbose || argv.options.verbose || false;
 
 // set variables based on pkg options
 let paths = getPaths(pkg.paths),
@@ -578,11 +578,11 @@ async function compileIcon() {
             if (count > 0) {
                 files.forEach((item) => {
                     fs.copy(item, item.replace(paths.icon.src, paths.icon.dist)).then(() => {
-                            count--;
-                            if (count === 0) {
-                                resolve();
-                            }
-                        });
+                        count--;
+                        if (count === 0) {
+                            resolve();
+                        }
+                    });
                 });
             } else {
                 resolve();
@@ -620,8 +620,8 @@ async function compileImg() {
             log('verbose', `Resizing: ${ image }`, verbose);
             const resize = size => {
                 const resizedImage = sharp(image).resize(size);
-                    resizedImage.toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }-${ size + path.extname(image) }`);
-                    resizedImage.toFormat(sharp.format.webp).toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }-${ size }.webp`);
+                resizedImage.toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }-${ size + path.extname(image) }`);
+                resizedImage.toFormat(sharp.format.webp).toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }-${ size }.webp`);
             };
 
             Promise.all(options.sizes.map(resize))
@@ -772,19 +772,19 @@ async function postCss() {
                             browsers: pkg.browserlist.autoprefix
                         })
                     ])
-                    .process(purifiedCss)
-                    .then(result => {
-                        fs.outputFile(`${ paths.css.dist + item + filenameVersion('.') }.css`, result.css, (err) => {
-                            if (err) {
-                                log('warn', err, verbose);
-                            }
-                            log('verbose', `POST CSS ran: ${ item }`, verbose);
-                            count--;
-                            if (count === 0) {
-                                resolve();
-                            }
-                        });
-                    })
+                        .process(purifiedCss)
+                        .then(result => {
+                            fs.outputFile(`${ paths.css.dist + item + filenameVersion('.') }.css`, result.css, (err) => {
+                                if (err) {
+                                    log('warn', err, verbose);
+                                }
+                                log('verbose', `POST CSS ran: ${ item }`, verbose);
+                                count--;
+                                if (count === 0) {
+                                    resolve();
+                                }
+                            });
+                        })
                 })
             });
         } else {
@@ -1016,7 +1016,7 @@ function getPaths(paths) {
 
 // get version number based on build environment
 function getVersion(version) {
-    return release ? version : null;
+    return release ? version : pkg.overrideVersion || null;
 }
 
 // display a message in the command line

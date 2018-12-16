@@ -241,7 +241,8 @@
   "projectTemplateLanguage": "ejs",
   "projectType": "html",
   "templateExtensions": "html,twig,php,json,csv,css,js",
-  "verboseOverride": false,
+  "overrideVerbose": false,
+  "overrideVersion": false,
   "dependencies": {
     "axios": "^0.18.0",
     "cleave.js": "^1.4.4",
