@@ -424,10 +424,10 @@ async function run() {
         } else if (answers.projectType === 'craftplugin') {
             pkg.paths.base.dist = 'development/';
             pkg.paths.base.release = 'release/';
-            pkg.paths.css.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/css/`;
-            pkg.paths.icon.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/icon/`;
-            pkg.paths.img.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/img/`;
-            pkg.paths.js.dist = `src/⁨assetbundles/⁨${ handle }/⁨dist⁩/js/`;
+            pkg.paths.css.dist = `src/assetbundles/${ handle }/dist⁩/css/`;
+            pkg.paths.icon.dist = `src/assetbundles/${ handle }/dist⁩/icon/`;
+            pkg.paths.img.dist = `src/assetbundles/${ handle }/dist⁩/img/`;
+            pkg.paths.js.dist = `src/assetbundles/${ handle }/dist⁩/js/`;
             pkg.paths.templates.dist = `src/templates/`;
             pkg.postcss = [];
             pkg.projectTemplateLanguage = 'twig';
