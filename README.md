@@ -315,6 +315,35 @@ scrollToElement(el);
     - The `ejs` object in `package.json` gives you a convenient place to store EJS variables, however, any variable defined in `package.json` is accessible.
     - To use variables stored in `package.json`, use `pkg` then the variable name. For example, to print out the site URL path, use `<%- pkg.paths.base.siteUrl %>`
 
+---
+## Using Best Practices for Craft Plugin Project
+By default, this workflow is capable of compiling assets for a Craft Plugin, however, some of the default naming conventions and compiling options do not follow plugin best practices. Here are some adjustments you can make:
+
+*NOTE: anytime `HANDLE` is referenced, replace it with the plugin handle.*
+
+- Rename `_source/_css/app.scss` to `HANDLE.scss`.
+- In `_source/_css/HANDLE.scss`, comment or delete the line that includes `lib/_reset`.
+- In the `_source/_components` folder, do a find and replace from `c_` to `HANDLE_`.
+- Rename `_source/_js/app.js` to `HANDLE.js`.
+- Namespace the `VueEvent` variable by find and replace within the `_source/` folder.
+  - Do the find and replace again in `_starter/components`.
+- Namespace the `jsDevMode` variable by find and replace within the `_source/` folder.
+  - Do the find and replace again in `_starter/components`.
+- In `_source/_js/HANDLE.js`, do the following:
+  - Comment out the entire root Vue block.
+    - In Craft‘s CP, you'll want to create several Vue instances.
+- In `_source/_js/global.js`, do the following:
+  - Remove the import for `lazy.js`.
+  - Remove the `setupEnhancements()` function.
+- Add this chunk to your main plugin class (combine if necessary), and replace `jsDevMode` with your namespaced version:
+```php
+if (Craft::$app->getView()->getTemplateMode() === View::TEMPLATE_MODE_CP) {
+    Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function() {
+        Craft::$app->getView()->registerJs('window.jsDevMode = window.jsDevMode || ' . (Craft::$app->getConfig()->getGeneral()->devMode ? 'true' : 'false') . ';', 1);
+    });
+}
+```
+
 
 ---
 ## Release Notes

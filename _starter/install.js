@@ -422,6 +422,8 @@ async function run() {
             pkg.projectTemplateLanguage = 'ejs';
             pkg.projectType = 'html';
         } else if (answers.projectType === 'craftplugin') {
+            pkg.favicon.enabled = false;
+            pkg.overrideVersion = "1.0.0";
             pkg.paths.base.dist = 'development/';
             pkg.paths.base.release = 'release/';
             pkg.paths.css.dist = `src/assetbundles/${ handle }/dist/css/`;

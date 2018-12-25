@@ -83,8 +83,8 @@ async function run() {
                 const publishQuestions = [
                     {
                         type: 'confirm',
-                        name: 'enableTag',
-                        message: 'Tag commit for release?',
+                        name: 'commitRelease',
+                        message: 'Commit and push release?',
                         default: false,
                     },
                     {
@@ -97,19 +97,16 @@ async function run() {
                         validate: (answer) => {
                             return answer !== '';
                         },
+                        when: (answers) => {
+                            return answers.commitRelease;
+                        },
                     },
                     {
                         type: 'input',
                         name: 'tag',
                         message: 'Release tag',
-                        default: (answers) => {
-                            return version;
-                        },
-                        validate: (answer) => {
-                            return answer !== '';
-                        },
                         when: (answers) => {
-                            return answers.enableTag;
+                            return answers.commitRelease;
                         },
                     },
                 ];
@@ -132,7 +129,7 @@ async function run() {
         const buildCleanAll                      = clean();
         let buildCleanComplete                   = await buildCleanAll;
 
-        if (release) {
+        if (release && pkg.favicon.enabled) {
             const buildCompileFavicon            = compileFavicon();
             let buildCompileFaviconComplete      = await buildCompileFavicon;
         }
@@ -162,8 +159,10 @@ async function run() {
         let buildCompileTemplatesComplete        = await buildCompileTemplates;
 
         if (release) {
-            const buildPostCss                   = postCss();
-            let buildPostCssComplete             = await buildPostCss;
+            if (pkg.postcss.length > 0) {
+                const buildPostCss                   = postCss();
+                let buildPostCssComplete             = await buildPostCss;
+            }
 
             const buildCritcss                   = critCss();
             let buildCritcssComplete             = await buildCritcss;
@@ -182,13 +181,67 @@ async function run() {
     if (runPublish) {
         log('title', `Running Publish`);
 
-        verboseExec(`git pull`, verbose);
-        verboseExec(`git status`, verbose);
-        verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
+        if (fs.existsSync(paths.starter.release)) {
+            const removeReleaseFiles = asyncFunction(
+                `Removing Old Release Files`, `Old Release Files Removed`, (resolve) => {
+                    const globFiles = [
+                        `${ paths.starter.release }**/*`,
+                        `!${ paths.starter.release }.git`,
+                        `!${ paths.starter.release }.git/**/*`,
+                    ];
+                    glob(globFiles, { dot: false }, function (er, files) {
+                        let count = files.length;
+                        if (count > 0) {
+                            files.forEach((item) => {
+                                fs.removeSync(item);
+                            });
 
-        if (publishAnswers.enableTag) {
-            verboseExec(`git tag -a ${ publishAnswers.tag } -m "${ publishAnswers.message }"`, verbose);
-            verboseExec(`git push --follow-tags`, verbose);
+                            resolve();
+                        } else {
+                            resolve();
+                        }
+                    });
+                });
+            let removeReleaseFilesComplete = await removeReleaseFiles;
+
+            const copyNewReleaseFiles = asyncFunction(
+                `Copying New Release Files`, `New Release Files Copied`, (resolve) => {
+                    const globFiles = [
+                        `${ paths.starter.development }**/*`,
+                        `${ paths.starter.development }.gitignore`,
+                        `!${ paths.starter.development }vendor`,
+                        `!${ paths.starter.development }vendor/**/*`,
+                        `!${ paths.starter.development }node_modules`,
+                        `!${ paths.starter.development }node_modules/**/*`,
+                    ];
+                    glob(globFiles, function (er, files) {
+                        let count = files.length;
+                        if (count > 0) {
+                            files.forEach((item) => {
+                                fs.copySync(item, item.replace(paths.starter.development, paths.starter.release));
+                            });
+
+                            resolve();
+                        } else {
+                            resolve();
+                        }
+                    });
+                });
+            let copyNewReleaseFilesComplete = await copyNewReleaseFiles;
+        }
+
+        log('verbose', `Project moved to release directory.`, verbose);
+
+        if (publishAnswers.commitRelease) {
+            process.chdir(paths.starter.release);
+            // verboseExec(`git pull`, verbose);
+            // verboseExec(`git status`, verbose);
+            verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
+
+            if (publishAnswers.tag) {
+                verboseExec(`git tag -a ${ publishAnswers.tag } -m "${ publishAnswers.message }"`, verbose);
+                verboseExec(`git push --follow-tags`, verbose);
+            }
         }
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Project Published' });
@@ -301,7 +354,7 @@ async function bumpPackage() {
 
     const p = await new Promise(resolve => {
         log('title', `Bumping version number`);
-        version = bumpVersion(pkg.version);
+        version = getVersion(bumpVersion(pkg.version));
         pkg.version = version;
         ejsVars.pkg = pkg;
         ejsVars.filenameVersion = filenameVersion('.');
@@ -1007,7 +1060,8 @@ function getPaths(paths) {
             backups: process.cwd() + '/_starter/backups/',
             build: process.cwd() + paths.base.build,
             components: process.cwd() + '/_starter/components/',
-            release: process.cwd() + paths.base.release,
+            development: process.cwd() + '/' + paths.base.dist,
+            release: require('os').homedir() + paths.base.release,
             templates: process.cwd() + '/_starter/templates/',
             styleInventory: process.cwd() + '/_starter/style_inventory/',
         }
@@ -1016,7 +1070,7 @@ function getPaths(paths) {
 
 // get version number based on build environment
 function getVersion(version) {
-    return release ? version : pkg.overrideVersion || null;
+    return pkg.overrideVersion ? pkg.overrideVersion : release ? version : null;
 }
 
 // display a message in the command line
