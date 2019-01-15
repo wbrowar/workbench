@@ -21,9 +21,8 @@ const configureBabelLoader = (browserList) => {
             options: {
                 presets: [
                     [
-                        'env', {
-                        modules: false,
-                        useBuiltIns: true,
+                        '@babel/preset-env', {
+                        useBuiltIns: 'usage',
                         targets: {
                             browsers: browserList,
                         },
@@ -31,13 +30,8 @@ const configureBabelLoader = (browserList) => {
                     ],
                 ],
                 plugins: [
-                    'syntax-dynamic-import',
-                    [
-                        "transform-runtime", {
-                            "polyfill": false,
-                            "regenerator": true
-                        }
-                    ]
+                    '@babel/plugin-syntax-dynamic-import',
+                    '@babel/plugin-transform-runtime',
                 ],
             },
         },
