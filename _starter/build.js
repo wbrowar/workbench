@@ -73,6 +73,7 @@ const notify = {
 let webpackConfig = require(process.cwd() + (release ? '/webpack.prod.js' : '/webpack.dev.js'));
 
 // browser sync config
+const browsersyncInterval = 1000;
 let browsersyncReady = {
     css: true,
     components: true,
@@ -81,7 +82,6 @@ let browsersyncReady = {
     js: true,
     templates: true,
 };
-const browsersyncInterval = 1000;
 
 async function run() {
     if (release) {
@@ -268,6 +268,7 @@ async function run() {
             browserSync.init({
                 browser: pkg.browserSync.browser,
                 proxy: pkg.browserSync.url,
+                reloadThrottle: browsersyncInterval * 10,
                 files: [
                     {
                         match: [paths.components.src + '**/*'],
