@@ -29,7 +29,6 @@ let   handle  = argv.options.handle || false;
 
 // set variables to be processed by EJS
 let ejsVars = {
-    handle: handle ? handle : '',
     projectDir: process.cwd(),
     pkg: pkg,
     securityKey: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
@@ -95,34 +94,7 @@ async function run() {
             message: 'Handle',
             default: 'my-plugin',
             default: () => {
-                return handle || false;
-            },
-            when: (answers) => {
-                return ['craftplugin'].includes(answers.projectType);
-            },
-            validate: (answer) => {
-                return answer !== '';
-            },
-        },
-        {
-            type: 'input',
-            name: 'clientCode',
-            message: 'Client code',
-            default: 'wb',
-            when: (answers) => {
-                return !answers.handle;
-            },
-            validate: (answer) => {
-                return answer !== '';
-            },
-        },
-        {
-            type: 'input',
-            name: 'projectName',
-            message: 'Project name (machine readable)',
-            default: 'test',
-            when: (answers) => {
-                return !answers.handle;
+                return argv.options.handle || '';
             },
             validate: (answer) => {
                 return answer !== '';
@@ -133,7 +105,7 @@ async function run() {
             name: 'localUrl',
             message: 'Local Dev URL',
             default: (answers) => {
-                const url = answers.handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
+                const url = answers.handle.toLowerCase();
                 return `http://${ url }.test/`;
             },
         },
@@ -215,7 +187,7 @@ async function run() {
             name: 'gitRepo',
             message: 'Local Dev URL',
             default: (answers) => {
-                return answers.handle || answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
+                return answers.handle.toLowerCase();
             },
             when: (answers) => {
                 return answers.setupRepo;
@@ -289,9 +261,7 @@ async function run() {
         ejsVars['install'] = answers;
 
         if (answers.handle) {
-            handle = ejsVars.handle = answers.handle;
-        } else if (answers.clientCode && answers.projectName) {
-            handle = ejsVars.handle = answers.clientCode.toLowerCase() + '-' + answers.projectName.toLowerCase();
+            handle = ejsVars.handle = answers.handle || '';
         }
 
         const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ answers.projectType }/`,

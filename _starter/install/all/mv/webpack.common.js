@@ -3,8 +3,8 @@ const merge = require('webpack-merge'),
       path  = require('path');
 
 // webpack plugins
-const ManifestPlugin       = require('webpack-manifest-plugin'),
-      VueLoaderPlugin      = require('vue-loader/lib/plugin');
+const ManifestPlugin  = require('webpack-manifest-plugin'),
+      VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 // config files
 const pkg = require('./package.json');
