@@ -268,29 +268,14 @@ async function run() {
             browserSync.init({
                 browser: pkg.browserSync.browser,
                 proxy: pkg.browserSync.url,
-                reloadDebounce: 2000,
                 files: [
-                    {
-                        match: [paths.css.src + '**/*'],
-                        fn: async (event, file) => {
-                            if (browsersyncReady.css) {
-                                browsersyncReady.css = false;
-                                setTimeout(() => { browsersyncReady.css = true; }, browsersyncInterval);
-
-                                const watchCompileCss       = compileCss();
-                                let watchCompileCssComplete = await watchCompileCss;
-
-                                browserSync.reload();
-                                notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'CSS Updated' });
-                            }
-                        },
-                    },
                     {
                         match: [paths.components.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.components) {
+                            if (browsersyncReady.components && event === 'change') {
+                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.components = false;
-                                setTimeout(() => { browsersyncReady.components = true; }, browsersyncInterval);
+                                setTimeout(() => { browsersyncReady.components = true; }, (browsersyncInterval * 10));
 
                                 const watchUpdateComponents           = updateComponents();
                                 let watchUpdateComponentsComplete     = await watchUpdateComponents;
@@ -314,9 +299,26 @@ async function run() {
                         },
                     },
                     {
+                        match: [paths.css.src + '**/*'],
+                        fn: async (event, file) => {
+                            if (browsersyncReady.css && event === 'change') {
+                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
+                                browsersyncReady.css = false;
+                                setTimeout(() => { browsersyncReady.css = true; }, browsersyncInterval);
+
+                                const watchCompileCss       = compileCss();
+                                let watchCompileCssComplete = await watchCompileCss;
+
+                                browserSync.reload();
+                                notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'CSS Updated' });
+                            }
+                        },
+                    },
+                    {
                         match: [paths.icon.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.icon) {
+                            if (browsersyncReady.icon && event === 'change') {
+                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.icon = false;
                                 setTimeout(() => { browsersyncReady.icon = true; }, browsersyncInterval);
 
@@ -331,7 +333,8 @@ async function run() {
                     {
                         match: [paths.img.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.img) {
+                            if (browsersyncReady.img && event === 'change') {
+                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.img = false;
                                 setTimeout(() => { browsersyncReady.img = true; }, browsersyncInterval);
 
@@ -346,7 +349,8 @@ async function run() {
                     {
                         match: [paths.js.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.js) {
+                            if (browsersyncReady.js && event === 'change') {
+                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.js = false;
                                 setTimeout(() => { browsersyncReady.js = true; }, browsersyncInterval);
 
@@ -361,7 +365,8 @@ async function run() {
                     {
                         match: [paths.templates.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.templates) {
+                            if (browsersyncReady.templates && event === 'change') {
+                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.templates = false;
                                 setTimeout(() => { browsersyncReady.templates = true; }, browsersyncInterval);
 

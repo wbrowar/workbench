@@ -11,33 +11,6 @@ const pkg = require('./package.json');
 
 
 // CONFIGURE LOADERS
-// Babel loader
-const configureBabelLoader = (browserList) => {
-    return {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-            loader: 'babel-loader',
-            options: {
-                presets: [
-                    [
-                        '@babel/preset-env', {
-                        useBuiltIns: 'usage',
-                        targets: {
-                            browsers: browserList,
-                        },
-                    }
-                    ],
-                ],
-                plugins: [
-                    '@babel/plugin-syntax-dynamic-import',
-                    '@babel/plugin-transform-runtime',
-                ],
-            },
-        },
-    };
-};
-
 // SCSS loader
 const configureScssLoader = () => {
     return {
@@ -97,22 +70,12 @@ const legacyConfig = {
     output: {
         filename: 'legacy',
     },
-    module: {
-        rules: [
-            configureBabelLoader(Object.values(pkg.browserlist.legacy)),
-        ],
-    },
 };
 
 // Modern webpack config
 const modernConfig = {
     output: {
         filename: 'modern',
-    },
-    module: {
-        rules: [
-            configureBabelLoader(Object.values(pkg.browserlist.modern)),
-        ],
     },
 };
 
