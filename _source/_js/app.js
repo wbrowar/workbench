@@ -4,6 +4,7 @@
 import Vue from 'vue';
 // import Navigation from './components/Navigation.vue';
 // import ScrollUpdater from './components/ScrollUpdater.vue';
+import Lazy from './lazy.js';
 import { gaTrack, log, warn, setupEnhancements, addClass, hasClass, removeClass } from './global.js';
 
 // VARIABLES
@@ -115,12 +116,13 @@ new Vue({
     mounted: function () {
         this.resizeHandler();
 
-        // Initialize
-        setupEnhancements();
+        // lazy load images and media
+        window.lazy = new Lazy({
+            container: '#page',
+        });
     },
     delimiters: ['${', '}'],
 });
-
 
 // INIT FUNCTIONS
 log('App');

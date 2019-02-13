@@ -8,7 +8,7 @@ let animations = false;
 
 // UTILITY FUNCTIONS
 function isElementInViewport(el) {
-    var rect = el.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
 
     return (
         rect.top >= 0 &&
@@ -169,6 +169,8 @@ export default class Lazy {
                 animateHandler(element, null, animations);
             } else if (isElementInViewport(element)) {
                 animateHandler(element, this.animateObserver, animations);
+            } else {
+                this.loadObserver.observe(element);
             }
         });
     }
@@ -180,6 +182,8 @@ export default class Lazy {
                 loadHandler(element, null);
             } else if (isElementInViewport(element)) {
                 loadHandler(element, this.loadObserver);
+            } else {
+                this.loadObserver.observe(element);
             }
         });
     }

@@ -133,6 +133,9 @@ class SiteModuleTwigExtension extends \Twig_Extension
      */
     public function renderHtmlAttributes(array $attrs)
     {
+        // Re-order attributes so ones with colons (used for vue shorthand) are last
+        ksort($attrs);
+
         // Ported from https://github.com/timkelty/htmlattributes-craft
         $str = trim(implode(' ', array_map(function($attrName) use ($attrs) {
             $attrVal = $attrs[$attrName];

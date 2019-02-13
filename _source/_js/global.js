@@ -1,10 +1,8 @@
 //  GLOBAL
 //  🌎 Scripts used on all pages on the site
 //  Examples:
-//  🛣 Functionality in nagivation used accross all pages on the site
+//  🛣 Functionality in navigation used across all pages on the site
 //  🏗 Utility functions, global variables, or browser events used on all pages of the site
-
-import Lazy from './lazy.js';
 
 // UTILITY FUNCTIONS
 export function log(...args) {
@@ -98,34 +96,6 @@ export function snake(text) {
         .replace(/\-\-+/g, '_')         // Replace multiple - with single -
         .replace(/^-+/, '')             // Trim - from start of text
         .replace(/-+$/, '');            // Trim - from end of text
-}
-
-
-// CUSTOM FUNCTIONS
-function sliderLoaded(el, args) {
-    if (window.VueEvent !== undefined) {
-        window.VueEvent.$emit('slider-loaded', args.id);
-    }
-}
-
-
-// SETUP FUNCTIONS
-export function setupEnhancements() {
-    if (typeof QueryString.enhanced === 'undefined') {
-        ready(function() {
-            // add class to html element for styling purposes
-            addClass(document.documentElement, 'enhanced');
-
-            // lazy load images and media
-            window.lazy = new Lazy({
-                // animationFunctions: {
-                //     'introduceElement': animation.introduceElement,
-                //     'sliderLoaded': sliderLoaded,
-                // },
-                container: '#page',
-            });
-        });
-    }
 }
 
 // INIT FUNCTIONS

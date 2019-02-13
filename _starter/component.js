@@ -142,7 +142,7 @@ async function run() {
                     case 'vue':
                         config = Object.assign({
                             src: `${ paths.starter.templates }_components/new/HANDLE.vue`,
-                            dist: `${ paths.components.src }${ answers.handle }/${ answers.name.replace(' ', '') }.vue`,
+                            dist: `${ paths.components.src }${ answers.handle }/${ answers.name.replace(/\s+/g, '') }.vue`,
                         }, config);
                         break;
                 }
@@ -155,7 +155,7 @@ async function run() {
   twig: {
     code:
 \`{% import 'macros/component.twig' as component %}
-{{ component.c('${ answers.name }', {  }) }}\`
+{{ component.c('${ answers.handle }', {  }) }}\`
     },
     options: [
       { "name": 'example', "required": false, "type": 'string', "": \`''\`, "description": \`Description of example.\` },

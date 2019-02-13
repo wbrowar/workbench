@@ -14,7 +14,7 @@ const pkg = require('./package.json');
 // SCSS loader
 const configureScssLoader = () => {
     return {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         use: [
             'vue-style-loader',
             'css-loader',
