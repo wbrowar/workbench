@@ -367,6 +367,14 @@ async function run() {
             log('verbose', `Craft 3 installer ran`, verbose);
 
             log('title', 'Applying Project Config Settings');
+            if (fs.existsSync(`config/default.project.yaml`)) {
+                if (fs.existsSync(`config/project.yaml`)) {
+                    verboseExec(`rm config/project.yaml`, verbose);
+                    log('verbose', `Deleted project config generated from install`, verbose);
+                }
+                verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
+                log('verbose', `Renamed default project config to project.yaml`, verbose);
+            }
             verboseExec(`./craft project-config/sync`, verbose);
             log('verbose', `Project Config synced`, verbose);
         }
