@@ -94,10 +94,6 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  typogrify:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
 sections:
   82e5ba29-1ff2-43b6-b327-eb13aa565602:
     enableVersioning: true

@@ -27,7 +27,6 @@
     "craftcms/redactor": "^2.3.0",
     "mmikkel/cp-field-inspect": "^1.0.5",
     "nystudio107/craft-minify": "^1.2.9",
-    "nystudio107/craft-typogrify": "^1.1.16",
     "nystudio107/craft-seomatic": "^3.1.39",
     "sebastianlenz/linkfield": "^1.0.12",
     "verbb/image-resizer": "^2.0.4",
