@@ -1,0 +1,275 @@
+dateModified: 1550247674
+email:
+  fromEmail: wbrowar@gmail.com
+  fromName: 'My Site'
+  transportType: craft\mail\transportadapters\Sendmail
+fieldGroups:
+  192e5cb4-2e8e-4608-a3c3-49934dc57436:
+    name: SEO
+  c5b754fa-8838-4c61-8873-a4a5dc5ce1b7:
+    name: Common
+fields:
+  28d83a54-0139-4e9c-a874-bc6ce552cebd:
+    contentColumnType: text
+    fieldGroup: 192e5cb4-2e8e-4608-a3c3-49934dc57436
+    handle: seo
+    instructions: ''
+    name: SEO
+    searchable: true
+    settings:
+      elementDisplayPreviewType: google
+      facebookEnabledFields:
+        - seoPreview
+        - ogTitle
+        - ogDescription
+        - ogImage
+        - ogImageDescription
+      facebookTabEnabled: '1'
+      generalEnabledFields:
+        - seoPreview
+        - seoTitle
+        - seoDescription
+        - seoImage
+        - seoImageDescription
+        - robots
+        - canonicalUrl
+      generalTabEnabled: '1'
+      sitemapTabEnabled: ''
+      twitterEnabledFields:
+        - seoPreview
+        - twitterTitle
+        - twitterDescription
+        - twitterImage
+        - twitterImageDescription
+      twitterTabEnabled: '1'
+    translationKeyFormat: null
+    translationMethod: none
+    type: nystudio107\seomatic\fields\SeoSettings
+plugins:
+  admin-bar:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.1.0
+  communicator:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  cp-field-inspect:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  grid:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  guide:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.1.0
+  image-resizer:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  imager:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  minify:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  navigation:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.6
+  redactor:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.2.1
+  seomatic:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.0.6
+  typedlinkfield:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  typogrify:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+sections:
+  82e5ba29-1ff2-43b6-b327-eb13aa565602:
+    enableVersioning: true
+    entryTypes:
+      9868e67e-dd2a-4584-96bb-0f45103c0e8b:
+        fieldLayouts:
+          75b4cdcd-417a-48f5-bfd2-785157595fa4:
+            tabs:
+              -
+                fields:
+                  28d83a54-0139-4e9c-a874-bc6ce552cebd:
+                    required: false
+                    sortOrder: 1
+                name: SEO
+                sortOrder: 1
+        handle: home
+        hasTitleField: false
+        name: Home
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: ''
+    handle: home
+    name: Home
+    propagateEntries: true
+    siteSettings:
+      292ea3b8-8d45-4df3-94f1-e79daee6f464:
+        enabledByDefault: true
+        hasUrls: true
+        template: pages/home
+        uriFormat: __home__
+    type: single
+  f468a20f-405f-4e6c-8750-d9644cf97743:
+    enableVersioning: true
+    entryTypes:
+      b7236375-63b9-4f4b-a7a9-20f6f35108ee:
+        handle: basicPage
+        hasTitleField: true
+        name: 'Basic Page'
+        sortOrder: 1
+        titleFormat: null
+        titleLabel: Title
+    handle: basicPage
+    name: 'Basic Page'
+    propagateEntries: true
+    siteSettings:
+      292ea3b8-8d45-4df3-94f1-e79daee6f464:
+        enabledByDefault: true
+        hasUrls: true
+        template: pages/basic_page
+        uriFormat: '{slug}'
+    structure:
+      maxLevels: ''
+      uid: 4329fcfc-cb4b-4aba-a51c-c9977969a68e
+    type: structure
+siteGroups:
+  794f7ca5-ed59-4ee7-8ea6-5bbbc0d5bc55:
+    name: 'My Site'
+sites:
+  292ea3b8-8d45-4df3-94f1-e79daee6f464:
+    baseUrl: $DEFAULT_SITE_URL
+    handle: default
+    hasUrls: true
+    language: en-US
+    name: 'My Site'
+    primary: true
+    siteGroup: 794f7ca5-ed59-4ee7-8ea6-5bbbc0d5bc55
+    sortOrder: 1
+system:
+  edition: pro
+  live: true
+  name: 'My Site'
+  schemaVersion: 3.1.25
+  timeZone: America/New_York
+users:
+  allowPublicRegistration: false
+  defaultGroup: ''
+  groups:
+    6917754f-ff64-4232-9232-a8f78f9c66bc:
+      handle: seoAdmin
+      name: 'SEO Admin'
+      permissions:
+        - accessplugin-guide
+        - accessplugin-seomatic
+        - accesscp
+        - 'seomatic:dashboard'
+        - 'seomatic:global-meta:general'
+        - 'seomatic:global-meta:twitter'
+        - 'seomatic:global-meta:facebook'
+        - 'seomatic:global-meta:robots'
+        - 'seomatic:global-meta:humans'
+        - 'seomatic:global-meta:ads'
+        - 'seomatic:global-meta'
+        - 'seomatic:content-meta:general'
+        - 'seomatic:content-meta:twitter'
+        - 'seomatic:content-meta:facebook'
+        - 'seomatic:content-meta:sitemap'
+        - 'seomatic:content-meta'
+        - 'seomatic:site-settings:identity'
+        - 'seomatic:site-settings:creator'
+        - 'seomatic:site-settings:social'
+        - 'seomatic:site-settings:sitemap'
+        - 'seomatic:site-settings:miscellaneous'
+        - 'seomatic:site-settings'
+        - 'seomatic:tracking-scripts:googleanalytics'
+        - 'seomatic:tracking-scripts:gtag'
+        - 'seomatic:tracking-scripts:googletagmanager'
+        - 'seomatic:tracking-scripts:facebookpixel'
+        - 'seomatic:tracking-scripts:linkedininsight'
+        - 'seomatic:tracking-scripts:hubspot'
+        - 'seomatic:tracking-scripts'
+        - 'seomatic:plugin-settings'
+    6bd6d956-aeaf-4ac9-9535-fb00dd677e85:
+      handle: contentEditor
+      name: 'Content Editor'
+      permissions:
+        - accessplugin-guide
+        - accessplugin-navigation
+        - accesscp
+        - 'publishentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'publishpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'deletepeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'editpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'editentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+    835f8190-17cd-4f18-b4d9-833f462f2ba4:
+      handle: userAdmin
+      name: 'User Admin'
+      permissions:
+        - accesscp
+        - registerusers
+        - moderateusers
+        - 'assignusergroup:96ddc9e2-4d22-4d9a-bc4b-b5c2c303f31e'
+        - 'assignusergroup:6bd6d956-aeaf-4ac9-9535-fb00dd677e85'
+        - 'assignusergroup:6917754f-ff64-4232-9232-a8f78f9c66bc'
+        - 'assignusergroup:835f8190-17cd-4f18-b4d9-833f462f2ba4'
+        - assignusergroups
+        - editusers
+    96ddc9e2-4d22-4d9a-bc4b-b5c2c303f31e:
+      handle: contentAdmin
+      name: 'Content Admin'
+      permissions:
+        - accesssitewhensystemisoff
+        - accessplugin-guide
+        - accessplugin-navigation
+        - accesscp
+        - 'publishentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'publishpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'deletepeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'editpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'editentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
+        - 'saveassetinvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
+        - 'createfoldersinvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
+        - 'deletefilesandfoldersinvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
+        - 'viewvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
+  photoSubpath: ''
+  photoVolumeUid: af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8
+  requireEmailVerification: true
+volumes:
+  af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8:
+    handle: userPhotos
+    hasUrls: true
+    name: 'User Photos'
+    settings:
+      path: '@basePath/u/users/'
+    sortOrder: 2
+    type: craft\volumes\Local
+    url: '@baseUrl/u/users/'
+  f5b7612c-9c81-4a2d-9ad5-01c3b88c40f9:
+    handle: guide
+    hasUrls: true
+    name: Guide
+    settings:
+      path: '@basePath/u/guide/'
+    sortOrder: 1
+    type: craft\volumes\Local
+    url: '@baseUrl/u/guide/'

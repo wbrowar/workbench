@@ -366,11 +366,9 @@ async function run() {
             exec.spawnSync(`./craft setup`, [], { stdio: 'inherit', shell: true });
             log('verbose', `Craft 3 installer ran`, verbose);
 
-            log('title', 'Installing Craft Plugins');
-            installConfig.plugins.install.forEach((item) => {
-                verboseExec(`./craft install/plugin ${ item }`, verbose);
-                log('verbose', `installed ${ item } plugin`, verbose);
-            });
+            log('title', 'Applying Project Config Settings');
+            verboseExec(`./craft project-config/sync`, verbose);
+            log('verbose', `Project Config synced`, verbose);
         }
 
         log('title', 'Changing package.json Defaults', verbose);
