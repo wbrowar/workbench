@@ -10,7 +10,7 @@ return [
     // Global settings
     '*' => [
         'aliases' => [
-            '@basePath' => realpath(dirname(__FILE__)) . getenv('BASE_PATH'),
+            '@basePath' => realpath(dirname(__DIR__)) . getenv('BASE_PATH'),
             '@baseUrl' => getenv('BASE_URL'),
         ],
         'cacheDuration' => false,

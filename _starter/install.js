@@ -246,7 +246,7 @@ async function run() {
         {
             type: 'confirm',
             name: 'saveConfig',
-            message: 'Save these options to a local config file?',
+            message: 'Save these options to a config file (in your home folder)?',
             default: true,
             when: () => {
                 return !localConfig;
