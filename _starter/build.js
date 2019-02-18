@@ -73,6 +73,7 @@ const notify = {
 let webpackConfig = require(process.cwd() + (release ? '/webpack.prod.js' : '/webpack.dev.js'));
 
 // browser sync config
+let browsersyncComponentsMoving = false;
 const browsersyncInterval = 1000;
 let browsersyncReady = {
     css: true,
@@ -82,6 +83,7 @@ let browsersyncReady = {
     js: true,
     templates: true,
 };
+
 
 async function run() {
     if (release) {
@@ -276,6 +278,7 @@ async function run() {
                             if (browsersyncReady.components && event === 'change') {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.components = false;
+                                browsersyncComponentsMoving = true;
                                 setTimeout(() => { browsersyncReady.components = true; }, (browsersyncInterval * 10));
 
                                 const watchUpdateComponents           = updateComponents();
@@ -289,11 +292,13 @@ async function run() {
 
                                 const watchCompileCss                 = compileCss();
                                 const watchCompileJs                  = compileJs();
-                                const watchCompileTemplates           = compileTemplates();
                                 let watchCompileCssComplete           = await watchCompileCss;
                                 let watchCompileJsComplete            = await watchCompileJs;
+
+                                const watchCompileTemplates           = compileTemplates();
                                 let watchCompileTemplatesComplete     = await watchCompileTemplates;
 
+                                browsersyncComponentsMoving = false;
                                 browserSync.reload();
                                 notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Components Updated' });
                             }
@@ -302,7 +307,7 @@ async function run() {
                     {
                         match: [paths.css.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.css && event === 'change') {
+                            if (!browsersyncComponentsMoving && browsersyncReady.css && event === 'change') {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.css = false;
                                 setTimeout(() => { browsersyncReady.css = true; }, browsersyncInterval);
@@ -310,7 +315,7 @@ async function run() {
                                 const watchCompileCss       = compileCss();
                                 let watchCompileCssComplete = await watchCompileCss;
 
-                                browserSync.reload();
+                                // browserSync.reload();
                                 notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'CSS Updated' });
                             }
                         },
@@ -318,23 +323,23 @@ async function run() {
                     {
                         match: [paths.icon.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.icon && event === 'change') {
+                            if (!browsersyncComponentsMoving && browsersyncReady.icon && event === 'change') {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.icon = false;
                                 setTimeout(() => { browsersyncReady.icon = true; }, browsersyncInterval);
 
-                            }
-                            const watchCompileIcon       = compileIcon();
-                            let watchCompileIconComplete = await watchCompileIcon;
+                                const watchCompileIcon       = compileIcon();
+                                let watchCompileIconComplete = await watchCompileIcon;
 
-                            browserSync.reload();
-                            notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Icons Updated' });
+                                browserSync.reload();
+                                notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Icons Updated' });
+                            }
                         },
                     },
                     {
                         match: [paths.img.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.img && event === 'change') {
+                            if (!browsersyncComponentsMoving && browsersyncReady.img && event === 'change') {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.img = false;
                                 setTimeout(() => { browsersyncReady.img = true; }, browsersyncInterval);
@@ -350,7 +355,7 @@ async function run() {
                     {
                         match: [paths.js.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.js && event === 'change') {
+                            if (!browsersyncComponentsMoving && browsersyncReady.js && event === 'change') {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.js = false;
                                 setTimeout(() => { browsersyncReady.js = true; }, browsersyncInterval);
@@ -366,7 +371,7 @@ async function run() {
                     {
                         match: [paths.templates.src + '**/*'],
                         fn: async (event, file) => {
-                            if (browsersyncReady.templates && event === 'change') {
+                            if (!browsersyncComponentsMoving && browsersyncReady.templates && event === 'change') {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.templates = false;
                                 setTimeout(() => { browsersyncReady.templates = true; }, browsersyncInterval);
