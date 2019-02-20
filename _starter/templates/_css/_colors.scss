@@ -7,3 +7,8 @@
 <% } %>
 <% for (const color in pkg.colors) { %>$color_<%- color %>_raw: <%- pkg.colors[color] %>;
 <% } %>
+@mixin automated_color_modifiers($selector, $property) {
+<% for (const color in pkg.colors) { %>@at-root #{ $selector}--<%- color %> {
+  #{$property}: $color_<%- color %>;
+};<% } %>
+}

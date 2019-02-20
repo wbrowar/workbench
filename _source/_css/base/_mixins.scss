@@ -55,6 +55,7 @@ $mq_grid_start: 700px;
 // BOX
 // Default modifiers that affect spacing and layout of box elements
 @mixin box_modifiers($self: &) {
+  @include automated_color_modifiers($self, 'background-color');
   @at-root #{$self}--center {
     text-align: center;
   }
@@ -315,6 +316,7 @@ $mq_grid_start: 700px;
 // TEXT
 // Default modifiers that affect spacing and layout of text
 @mixin text_modifiers($self: &) {
+  @include automated_color_modifiers($self, 'color');
   @at-root #{$self}--center {
     text-align: center;
   }
