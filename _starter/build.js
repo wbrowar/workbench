@@ -74,7 +74,7 @@ let webpackConfig = require(process.cwd() + (release ? '/webpack.prod.js' : '/we
 
 // browser sync config
 let browsersyncComponentsMoving = false;
-const browsersyncInterval = 1000;
+const browsersyncInterval = 500;
 let browsersyncReady = {
     css: true,
     components: true,
@@ -271,6 +271,7 @@ async function run() {
                 browser: pkg.browserSync.browser,
                 proxy: pkg.browserSync.url,
                 reloadThrottle: browsersyncInterval * 10,
+                ignore: [paths.templates.src + '_css'],
                 files: [
                     {
                         match: [paths.components.src + '**/*'],
@@ -315,7 +316,7 @@ async function run() {
                                 const watchCompileCss       = compileCss();
                                 let watchCompileCssComplete = await watchCompileCss;
 
-                                // browserSync.reload();
+                                browserSync.reload("*.css");
                                 notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'CSS Updated' });
                             }
                         },
@@ -869,7 +870,7 @@ async function postCss() {
                     `${ paths.components.src }**/*.vue`,
                 ], [paths.css.dist + item + filenameVersion('.') + '.css'], { info: verbose }, (purifiedCss) => {
                     postcss([
-                        mqpacker,
+                        // mqpacker,
                         autoprefixer({
                             browsers: pkg.browserlist.autoprefix
                         })
