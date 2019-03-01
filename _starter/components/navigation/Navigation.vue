@@ -464,7 +464,7 @@
 <style lang="scss">
     // include variables and mixins if needed
     <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
+    <%- include(paths.css.src + '_mixins.scss') %>
 
     .c_navigation {
         $self: &;

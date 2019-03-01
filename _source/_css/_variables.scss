@@ -1,0 +1,24 @@
+// CSS CUSTOM PROPERTIES
+:root {
+  --grid-gap: 20px;
+  --max-width: 1100px;
+  --max-width-text: 700px;
+  --spacing-box: 50px;
+  --spacing-text: 30px;
+}
+
+// SITE VARIABLES
+// ANIMATIONS
+$anim_duration_default: 0.3s;
+$anim_duration_fade: $anim_duration_default;
+$anim_duration_slide: $anim_duration_default;
+
+// LAYOUT
+$grid_gap: var(--grid-gap);
+$max_width: var(--max-width);
+$max_width_text: var(--max-width-text);
+$spacing_box: var(--spacing-box);
+$spacing_text: var(--spacing-text);
+
+// MEDIA QUERIES
+$mq_grid_start: 700px;

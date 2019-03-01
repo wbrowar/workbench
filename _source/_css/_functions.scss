@@ -1,0 +1,13 @@
+// PIXELS TO REM
+// Convert pixels to REM (based on 16px defaul)
+// px_to_rem(1024);
+@function px_to_rem($pxValue) {
+  $returnValue: '';
+
+  @if $pxValue != '' {
+    $returnValue: $pxValue / 16;
+  }
+  $returnValue: $returnValue + rem;
+
+  @return $returnValue;
+}

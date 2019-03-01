@@ -17,7 +17,7 @@
 
 <style lang="scss">
     <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
+    <%- include(paths.css.src + '_mixins.scss') %>
 
     @keyframes slider_slide--left-to-center {
         0% { transform: translateX(-100%) }

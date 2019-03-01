@@ -1,10 +1,12 @@
 @import "automated/_colors"; // color variables as defined in package.json
 @import "automated/_fonts"; // @font-face fonts (use this along with font() mixin
-@import "automated/_icons"; // Adds all svgs from _source/_img/_icons/css turned into SCSS base64-encoded data
-@import "base/_mixins"; // Functions, mixins, and variables
-@import "base/_animations"; // Custom CSS animations
+@import "automated/_icons"; // Adds all SVGs from _source/_img/_icons/css turned into SCSS base64-encoded data
+@import "_functions"; // SASS Functions
+@import "_variables"; // Variables
+@import "_mixins"; // Mixins
+@import "_animations"; // Custom CSS animations
 @import "lib/_reset"; // reset.css
-@import "base/_global"; // Styles used accross all pages
+@import "_global"; // Styles used across all pages
 @import "components/*"; // Styles for individual elements
 @import "layout/*"; // Spacing and layout of elements
 @import "pages/*"; // Styles for specific pages
