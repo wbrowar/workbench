@@ -23,6 +23,16 @@
   textarea {
     @include _field_default;
   }
+  select {
+    @include _field_default;
+    width: 100%;
+    border-radius: 0;
+    background-color: transparent;
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
   & > label {
     display: block;
   }

@@ -44,6 +44,19 @@
     {% set inputBody -%}
         {% if type in ['email', 'number', 'password', 'tel', 'text', 'search', 'submit', 'url'] %}
             <input id="{{ inputId }}"{% if inputClasses ?? false %} class="{{ inputClasses }}"{% endif %} aria-label="{{ label ?? name }}" name="{{ name }}" type="{{ type }}"{% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if value ?? false %} value="{{ value }}"{% endif %}{% if inputAttributes ?? false %} {{ inputAttributes|raw }}{% endif %}{% if required %} required{% endif %}>
+        {% elseif type == 'select' %}
+            <div class="select_wrapper">
+                <select{% if inputClasses ?? false %} class="{{ inputClasses }}"{% endif %}{% if name ?? false %} name="{{ name }}"{% endif %}{% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if inputAttributes ?? false %} {{ inputAttributes|raw }}{% endif %}{% if required %} required{% endif %}>{% if value ?? false %}{{ value }}{% endif %}
+                    {% if placeholder is not null %}
+                        <option class="placeholder" value="">{{ placeholder }}</option>
+                    {% endif %}
+                    {% if options is not null %}
+                        {% for item in options %}
+                            <option value="{{ item.value }}">{{ item.label }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
         {% elseif type == 'textarea' %}
             <textarea id="{{ inputId }}"{% if inputClasses ?? false %} class="{{ inputClasses }}"{% endif %} aria-label="{{ label ?? name }}" name="{{ name }}"{% if placeholder ?? false %} placeholder="{{ placeholder }}"{% endif %}{% if inputAttributes ?? false %} {{ inputAttributes|raw }}{% endif %}{% if required %} required{% endif %}>{% if value ?? false %}{{ value }}{% endif %}</textarea>
         {% endif %}
