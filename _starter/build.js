@@ -276,6 +276,7 @@ async function run() {
                     {
                         match: [paths.components.src + '**/*'],
                         fn: async (event, file) => {
+                            log('title', `BrowserSync File: ${ path.extname(file) }`);
                             if (browsersyncReady.components && event === 'change') {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.components = false;
@@ -300,7 +301,11 @@ async function run() {
                                 let watchCompileTemplatesComplete     = await watchCompileTemplates;
 
                                 browsersyncComponentsMoving = false;
-                                browserSync.reload();
+                                if (path.extname(file) === '.scss') {
+                                    browserSync.reload("*.css");
+                                } else {
+                                    browserSync.reload();
+                                }
                                 notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Components Updated' });
                             }
                         },
