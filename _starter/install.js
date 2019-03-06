@@ -185,7 +185,7 @@ async function run() {
         {
             type: 'input',
             name: 'gitRepo',
-            message: 'Local Dev URL',
+            message: 'Git Repo Name (machine readable)',
             default: (answers) => {
                 return answers.handle.toLowerCase();
             },
