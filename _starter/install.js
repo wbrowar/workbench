@@ -39,10 +39,10 @@ let localConfig = false;
 
 // check if npm and composer are installed
 if (verbose) {
-    log('verbose', `getting composer version`);
-    verboseExec(`composer --version`);
-    log('verbose', `getting npm version`);
-    verboseExec(`npm -v`);
+    log('verbose', `getting composer version`, verbose);
+    verboseExec(`composer --version`, verbose);
+    log('verbose', `getting npm version`, verbose);
+    verboseExec(`npm -v`, verbose);
 }
 
 // get local config file
