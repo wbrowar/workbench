@@ -244,6 +244,17 @@ async function run() {
             choices: componentOptions,
         },
         {
+            type: 'list',
+            name: 'npmInstaller',
+            message: 'npm installer',
+            default: argv.options.npminstaller || localConfig ? (localConfig.npmInstaller || 'npm') : 'npm',
+            choices: [
+                { name: 'npm', value: 'npm' },
+                { name: 'pnpm', value: 'pnpm' },
+                { name: 'Yarn', value: 'yarn' },
+            ],
+        },
+        {
             type: 'confirm',
             name: 'saveConfig',
             message: 'Save these options to a config file (in your home folder)?',
@@ -284,6 +295,7 @@ async function run() {
                 localConfig['gitOrg'] = answers.gitOrg;
                 localConfig['gitPrivate'] = answers.gitPrivate;
             }
+            localConfig['npmInstaller'] = answers.npmInstaller;
 
             fs.outputFileSync(`${ os.homedir() }/.wb-starter.config.json`, JSON.stringify(localConfig, null, 2));
 
@@ -437,7 +449,7 @@ async function run() {
             pkg.scripts['cssd'] = './vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
             pkg.scripts['cssdb'] = './vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
             pkg.scripts['update'] = 'git pull && npm run update && npm run cssd && npm run watch';
-            pkg.scripts['update'] = 'npm update && composer update';
+            pkg.scripts['update'] = answers.npmInstaller + ' update && composer update';
         }
 
         fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
