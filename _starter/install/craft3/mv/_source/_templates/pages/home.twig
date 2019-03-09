@@ -8,7 +8,7 @@
 {% set pageSection = 'home' %}
 
 {% block critcss %}
-    <style>{{ source('_critcss/home.css') }}</style>
+    <style>{{ source('_css/critcss/home.css', ignore_missing = true) }}</style>
 {% endblock %}
 
 {% block content %}
