@@ -789,7 +789,7 @@ async function compileJs() {
                     return entries;
                 };
                 item['output'] = {
-                    chunkFilename: '[id].js',
+                    chunkFilename: `[id]${ legacySuffix + filenameVersion('.') }.js`,
                     filename: `[name]${ legacySuffix + filenameVersion('.') }.js`,
                     path: paths.js.dist,
                     publicPath: "/js/",

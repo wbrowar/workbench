@@ -10,14 +10,15 @@
   <html class="no-js" lang="en">
     <head>
 <%- include('_ejs/_head_meta') %>
-      {{ adminbar() }}
 
 <%- include('_ejs/_head_scripts') %>
 
 <%- include('_ejs/_head_tracking') %>
+      {% block critcss %}<!-- Crit CSS -->{% endblock %}
     </head>
     <body>
       {% minify %}
+      {{ adminbar() }}
       <div id="page">
         {% block header %}
           {% include 'partials/_ui' %}
