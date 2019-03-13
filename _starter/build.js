@@ -9,7 +9,6 @@ const autoprefixer = require('autoprefixer'),
     fs = require('fs-extra'),
     glob = require('glob-all'),
     inquirer = require('inquirer'),
-    mqpacker = require("css-mqpacker"),
     notifier = require('node-notifier'),
     path = require('path'),
     postcss = require('postcss'),
@@ -875,7 +874,6 @@ async function postCss() {
                     `${ paths.components.src }**/*.vue`,
                 ], [paths.css.dist + item + filenameVersion('.') + '.css'], { info: verbose }, (purifiedCss) => {
                     postcss([
-                        // mqpacker,
                         autoprefixer({
                             browsers: pkg.browserlist.autoprefix
                         })
