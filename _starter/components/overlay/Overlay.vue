@@ -28,6 +28,12 @@
         },
         mounted() {
             this.isActive = this.active;
+            if (this.active) {
+                VueEvent.$emit('show-overlay', this.overlayId);
+            }
+
+            // Hide overlay and remove content
+            VueEvent.$on('hide-overlay', (id) => this.isActive = id === this.overlayId ? false : this.isActive);
         },
         props: {
             active: { default: false },
@@ -44,7 +50,7 @@
 
 <style lang="scss">
     <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + '_mixins.scss') %>
+    <%- include(paths.css.src + 'base/_mixins.scss') %>
 
     $_mq_overlay_1: 700px;
     .c_overlay {

@@ -38,11 +38,16 @@ vueMethods['scrollHandler'] = function () {
 };
 
 // Display overlay
-vueData['overlayIsVisible'] = false;
+vueData['visibleOverlays'] = [];
 vueMethods['showOverlay'] = function (overlayTitle) {
     VueEvent.$emit('show-overlay', overlayTitle);
-    this.overlayIsVisible = true;
+    this.visibleOverlays.push(overlayTitle);
     gaTrack('overlay', 'shown', overlayTitle);
+};
+vueMethods['hideOverlay'] = function (overlayTitle) {
+    VueEvent.$emit('hide-overlay', overlayTitle);
+    this.visibleOverlays = this.visibleOverlays.filter(item => item !== overlayTitle);
+    gaTrack('overlay', 'hidden', overlayTitle);
 };
 
 // Generic class toggle utility
@@ -103,14 +108,14 @@ new Vue({
         //ScrollUpdater,
     },
     created: function () {
-        // Hide overlay and remove content
-        VueEvent.$on('hide-overlay', () => this.isActive = (this.overlayIsVisible = false));
-
         // Watch resize
         window.addEventListener('resize', this.resizeHandler);
 
         // Watch scroll
         // window.addEventListener('scroll', this.scrollHandler);
+
+        // Manage overlays
+        VueEvent.$on('show-overlay', (id) => this.visibleOverlays.push(id));
     },
     methods: vueMethods,
     mounted: function () {
