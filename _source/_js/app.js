@@ -5,7 +5,7 @@ import Vue from 'vue';
 // import Navigation from './components/Navigation.vue';
 // import ScrollUpdater from './components/ScrollUpdater.vue';
 import Lazy from './lazy.js';
-import { gaTrack, log, warn, setupEnhancements, addClass, hasClass, removeClass } from './global.js';
+import { gaTrack, log, warn, addClass, hasClass, removeClass } from './global.js';
 
 // VARIABLES
 let vueData = {};
