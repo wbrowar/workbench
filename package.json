@@ -1,6 +1,7 @@
 {
   "scripts": {
     "component": "node ./_starter/component.js",
+    "das": "node ./_starter/build.js",
     "dev": "node ./_starter/build.js --build",
     "prod": "NODE_ENV=production node ./_starter/build.js --build",
     "pub": "NODE_ENV=production node ./_starter/build.js --build --publish",
@@ -278,6 +279,7 @@
     "node-sass-glob-importer": "^5.3.0",
     "postcss": "^7.0.14",
     "purify-css": "^1.2.5",
+    "request": "^2.88.0",
     "sass-loader": "^7.1.0",
     "semver": "^5.6.0",
     "sharp": "^0.21.2",

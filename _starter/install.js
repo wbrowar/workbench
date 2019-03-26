@@ -5,9 +5,8 @@ const chalk = require('chalk'),
       fs = require('fs-extra'),
       glob = require('glob-all'),
       inquirer = require('inquirer'),
-      notifier = require('node-notifier'),
-      path = require('path'),
-      os = require('os');
+      os = require('os'),
+      path = require('path');
 
 if (!fs.existsSync(`${ process.cwd() }/_starter/install`)) {
     log('warn', `Install Has Already Completed and Cannot Be Run Again`);
