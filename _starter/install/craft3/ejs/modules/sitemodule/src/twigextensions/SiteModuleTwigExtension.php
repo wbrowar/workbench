@@ -106,13 +106,13 @@ class SiteModuleTwigExtension extends \Twig_Extension
      */
     public function checkAccessByIp(array $environments = ['staging'])
     {
-        $accessGranted = !in_array(getenv('ENVIRONMENT'), $environments);
+        $accessGranted = !(in_array(getenv('ENVIRONMENT'), $environments) && (getenv('WHITELISTED_IPS') ?? false));
         if (!$accessGranted) {
             if (!Craft::$app->getUser()->getIsGuest()) {
                 // Allow access for logged in users
                 $accessGranted = true;
             } else {
-                // Allow access for users that visit the site from an IP address in WHITELISTED_IPS, in the env.php file
+                // Allow access for users that visit the site from an IP address in WHITELISTED_IPS, in the .env file
                 $accessGranted = in_array(Craft::$app->getRequest()->getUserIP(), json_decode(getenv('WHITELISTED_IPS')));
             }
         }
@@ -120,6 +120,7 @@ class SiteModuleTwigExtension extends \Twig_Extension
         if (!$accessGranted && !in_array(Craft::$app->getRequest()->getUrl(), ['/404', '/503'])) {
             return BaseYii::$app->getResponse()->redirect(UrlHelper::url('503'));
         }
+        return $accessGranted;
     }
 
     /**
