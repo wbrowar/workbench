@@ -5,7 +5,7 @@ import Vue from 'vue';
 // import Navigation from './components/Navigation.vue';
 // import ScrollUpdater from './components/ScrollUpdater.vue';
 import Lazy from './lazy.js';
-import { gaTrack, log, warn, addClass, hasClass, removeClass } from './global.js';
+import { dir, error, log, warn, classToggle, gaTrack } from './global.js';
 
 // VARIABLES
 let vueData = {};
@@ -51,16 +51,9 @@ vueMethods['hideOverlay'] = function (overlayTitle) {
 };
 
 // Generic class toggle utility
-// @click="classToggle('id','class')"
-vueMethods['classToggle'] = function (getID, getClass) {
-    const query = document.querySelectorAll(getID);
-    query.forEach((el) => {
-        if (hasClass(el, getClass)) {
-            removeClass(el, getClass);
-        } else {
-            addClass(el, getClass);
-        }
-    });
+// @click="classToggle('selector','class')"
+vueMethods['classToggle'] = function (selector, getClass) {
+    classToggle(selector, getClass);
 };
 
 // Lazy load Vue components

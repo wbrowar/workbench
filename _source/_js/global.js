@@ -1,25 +1,46 @@
 //  GLOBAL
-//  🌎 Scripts used on all pages on the site
-//  Examples:
-//  🛣 Functionality in navigation used across all pages on the site
-//  🏗 Utility functions, global variables, or browser events used on all pages of the site
-
-// UTILITY FUNCTIONS
+// LOGGING FUNCTIONS
+export function dir(...args) {
+    logger('dir', args);
+}
+export function error(...args) {
+    logger('error', args);
+}
 export function log(...args) {
-    if (jsDevMode) {
-        for (let i=0; i<args.length; i++) {
-            const spacer = i>0 ? '•' : '';
-            console.log(spacer + '🚀', args[i]);
-        }
-    }
+    logger('log', args);
 }
 export function warn(...args) {
-    if (jsDevMode) {
+    logger('warn', args);
+}
+function logger(type = 'log', args) {
+    const spirit = '🚀';
+
+    if (window.jsDevMode) {
         for (let i=0; i<args.length; i++) {
-            console.warn(args);
+            const spacer = i>0 ? '◉ ' : '';
+            switch (type) {
+                case 'dir':
+                    if (typeof args[i] === 'string') {
+                        console.dir(spacer + spirit + ' ' + args[i]);
+                    } else {
+                        console.dir(args[i]);
+                    }
+                    break;
+                case 'error':
+                    console.error(spacer + spirit, args[i]);
+                    break;
+                case 'log':
+                    console.log(spacer + spirit, args[i]);
+                    break;
+                case 'warn':
+                    console.warn(spacer + spirit, args[i]);
+                    break;
+            }
         }
     }
 }
+
+// UTILITY FUNCTIONS
 export function addClass(el, className) {
     if (el.classList) {
         el.classList.add(className);
@@ -27,8 +48,18 @@ export function addClass(el, className) {
         el.className += ' ' + className;
     }
 }
+export function classToggle(selector, getClass) {
+    const query = document.querySelectorAll(selector);
+    query.forEach((el) => {
+        if (hasClass(el, getClass)) {
+            removeClass(el, getClass);
+        } else {
+            addClass(el, getClass);
+        }
+    });
+}
 export function gaTrack(category, action, label) {
-    if (!jsDevMode) {
+    if (!window.jsDevMode) {
         if (typeof ga === 'function') {
             ga("send", "event", category, action, label);
         } else {
