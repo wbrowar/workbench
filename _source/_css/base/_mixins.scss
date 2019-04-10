@@ -204,14 +204,14 @@
 
 // MEDIA QUERIES
 // Quickly write simple media queries
-// @include mq(600px) {  }
+// @include mq(600) {  }
 @mixin _mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '') {
   @if $additional_media != '' {
-    @media (#{$mq_min_max}-#{$mq_direction}: $breakpoint, $additional_media) {
+    @media (#{$mq_min_max}-#{$mq_direction}: px_to_rem($breakpoint), $additional_media) {
       @content;
     }
   } @else {
-    @media (#{$mq_min_max}-#{$mq_direction}: $breakpoint) {
+    @media (#{$mq_min_max}-#{$mq_direction}: px_to_rem($breakpoint)) {
       @content;
     }
   }
@@ -224,7 +224,7 @@
 }
 
 @mixin mq_max($breakpoint, $additional_media: '') {
-  @include _mq_handler('max', 'width', ($breakpoint - 1px), $additional_media) {
+  @include _mq_handler('max', 'width', ($breakpoint - 1), $additional_media) {
     @content;
   }
 }
@@ -236,7 +236,7 @@
 }
 
 @mixin mq_vmax($breakpoint, $additional_media: '') {
-  @include _mq_handler('max', 'height', ($breakpoint - 1px), $additional_media) {
+  @include _mq_handler('max', 'height', ($breakpoint - 1), $additional_media) {
     @content;
   }
 }
