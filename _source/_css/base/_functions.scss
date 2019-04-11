@@ -1,13 +1,18 @@
+// STRIP UNIT
+// Remove the unit of a length
+// @param {Number} $number - Number to remove unit from
+// @return {Number} - Unitless number
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
 // PIXELS TO REM
 // Convert pixels to REM (based on 16px defaul)
 // px_to_rem(1024);
-@function px_to_rem($pxValue) {
-  $returnValue: '';
-
-  @if $pxValue != '' {
-    $returnValue: $pxValue / 16;
-  }
-  $returnValue: $returnValue + rem;
-
-  @return $returnValue;
+@function px_to_rem($size) {
+  @return #{ strip-unit($size) / 16 }rem;
 }
