@@ -2,6 +2,7 @@
 //  🏡 Custom Javascript used for UI and other functionality
 
 import Vue from 'vue';
+import AdminBar from './adminbar.js';
 // import Navigation from './components/Navigation.vue';
 // import ScrollUpdater from './components/ScrollUpdater.vue';
 import Lazy from './lazy.js';
@@ -118,6 +119,9 @@ new Vue({
         window.lazy = new Lazy({
             container: '#page',
         });
+
+        // Add Admin Bar to Craft CMS websites
+        // window.adminbar = new AdminBar();
     },
     delimiters: ['${', '}'],
 });

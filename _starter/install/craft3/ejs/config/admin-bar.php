@@ -42,30 +42,6 @@ return [
 
         'additionalLinks' => [
             [
-                'title' => 'Guide',
-                'url' => 'guide/home',
-                'type' => 'cpUrl',
-                'permissions' => ['accessPlugin-guide'],
-            ],
-            [
-                'title' => 'Fields',
-                'url' => 'settings/fields',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-            [
-                'title' => 'Sections',
-                'url' => 'settings/sections',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-            [
-                'title' => 'Admin’s Log',
-                'url' => 'guide/admins-log',
-                'type' => 'cpUrl',
-                'admin' => true,
-            ],
-            [
                 'title' => 'Clear Caches',
                 'url' => 'utilities/clear-caches',
                 'type' => 'cpUrl',

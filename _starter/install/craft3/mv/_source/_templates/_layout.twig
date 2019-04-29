@@ -15,7 +15,6 @@
     </head>
     <body>
       {% minify %}
-      {{ adminbar() }}
       <div id="page">
         {% block header %}
           {% include 'partials/_ui' %}
@@ -32,6 +31,8 @@
         {% endblock %}
       </div>
       {% endminify %}
+
+      {{ getAdminBarAssets() }}
 
       {% block jsFooter %}
 <%- include('_ejs/_body_load_js') %>
