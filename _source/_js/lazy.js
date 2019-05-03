@@ -27,11 +27,11 @@ function animateHandler(element, watcher = false, onLoad = false) {
     if (element.getAttribute('data-lazy-animate') !== '' && animations) {
         let args = JSON.parse(element.getAttribute('data-lazy-animate')) || {};
         const anim = args.anim || false,
-              el = args.targets ? document.querySelectorAll(args.targets) : args.target ? document.querySelector(args.target) : element;
+            el = args.targets ? document.querySelectorAll(args.targets) : args.target ? document.querySelector(args.target) : element;
 
         reset = args.reset || false;
 
-        if (onLoad && (args.staticOnLoad || true)) {
+        if (onLoad && (args.staticOnLoad !== undefined ? args.staticOnLoad : true)) {
             args.delay = args.speed = 0;
         }
 
@@ -103,7 +103,7 @@ export default class Lazy {
                 entries.forEach((entry) => {
                     log('Lazy loading element', entry);
                     if (entry.isIntersecting) {
-                    // if (entry.intersectionRatio === 0) {
+                        // if (entry.intersectionRatio === 0) {
                         loadHandler(entry.target, this.loadObserver);
                     }
                 });
