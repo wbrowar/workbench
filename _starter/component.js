@@ -155,16 +155,17 @@ async function run() {
   twig: {
     code:
 \`{% import 'macros/component.twig' as component %}
-{{ component.c('${ answers.handle }', {  }) }}\`
-    },
-    options: [
-      { "name": 'example', "required": false, "type": 'string', "": \`''\`, "description": \`Description of example.\` },
-    ]` : '';
+{{ component.c('${ answers.handle }', {  }) }}\`,
+        options: [
+          { "name": 'example', "required": false, "type": 'string', "default": \`''\`, "description": \`Description of example.\` },
+        ] 
+    },` : '';
             const demoCode =
 `<% let component = {
   title: "${ answers.name }",
   description: "A new component.",
   background: "light",
+  modifiers: ['example'],
   html: {
     code:
 \`<div class="c_${ answers.handle }">DEMO CODE</div>\`

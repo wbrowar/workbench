@@ -23,7 +23,9 @@
 `{% import 'macros/component.twig' as component %}
 {{ component.c('button', { label: 'Button', url: 'http://google.com' }) }}`,
     options: [
+      { "name": 'anchor', "required": false, "type": 'boolean', "default": `false`, "description": `Forces the button to be an anchor element` },
       { "name": 'label', "required": false, "type": 'string', "description": `Text that appears on the button.` },
+      { "name": 'linkField', "required": false, "type": 'Link Field', "description": `Uses vales from a LinkField field to construct the button.` },
       { "name": 'target', "required": false, "type": 'string', "description": `Adds a target attribute to the button.` },
       { "name": 'url', "required": false, "type": 'string', "description": `URL that th user will be sent to upon clicking button. If a URL is not supplied, the button will switch from an 'a' element to a 'button' element.` }
     ]
