@@ -156,6 +156,7 @@ async function run() {
     code:
 \`{% import 'macros/component.twig' as component %}
 {{ component.c('${ answers.handle }', {  }) }}\`,
+        modifiers: ['example'],
         options: [
           { "name": 'example', "required": false, "type": 'string', "default": \`''\`, "description": \`Description of example.\` },
         ] 
@@ -165,7 +166,6 @@ async function run() {
   title: "${ answers.name }",
   description: "A new component.",
   background: "light",
-  modifiers: ['example'],
   html: {
     code:
 \`<div class="c_${ answers.handle }">DEMO CODE</div>\`
