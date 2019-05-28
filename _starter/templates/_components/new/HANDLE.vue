@@ -24,7 +24,7 @@
 <style lang="scss">
     // include variables and mixins if needed
     <%- ('< %-').replace(' ', '') + ' include(paths.css.src + \'automated/_colors.scss\') ' + ('% >').replace(' ', '') %>
-    <%- ('< %-').replace(' ', '') + ' include(paths.css.src + \'_mixins.scss\') ' + ('% >').replace(' ', '') %>
+    <%- ('< %-').replace(' ', '') + ' include(paths.css.src + \'base/_mixins.scss\') ' + ('% >').replace(' ', '') %>
 
     .c_<%- handle %> {
         $self: &;
