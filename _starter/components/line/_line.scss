@@ -1,0 +1,23 @@
+.c_line {
+  $self: &;
+  --margin: var(--margin-top, 20px) 0 var(--margin-bottom, 20px);
+  --width: 100%;
+  --height: #{$line_thickness};
+  --max-width: 100%;
+  --max-height: #{$line_thickness};
+
+  @include automated_color_modifiers($self, 'background-color');
+  width: var(--width);
+  height: var(--height);
+  max-width: var(--max-width);
+  max-height: var(--max-height);
+  background-color: $color_black;
+
+  @at-root #{$self}--margin {
+    margin: var(--margin);
+  }
+  @at-root #{$self}--vertical {
+    --width: #{$line_thickness};
+    --max-width: #{$line_thickness};
+  }
+}
