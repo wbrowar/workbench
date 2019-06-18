@@ -1,8 +1,17 @@
+// COLOR ALPHA
+// Add alpha to a color
+// @param {String} $color_name - Number to remove unit from
+// @return {Number} $alpha - Unitless number
+// colora(black, .5)
+@function colora($color_name, $alpha) {
+  @return rgba(var(--color-#{$color_name}-rgb), $alpha);
+}
+
 // STRIP UNIT
 // Remove the unit of a length
 // @param {Number} $number - Number to remove unit from
 // @return {Number} - Unitless number
-@function strip-unit($number) {
+@function strip_unit($number) {
   @if type-of($number) == 'number' and not unitless($number) {
     @return $number / ($number * 0 + 1);
   }
@@ -14,5 +23,5 @@
 // Convert pixels to REM (based on 16px defaul)
 // px_to_rem(1024);
 @function px_to_rem($size) {
-  @return #{ strip-unit($size) / 16 }rem;
+  @return #{ strip_unit($size) / 16 }rem;
 }

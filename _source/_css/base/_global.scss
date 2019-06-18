@@ -1,7 +1,7 @@
 // GLOBAL
 
 ::selection {
-  background-color: transparentize($color_black_raw, .5);
+  background-color: colora(black, .5);
   color: $color_white;
 }
 
@@ -28,15 +28,17 @@ img {
 video {
   width: 100%;
 }
-// removes outline for mouse users, but keeps outline for keyboard users
+// Removes outline for mouse users, but keeps outline for keyboard users
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-// hide items with v-cloak attribute until vue is loaded and ready to go
+// Hide items with v-cloak attribute until Vue is loaded and ready to go
 [v-cloak] {
   display: none;
 }
+
+// Make element bright and easy to see that it needs to be swapped out during development
 .fpo {
   background-color: fuchsia;
   outline: 5px solid fuchsia;

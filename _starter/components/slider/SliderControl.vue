@@ -53,7 +53,7 @@
 
 <style lang="scss">
     <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + '_mixins.scss') %>
+    <%- include(paths.css.src + 'base/_mixins.scss') %>
 
     $_dot_size: 10px;
     .c_slider_control {

@@ -37,7 +37,7 @@ NPM Scripts may be added depending on what type of project you are creating. Che
 | `pub` | Completes the build script in `production` mode, then does a GIT commit and push. |
 | `pubd` | Does the same as `pub` but merges files from `dev` to `master` and does the commit from `master`. |
 | `start` | Does a `git pull`, updates NPM and Composer dependencies, then runs the `watch` script. |
-| `update` | Updates NPM and Composer dependencies. |
+| `update` | Updates Node and Composer dependencies. |
 | `watch` | Completes the development build, then watches files in the `_source` folder for changes. |
 
 If you use an `.alias` file for command line aliases, here are shortcuts for these scripts.
@@ -163,10 +163,10 @@ Remove any options you don’t want to create a preset for. You will still be ab
 To add a file for PostCSS processing, add its filename to the `postcss` array in `package.json`.
 
 #### Using Colors in CSS
-- Colors that are defined in `package.json`, in the `colors` object, will be generated as SCSS variables.
+- Colors that are defined in `package.json`, in the `colors` object, will be generated as SASS variables.
   - For example, `"blue": "rgb(0, 0, 255)"` can be used in the following ways in SCSS files:
     - `$color_blue` will output `var(--color-blue)`
-    - Suffixing `_raw`, as in `$color_blue_raw`, will allow you to use SASS‘s color functions. For example, `transparentize($color_blue_raw, .4)` will output `rgba(0, 0, 255, .6)`
+    - Using the `colora()` SASS function allows you to set an alpha value onto a color while maintaining keeping it's RGB value as a CSS Custom Property. For example, `colora(blue, .6)` will output `rgba(var(--color-blue-rgb), .6)`
     - Setting the color value using CSS Custom Properties can override a color for easier theming. For example:
 ```scss
   .parent {
