@@ -927,30 +927,45 @@ async function postCss() {
 
         if (count > 0) {
             pkg.postcss.forEach((item) => {
-                purify([
-                    `${ paths.templates.dist }**/*.${ templateExtension }`,
-                    `${ paths.js.dist }**/*.js`,
-                    `${ paths.components.src }**/*.vue`,
-                ], [paths.css.dist + item + filenameVersion('.') + '.css'], { info: verbose }, (purifiedCss) => {
-                    postcss([
+                let postCssActions = [];
+
+                if (item.autoprefixer || false) {
+                    postCssActions.push(
                         autoprefixer({
-                            browsers: pkg.browserlist.autoprefix
+                            overrideBrowserslist: pkg.browserlist.autoprefix
                         })
-                    ])
-                        .process(purifiedCss)
+                    );
+                }
+                // if (item.purify || false) {
+                //     postCssActions.push(
+                //         purify([
+                //             `${ paths.templates.dist }**/*.${ templateExtension }`,
+                //             `${ paths.js.dist }**/*.js`,
+                //             `${ paths.components.src }**/*.vue`,
+                //         ],
+                //         [css],
+                //         { info: verbose })
+                //     );
+                // }
+
+                if (postCssActions.length > 0) {
+                    fs.readFile(paths.css.dist + item.filename + filenameVersion('.') + '.css', (err, css) => {
+                        postcss(postCssActions)
+                        .process(css)
                         .then(result => {
-                            fs.outputFile(`${ paths.css.dist + item + filenameVersion('.') }.css`, result.css, (err) => {
+                            fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
                                 if (err) {
                                     log('warn', err, verbose);
                                 }
-                                log('verbose', `POST CSS ran: ${ item }`, verbose);
+                                log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
                                 count--;
                                 if (count === 0) {
                                     resolve();
                                 }
                             });
                         })
-                })
+                    });
+                }
             });
         } else {
             count--;
