@@ -1,4 +1,7 @@
 :root {
+  // COLORS
+  @include automated_colors;
+
   // LAYOUT
   --footer-height: 80px;
   --grid-gap: 20px;
