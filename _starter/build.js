@@ -291,7 +291,7 @@ async function run() {
             browserSync.init({
                 browser: pkg.browserSync.browser,
                 proxy: pkg.browserSync.url,
-                reloadThrottle: browsersyncInterval * 10,
+                reloadThrottle: browsersyncInterval * 3,
                 ignore: [paths.templates.src + '_css'],
                 files: [
                     {

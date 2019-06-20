@@ -2,7 +2,7 @@
 //  🖌 Global animations used around the website
 
 import { log, warn } from './global.js';
-import { TweenMax, Power1 } from 'gsap/TweenMax';
+import { TweenMax, Power0, Power1 } from 'gsap/TweenMax';
 
 export function animate(animation, el, args) {
     const delay = args.delay !== undefined ? _randomFromRange(args.delay) : 0,
@@ -15,6 +15,13 @@ export function animate(animation, el, args) {
                 delay: delay,
                 ease: Power1.easeOut,
             });
+            break;
+        case 'custom':
+            let props = JSON.parse(args.properties);
+            props.ease = Power0.easeNone;
+            props.yoyoEase = Power0.easeNone;
+
+            TweenMax.to(el, speed, props);
             break;
         case 'fade-in':
             TweenMax.to(el, speed, {

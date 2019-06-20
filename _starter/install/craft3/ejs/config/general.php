@@ -22,6 +22,7 @@ return [
         'enableStyleInventory' => getenv('STYLE_INVENTORY') ?: false,
         'enableCsrfProtection' => true,
         'generateTransformsBeforePageLoad' => true,
+        'isSystemLive' => getenv('IS_SYSTEM_LIVE') ?: false,
         'omitScriptNameInUrls' => true,
         'securityKey' => getenv('SECURITY_KEY'),
         'siteUrl' => getenv('SITE_URL'),
