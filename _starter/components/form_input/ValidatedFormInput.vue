@@ -2,8 +2,8 @@
     <div>
         <label :for="inputId">{{ label }}<span class="c_form_input__required_indicator" v-if="required">•</span></label>
 
-        <textarea :id="inputId" :class="{ inputClasses, 'c_form_input--invalid': !isValid }" :required="required" v-if="inputType === 'textarea'"></textarea>
-        <input :id="inputId" :class="{ inputClasses, 'c_form_input--invalid': !isValid }" :type="inputType" :name="inputName" :required="required" @blur="validateField" v-else>
+        <textarea :id="inputId" :class="{ inputClasses, 'c_form_input--invalid': !isValid }" :placeholder="inputPlaceholder" :required="required" v-if="inputType === 'textarea'"></textarea>
+        <input :id="inputId" :class="{ inputClasses, 'c_form_input--invalid': !isValid }" :type="inputType" :name="inputName" :placeholder="inputPlaceholder" :required="required" @blur="validateField" v-else>
 
         <div class="c_form_input__error" v-if="!isValid">{{ error }}</div>
     </div>
@@ -99,7 +99,7 @@
                 this.validateField();
             }
 
-            if (this.format) {
+            if (this.input && this.format) {
                 let options = false;
 
                 switch (this.format) {
