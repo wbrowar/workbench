@@ -522,7 +522,7 @@ async function clean(type = 'all') {
                     files.forEach((item) => {
                         fs.remove(item, err => {
                             if (err) return console.error(err);
-                            log('verbose', `Deleted: ${ item }`, verbose);
+                            log('verbose', `Deleted: ${ item }, Pattern: ${ pattern }`, verbose);
                             count--;
                             if (count === 0) {
                                 removeTaskIndex();

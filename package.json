@@ -253,7 +253,7 @@
   },
   "projectTemplateLanguage": "ejs",
   "projectType": "html",
-  "templateExtensions": "html,twig,php,json,csv,css,js",
+  "templateExtensions": "html,twig,php,json,csv",
   "overrideVerbose": false,
   "overrideVersion": false,
   "dependencies": {
