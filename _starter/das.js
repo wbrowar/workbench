@@ -29,20 +29,20 @@ const backendUrl = 'http://localhost:27301',
       pid = 'DK5QPID';
 
 // get local config file
-log('verbose', `Looking for local configuration file in home directory: .wb-starter.config.json`, verbose);
+// log('verbose', `Looking for local configuration file in home directory: .wb-starter.config.json`, verbose);
 if (fs.existsSync(`${ os.homedir() }/.wb-starter.config.json`)) {
-    log('verbose', `wb-starter configuration file found`, verbose);
+    // log('verbose', `wb-starter configuration file found`, verbose);
 
     localConfig = require(`${ os.homedir() }/.wb-starter.config.json`);
 } else {
-    log('verbose', `wb-starter configuration file not found`, verbose);
+    // log('verbose', `wb-starter configuration file not found`, verbose);
 }
 
 module.exports = {
     animate: function (anim = 'idle', options = {}, verbose) {
         let signals = [];
         const useVerbose = options.verbose || verbose;
-        log('verbose', `Starting animation: ${ anim }`, useVerbose);
+        // log('verbose', `Starting animation: ${ anim }`, useVerbose);
 
         switch (anim) {
             case 'highlight':
@@ -75,14 +75,14 @@ function getDasSignal(zone, options = {}, verbose) {
         headers: headers,
         json: true
     }, (error, response) => {
-        log('verbose', `Das Get Zone: ${ zone }`, verbose);
+        // log('verbose', `Das Get Zone: ${ zone }`, verbose);
         // OK
         if (response && response.statusCode == 200) {
-            log('dump', response.body, verbose);
+            // log('dump', response.body, verbose);
         }
         // OK from API response
         if(response && response.statusCode != 200) {
-            log('dump', response.body, verbose);
+            // log('dump', response.body, verbose);
         }
         // OK
         if (error) {
@@ -96,14 +96,14 @@ function removeDasSignal(zone, options = {}, verbose) {
         headers: headers,
         json: true
     }, (error, response) => {
-        log('verbose', `Das Deleted Zone: ${ zone }`, verbose);
+        // log('verbose', `Das Deleted Zone: ${ zone }`, verbose);
         // OK
         if (response && response.statusCode == 200) {
-            log('dump', response.body, verbose);
+            // log('dump', response.body, verbose);
         }
         // OK from API response
         if(response && response.statusCode != 200) {
-            log('dump', response.body, verbose);
+            // log('dump', response.body, verbose);
         }
         // OK
         if (error) {
@@ -121,14 +121,14 @@ function sendDasSignals(signals, options = {}, verbose) {
                     body: signal,
                     json: true
                 }, (error, response) => {
-                    log('verbose', `Das Sent Signal to Zone: ${ signal.zoneId }`, verbose);
+                    // log('verbose', `Das Sent Signal to Zone: ${ signal.zoneId }`, verbose);
                     // OK
                     if (response && response.statusCode == 200) {
-                        log('dump', response.body, verbose);
+                        // log('dump', response.body, verbose);
                     }
                     // OK from API response
                     if(response && response.statusCode != 200) {
-                        log('dump', response.body, verbose);
+                        // log('dump', response.body, verbose);
                     }
                     // OK
                     if (error) {
@@ -228,33 +228,33 @@ function addComponentToStyleInventory(handle) {
     ];
 
     inquirer.prompt(questions).then(function (answers) {
-        log('verbose', `Answers:`, verbose);
-        log('dump', answers, verbose);
+        // log('verbose', `Answers:`, verbose);
+        // log('dump', answers, verbose);
 
         if (answers.targetPage === '__new__') {
             pkg.styleInventory['pages'][answers.newHandle] = {
                 label: answers.newTitle,
                 components: [handle]
             };
-            log('verbose', `Created a new page:`, verbose);
-            log('dump', pkg.styleInventory['pages'][answers.newHandle], verbose);
+            // log('verbose', `Created a new page:`, verbose);
+            // log('dump', pkg.styleInventory['pages'][answers.newHandle], verbose);
         } else if (answers.targetPage !== '__none__') {
             pkg.styleInventory['pages'][answers.targetPage].components.push(handle);
-            log('verbose', `Added to page:`, verbose);
-            log('dump', pkg.styleInventory['pages'][answers.targetPage], verbose);
+            // log('verbose', `Added to page:`, verbose);
+            // log('dump', pkg.styleInventory['pages'][answers.targetPage], verbose);
         }
 
         // backup package file then overwrite the version number
         fs.copy(`${ process.cwd() }/package.json`, `${ paths.starter.backups }package.json`, (err) => {
             if (err) {
-                log('warn', err, verbose);
+                // log('warn', err, verbose);
             }
-            log('verbose', `Package File Backed Up`, verbose);
+            // log('verbose', `Package File Backed Up`, verbose);
             fs.outputFile(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2), function (err) {
                 if (err) {
-                    log('warn', err, verbose);
+                    // log('warn', err, verbose);
                 }
-                log('verbose', `Package file updated.`, verbose);
+                // log('verbose', `Package file updated.`, verbose);
             });
         });
     });
@@ -267,7 +267,7 @@ function moveFile(config, delimiter = '%') {
         ejs.renderFile(config.src, config, { delimiter: delimiter }, function(err, str) {
             fs.outputFile(config.dist, str, (err) => {
                 if(!err){
-                    log('verbose', `Compiled : ${ config.dist }`, verbose);
+                    // log('verbose', `Compiled : ${ config.dist }`, verbose);
                 }
             });
         });
@@ -288,12 +288,12 @@ async function asyncForEach(array, callback) {
 
 // Synchronously run a function and wait for a callback to fire
 async function asyncFunction(startMessage, endMessage, func) {
-    log('title', startMessage);
+    // log('title', startMessage);
 
     const p = await new Promise(resolve => {
         func(resolve);
     }).then(()=>'');
-    log('title', endMessage);
+    // log('title', endMessage);
     return p;
 }
 
