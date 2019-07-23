@@ -36,6 +36,9 @@ const argv = parseArgv(),
 // use CLI arguments to set variables
 const enableImg  = argv.options.noimg ? false : true,
       runBuild   = argv.options.build || false,
+      runBump    = argv.options.bump || false,
+      runCritCss = argv.options.critcss || false,
+      runDeploy  = argv.options.deploy || false,
       runPublish = argv.options.publish || false,
       runWatch   = argv.options.watch || false,
       verbose    = pkg.overrideVerbose || argv.options.verbose || false;
@@ -101,7 +104,7 @@ async function run() {
     dasReset();
     dasAnimate('rainbow', { key: '7,5', color: '#c2ff07', title: 'Compiling Icons' }); // SPC
 
-    if (release) {
+    if (runBump) {
         const bumpPackageVersion       = bumpPackage();
         let bumpPackageVersionComplete = await bumpPackageVersion;
     }
@@ -192,12 +195,9 @@ async function run() {
 
         if (release) {
             if (pkg.postcss.length > 0) {
-                const buildPostCss                   = postCss();
-                let buildPostCssComplete             = await buildPostCss;
+                const buildPostCss               = postCss();
+                let buildPostCssComplete         = await buildPostCss;
             }
-
-            const buildCritcss                   = critCss();
-            let buildCritcssComplete             = await buildCritcss;
         }
 
         if (!runWatch) {
@@ -209,6 +209,16 @@ async function run() {
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Build Complete' });
         dasRemove('KEY_B');
+    }
+
+    if (runCritCss) {
+        const buildCritcss                       = critCss();
+        let buildCritcssComplete                 = await buildCritcss;
+    }
+
+    if (runDeploy) {
+        const deployCleanAll                     = clean();
+        let deployCleanComplete                  = await deployCleanAll;
     }
 
     if (runPublish) {
