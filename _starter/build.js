@@ -872,24 +872,30 @@ async function compileJs() {
 }
 
 async function dasAnimate(anim, options = { }) {
-    if (localConfig.das.enabled || false) {
-        options['verbose'] = verbose;
-        log('verbose', `Running Das animation: ${ anim }`, verbose);
-        das.animate(anim, options, verbose);
+    if (localConfig.das || false) {
+        if (localConfig.das.enabled || false) {
+            options['verbose'] = verbose;
+            log('verbose', `Running Das animation: ${ anim }`, verbose);
+            das.animate(anim, options, verbose);
+        }
     }
 }
 async function dasRemove(zone, options = { }) {
-    if (localConfig.das.enabled || false) {
-        options['verbose'] = verbose;
-        log('verbose', `Removing Das Zone: ${ zone }`, verbose);
-        das.remove(zone, options, verbose);
+    if (localConfig.das || false) {
+        if (localConfig.das.enabled || false) {
+            options['verbose'] = verbose;
+            log('verbose', `Removing Das Zone: ${ zone }`, verbose);
+            das.remove(zone, options, verbose);
+        }
     }
 }
 async function dasReset() {
-    if (localConfig.das.enabled || false) {
-        log('verbose', `Resetting Das`, verbose);
-        dasRemove('KEY_W');
-        dasRemove('7,5'); // SPC
+    if (localConfig.das || false) {
+        if (localConfig.das.enabled || false) {
+            log('verbose', `Resetting Das`, verbose);
+            dasRemove('KEY_W');
+            dasRemove('7,5'); // SPC
+        }
     }
 }
 
