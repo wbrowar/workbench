@@ -12,6 +12,8 @@ return [
         'aliases' => [
             '@basePath' => realpath(dirname(__DIR__)) . getenv('BASE_PATH'),
             '@baseUrl' => getenv('BASE_URL'),
+            '@baseAssetPath' => realpath(dirname(__DIR__)) . getenv('BASE_PATH') . '/u',
+            '@baseAssetUrl' => getenv('BASE_URL') . '/u',
         ],
         'cacheDuration' => false,
         'cpTrigger' => '<%- install.cpTrigger %>',
