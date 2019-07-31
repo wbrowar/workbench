@@ -1,25 +1,25 @@
 // import node modules
 const autoprefixer = require('autoprefixer'),
-      browserSync = require('browser-sync').create(),
-      critical = require('critical'),
-      chalk = require('chalk'),
-      das = require('./das.js'),
-      exec = require('child_process'),
-      ejs = require('ejs'),
-      favicons = require('favicons'),
-      fs = require('fs-extra'),
-      glob = require('glob-all'),
-      inquirer = require('inquirer'),
-      notifier = require('node-notifier'),
-      os = require('os'),
-      path = require('path'),
-      postcss = require('postcss'),
-      purify = require('purify-css'),
-      sass = require('node-sass'),
-      sassGlobImporter = require('node-sass-glob-importer'),
-      sharp = require('sharp'),
-      semver = require('semver'),
-      webpack = require('webpack');
+    browserSync = require('browser-sync').create(),
+    critical = require('critical'),
+    chalk = require('chalk'),
+    das = require('./das.js'),
+    exec = require('child_process'),
+    ejs = require('ejs'),
+    favicons = require('favicons'),
+    fs = require('fs-extra'),
+    glob = require('glob-all'),
+    inquirer = require('inquirer'),
+    notifier = require('node-notifier'),
+    os = require('os'),
+    path = require('path'),
+    postcss = require('postcss'),
+    purify = require('purify-css'),
+    sass = require('node-sass'),
+    sassGlobImporter = require('node-sass-glob-importer'),
+    sharp = require('sharp'),
+    semver = require('semver'),
+    webpack = require('webpack');
 
 // HELLO
 log('app', `Beginning`);
@@ -29,19 +29,21 @@ let pkg = require(`${ process.cwd() }/package.json`);
 
 // set constants
 const argv = parseArgv(),
-      env = process.env.NODE_ENV || 'development',
-      release = env === 'production',
-      timestamp = Math.floor(new Date().getTime() / 1000);
+    env = process.env.NODE_ENV || 'development',
+    release = env === 'production',
+    timestamp = Math.floor(new Date().getTime() / 1000);
 
 // use CLI arguments to set variables
-const enableImg  = argv.options.noimg ? false : true,
-      runBuild   = argv.options.build || false,
-      runBump    = argv.options.bump || false,
-      runCritCss = argv.options.critcss || false,
-      runDeploy  = argv.options.deploy || false,
-      runPublish = argv.options.publish || false,
-      runWatch   = argv.options.watch || false,
-      verbose    = pkg.overrideVerbose || argv.options.verbose || false;
+const enableImg     = argv.options.noimg ? false : true,
+    commitMessage = argv.options.commitmessage || false,
+    runBuild      = argv.options.build || false,
+    runBump       = argv.options.bump || false,
+    runCommit     = argv.options.commit || false,
+    runCritCss    = argv.options.critcss || false,
+    runDeploy     = argv.options.deploy || false,
+    runPublish    = argv.options.publish || false,
+    runWatch      = argv.options.watch || false,
+    verbose       = pkg.overrideVerbose || argv.options.verbose || false;
 
 // set variables based on pkg options
 let paths = getPaths(pkg.paths),
@@ -110,50 +112,51 @@ async function run() {
     }
 
     // ask questions related to build task
-    if (runPublish) {
-        const askPublishQuestions = asyncFunction(
-            `Publish Options`, `Publish Options Set`, (resolve) => {
+    if (runCommit) {
+        const askCommitQuestions = asyncFunction(
+            `Git Options`, `Publish Options Set`, (resolve) => {
 
-                const publishQuestions = [
-                    {
-                        type: 'confirm',
-                        name: 'commitRelease',
-                        message: 'Commit and push release?',
-                        default: false,
-                    },
-                    {
-                        type: 'input',
-                        name: 'message',
-                        message: 'Commit message',
-                        default: (answers) => {
-                            return answers.enableTag ? `Version ${ version }` : '';
-                        },
-                        validate: (answer) => {
-                            return answer !== '';
-                        },
-                        when: (answers) => {
-                            return answers.commitRelease;
-                        },
-                    },
-                    {
-                        type: 'input',
-                        name: 'tag',
-                        message: 'Release tag',
-                        when: (answers) => {
-                            return answers.commitRelease;
-                        },
-                    },
-                ];
-
-                inquirer.prompt(publishQuestions).then((answers) => {
-                    log('verbose', `Publishing with settings:`, verbose);
-                    log('dump', answers, verbose);
-
-                    publishAnswers = answers;
+                if (commitMessage) {
+                    publishAnswers.commitRelease = true;
+                    publishAnswers.message = commitMessage;
                     resolve();
-                });
+                } else {
+                    const publishQuestions = [
+                        {
+                            type: 'confirm',
+                            name: 'commitRelease',
+                            message: 'Commit and push release?',
+                            default: true,
+                            when: () => {
+                                return !!commitMessage;
+                            },
+                        },
+                        {
+                            type: 'input',
+                            name: 'message',
+                            message: 'Commit message',
+                            default: (answers) => {
+                                return commitMessage || '';
+                            },
+                            validate: (answer) => {
+                                return answer !== '';
+                            },
+                            when: (answers) => {
+                                return answers.commitRelease;
+                            },
+                        },
+                    ];
+
+                    inquirer.prompt(publishQuestions).then((answers) => {
+                        log('verbose', `Publishing with settings:`, verbose);
+                        log('dump', answers, verbose);
+
+                        publishAnswers = answers;
+                        resolve();
+                    });
+                }
             });
-        let askPublishQuestionsComplete = await askPublishQuestions;
+        let askCommitQuestionsComplete = await askCommitQuestions;
     }
 
     // run build tasks
@@ -276,20 +279,14 @@ async function run() {
 
         log('verbose', `Project moved to release directory.`, verbose);
 
-        if (publishAnswers.commitRelease) {
-            process.chdir(paths.starter.release);
-            // verboseExec(`git pull`, verbose);
-            // verboseExec(`git status`, verbose);
-            verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
-
-            if (publishAnswers.tag) {
-                verboseExec(`git tag -a ${ publishAnswers.tag } -m "${ publishAnswers.message }"`, verbose);
-                verboseExec(`git push --follow-tags`, verbose);
-            }
-        }
-
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Project Published' });
         dasRemove('KEY_P');
+    } else if (runCommit) {
+        if (publishAnswers.commitRelease && publishAnswers.message) {
+            log('title', `Adding and committing code to repo.`);
+            verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
+            log('verbose', `Code pushed with message: ${ publishAnswers.message }`, verbose);
+        }
     } else if (runWatch) {
         log('title', `Running Watch`);
 
@@ -967,19 +964,19 @@ async function postCss() {
                 if (postCssActions.length > 0) {
                     fs.readFile(paths.css.dist + item.filename + filenameVersion('.') + '.css', (err, css) => {
                         postcss(postCssActions)
-                        .process(css)
-                        .then(result => {
-                            fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
-                                if (err) {
-                                    log('warn', err, verbose);
-                                }
-                                log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
-                                count--;
-                                if (count === 0) {
-                                    resolve();
-                                }
-                            });
-                        })
+                            .process(css)
+                            .then(result => {
+                                fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
+                                    if (err) {
+                                        log('warn', err, verbose);
+                                    }
+                                    log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
+                                    count--;
+                                    if (count === 0) {
+                                        resolve();
+                                    }
+                                });
+                            })
                     });
                 }
             });
