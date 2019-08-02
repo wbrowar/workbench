@@ -22,6 +22,8 @@
 
 <% for (const color in pkg.colors.default) { %>$color_<%- color %>: var(--color-<%- color %>);
 <% } %>
+<% for (const color in pkg.colors.default) { %>$color_<%- color %>_raw: <%- pkg.colors.default[color] %>;
+<% } %>
 @mixin automated_color_modifiers($selector, $property) {<% for (const color in pkg.colors.default) { %>
   @at-root #{ $selector}--<%- color %> {
     #{$property}: $color_<%- color %>;
