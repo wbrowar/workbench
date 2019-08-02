@@ -172,7 +172,7 @@ async function run() {
         const buildCleanAll                      = clean();
         let buildCleanComplete                   = await buildCleanAll;
 
-        if (release && pkg.favicon.enabled) {
+        if (release && pkg.favicon.enabled && !fs.existsSync(paths.favicon.dist)) {
             const buildCompileFavicon            = compileFavicon();
             let buildCompileFaviconComplete      = await buildCompileFavicon;
         }

@@ -18,11 +18,12 @@ const configureBabelLoader = (browserList) => {
                 presets: [
                     [
                         '@babel/preset-env', {
-                        useBuiltIns: 'entry',
-                        targets: {
-                            browsers: browserList,
-                        },
-                    }
+                            corejs: 3,
+                            useBuiltIns: 'entry',
+                            targets: {
+                                browsers: browserList,
+                            },
+                        }
                     ],
                 ],
                 plugins: [
