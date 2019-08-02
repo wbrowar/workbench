@@ -3,14 +3,13 @@
     "component": "node ./_starter/component.js",
     "ci:build": "NODE_ENV=production node ./_starter/build.js --build",
     "das": "node ./_starter/build.js",
-    "dev": "node ./_starter/build.js --build",
-    "deploy": "NODE_ENV=production node ./_starter/build.js --build --bump --commit --critcss --deploy",
-    "prod": "NODE_ENV=production node ./_starter/build.js --build --critcss",
-    "pub": "NODE_ENV=production node ./_starter/build.js --build --publish",
-    "pubd": "npm run pub && git checkout master && git merge dev && git push && git checkout dev",
+    "dev": "node ./_starter/build.js --build --prettier",
+    "deploy": "NODE_ENV=production node ./_starter/build.js --build --bump --commit --critcss --deploy --prettier",
+    "prod": "NODE_ENV=production node ./_starter/build.js --build --critcss --prettier",
+    "pub": "NODE_ENV=production node ./_starter/build.js --build --prettier --publish",
     "start": "git pull && npm run update && npm run watch",
     "update": "npm update",
-    "watch": "node ./_starter/build.js --build --watch"
+    "watch": "node ./_starter/build.js --build --prettier --watch"
   },
   "browserSync": {
     "browser": "google chrome",
@@ -253,6 +252,10 @@
       "src": "_templates/"
     }
   },
+  "prettier": {
+    "files": "_source/**/*.{js,json,scss,vue}",
+    "options": "--write"
+  },
   "projectTemplateLanguage": "ejs",
   "projectType": "html",
   "templateExtensions": "html,twig,php,json,csv",
@@ -292,6 +295,7 @@
     "node-sass": "^4.11.0",
     "node-sass-glob-importer": "^5.3.0",
     "postcss": "^7.0.14",
+    "prettier": "^1.18.2",
     "purify-css": "^1.2.5",
     "request": "^2.88.0",
     "sass-loader": "^7.1.0",

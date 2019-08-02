@@ -1,25 +1,25 @@
 // import node modules
 const autoprefixer = require('autoprefixer'),
-    browserSync = require('browser-sync').create(),
-    critical = require('critical'),
-    chalk = require('chalk'),
-    das = require('./das.js'),
-    exec = require('child_process'),
-    ejs = require('ejs'),
-    favicons = require('favicons'),
-    fs = require('fs-extra'),
-    glob = require('glob-all'),
-    inquirer = require('inquirer'),
-    notifier = require('node-notifier'),
-    os = require('os'),
-    path = require('path'),
-    postcss = require('postcss'),
-    purify = require('purify-css'),
-    sass = require('node-sass'),
-    sassGlobImporter = require('node-sass-glob-importer'),
-    sharp = require('sharp'),
-    semver = require('semver'),
-    webpack = require('webpack');
+      browserSync = require('browser-sync').create(),
+      critical = require('critical'),
+      chalk = require('chalk'),
+      das = require('./das.js'),
+      exec = require('child_process'),
+      ejs = require('ejs'),
+      favicons = require('favicons'),
+      fs = require('fs-extra'),
+      glob = require('glob-all'),
+      inquirer = require('inquirer'),
+      notifier = require('node-notifier'),
+      os = require('os'),
+      path = require('path'),
+      postcss = require('postcss'),
+      prettier = require("prettier"),
+      sass = require('node-sass'),
+      sassGlobImporter = require('node-sass-glob-importer'),
+      sharp = require('sharp'),
+      semver = require('semver'),
+      webpack = require('webpack');
 
 // HELLO
 log('app', `Beginning`);
@@ -29,21 +29,22 @@ let pkg = require(`${ process.cwd() }/package.json`);
 
 // set constants
 const argv = parseArgv(),
-    env = process.env.NODE_ENV || 'development',
-    release = env === 'production',
-    timestamp = Math.floor(new Date().getTime() / 1000);
+      env = process.env.NODE_ENV || 'development',
+      release = env === 'production',
+      timestamp = Math.floor(new Date().getTime() / 1000);
 
 // use CLI arguments to set variables
 const enableImg     = argv.options.noimg ? false : true,
-    commitMessage = argv.options.commitmessage || false,
-    runBuild      = argv.options.build || false,
-    runBump       = argv.options.bump || false,
-    runCommit     = argv.options.commit || false,
-    runCritCss    = argv.options.critcss || false,
-    runDeploy     = argv.options.deploy || false,
-    runPublish    = argv.options.publish || false,
-    runWatch      = argv.options.watch || false,
-    verbose       = pkg.overrideVerbose || argv.options.verbose || false;
+      commitMessage = argv.options.commitmessage || false,
+      runBuild      = argv.options.build || false,
+      runBump       = argv.options.bump || false,
+      runCommit     = argv.options.commit || false,
+      runCritCss    = argv.options.critcss || false,
+      runDeploy     = argv.options.deploy || false,
+      runPrettier    = argv.options.prettier || false,
+      runPublish    = argv.options.publish || false,
+      runWatch      = argv.options.watch || false,
+      verbose       = pkg.overrideVerbose || argv.options.verbose || false;
 
 // set variables based on pkg options
 let paths = getPaths(pkg.paths),
@@ -157,6 +158,10 @@ async function run() {
                 }
             });
         let askCommitQuestionsComplete = await askCommitQuestions;
+    }
+
+    if (runPrettier) {
+        prettierOnFile();
     }
 
     // run build tasks
@@ -311,6 +316,8 @@ async function run() {
                                 browsersyncComponentsMoving = true;
                                 setTimeout(() => { browsersyncReady.components = true; }, (browsersyncInterval * 10));
 
+                                prettierOnFile(file);
+
                                 const watchUpdateComponents           = updateComponents();
                                 let watchUpdateComponentsComplete     = await watchUpdateComponents;
 
@@ -345,6 +352,8 @@ async function run() {
                                 log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.css = false;
                                 setTimeout(() => { browsersyncReady.css = true; }, browsersyncInterval);
+
+                                prettierOnFile(file);
 
                                 const watchCompileCss       = compileCss();
                                 let watchCompileCssComplete = await watchCompileCss;
@@ -394,6 +403,8 @@ async function run() {
                                 browsersyncReady.js = false;
                                 setTimeout(() => { browsersyncReady.js = true; }, browsersyncInterval);
 
+                                prettierOnFile(file);
+
                                 const watchCompileJs       = compileJs();
                                 let watchCompileJsComplete = await watchCompileJs;
 
@@ -410,6 +421,8 @@ async function run() {
                                 browsersyncReady.templates = false;
                                 setTimeout(() => { browsersyncReady.templates = true; }, browsersyncInterval);
 
+                                prettierOnFile(file);
+
                                 const watchCompileTemplates       = compileTemplates();
                                 let watchCompileTemplatesComplete = await watchCompileTemplates;
 
@@ -420,10 +433,6 @@ async function run() {
                     },
                 ]
             });
-            // process.on('exit', (code) => {
-            //     dasRemove('KEY_W');
-            //     dasRemove('7,5'); // SPC
-            // });
         }
     }
 
@@ -964,19 +973,19 @@ async function postCss() {
                 if (postCssActions.length > 0) {
                     fs.readFile(paths.css.dist + item.filename + filenameVersion('.') + '.css', (err, css) => {
                         postcss(postCssActions)
-                            .process(css)
-                            .then(result => {
-                                fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
-                                    if (err) {
-                                        log('warn', err, verbose);
-                                    }
-                                    log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
-                                    count--;
-                                    if (count === 0) {
-                                        resolve();
-                                    }
-                                });
-                            })
+                        .process(css)
+                        .then(result => {
+                            fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
+                                if (err) {
+                                    log('warn', err, verbose);
+                                }
+                                log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
+                                count--;
+                                if (count === 0) {
+                                    resolve();
+                                }
+                            });
+                        })
                     });
                 }
             });
@@ -989,6 +998,27 @@ async function postCss() {
     }).then(()=>'');
     log('title', `Post CSS Complete`);
     return p;
+}
+
+function prettierOnFile(file = null) {
+    if (runPrettier && pkg.prettier) {
+        log('title', `Running Prettier`);
+
+        let files = false;
+
+        if (file) {
+            if (glob.sync(pkg.prettier.files).includes(file)) {
+                files = file;
+            }
+        } else {
+            files = pkg.prettier.files;
+        }
+
+        if (files) {
+            verboseExec(`prettier --config ./.prettierrc ${ pkg.prettier.options } "${ files }"`, verbose);
+        }
+        log('title', `Prettier Ran`);
+    }
 }
 
 async function updateComponents() {
