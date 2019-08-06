@@ -40,6 +40,7 @@ return [
         'backupOnUpdate' => false,
         'devMode' => false,
         'enableTemplateCaching' => true,
+//        'run­QueueAu­to­mat­i­cal­ly' => false,
     ],
 
     // Staging (pre-production) environment
@@ -51,6 +52,7 @@ return [
         'devMode' => false,
         'enableTemplateCaching' => true,
         'rememberedUserSessionDuration' => 31557600,
+//        'run­QueueAu­to­mat­i­cal­ly' => false,
         'userSessionDuration' => 31557600,
     ],
 
