@@ -168,10 +168,6 @@ async function run() {
             type: 'input',
             name: 'dbPrefix',
             message: 'Database Prefix',
-            default: (answers) => {
-                const defaultPrefix = ['craft3'].includes(answers.projectType) ? 'craft' : '';
-                return localConfig ? (localConfig.dbPrefix || defaultPrefix) : defaultPrefix;
-            },
             when: (answers) => {
                 return answers.setupDb;
             },
