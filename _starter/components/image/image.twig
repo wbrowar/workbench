@@ -31,16 +31,16 @@
             {% if craft.imager.serverSupportsWebp() %}
                 {% set webpGlobals = globals|merge({ format: 'webp' }) %}
                 {% set webpTransformedImages = craft.imager.transformImage(image, imager.transforms ?? {}, webpGlobals) %}
-                <source {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ craft.imager.srcset(webpTransformedImages) }}" sizes="{{ sizes }}" type="image/webp" />
+                <source {% if lazyLoad %}loading="lazy" data-lazy-load data-{% endif %}srcset="{{ craft.imager.srcset(webpTransformedImages) }}" sizes="{{ sizes }}" type="image/webp" />
             {% endif %}
 
-            <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ craft.imager.srcset(transformedImages) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
+            <img {% if lazyLoad %}loading="lazy" data-lazy-load data-{% endif %}srcset="{{ craft.imager.srcset(transformedImages) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
         {% elseif transforms|length %}
             {# Add webp images back in if there is a plugin—like Image Optimize—or another way to create them #}
             {#<source {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ self.getSrcSetFromObject({ image: image, transforms: transforms, suffix: '.webp' }) }}" sizes="{{ sizes }}" type="image/webp" />#}
-            <img {% if lazyLoad %}data-lazy-load data-{% endif %}srcset="{{ self.getSrcSetFromObject({ image: image, transforms: transforms }) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
+            <img {% if lazyLoad %}loading="lazy" data-lazy-load data-{% endif %}srcset="{{ self.getSrcSetFromObject({ image: image, transforms: transforms }) }}" src="{{ placeholder }}" sizes="{{ sizes }}" alt="{{ alt }}" />
         {% else %}
-            <img {% if lazyLoad %}data-lazy-load data-{% endif %}src="{{ image.url }}" alt="{{ alt }}" />
+            <img {% if lazyLoad %}loading="lazy" data-lazy-load data-{% endif %}src="{{ image.url }}" alt="{{ alt }}" />
         {% endif %}
     </picture>
     {% if caption ?? false -%}

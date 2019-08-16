@@ -10,7 +10,7 @@
 <figure class="c_image<%- classes %>" <%- attributes %>>
     <picture>
         <% if (webpSrcset) { %><source type="image/webp" data-lazy-load data-srcset="<%- webpSrcset %>">
-        <% } %><img data-lazy-load src="<%- placeholder %>"
+        <% } %><img loading="lazy" data-lazy-load src="<%- placeholder %>"
              sizes="100vw"
              alt="<%= alt %>"
              data-srcset="<%- srcset %>">

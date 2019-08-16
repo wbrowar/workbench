@@ -1,179 +1,146 @@
-dateModified: 1550247674
+dateModified: 1565988869
 email:
-  fromEmail: wbrowar@gmail.com
-  fromName: 'My Site'
+  fromEmail: $EMAIL_SYSTEM_EMAIL_ADDRESS
+  fromName: $EMAIL_SENDER_NAME
+  template: ''
   transportType: craft\mail\transportadapters\Sendmail
+  transportSettings: null
 fieldGroups:
-  192e5cb4-2e8e-4608-a3c3-49934dc57436:
-    name: SEO
-  c5b754fa-8838-4c61-8873-a4a5dc5ce1b7:
+  31591f3c-b2da-4ef4-877a-4756a80b1d50:
     name: Common
-fields:
-  28d83a54-0139-4e9c-a874-bc6ce552cebd:
-    contentColumnType: text
-    fieldGroup: 192e5cb4-2e8e-4608-a3c3-49934dc57436
-    handle: seo
-    instructions: ''
-    name: SEO
-    searchable: true
-    settings:
-      elementDisplayPreviewType: google
-      facebookEnabledFields:
-        - seoPreview
-        - ogTitle
-        - ogDescription
-        - ogImage
-        - ogImageDescription
-      facebookTabEnabled: '1'
-      generalEnabledFields:
-        - seoPreview
-        - seoTitle
-        - seoDescription
-        - seoImage
-        - seoImageDescription
-        - robots
-        - canonicalUrl
-      generalTabEnabled: '1'
-      sitemapTabEnabled: ''
-      twitterEnabledFields:
-        - seoPreview
-        - twitterTitle
-        - twitterDescription
-        - twitterImage
-        - twitterImageDescription
-      twitterTabEnabled: '1'
-    translationKeyFormat: null
-    translationMethod: none
-    type: nystudio107\seomatic\fields\SeoSettings
 plugins:
-  admin-bar:
-    edition: standard
-    enabled: true
-    schemaVersion: 3.1.0
-  communicator:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  cp-field-inspect:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  grid:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  guide:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.1.0
-  image-resizer:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.0.0
-  imager:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.0.0
-  minify:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  navigation:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.6
-  redactor:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.2.1
-  seomatic:
-    edition: standard
-    enabled: true
-    schemaVersion: 3.0.6
   typedlinkfield:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
+  seomatic:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.0.8
+  redactor:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.3.0
+  minify:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  imager:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  image-resizer:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  guide:
+    edition: pro
+    enabled: true
+    schemaVersion: 2.0.0
+    settings:
+      templatePath: _guide
+      assetVolume: 8a7e7f5c-8ffc-43f6-b356-6e22c003bd43
+      clientName: ''
+      myCompanyName: ''
+  admin-bar:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.1.0
+  content-stats:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  communicator:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+    settings:
+      emailSupportContacts: ''
+      enableChangelog: '1'
+      enableEmailSupport: ''
+      enableEmailSupportForm: '1'
+      enableGlobalWidget: ''
+  cp-field-inspect:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  feed-me:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.1.2
 sections:
-  82e5ba29-1ff2-43b6-b327-eb13aa565602:
+  804fec4f-1997-47dc-908b-589f0b3fd640:
+    name: Home
+    handle: home
+    type: single
     enableVersioning: true
+    propagationMethod: all
+    siteSettings:
+      1a456e16-c64d-4f15-a96f-908626ede7a4:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: __home__
+        template: pages/home
     entryTypes:
-      9868e67e-dd2a-4584-96bb-0f45103c0e8b:
-        fieldLayouts:
-          75b4cdcd-417a-48f5-bfd2-785157595fa4:
-            tabs:
-              -
-                fields:
-                  28d83a54-0139-4e9c-a874-bc6ce552cebd:
-                    required: false
-                    sortOrder: 1
-                name: SEO
-                sortOrder: 1
+      47e686ee-1042-4b78-bf1c-4fcdae245c80:
+        name: Home
         handle: home
         hasTitleField: false
-        name: Home
-        sortOrder: 1
+        titleLabel: null
         titleFormat: '{section.name|raw}'
-        titleLabel: ''
-    handle: home
-    name: Home
-    propagateEntries: true
+        sortOrder: 1
+  8780f4ca-f1e9-4eab-8c64-2c668a7b346e:
+    name: 'Basic Page'
+    handle: basicPage
+    type: structure
+    enableVersioning: true
+    propagationMethod: all
     siteSettings:
-      292ea3b8-8d45-4df3-94f1-e79daee6f464:
+      1a456e16-c64d-4f15-a96f-908626ede7a4:
         enabledByDefault: true
         hasUrls: true
-        template: pages/home
-        uriFormat: __home__
-    type: single
-  f468a20f-405f-4e6c-8750-d9644cf97743:
-    enableVersioning: true
+        uriFormat: '{parent.uri}/{slug}'
+        template: pages/basic_page
+    structure:
+      uid: 4e08f68d-a34d-4dbe-9cfe-546c8229dfa6
+      maxLevels: null
     entryTypes:
-      b7236375-63b9-4f4b-a7a9-20f6f35108ee:
+      691d9b0d-87ab-40fc-a935-eae3b57bb8e7:
+        name: 'Basic Page'
         handle: basicPage
         hasTitleField: true
-        name: 'Basic Page'
-        sortOrder: 1
-        titleFormat: null
         titleLabel: Title
-    handle: basicPage
-    name: 'Basic Page'
-    propagateEntries: true
-    siteSettings:
-      292ea3b8-8d45-4df3-94f1-e79daee6f464:
-        enabledByDefault: true
-        hasUrls: true
-        template: pages/basic_page
-        uriFormat: '{slug}'
-    structure:
-      maxLevels: ''
-      uid: 4329fcfc-cb4b-4aba-a51c-c9977969a68e
-    type: structure
+        titleFormat: null
+        sortOrder: 1
 siteGroups:
-  794f7ca5-ed59-4ee7-8ea6-5bbbc0d5bc55:
+  9c94fc46-354f-4e2d-b28c-a884a5ea683c:
     name: 'My Site'
 sites:
-  292ea3b8-8d45-4df3-94f1-e79daee6f464:
-    baseUrl: $DEFAULT_SITE_URL
-    handle: default
-    hasUrls: true
-    language: en-US
+  1a456e16-c64d-4f15-a96f-908626ede7a4:
     name: 'My Site'
-    primary: true
-    siteGroup: 794f7ca5-ed59-4ee7-8ea6-5bbbc0d5bc55
+    handle: default
+    language: en-US
+    hasUrls: true
+    baseUrl: $DEFAULT_SITE_URL
     sortOrder: 1
+    primary: true
+    siteGroup: 9c94fc46-354f-4e2d-b28c-a884a5ea683c
 system:
   edition: pro
-  live: true
   name: 'My Site'
-  schemaVersion: 3.1.25
+  live: true
+  schemaVersion: 3.2.16
   timeZone: America/New_York
 users:
+  requireEmailVerification: true
   allowPublicRegistration: false
-  defaultGroup: ''
+  defaultGroup: null
+  photoVolumeUid: null
+  photoSubpath: ''
   groups:
-    6917754f-ff64-4232-9232-a8f78f9c66bc:
-      handle: seoAdmin
-      name: 'SEO Admin'
+    0e71a30c-d2bc-4643-86e8-4ef88987fdf0:
+      name: 'SEO Editor'
+      handle: seoEditor
       permissions:
         - accessplugin-guide
         - accessplugin-seomatic
@@ -205,67 +172,93 @@ users:
         - 'seomatic:tracking-scripts:hubspot'
         - 'seomatic:tracking-scripts'
         - 'seomatic:plugin-settings'
-    6bd6d956-aeaf-4ac9-9535-fb00dd677e85:
-      handle: contentEditor
+    15c02845-ac7d-4a42-baaf-b528aa2798bb:
       name: 'Content Editor'
+      handle: contentEditor
+      permissions:
+        - accessplugin-communicator
+        - accessplugin-guide
+        - accesscp
+        - registerusers
+        - 'assignusergroup:46a24753-03de-403c-96c4-568e5885df44'
+        - assignusergroups
+        - editusers
+        - 'createentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'publishentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'deleteentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'publishpeerentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'deletepeerentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'editpeerentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'publishpeerentrydrafts:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'deletepeerentrydrafts:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'editpeerentrydrafts:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'editentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'publishentries:804fec4f-1997-47dc-908b-589f0b3fd640'
+        - 'publishpeerentrydrafts:804fec4f-1997-47dc-908b-589f0b3fd640'
+        - 'deletepeerentrydrafts:804fec4f-1997-47dc-908b-589f0b3fd640'
+        - 'editpeerentrydrafts:804fec4f-1997-47dc-908b-589f0b3fd640'
+        - 'editentries:804fec4f-1997-47dc-908b-589f0b3fd640'
+    1de3ee0e-4424-4cd7-b8d9-fbae086a2473:
+      name: 'Guide Editor'
+      handle: guideEditor
       permissions:
         - accessplugin-guide
-        - accessplugin-navigation
         - accesscp
-        - 'publishentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'publishpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'deletepeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'editpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'editentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-    835f8190-17cd-4f18-b4d9-833f462f2ba4:
-      handle: userAdmin
-      name: 'User Admin'
+        - editguides
+        - setaccesspermissions
+        - deleteguides
+        - useorganizer
+    46a24753-03de-403c-96c4-568e5885df44:
+      name: 'Content Author'
+      handle: contentAuthor
       permissions:
+        - accessplugin-communicator
+        - accessplugin-guide
+        - accesscp
+        - 'createentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'publishentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'deleteentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'publishpeerentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'deletepeerentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'editpeerentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'editentries:8780f4ca-f1e9-4eab-8c64-2c668a7b346e'
+        - 'publishentries:804fec4f-1997-47dc-908b-589f0b3fd640'
+        - 'editentries:804fec4f-1997-47dc-908b-589f0b3fd640'
+    48c65c4b-8797-4301-9213-274e2037ace4:
+      name: 'User Admin'
+      handle: userAdmin
+      permissions:
+        - accessplugin-communicator
+        - accessplugin-guide
         - accesscp
         - registerusers
         - moderateusers
-        - 'assignusergroup:96ddc9e2-4d22-4d9a-bc4b-b5c2c303f31e'
-        - 'assignusergroup:6bd6d956-aeaf-4ac9-9535-fb00dd677e85'
-        - 'assignusergroup:6917754f-ff64-4232-9232-a8f78f9c66bc'
-        - 'assignusergroup:835f8190-17cd-4f18-b4d9-833f462f2ba4'
+        - assignuserpermissions
+        - 'assignusergroup:46a24753-03de-403c-96c4-568e5885df44'
+        - 'assignusergroup:15c02845-ac7d-4a42-baaf-b528aa2798bb'
+        - 'assignusergroup:1de3ee0e-4424-4cd7-b8d9-fbae086a2473'
+        - 'assignusergroup:0e71a30c-d2bc-4643-86e8-4ef88987fdf0'
         - assignusergroups
+        - administrateusers
+        - impersonateusers
         - editusers
-    96ddc9e2-4d22-4d9a-bc4b-b5c2c303f31e:
-      handle: contentAdmin
-      name: 'Content Admin'
-      permissions:
-        - accesssitewhensystemisoff
-        - accessplugin-guide
-        - accessplugin-navigation
-        - accesscp
-        - 'publishentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'publishpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'deletepeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'editpeerentrydrafts:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'editentries:82e5ba29-1ff2-43b6-b327-eb13aa565602'
-        - 'saveassetinvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
-        - 'createfoldersinvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
-        - 'deletefilesandfoldersinvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
-        - 'viewvolume:af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8'
-  photoSubpath: ''
-  photoVolumeUid: af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8
-  requireEmailVerification: true
+        - deleteusers
 volumes:
-  af7e0cbd-9c86-438c-9d7e-1e9d3de5a0d8:
-    handle: userPhotos
-    hasUrls: true
-    name: 'User Photos'
-    settings:
-      path: '@basePath/u/users/'
-    sortOrder: 2
-    type: craft\volumes\Local
-    url: '@baseUrl/u/users/'
-  f5b7612c-9c81-4a2d-9ad5-01c3b88c40f9:
-    handle: guide
-    hasUrls: true
+  8a7e7f5c-8ffc-43f6-b356-6e22c003bd43:
     name: Guide
-    settings:
-      path: '@basePath/u/guide/'
-    sortOrder: 1
+    handle: guide
     type: craft\volumes\Local
-    url: '@baseUrl/u/guide/'
+    hasUrls: true
+    url: '@baseUrl/guide'
+    settings:
+      path: '@basePath/guide'
+    sortOrder: 1
+  8d7b2379-848e-4919-920a-51ad22e0484b:
+    name: Imports
+    handle: imports
+    type: craft\volumes\Local
+    hasUrls: true
+    url: '@baseAssetUrl/imports/'
+    settings:
+      path: '@baseAssetPath/imports/'
+    sortOrder: 2

@@ -384,6 +384,8 @@ async function run() {
             }
             verboseExec(`./craft project-config/sync`, verbose);
             log('verbose', `Project Config synced`, verbose);
+            verboseExec(`./craft update/update`, verbose);
+            log('verbose', `Craft and plugins updated`, verbose);
         }
 
         log('title', 'Changing package.json Defaults', verbose);

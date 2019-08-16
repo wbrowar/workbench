@@ -13,7 +13,7 @@ function isElementInViewport(el) {
     return (
         rect.top >= 0 &&
         rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) /*or $(window).height() */ &&
         rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
     );
 }
@@ -27,7 +27,11 @@ function animateHandler(element, watcher = false, onLoad = false) {
     if (element.getAttribute('data-lazy-animate') !== '' && animations) {
         let args = JSON.parse(element.getAttribute('data-lazy-animate')) || {};
         const anim = args.anim || false,
-            el = args.targets ? document.querySelectorAll(args.targets) : args.target ? document.querySelector(args.target) : element;
+            el = args.targets
+                ? document.querySelectorAll(args.targets)
+                : args.target
+                    ? document.querySelector(args.target)
+                    : element;
 
         reset = args.reset || false;
 
@@ -93,25 +97,35 @@ export default class Lazy {
         this.loadMargin = args.loadMargin || '50%';
         this.loadThreshold = args.loadThreshold || 0;
 
+        // If native lazy loading is available, ignore images
+        if ('loading' in HTMLImageElement.prototype) {
+            const images = document.querySelectorAll('[loading="lazy"]');
+            images.forEach((element) => {
+                loadHandler(element, null);
+            });
+        }
+
         this.createImagePlaceholders();
 
         // Loops through elements with `data-lazy-load` and adds each element to the observer
         // When the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
         this.loadElements = args.loadElements || document.querySelectorAll('[data-lazy-load]');
         if (this.loadElements.length > 0) {
-            this.loadObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    log('Lazy loading element', entry);
-                    if (entry.isIntersecting) {
-                        // if (entry.intersectionRatio === 0) {
-                        loadHandler(entry.target, this.loadObserver);
-                    }
-                });
-            }, {
-                rootMargin: this.loadMargin,
-                threshold: this.loadThreshold,
-            });
-            this.loadElements.forEach(element => {
+            this.loadObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        log('Lazy loading element', entry);
+                        if (entry.isIntersecting) {
+                            loadHandler(entry.target, this.loadObserver);
+                        }
+                    });
+                },
+                {
+                    rootMargin: this.loadMargin,
+                    threshold: this.loadThreshold,
+                }
+            );
+            this.loadElements.forEach((element) => {
                 if (isElementInViewport(element)) {
                     loadHandler(element, null);
                 } else {
@@ -124,45 +138,52 @@ export default class Lazy {
         // When the element scrolls into view, a callback function will be fired and data attributes will be replaced with code that loads assets
         this.animateElements = args.animateElements || document.querySelectorAll('[data-lazy-animate]');
         if (this.animateElements.length > 0) {
-            import(/* webpackChunkName: "animation" */ './animation.js').then((module) => {
-                animations = module;
+            import(/* webpackChunkName: "animation" */ './animation.js')
+                .then((module) => {
+                    animations = module;
 
-                this.animateObserver = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        log('Lazy animating element', entry);
-                        if (entry.isIntersecting) {
-                            animateHandler(entry.target, this.animateObserver);
+                    this.animateObserver = new IntersectionObserver(
+                        (entries) => {
+                            entries.forEach((entry) => {
+                                log('Lazy animating element', entry);
+                                if (entry.isIntersecting) {
+                                    animateHandler(entry.target, this.animateObserver);
+                                }
+                            });
+                        },
+                        {
+                            rootMargin: this.animateMargin,
+                            threshold: this.animateThreshold,
+                        }
+                    );
+                    this.animateElements.forEach((element) => {
+                        let args = JSON.parse(element.getAttribute('data-lazy-animate')) || {};
+
+                        if (isElementInViewport(element)) {
+                            animateHandler(element, args.reset ? this.animateObserver : null, true);
+                        } else {
+                            this.animateObserver.observe(element);
                         }
                     });
-                }, {
-                    rootMargin: this.animateMargin,
-                    threshold: this.animateThreshold,
-                });
-                this.animateElements.forEach(element => {
-                    let args = JSON.parse(element.getAttribute('data-lazy-animate')) || {};
-
-                    if (isElementInViewport(element)) {
-                        animateHandler(element, (args.reset ? this.animateObserver : null), true);
-                    } else {
-                        this.animateObserver.observe(element);
-                    }
-                });
-            }).catch(error => warn('An error occurred while loading the component'));
+                })
+                .catch((error) => warn('An error occurred while loading the component'));
         }
     }
     createImagePlaceholders() {
         const images = document.querySelectorAll('img[data-lazy-load]');
-        Array.prototype.forEach.call(images, function(el, i){
+        Array.prototype.forEach.call(images, function(el, i) {
             if (el.getAttribute('data-width') && el.getAttribute('data-height')) {
                 const width = el.getAttribute('data-width'),
                     height = el.getAttribute('data-height');
-                el.style.paddingTop = (height / width * 100) + '%';
+                el.style.paddingTop = (height / width) * 100 + '%';
                 el.style.maxWidth = el.getAttribute('data-width') + 'px';
             }
         });
     }
     updateAnimate(selector = false) {
-        const elements = selector ? document.querySelectorAll(selector + ' [data-lazy-animate],' + selector + '[data-lazy-animate]') : this.animateElements;
+        const elements = selector
+            ? document.querySelectorAll(selector + ' [data-lazy-animate],' + selector + '[data-lazy-animate]')
+            : this.animateElements;
 
         elements.forEach((element) => {
             if (selector) {
@@ -175,7 +196,9 @@ export default class Lazy {
         });
     }
     updateLoad(selector = false) {
-        const elements = selector ? document.querySelectorAll(selector + ' [data-lazy-load],' + selector + '[data-lazy-load]') : this.loadElements;
+        const elements = selector
+            ? document.querySelectorAll(selector + ' [data-lazy-load],' + selector + '[data-lazy-load]')
+            : this.loadElements;
 
         elements.forEach((element) => {
             if (selector) {
