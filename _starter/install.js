@@ -382,8 +382,10 @@ async function run() {
                 verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
                 log('verbose', `Renamed default project config to project.yaml`, verbose);
             }
+            // exec.spawnSync(`./craft project-config/sync`, [], { stdio: 'inherit', shell: true });
             verboseExec(`./craft project-config/sync`, verbose);
             log('verbose', `Project Config synced`, verbose);
+            // exec.spawnSync(`./craft update/update`, [], { stdio: 'inherit', shell: true });
             verboseExec(`./craft update/update`, verbose);
             log('verbose', `Craft and plugins updated`, verbose);
         }

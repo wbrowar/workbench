@@ -24,6 +24,7 @@
     "craftcms/cms": "3.2.10",
     "nystudio107/craft-scripts": "^1.2.10",
     "aelvan/imager": "v2.1.10",
+    "craftcms/feed-me": "4.1.2",
     "craftcms/redactor": "2.3.3.2",
     "mmikkel/cp-field-inspect": "1.0.6",
     "nystudio107/craft-minify": "1.2.9",
