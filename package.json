@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "component": "node ./_starter/component.js",
+    "chn": "nvm use 11",
     "ci:build": "NODE_ENV=production node ./_starter/build.js --build",
+    "component": "node ./_starter/component.js",
     "das": "node ./_starter/build.js",
     "dev": "node ./_starter/build.js --build --prettier",
     "deploy": "NODE_ENV=production node ./_starter/build.js --build --bump --commit --critcss --deploy --prettier",
