@@ -436,9 +436,13 @@ async function run() {
                 verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
                 log('verbose', `Renamed default project config to project.yaml`, verbose);
             }
-            verboseExec(`./craft project-config/sync`, verbose);
-            verboseExec(`./craft project-config/sync`, verbose); // Running again to fix minify issue
-            log('verbose', `Project Config synced`, verbose);
+            try {
+                verboseExec(`./craft project-config/sync`, verbose);
+                log('verbose', `Project Config synced`, verbose);
+            } catch {
+                verboseExec(`./craft project-config/sync`, verbose); // Running again to fix minify issue
+                log('verbose', `Project Config synced`, verbose);
+            }
             verboseExec(`./craft update all --backup`, verbose);
             log('verbose', `Craft and plugins updated`, verbose);
         }
