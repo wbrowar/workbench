@@ -439,8 +439,6 @@ async function run() {
             verboseExec(`./craft project-config/sync`, verbose);
             verboseExec(`./craft project-config/sync`, verbose); // Running again to fix minify issue
             log('verbose', `Project Config synced`, verbose);
-            verboseExec(`./craft queue/run`, verbose);
-            log('verbose', `Ran job queue tasks`, verbose);
             verboseExec(`./craft update all --backup`, verbose);
             log('verbose', `Craft and plugins updated`, verbose);
         }
