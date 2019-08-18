@@ -433,7 +433,7 @@ async function run() {
                 verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
                 log('verbose', `Renamed default project config to project.yaml`, verbose);
             }
-            verboseExec(`./craft project-config/sync`, verbose);
+            verboseExec(`./craft project-config/sync --force`, verbose);
             log('verbose', `Project Config synced`, verbose);
             verboseExec(`./craft update/info && ./craft update all --backup`, verbose);
             log('verbose', `Craft and plugins updated`, verbose);
