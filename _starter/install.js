@@ -362,7 +362,7 @@ async function run() {
         let removeGitkeepComplete = await removeGitkeep;
 
         if (['craft3'].includes(answers.projectType)) {
-            log('title', 'Installing Craft');
+            log('title', 'Downloading Craft');
             verboseExec(`composer create-project -s RC craftcms/craft CRAFT_DOWNLOAD --ignore-platform-reqs`, verbose);
             log('verbose', `Craft 3 downloaded via composer`, verbose);
             verboseExec(`rm -r ${ process.cwd() }/CRAFT_DOWNLOAD/composer.lock`, verbose);
@@ -420,12 +420,7 @@ async function run() {
             verboseExec(`composer update --ignore-platform-reqs`, verbose);
             log('verbose', `Composer updated`, verbose);
 
-            // log('title', 'Setting Up Craft');
-            // exec.spawnSync(`./craft setup --interactive=0 --driver="mysql" --schema="public" --server="${ answers.dbHost }" --database="${ handle }" --user="${ answers.dbUser }" --password="${ answers.dbPass }" --port="${ answers.dbPort }" --tablePrefix="${ answers.dbPrefix }"`, [], { stdio: 'inherit', shell: true });
-            // log('verbose', `Craft 3 set up`, verbose);
-
             log('title', 'Installing Craft');
-            // exec.spawnSync(`./craft install --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --siteName="${ answers.cmsSiteName }" --siteUrl="$DEFAULT_SITE_URL" --language="en"`, [], { stdio: 'inherit', shell: true });
             verboseExec(`./craft install --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --siteName="${ answers.cmsSiteName }" --siteUrl="$DEFAULT_SITE_URL" --language="en"`, verbose);
             log('verbose', `Craft 3 installed`, verbose);
 
@@ -445,6 +440,7 @@ async function run() {
         }
 
         log('title', 'Changing package.json Defaults', verbose);
+        pkg.name = handle;
         pkg.version = '1.0.0';
         pkg.browserSync.url = answers.localUrl;
         pkg.paths.base.siteUrl = answers.localUrl;
@@ -498,6 +494,7 @@ async function run() {
         let editPkgComponentsComplete = await editPkgComponents;
 
         log('title', `Filtering NPM Scripts in package.json`);
+        pkg.scripts['cnvm'] = 'nvm use ' + process.version;
         pkg.scripts['update'] = answers.npmInstaller + ' update';
 
         if (['craft3'].includes(answers.projectType)) {
@@ -511,7 +508,7 @@ async function run() {
         log('dump', pkg, verbose);
 
         log('title', 'Running Initial Build Script', verbose);
-        verboseExec(`npm run dev${ verbose ? ' --verbose' : '' }`, verbose);
+        verboseExec(`npm run dev${ verbose ? ' -- --verbose' : '' }`, verbose);
         log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
 
         if (answers.setupRepo) {
