@@ -361,17 +361,18 @@ async function run() {
             });
         let removeGitkeepComplete = await removeGitkeep;
 
-        if (['craft3'].includes(answers.projectType)) {
-            log('title', 'Downloading Craft');
-            verboseExec(`composer create-project -s RC craftcms/craft CRAFT_DOWNLOAD --ignore-platform-reqs`, verbose);
-            log('verbose', `Craft 3 downloaded via composer`, verbose);
-            verboseExec(`rm -r ${ process.cwd() }/CRAFT_DOWNLOAD/composer.lock`, verbose);
-            log('verbose', `Craft 3 download directory removed`, verbose);
-            verboseExec(`mv ./CRAFT_DOWNLOAD/* ./`, verbose);
-            log('verbose', `Craft 3 files moved to cwd`, verbose);
-            verboseExec(`rm -r ${ process.cwd() }/CRAFT_DOWNLOAD`, verbose);
-            log('verbose', `Craft 3 download directory removed`, verbose);
-        }
+        // if (['craft3'].includes(answers.projectType)) {
+        //     log('title', 'Downloading Craft');
+        //     verboseExec(`composer create-project -s RC craftcms/craft CRAFT_DOWNLOAD --ignore-platform-reqs`, verbose);
+        //     log('verbose', `Craft 3 downloaded via composer`, verbose);
+        //     verboseExec(`rm -r ${ process.cwd() }/CRAFT_DOWNLOAD/composer.lock`, verbose);
+        //     log('verbose', `Craft 3 download directory removed`, verbose);
+        //     verboseExec(`mv ./CRAFT_DOWNLOAD/craft ./craft`, verbose);
+        //     verboseExec(`mv ./CRAFT_DOWNLOAD/web/index.php ./web/index.php`, verbose);
+        //     log('verbose', `Craft 3 files moved to cwd`, verbose);
+        //     verboseExec(`rm -r ${ process.cwd() }/CRAFT_DOWNLOAD`, verbose);
+        //     log('verbose', `Craft 3 download directory removed`, verbose);
+        // }
 
         const moveAllInstallFiles = asyncFunction(
             `Moving Default Files`, `Default Files Moved`, (resolve) => {
@@ -417,7 +418,7 @@ async function run() {
             log('verbose', `.env.sh created from example`, verbose);
 
             log('title', 'Running Composer Update');
-            verboseExec(`composer update --ignore-platform-reqs`, verbose);
+            verboseExec(`composer install --ignore-platform-reqs`, verbose);
             log('verbose', `Composer updated`, verbose);
 
             log('title', 'Installing Craft');
@@ -433,7 +434,7 @@ async function run() {
                 verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
                 log('verbose', `Renamed default project config to project.yaml`, verbose);
             }
-            verboseExec(`./craft project-config/sync --force`, verbose);
+            verboseExec(`./craft project-config/sync`, verbose);
             log('verbose', `Project Config synced`, verbose);
             verboseExec(`./craft update/info && ./craft update all --backup`, verbose);
             log('verbose', `Craft and plugins updated`, verbose);
