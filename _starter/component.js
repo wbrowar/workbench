@@ -381,7 +381,7 @@ function log(type = 'message', message, verbose = false) {
             break;
         case 'verbose':
             if (verbose) {
-                console.log(chalk.keyword('orange')(`🕵 ${ message }`));
+                console.log(chalk.keyword('orange')(`👓 ${ message }`));
             }
             break;
         case 'warn':
