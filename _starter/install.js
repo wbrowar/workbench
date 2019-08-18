@@ -435,7 +435,7 @@ async function run() {
             }
             verboseExec(`./craft project-config/sync`, verbose);
             log('verbose', `Project Config synced`, verbose);
-            verboseExec(`./craft update all --backup`, verbose);
+            verboseExec(`./craft update/info && ./craft update all --backup`, verbose);
             log('verbose', `Craft and plugins updated`, verbose);
         }
 
@@ -500,7 +500,7 @@ async function run() {
         if (['craft3'].includes(answers.projectType)) {
             pkg.scripts['cssd'] = './vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
             pkg.scripts['cssdb'] = './vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
-            pkg.scripts['update'] = answers.npmInstaller + ' update && composer update';
+            pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update/info && ./craft update all --backup';
         }
 
         fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));

@@ -1,5 +1,5 @@
 {
-  "name": "<%- handle %>",
+  "name": "<%- install.gitOrg || 'example' %>/<%- handle %>",
   "description": "Craft CMS",
   "keywords": [
     "craft",

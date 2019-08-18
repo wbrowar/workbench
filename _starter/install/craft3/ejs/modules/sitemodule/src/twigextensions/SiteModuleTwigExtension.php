@@ -10,9 +10,12 @@
 
 namespace modules\sitemodule\twigextensions;
 
+use craft\helpers\Json;
 use craft\helpers\Template;
 use craft\helpers\UrlHelper;
-use modules\sitemodule\SiteModule;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 use Craft;
 use yii\BaseYii;
@@ -28,7 +31,7 @@ use yii\BaseYii;
  * @package   SiteModule
  * @since     1.0.0
  */
-class SiteModuleTwigExtension extends \Twig_Extension
+class SiteModuleTwigExtension extends AbstractExtension
 {
     // Public Methods
     // =========================================================================
@@ -53,7 +56,7 @@ class SiteModuleTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('htmlattr', [$this, 'renderHtmlAttributes']),
+            new TwigFilter('htmlattr', [$this, 'renderHtmlAttributes']),
         ];
     }
 
@@ -67,8 +70,8 @@ class SiteModuleTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('attrAdd', [$this, 'attrAdd']),
-            new \Twig_SimpleFunction('checkAccessByIp', [$this, 'checkAccessByIp']),
+            new TwigFunction('attrAdd', [$this, 'attrAdd']),
+            new TwigFunction('checkAccessByIp', [$this, 'checkAccessByIp']),
         ];
     }
 
@@ -100,8 +103,7 @@ class SiteModuleTwigExtension extends \Twig_Extension
     /**
      * Allow only visitors that are logged in or visitors visiting from whitelisted IP addresses
      *
-     * @param array $attrs
-     *
+     * @param array $environments
      * @return mixed
      */
     public function checkAccessByIp(array $environments = ['staging'])
@@ -113,7 +115,7 @@ class SiteModuleTwigExtension extends \Twig_Extension
                 $accessGranted = true;
             } else {
                 // Allow access for users that visit the site from an IP address in WHITELISTED_IPS, in the .env file
-                $accessGranted = in_array(Craft::$app->getRequest()->getUserIP(), json_decode(getenv('WHITELISTED_IPS')));
+                $accessGranted = in_array(Craft::$app->getRequest()->getUserIP(), Json::decodeIfJson(getenv('WHITELISTED_IPS')));
             }
         }
         // If user cannot access the page, send them to the 503
@@ -160,7 +162,7 @@ class SiteModuleTwigExtension extends \Twig_Extension
                     // Default to json, for data-* attributes
                     default:
                         $quote = '\'';
-                        $attrVal = json_encode($attrVal);
+                        $attrVal = Json::encode($attrVal);
                         break;
                 }
             } else {

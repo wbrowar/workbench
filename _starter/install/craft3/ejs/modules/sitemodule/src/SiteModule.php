@@ -15,7 +15,6 @@ use modules\sitemodule\twigextensions\SiteModuleTwigExtension;
 
 use Craft;
 use craft\events\RegisterTemplateRootsEvent;
-use craft\events\TemplateEvent;
 use craft\i18n\PhpMessageSource;
 use craft\web\View;
 
@@ -109,7 +108,7 @@ class SiteModule extends Module
             Event::on(
                 View::class,
                 View::EVENT_BEFORE_RENDER_TEMPLATE,
-                function (TemplateEvent $event) {
+                function () {
                     try {
                         Craft::$app->getView()->registerAssetBundle(SiteModuleAsset::class);
                     } catch (InvalidConfigException $e) {
