@@ -436,10 +436,13 @@ async function run() {
                 verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
                 log('verbose', `Renamed default project config to project.yaml`, verbose);
             }
-            // verboseExec(`./craft project-config/sync`, verbose);
-            // log('verbose', `Project Config synced`, verbose);
-            // verboseExec(`./craft update all --backup`, verbose);
-            // log('verbose', `Craft and plugins updated`, verbose);
+            verboseExec(`./craft project-config/sync`, verbose);
+            verboseExec(`./craft project-config/sync`, verbose); // Running again to fix minify issue
+            log('verbose', `Project Config synced`, verbose);
+            verboseExec(`./craft queue/run`, verbose);
+            log('verbose', `Ran job queue tasks`, verbose);
+            verboseExec(`./craft update all --backup`, verbose);
+            log('verbose', `Craft and plugins updated`, verbose);
         }
 
         log('title', 'Changing package.json Defaults', verbose);
@@ -538,13 +541,13 @@ async function run() {
         verboseExec(`rm -r ${ process.cwd() }/_starter/install`, verbose);
         log('verbose', `Install directory deleted`, verbose);
 
-        if (['craft3'].includes(answers.projectType)) {
-            log('warn', `----------------------------------------------------`, verbose);
-            log('warn', `Finish up install by running the following commands:`, verbose);
-            log('warn', `./craft project-config/sync`, verbose);
-            log('warn', `./craft update all --backup`, verbose);
-            log('warn', `----------------------------------------------------`, verbose);
-        }
+        // if (['craft3'].includes(answers.projectType)) {
+        //     log('warn', `----------------------------------------------------`, verbose);
+        //     log('warn', `Finish up install by running the following commands:`, verbose);
+        //     log('warn', `./craft project-config/sync`, verbose);
+        //     log('warn', `./craft update all --backup`, verbose);
+        //     log('warn', `----------------------------------------------------`, verbose);
+        // }
     });
 }
 
