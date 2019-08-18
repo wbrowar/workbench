@@ -412,7 +412,7 @@ async function run() {
 
         if (['craft3'].includes(answers.projectType)) {
             verboseExec(`mv example.env .env`, verbose);
-            verboseExec(`mv example.craft ./craft`, verbose);
+            verboseExec(`mv ./craft ./craft`, verbose);
             log('verbose', `Craft files moved`, verbose);
 
             log('title', 'Setting Up Craft Scripts');
