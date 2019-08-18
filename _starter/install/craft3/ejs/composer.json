@@ -22,20 +22,7 @@
     "php": ">=7.0.0",
     "vlucas/phpdotenv": "^3.4.0",
     "craftcms/cms": "3.2.10",
-    "nystudio107/craft-scripts": "^1.2.10",
-    "aelvan/imager": "v2.1.10",
-    "craftcms/feed-me": "4.1.2",
-    "craftcms/redactor": "2.3.3.2",
-    "mmikkel/cp-field-inspect": "1.0.6",
-    "nystudio107/craft-minify": "1.2.9",
-    "nystudio107/craft-seomatic": "3.2.20",
-    "sebastianlenz/linkfield": "1.0.19",
-    "verbb/image-resizer": "2.0.5",
-    "verbb/navigation": "1.1.13",
-    "wbrowar/adminbar": "3.1.8.1",
-    "wbrowar/contentstats": "2.1.1",
-    "wbrowar/craft-communicator": "1.0.0",
-    "wbrowar/guide": "2.1.0"
+    "nystudio107/craft-scripts": "^1.2.10"
   },
   "autoload": {
     "psr-4": {
