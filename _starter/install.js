@@ -419,7 +419,7 @@ async function run() {
             verboseExec(`mv scripts/craft3-example.env.sh scripts/.env.sh`, verbose);
             log('verbose', `.env.sh created from example`, verbose);
 
-            log('title', 'Running Composer Update');
+            log('title', 'Running Composer Install');
             verboseExec(`composer install --ignore-platform-reqs`, verbose);
             log('verbose', `Composer updated`, verbose);
 
