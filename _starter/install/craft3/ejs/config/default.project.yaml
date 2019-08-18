@@ -114,10 +114,10 @@ sections:
         sortOrder: 1
 siteGroups:
   9c94fc46-354f-4e2d-b28c-a884a5ea683c:
-    name: 'My Site'
+    name: $SITE_NAME
 sites:
   1a456e16-c64d-4f15-a96f-908626ede7a4:
-    name: 'My Site'
+    name: $SITE_NAME
     handle: default
     language: en-US
     hasUrls: true
@@ -127,7 +127,7 @@ sites:
     siteGroup: 9c94fc46-354f-4e2d-b28c-a884a5ea683c
 system:
   edition: pro
-  name: 'My Site'
+  name: $SITE_NAME
   live: true
   schemaVersion: 3.2.16
   timeZone: America/New_York

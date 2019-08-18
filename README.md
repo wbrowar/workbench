@@ -6,11 +6,11 @@ My personal framework for front-end development includes some SASS, HTML, and JS
 This is here for my own storage, but please [let me know if you have any feedback or suggestions](https://github.com/wbrowar/WB-Starter/issues).
 
 ## Requirements
-- [Node.js](https://nodejs.org/en/) (requires v10+)
-- [Composer](https://getcomposer.org)
+- [Node.js](https://nodejs.org/en/) (requires v11+)
+- [Composer](https://getcomposer.org) (for Craft-based projects)
 
 ## Installation
-NOTE: these instructions are for macOS. Commands for Linux might be slightly different. I don‘t *think* Windows OS is supported.
+NOTE: these instructions are for macOS. Commands for Linux might be slightly different. I don‘t *think* Windows is supported.
 
 1. Install [new-wb](https://www.npmjs.com/package/new-wb) by running `npm install -g new-wb`.
 1. Run `new-wb` in the directory of your choice.
@@ -20,7 +20,7 @@ NOTE: these instructions are for macOS. Commands for Linux might be slightly dif
 
 1. Create a new project folder and `cd` into it.
 1. Clone this repo or download the [master.zip](https://github.com/wbrowar/WB-Starter/archive/master.zip) and unzip it.
-1. Run `npm install` or `yarn` to download Node modules.
+1. Run `npm install`, `pnpm install`, or `yarn` to download Node modules.
 1. Run `node ./_starter/install.js --handle='CHANGE_ME'` and change `CHANGE_ME` to the name of your directory.
 1. Enter in the required information requested by various sets of prompts.
 
@@ -29,13 +29,15 @@ NPM Scripts may be added depending on what type of project you are creating. Che
 
 | Script | Description |
 | --- | --- |
+| `cnvm` | Changes the version of node using [nvm](https://github.com/nvm-sh/nvm) |
+| `ci:build` | The build script used in CI environment like Buddy, GitLab, or GitHub Actions. |
 | `component` | Add or move a component into your project‘s `_source/_components` directory. |
 | `cssd` | Use Craft Scripts to pull down uploaded assets and the specified database. |
 | `cssdb` | Pulls down only the database using Craft Scripts. |
+| `deploy` | Prepares code for commit to a repo that triggers CI deployment. |
 | `dev` | Development build that processes templates and theme files. |
 | `prod` | Completes the build script in `production` mode. |
-| `pub` | Completes the build script in `production` mode, then does a GIT commit and push. |
-| `pubd` | Does the same as `pub` but merges files from `dev` to `master` and does the commit from `master`. |
+| `pub` | Completes the build script in `production` mode, then makes a copy in the `release` directory. |
 | `start` | Does a `git pull`, updates NPM and Composer dependencies, then runs the `watch` script. |
 | `update` | Updates Node and Composer dependencies. |
 | `watch` | Completes the development build, then watches files in the `_source` folder for changes. |
@@ -46,10 +48,10 @@ If you use an `.alias` file for command line aliases, here are shortcuts for the
 alias comp="npm run component"
 alias cssd="npm run cssd"
 alias cssdb="npm run cssdb"
+alias dep="npm run deploy"
 alias dev="npm run dev"
 alias prod="npm run prod"
 alias pub="npm run pub"
-alias pubd="npm run pubd"
 alias start="npm run start"
 alias update="npm run update"
 alias watch="npm run watch"
@@ -71,6 +73,7 @@ Once it has been created, you may edit it with the following options:
 | `gitUser` | Your GitHub username. |
 | `gitOrg` | A GitHub organization name, if you plan to create sites for an organization. Leave this blank to create repos in your personal profile. |
 | `gitPrivate` | Set this to `true` to create private GitHub repos. |
+| `npmInstaller` | The package manager used to install npm modules. Accepts: `npm`, `pnpm`, or `yarn` |
 
 Remove any options you don’t want to create a preset for. You will still be able to overwrite any of these presets when setting up a new project. If you delete this file from your home directory you can re-create it during your next installation.
 
@@ -84,21 +87,21 @@ Remove any options you don’t want to create a preset for. You will still be ab
 - Every time you begin to write code, run `npm run watch` first. This will run `npm run dev`, then watch the `_source` folder and update theme files as you save them.
 
 ### Staging and Testing
-- When staging files for review or testing, run `npm run prod`—every time—before deploying to a staging server. `npm run prod` includes extra tasks, such as Babel transpiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
+- If you would like to see what a production build looks like, run `npm run prod` locally. `npm run prod` includes extra tasks, such as Babel transpiling and uglification of Javascript files. While these may not be needed for better performance on a staging server, these tasks might slightly change the code enough to cause bugs to appear.
+- If you are using CI to deploy your project, run `npm run deploy`—every time—before deploying to a staging server. This will do the same thing as running `npm run prod`, but it removes build files that will ultimately be built during deployment.
+- Running `npm run prod` or `npm run deploy` cleans out all CSS, JS, SVG, templates, and image files and replaces them with fresh builds.
+- `npm run prod` and `npm run deploy` also creates favicons and adds Critical CSS.
 
 ### Going Live
-- When preparing to go live, run the `npm run prod` task. This will increase the version number in the `package.json` file, which will cause cache-busting to occur on static files that are loaded using version number parameters.
-- Running `npm run prod` cleans out all CSS, JS, SVG, templates, and image files and replaces them with fresh builds.
-- `npm run prod` also creates favicons and adds Critical CSS.
+- To push files to production, run the `npm run deploy` task on the appropriate branche (usually `master`). This will increase the version number in the `package.json` file, which will cause cache-busting to occur on static files that are loaded using version number parameters.
 
 ### Publishing a New Release
-- Use `npm run pub` to commit a new release via that command line. This will run `npm run prod` first, then push your changes to GitHub.
-- If you would like to tag your commit for release you can add it through the command line prompts.
+- For Craft plugins, use `npm run pub` to do a production build and then move a copy of your project from `development` to `release`. These values must be set in your `package.json` file before running `npm run pub`.
 
 ## Style Inventory
 - The Style Inventory displays the code and an example of the components available in your project.
 - To get to the Style Inventory, go to `/dev/inv/index.html` or `/dev/inv/` in a Craft 3 project.
-- In Craft websites, the Style Inventory section is available in `dev`, and `staging` environments and will redirect you to the home page in a `live` environment.
+- In Craft websites, the Style Inventory section is available based on a setting in your `.env` file. This allows you to turn it off in production environments.
 - The Style Inventory is generated from settings in the `package.json`, `styleInventory.pages` object, and the `demo.ejs` files in component folders.
 - Based on this code snippet:
     ```json

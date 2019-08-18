@@ -173,6 +173,54 @@ async function run() {
             },
         },
         {
+            type: 'input',
+            name: 'cmsAdminEmail',
+            message: 'CMS Admin Email Address',
+            default: localConfig ? (localConfig.cmsAdminEmail || '') : '',
+            when: (answers) => {
+                return ['craft3'].includes(answers.projectType);
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
+        },
+        {
+            type: 'input',
+            name: 'cmsAdminUsername',
+            message: 'CMS Admin Username',
+            default: localConfig ? (localConfig.cmsAdminUsername || 'admin') : 'admin',
+            when: (answers) => {
+                return ['craft3'].includes(answers.projectType);
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
+        },
+        {
+            type: 'password',
+            name: 'cmsAdminPassword',
+            message: 'CMS Admin Password',
+            default: localConfig ? (localConfig.cmsAdminPassword || '') : '',
+            when: (answers) => {
+                return ['craft3'].includes(answers.projectType);
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
+        },
+        {
+            type: 'input',
+            name: 'cmsSiteName',
+            message: 'Craft Site Name',
+            default: 'My Site',
+            when: (answers) => {
+                return ['craft3'].includes(answers.projectType);
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
+        },
+        {
             type: 'confirm',
             name: 'setupRepo',
             message: 'Setup GitHub repo?',
@@ -279,6 +327,9 @@ async function run() {
 
             if (['craft3'].includes(answers.projectType)) {
                 localConfig['cpTrigger'] = answers.cpTrigger;
+                localConfig['cmsAdminEmail'] = answers.cmsAdminEmail;
+                localConfig['cmsAdminUsername'] = answers.cmsAdminUsername;
+                localConfig['cmsAdminPassword'] = answers.cmsAdminPassword;
             }
             if (answers.setupDb) {
                 localConfig['dbHost'] = answers.dbHost;
@@ -369,9 +420,14 @@ async function run() {
             verboseExec(`composer update --ignore-platform-reqs`, verbose);
             log('verbose', `Composer updated`, verbose);
 
+            // log('title', 'Setting Up Craft');
+            // exec.spawnSync(`./craft setup --interactive=0 --driver="mysql" --schema="public" --server="${ answers.dbHost }" --database="${ handle }" --user="${ answers.dbUser }" --password="${ answers.dbPass }" --port="${ answers.dbPort }" --tablePrefix="${ answers.dbPrefix }"`, [], { stdio: 'inherit', shell: true });
+            // log('verbose', `Craft 3 set up`, verbose);
+
             log('title', 'Installing Craft');
-            exec.spawnSync(`./craft setup`, [], { stdio: 'inherit', shell: true });
-            log('verbose', `Craft 3 installer ran`, verbose);
+            // exec.spawnSync(`./craft install --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --siteName="${ answers.cmsSiteName }" --siteUrl="$DEFAULT_SITE_URL" --language="en"`, [], { stdio: 'inherit', shell: true });
+            verboseExec(`./craft install --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --siteName="${ answers.cmsSiteName }" --siteUrl="$DEFAULT_SITE_URL" --language="en"`, verbose);
+            log('verbose', `Craft 3 installed`, verbose);
 
             log('title', 'Applying Project Config Settings');
             if (fs.existsSync(`config/default.project.yaml`)) {
@@ -382,10 +438,8 @@ async function run() {
                 verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
                 log('verbose', `Renamed default project config to project.yaml`, verbose);
             }
-            // exec.spawnSync(`./craft project-config/sync`, [], { stdio: 'inherit', shell: true });
             verboseExec(`./craft project-config/sync`, verbose);
             log('verbose', `Project Config synced`, verbose);
-            // exec.spawnSync(`./craft update/update`, [], { stdio: 'inherit', shell: true });
             verboseExec(`./craft update/update`, verbose);
             log('verbose', `Craft and plugins updated`, verbose);
         }

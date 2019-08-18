@@ -1,11 +1,10 @@
 {
   "scripts": {
-    "chn": "nvm use 11",
+    "cnvm": "nvm use 11",
     "ci:build": "NODE_ENV=production node ./_starter/build.js --build",
     "component": "node ./_starter/component.js",
-    "das": "node ./_starter/build.js",
-    "dev": "node ./_starter/build.js --build --prettier",
     "deploy": "NODE_ENV=production node ./_starter/build.js --build --bump --commit --critcss --deploy --prettier",
+    "dev": "node ./_starter/build.js --build --prettier",
     "prod": "NODE_ENV=production node ./_starter/build.js --build --critcss --prettier",
     "pub": "NODE_ENV=production node ./_starter/build.js --build --prettier --publish",
     "start": "git pull && npm run update && npm run watch",

@@ -27,7 +27,7 @@ return [
         'isSystemLive' => getenv('IS_SYSTEM_LIVE') ?: false,
         'omitScriptNameInUrls' => true,
         'securityKey' => getenv('SECURITY_KEY'),
-        'siteUrl' => getenv('SITE_URL'),
+        'siteUrl' => getenv('DEFAULT_SITE_URL'),
         'usePathInfo' => true,
         'useProjectConfigFile' => true,
     ],
