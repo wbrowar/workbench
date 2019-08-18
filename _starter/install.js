@@ -411,9 +411,11 @@ async function run() {
         });
 
         if (['craft3'].includes(answers.projectType)) {
-            log('title', 'Setting Up Craft Scripts');
             verboseExec(`mv example.env .env`, verbose);
-            log('verbose', `.env created from example`, verbose);
+            verboseExec(`mv example.craft craft`, verbose);
+            log('verbose', `Craft files moved`, verbose);
+
+            log('title', 'Setting Up Craft Scripts');
             verboseExec(`mv scripts/craft3-example.env.sh scripts/.env.sh`, verbose);
             log('verbose', `.env.sh created from example`, verbose);
 
