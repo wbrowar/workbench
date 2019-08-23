@@ -32,16 +32,16 @@
     <div class="styles__box" style="padding: 0px;">
         <div class="c_image_bg">
             {% import 'macros/component.twig' as component %}
-            {% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png') %}
+            {% set image = craft.assets.title('fpo').one() %}
             {% set options = {
+                alt: image.title ?? '',
                 image: image,
-                title: image.title ?? '',
-                imager: {
+                sources: [{
                     transforms: [
                         { width: 500 },
                         { width: 800 },
                     ],
-                }
+                }]
             } %}
             {{ component.c('image_bg', { image: options }) }}
         </div>
@@ -49,16 +49,16 @@
 </div>`,
     code:
 `{% import 'macros/component.twig' as component %}
-{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO.png') %}
+{% set image = craft.assets.title('fpo').one() %}
 {% set options = {
+    alt: image.title ?? '',
     image: image,
-    title: image.title ?? '',
-    imager: {
+    sources: [{
         transforms: [
             { width: 500 },
             { width: 800 },
         ],
-    }
+    }]
 } %}
 {{ component.c('image_bg', { image: options }) }}`,
     options: [

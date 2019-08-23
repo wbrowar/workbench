@@ -18,33 +18,45 @@
   twig: {
     code:
 `{% import 'macros/component.twig' as component %}
-{% set image = craft.assets.title('fpo').one() ?? alias('@web/img/FPO-2048.jpg') %}
+{% set image = craft.assets.title('fpo').one() %}
 {% set options = {
+    alt: image.title ?? '',
     image: image,
-    title: image.title ?? '',
-    imager: {
+    sources: [{
         globals: {
             ratio: 16/9,
         },
+        media: '(min-width: 1024px)',
         transforms: [
-            { width: 500 },
-            { width: 800 },
-            { width: 1024 },
             { width: 2048 },
+            { width: 1024 },
         ],
-    }
+    },{
+        transforms: [
+            { width: 800 },
+            { width: 500 },
+        ],
+    }],
 } %}
 {{ component.c('image', options) }}`,
     options: [
-      { "name": 'imager', "required": false, "type": 'object', "default": `{}`, "description": `Settings used to perform transforms using the Imager plugin.` },
-      { "name": 'imager > transforms', "required": false, "type": 'array', "default": `[]`, "description": `An array of objects passed into Imager to create image transforms.` },
-      { "name": 'imager > globals', "required": false, "type": 'object', "default": `{}`, "description": `Global options used by Imager for all image transforms.` },
-      { "name": 'lazyLoad', "required": false, "type": 'boolean', "default": `true`, "description": `Adds the data attributes used by lazy.js to load the image when the user scrolls to it on the page.` },
-      { "name": 'placeholder', "required": false, "type": 'string', "default": `blank png data url`, "description": `The value of the image src attribute when srcset is used. This can be a blank png string or the url of an image.` },
-      { "name": 'sizes', "required": false, "type": 'string', "default": `'100vw'`, "description": `The value of the img sizes attribute.` },
-      { "name": 'styles', "required": false, "type": 'string', "default": `''`, "description": `Inline styles that are added to the figure wrapper of the image.` },
-      { "name": 'title', "required": false, "type": 'string', "default": `''`, "description": `The value of the img alt attribute.` },
-      { "name": 'transforms', "required": false, "type": 'array', "default": `[]`, "description": `An array of objects that create a Craft image transform. Use this if you do not wish to use Imager for an image transform.` }
+        { "name": 'alt', "required": false, "type": 'string', "description": `The value of the img alt attribute.` },
+        { "name": 'caption', "required": false, "type": 'string', "description": `Adds a <figcaption> tag below the image’s <picture> element.` },
+        { "name": 'intrinsicsize', "required": false, "type": 'boolean', "default": `true`, "description": `Adds the intrinsicsize attribute and the width attribute for the image if it can be determined from the transforms array.` },
+        { "name": 'image', "required": false, "type": 'Asset or string', "description": `The source of the image being displayed.` },
+        { "name": 'loading', "required": false, "type": 'string', "default": `'lazy'`, "description": `Sets the loading attribute to use native lazy or eager loading. Adds the data attributes used by lazy.js to load the image where the loading attribute isn’t supported.` },
+        { "name": 'placeholder', "required": false, "type": 'string', "default": `blank png data url`, "description": `The value of the image src attribute when srcset is used. This can be a blank png string or the url of an image.` },
+        { "name": 'sizes', "required": false, "type": 'string', "default": `'100vw'`, "description": `The value of the img sizes attribute.` },
+        { "name": 'sources', "required": false, "type": 'Array', "default": `[]`, "description": `An array of objects that create source tags based on the supplied arguments.` },
+        { "name": 'sources > alt', "required": false, "type": 'string', "default": `alt`, "description": `Overrides the global "alt" value for this source.` },
+        { "name": 'sources > image', "required": false, "type": 'string', "default": `image`, "description": `Overrides the global "image" value for this source.` },
+        { "name": 'sources > loading', "required": false, "type": 'string', "default": `loading`, "description": `Overrides the global "loading" value for this source.` },
+        { "name": 'sources > placeholder', "required": false, "type": 'string', "default": `placeholder`, "description": `Overrides the global "placeholder" value for this source.` },
+        { "name": 'sources > sizes', "required": false, "type": 'string', "default": `sizes`, "description": `Overrides the global "sizes" value for this source.` },
+        { "name": 'sources > transforms', "required": false, "type": 'Array', "default": `[]`, "description": `The transforms performed on the image. Change this value based on the transformer used.` },
+        { "name": 'sources > transformer', "required": false, "type": 'string', "default": `transformer`, "description": `Overrides the global "transformer" value for this source.` },
+        { "name": 'sources > media', "required": false, "type": 'string', "description": `Adds a media attribute to allow the image to appear only for specific conditions.` },
+        { "name": 'transformer', "required": false, "type": 'string', "default": `'imager'`, "description": `Specify the tool that performs image transforms. Accepts 'imager', 'imageoptimize', or 'craft'.` },
     ]
   }
 } %>
