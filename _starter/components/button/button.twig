@@ -1,5 +1,3 @@
-{# @var craft \craft\web\twig\variables\CraftVariable #}
-
 {% extends 'partials/_component.twig' %}
 
 {# Variables #}
@@ -24,13 +22,11 @@
 
 {% set element = (url ?? false) ? 'a' : 'button' %}
 
-{% if target ?? false %}
-    {% set attrs = attrs|merge({ target: target, rel: "noopener" }) %}
-{% endif %}
-
-{% if url ?? false %}
-    {% set attrs = attrs|merge({ href: url }) %}
-{% endif %}
+{% set attrs = attrs|merge({
+    href: (url ?? false) ? url : null,
+    target: (target ?? false) ? target : null,
+    rel: (target ?? false) ? "noopener" : null,
+}) %}
 
 {% block content -%}
     {{ label }}

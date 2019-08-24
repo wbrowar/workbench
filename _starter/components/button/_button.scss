@@ -6,7 +6,7 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-  padding: .8em 20px .7em;
+  padding: 0.8em 20px 0.7em;
   width: 100%;
   max-width: 300px;
   background-color: $color_black;
@@ -21,6 +21,6 @@
   color: $color_white;
 
   &:hover {
-    opacity: .7;
+    opacity: 0.7;
   }
 }

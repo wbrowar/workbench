@@ -354,6 +354,14 @@ if (Craft::$app->getView()->getTemplateMode() === View::TEMPLATE_MODE_CP) {
 
 ---
 ## Release Notes
+#### 5.2.0
+##### Components
+- :rocket: Added a new `ColorSchemeToggle` Vue component
+  - This allows you to set the site’s color scheme based on those set in the `package.json` file
+- :wrench: Twig components now use Craft’s built in `attr()` function to set component attributes
+
+
+
 #### 5.1.0
 
 ##### Build Process
@@ -417,11 +425,6 @@ To add DAS Q5 animation add this to your `.wb-starter.config.json` in your home 
 - :fire: Removed presets from `volumes.php`
   - Use project config to manage Volumes
 - :fire: Removed links from Admin Bar config
-
-
-- :rocket:
-- :wrench:
-- :fire:
 
 #### 5.0.0
 - :rocket: Complete rewrite from Gulp to Node!

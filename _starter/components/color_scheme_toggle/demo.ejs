@@ -1,0 +1,11 @@
+<% let component = {
+  title: "Color Scheme Toggle",
+  description: "A button that sets the site’s color scheme.",
+  background: "light",
+  html: {
+    code:
+`<color-scheme-toggle :all-schemes="['dark']" scheme-id="default"></color-scheme-toggle>
+<color-scheme-toggle :all-schemes="['dark']" scheme-id="dark"></color-scheme-toggle>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

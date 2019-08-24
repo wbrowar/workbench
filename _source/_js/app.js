@@ -68,6 +68,9 @@ vueMethods['classToggle'] = function (selector, getClass) {
 //         require(['./components/AccordionTab.vue'], resolve)
 //     });
 // });
+// Vue.component('color-scheme-toggle', function(resolve) {
+//     require(['./components/ColorSchemeToggle.vue'], resolve);
+// });
 // Vue.component('overlay', function (resolve) {
 //     require(['./components/Overlay.vue'], resolve)
 // });

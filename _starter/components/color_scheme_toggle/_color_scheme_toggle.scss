@@ -1,0 +1,5 @@
+.c_color_scheme_toggle {
+  $self: &;
+
+  @include button_reset;
+}

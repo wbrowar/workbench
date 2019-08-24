@@ -56,7 +56,7 @@ class SiteModuleTwigExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('htmlattr', [$this, 'renderHtmlAttributes']),
+//            new TwigFilter('htmlattr', [$this, 'renderHtmlAttributes']),
         ];
     }
 
@@ -123,55 +123,5 @@ class SiteModuleTwigExtension extends AbstractExtension
             return BaseYii::$app->getResponse()->redirect(UrlHelper::url('503'));
         }
         return $accessGranted;
-    }
-
-    /**
-     * Formats HTML attributes and makes it easy to override and add classes and other attributes
-     *
-     * @param array $attrs
-     *
-     * @return string
-     */
-    public function renderHtmlAttributes(array $attrs)
-    {
-        // Re-order attributes so ones with colons (used for vue shorthand) are last
-        ksort($attrs);
-
-        // Ported from https://github.com/timkelty/htmlattributes-craft
-        $str = trim(implode(' ', array_map(function($attrName) use ($attrs) {
-            $attrVal = $attrs[$attrName];
-            $quote = '"';
-
-            if (is_null($attrVal) || $attrVal === true) {
-                return $attrName;
-            } elseif($attrVal === false) {
-                return '';
-            } elseif(is_array($attrVal)) {
-                switch ($attrName) {
-                    case 'class':
-                        $attrVal = implode(' ', array_filter($attrVal));
-                        break;
-
-                    case 'style':
-                        array_walk($attrVal, function(&$val, $key) {
-                            $val = $key . ': ' . $val;
-                        });
-                        $attrVal = implode('; ', $attrVal) . ';';
-                        break;
-
-                    // Default to json, for data-* attributes
-                    default:
-                        $quote = '\'';
-                        $attrVal = Json::encode($attrVal);
-                        break;
-                }
-            } else {
-                return $attrName . '="' . $attrVal . '"';
-            }
-
-            return $attrName . '=' . $quote . $attrVal . $quote;
-        }, array_keys($attrs))));
-
-        return Template::raw($str);
     }
 }

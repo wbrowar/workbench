@@ -30,5 +30,5 @@
 {% endif %}
 
 {% block before %}{{ before ?? null }}{% endblock %}
-<{{ element }} {{ attrs|htmlattr }}>{% block content %}{{ content ?? null }}{% endblock %}</{{ element }}>
+<{{ element }}{{ attr(attrs) }}>{% block content %}{{ content ?? null }}{% endblock %}</{{ element }}>
 {% block after %}{{ after ?? null }}{% endblock %}

@@ -1,11 +1,12 @@
 // GLOBAL
 
 ::selection {
-  background-color: colora(black, .5);
+  background-color: colora(black, 0.5);
   color: $color_white;
 }
 
 html {
+  @include automated_color_schemes;
   @include font('apple');
   line-height: 1.4;
   background-color: $color_white;
