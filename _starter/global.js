@@ -15,12 +15,12 @@ methods.asyncForEach = async function asyncForEach(array, callback) {
 
 // Synchronously run a function and wait for a callback to fire
 methods.asyncFunction = async function asyncFunction(startMessage, endMessage, func) {
-    log('title', startMessage);
+    methods.log('title', startMessage);
 
     const p = await new Promise(resolve => {
         func(resolve);
     }).then(()=>'');
-    log('title', endMessage);
+    methods.log('title', endMessage);
     return p;
 };
 
@@ -156,7 +156,7 @@ methods.snake = function snake(text) {
 // determine if a command should be displayed in terminal when running shell commands
 methods.verboseExec = function verboseExec(command, verbose = false) {
     if (verbose) {
-        log('running', command);
+        methods.log('running', command);
         exec.spawnSync(command, [], { stdio: 'inherit', shell: true });
     } else {
         exec.execSync(`${command} > /dev/null 2>&1`);
