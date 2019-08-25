@@ -17,7 +17,7 @@ if (!fs.existsSync(`${ process.cwd() }/_starter/install`)) {
 }
 
 // HELLO
-console.g.log(`Installing WB-Starter`);
+g.log(`Installing WB-Starter`);
 
 // load package file
 let pkg = require(`${ process.cwd() }/package.json`);
