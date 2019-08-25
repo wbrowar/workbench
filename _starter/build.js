@@ -2,9 +2,7 @@
 const autoprefixer = require('autoprefixer'),
       browserSync = require('browser-sync').create(),
       critical = require('critical'),
-      chalk = require('chalk'),
       das = require('./das.js'),
-      exec = require('child_process'),
       ejs = require('ejs'),
       favicons = require('favicons'),
       fs = require('fs-extra'),
@@ -14,21 +12,22 @@ const autoprefixer = require('autoprefixer'),
       os = require('os'),
       path = require('path'),
       postcss = require('postcss'),
-      prettier = require("prettier"),
       sass = require('node-sass'),
       sassGlobImporter = require('node-sass-glob-importer'),
       sharp = require('sharp'),
-      semver = require('semver'),
       webpack = require('webpack');
 
+// import global functions
+const g = require('./global.js');
+
 // HELLO
-log('app', `Beginning`);
+g.log('app', `Beginning`);
 
 // load package file
 let pkg = require(`${ process.cwd() }/package.json`);
 
 // set constants
-const argv = parseArgv(),
+const argv = g.parseArgv(),
       env = process.env.NODE_ENV || 'development',
       release = env === 'production',
       timestamp = Math.floor(new Date().getTime() / 1000);
@@ -47,8 +46,8 @@ const enableImg     = argv.options.noimg ? false : true,
       verbose       = pkg.overrideVerbose || argv.options.verbose || false;
 
 // set variables based on pkg options
-let paths = getPaths(pkg.paths),
-    version = getVersion(pkg.version);
+let paths = g.getPaths(pkg.paths),
+    version = g.getVersion(release, pkg.version);
 
 let templateExtension = 'html';
 switch (pkg.projectType) {
@@ -72,13 +71,13 @@ let localConfig = false,
     publishAnswers = {};
 
 // get local config file
-log('verbose', `Looking for local configuration file in home directory: .wb-starter.config.json`, verbose);
+g.log('verbose', `Looking for local configuration file in home directory: .wb-starter.config.json`, verbose);
 if (fs.existsSync(`${ os.homedir() }/.wb-starter.config.json`)) {
-    log('verbose', `wb-starter configuration file found`, verbose);
+    g.log('verbose', `wb-starter configuration file found`, verbose);
 
     localConfig = require(`${ os.homedir() }/.wb-starter.config.json`);
 } else {
-    log('verbose', `wb-starter configuration file not found`, verbose);
+    g.log('verbose', `wb-starter configuration file not found`, verbose);
 }
 
 // set notify configs
@@ -114,7 +113,7 @@ async function run() {
 
     // ask questions related to build task
     if (runCommit) {
-        const askCommitQuestions = asyncFunction(
+        const askCommitQuestions = g.asyncFunction(
             `Git Options`, `Publish Options Set`, (resolve) => {
 
                 if (commitMessage) {
@@ -149,8 +148,8 @@ async function run() {
                     ];
 
                     inquirer.prompt(publishQuestions).then((answers) => {
-                        log('verbose', `Publishing with settings:`, verbose);
-                        log('dump', answers, verbose);
+                        g.log('verbose', `Publishing with settings:`, verbose);
+                        g.log('dump', answers, verbose);
 
                         publishAnswers = answers;
                         resolve();
@@ -166,7 +165,7 @@ async function run() {
 
     // run build tasks
     if (runBuild) {
-        log('title', `Running Build`);
+        g.log('title', `Running Build`);
         dasAnimate('rainbow', { key: 'KEY_B', color: '#c2ff07', title: 'Building' });
 
         const buildCleanAll                      = clean();
@@ -230,11 +229,11 @@ async function run() {
     }
 
     if (runPublish) {
-        log('title', `Running Publish`);
+        g.log('title', `Running Publish`);
         dasAnimate('rainbow', { key: 'KEY_P', color: '#c2ff07', title: 'Publishing' });
 
         if (fs.existsSync(paths.starter.release)) {
-            const removeReleaseFiles = asyncFunction(
+            const removeReleaseFiles = g.asyncFunction(
                 `Removing Old Release Files`, `Old Release Files Removed`, (resolve) => {
                     const globFiles = [
                         `${ paths.starter.release }**/*`,
@@ -256,7 +255,7 @@ async function run() {
                 });
             let removeReleaseFilesComplete = await removeReleaseFiles;
 
-            const copyNewReleaseFiles = asyncFunction(
+            const copyNewReleaseFiles = g.asyncFunction(
                 `Copying New Release Files`, `New Release Files Copied`, (resolve) => {
                     const globFiles = [
                         `${ paths.starter.development }**/*`,
@@ -282,21 +281,21 @@ async function run() {
             let copyNewReleaseFilesComplete = await copyNewReleaseFiles;
         }
 
-        log('verbose', `Project moved to release directory.`, verbose);
+        g.log('verbose', `Project moved to release directory.`, verbose);
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Project Published' });
         dasRemove('KEY_P');
     } else if (runCommit) {
         if (publishAnswers.commitRelease && publishAnswers.message) {
-            log('title', `Adding and committing code to repo.`);
-            verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
-            log('verbose', `Code pushed with message: ${ publishAnswers.message }`, verbose);
+            g.log('title', `Adding and committing code to repo.`);
+            g.verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
+            g.log('verbose', `Code pushed with message: ${ publishAnswers.message }`, verbose);
         }
     } else if (runWatch) {
-        log('title', `Running Watch`);
+        g.log('title', `Running Watch`);
 
         if (pkg.browserSync.url === 'CHANGE_ME') {
-            log('warn', 'Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json.')
+            g.log('warn', 'Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json.')
         } else {
             dasAnimate('rainbow', { key: 'KEY_W', color: '#c2ff07', title: 'Watching' });
 
@@ -309,9 +308,9 @@ async function run() {
                     {
                         match: [paths.components.src + '**/*'],
                         fn: async (event, file) => {
-                            log('title', `BrowserSync File: ${ path.extname(file) }`);
+                            g.log('title', `BrowserSync File: ${ path.extname(file) }`);
                             if (browsersyncReady.components && event === 'change') {
-                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
+                                g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.components = false;
                                 browsersyncComponentsMoving = true;
                                 setTimeout(() => { browsersyncReady.components = true; }, (browsersyncInterval * 10));
@@ -349,7 +348,7 @@ async function run() {
                         match: [paths.css.src + '**/*'],
                         fn: async (event, file) => {
                             if (!browsersyncComponentsMoving && browsersyncReady.css && event === 'change') {
-                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
+                                g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.css = false;
                                 setTimeout(() => { browsersyncReady.css = true; }, browsersyncInterval);
 
@@ -367,7 +366,7 @@ async function run() {
                         match: [paths.icon.src + '**/*'],
                         fn: async (event, file) => {
                             if (!browsersyncComponentsMoving && browsersyncReady.icon && event === 'change') {
-                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
+                                g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.icon = false;
                                 setTimeout(() => { browsersyncReady.icon = true; }, browsersyncInterval);
 
@@ -383,7 +382,7 @@ async function run() {
                         match: [paths.img.src + '**/*'],
                         fn: async (event, file) => {
                             if (!browsersyncComponentsMoving && browsersyncReady.img && event === 'change') {
-                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
+                                g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.img = false;
                                 setTimeout(() => { browsersyncReady.img = true; }, browsersyncInterval);
 
@@ -399,7 +398,7 @@ async function run() {
                         match: [paths.js.src + '**/*'],
                         fn: async (event, file) => {
                             if (!browsersyncComponentsMoving && browsersyncReady.js && event === 'change') {
-                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
+                                g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.js = false;
                                 setTimeout(() => { browsersyncReady.js = true; }, browsersyncInterval);
 
@@ -417,7 +416,7 @@ async function run() {
                         match: [paths.templates.src + '**/*'],
                         fn: async (event, file) => {
                             if (!browsersyncComponentsMoving && browsersyncReady.templates && event === 'change') {
-                                log('verbose', `BrowserSync Event: ${ event }`, verbose);
+                                g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.templates = false;
                                 setTimeout(() => { browsersyncReady.templates = true; }, browsersyncInterval);
 
@@ -440,7 +439,7 @@ async function run() {
     // BYE
     if (!runWatch) {
         dasRemove('7,5'); // SPC
-        log('app', `End`);
+        g.log('app', `End`);
     }
 }
 
@@ -448,11 +447,11 @@ async function run() {
 
 
 async function bumpPackage() {
-    log('title', `Increasing Version Number`);
+    g.log('title', `Increasing Version Number`);
 
     const p = await new Promise(resolve => {
-        log('title', `Bumping version number`);
-        version = getVersion(bumpVersion(pkg.version));
+        g.log('title', `Bumping version number`);
+        version = g.getVersion(g.bumpVersion(pkg.version));
         pkg.version = version;
         ejsVars.pkg = pkg;
         ejsVars.filenameVersion = filenameVersion('.');
@@ -460,24 +459,24 @@ async function bumpPackage() {
         // backup package file then overwrite the version number
         fs.copy(`${ process.cwd() }/package.json`, `${ paths.starter.backups }package.json`, (err) => {
             if (err) {
-                log('warn', err, verbose);
+                g.log('warn', err, verbose);
             }
-            log('verbose', `Package File Backed Up`, verbose);
+            g.log('verbose', `Package File Backed Up`, verbose);
             fs.outputFile(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2), function (err) {
                 if (err) {
-                    log('warn', err, verbose);
+                    g.log('warn', err, verbose);
                 }
-                log('verbose', `Version changed to: ${ version }`, verbose);
+                g.log('verbose', `Version changed to: ${ version }`, verbose);
                 resolve();
             });
         });
     }).then(()=>'');
-    log('title', `Version Number Set to "${ version }"`);
+    g.log('title', `Version Number Set to "${ version }"`);
     return p;
 }
 
 async function clean(type = 'all') {
-    log('title', `Cleaning "${ type }"`);
+    g.log('title', `Cleaning "${ type }"`);
 
     const p = await new Promise(resolve => {
         let cleanPaths = [];
@@ -538,7 +537,7 @@ async function clean(type = 'all') {
                     files.forEach((item) => {
                         fs.remove(item, err => {
                             if (err) return console.error(err);
-                            log('verbose', `Deleted: ${ item }, Pattern: ${ pattern }`, verbose);
+                            g.log('verbose', `Deleted: ${ item }, Pattern: ${ pattern }`, verbose);
                             count--;
                             if (count === 0) {
                                 removeTaskIndex();
@@ -551,12 +550,12 @@ async function clean(type = 'all') {
             });
         });
     }).then(()=>'');
-    log('title', `"${ type }" Cleaned`);
+    g.log('title', `"${ type }" Cleaned`);
     return p;
 }
 
 async function critCss() {
-    log('title', `Starting Critical CSS`);
+    g.log('title', `Starting Critical CSS`);
 
     const p = await new Promise(resolve => {
         let count = pkg.critcss.length;
@@ -574,9 +573,9 @@ async function critCss() {
                         height: item.height || 900
                     }, function (err, output) {
                         if (err) {
-                            log('warn', err);
+                            g.log('warn', err);
                         }
-                        log('verbose', `Critical CSS compiled: ${ item }`, verbose);
+                        g.log('verbose', `Critical CSS compiled: ${ item }`, verbose);
                         count--;
                         if (count === 0) {
                             resolve();
@@ -593,25 +592,25 @@ async function critCss() {
             resolve();
         }
     }).then(()=>'');
-    log('title', `Critical CSS Generated`);
+    g.log('title', `Critical CSS Generated`);
     return p;
 }
 
 async function compileCssTemplates() {
-    log('title', `Moving CSS Components`);
+    g.log('title', `Moving CSS Components`);
 
     const p = await new Promise(resolve => {
         glob(`${ paths.starter.templates }_css/*.{css,scss}`, function (er, files) {
-            log('verbose', `CSS templates: ${ JSON.stringify(files, null, 2) }`, verbose);
+            g.log('verbose', `CSS templates: ${ JSON.stringify(files, null, 2) }`, verbose);
             let count = files.length;
             files.forEach((item) => {
                 ejs.renderFile(item, ejsVars, {}, function(err, str) {
                     if (err) {
-                        log('warn', err);
+                        g.log('warn', err);
                     }
                     fs.outputFile(paths.css.src + 'automated/' + path.basename(item), str, (err) => {
                         if(!err) {
-                            log('verbose', `CSS templates compiled: ${ item }`, verbose);
+                            g.log('verbose', `CSS templates compiled: ${ item }`, verbose);
                             count--;
                             if (count === 0) {
                                 resolve();
@@ -622,19 +621,19 @@ async function compileCssTemplates() {
             });
         });
     }).then(() => '');
-    log('title', `CSS Components Moved`);
+    g.log('title', `CSS Components Moved`);
     return p;
 }
 
 async function compileCss() {
-    log('title', `Compiling CSS`);
+    g.log('title', `Compiling CSS`);
     dasAnimate('highlight', { key: 'KEY_C', color: '#c2ff07', title: 'Compiling CSS' });
 
     const p = await new Promise(resolve => {
         glob(`${ paths.css.src }/*.scss`, function (er, files) {
             let count = files.length;
             files.forEach((item) => {
-                log('verbose', `CSS: compiling ${ item }`, verbose);
+                g.log('verbose', `CSS: compiling ${ item }`, verbose);
 
                 sass.render({
                     file: item,
@@ -642,10 +641,10 @@ async function compileCss() {
                     outputStyle: release ? 'compressed' : 'expanded',
                 }, function(error, result) { // node-style callback from v3.0.0 onwards
                     if (error) {
-                        log('warn', `SASS Error: ${ error.file }`);
-                        log('warn', `Line: ${ error.line }`);
-                        log('warn', `Column: ${ error.column }`);
-                        log('warn', `Error: ${ error.message }`);
+                        g.log('warn', `SASS Error: ${ error.file }`);
+                        g.log('warn', `Line: ${ error.line }`);
+                        g.log('warn', `Column: ${ error.column }`);
+                        g.log('warn', `Error: ${ error.message }`);
                     }
                     else {
                         const outputFilename = `${ path.basename(item, path.extname(item)) }${ filenameVersion('.') }.css`;
@@ -653,7 +652,7 @@ async function compileCss() {
                             if(!err) {
                                 fs.outputFile(`${ paths.templates.src }_css/${ outputFilename }`, result.css, (err) => {
                                     if(!err) {
-                                        log('verbose', `SASS compiled: ${ item } → ${ outputFilename }`, verbose);
+                                        g.log('verbose', `SASS compiled: ${ item } → ${ outputFilename }`, verbose);
                                         count--;
                                         if (count === 0) {
                                             resolve();
@@ -667,13 +666,13 @@ async function compileCss() {
             });
         });
     }).then(() => '');
-    log('title', `CSS Compiled`);
+    g.log('title', `CSS Compiled`);
     dasRemove('KEY_C');
     return p;
 }
 
 async function compileFavicon() {
-    log('title', `Generating Favicons`);
+    g.log('title', `Generating Favicons`);
     dasAnimate('highlight', { key: 'KEY_F', color: '#c2ff07', title: 'Generating Favicons' });
 
     const p = await new Promise(resolve => {
@@ -698,7 +697,7 @@ async function compileFavicon() {
             response.images.forEach((item) => {
                 fs.outputFile(paths.favicon.dist + item.name, item.contents, function (err) {
                     if (err) return console.log(err);
-                    log('verbose', `Favicon icon moved: ${ item.name }`, verbose);
+                    g.log('verbose', `Favicon icon moved: ${ item.name }`, verbose);
                     countImages--;
                     if (countImages === 0) {
                         removeTaskIndex();
@@ -710,7 +709,7 @@ async function compileFavicon() {
             response.files.forEach((item) => {
                 fs.outputFile(paths.favicon.dist + item.name, item.contents, function (err) {
                     if (err) return console.log(err);
-                    log('verbose', `Favicon file moved: ${ item.name }`, verbose);
+                    g.log('verbose', `Favicon file moved: ${ item.name }`, verbose);
                     countFiles--;
                     if (countFiles === 0) {
                         removeTaskIndex();
@@ -719,13 +718,13 @@ async function compileFavicon() {
             });
         });
     }).then(()=>'');
-    log('title', `Favicons Generated`);
+    g.log('title', `Favicons Generated`);
     dasRemove('KEY_C');
     return p;
 }
 
 async function compileIcon() {
-    log('title', `Compiling Icons`);
+    g.log('title', `Compiling Icons`);
     dasAnimate('highlight', { key: 'KEY_S', color: '#c2ff07', title: 'Compiling Icons' });
 
     const p = await new Promise(resolve => {
@@ -745,13 +744,13 @@ async function compileIcon() {
             }
         });
     }).then(()=>'');
-    log('title', `Icons Compiled`);
+    g.log('title', `Icons Compiled`);
     dasRemove('KEY_S');
     return p;
 }
 
 async function compileImg() {
-    log('title', `Compiling Images`);
+    g.log('title', `Compiling Images`);
     dasAnimate('highlight', { key: 'KEY_I', color: '#c2ff07', title: 'Compiling Images' });
 
     const p = await new Promise(resolve => {
@@ -775,7 +774,7 @@ async function compileImg() {
                 .toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }.webp`);
         };
         let resizeImage = (image, options) => {
-            log('verbose', `Resizing: ${ image }`, verbose);
+            g.log('verbose', `Resizing: ${ image }`, verbose);
             const resize = size => {
                 const resizedImage = sharp(image).resize(size);
                 resizedImage.toFile(`${ paths.img.dist + path.basename(image, path.extname(image)) }-${ size + path.extname(image) }`);
@@ -784,7 +783,7 @@ async function compileImg() {
 
             Promise.all(options.sizes.map(resize))
                 .then(() => {
-                    log('verbose', `IMG resized: ${ image }`, verbose);
+                    g.log('verbose', `IMG resized: ${ image }`, verbose);
                     removeTaskIndex();
                 });
         };
@@ -796,7 +795,7 @@ async function compileImg() {
                 files.forEach((item) => {
                     compressMove(item);
                     convertWebp(item);
-                    log('verbose', `IMG moved: ${ item }`, verbose);
+                    g.log('verbose', `IMG moved: ${ item }`, verbose);
                     count--;
                     if (count === 0) {
                         removeTaskIndex();
@@ -816,13 +815,13 @@ async function compileImg() {
             });
         });
     }).then(()=>'');
-    log('title', `Images Compiled`);
+    g.log('title', `Images Compiled`);
     dasRemove('KEY_I');
     return p;
 }
 
 async function compileJs() {
-    log('title', `Compiling JS`);
+    g.log('title', `Compiling JS`);
     dasAnimate('highlight', { key: 'KEY_J', color: '#c2ff07', title: 'Compiling JS' });
 
     const p = await new Promise(resolve => {
@@ -847,16 +846,16 @@ async function compileJs() {
                 };
             });
 
-            log('verbose', `JS Webpack config:`, verbose);
-            log('dump', webpackConfig, verbose);
+            g.log('verbose', `JS Webpack config:`, verbose);
+            g.log('dump', webpackConfig, verbose);
 
             webpack(webpackConfig, function (err, stats) {
                 if (err) {
                     // throw new Error(err);
-                    log('warn', err);
+                    g.log('warn', err);
                 }
 
-                log('verbose', `JS compiled: ${ stats.toString({
+                g.log('verbose', `JS compiled: ${ stats.toString({
                     assets: true,
                     chunks: true,
                     chunkModules: false,
@@ -872,7 +871,7 @@ async function compileJs() {
             throw new Error("A valid webpack config file is not provided. Point config.webpack to a valid webpack.config.json file.");
         }
     }).then(()=>'');
-    log('title', `JS Compiled`);
+    g.log('title', `JS Compiled`);
     dasRemove('KEY_J');
     return p;
 }
@@ -881,7 +880,7 @@ async function dasAnimate(anim, options = { }) {
     if (localConfig.das || false) {
         if (localConfig.das.enabled || false) {
             options['verbose'] = verbose;
-            log('verbose', `Running Das animation: ${ anim }`, verbose);
+            g.log('verbose', `Running Das animation: ${ anim }`, verbose);
             das.animate(anim, options, verbose);
         }
     }
@@ -890,7 +889,7 @@ async function dasRemove(zone, options = { }) {
     if (localConfig.das || false) {
         if (localConfig.das.enabled || false) {
             options['verbose'] = verbose;
-            log('verbose', `Removing Das Zone: ${ zone }`, verbose);
+            g.log('verbose', `Removing Das Zone: ${ zone }`, verbose);
             das.remove(zone, options, verbose);
         }
     }
@@ -898,7 +897,7 @@ async function dasRemove(zone, options = { }) {
 async function dasReset() {
     if (localConfig.das || false) {
         if (localConfig.das.enabled || false) {
-            log('verbose', `Resetting Das`, verbose);
+            g.log('verbose', `Resetting Das`, verbose);
             dasRemove('KEY_W');
             dasRemove('7,5'); // SPC
         }
@@ -906,7 +905,7 @@ async function dasReset() {
 }
 
 async function compileTemplates() {
-    log('title', `Compiling Templates`);
+    g.log('title', `Compiling Templates`);
 
     const p = await new Promise(resolve => {
         glob(`${ paths.templates.src }**/*.{${ pkg.templateExtensions }}`, function (er, files) {
@@ -916,11 +915,11 @@ async function compileTemplates() {
                 files.forEach((item) => {
                     ejs.renderFile(item, ejsVars, {}, function(err, str) {
                         if (err) {
-                            log('warn', err);
+                            g.log('warn', err);
                         }
                         fs.outputFile(item.replace(paths.templates.src, paths.templates.dist), str, (err) => {
                             if(!err) {
-                                log('verbose', `EJS compiled: ${ item }`, verbose);
+                                g.log('verbose', `EJS compiled: ${ item }`, verbose);
                                 count--;
                                 if (count === 0) {
                                     resolve();
@@ -937,12 +936,12 @@ async function compileTemplates() {
             }
         });
     }).then(()=>'');
-    log('title', `Templates Compiled`);
+    g.log('title', `Templates Compiled`);
     return p;
 }
 
 async function postCss() {
-    log('title', `Post CSS Started`);
+    g.log('title', `Post CSS Started`);
 
     const p = await new Promise(resolve => {
         let count = pkg.postcss.length;
@@ -977,9 +976,9 @@ async function postCss() {
                         .then(result => {
                             fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
                                 if (err) {
-                                    log('warn', err, verbose);
+                                    g.log('warn', err, verbose);
                                 }
-                                log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
+                                g.log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
                                 count--;
                                 if (count === 0) {
                                     resolve();
@@ -996,13 +995,13 @@ async function postCss() {
             }
         }
     }).then(()=>'');
-    log('title', `Post CSS Complete`);
+    g.log('title', `Post CSS Complete`);
     return p;
 }
 
 function prettierOnFile(file = null) {
     if (runPrettier && pkg.prettier) {
-        log('title', `Running Prettier`);
+        g.log('title', `Running Prettier`);
 
         let files = false;
 
@@ -1015,14 +1014,14 @@ function prettierOnFile(file = null) {
         }
 
         if (files) {
-            verboseExec(`prettier --config ./.prettierrc ${ pkg.prettier.options } "${ files }"`, verbose);
+            g.verboseExec(`prettier --config ./.prettierrc ${ pkg.prettier.options } "${ files }"`, verbose);
         }
-        log('title', `Prettier Ran`);
+        g.log('title', `Prettier Ran`);
     }
 }
 
 async function updateComponents() {
-    log('title', `Updating Components`);
+    g.log('title', `Updating Components`);
 
     const p = await new Promise(resolve => {
         let tasks = 3; // count of tasks below
@@ -1038,7 +1037,7 @@ async function updateComponents() {
             if (count > 0) {
                 files.forEach((item) => {
                     fs.copy(item, `${ paths.templates.src }components/${ path.basename(item) }`).then(() => {
-                        log('verbose', `Component template updated: ${ item }`, verbose);
+                        g.log('verbose', `Component template updated: ${ item }`, verbose);
                         count--;
                         if (count === 0) {
                             removeTaskIndex();
@@ -1056,11 +1055,11 @@ async function updateComponents() {
                 files.forEach((item) => {
                     ejs.renderFile(item, ejsVars, {}, function(err, str) {
                         if (err) {
-                            log('warn', err);
+                            g.log('warn', err);
                         }
                         fs.outputFile(`${ paths.css.src }components/${ path.basename(item) }`, str, (err) => {
                             if(!err) {
-                                log('verbose', `Component style updated: ${ item }`, verbose);
+                                g.log('verbose', `Component style updated: ${ item }`, verbose);
                             }
                             count--;
                             if (count === 0) {
@@ -1080,11 +1079,11 @@ async function updateComponents() {
                 files.forEach((item) => {
                     ejs.renderFile(item, ejsVars, {}, function(err, str) {
                         if (err) {
-                            log('warn', err);
+                            g.log('warn', err);
                         }
                         fs.outputFile(`${ paths.js.src }components/${ path.basename(item) }`, str, (err) => {
                             if(!err) {
-                                log('verbose', `Component script updated: ${ item }`, verbose);
+                                g.log('verbose', `Component script updated: ${ item }`, verbose);
                                 count--;
                                 if (count === 0) {
                                     removeTaskIndex();
@@ -1098,13 +1097,13 @@ async function updateComponents() {
             }
         });
     }).then(()=>'');
-    log('title', `Components Updated`);
+    g.log('title', `Components Updated`);
     return p;
 }
 
 async function updateStyleInventory() {
     if (pkg.styleInventory.enabled) {
-        log('title', `Generating Style Inventory`);
+        g.log('title', `Generating Style Inventory`);
 
         const p = await new Promise(resolve => {
             let count = Object.keys(pkg.styleInventory.pages).length;
@@ -1115,11 +1114,11 @@ async function updateStyleInventory() {
 
                 ejs.renderFile(`${ paths.starter.styleInventory }_page.ejs`, vars, {}, function(err, str) {
                     if (err) {
-                        log('warn', err);
+                        g.log('warn', err);
                     }
                     fs.outputFile(`${ paths.templates.src }dev/inv/${ item }.${ templateExtension }`, str, (err) => {
                         if(!err) {
-                            log('verbose', `Style Inventory Page: ${ item }`, verbose);
+                            g.log('verbose', `Style Inventory Page: ${ item }`, verbose);
                             count--;
                             if (count === 0) {
                                 resolve();
@@ -1129,7 +1128,7 @@ async function updateStyleInventory() {
                 });
             });
         }).then(()=>'');
-        log('title', `Style Inventory Generated`);
+        g.log('title', `Style Inventory Generated`);
         return p;
     } else {
         return true;
@@ -1165,171 +1164,6 @@ function watch(directory, callback) {
 function filenameVersion(prefix = '', suffix = '') {
     const newVersion = version || timestamp;
     return prefix + newVersion + suffix;
-}
-
-
-
-
-
-// LIBRARY FUNCTIONS
-// todo: move these to an ES6 module for sharing with other library files
-// synchronously crawls each file
-async function asyncForEach(array, callback) {
-    for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array)
-    }
-}
-
-// Synchronously run a function and wait for a callback to fire
-async function asyncFunction(startMessage, endMessage, func) {
-    log('title', startMessage);
-
-    const p = await new Promise(resolve => {
-        func(resolve);
-    }).then(()=>'');
-    log('title', endMessage);
-    return p;
-}
-
-// bump version
-function bumpVersion(version, release = 'patch') {
-    return semver.inc(version, release);
-}
-
-// get dist and src paths based on base path options
-function getPaths(paths) {
-    return {
-        components: {
-            src: process.cwd() + '/' + paths.base.src + paths.components.src,
-        },
-        css: {
-            dist: process.cwd() + '/' + paths.base.dist + paths.css.dist,
-            src: process.cwd() + '/' + paths.base.src + paths.css.src,
-        },
-        favicon: {
-            dist: process.cwd() + '/' + paths.base.dist + paths.favicon.dist,
-            src: process.cwd() + '/' + paths.base.src + paths.favicon.src,
-        },
-        icon: {
-            dist: process.cwd() + '/' + paths.base.dist + paths.icon.dist,
-            src: process.cwd() + '/' + paths.base.src + paths.icon.src,
-        },
-        img: {
-            dist: process.cwd() + '/' + paths.base.dist + paths.img.dist,
-            src: process.cwd() + '/' + paths.base.src + paths.img.src,
-        },
-        js: {
-            dist: process.cwd() + '/' + paths.base.dist + paths.js.dist,
-            src: process.cwd() + '/' + paths.base.src + paths.js.src,
-        },
-        templates: {
-            dist: process.cwd() + '/' + paths.base.dist + paths.templates.dist,
-            src: process.cwd() + '/' + paths.base.src + paths.templates.src,
-        },
-        starter: {
-            backups: process.cwd() + '/_starter/backups/',
-            build: process.cwd() + paths.base.build,
-            components: process.cwd() + '/_starter/components/',
-            development: process.cwd() + '/' + paths.base.dist,
-            release: require('os').homedir() + paths.base.release,
-            templates: process.cwd() + '/_starter/templates/',
-            styleInventory: process.cwd() + '/_starter/style_inventory/',
-        }
-    }
-}
-
-// get version number based on build environment
-function getVersion(version) {
-    return pkg.overrideVersion ? pkg.overrideVersion : release ? version : null;
-}
-
-// display a message in the command line
-function log(type = 'message', message, verbose = false) {
-    switch (type) {
-        case 'app':
-            console.log(chalk.bgRgb(230, 20, 20)(`  ${ message }  `));
-            break;
-        case 'dump':
-            if (verbose) {
-                console.log(chalk.magenta.bold(`📦 ${ JSON.stringify(message, null, 2) }`));
-            }
-            break;
-        case 'running':
-            console.log(chalk.green.bold(`💻 ${ chalk.green(message) }`));
-            break;
-        case 'title':
-            console.log(chalk.blue.bold(`🛠 ${ message }`));
-            break;
-        case 'verbose':
-            if (verbose) {
-                console.log(chalk.keyword('orange')(`👓 ${ message }`));
-            }
-            break;
-        case 'warn':
-            console.warn(chalk.red.bold(`🚧 ${ message }`));
-            break;
-        default:
-            console.log(message);
-    }
-}
-
-// parse process arguments into an array format
-function parseArgv() {
-    let args = [];
-    let options = {};
-
-    process.argv.forEach(function(arg, i) {
-        if(i > 1) {
-            if (arg.substr(0, 2) === "--") {
-                // remove leading dashes
-                const str = arg.substr(2);
-
-                // split out to key/value pairs
-                if (str.indexOf("=") !== -1) {
-                    const strSplit = str.split('=');
-                    options[strSplit[0]] = strSplit[1];
-                } else {
-                    options[str] = true;
-                }
-            }
-            else {
-                args.push(arg);
-            }
-        }
-    });
-
-    return {
-        args: args,
-        options: options
-    }
-}
-
-function slugify(text) {
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Replace spaces with -
-        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-        .replace(/^-+/, '')             // Trim - from start of text
-        .replace(/-+$/, '');            // Trim - from end of text
-}
-
-function snake(text) {
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '_')           // Replace spaces with -
-        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        .replace(/\-\-+/g, '_')         // Replace multiple - with single -
-        .replace(/^-+/, '')             // Trim - from start of text
-        .replace(/-+$/, '');            // Trim - from end of text
-}
-
-// determine if a command should be displayed in terminal when running shell commands
-function verboseExec(command, verbose = false) {
-    if (verbose) {
-        log('running', command);
-        exec.spawnSync(command, [], { stdio: 'inherit', shell: true });
-    } else {
-        exec.execSync(`${command} > /dev/null 2>&1`);
-    }
 }
 
 // INIT
