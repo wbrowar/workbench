@@ -33,7 +33,7 @@ return [
     ],
 
     // Production (live) environment
-    'production' => [
+    'live' => [
         // Craft defined config settings
         'allowAdminChanges' => false,
         'allowUpdates' => false,
@@ -57,7 +57,7 @@ return [
     ],
 
     // Local (development) environment
-    'dev' => [
+    'local' => [
         // Craft defined config settings
         'allowAdminChanges' => true,
         'allowUpdates' => true,

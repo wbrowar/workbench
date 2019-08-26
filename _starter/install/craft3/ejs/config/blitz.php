@@ -8,7 +8,7 @@ return [
     ],
 
     // Production (live) environment
-    'production' => [
+    'live' => [
         'cachingEnabled' => true,
     ],
 
@@ -18,7 +18,7 @@ return [
     ],
 
     // Local (development) environment
-    'dev'  => [
+    'local'  => [
         'cachingEnabled' => false,
     ],
 ];

@@ -35,8 +35,8 @@ return [
         'port' => getenv('DB_PORT'),
     ],
 
-    // Live (production) environment
-    'CRAFTENV'  => [
+    // Production (live) environment
+    'live'  => [
     ],
 
     // Staging (pre-production) environment
@@ -44,6 +44,6 @@ return [
     ],
 
     // Local (development) environment
-    'dev'  => [
+    'local'  => [
     ],
 ];
