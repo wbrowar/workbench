@@ -1,7 +1,5 @@
 // import node modules
-const chalk = require('chalk'),
-      ejs = require('ejs'),
-      exec = require('child_process'),
+const ejs = require('ejs'),
       fs = require('fs-extra'),
       glob = require('glob-all'),
       inquirer = require('inquirer'),
@@ -364,19 +362,6 @@ async function run() {
             });
         let removeGitkeepComplete = await removeGitkeep;
 
-        // if (['craft3'].includes(answers.projectType)) {
-        //     g.log('title', 'Downloading Craft');
-        //     g.verboseExec(`composer create-project -s RC craftcms/craft CRAFT_DOWNLOAD --ignore-platform-reqs`, verbose);
-        //     g.log('verbose', `Craft 3 downloaded via composer`, verbose);
-        //     g.verboseExec(`rm -r ${ process.cwd() }/CRAFT_DOWNLOAD/composer.lock`, verbose);
-        //     g.log('verbose', `Craft 3 download directory removed`, verbose);
-        //     g.verboseExec(`mv ./CRAFT_DOWNLOAD/craft ./craft`, verbose);
-        //     g.verboseExec(`mv ./CRAFT_DOWNLOAD/web/index.php ./web/index.php`, verbose);
-        //     g.log('verbose', `Craft 3 files moved to cwd`, verbose);
-        //     g.verboseExec(`rm -r ${ process.cwd() }/CRAFT_DOWNLOAD`, verbose);
-        //     g.log('verbose', `Craft 3 download directory removed`, verbose);
-        // }
-
         const moveAllInstallFiles = g.asyncFunction(
             `Moving Default Files`, `Default Files Moved`, (resolve) => {
                 globMove(`${ process.cwd() }/_starter/install/all/mv/**/*`, `_starter/install/all/mv/`, ``, resolve);
@@ -545,14 +530,6 @@ async function run() {
         g.log('title', `Cleaning Up`);
         g.verboseExec(`rm -r ${ process.cwd() }/_starter/install`, verbose);
         g.log('verbose', `Install directory deleted`, verbose);
-
-        // if (['craft3'].includes(answers.projectType)) {
-        //     g.log('warn', `----------------------------------------------------`, verbose);
-        //     g.log('warn', `Finish up install by running the following commands:`, verbose);
-        //     g.log('warn', `./craft project-config/sync`, verbose);
-        //     g.log('warn', `./craft update all --backup`, verbose);
-        //     g.log('warn', `----------------------------------------------------`, verbose);
-        // }
     });
 }
 
