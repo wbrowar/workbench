@@ -323,6 +323,49 @@ scrollToElement(el);
     - To use variables stored in `package.json`, use `pkg` then the variable name. For example, to print out the site URL path, use `<%- pkg.paths.base.siteUrl %>`
 
 ---
+## Fixing CORS issues
+To fix CORS errors that could come up in using Valet for local development, follow these instructions:
+
+1. Create a new file at `/usr/local/etc/nginx/valet/` called `cors.conf` (the name can be set to anything)
+1. Past the code below into the file. This will completely open up CORS on your machine, so be aware of security implications
+
+    ```
+    #
+    # Wide-open CORS config for nginx
+    #
+    location / {
+         if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+            #
+            # Custom headers and headers various browsers *should* be OK with but aren't
+            #
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+            #
+            # Tell client that this pre-flight info is valid for 20 days
+            #
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            return 204;
+         }
+         if ($request_method = 'POST') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+            add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
+         }
+         if ($request_method = 'GET') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+            add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
+         }
+    }
+    ```
+1. Restart Valet using `valet restart`
+
+---
 ## Using Best Practices for Craft Plugin Project
 By default, this workflow is capable of compiling assets for a Craft Plugin, however, some of the default naming conventions and compiling options do not follow plugin best practices. Here are some adjustments you can make:
 
