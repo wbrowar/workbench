@@ -119,7 +119,9 @@ async function run() {
             type: 'confirm',
             name: 'setupDb',
             message: 'Setup Database?',
-            default: ['craft3'].includes(answers.projectType),
+            default: (answers) => {
+                return ['craft3'].includes(answers.projectType);
+            },
             when: (answers) => {
                 return !['craftplugin'].includes(answers.projectType);
             },
