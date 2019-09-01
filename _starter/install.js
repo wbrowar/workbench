@@ -545,11 +545,11 @@ function globEjs(pattern, replaceSrc, replaceDist, resolve) {
             files.forEach((item) => {
                 ejs.renderFile(item, ejsVars, {}, function(err, str) {
                     if (err) {
-                        log('warn', err);
+                        g.log('warn', err);
                     }
                     fs.outputFile(item.replace(replaceSrc, replaceDist), str, (err) => {
                         if(!err) {
-                            log('verbose', `Compiled ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+                            g.log('verbose', `Compiled ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
                             count--;
                             if (count === 0) {
                                 resolve();
@@ -570,7 +570,7 @@ function globMove(pattern, replaceSrc, replaceDist, resolve) {
         if (count > 0) {
             files.forEach((item) => {
                 fs.move(item, item.replace(replaceSrc, replaceDist), { overwrite: true }).then(() => {
-                    log('verbose', `Moved ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+                    g.log('verbose', `Moved ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
                     count--;
                     if (count === 0) {
                         resolve();
