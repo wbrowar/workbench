@@ -401,7 +401,9 @@ async function run() {
         let editPkgComponentsComplete = await editPkgComponents;
 
         g.log('verbose', `Updating package.json file`, verbose);
-        fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
+        const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
+        const pkgWithDependenciesAtTheEnd = _.merge([pkgWithoutDependencies, pkg.dependencies, pkg.devDependencies]);
+        fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkgWithDependenciesAtTheEnd, null, 2));
         g.log('verbose', `package.json file updated:`, verbose);
         g.log('dump', pkg, verbose);
 
