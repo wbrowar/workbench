@@ -1,0 +1,299 @@
+{
+  "scripts": {
+    "cnvm": "nvm use 11",
+    "ci:build": "NODE_ENV=production node ./_starter/build.js --build",
+    "component": "node ./_starter/component.js",
+    "deploy": "NODE_ENV=production node ./_starter/build.js --build --bump --commit --critcss --deploy --prettier",
+    "dev": "node ./_starter/build.js --build --prettier",
+    "prod": "NODE_ENV=production node ./_starter/build.js --build --critcss --prettier",
+    "pub": "NODE_ENV=production node ./_starter/build.js --build --prettier --publish",
+    "start": "git pull && npm run update && npm run watch",
+    "update": "npm update",
+    "watch": "node ./_starter/build.js --build --prettier --watch"
+  },
+  "browserSync": {
+    "browser": "google chrome",
+    "url": "CHANGE_ME"
+  },
+  "colors": {
+    "default": {
+      "white": "rgb(255, 255, 255)",
+      "black": "rgb(0, 0, 0)",
+      "alert_success": "rgb(45, 176, 51)",
+      "alert_error": "rgb(176, 25, 22)",
+      "alert_warning": "rgb(238, 199, 0)"
+    },
+    "dark": {
+      "white": "rgb(230, 230, 230)"
+    }
+  },
+  "critcss": [
+    {
+      "src": "CHANGE_ME",
+      "css": [
+        "app"
+      ],
+      "filename": "home"
+    }
+  ],
+  "cssIcons": [
+    "close",
+    "location",
+    "minus",
+    "plus"
+  ],
+  "ejs": {
+    "loadcss": "./../../../node_modules/fg-loadcss/src/loadCSS.js"
+  },
+  "favicon": {
+    "enabled": true,
+    "background": "#fff",
+    "theme_color": "#fff"
+  },
+  "fonts": {
+    "apple": {
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "normal"
+    },
+    "eaves": {
+      "fontFamily": "'MrEavesXLSanRRegular'",
+      "fallbackStack": "Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "normal",
+      "files": {
+        "eot": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
+        "woff": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
+        "woff2": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
+      }
+    }
+  },
+  "imageResize": {
+    "resized": {
+      "sizes": [
+        500,
+        1024,
+        2048
+      ]
+    }
+  },
+  "postcss": [
+    {
+      "filename": "app",
+      "autoprefixer": true,
+      "purify": false
+    }
+  ],
+  "styleInventory": {
+    "enabled": true,
+    "pages": {
+      "index": {
+        "label": "Style Inventory",
+        "components": [
+          "@style_inventory"
+        ]
+      },
+      "globals": {
+        "label": "Globals",
+        "components": [
+          "@colors",
+          "header",
+          "text",
+          "wrapper"
+        ]
+      },
+      "animations": {
+        "label": "Animations",
+        "components": [
+          "animate",
+          "scroll_updater",
+          "@lazy_animations"
+        ]
+      },
+      "buttons": {
+        "label": "Buttons",
+        "components": [
+          "button",
+          "buttons"
+        ]
+      },
+      "forms": {
+        "label": "Forms",
+        "components": [
+          "form_input",
+          "validated_form"
+        ]
+      },
+      "grid": {
+        "label": "Grids",
+        "components": [
+          "grid"
+        ]
+      },
+      "icons": {
+        "label": "Icons",
+        "components": [
+          "social_nav",
+          "social_share"
+        ]
+      },
+      "information": {
+        "label": "Information",
+        "components": [
+          "alert_bar",
+          "message",
+          "tooltip"
+        ]
+      },
+      "media": {
+        "label": "Media",
+        "components": [
+          "audio",
+          "image",
+          "image_bg",
+          "video",
+          "video_bg"
+        ]
+      },
+      "overlays": {
+        "label": "Overlays",
+        "components": [
+          "overlay"
+        ]
+      },
+      "sliders": {
+        "label": "Sliders",
+        "components": [
+          "image_slider",
+          "slider_control",
+          "slider"
+        ]
+      },
+      "thumbnails": {
+        "label": "Thumbnails",
+        "components": [
+          "card"
+        ]
+      }
+    },
+    "urlPrefix": "dev/inv/",
+    "urlSuffix": ".html"
+  },
+  "webpack": {
+    "entries": {
+      "js": {
+        "app": "app.js"
+      }
+    }
+  },
+  "browserlist": {
+    "autoprefix": [
+      "last 2 versions"
+    ],
+    "legacy": [
+      "> 1%",
+      "last 2 versions",
+      "Firefox ESR"
+    ],
+    "modern": [
+      "last 2 Chrome versions",
+      "not Chrome < 60",
+      "last 2 Safari versions",
+      "not Safari < 10.1",
+      "last 2 iOS versions",
+      "not iOS < 10.3",
+      "last 2 Firefox versions",
+      "not Firefox < 54",
+      "last 2 Edge versions",
+      "not Edge < 15"
+    ]
+  },
+  "paths": {
+    "base": {
+      "build": "_build/",
+      "dist": "",
+      "release": "",
+      "siteUrl": "http://starter.test/",
+      "src": "_source/"
+    },
+    "components": {
+      "src": "_components/"
+    },
+    "css": {
+      "dist": "public/css/",
+      "src": "_css/"
+    },
+    "favicon": {
+      "dist": "public/favicon/",
+      "src": "_favicon/"
+    },
+    "icon": {
+      "dist": "public/icon/",
+      "src": "_icon/"
+    },
+    "img": {
+      "dist": "public/img/",
+      "src": "_img/"
+    },
+    "js": {
+      "dist": "public/js/",
+      "src": "_js/"
+    },
+    "templates": {
+      "dist": "public/",
+      "src": "_templates/"
+    }
+  },
+  "prettier": {
+    "files": "_source/**/*.{js,json,scss,vue}",
+    "options": "--write"
+  },
+  "projectTemplateLanguage": "ejs",
+  "projectType": "html",
+  "templateExtensions": "html,twig,php,json,csv",
+  "overrideVerbose": false,
+  "overrideVersion": false,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cleave.js": "^1.4.7",
+    "fg-loadcss": "^2.1.0",
+    "gsap": "^2.0.2",
+    "hammerjs": "^2.0.8",
+    "intersection-observer": "^0.5.1",
+    "js-cookie": "^2.2.0",
+    "loadjs": "^3.5.5",
+    "resize-observer-polyfill": "^1.5.1",
+    "vue": "^2.5.22"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.4.5",
+    "@babel/core": "^7.2.2",
+    "babel-loader": "^8.0.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/runtime": "^7.3.1",
+    "browser-sync": "^2.26.3",
+    "core-js": "^3.0.0",
+    "critical": "^1.3.4",
+    "css-loader": "^2.1.0",
+    "favicons": "^5.3.0",
+    "node-notifier": "^5.3.0",
+    "node-sass": "^4.11.0",
+    "node-sass-glob-importer": "^5.3.0",
+    "postcss": "^7.0.14",
+    "prettier": "^1.18.2",
+    "purify-css": "^1.2.5",
+    "sass-loader": "^7.1.0",
+    "sharp": "^0.21.2",
+    "uglifyjs-webpack-plugin": "^2.1.1",
+    "vue-loader": "^15.5.1",
+    "vue-template-compiler": "^2.5.22",
+    "vue-style-loader": "^4.1.2",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-manifest-plugin": "^2.0.4",
+    "webpack-merge": "^4.2.1"
+  }
+}

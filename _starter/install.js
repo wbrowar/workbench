@@ -1,5 +1,6 @@
 // import node modules
-const ejs = require('ejs'),
+const _ = require('lodash'),
+      ejs = require('ejs'),
       fs = require('fs-extra'),
       glob = require('glob-all'),
       inquirer = require('inquirer'),
@@ -85,6 +86,7 @@ async function run() {
             choices: [
                 { name: 'Craft 3', value: 'craft3' },
                 { name: 'HTML', value: 'html' },
+                { name: 'Vue CLI', value: 'vuecli' },
                 { name: 'Craft Plugin', value: 'craftplugin' },
             ],
         },
@@ -360,6 +362,8 @@ async function run() {
         let removeGitkeepComplete = await removeGitkeep;
 
         if (['craft3', 'craftplugin', 'html'].includes(answers.projectType)) {
+            mergeIntoPkg(`${ process.cwd() }/_starter/install/starter/setup/package.json`);
+
             const moveAllInstallFiles = g.asyncFunction(
                 `Moving Default Files`, `Default Files Moved`, (resolve) => {
                     globMove(`${ process.cwd() }/_starter/install/starter/mv/**/*`, `_starter/install/starter/mv/`, ``, resolve);
@@ -600,6 +604,20 @@ function globRemove(pattern, resolve) {
             resolve();
         }
     });
+}
+
+function mergeIntoPkg(pkgFile) {
+    if (fs.existsSync(pkgFile)) {
+        g.log('verbose', `Merging new package info from: ${ pkgFile }`, verbose);
+
+        const newPkgInfo = require(pkgFile);
+        pkg = _.merge(pkg, newPkgInfo);
+
+        g.log('verbose', `Merged new package info:`, verbose);
+        g.log('dump', answers, verbose);
+    } else {
+        g.log('verbose', `Package JSON not found at: ${ pkgFile }`, verbose);
+    }
 }
 
 function randomString(length, chars) {
