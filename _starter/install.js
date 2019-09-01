@@ -503,6 +503,8 @@ async function run() {
             }
             g.verboseExec(`./craft update all --backup`, verbose);
             g.log('verbose', `Craft and plugins updated`, verbose);
+        } else if (['vuecli'].includes(answers.projectType)) {
+            g.verboseExec(`vue create .`, verbose);
         }
 
         g.log('title', 'Moving selected components', verbose);
