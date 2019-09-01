@@ -507,13 +507,17 @@ async function run() {
         fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
         g.log('verbose', `package.json updated:`, verbose);
         g.log('dump', pkg, verbose);
-        
+
         answers.components.forEach((item) => {
             g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
         });
 
+        g.log('title', 'Updating NPM packages', verbose);
+        g.verboseExec(`npm run update${ verbose ? ' -- --verbose' : '' }`, verbose);
+        g.log('verbose', `NPM Packages updated`, verbose);
+
         g.log('title', 'Running Initial Build Script', verbose);
-        g.verboseExec(`npm run dev${ verbose ? ' -- --verbose' : '' }`, verbose);
+        g.verboseExec(answers.npmInstaller + ` update`, verbose);
         g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
 
         if (answers.setupRepo) {
