@@ -94,7 +94,7 @@ new Vue({
         });
         <% if (install.projectType === 'craft3') { %>
 
-        import AdminBar from './adminbar.js';// Add Admin Bar to Craft CMS websites
+        // Add Admin Bar to Craft CMS websites
         window.adminbar = new AdminBar();<% } -%>
     },
     delimiters: ['${', '}'],
