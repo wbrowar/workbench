@@ -513,11 +513,11 @@ async function run() {
         });
 
         g.log('title', 'Updating NPM packages', verbose);
-        g.verboseExec(`npm run update${ verbose ? ' -- --verbose' : '' }`, verbose);
+        g.verboseExec(answers.npmInstaller + ` update`, verbose);
         g.log('verbose', `NPM Packages updated`, verbose);
 
         g.log('title', 'Running Initial Build Script', verbose);
-        g.verboseExec(answers.npmInstaller + ` update`, verbose);
+        g.verboseExec(`npm run dev${ verbose ? ' -- --verbose' : '' }`, verbose);
         g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
 
         if (answers.setupRepo) {
