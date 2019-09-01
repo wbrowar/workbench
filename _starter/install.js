@@ -402,7 +402,10 @@ async function run() {
 
         g.log('verbose', `Updating package.json file`, verbose);
         const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
-        const pkgWithDependenciesAtTheEnd = _.merge(pkgWithoutDependencies, [pkg.dependencies, pkg.devDependencies]);
+        const pkgWithDependenciesAtTheEnd = _.merge(pkgWithoutDependencies, {
+            dependencies: pkg.dependencies,
+            devDependencies: pkg.devDependencies,
+        });
         fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkgWithDependenciesAtTheEnd, null, 2));
         g.log('verbose', `package.json file updated:`, verbose);
         g.log('dump', pkg, verbose);
