@@ -374,18 +374,45 @@ async function run() {
 
         if (starterProjects.includes(answers.projectType)) {
             mergeIntoPkg(`${process.cwd()}/_starter/install/_starter/setup/package.json`);
+
+            const editPkgComponents = g.asyncFunction(
+                `Adding Selected Components to package.json`, `Selected Components Added`, (resolve) => {
+                    let selectedComponents = answers.components;
+                    const defaults = glob.sync(`${ process.cwd() }/_starter/style_inventory/defaults/*`);
+                    defaults.forEach((item) => {
+                        selectedComponents.push(`@${ path.basename(item, path.extname(item)) }`);
+                    });
+                    Object.keys(pkg.styleInventory['pages']).forEach((key) => {
+                        const filteredComponents = pkg.styleInventory['pages'][key].components.filter(component => selectedComponents.includes(component));
+                        if (filteredComponents.length > 0) {
+                            pkg.styleInventory['pages'][key].components = filteredComponents;
+                        } else {
+                            delete pkg.styleInventory['pages'][key];
+                        }
+                    });
+                    resolve();
+                });
+            let editPkgComponentsComplete = await editPkgComponents;
         }
-        g.log('title', 'Changing package.json Defaults', verbose);
-        pkg.name = handle;
-        pkg.version = '1.0.0';
-        pkg.browserSync.url = answers.localUrl;
-        pkg.paths.base.siteUrl = answers.localUrl;
+        g.log('title', 'Updating package.json values with dynamic data', verbose);
+        pkg = _.merge(pkg, {
+            scripts: {
+                cnvm: 'nvm use ' + process.version,
+                update: answers.npmInstaller + ' update',
+            },
+            name: handle,
+            version: '1.0.0',
+            browserSync: {
+                url: answers.localUrl,
+            },
+            paths: {
+                base: {
+                    siteUrl: answers.localUrl,
+                }
+            },
+        });
 
         mergeIntoPkg(`${process.cwd()}/_starter/install/${ answers.projectType }/setup/package.json`);
-
-        g.log('title', `Updating package.json values with dynamic data`);
-        pkg.scripts['cnvm'] = 'nvm use ' + process.version;
-        pkg.scripts['update'] = answers.npmInstaller + ' update';
 
         if (answers.projectType === 'craft3') {
             pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update all --backup';
@@ -395,25 +422,6 @@ async function run() {
             pkg.paths.img.dist = `src/assetbundles/${ handle }/dist/img/`;
             pkg.paths.js.dist = `src/assetbundles/${ handle }/dist/js/`;
         }
-
-        const editPkgComponents = g.asyncFunction(
-            `Adding Selected Components to package.json`, `Selected Components Added`, (resolve) => {
-                let selectedComponents = answers.components;
-                const defaults = glob.sync(`${ process.cwd() }/_starter/style_inventory/defaults/*`);
-                defaults.forEach((item) => {
-                    selectedComponents.push(`@${ path.basename(item, path.extname(item)) }`);
-                });
-                Object.keys(pkg.styleInventory['pages']).forEach((key) => {
-                    const filteredComponents = pkg.styleInventory['pages'][key].components.filter(component => selectedComponents.includes(component));
-                    if (filteredComponents.length > 0) {
-                        pkg.styleInventory['pages'][key].components = filteredComponents;
-                    } else {
-                        delete pkg.styleInventory['pages'][key];
-                    }
-                });
-                resolve();
-            });
-        let editPkgComponentsComplete = await editPkgComponents;
 
         g.log('verbose', `Updating package.json file`, verbose);
         const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
