@@ -359,42 +359,42 @@ async function run() {
             });
         let removeGitkeepComplete = await removeGitkeep;
 
-        let projectTypeInstallDirectories = []; `${ process.cwd() }/_starter/install/${ answers.projectType }/`;
+        let projectTypeInstallDirectories = [];;
 
         switch (answers.projectType) {
             case 'craft3':
-                projectTypeInstallDirectories.push(...['starter', 'craft3']);
+                projectTypeInstallDirectories = ['starter', 'craft3'];
                 break;
             case 'craftplugin':
-                projectTypeInstallDirectories.push(...['starter', 'craftplugin']);
+                projectTypeInstallDirectories = ['starter', 'craftplugin'];
                 break;
             case 'html':
-                projectTypeInstallDirectories.push(...['starter', 'html']);
+                projectTypeInstallDirectories = ['starter', 'html'];
                 break;
             case 'vuecli':
-                projectTypeInstallDirectories.push(...['vuecli']);
+                projectTypeInstallDirectories = ['vuecli'];
                 break;
         }
 
         g.asyncForEach(projectTypeInstallDirectories, async (item) => {
-            if (fs.existsSync(`${ item }ejs`)) {
+            if (fs.existsSync(`_starter/install/${ item }/ejs`)) {
                 const compileProjectInstallFiles = g.asyncFunction(
                     `Compiling Project Templates`, `Project Templates Compiled`, (resolve) => {
-                        globEjs(`${ item }ejs/**/*`, `_starter/install/${ answers.projectType }/ejs/`, ``, resolve);
+                        globEjs(`${ item }ejs/**/*`, `_starter/install/${ item }/ejs/`, ``, resolve);
                     });
                 let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
             } else {
-                g.log('verbose', `No project templates to compile`, verbose);
+                g.log('verbose', `No project templates to move from _starter/install/${ item }/ejs`, verbose);
             }
 
-            if (fs.existsSync(`${ item }mv`)) {
+            if (fs.existsSync(`_starter/install/${ item }/mv`)) {
                 const compileProjectInstallFiles = g.asyncFunction(
                     `Moving Project Templates`, `Project Templates Moved`, (resolve) => {
-                        globMove(`${ item }mv/**/*`, `_starter/install/${ answers.projectType }/mv/`, ``, resolve);
+                        globMove(`${ item }mv/**/*`, `_starter/install/${ item }/mv/`, ``, resolve);
                     });
                 let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
             } else {
-                g.log('verbose', `No project templates to move`, verbose);
+                g.log('verbose', `No project templates to move from _starter/install/${ item }/mv`, verbose);
             }
         });
 
