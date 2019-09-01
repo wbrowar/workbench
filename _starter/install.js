@@ -614,7 +614,9 @@ function mergeIntoPkg(pkgFile) {
         pkg = _.merge(pkg, newPkgInfo);
 
         g.log('verbose', `Merged new package info:`, verbose);
-        g.log('dump', answers, verbose);
+        g.log('dump', newPkgInfo, verbose);
+        g.log('verbose', `Current package info:`, verbose);
+        g.log('dump', pkg, verbose);
     } else {
         g.log('verbose', `Package JSON not found at: ${ pkgFile }`, verbose);
     }
