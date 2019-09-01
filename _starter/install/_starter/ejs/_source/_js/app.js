@@ -64,15 +64,15 @@ new Vue({
     components: {
         //Navigation,
         //ScrollUpdater,
-        <% if (install.components.includes('accordion')) { %>Accordion = () => import('./components/Accordion.vue'),
-        AccordionTab = () => import('./components/AccordionTab.vue'),<% } -%>
-        <% if (install.components.includes('color_scheme_toggle')) { %>ColorSchemeToggle = () => import('./components/ColorSchemeToggle.vue'),<% } -%>
-        <% if (install.components.includes('overlay')) { %>Overlay = () => import('./components/Overlay.vue'),<% } -%>
-        <% if (install.components.includes('slider')) { %>Slider = () => import('./components/Slider.vue'),
-        SliderControl = () => import('./components/SliderControl.vue'),
-        SliderSlide = () => import('./components/SliderSlide.vue'),<% } -%>
-        <% if (install.components.includes('form')) { %>ValidatedForm = () => import('./components/ValidatedForm.vue'),<% } -%>
-        <% if (install.components.includes('form_input')) { %>ValidatedFormInput = () => import('./components/ValidatedFormInput.vue'),<% } -%>
+        <% if (install.components.includes('accordion')) { %>Accordion: () => import('./components/Accordion.vue'),
+        AccordionTab: () => import('./components/AccordionTab.vue'),<% } _%>
+        <% if (install.components.includes('color_scheme_toggle')) { %>ColorSchemeToggle: () => import('./components/ColorSchemeToggle.vue'),<% } _%>
+        <% if (install.components.includes('overlay')) { %>Overlay: () => import('./components/Overlay.vue'),<% } _%>
+        <% if (install.components.includes('slider')) { %>Slider: () => import('./components/Slider.vue'),
+        SliderControl: () => import('./components/SliderControl.vue'),
+        SliderSlide: () => import('./components/SliderSlide.vue'),<% } _%>
+        <% if (install.components.includes('form')) { %>ValidatedForm: () => import('./components/ValidatedForm.vue'),<% } _%>
+        <% if (install.components.includes('form_input')) { %>ValidatedFormInput: () => import('./components/ValidatedFormInput.vue'),<% } _%>
     },
     created: function () {
         // Watch resize
