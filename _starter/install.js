@@ -447,6 +447,7 @@ async function run() {
             g.log('verbose', `No project templates to move`, verbose);
         }
 
+        g.log('title', 'Running project specific install scripts', verbose);
         if (['craft3'].includes(answers.projectType)) {
             g.verboseExec(`mv example.env .env`, verbose);
             g.verboseExec(`mv ./craft ./craft`, verbose);
@@ -484,6 +485,7 @@ async function run() {
             g.log('verbose', `Craft and plugins updated`, verbose);
         }
 
+        g.log('title', 'Moving selected components', verbose);
         answers.components.forEach((item) => {
             if (!item.startsWith('@')) {
                 g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
