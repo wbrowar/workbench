@@ -44,6 +44,8 @@ if (verbose) {
     g.log('warn', `Running install using --verbose will expose passwords in the terminal. Only share the output with people you trust with those passwords.`, verbose);
     g.log('verbose', `getting composer version`, verbose);
     g.verboseExec(`composer --version`, verbose);
+    g.log('verbose', `getting node version`, verbose);
+    g.verboseExec(`node -v`, verbose);
     g.log('verbose', `getting npm version`, verbose);
     g.verboseExec(`npm -v`, verbose);
 }
@@ -358,7 +360,7 @@ async function run() {
         }
 
         if (starterProjects.includes(answers.projectType)) {
-            mergeIntoPkg(`${process.cwd()}/_starter/install/starter/setup/package.json`);
+            mergeIntoPkg(`${process.cwd()}/_starter/install/_starter/setup/package.json`);
         }
         g.log('title', 'Changing package.json Defaults', verbose);
         pkg.name = handle;
@@ -419,13 +421,13 @@ async function run() {
         if (starterProjects.includes(answers.projectType)) {
             const moveAllInstallFiles = g.asyncFunction(
                 `Moving Default Files`, `Default Files Moved`, (resolve) => {
-                    globMove(`${ process.cwd() }/_starter/install/starter/mv/**/*`, `_starter/install/starter/mv/`, ``, resolve);
+                    globMove(`${ process.cwd() }/_starter/install/_starter/mv/**/*`, `_starter/install/_starter/mv/`, ``, resolve);
                 });
             let moveAllInstallFilesComplete = await moveAllInstallFiles;
 
             const compileAllInstallFiles = g.asyncFunction(
                 `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
-                    globEjs(`${ process.cwd() }/_starter/install/starter/ejs/**/*`, `_starter/install/starter/ejs/`, ``, resolve);
+                    globEjs(`${ process.cwd() }/_starter/install/_starter/ejs/**/*`, `_starter/install/_starter/ejs/`, ``, resolve);
                 });
             let compileAllInstallFilesComplete = await compileAllInstallFiles;
         }
