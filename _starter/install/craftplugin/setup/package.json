@@ -1,0 +1,21 @@
+{
+  "favicon": {
+    "enabled": false
+  },
+  "postcss": [],
+  "overrideVersion": "1.0.0",
+  "projectTemplateLanguage": "twig",
+  "projectType": "craftplugin",
+  "styleInventory": {
+    "enabled": false
+  },
+  "paths": {
+    "base": {
+      "dist": "development/",
+      "release": "release/"
+    },
+    "templates": {
+      "dist": "src/templates/"
+    }
+  }
+}

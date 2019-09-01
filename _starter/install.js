@@ -41,6 +41,7 @@ let localConfig = false;
 
 // check if npm and composer are installed
 if (verbose) {
+    g.log('warn', `Running install using --verbose will expose passwords in the terminal. Only share the output with people you trust with those passwords.`, verbose);
     g.log('verbose', `getting composer version`, verbose);
     g.verboseExec(`composer --version`, verbose);
     g.log('verbose', `getting npm version`, verbose);
@@ -367,33 +368,17 @@ async function run() {
 
         mergeIntoPkg(`${process.cwd()}/_starter/install/${ answers.projectType }/setup/package.json`);
 
+        g.log('title', `Updating package.json values with dynamic data`);
+        pkg.scripts['cnvm'] = 'nvm use ' + process.version;
+        pkg.scripts['update'] = answers.npmInstaller + ' update';
+
         if (answers.projectType === 'craft3') {
-            pkg.paths.css.dist = `web/css/`;
-            pkg.paths.favicon.dist = `web/favicon/`;
-            pkg.paths.icon.dist = `web/icon/`;
-            pkg.paths.img.dist = `web/img/`;
-            pkg.paths.js.dist = `web/js/`;
-            pkg.paths.templates.dist = `templates/`;
-            pkg.styleInventory.urlSuffix = '';
-            pkg.projectTemplateLanguage = 'twig';
-            pkg.projectType = 'craft3';
-        } else if (answers.projectType === 'html') {
-            pkg.projectTemplateLanguage = 'ejs';
-            pkg.projectType = 'html';
+            pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update all --backup';
         } else if (answers.projectType === 'craftplugin') {
-            pkg.favicon.enabled = false;
-            pkg.overrideVersion = "1.0.0";
-            pkg.paths.base.dist = 'development/';
-            pkg.paths.base.release = 'release/';
             pkg.paths.css.dist = `src/assetbundles/${ handle }/dist/css/`;
             pkg.paths.icon.dist = `src/assetbundles/${ handle }/dist/icon/`;
             pkg.paths.img.dist = `src/assetbundles/${ handle }/dist/img/`;
             pkg.paths.js.dist = `src/assetbundles/${ handle }/dist/js/`;
-            pkg.paths.templates.dist = `src/templates/`;
-            pkg.postcss = [];
-            pkg.projectTemplateLanguage = 'twig';
-            pkg.projectType = 'craftplugin';
-            pkg.styleInventory.enabled = false;
         }
 
         const editPkgComponents = g.asyncFunction(
@@ -415,18 +400,9 @@ async function run() {
             });
         let editPkgComponentsComplete = await editPkgComponents;
 
-        g.log('title', `Filtering NPM Scripts in package.json`);
-        pkg.scripts['cnvm'] = 'nvm use ' + process.version;
-        pkg.scripts['update'] = answers.npmInstaller + ' update';
-
-        if (['craft3'].includes(answers.projectType)) {
-            pkg.scripts['cssd'] = './vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
-            pkg.scripts['cssdb'] = './vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
-            pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update all --backup';
-        }
-
+        g.log('verbose', `Updating package.json file`, verbose);
         fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
-        g.log('verbose', `package.json updated:`, verbose);
+        g.log('verbose', `package.json file updated:`, verbose);
         g.log('dump', pkg, verbose);
 
         const removeGitkeep = g.asyncFunction(

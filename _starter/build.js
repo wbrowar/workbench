@@ -315,8 +315,6 @@ async function run() {
                                 browsersyncComponentsMoving = true;
                                 setTimeout(() => { browsersyncReady.components = true; }, (browsersyncInterval * 10));
 
-                                prettierOnFile(file);
-
                                 const watchUpdateComponents           = updateComponents();
                                 let watchUpdateComponentsComplete     = await watchUpdateComponents;
 
@@ -351,8 +349,6 @@ async function run() {
                                 g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.css = false;
                                 setTimeout(() => { browsersyncReady.css = true; }, browsersyncInterval);
-
-                                prettierOnFile(file);
 
                                 const watchCompileCss       = compileCss();
                                 let watchCompileCssComplete = await watchCompileCss;
@@ -402,8 +398,6 @@ async function run() {
                                 browsersyncReady.js = false;
                                 setTimeout(() => { browsersyncReady.js = true; }, browsersyncInterval);
 
-                                prettierOnFile(file);
-
                                 const watchCompileJs       = compileJs();
                                 let watchCompileJsComplete = await watchCompileJs;
 
@@ -419,8 +413,6 @@ async function run() {
                                 g.log('verbose', `BrowserSync Event: ${ event }`, verbose);
                                 browsersyncReady.templates = false;
                                 setTimeout(() => { browsersyncReady.templates = true; }, browsersyncInterval);
-
-                                prettierOnFile(file);
 
                                 const watchCompileTemplates       = compileTemplates();
                                 let watchCompileTemplatesComplete = await watchCompileTemplates;

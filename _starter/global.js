@@ -97,7 +97,7 @@ methods.log = function log(type = 'message', message, verbose = false) {
             }
             break;
         case 'warn':
-            console.warn(chalk.red.bold(`🚧 ${ message }`));
+            console.warn(chalk.red.bold(`❗️ ${ message }`));
             break;
         default:
             console.log(message);

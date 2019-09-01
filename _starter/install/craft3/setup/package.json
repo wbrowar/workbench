@@ -1,0 +1,31 @@
+{
+  "scripts": {
+    "cssd": "./vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh",
+    "cssdb": "./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh"
+  },
+  "styleInventory": {
+    "urlSuffix": ""
+  },
+  "projectTemplateLanguage": "twig",
+  "projectType": "craft3",
+  "paths": {
+    "css": {
+      "dist": "web/css/"
+    },
+    "favicon": {
+      "dist": "web/favicon/"
+    },
+    "icon": {
+      "dist": "web/icon/"
+    },
+    "img": {
+      "dist": "web/img/"
+    },
+    "js": {
+      "dist": "web/js/"
+    },
+    "templates": {
+      "dist": "templates/"
+    }
+  }
+}
