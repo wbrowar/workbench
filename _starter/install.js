@@ -376,7 +376,7 @@ async function run() {
                 break;
         }
 
-        g.asyncForEach(projectTypeInstallDirectories, (item) => {
+        g.asyncForEach(projectTypeInstallDirectories, async (item) => {
             if (fs.existsSync(`${ item }ejs`)) {
                 const compileProjectInstallFiles = g.asyncFunction(
                     `Compiling Project Templates`, `Project Templates Compiled`, (resolve) => {
