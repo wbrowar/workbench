@@ -103,9 +103,9 @@ new Vue({
     components: {
         //Navigation,
         //ScrollUpdater,
-        <% if (install.components.accordion) { %>Accordion = () => import('./components/Accordion.vue'),
+        <% if (install.components.includes('accordion')) { %>Accordion = () => import('./components/Accordion.vue'),
         AccordionTab = () => import('./components/AccordionTab.vue'),<% } %>
-        <% if (install.components.color_scheme_toggle) { %>ColorSchemeToggle = () => import('./components/ColorSchemeToggle.vue'),<% } %>
+        <% if (install.components.includes('color_scheme_toggle')) { %>ColorSchemeToggle = () => import('./components/ColorSchemeToggle.vue'),<% } %>
     },
     created: function () {
         // Watch resize
