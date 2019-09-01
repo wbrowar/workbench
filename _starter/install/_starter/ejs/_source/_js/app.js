@@ -57,45 +57,6 @@ vueMethods['classToggle'] = function (selector, getClass) {
     classToggle(selector, getClass);
 };
 
-// Lazy load Vue components
-// Vue.component('accordion', function (resolve) {
-//     require.ensure(['./components/Accordion.vue', './components/AccordionTab.vue'], function(require){
-//         require(['./components/Accordion.vue'], resolve)
-//     });
-// });
-// Vue.component('accordion-tab', function (resolve) {
-//     require.ensure(['./components/Accordion.vue', './components/AccordionTab.vue'], function(require){
-//         require(['./components/AccordionTab.vue'], resolve)
-//     });
-// });
-// Vue.component('color-scheme-toggle', function(resolve) {
-//     require(['./components/ColorSchemeToggle.vue'], resolve);
-// });
-// Vue.component('overlay', function (resolve) {
-//     require(['./components/Overlay.vue'], resolve)
-// });
-// Vue.component('slider', function (resolve) {
-//     require.ensure(['./components/Slider.vue', './components/SliderControl.vue', './components/SliderSlide.vue'], function(require){
-//         require(['./components/Slider.vue'], resolve)
-//     });
-// });
-// Vue.component('slider-control', function (resolve) {
-//     require.ensure(['./components/Slider.vue', './components/SliderControl.vue', './components/SliderSlide.vue'], function(require){
-//         require(['./components/SliderControl.vue'], resolve)
-//     });
-// });
-// Vue.component('slider-slide', function (resolve) {
-//     require.ensure(['./components/Slider.vue', './components/SliderControl.vue', './components/SliderSlide.vue'], function(require){
-//         require(['./components/SliderSlide.vue'], resolve)
-//     });
-// });
-// Vue.component('validated-form', function (resolve) {
-//     require(['./components/ValidatedForm.vue'], resolve)
-// });
-// Vue.component('validated-form-input', function (resolve) {
-//     require(['./components/ValidatedFormInput.vue'], resolve)
-// });
-
 // VUE INSTANCE
 new Vue({
     el: '#page',
@@ -104,8 +65,14 @@ new Vue({
         //Navigation,
         //ScrollUpdater,
         <% if (install.components.includes('accordion')) { %>Accordion = () => import('./components/Accordion.vue'),
-        AccordionTab = () => import('./components/AccordionTab.vue'),<% } %>
-        <% if (install.components.includes('color_scheme_toggle')) { %>ColorSchemeToggle = () => import('./components/ColorSchemeToggle.vue'),<% } %>
+        AccordionTab = () => import('./components/AccordionTab.vue'),<% } -%>
+        <% if (install.components.includes('color_scheme_toggle')) { %>ColorSchemeToggle = () => import('./components/ColorSchemeToggle.vue'),<% } -%>
+        <% if (install.components.includes('overlay')) { %>Overlay = () => import('./components/Overlay.vue'),<% } -%>
+        <% if (install.components.includes('slider')) { %>Slider = () => import('./components/Slider.vue'),
+        SliderControl = () => import('./components/SliderControl.vue'),
+        SliderSlide = () => import('./components/SliderSlide.vue'),<% } -%>
+        <% if (install.components.includes('form')) { %>ValidatedForm = () => import('./components/ValidatedForm.vue'),<% } -%>
+        <% if (install.components.includes('form_input')) { %>ValidatedFormInput = () => import('./components/ValidatedFormInput.vue'),<% } -%>
     },
     created: function () {
         // Watch resize
