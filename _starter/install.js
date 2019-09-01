@@ -360,13 +360,13 @@ async function run() {
         let removeGitkeepComplete = await removeGitkeep;
 
         if (['craft3', 'craftplugin', 'html'].includes(answers.projectType)) {
-            const moveAllInstallFiles = asyncFunction(
+            const moveAllInstallFiles = g.asyncFunction(
                 `Moving Default Files`, `Default Files Moved`, (resolve) => {
                     globMove(`${ process.cwd() }/_starter/install/all/mv/**/*`, `_starter/install/all/mv/`, ``, resolve);
                 });
             let moveAllInstallFilesComplete = await moveAllInstallFiles;
 
-            const compileAllInstallFiles = asyncFunction(
+            const compileAllInstallFiles = g.asyncFunction(
                 `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
                     globEjs(`${ process.cwd() }/_starter/install/all/ejs/**/*`, `_starter/install/all/ejs/`, ``, resolve);
                 });
@@ -376,7 +376,7 @@ async function run() {
         const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ answers.projectType }/`;
 
         if (fs.existsSync(`${ projectTypeInstallDirectory }ejs`)) {
-            const compileProjectInstallFiles = asyncFunction(
+            const compileProjectInstallFiles = g.asyncFunction(
                 `Compiling Project Templates`, `Project Templates Compiled`, (resolve) => {
                     globEjs(`${ projectTypeInstallDirectory }ejs/**/*`, `_starter/install/${ answers.projectType }/ejs/`, ``, resolve);
                 });
@@ -386,7 +386,7 @@ async function run() {
         }
 
         if (fs.existsSync(`${ projectTypeInstallDirectory }mv`)) {
-            const compileProjectInstallFiles = asyncFunction(
+            const compileProjectInstallFiles = g.asyncFunction(
                 `Moving Project Templates`, `Project Templates Moved`, (resolve) => {
                     globMove(`${ projectTypeInstallDirectory }mv/**/*`, `_starter/install/${ answers.projectType }/mv/`, ``, resolve);
                 });
