@@ -116,21 +116,10 @@ async function run() {
             },
         },
         {
-            type: 'input',
-            name: 'cpTrigger',
-            message: 'CP Trigger (path to Craft CP)',
-            default: localConfig ? (localConfig.cpTrigger || 'admin') : 'admin',
-            when: (answers) => {
-                return ['craft3'].includes(answers.projectType);
-            },
-            validate: (answer) => {
-                return answer !== '';
-            },
-        },
-        {
             type: 'confirm',
             name: 'setupDb',
             message: 'Setup Database?',
+            default: ['craft3'].includes(answers.projectType),
             when: (answers) => {
                 return !['craftplugin'].includes(answers.projectType);
             },
@@ -228,9 +217,31 @@ async function run() {
             },
         },
         {
+            type: 'input',
+            name: 'cpTrigger',
+            message: 'CP Trigger (path to Craft CP)',
+            default: localConfig ? (localConfig.cpTrigger || 'admin') : 'admin',
+            when: (answers) => {
+                return ['craft3'].includes(answers.projectType);
+            },
+            validate: (answer) => {
+                return answer !== '';
+            },
+        },
+        {
+            type: 'confirm',
+            name: 'headless',
+            message: 'Will this be a headless CMS?',
+            default: false,
+            when: (answers) => {
+                return ['craft3'].includes(answers.projectType);
+            },
+        },
+        {
             type: 'confirm',
             name: 'setupRepo',
             message: 'Setup GitHub repo?',
+            default: false,
         },
         {
             type: 'input',

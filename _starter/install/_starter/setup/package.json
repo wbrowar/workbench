@@ -96,6 +96,7 @@
         "label": "Globals",
         "components": [
           "@colors",
+          "color_scheme_toggle",
           "header",
           "text",
           "wrapper"

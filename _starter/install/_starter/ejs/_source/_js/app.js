@@ -2,9 +2,9 @@
 //  🏡 Custom Javascript used for UI and other functionality
 
 import Vue from 'vue';
-// import AdminBar from './adminbar.js';
-// import Navigation from './components/Navigation.vue';
-// import ScrollUpdater from './components/ScrollUpdater.vue';
+<% if (install.projectType === 'craft3') { %>import AdminBar from './adminbar.js';<% } _%>
+<% if (install.components.includes('navigation')) { %>import Navigation from './components/Navigation.vue';<% } _%>
+<% if (install.components.includes('scroll_updater')) { %>import ScrollUpdater from './components/ScrollUpdater.vue';<% } _%>
 import Lazy from './lazy.js';
 import { dir, error, log, warn, classToggle, gaTrack } from './global.js';
 
@@ -62,8 +62,8 @@ new Vue({
     el: '#page',
     data: vueData,
     components: {
-        //Navigation,
-        //ScrollUpdater,
+        <% if (install.components.includes('navigation')) { %>Navigation,<% } _%>
+        <% if (install.components.includes('scroll_updater')) { %>ScrollUpdater,<% } _%>
         <% if (install.components.includes('accordion')) { %>Accordion: () => import('./components/Accordion.vue'),
         AccordionTab: () => import('./components/AccordionTab.vue'),<% } _%>
         <% if (install.components.includes('color_scheme_toggle')) { %>ColorSchemeToggle: () => import('./components/ColorSchemeToggle.vue'),<% } _%>
@@ -92,9 +92,10 @@ new Vue({
         window.lazy = new Lazy({
             container: '#page',
         });
+        <% if (install.projectType === 'craft3') { %>
 
-        // Add Admin Bar to Craft CMS websites
-        // window.adminbar = new AdminBar();
+        import AdminBar from './adminbar.js';// Add Admin Bar to Craft CMS websites
+        window.adminbar = new AdminBar();<% } -%>
     },
     delimiters: ['${', '}'],
 });

@@ -24,6 +24,7 @@ return [
         'enableStyleInventory' => getenv('STYLE_INVENTORY') ?: false,
         'enableCsrfProtection' => true,
         'generateTransformsBeforePageLoad' => true,
+        'headlessMode' => getenv('IS_HEADLESS') ?: false,
         'isSystemLive' => getenv('IS_SYSTEM_LIVE') ?: false,
         'omitScriptNameInUrls' => true,
         'securityKey' => getenv('SECURITY_KEY'),
