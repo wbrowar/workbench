@@ -376,27 +376,30 @@ async function run() {
                 break;
         }
 
-        projectTypeInstallDirectories.forEach((item) => {
-            if (fs.existsSync(`${ item }ejs`)) {
-                const compileProjectInstallFiles = g.asyncFunction(
-                    `Compiling Project Templates`, `Project Templates Compiled`, (resolve) => {
-                        globEjs(`${ item }ejs/**/*`, `_starter/install/${ answers.projectType }/ejs/`, ``, resolve);
-                    });
-                let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
-            } else {
-                g.log('verbose', `No project templates to compile`, verbose);
-            }
+        const getProjectInstallFiles = async () => {
+            projectTypeInstallDirectories.forEach((item) => {
+                if (fs.existsSync(`${item}ejs`)) {
+                    const compileProjectInstallFiles = g.asyncFunction(
+                        `Compiling Project Templates`, `Project Templates Compiled`, (resolve) => {
+                            globEjs(`${item}ejs/**/*`, `_starter/install/${answers.projectType}/ejs/`, ``, resolve);
+                        });
+                    let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
+                } else {
+                    g.log('verbose', `No project templates to compile`, verbose);
+                }
 
-            if (fs.existsSync(`${ item }mv`)) {
-                const compileProjectInstallFiles = g.asyncFunction(
-                    `Moving Project Templates`, `Project Templates Moved`, (resolve) => {
-                        globMove(`${ item }mv/**/*`, `_starter/install/${ answers.projectType }/mv/`, ``, resolve);
-                    });
-                let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
-            } else {
-                g.log('verbose', `No project templates to move`, verbose);
-            }
-        });
+                if (fs.existsSync(`${item}mv`)) {
+                    const moveProjectInstallFiles = g.asyncFunction(
+                        `Moving Project Templates`, `Project Templates Moved`, (resolve) => {
+                            globMove(`${item}mv/**/*`, `_starter/install/${answers.projectType}/mv/`, ``, resolve);
+                        });
+                    let moveProjectInstallFilesComplete = await moveProjectInstallFiles;
+                } else {
+                    g.log('verbose', `No project templates to move`, verbose);
+                }
+            });
+        };
+        getProjectInstallFiles();
 
         answers.components.forEach((item) => {
             g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
