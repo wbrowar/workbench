@@ -538,35 +538,47 @@ async function run() {
 
 
 // CUSTOM FUNCTIONS
-function globEjs(pattern, replaceSrc, replaceDist) {
+function globEjs(pattern, replaceSrc, replaceDist, resolve) {
     glob(pattern, { dot:true, nodir: true }, function (er, files) {
         let count = files.length;
         if (count > 0) {
             files.forEach((item) => {
                 ejs.renderFile(item, ejsVars, {}, function(err, str) {
                     if (err) {
-                        g.log('warn', err);
+                        log('warn', err);
                     }
                     fs.outputFile(item.replace(replaceSrc, replaceDist), str, (err) => {
                         if(!err) {
-                            g.log('verbose', `Compiled ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+                            log('verbose', `Compiled ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+                            count--;
+                            if (count === 0) {
+                                resolve();
+                            }
                         }
                     });
                 });
             });
+        } else {
+            resolve();
         }
     });
 }
 
-function globMove(pattern, replaceSrc, replaceDist) {
+function globMove(pattern, replaceSrc, replaceDist, resolve) {
     glob(pattern, { dot:true, nodir: true }, function (er, files) {
         let count = files.length;
         if (count > 0) {
             files.forEach((item) => {
                 fs.move(item, item.replace(replaceSrc, replaceDist), { overwrite: true }).then(() => {
-                    g.log('verbose', `Moved ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+                    log('verbose', `Moved ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+                    count--;
+                    if (count === 0) {
+                        resolve();
+                    }
                 });
             });
+        } else {
+            resolve();
         }
     });
 }
