@@ -382,7 +382,7 @@ async function run() {
                 });
             let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
         } else {
-            log('verbose', `No project templates to compile`, verbose);
+            g.log('verbose', `No project templates to compile`, verbose);
         }
 
         if (fs.existsSync(`${ projectTypeInstallDirectory }mv`)) {
@@ -392,7 +392,7 @@ async function run() {
                 });
             let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
         } else {
-            log('verbose', `No project templates to move`, verbose);
+            g.log('verbose', `No project templates to move`, verbose);
         }
 
         answers.components.forEach((item) => {
