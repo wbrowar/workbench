@@ -36,6 +36,7 @@ let ejsVars = {
 };
 
 // set other variables
+const starterProjects = ['craft3', 'craftplugin', 'html'];
 let localConfig = false;
 
 // check if npm and composer are installed
@@ -361,9 +362,7 @@ async function run() {
             });
         let removeGitkeepComplete = await removeGitkeep;
 
-        if (['craft3', 'craftplugin', 'html'].includes(answers.projectType)) {
-            mergeIntoPkg(`${ process.cwd() }/_starter/install/starter/setup/package.json`);
-
+        if (starterProjects.includes(answers.projectType)) {
             const moveAllInstallFiles = g.asyncFunction(
                 `Moving Default Files`, `Default Files Moved`, (resolve) => {
                     globMove(`${ process.cwd() }/_starter/install/starter/mv/**/*`, `_starter/install/starter/mv/`, ``, resolve);
@@ -398,10 +397,6 @@ async function run() {
         } else {
             g.log('verbose', `No project templates to move`, verbose);
         }
-
-        answers.components.forEach((item) => {
-            g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
-        });
 
         if (['craft3'].includes(answers.projectType)) {
             g.verboseExec(`mv example.env .env`, verbose);
@@ -440,11 +435,16 @@ async function run() {
             g.log('verbose', `Craft and plugins updated`, verbose);
         }
 
+        if (starterProjects.includes(answers.projectType)) {
+            mergeIntoPkg(`${process.cwd()}/_starter/install/starter/setup/package.json`);
+        }
         g.log('title', 'Changing package.json Defaults', verbose);
         pkg.name = handle;
         pkg.version = '1.0.0';
         pkg.browserSync.url = answers.localUrl;
         pkg.paths.base.siteUrl = answers.localUrl;
+
+        mergeIntoPkg(`${process.cwd()}/_starter/install/${ answers.projectType }/setup/package.json`);
 
         if (answers.projectType === 'craft3') {
             pkg.paths.css.dist = `web/css/`;
@@ -507,6 +507,10 @@ async function run() {
         fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
         g.log('verbose', `package.json updated:`, verbose);
         g.log('dump', pkg, verbose);
+        
+        answers.components.forEach((item) => {
+            g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
+        });
 
         g.log('title', 'Running Initial Build Script', verbose);
         g.verboseExec(`npm run dev${ verbose ? ' -- --verbose' : '' }`, verbose);

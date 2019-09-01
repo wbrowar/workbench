@@ -214,7 +214,7 @@
       "build": "_build/",
       "dist": "",
       "release": "",
-      "siteUrl": "http://starter.test/",
+      "siteUrl": "/",
       "src": "_source/"
     },
     "components": {
