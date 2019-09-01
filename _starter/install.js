@@ -379,7 +379,7 @@ async function run() {
         const getProjectInstallFiles = g.asyncForEach(projectTypeInstallDirectories,(item) => {
             if (fs.existsSync(`_starter/install/${ item }/ejs`)) {
                 g.log('verbose', `Compiling templates from _starter/install/${ item }/ejs`, verbose);
-                globEjs(`${ item }ejs/**/*`, `_starter/install/${ item }/ejs/`, ``, resolve);
+                globEjs(`${ item }ejs/**/*`, `_starter/install/${ item }/ejs/`, ``);
                 g.log('verbose', `Templates compiled`, verbose);
             } else {
                 g.log('verbose', `No project templates to move from _starter/install/${ item }/ejs`, verbose);
@@ -387,7 +387,7 @@ async function run() {
 
             if (fs.existsSync(`_starter/install/${ item }/mv`)) {
                 g.log('verbose', `Moving templates from _starter/install/${ item }/mv`, verbose);
-                globMove(`${ item }mv/**/*`, `_starter/install/${ item }/mv/`, ``, resolve);
+                globMove(`${ item }mv/**/*`, `_starter/install/${ item }/mv/`, ``);
                 g.log('verbose', `Templates moved`, verbose);
             } else {
                 g.log('verbose', `No project templates to move from _starter/install/${ item }/mv`, verbose);
@@ -538,7 +538,7 @@ async function run() {
 
 
 // CUSTOM FUNCTIONS
-function globEjs(pattern, replaceSrc, replaceDist, resolve) {
+function globEjs(pattern, replaceSrc, replaceDist) {
     glob(pattern, { dot:true, nodir: true }, function (er, files) {
         let count = files.length;
         if (count > 0) {
@@ -550,35 +550,23 @@ function globEjs(pattern, replaceSrc, replaceDist, resolve) {
                     fs.outputFile(item.replace(replaceSrc, replaceDist), str, (err) => {
                         if(!err) {
                             g.log('verbose', `Compiled ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
-                            count--;
-                            if (count === 0) {
-                                resolve();
-                            }
                         }
                     });
                 });
             });
-        } else {
-            resolve();
         }
     });
 }
 
-function globMove(pattern, replaceSrc, replaceDist, resolve) {
+function globMove(pattern, replaceSrc, replaceDist) {
     glob(pattern, { dot:true, nodir: true }, function (er, files) {
         let count = files.length;
         if (count > 0) {
             files.forEach((item) => {
                 fs.move(item, item.replace(replaceSrc, replaceDist), { overwrite: true }).then(() => {
                     g.log('verbose', `Moved ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
-                    count--;
-                    if (count === 0) {
-                        resolve();
-                    }
                 });
             });
-        } else {
-            resolve();
         }
     });
 }
