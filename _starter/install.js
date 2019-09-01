@@ -362,13 +362,13 @@ async function run() {
         if (['craft3', 'craftplugin', 'html'].includes(answers.projectType)) {
             const moveAllInstallFiles = g.asyncFunction(
                 `Moving Default Files`, `Default Files Moved`, (resolve) => {
-                    globMove(`${ process.cwd() }/_starter/install/starter/mv/**/*`, `_starter/install/all/mv/`, ``, resolve);
+                    globMove(`${ process.cwd() }/_starter/install/starter/mv/**/*`, `_starter/install/starter/mv/`, ``, resolve);
                 });
             let moveAllInstallFilesComplete = await moveAllInstallFiles;
 
             const compileAllInstallFiles = g.asyncFunction(
                 `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
-                    globEjs(`${ process.cwd() }/_starter/install/starter/ejs/**/*`, `_starter/install/all/ejs/`, ``, resolve);
+                    globEjs(`${ process.cwd() }/_starter/install/starter/ejs/**/*`, `_starter/install/starter/ejs/`, ``, resolve);
                 });
             let compileAllInstallFilesComplete = await compileAllInstallFiles;
         }
