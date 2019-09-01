@@ -356,6 +356,79 @@ async function run() {
             g.log('verbose', `Created mysql database: '${ handle }'`, verbose);
         }
 
+        if (starterProjects.includes(answers.projectType)) {
+            mergeIntoPkg(`${process.cwd()}/_starter/install/starter/setup/package.json`);
+        }
+        g.log('title', 'Changing package.json Defaults', verbose);
+        pkg.name = handle;
+        pkg.version = '1.0.0';
+        pkg.browserSync.url = answers.localUrl;
+        pkg.paths.base.siteUrl = answers.localUrl;
+
+        mergeIntoPkg(`${process.cwd()}/_starter/install/${ answers.projectType }/setup/package.json`);
+
+        if (answers.projectType === 'craft3') {
+            pkg.paths.css.dist = `web/css/`;
+            pkg.paths.favicon.dist = `web/favicon/`;
+            pkg.paths.icon.dist = `web/icon/`;
+            pkg.paths.img.dist = `web/img/`;
+            pkg.paths.js.dist = `web/js/`;
+            pkg.paths.templates.dist = `templates/`;
+            pkg.styleInventory.urlSuffix = '';
+            pkg.projectTemplateLanguage = 'twig';
+            pkg.projectType = 'craft3';
+        } else if (answers.projectType === 'html') {
+            pkg.projectTemplateLanguage = 'ejs';
+            pkg.projectType = 'html';
+        } else if (answers.projectType === 'craftplugin') {
+            pkg.favicon.enabled = false;
+            pkg.overrideVersion = "1.0.0";
+            pkg.paths.base.dist = 'development/';
+            pkg.paths.base.release = 'release/';
+            pkg.paths.css.dist = `src/assetbundles/${ handle }/dist/css/`;
+            pkg.paths.icon.dist = `src/assetbundles/${ handle }/dist/icon/`;
+            pkg.paths.img.dist = `src/assetbundles/${ handle }/dist/img/`;
+            pkg.paths.js.dist = `src/assetbundles/${ handle }/dist/js/`;
+            pkg.paths.templates.dist = `src/templates/`;
+            pkg.postcss = [];
+            pkg.projectTemplateLanguage = 'twig';
+            pkg.projectType = 'craftplugin';
+            pkg.styleInventory.enabled = false;
+        }
+
+        const editPkgComponents = g.asyncFunction(
+            `Adding Selected Components to package.json`, `Selected Components Added`, (resolve) => {
+                let selectedComponents = answers.components;
+                const defaults = glob.sync(`${ process.cwd() }/_starter/style_inventory/defaults/*`);
+                defaults.forEach((item) => {
+                    selectedComponents.push(`@${ path.basename(item, path.extname(item)) }`);
+                });
+                Object.keys(pkg.styleInventory['pages']).forEach((key) => {
+                    const filteredComponents = pkg.styleInventory['pages'][key].components.filter(component => selectedComponents.includes(component));
+                    if (filteredComponents.length > 0) {
+                        pkg.styleInventory['pages'][key].components = filteredComponents;
+                    } else {
+                        delete pkg.styleInventory['pages'][key];
+                    }
+                });
+                resolve();
+            });
+        let editPkgComponentsComplete = await editPkgComponents;
+
+        g.log('title', `Filtering NPM Scripts in package.json`);
+        pkg.scripts['cnvm'] = 'nvm use ' + process.version;
+        pkg.scripts['update'] = answers.npmInstaller + ' update';
+
+        if (['craft3'].includes(answers.projectType)) {
+            pkg.scripts['cssd'] = './vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
+            pkg.scripts['cssdb'] = './vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
+            pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update all --backup';
+        }
+
+        fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
+        g.log('verbose', `package.json updated:`, verbose);
+        g.log('dump', pkg, verbose);
+
         const removeGitkeep = g.asyncFunction(
             `Removing Default .gitkeep Files`, `Default .gitkeep Files Removed`, (resolve) => {
                 globRemove(`${ process.cwd() }/_source/**/.gitkeep`, resolve);
@@ -435,81 +508,10 @@ async function run() {
             g.log('verbose', `Craft and plugins updated`, verbose);
         }
 
-        if (starterProjects.includes(answers.projectType)) {
-            mergeIntoPkg(`${process.cwd()}/_starter/install/starter/setup/package.json`);
-        }
-        g.log('title', 'Changing package.json Defaults', verbose);
-        pkg.name = handle;
-        pkg.version = '1.0.0';
-        pkg.browserSync.url = answers.localUrl;
-        pkg.paths.base.siteUrl = answers.localUrl;
-
-        mergeIntoPkg(`${process.cwd()}/_starter/install/${ answers.projectType }/setup/package.json`);
-
-        if (answers.projectType === 'craft3') {
-            pkg.paths.css.dist = `web/css/`;
-            pkg.paths.favicon.dist = `web/favicon/`;
-            pkg.paths.icon.dist = `web/icon/`;
-            pkg.paths.img.dist = `web/img/`;
-            pkg.paths.js.dist = `web/js/`;
-            pkg.paths.templates.dist = `templates/`;
-            pkg.styleInventory.urlSuffix = '';
-            pkg.projectTemplateLanguage = 'twig';
-            pkg.projectType = 'craft3';
-        } else if (answers.projectType === 'html') {
-            pkg.projectTemplateLanguage = 'ejs';
-            pkg.projectType = 'html';
-        } else if (answers.projectType === 'craftplugin') {
-            pkg.favicon.enabled = false;
-            pkg.overrideVersion = "1.0.0";
-            pkg.paths.base.dist = 'development/';
-            pkg.paths.base.release = 'release/';
-            pkg.paths.css.dist = `src/assetbundles/${ handle }/dist/css/`;
-            pkg.paths.icon.dist = `src/assetbundles/${ handle }/dist/icon/`;
-            pkg.paths.img.dist = `src/assetbundles/${ handle }/dist/img/`;
-            pkg.paths.js.dist = `src/assetbundles/${ handle }/dist/js/`;
-            pkg.paths.templates.dist = `src/templates/`;
-            pkg.postcss = [];
-            pkg.projectTemplateLanguage = 'twig';
-            pkg.projectType = 'craftplugin';
-            pkg.styleInventory.enabled = false;
-        }
-
-        const editPkgComponents = g.asyncFunction(
-            `Adding Selected Components to package.json`, `Selected Components Added`, (resolve) => {
-                let selectedComponents = answers.components;
-                const defaults = glob.sync(`${ process.cwd() }/_starter/style_inventory/defaults/*`);
-                defaults.forEach((item) => {
-                    selectedComponents.push(`@${ path.basename(item, path.extname(item)) }`);
-                });
-                Object.keys(pkg.styleInventory['pages']).forEach((key) => {
-                    const filteredComponents = pkg.styleInventory['pages'][key].components.filter(component => selectedComponents.includes(component));
-                    if (filteredComponents.length > 0) {
-                        pkg.styleInventory['pages'][key].components = filteredComponents;
-                    } else {
-                        delete pkg.styleInventory['pages'][key];
-                    }
-                });
-                resolve();
-            });
-        let editPkgComponentsComplete = await editPkgComponents;
-
-        g.log('title', `Filtering NPM Scripts in package.json`);
-        pkg.scripts['cnvm'] = 'nvm use ' + process.version;
-        pkg.scripts['update'] = answers.npmInstaller + ' update';
-
-        if (['craft3'].includes(answers.projectType)) {
-            pkg.scripts['cssd'] = './vendor/nystudio107/craft-scripts/scripts/backup_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_assets.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
-            pkg.scripts['cssdb'] = './vendor/nystudio107/craft-scripts/scripts/backup_db.sh && ./vendor/nystudio107/craft-scripts/scripts/pull_db.sh && ./vendor/nystudio107/craft-scripts/scripts/clear_caches.sh';
-            pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update all --backup';
-        }
-
-        fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkg, null, 2));
-        g.log('verbose', `package.json updated:`, verbose);
-        g.log('dump', pkg, verbose);
-
         answers.components.forEach((item) => {
-            g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
+            if (!item.startsWith('@')) {
+                g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
+            }
         });
 
         g.log('title', 'Updating NPM packages', verbose);
@@ -623,8 +625,6 @@ function mergeIntoPkg(pkgFile) {
 
         g.log('verbose', `Merged new package info:`, verbose);
         g.log('dump', newPkgInfo, verbose);
-        g.log('verbose', `Current package info:`, verbose);
-        g.log('dump', pkg, verbose);
     } else {
         g.log('verbose', `Package JSON not found at: ${ pkgFile }`, verbose);
     }
