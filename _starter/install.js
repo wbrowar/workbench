@@ -36,7 +36,7 @@ let ejsVars = {
 };
 
 // set other variables
-const starterProjects = ['craft3', 'craftplugin', 'html'];
+const starterProjects = ['craft3', 'craftplugin', 'html', 'vue'];
 let localConfig = false;
 
 // check if npm and composer are installed
@@ -90,7 +90,7 @@ async function run() {
             choices: [
                 { name: 'Craft 3', value: 'craft3' },
                 { name: 'HTML', value: 'html' },
-                { name: 'Vue CLI', value: 'vuecli' },
+                { name: 'Vue', value: 'vue' },
                 { name: 'Craft Plugin', value: 'craftplugin' },
             ],
         },
@@ -511,8 +511,6 @@ async function run() {
             }
             g.verboseExec(`./craft update all --backup`, verbose);
             g.log('verbose', `Craft and plugins updated`, verbose);
-        } else if (['vuecli'].includes(answers.projectType)) {
-            g.verboseExec(`vue create .`, verbose);
         }
 
         g.log('title', 'Moving selected components', verbose);

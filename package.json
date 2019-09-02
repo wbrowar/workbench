@@ -4,6 +4,7 @@
     "update": "npm update"
   },
   "name": "example-project",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
