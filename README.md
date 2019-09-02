@@ -226,6 +226,52 @@ For Javascript files, Webpack is used to uglify, transpile, and concatenate our 
 
 Currently, there is one file, `app.js`, but if you need to split out code into additional bundles, you can configure Webpack's entries in the `package.json` file. To add another Javascript file, modify the `webpack.entries.js` object.
 
+#### Loading Single-file Vue Components
+You can choose to lazy-load single-file Vue components or load them as part of your bundle.
+
+Lazy loading means that the component chunk will only load at the first instance the component is rendered.
+
+To split out a component and lazy load it, use this syntax when registering your Vue components:
+
+```javascript
+new Vue({
+    components: {
+        Overlay: () => import('./components/Overlay.vue'),
+    }
+});
+```
+
+Here, the component will be registered as Overlay and will be loaded and rendered when a `<overlay>` tag appears. This syntax does not take into account any dependencies. Those should all be imported into the `Overlay.vue` file as ES6 modules.
+
+When code is above the fold and important to the initial state of your app, you may bundle it into your `app.js` script by following this syntax, instead:
+
+```javascript
+import ScrollUpdater from './components/ScrollUpdater.vue';
+
+// ... Other code and beginning of vue instance
+
+new Vue({
+    components: {
+        ScrollUpdater
+    }
+});
+```
+
+If you need to mix and match bundled components with lazy-loaded components, you can do something like this:
+
+```javascript
+import ScrollUpdater from './components/ScrollUpdater.vue';
+
+// ...
+
+new Vue({
+    components: {
+        ScrollUpdater,
+        Overlay: () => import('./components/Overlay.vue'),
+    }
+});
+```
+
 ### lazy.js
 Include `lazy.js` into a JS document and create a new instance using `window.lazy = new Lazy(config)`.
 
