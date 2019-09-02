@@ -79,10 +79,10 @@ new Vue({
         window.addEventListener('resize', this.resizeHandler);
 
         // Watch scroll
-        // window.addEventListener('scroll', this.scrollHandler);
+        <% if (!install.components.includes('scroll_updater')) { %>// <% } %>window.addEventListener('scroll', this.scrollHandler);
 
         // Manage overlays
-        VueEvent.$on('show-overlay', (id) => this.visibleOverlays.push(id));
+        <% if (install.components.includes('overlay')) { %>// <% } %>VueEvent.$on('show-overlay', (id) => this.visibleOverlays.push(id));
     },
     methods: vueMethods,
     mounted: function () {
