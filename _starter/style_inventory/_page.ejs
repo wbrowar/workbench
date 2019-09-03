@@ -3,7 +3,7 @@
 <% } %>
 <div class="styles styles--<%- pkg.projectTemplateLanguage %>">
     <div class="styles__menu"><% var pages = pkg.styleInventory['pages'] %><% for (var item in pages) { %>
-        <a<% if (page === item) { %> class="active"<% } %> href="<%- pkg.paths.base.siteUrl %><%- pkg.styleInventory.urlPrefix %><%- item %><%- pkg.styleInventory.urlSuffix %>"><% if (page === item) { %><span class="styles__menu__active_spacer"></span><% } %><%= pages[item].label; %><% if (page === item) { %><span class="styles__menu__active_indicator"></span><% } %></a><% } %>
+        <a<% if (page === item) { %> class="active"<% } %> href="<%- siteUrl %><%- pkg.styleInventory.urlPrefix %><%- item %><%- pkg.styleInventory.urlSuffix %>"><% if (page === item) { %><span class="styles__menu__active_spacer"></span><% } %><%= pages[item].label; %><% if (page === item) { %><span class="styles__menu__active_indicator"></span><% } %></a><% } %>
     </div>
     <div>
         <% pkg.styleInventory['pages'][page].components.forEach(function (item) { %>
@@ -21,8 +21,8 @@
         <%- ('< %-').replace(' ', '') + ' include(paths.templates.src + "_css/dev-styles\" + filenameVersion + \".css") ' + ('% >').replace(' ', '') %>
     {% endcss %}
 <% } else { %>
-    <link rel="preload" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="<%- pkg.paths.base.siteUrl %>css/dev-styles<%- filenameVersion %>.css"></noscript>
+    <link rel="preload" href="<%- siteUrl %>css/dev-styles<%- filenameVersion %>.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="<%- siteUrl %>css/dev-styles<%- filenameVersion %>.css"></noscript>
 <% } %>
 <% if (pkg.projectTemplateLanguage === 'ejs') { %>
 <%- include(paths.templates.src + '_ejs/_layout_bottom') %>

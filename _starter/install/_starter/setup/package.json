@@ -213,7 +213,10 @@
       "build": "_build/",
       "dist": "",
       "release": "",
-      "siteUrl": "/",
+      "siteUrl": {
+        "dev": "/",
+        "prod": "/"
+      },
       "src": "_source/"
     },
     "components": {

@@ -1,21 +1,21 @@
 // import node modules
 const autoprefixer = require('autoprefixer'),
-      browserSync = require('browser-sync').create(),
-      critical = require('critical'),
-      das = require('./das.js'),
-      ejs = require('ejs'),
-      favicons = require('favicons'),
-      fs = require('fs-extra'),
-      glob = require('glob-all'),
-      inquirer = require('inquirer'),
-      notifier = require('node-notifier'),
-      os = require('os'),
-      path = require('path'),
-      postcss = require('postcss'),
-      sass = require('node-sass'),
-      sassGlobImporter = require('node-sass-glob-importer'),
-      sharp = require('sharp'),
-      webpack = require('webpack');
+    browserSync = require('browser-sync').create(),
+    critical = require('critical'),
+    das = require('./das.js'),
+    ejs = require('ejs'),
+    favicons = require('favicons'),
+    fs = require('fs-extra'),
+    glob = require('glob-all'),
+    inquirer = require('inquirer'),
+    notifier = require('node-notifier'),
+    os = require('os'),
+    path = require('path'),
+    postcss = require('postcss'),
+    sass = require('node-sass'),
+    sassGlobImporter = require('node-sass-glob-importer'),
+    sharp = require('sharp'),
+    webpack = require('webpack');
 
 // import global functions
 const g = require('./global.js');
@@ -28,22 +28,23 @@ let pkg = require(`${ process.cwd() }/package.json`);
 
 // set constants
 const argv = g.parseArgv(),
-      env = process.env.NODE_ENV || 'development',
-      release = env === 'production',
-      timestamp = Math.floor(new Date().getTime() / 1000);
+    env = process.env.NODE_ENV || 'development',
+    release = env === 'production',
+    siteUrl = release ? pkg.paths.base.siteUrl.prod : pkg.paths.base.siteUrl.dev,
+    timestamp = Math.floor(new Date().getTime() / 1000);
 
 // use CLI arguments to set variables
 const enableImg     = argv.options.noimg ? false : true,
-      commitMessage = argv.options.commitmessage || false,
-      runBuild      = argv.options.build || false,
-      runBump       = argv.options.bump || false,
-      runCommit     = argv.options.commit || false,
-      runCritCss    = argv.options.critcss || false,
-      runDeploy     = argv.options.deploy || false,
-      runPrettier    = argv.options.prettier || false,
-      runPublish    = argv.options.publish || false,
-      runWatch      = argv.options.watch || false,
-      verbose       = pkg.overrideVerbose || argv.options.verbose || false;
+    commitMessage = argv.options.commitmessage || false,
+    runBuild      = argv.options.build || false,
+    runBump       = argv.options.bump || false,
+    runCommit     = argv.options.commit || false,
+    runCritCss    = argv.options.critcss || false,
+    runDeploy     = argv.options.deploy || false,
+    runPrettier    = argv.options.prettier || false,
+    runPublish    = argv.options.publish || false,
+    runWatch      = argv.options.watch || false,
+    verbose       = pkg.overrideVerbose || argv.options.verbose || false;
 
 // set variables based on pkg options
 let paths = g.getPaths(pkg.paths),
@@ -63,6 +64,7 @@ let ejsVars = Object.assign({
     paths: paths,
     pkg: pkg,
     release: release,
+    siteUrl: siteUrl,
     version: version,
 }, pkg.ejs);
 
@@ -443,7 +445,8 @@ async function bumpPackage() {
 
     const p = await new Promise(resolve => {
         g.log('title', `Bumping version number`);
-        version = g.getVersion(g.bumpVersion(pkg.version));
+        g.log('verbose', `Current version number: ${ version }`, verbose);
+        version = g.getVersion(release, g.bumpVersion(pkg.version));
         pkg.version = version;
         ejsVars.pkg = pkg;
         ejsVars.filenameVersion = filenameVersion('.');
@@ -669,7 +672,7 @@ async function compileFavicon() {
 
     const p = await new Promise(resolve => {
         favicons(`${ paths.favicon.src }favicon.png`, {
-            path: `${ pkg.paths.base.siteUrl }favicon/`,
+            path: `${ siteUrl }favicon/`,
             background: "#fff",
             theme_color: "#fff",
             version: version,
@@ -834,7 +837,7 @@ async function compileJs() {
                     chunkFilename: `[id]${ legacySuffix + filenameVersion('.') }.js`,
                     filename: `[name]${ legacySuffix + filenameVersion('.') }.js`,
                     path: paths.js.dist,
-                    publicPath: "/js/",
+                    publicPath: `${ siteUrl }js/`,
                 };
             });
 
@@ -964,19 +967,19 @@ async function postCss() {
                 if (postCssActions.length > 0) {
                     fs.readFile(paths.css.dist + item.filename + filenameVersion('.') + '.css', (err, css) => {
                         postcss(postCssActions)
-                        .process(css)
-                        .then(result => {
-                            fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
-                                if (err) {
-                                    g.log('warn', err, verbose);
-                                }
-                                g.log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
-                                count--;
-                                if (count === 0) {
-                                    resolve();
-                                }
-                            });
-                        })
+                            .process(css)
+                            .then(result => {
+                                fs.outputFile(`${ paths.css.dist + item.filename + filenameVersion('.') }.css`, result.css, (err) => {
+                                    if (err) {
+                                        g.log('warn', err, verbose);
+                                    }
+                                    g.log('verbose', `POST CSS ran: ${ item.filename }`, verbose);
+                                    count--;
+                                    if (count === 0) {
+                                        resolve();
+                                    }
+                                });
+                            })
                     });
                 }
             });

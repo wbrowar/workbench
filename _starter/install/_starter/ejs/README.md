@@ -3,7 +3,7 @@ This project was built using [WB-Starter](#wb-starter) for building and optimizi
 
 Source files are stored in the `<%- pkg.paths.base.src %>` directory. Using [NPM Scripts](#npm-scripts), these files are processed based on settings stored in the `package.json` file.<% if (install.projectType === 'craft3') { %>
 
-This project is built using [Craft CMS 3](https://craftcms.com) and the control panel can be accessed by visiting: <%- pkg.paths.base.siteUrl + install.cpTrigger %>
+This project is built using [Craft CMS 3](https://craftcms.com) and the control panel can be accessed by visiting: <%- pkg.paths.base.siteUrl.prod + install.cpTrigger %>
 
 This project utilizes [Craft Scripts](https://github.com/nystudio107/craft-scripts) to make development easier. These scripts automate pulling down the master database and user uploaded assets from staging or production.
 
