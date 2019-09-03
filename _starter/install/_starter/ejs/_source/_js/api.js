@@ -21,7 +21,7 @@ export default class Api {
         this.variables = args.variables || null;
 
         if (this.query) {
-            this.request(this.query)
+            this.request(this.query, this.variables);
         }
     }
 
