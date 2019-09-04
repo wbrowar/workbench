@@ -3,11 +3,7 @@
 
 import axios from 'axios';
 import { log } from './global.js';
-
-const defaultHeaders = {
-    'Content-Type': 'application/json;charset=UTF-8',
-};
-const defaultUrl = 'REPLACE_URL';
+import { defaultHeaders, defaultUrl } from './settings.js';
 
 export default class Api {
     constructor(args = {}) {
@@ -38,6 +34,7 @@ export default class Api {
                 headers: this.headers,
             }).then((result) => {
                 this.callback(result);
+                log('GraphQL Request', result);
                 this.status = 'idle';
             });
         }
