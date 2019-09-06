@@ -407,7 +407,9 @@ async function run() {
             },
             paths: {
                 base: {
-                    siteUrl: answers.localUrl,
+                    siteUrl: {
+                        dev: answers.localUrl,
+                    }
                 }
             },
         });
