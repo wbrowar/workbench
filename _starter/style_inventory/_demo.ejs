@@ -7,6 +7,8 @@
         <% } else { %>
             <% if (pkg.projectTemplateLanguage === 'twig' && component.twig) { %>
                 <%- component.twig.demo || component.twig.code || '' %>
+            <% } else if (pkg.projectTemplateLanguage === 'vue' && component.vue) { %>
+                <%- component.vue.demo || component.vue.code || '' %>
             <% } else if (component.html) { %>
                 <%- component.html.demo || component.html.code %>
             <% } %>
@@ -27,6 +29,13 @@
             </div>
             <% if (component.twig.modifiers) { %><%- include('_demo_modifiers', { modifiers: component.twig.modifiers }) %><% } %>
             <% if (component.twig.options) { %><%- include('_demo_options', { options: component.twig.options }) %><% } %>
+        <% } %>
+        <% if (pkg.projectTemplateLanguage === 'vue' && component.vue) { %>
+            <div class="styles__example__code styles__example__code--vue">
+                {% verbatim %}<pre><code><%= component.vue.code %></code></pre>{% endverbatim %}
+            </div>
+            <% if (component.vue.modifiers) { %><%- include('_demo_modifiers', { modifiers: component.vue.modifiers }) %><% } %>
+            <% if (component.vue.options) { %><%- include('_demo_options', { options: component.vue.options }) %><% } %>
         <% } %>
         <%# other languages ... %>
     <% } %>
