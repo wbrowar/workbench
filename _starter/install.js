@@ -418,6 +418,8 @@ async function run() {
 
         if (answers.projectType === 'craft3') {
             pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update all --backup';
+            pkg.paths.base.siteUrl.dev = `{{ siteUrl }}`;
+            pkg.paths.base.siteUrl.prod = `{{ siteUrl }}`;
         } else if (answers.projectType === 'craftplugin') {
             pkg.paths.css.dist = `src/assetbundles/${ handle }/dist/css/`;
             pkg.paths.icon.dist = `src/assetbundles/${ handle }/dist/icon/`;
