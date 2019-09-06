@@ -21,8 +21,7 @@
         <%- ('< %-').replace(' ', '') + ' include(paths.templates.src + "_css/dev-styles\" + filenameVersion + \".css") ' + ('% >').replace(' ', '') %>
     {% endcss %}
 <% } else { %>
-    <link rel="preload" href="<%- siteUrl %>css/dev-styles<%- filenameVersion %>.css" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="<%- siteUrl %>css/dev-styles<%- filenameVersion %>.css"></noscript>
+    <link rel="stylesheet" href="<%- siteUrl %>css/dev-styles<%- filenameVersion %>.css" media="print" onload="this.media='all'">
 <% } %>
 <% if (pkg.projectTemplateLanguage === 'ejs') { %>
 <%- include(paths.templates.src + '_ejs/_layout_bottom') %>

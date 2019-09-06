@@ -22,9 +22,10 @@
 </script>
 
 <style lang="scss">
-    // include variables and mixins if needed
-    <%- ('< %-').replace(' ', '') + ' include(paths.css.src + \'automated/_colors.scss\') ' + ('% >').replace(' ', '') %>
-    <%- ('< %-').replace(' ', '') + ' include(paths.css.src + \'base/_mixins.scss\') ' + ('% >').replace(' ', '') %>
+    // @import './_source/_css/automated/_colors';
+    // @import './_source/_css/automated/_fonts';
+    // @import './_source/_css/base/_variables.scss';
+    // @import './_source/_css/base/_mixins.scss';
 
     .c_<%- handle %> {
         $self: &;
