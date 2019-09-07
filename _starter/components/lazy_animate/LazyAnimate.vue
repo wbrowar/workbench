@@ -39,6 +39,7 @@ export default {
         return {};
       },
     },
+    reset: { type: Boolean, default: false },
     type: { type: String, default: 'css' },
   },
   computed: {
@@ -62,6 +63,9 @@ export default {
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
+                if (this.reset) {
+                  this.animated = false;
+                }
                 callback();
               }
             });
@@ -77,7 +81,9 @@ export default {
     handleCssAnimation: function() {
       log('Handling Lazy Animate (css)');
 
-      this.removeFromObserver();
+      if (!this.reset) {
+        this.removeFromObserver();
+      }
       this.animated = true;
     },
     handleJsAnimation: function() {
@@ -85,7 +91,9 @@ export default {
 
       animations.animate(this.type, this.$el, this.options);
 
-      this.removeFromObserver();
+      if (!this.reset) {
+        this.removeFromObserver();
+      }
       this.animated = true;
     },
     inViewport: function() {
