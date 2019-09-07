@@ -1,5 +1,5 @@
 <template>
-  <div :class="animated ? 'c_animate--animated' : false" :style="animated ? endCss : startCss"><slot></slot></div>
+  <div :class="animated ? 'c_animate--animated' : false" :style="styles"><slot></slot></div>
 </template>
 
 <script>
@@ -17,17 +17,42 @@ export default {
     };
   },
   props: {
-    endCss: false,
-    observerMargin: { default: '-100px' },
-    observerThreshold: { default: 0 },
+    cssAnimation: String,
+    cssEnd: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+    cssStart: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+    cssTransition: String,
+    observerMargin: { type: String, default: '-100px' },
+    observerThreshold: { type: Number, default: 0 },
     options: {
       type: Object,
       default: () => {
         return {};
       },
     },
-    startCss: false,
-    type: { default: 'css' },
+    type: { type: String, default: 'css' },
+  },
+  computed: {
+    styles: function() {
+      let styles = this.animated ? this.cssEnd : this.cssStart;
+
+      if (this.cssAnimation) {
+        styles.animation = this.animated ? this.cssAnimation : null;
+      } else if (this.cssTransition) {
+        styles.transition = this.cssTransition;
+      }
+
+      return styles;
+    }
   },
   methods: {
     addToObserver: function(callback) {
@@ -110,14 +135,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-// @import './_source/_css/automated/_colors';
-// @import './_source/_css/automated/_fonts';
-// @import './_source/_css/base/_variables.scss';
-// @import './_source/_css/base/_mixins.scss';
-
-.c_lazy_animate {
-  $self: &;
-}
-</style>
