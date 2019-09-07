@@ -11,7 +11,8 @@
   overflow: hidden;
   @include aspect(1/1);
 
-  @at-root #{$self}__video, #{$self}__video video {
+  @at-root #{$self}__video,
+    #{$self}__video video {
     padding: 0;
     position: absolute !important;
     top: 50%;

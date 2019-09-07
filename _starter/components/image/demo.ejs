@@ -58,6 +58,10 @@
         { "name": 'sources > media', "required": false, "type": 'string', "description": `Adds a media attribute to allow the image to appear only for specific conditions.` },
         { "name": 'transformer', "required": false, "type": 'string', "default": `'imager'`, "description": `Specify the tool that performs image transforms. Accepts 'imager', 'imageoptimize', or 'craft'.` },
     ]
-  }
+  },
+  vue: {
+    code:
+            `hey`
+  },
 } %>
 <%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>

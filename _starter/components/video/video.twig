@@ -16,7 +16,7 @@
 
 {% block content -%}
     {% if source == 'youtube' %}
-        <iframe {% if lazyLoad %}data-lazy-load data-{% endif %}src="https://www.youtube.com/embed/{{ videoId }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe>
+        <iframe {% if lazyLoad %}data-lazy-load data-{% endif %}src="https://www.youtube.com/embed/{{ videoId }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480" frameborder="0" allowfullscreen></iframe>
         <noscript><iframe src="https://www.youtube.com/embed/{{ videoId }}?rel=0&amp;controls=0&amp;showinfo=0" width="853" height="480"  frameborder="0" allowfullscreen></iframe></noscript>
     {% elseif source == 'vimeo' %}
         <iframe {% if lazyLoad %}data-lazy-load data-{% endif %}src="https://player.vimeo.com/video/{{ videoId }}?title=0&byline=0&portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
