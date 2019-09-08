@@ -13,6 +13,7 @@
   },
   "paths": {
     "components": {
+      "flatten": true,
       "src": "src/components/"
     }
   },

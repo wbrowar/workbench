@@ -57,6 +57,7 @@
       "src": "_source/"
     },
     "components": {
+      "flatten": false,
       "src": "_components/"
     },
     "css": {
