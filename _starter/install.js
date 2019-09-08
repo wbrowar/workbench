@@ -530,7 +530,7 @@ async function run() {
         g.log('verbose', `NPM Packages updated`, verbose);
 
         g.log('title', 'Running Initial Build Script', verbose);
-        g.verboseExec(`npm run dev${ verbose ? ' -- --verbose' : '' }`, verbose);
+        g.verboseExec(`npm run dev`, verbose);
         g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
 
         if (answers.setupRepo) {
