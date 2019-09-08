@@ -178,10 +178,6 @@ async function run() {
 
             addComponentToStyleInventory(answers.handle);
         });
-
-
-        // BYE
-        // g.log('app', `End`);
     }
 }
 

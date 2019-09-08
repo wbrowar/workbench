@@ -34,17 +34,17 @@ const argv = g.parseArgv(),
     timestamp = Math.floor(new Date().getTime() / 1000);
 
 // use CLI arguments to set variables
-const enableImg     = argv.options.noimg ? false : true,
-    commitMessage = argv.options.commitmessage || false,
-    runBuild      = argv.options.build || false,
-    runBump       = argv.options.bump || false,
-    runCommit     = argv.options.commit || false,
-    runCritCss    = argv.options.critcss || false,
-    runDeploy     = argv.options.deploy || false,
-    runPrettier    = argv.options.prettier || false,
-    runPublish    = argv.options.publish || false,
-    runWatch      = argv.options.watch || false,
-    verbose       = pkg.overrideVerbose || argv.options.verbose || false;
+const enableImg   = argv.options.noimg ? false : true,
+      commitMessage = argv.options.commitmessage || false,
+      runBuild      = argv.options.build || false,
+      runBump       = argv.options.bump || false,
+      runCommit     = argv.options.commit || false,
+      runCritCss    = argv.options.critcss || false,
+      runDeploy     = argv.options.deploy || false,
+      runPrettier   = argv.options.prettier || false,
+      runPublish    = argv.options.publish || false,
+      runWatch      = argv.options.watch || false,
+      verbose       = pkg.overrideVerbose || argv.options.verbose || false;
 
 // set variables based on pkg options
 let paths = g.getPaths(pkg.paths),
@@ -595,26 +595,7 @@ async function compileCssTemplates() {
     g.log('title', `Moving CSS Components`);
 
     const p = await new Promise(resolve => {
-        glob(`${ paths.starter.templates }_css/*.{css,scss}`, function (er, files) {
-            g.log('verbose', `CSS templates: ${ JSON.stringify(files, null, 2) }`, verbose);
-            let count = files.length;
-            files.forEach((item) => {
-                ejs.renderFile(item, ejsVars, {}, function(err, str) {
-                    if (err) {
-                        g.log('warn', err);
-                    }
-                    fs.outputFile(paths.css.src + 'automated/' + path.basename(item), str, (err) => {
-                        if(!err) {
-                            g.log('verbose', `CSS templates compiled: ${ item }`, verbose);
-                            count--;
-                            if (count === 0) {
-                                resolve();
-                            }
-                        }
-                    });
-                });
-            });
-        });
+        g.prebuildCssTemplates(resolve, paths, ejsVars, verbose);
     }).then(() => '');
     g.log('title', `CSS Components Moved`);
     return p;

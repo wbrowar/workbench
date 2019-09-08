@@ -89,6 +89,7 @@ async function run() {
             message: 'What kind of project are you building?',
             choices: [
                 { name: 'Craft 3', value: 'craft3' },
+                { name: 'Gridsome', value: 'gridsome' },
                 { name: 'HTML', value: 'html' },
                 { name: 'Vue', value: 'vue' },
                 { name: 'Craft Plugin', value: 'craftplugin' },

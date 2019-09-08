@@ -3,7 +3,11 @@ let methods = {};
 
 // import node modules
 const chalk = require('chalk'),
+      ejs = require('ejs'),
       exec = require('child_process'),
+      fs = require('fs-extra'),
+      glob = require('glob-all'),
+      path = require('path'),
       semver = require('semver');
 
 // synchronously crawls each file
@@ -133,6 +137,29 @@ methods.parseArgv = function parseArgv() {
         args: args,
         options: options
     }
+};
+
+methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ejsVars, verbose) {
+    glob(`${ paths.starter.templates }_css/*.{css,scss}`, function (er, files) {
+        methods.log('verbose', `CSS templates: ${ JSON.stringify(files, null, 2) }`, verbose);
+        let count = files.length;
+        files.forEach((item) => {
+            ejs.renderFile(item, ejsVars, {}, function(err, str) {
+                if (err) {
+                    methods.log('warn', err);
+                }
+                fs.outputFile(paths.css.src + 'automated/' + path.basename(item), str, (err) => {
+                    if(!err) {
+                        methods.log('verbose', `CSS templates compiled: ${ item }`, verbose);
+                        count--;
+                        if (count === 0) {
+                            callback();
+                        }
+                    }
+                });
+            });
+        });
+    });
 };
 
 methods.slugify = function slugify(text) {

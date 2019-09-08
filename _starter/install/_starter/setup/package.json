@@ -13,18 +13,6 @@
     "browser": "google chrome",
     "url": "CHANGE_ME"
   },
-  "colors": {
-    "default": {
-      "white": "rgb(255, 255, 255)",
-      "black": "rgb(0, 0, 0)",
-      "alert_success": "rgb(45, 176, 51)",
-      "alert_error": "rgb(176, 25, 22)",
-      "alert_warning": "rgb(238, 199, 0)"
-    },
-    "dark": {
-      "white": "rgb(230, 230, 230)"
-    }
-  },
   "critcss": [
     {
       "src": "CHANGE_ME",
@@ -34,12 +22,6 @@
       "filename": "home"
     }
   ],
-  "cssIcons": [
-    "close",
-    "location",
-    "minus",
-    "plus"
-  ],
   "ejs": {
     "loadcss": "./../../../node_modules/fg-loadcss/src/loadCSS.js"
   },
@@ -47,25 +29,6 @@
     "enabled": true,
     "background": "#fff",
     "theme_color": "#fff"
-  },
-  "fonts": {
-    "apple": {
-      "fontFamily": "-apple-system",
-      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      "fontStyle": "normal",
-      "fontWeight": "normal"
-    },
-    "eaves": {
-      "fontFamily": "'MrEavesXLSanRRegular'",
-      "fallbackStack": "Helvetica, Arial, sans-serif",
-      "fontStyle": "normal",
-      "fontWeight": "normal",
-      "files": {
-        "eot": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
-        "woff": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
-        "woff2": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
-      }
-    }
   },
   "imageResize": {
     "resized": {
@@ -207,49 +170,6 @@
       "last 2 Edge versions",
       "not Edge < 15"
     ]
-  },
-  "paths": {
-    "base": {
-      "build": "_build/",
-      "dist": "",
-      "release": "",
-      "siteUrl": {
-        "dev": "/",
-        "prod": "/"
-      },
-      "src": "_source/"
-    },
-    "components": {
-      "src": "_components/"
-    },
-    "css": {
-      "dist": "public/css/",
-      "src": "_css/"
-    },
-    "favicon": {
-      "dist": "public/favicon/",
-      "src": "_favicon/"
-    },
-    "icon": {
-      "dist": "public/icon/",
-      "src": "_icon/"
-    },
-    "img": {
-      "dist": "public/img/",
-      "src": "_img/"
-    },
-    "js": {
-      "dist": "public/js/",
-      "src": "_js/"
-    },
-    "templates": {
-      "dist": "public/",
-      "src": "_templates/"
-    }
-  },
-  "prettier": {
-    "files": "_source/**/*.{js,json,scss,vue}",
-    "options": "--write"
   },
   "projectTemplateLanguage": "ejs",
   "projectType": "html",
