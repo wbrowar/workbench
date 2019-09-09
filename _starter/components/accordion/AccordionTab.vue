@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import * as g from './../global.js';
+    import * as g from 'starter/_js/global.js';
 
     export default {
         data() {

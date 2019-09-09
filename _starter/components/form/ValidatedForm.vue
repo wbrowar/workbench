@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import { log } from '../global.js';
+    import { log } from 'starter/_js/global.js';
 
     export default {
         data() {

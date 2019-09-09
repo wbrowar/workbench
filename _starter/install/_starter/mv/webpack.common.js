@@ -48,7 +48,8 @@ const baseConfig = {
     output: {},
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js'
+            'vue$': 'vue/dist/vue.esm.js',
+            'starter': path.resolve(__dirname, '_source/'),
         }
     },
     module: {

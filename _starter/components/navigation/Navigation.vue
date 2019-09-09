@@ -30,7 +30,7 @@
     import NavSlideOut from './NavSlideOut.vue';
     import NavStackedDropdown from './NavStackedDropdown.vue';
     import NavOverlay from './NavOverlay.vue';
-    import {snake} from '../global.js';
+    import {snake} from 'starter/_js/global.js';
 
     export default {
         components: {

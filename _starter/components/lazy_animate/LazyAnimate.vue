@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { log, warn } from '../global.js';
+import { log, warn } from 'starter/_js/global.js';
 import * as io from 'intersection-observer';
 
 let animations = false;

@@ -4,7 +4,7 @@
 
 <script>
     import ResizeObserver from 'resize-observer-polyfill';
-    import { error, log } from '../global.js';
+    import { error, log } from 'starter/_js/global.js';
 
     export default {
         data() {
