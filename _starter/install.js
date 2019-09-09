@@ -75,6 +75,9 @@ async function run() {
             'header',
             'image',
             'image_bg',
+            'lazy_animate',
+            'lazy_load',
+            'resize_container',
             'text',
             'wrapper',
         ];
