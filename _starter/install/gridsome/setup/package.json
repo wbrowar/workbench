@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "ci:build": "gridsome build",
+    "ci:build": "npm run prebuild && gridsome build",
     "component": "node ./_starter/component.js",
-    "dev": "gridsome develop",
+    "dev": "npm run prebuild && gridsome develop",
     "prebuild": "node ./_starter/prebuild.js --csstemplates",
-    "prod": "gridsome build",
-    "watch": "gridsome develop"
+    "prod": "npm run prebuild && gridsome build",
+    "watch": "npm run prebuild && gridsome develop"
   },
   "prettier": {
     "files": "{_source,src}/**/*.{js,json,scss,vue}",
