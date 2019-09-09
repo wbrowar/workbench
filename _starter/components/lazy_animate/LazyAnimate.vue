@@ -123,7 +123,7 @@ export default {
         this.addToObserver(this.handleCssAnimation);
       }
     } else {
-      import(/* webpackChunkName: "animation" */ '../animation.js')
+      import(/* webpackChunkName: "animation" */ 'starter/_js/animation.js')
         .then((module) => {
           animations = module;
           if (this.inViewport()) {
