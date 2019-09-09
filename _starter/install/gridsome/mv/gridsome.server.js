@@ -5,6 +5,9 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+const path = require('path');
+const g = require('./_starter/global.js');
+
 module.exports = function (api) {
   api.loadSource(({ addContentType }) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api
@@ -13,4 +16,12 @@ module.exports = function (api) {
   api.createPages(({ createPage }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api
   })
-}
+
+  api.configureWebpack({
+    resolve: {
+      alias: {
+        starter: path.resolve(__dirname, '_source/'),
+      }
+    }
+  })
+};

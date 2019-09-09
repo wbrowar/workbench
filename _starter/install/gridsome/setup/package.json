@@ -1,7 +1,7 @@
 {
   "scripts": {
     "ci:build": "gridsome build",
-    "component": "node ./_starter/component.js --flatten",
+    "component": "node ./_starter/component.js",
     "dev": "gridsome develop",
     "prebuild": "node ./_starter/prebuild.js --csstemplates",
     "prod": "gridsome build",
@@ -11,20 +11,48 @@
     "files": "{_source,src}/**/*.{js,json,scss,vue}",
     "options": "--write"
   },
+  "styleInventory": {
+    "enabled": false
+  },
   "paths": {
+    "base": {
+      "src": ""
+    },
     "components": {
-      "flatten": true,
+      "grouped": false,
       "src": "src/components/"
+    },
+    "css": {
+      "dist": "static/css/",
+      "src": "_source/_css/"
+    },
+    "favicon": {
+      "dist": "static/favicon/",
+      "src": "_source/_favicon/"
+    },
+    "icon": {
+      "dist": "static/icon/",
+      "src": "_source/_icon/"
+    },
+    "img": {
+      "dist": "static/img/",
+      "src": "_source/_img/"
+    },
+    "js": {
+      "dist": "static/js/",
+      "src": "_source/_js/"
+    },
+    "templates": {
+      "dist": "static/",
+      "src": "_source/_templates/"
     }
   },
   "dependencies": {
     "gridsome": "^0.6.0",
     "@gridsome/plugin-critical": "^0.1.3",
-    "gridsome-plugin-sass-resources-loader": "^0.0.3"
-  },
-  "devDependencies": {
+    "gridsome-plugin-sass-resources-loader": "^0.0.3",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
-    "webpack-dev-server": "^3.8.0"
+    "style-resources-loader": "^1.2.1"
   }
 }

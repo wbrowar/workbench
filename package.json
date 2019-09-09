@@ -57,7 +57,7 @@
       "src": "_source/"
     },
     "components": {
-      "flatten": false,
+      "grouped": true,
       "src": "_components/"
     },
     "css": {

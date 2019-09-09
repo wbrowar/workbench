@@ -4,6 +4,23 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+const path = require('path');
+
+function addStyleResource (rule) {
+  rule.use('style-resource')
+      .loader('style-resources-loader')
+      .options({
+        patterns: [
+          path.resolve(__dirname, './_source/_css/components/automated/_colors.scss'),
+          path.resolve(__dirname, './_source/_css/components/automated/_fonts.scss'),
+          path.resolve(__dirname, './_source/_css/components/automated/_icons.scss'),
+          path.resolve(__dirname, './_source/_css/base/_functions.scss'),
+          path.resolve(__dirname, './_source/_css/base/_variables.scss'),
+          path.resolve(__dirname, './_source/_css/base/_mixins.scss'),
+        ],
+      })
+}
+
 module.exports = {
   siteName: 'Gridsome',
   plugins: [
@@ -15,12 +32,14 @@ module.exports = {
         height: 900
       }
     },
-    {
-      use: 'gridsome-plugin-sass-resources-loader',
-      options: {
-          // provide path to the file with resources
-          resources: '@/path/to/resources.scss',
-      }
-    }
-  ]
+  ],
+  chainWebpack (config) {
+    // Load variables for all vue-files
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
+
+    // or if you use scss
+    types.forEach(type => {
+      addStyleResource(config.module.rule('scss').oneOf(type));
+    })
+  }
 }

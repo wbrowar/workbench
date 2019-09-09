@@ -65,7 +65,10 @@ async function run() {
                     g.log('dump', answers, verbose);
                     g.log('verbose', `Moving ${ answers.component }`, verbose);
                     moveExistingComponent(answers.component);
-                    addComponentToStyleInventory(answers.component);
+
+                    if (pkg.styleInventory.enabled) {
+                        addComponentToStyleInventory(answers.component);
+                    }
                 });
             } else {
                 console.warn(`No components found in library.`);
@@ -176,7 +179,9 @@ async function run() {
 
             fs.outputFileSync(`${ paths.components.src }${ answers.handle }/demo.ejs`, demoCode);
 
-            addComponentToStyleInventory(answers.handle);
+            if (pkg.styleInventory.enabled) {
+                addComponentToStyleInventory(answers.handle);
+            }
         });
     }
 }
@@ -272,7 +277,29 @@ function addComponentToStyleInventory(handle) {
     });
 }
 function moveExistingComponent(handle) {
-    fs.moveSync(`${ paths.starter.components }${ handle }`, paths.components.src + handle, { overwrite: false })
+    const componentSourceFolder = `${ paths.starter.components }${ handle }`;
+
+    if (pkg.paths.components.grouped) {
+        fs.moveSync(componentSourceFolder, paths.components.src + handle, { overwrite: false })
+    } else {
+        const cssFiles = glob.sync(`${ componentSourceFolder }**/*.scss`);
+        cssFiles.forEach((file) => {
+            if (fs.existsSync(file)) {
+                g.log('verbose', `Moving : ${ file }`, verbose);
+                fs.moveSync(file, `${ paths.css.src }components/${ path.basename(file) }`, { overwrite: false });
+            }
+        });
+        const vueFiles = glob.sync(`${ componentSourceFolder }**/*.vue`);
+        vueFiles.forEach((file) => {
+            if (fs.existsSync(file)) {
+                g.log('verbose', `Moving : ${ file }`, verbose);
+                fs.moveSync(file, `${ paths.components.src }${ path.basename(file) }`, { overwrite: false });
+            }
+        });
+
+        g.log('verbose', `Removing : ${ componentSourceFolder }`, verbose);
+        fs.removeSync(componentSourceFolder);
+    }
 }
 function moveFile(config, delimiter = '%') {
     if (process) {
