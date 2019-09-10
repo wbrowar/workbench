@@ -9,7 +9,11 @@
         <g-link class="nav__link" to="/about">About</g-link>
       </nav>
     </header>
-    <slot/>
+    <transition name="fade" appear>
+      <main>
+        <slot/>
+      </main>
+    </transition>
   </div>
 </template>
 
@@ -28,4 +32,12 @@ query {
   @import "~starter/_css/base/_animations.scss";
   @import "~starter/_css/base/_custom_properties.scss";
   @import "~starter/_css/base/_global.scss";
+  @import "~starter/_css/_default.scss";
+
+  .fade-enter-active {
+    transition: opacity .5s;
+  }
+  .fade-enter {
+    opacity: 0;
+  }
 </style>

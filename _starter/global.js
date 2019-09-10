@@ -162,6 +162,30 @@ methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ej
     });
 };
 
+methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, verbose) {
+    glob(`${ paths.css.src }components/*.scss`, function (er, files) {
+        methods.log('verbose', `SCSS Files: ${ JSON.stringify(files, null, 2) }`, verbose);
+        let count = files.length;
+        let data = '';
+        files.forEach((item) => {
+            data += `${ fs.readFileSync(item) } `;
+        });
+        methods.log('verbose', data, verbose);
+
+        if (data) {
+            const scssIncludesPath = paths.css.src + '_default.scss';
+            fs.outputFile(scssIncludesPath, data, (err) => {
+                if(!err) {
+                    methods.log('verbose', `Writing combined SCSS files to: ${ scssIncludesPath }`, verbose);
+                    callback();
+                }
+            });
+        } else {
+            callback();
+        }
+    });
+};
+
 methods.slugify = function slugify(text) {
     return text.toString().toLowerCase()
         .replace(/\s+/g, '-')           // Replace spaces with -

@@ -9,6 +9,7 @@ const argv = g.parseArgv();
 
 // use CLI arguments to set variables
 const runCssTemplates = argv.options.csstemplates || false,
+      runScssIncludes = argv.options.scssincludes || false,
       verbose         = pkg.overrideVerbose || argv.options.verbose || false;
 
 // set variables based on pkg options
@@ -26,6 +27,15 @@ async function run() {
             }
         );
         let cssTemplatesComplete = await cssTemplates;
+    }
+
+    if (runScssIncludes) {
+        const scssIncludes = g.asyncFunction(
+            `Combining SCSS Files`, `SCSS Files Combined`, (resolve) => {
+                g.prebuildScssIncludes(resolve, paths, verbose);
+            }
+        );
+        let scssIncludesComplete = await scssIncludes;
     }
 }
 

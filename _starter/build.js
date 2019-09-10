@@ -7,7 +7,6 @@ const autoprefixer = require('autoprefixer'),
     favicons = require('favicons'),
     fs = require('fs-extra'),
     glob = require('glob-all'),
-    inquirer = require('inquirer'),
     notifier = require('node-notifier'),
     os = require('os'),
     path = require('path'),
@@ -38,7 +37,6 @@ const enableImg   = argv.options.noimg ? false : true,
       commitMessage = argv.options.commitmessage || false,
       runBuild      = argv.options.build || false,
       runBump       = argv.options.bump || false,
-      runCommit     = argv.options.commit || false,
       runCritCss    = argv.options.critcss || false,
       runDeploy     = argv.options.deploy || false,
       runPrettier   = argv.options.prettier || false,
@@ -69,8 +67,7 @@ let ejsVars = Object.assign({
 }, pkg.ejs);
 
 // other variables
-let localConfig = false,
-    publishAnswers = {};
+let localConfig = false;
 
 // get local config file
 g.log('verbose', `Looking for local configuration file in home directory: .wb-starter.config.json`, verbose);
@@ -111,54 +108,6 @@ async function run() {
     if (runBump) {
         const bumpPackageVersion       = bumpPackage();
         let bumpPackageVersionComplete = await bumpPackageVersion;
-    }
-
-    // ask questions related to build task
-    if (runCommit) {
-        const askCommitQuestions = g.asyncFunction(
-            `Git Options`, `Publish Options Set`, (resolve) => {
-
-                if (commitMessage) {
-                    publishAnswers.commitRelease = true;
-                    publishAnswers.message = commitMessage;
-                    resolve();
-                } else {
-                    const publishQuestions = [
-                        {
-                            type: 'confirm',
-                            name: 'commitRelease',
-                            message: 'Commit and push release?',
-                            default: true,
-                            when: () => {
-                                return !!commitMessage;
-                            },
-                        },
-                        {
-                            type: 'input',
-                            name: 'message',
-                            message: 'Commit message',
-                            default: (answers) => {
-                                return commitMessage || '';
-                            },
-                            validate: (answer) => {
-                                return answer !== '';
-                            },
-                            when: (answers) => {
-                                return answers.commitRelease;
-                            },
-                        },
-                    ];
-
-                    inquirer.prompt(publishQuestions).then((answers) => {
-                        g.log('verbose', `Publishing with settings:`, verbose);
-                        g.log('dump', answers, verbose);
-
-                        publishAnswers = answers;
-                        resolve();
-                    });
-                }
-            });
-        let askCommitQuestionsComplete = await askCommitQuestions;
     }
 
     if (runPrettier) {
@@ -287,12 +236,6 @@ async function run() {
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Project Published' });
         dasRemove('KEY_P');
-    } else if (runCommit) {
-        if (publishAnswers.commitRelease && publishAnswers.message) {
-            g.log('title', `Adding and committing code to repo.`);
-            g.verboseExec(`git add -A && git commit -m "${ publishAnswers.message }" && git push && git status`, verbose);
-            g.log('verbose', `Code pushed with message: ${ publishAnswers.message }`, verbose);
-        }
     } else if (runWatch) {
         g.log('title', `Running Watch`);
 

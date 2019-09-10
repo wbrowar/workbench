@@ -2,7 +2,7 @@
   "scripts": {
     "ci:build": "NODE_ENV=production node ./_starter/build.js --build",
     "component": "node ./_starter/component.js",
-    "deploy": "NODE_ENV=production node ./_starter/build.js --build --bump --commit --critcss --deploy --prettier",
+    "deploy": "NODE_ENV=production node ./_starter/build.js --build --bump --critcss --deploy --prettier && npm run commit",
     "dev": "node ./_starter/build.js --build --prettier",
     "prod": "NODE_ENV=production node ./_starter/build.js --build --critcss --prettier",
     "pub": "NODE_ENV=production node ./_starter/build.js --build --prettier --publish",

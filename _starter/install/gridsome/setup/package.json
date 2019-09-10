@@ -3,7 +3,7 @@
     "ci:build": "npm run prebuild && gridsome build",
     "component": "node ./_starter/component.js",
     "dev": "npm run prebuild && gridsome develop",
-    "prebuild": "node ./_starter/prebuild.js --csstemplates",
+    "prebuild": "node ./_starter/prebuild.js --csstemplates --scssincludes",
     "prod": "npm run prebuild && gridsome build",
     "watch": "npm run prebuild && gridsome develop"
   },

@@ -1,7 +1,9 @@
 {
   "scripts": {
     "cnvm": "nvm use 11",
-    "update": "npm update"
+    "update": "npm update",
+    "commit": "node ./_starter/commit.js",
+    "deploy": "npm run commit"
   },
   "colors": {
     "default": {
