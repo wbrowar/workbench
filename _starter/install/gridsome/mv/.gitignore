@@ -3,10 +3,10 @@
 # ------------------------------------------------------------
 .cache
 .DS_Store
+.env
 .idea
-logs/*
-vendor/*
 Thumbs.db
-
-# BUILD FILES
+dist/*
+logs/*
 node_modules/*
+vendor/*
