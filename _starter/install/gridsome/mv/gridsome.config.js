@@ -11,9 +11,9 @@ function addStyleResource (rule) {
       .loader('style-resources-loader')
       .options({
         patterns: [
-          path.resolve(__dirname, './_source/_css/components/automated/_colors.scss'),
-          path.resolve(__dirname, './_source/_css/components/automated/_fonts.scss'),
-          path.resolve(__dirname, './_source/_css/components/automated/_icons.scss'),
+          path.resolve(__dirname, './_source/_css/automated/_colors.scss'),
+          path.resolve(__dirname, './_source/_css/automated/_fonts.scss'),
+          path.resolve(__dirname, './_source/_css/automated/_icons.scss'),
           path.resolve(__dirname, './_source/_css/base/_functions.scss'),
           path.resolve(__dirname, './_source/_css/base/_variables.scss'),
           path.resolve(__dirname, './_source/_css/base/_mixins.scss'),
