@@ -15,14 +15,16 @@
       </main>
     </transition>
     <footer class="ui__footer">
-      <ColorSchemeToggle
-              scheme-id="default"
-              :all-schemes="['default', 'dark']"
-      />
-      <ColorSchemeToggle
-              scheme-id="dark"
-              :all-schemes="['default', 'dark']"
-      />
+      <ClientOnly>
+        <ColorSchemeToggle
+                scheme-id="default"
+                :all-schemes="['default', 'dark']"
+        />
+        <ColorSchemeToggle
+                scheme-id="dark"
+                :all-schemes="['default', 'dark']"
+        />
+      </ClientOnly>
     </footer>
   </div>
 </template>
