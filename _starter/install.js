@@ -71,6 +71,7 @@ async function run() {
             'animate',
             'button',
             'buttons',
+            'color_scheme_toggle',
             'grid',
             'header',
             'image',
