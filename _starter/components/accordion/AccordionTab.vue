@@ -34,8 +34,10 @@
 </script>
 
 <style scoped lang="scss">
-    <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
+    @import "starter/_css/automated/_colors.scss";
+    @import "starter/_css/base/_functions.scss";
+    @import "starter/_css/base/_variables.scss";
+    @import 'starter/_css/base/_mixins.scss";
 
     .vue_accordion__tab {
         margin-bottom: 20px;
