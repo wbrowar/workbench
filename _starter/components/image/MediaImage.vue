@@ -61,14 +61,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-@import "starter/_css/automated/_colors.scss";
-@import "starter/_css/base/_functions.scss";
-@import "starter/_css/base/_variables.scss";
-@import 'starter/_css/base/_mixins.scss";
-
-.c_image {
-  $self: &;
-}
-</style>
