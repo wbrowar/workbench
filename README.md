@@ -381,6 +381,22 @@ To fix CORS errors that could come up in using Valet for local development, foll
 1. Restart Valet using `valet restart`
 
 ---
+## When to Create a `Vue` Project
+The `HTML` project type can be used to create static sites that consist of one `.html` page or several `.html` pages. The content of the sites is stored as `HTML` elements and Vue and CSS are used to support this content.
+
+A `Vue` project uses Vue Router and Vuex to create a SPA (Single Page App). In this case, there is only one `.html` file that’s purpose is to load the `_source/_js/App.vue`. This file loads the files in the `_source/_js/views/` directory and each one represents a different "page" in your app.
+
+Otherwise both `HTML` and `Vue` projects are the same in the build process and deployment.
+
+---
+## Gridsome Projects
+[Gridsome](https://gridsome.org) is a Vue-based framework for creating static sites (like Gatsby for React). Gridsome relies heavily on Webpack to process its files, so the `build.js` script is not used to process CSS and JS files.
+
+When a Gridsome project is created, its framework files are placed into a `src` directory along with a few config files. The `_source` directory includes SCSS, JS, and SVG files, but because they aren’t used in Gridsome, all template files are omitted.
+
+The `prebuild.js` script is used to prepare files before they are processed by Gridsome’s `develop` and `build` commands.
+
+---
 ## Using Best Practices for Craft Plugin Project
 By default, this workflow is capable of compiling assets for a Craft Plugin, however, some of the default naming conventions and compiling options do not follow plugin best practices. Here are some adjustments you can make:
 
@@ -408,6 +424,9 @@ if (Craft::$app->getView()->getTemplateMode() === View::TEMPLATE_MODE_CP) {
     });
 }
 ```
+
+---
+
 
 
 ---
