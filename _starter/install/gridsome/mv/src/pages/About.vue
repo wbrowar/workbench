@@ -1,5 +1,5 @@
 <template>
-  <Layout class="page--about">
+  <Layout class="about">
     <article class="about__example">
       <h1 class="c_header c_header--1">About</h1>
     </article>
@@ -15,10 +15,6 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~starter/_css/automated/_colors.scss";
-  @import "~starter/_css/base/_functions.scss";
-  @import "~starter/_css/base/_variables.scss";
-
   .about {
     $self: &;
 

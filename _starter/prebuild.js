@@ -9,6 +9,7 @@ const argv = g.parseArgv();
 
 // use CLI arguments to set variables
 const runCssTemplates = argv.options.csstemplates || false,
+      runPrettier     = argv.options.prettier || false,
       runScssIncludes = argv.options.scssincludes || false,
       verbose         = pkg.overrideVerbose || argv.options.verbose || false;
 
@@ -20,6 +21,9 @@ let ejsVars = Object.assign({
 }, pkg.ejs);
 
 async function run() {
+    if (runPrettier) {
+        g.prebuildPrettier(pkg.prettier, null, verbose);
+    }
     if (runCssTemplates) {
         const cssTemplates = g.asyncFunction(
             `Compiling CSS Templates`, `CSS Templates Compiled`, (resolve) => {

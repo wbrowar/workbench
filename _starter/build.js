@@ -920,22 +920,7 @@ async function postCss() {
 
 function prettierOnFile(file = null) {
     if (runPrettier && pkg.prettier) {
-        g.log('title', `Running Prettier`);
-
-        let files = false;
-
-        if (file) {
-            if (glob.sync(pkg.prettier.files).includes(file)) {
-                files = file;
-            }
-        } else {
-            files = pkg.prettier.files;
-        }
-
-        if (files) {
-            g.verboseExec(`prettier --config ./.prettierrc ${ pkg.prettier.options } "${ files }"`, verbose);
-        }
-        g.log('title', `Prettier Ran`);
+        g.prebuildPrettier(pkg.prettier, file, verbose);
     }
 }
 

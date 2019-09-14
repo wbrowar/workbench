@@ -162,13 +162,33 @@ methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ej
     });
 };
 
+methods.prebuildPrettier = function prebuildPrettier(options, file = null, verbose) {
+    methods.log('title', `Running Prettier`);
+
+    let files = false;
+
+    if (file) {
+        if (glob.sync(options.files).includes(file)) {
+            files = file;
+        }
+    } else {
+        files = options.files;
+    }
+
+    if (files) {
+        methods.verboseExec(`prettier --config ./.prettierrc ${ options.options || '' } "${ files }"`, verbose);
+    }
+    methods.log('title', `Prettier Ran`);
+};
+
 methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, verbose) {
     glob(`${ paths.css.src }components/*.scss`, function (er, files) {
         methods.log('verbose', `SCSS Files: ${ JSON.stringify(files, null, 2) }`, verbose);
         let count = files.length;
         let data = '';
         files.forEach((item) => {
-            data += `${ fs.readFileSync(item) } `;
+            data += `@import "components/${ path.basename(item) }";
+`;
         });
         methods.log('verbose', data, verbose);
 

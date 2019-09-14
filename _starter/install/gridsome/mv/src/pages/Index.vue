@@ -1,7 +1,7 @@
 <template>
-  <Layout class="page--home">
+  <Layout class="home">
     <section class="home__example">
-      <h1 class="c_header c_header--1">Home</h1>
+      <MediaImage background alt="FPO image" :sources="[{ src: `/img/FPO.png` }]" />
     </section>
     <section element-type="section" class="home__example">
       <h2 class="c_header c_header--2">Section 2</h2>
@@ -16,9 +16,11 @@
 </template>
 
 <script>
+import MediaImage from '../components/MediaImage.vue';
+
 export default {
   components: {
-    LazyLoad: () => import('@/components/LazyLoad.vue'),
+    MediaImage,
   },
   metaInfo: {
     title: 'Hello, world!'
@@ -27,10 +29,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~starter/_css/automated/_colors.scss";
-@import "~starter/_css/base/_functions.scss";
-@import "~starter/_css/base/_variables.scss";
-
 .home {
   $self: &;
 

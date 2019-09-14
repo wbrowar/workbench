@@ -24,14 +24,16 @@ function addStyleResource (rule) {
 module.exports = {
   siteName: 'Gridsome',
   plugins: [
-    {
-      use: '@gridsome/plugin-critical',
-      options: {
-        paths: ['/'],
-        width: 1300,
-        height: 900
-      }
-    },
+    // {
+    //   use: '@gridsome/source-graphql',
+    //   options: {
+    //     url: process.env.CRAFT_API_URL,
+    //     fieldName: 'craft',
+    //     headers: {
+    //       Authorization: `Bearer ${ process.env.CRAFT_AUTH_TOKEN }`
+    //     },
+    //   },
+    // },
   ],
   chainWebpack (config) {
     // Load variables for all vue-files
