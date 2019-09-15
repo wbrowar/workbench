@@ -1,36 +1,44 @@
 // COLORS
-@mixin automated_colors {
+@mixin automated_colors($includeLightScheme: false) {
 <% for (const scheme in pkg.colors) { -%>
-<% if (scheme === 'default') { -%>
+<% if (scheme === 'light') { -%>
 <% for (const color in pkg.colors[scheme]) { -%>
 <% let colorVal = pkg.colors[scheme][color] -%>
     --color-<%- color %>-rgb: #{ red(<%- colorVal %>) }, #{ green(<%- colorVal %>) }, #{ blue(<%- colorVal %>) };
     --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
     --color-<%- color %>: rgba(var(--color-<%- color %>-rgb), var(--color-<%- color %>-a));
 <% } -%>
+  @if $includeLightScheme {
+    @media (prefers-color-scheme: light) {
+    <% for (const color in pkg.colors[scheme]) { -%>
+    <% let colorVal = pkg.colors[scheme][color] -%>
+      --color-<%- color %>-rgb: #{ red(<%- colorVal %>) }, #{ green(<%- colorVal %>) }, #{ blue(<%- colorVal %>) };
+      --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
+    <% } -%>
+    }
+  }
 <% } else { -%>
   @media (prefers-color-scheme: <%- scheme %>) {
 <% for (const color in pkg.colors[scheme]) { -%>
 <% let colorVal = pkg.colors[scheme][color] -%>
       --color-<%- color %>-rgb: #{ red(<%- colorVal %>) }, #{ green(<%- colorVal %>) }, #{ blue(<%- colorVal %>) };
       --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
-      --color-<%- color %>: rgba(var(--color-<%- color %>-rgb), var(--color-<%- color %>-a));
 <% } -%>
   }
 <% } } -%>
 }
 
-<% for (const color in pkg.colors.default) { %>$color_<%- color %>: var(--color-<%- color %>);
+<% for (const color in pkg.colors.light) { %>$color_<%- color %>: var(--color-<%- color %>);
 <% } %>
-<% for (const color in pkg.colors.default) { %>$color_<%- color %>_raw: <%- pkg.colors.default[color] %>;
+<% for (const color in pkg.colors.light) { %>$color_<%- color %>_raw: <%- pkg.colors.light[color] %>;
 <% } %>
-@mixin automated_color_modifiers($selector, $property) {<% for (const color in pkg.colors.default) { %>
+@mixin automated_color_modifiers($selector, $property) {<% for (const color in pkg.colors.light) { %>
   @at-root #{ $selector}--<%- color %> {
     #{$property}: $color_<%- color %>;
   };<% } %>
 }
 @mixin automated_color_schemes($selector_prefix: '.color_scheme--', $selector_suffix: '') {
-<% for (const scheme in pkg.colors) { -%><% if (scheme !== 'default') { -%>
+<% for (const scheme in pkg.colors) { -%>
   @at-root #{&}#{$selector_prefix}<%- scheme %>#{$selector_suffix} {
 <% for (const color in pkg.colors[scheme]) { -%>
 <% let colorVal = pkg.colors[scheme][color] -%>
@@ -38,5 +46,5 @@
     --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
 <% } -%>
   }
-<% } -%><% } -%>
+<% } -%>
 }

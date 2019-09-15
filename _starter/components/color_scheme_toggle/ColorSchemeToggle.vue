@@ -24,9 +24,7 @@ export default {
           const el = document.querySelector(this.targetSelector);
           if (!hasClass(el, `color_scheme--${this.schemeId}`)) {
             this.otherSchemes.forEach((item) => removeClass(el, `color_scheme--${item}`));
-            if (this.schemeId !== 'default') {
-              addClass(el, `color_scheme--${this.schemeId}`);
-            }
+            addClass(el, `color_scheme--${this.schemeId}`);
           }
           break;
         case 'event':

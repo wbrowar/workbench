@@ -6,7 +6,7 @@
     "deploy": "npm run commit"
   },
   "colors": {
-    "default": {
+    "light": {
       "white": "rgb(255, 255, 255)",
       "black": "rgb(0, 0, 0)",
       "alert_success": "rgb(45, 176, 51)",
