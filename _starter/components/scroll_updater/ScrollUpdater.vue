@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import { log } from 'starter/_js/global.js';
+    import { log } from 'JS/global.js';
 
     export default {
         data() {

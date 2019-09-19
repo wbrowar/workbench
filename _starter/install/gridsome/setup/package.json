@@ -19,8 +19,8 @@
       "src": ""
     },
     "components": {
-      "grouped": false,
-      "src": "src/components/"
+      "grouped": true,
+      "src": "_source/_components/"
     },
     "css": {
       "dist": "static/css/",

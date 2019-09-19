@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { addClass, hasClass, removeClass } from 'starter/_js/global.js';
+import { addClass, hasClass, removeClass } from 'JS/global.js';
 
 export default {
   data() {

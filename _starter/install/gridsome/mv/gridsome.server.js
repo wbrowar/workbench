@@ -23,7 +23,10 @@ module.exports = function (api) {
   api.configureWebpack({
     resolve: {
       alias: {
-        starter: path.resolve(__dirname, '_source/'),
+        Components: path.resolve(__dirname, './_source/_components/'),
+        CSS: path.resolve(__dirname, './_source/_css/'),
+        JS: path.resolve(__dirname, './_source/_js/'),
+        Starter: path.resolve(__dirname, './_source/'),
       }
     }
   })

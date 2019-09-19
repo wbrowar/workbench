@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { log, warn } from 'starter/_js/global.js';
+import { log, warn } from 'JS/global.js';
 import * as io from 'intersection-observer';
 
 let animations = false;
@@ -123,7 +123,7 @@ export default {
         this.addToObserver(this.handleCssAnimation);
       }
     } else {
-      import(/* webpackChunkName: "animation" */ 'starter/_js/animation.js')
+      import(/* webpackChunkName: "animation" */ 'JS/animation.js')
         .then((module) => {
           animations = module;
           if (this.inViewport()) {

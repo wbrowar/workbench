@@ -46,13 +46,13 @@ query {
 </script>
 
 <style lang="scss">
-  @import "~starter/_css/automated/_colors.scss";
-  @import "~starter/_css/automated/_fonts.scss";
-  @import "~starter/_css/lib/_reset.scss";
-  @import "~starter/_css/base/_animations.scss";
-  @import "~starter/_css/base/_custom_properties.scss";
-  @import "~starter/_css/base/_global.scss";
-  @import "~starter/_css/_default.scss";
+  @import "CSS/automated/_colors.scss";
+  @import "CSS/automated/_fonts.scss";
+  @import "CSS/lib/_reset.scss";
+  @import "CSS/base/_animations.scss";
+  @import "CSS/base/_custom_properties.scss";
+  @import "CSS/base/_global.scss";
+  @import "CSS/_default.scss";
 
   .fade-enter-active {
     transition: opacity .5s;

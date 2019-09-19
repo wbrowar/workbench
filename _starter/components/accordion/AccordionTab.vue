@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import * as g from 'starter/_js/global.js';
+    import * as g from 'JS/global.js';
 
     export default {
         data() {
@@ -34,10 +34,10 @@
 </script>
 
 <style scoped lang="scss">
-    @import "starter/_css/automated/_colors.scss";
-    @import "starter/_css/base/_functions.scss";
-    @import "starter/_css/base/_variables.scss";
-    @import "starter/_css/base/_mixins.scss";
+    @import "CSS/automated/_colors.scss";
+    @import "CSS/base/_functions.scss";
+    @import "CSS/base/_variables.scss";
+    @import "CSS/base/_mixins.scss";
 
     .vue_accordion__tab {
         margin-bottom: 20px;
