@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import MediaImage from '../components/MediaImage.vue';
+import MediaImage from 'Components/image/MediaImage';
 
 export default {
   components: {
     MediaImage,
   },
   metaInfo: {
-    title: 'Hello, world!'
-  }
-}
+    title: 'Hello, world!',
+  },
+};
 </script>
 
 <style lang="scss">
@@ -37,17 +37,17 @@ export default {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: colora('black', .5);
-    color: colora('white', .5);
+    background-color: colora('black', 0.5);
+    color: colora('white', 0.5);
 
     &:first-child {
-      height: calc(100vh - #{ $ui_masthead_height });
+      height: calc(100vh - #{$ui_masthead_height});
     }
     &:last-child {
-      height: calc(100vh - #{ $ui_footer_height });
+      height: calc(100vh - #{$ui_footer_height});
     }
     &:nth-child(odd) {
-      background-color: colora('black', .6);
+      background-color: colora('black', 0.6);
     }
   }
 }

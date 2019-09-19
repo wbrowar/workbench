@@ -11,19 +11,13 @@
     </header>
     <transition name="fade" appear>
       <main>
-        <slot/>
+        <slot />
       </main>
     </transition>
     <footer class="ui__footer">
       <ClientOnly>
-        <ColorSchemeToggle
-                scheme-id="default"
-                :all-schemes="['default', 'dark']"
-        />
-        <ColorSchemeToggle
-                scheme-id="dark"
-                :all-schemes="['default', 'dark']"
-        />
+        <ColorSchemeToggle scheme-id="default" :all-schemes="['default', 'dark']" />
+        <ColorSchemeToggle scheme-id="dark" :all-schemes="['default', 'dark']" />
       </ClientOnly>
     </footer>
   </div>
@@ -38,42 +32,44 @@ query {
 </static-query>
 
 <script>
-  export default {
-    components: {
-      ColorSchemeToggle: () => import('@/components/ColorSchemeToggle.vue'),
-    }
-  }
+import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.vue';
+
+export default {
+  components: {
+    ColorSchemeToggle
+  },
+};
 </script>
 
 <style lang="scss">
-  @import "CSS/automated/_colors.scss";
-  @import "CSS/automated/_fonts.scss";
-  @import "CSS/lib/_reset.scss";
-  @import "CSS/base/_animations.scss";
-  @import "CSS/base/_custom_properties.scss";
-  @import "CSS/base/_global.scss";
-  @import "CSS/_default.scss";
+@import 'CSS/automated/_colors.scss';
+@import 'CSS/automated/_fonts.scss';
+@import 'CSS/lib/_reset.scss';
+@import 'CSS/base/_animations.scss';
+@import 'CSS/base/_custom_properties.scss';
+@import 'CSS/base/_global.scss';
+@import 'CSS/_default.scss';
 
-  .fade-enter-active {
-    transition: opacity .5s;
+.fade-enter-active {
+  transition: opacity 0.5s;
+}
+.fade-enter {
+  opacity: 0;
+}
+
+.ui {
+  $self: &;
+
+  @at-root #{$self}__header {
+    $header: &;
+
+    position: sticky;
+    height: $ui_masthead_height;
   }
-  .fade-enter {
-    opacity: 0;
+  @at-root #{$self}__footer {
+    $header: &;
+
+    height: $ui_footer_height;
   }
-
-  .ui {
-    $self: &;
-
-    @at-root #{$self}__header {
-      $header: &;
-
-      position: sticky;
-      height: $ui_masthead_height;
-    }
-    @at-root #{$self}__footer {
-      $header: &;
-
-      height: $ui_footer_height;
-    }
-  }
+}
 </style>

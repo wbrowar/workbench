@@ -9,22 +9,22 @@
 <script>
 export default {
   metaInfo: {
-    title: 'About us'
-  }
-}
+    title: 'About us',
+  },
+};
 </script>
 
 <style lang="scss">
-  .about {
-    $self: &;
+.about {
+  $self: &;
 
-    @at-root #{$self}__example {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: colora('white', .5);
-      height: calc(100vh - #{ $ui_masthead_height });
-      color: colora('black', .5);
-    }
+  @at-root #{$self}__example {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: colora('white', 0.5);
+    height: calc(100vh - #{$ui_masthead_height});
+    color: colora('black', 0.5);
   }
+}
 </style>
