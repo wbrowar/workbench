@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import LazyLoad from './LazyLoad.vue';
+import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
 export default {
   components: {

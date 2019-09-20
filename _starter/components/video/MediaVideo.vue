@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import LazyLoad from './LazyLoad.vue';
+import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
 export default {
   components: {
@@ -81,13 +81,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-// @import './_source/_css/automated/_colors';
-// @import './_source/_css/automated/_fonts';
-// @import './_source/_css/base/_variables.scss';
-// @import './_source/_css/base/_mixins.scss';
-
-.c_media_video {
+<style lang="scss">.c_media_video {
   $self: &;
 }
 </style>
