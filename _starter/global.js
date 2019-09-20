@@ -182,12 +182,12 @@ methods.prebuildPrettier = function prebuildPrettier(options, file = null, verbo
 };
 
 methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, verbose) {
-    glob(`${ paths.css.src }components/*.scss`, function (er, files) {
+    glob(`${ paths.components.src }**/*.scss`, function (er, files) {
         methods.log('verbose', `SCSS Files: ${ JSON.stringify(files, null, 2) }`, verbose);
         let count = files.length;
         let data = '';
         files.forEach((item) => {
-            data += `@import "components/${ path.basename(item) }";
+            data += `@import "Components/${ item.replace(paths.components.src, '') }";
 `;
         });
         methods.log('verbose', data, verbose);
