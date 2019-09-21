@@ -1,4 +1,6 @@
 //  GLOBAL
+const devMode = process.env.NODE_ENV || 'development';
+
 // LOGGING FUNCTIONS
 export function dir(...args) {
   logger('dir', args);
@@ -15,7 +17,7 @@ export function warn(...args) {
 function logger(type = 'log', args) {
   const spirit = '🚀';
 
-  if (window.jsDevMode) {
+  if (devMode) {
     for (let i = 0; i < args.length; i++) {
       const spacer = i > 0 ? '◉ ' : '';
       switch (type) {
@@ -61,7 +63,7 @@ export function classToggle(selector, getClass) {
   });
 }
 export function gaTrack(category, action, label) {
-  if (!window.jsDevMode) {
+  if (!devMode) {
     if (typeof ga === 'function') {
       ga('send', 'event', category, action, label);
     } else {
@@ -78,28 +80,6 @@ export function hasClass(el, className) {
     return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
   }
 }
-const QueryString = (function() {
-  // This function is anonymous, is executed immediately and
-  // the return value is assigned to QueryString!
-  const query_string = {};
-  const query = window.location.search.substring(1);
-  const vars = query.split('&');
-  for (let i = 0; i < vars.length; i++) {
-    const pair = vars[i].split('=');
-    // If first entry with this name
-    if (typeof query_string[pair[0]] === 'undefined') {
-      query_string[pair[0]] = decodeURIComponent(pair[1]);
-      // If second entry with this name
-    } else if (typeof query_string[pair[0]] === 'string') {
-      const arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
-      query_string[pair[0]] = arr;
-      // If third or later entry with this name
-    } else {
-      query_string[pair[0]].push(decodeURIComponent(pair[1]));
-    }
-  }
-  return query_string;
-})();
 function ready(fn) {
   if (document.readyState !== 'loading') {
     fn();
