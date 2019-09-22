@@ -1,21 +1,23 @@
 <template>
   <figure :is="background ? 'div' : 'figure'" :class="background ? 'c_image_bg' : false">
     <picture class="c_image" :class="{ c_image_bg__image: background }">
-      <LazyLoad
-        :key="index"
-        :alt="alt && lastSource(index)"
-        :element-type="lastSource(index) ? 'img' : 'source'"
-        :enable="enableLazyLoad"
-        :height="source.height || false"
-        :intrinsicsize="source.intrinsicsize || false"
-        :loading="loading"
-        :media="source.media || false"
-        :src="lazyLoad(false, lastSource(index) ? source.src || placeholder : false)"
-        :srcset="lazyLoad(false, source.srcset || false)"
-        :type="source.type || false"
-        :width="source.width || false"
-        v-for="(source, index) in sources"
-      />
+      <ClientOnly>
+        <LazyLoad
+          :key="index"
+          :alt="alt && lastSource(index)"
+          :after-load="{ src: lastSource(index) ? source.src || placeholder : false, srcset: source.srcset || false }"
+          :check-for-native-lazy-load="lazyLoad"
+          :element-type="lastSource(index) ? 'img' : 'source'"
+          :enabled="lazyLoad"
+          :height="source.height || false"
+          :intrinsicsize="source.intrinsicsize || false"
+          :loading="loading"
+          :media="source.media || false"
+          :type="source.type || false"
+          :width="source.width || false"
+          v-for="(source, index) in sources"
+        />
+      </ClientOnly>
     </picture>
     <figcaption v-if="elementType === 'figure' && caption">{{ caption }}</figcaption>
   </figure>
@@ -31,8 +33,7 @@ export default {
   data() {
     return {
       elementType: 'figure',
-      enableLazyLoad: false,
-      loaded: false,
+      lazyLoad: false,
     };
   },
   props: {
@@ -52,12 +53,9 @@ export default {
     lastSource: function(index) {
       return index === this.sources.length - 1;
     },
-    lazyLoad: function(value, falseValue = false) {
-      return this.enableLazyLoad && !this.loaded ? value : falseValue;
-    },
   },
   created() {
-    this.enableLazyLoad = this.loading === 'lazy' && !('loading' in HTMLImageElement.prototype);
+    this.lazyLoad = this.loading === 'lazy';
   },
 };
 </script>

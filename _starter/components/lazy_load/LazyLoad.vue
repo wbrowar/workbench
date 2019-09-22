@@ -1,5 +1,5 @@
 <template>
-  <div :is="elementType"><slot></slot></div>
+  <div :is="elementType" v-bind="loadAttributes"><slot /></div>
 </template>
 
 <script>
@@ -10,14 +10,28 @@ export default {
   data() {
     return {
       loaded: false,
+      nativeLazyLoad: false,
       observer: false,
     };
   },
   props: {
+    afterLoad: Object,
+    beforeLoad: Object,
+    checkForNativeLazyLoad: { type: Boolean, default: false },
     elementType: { type: String, default: 'div' },
-    enable: { default: true },
+    enabled: { default: true },
     observerMargin: { default: '50%' },
     observerThreshold: { default: 0 },
+  },
+  computed: {
+    loadAttributes: function() {
+      if (this.loaded && this.afterLoad) {
+        return this.afterLoad;
+      } else if (this.beforeLoad) {
+        return this.beforeLoad;
+      }
+      return false;
+    },
   },
   methods: {
     addToObserver: function() {
@@ -64,9 +78,13 @@ export default {
       }
     },
   },
-  created() {},
+  created() {
+    if (this.checkForNativeLazyLoad) {
+      this.nativeLazyLoad = ('loading' in HTMLImageElement.prototype);
+    }
+  },
   mounted() {
-    if (this.enable) {
+    if (this.enabled && this.checkForNativeLazyLoad ? !this.nativeLazyLoad : true) {
       if (this.inViewport()) {
         log('Lazy Load in Viewport');
         this.handleLazy();

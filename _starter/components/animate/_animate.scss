@@ -1,5 +1,5 @@
 @mixin _can_transition($transition) {
-  transition: #{ $transition };
+  transition: #{$transition};
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
@@ -15,7 +15,7 @@
         @include _can_transition(transform $anim_duration_slide ease-out);
 
         &:active {
-          transform: translateY(3%) scale(.92, .92);
+          transform: translateY(3%) scale(0.92, 0.92);
         }
       }
     }
@@ -24,21 +24,24 @@
         @at-root #{&}--up {
           @include _can_transition(transform $anim_duration_slide ease-out);
 
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             transform: translateY(-6%);
           }
         }
         @at-root #{&}--down {
           @include _can_transition(transform $anim_duration_slide ease-out);
 
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             transform: translateY(6%);
           }
         }
         @at-root #{&}--forward {
           @include _can_transition(transform $anim_duration_slide ease-out);
 
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             transform: translateY(-8%) scale(1.08, 1.08);
           }
         }
@@ -58,7 +61,8 @@
           @include _can_transition(transform $anim_duration_slide ease-out);
         }
 
-        @at-root &:hover > .c_animate--rollover--scale__background, &:focus > .c_animate--rollover--scale__background {
+        @at-root &:hover > .c_animate--rollover--scale__background,
+          &:focus > .c_animate--rollover--scale__background {
           transform: scale(1.25, 1.25);
         }
       }

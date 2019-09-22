@@ -1,11 +1,9 @@
 @mixin c_grid_columns($columns: 2) {
   @if $columns == 2 {
     grid-template-columns: repeat(2, 1fr);
-  }
-  @else if $columns == 3 {
+  } @else if $columns == 3 {
     grid-template-columns: repeat(3, 1fr);
-  }
-  @else if $columns == 4 {
+  } @else if $columns == 4 {
     grid-template-columns: repeat(4, 1fr);
   }
 }

@@ -61,6 +61,9 @@ vueMethods['classToggle'] = function (selector, getClass) {
 new Vue({
     el: '#page',
     data: vueData,
+    config: {
+        ignoredElements: ['ClientOnly']
+    },
     components: {
         <% if (install.components.includes('navigation')) { %>Navigation,<% } _%>
         <% if (install.components.includes('scroll_updater')) { %>ScrollUpdater,<% } _%>

@@ -10,17 +10,23 @@
     &:last-child {
       margin-bottom: 0;
     }
-    b, strong {
+    b,
+    strong {
       @include font('apple_bold');
     }
-    i, em {
+    i,
+    em {
       @include font('apple_italic');
     }
-    b i, i b, strong em, em strong {
+    b i,
+    i b,
+    strong em,
+    em strong {
       @include font('apple_bold_italic');
     }
   }
-  ol, ul {
+  ol,
+  ul {
     margin-bottom: $spacing_text;
 
     &:last-child {
@@ -28,7 +34,7 @@
     }
 
     li {
-      margin-bottom: .6em;
+      margin-bottom: 0.6em;
       margin-left: 1.5em;
       break-inside: avoid;
     }

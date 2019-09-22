@@ -1,40 +1,46 @@
 <template>
   <div class="c_video" :class="{ c_video_bg: background }">
-    <LazyLoad
-      :class="{ c_video_bg__video: background }"
-      element-type="video"
-      :enable="enableLazyLoad"
-      :autoplay="background ? true : autoplay"
-      :controls="background ? false : controls"
-      :loop="background ? true : loop"
-      :muted="background ? true : muted"
-      :playsinline="background ? 'playsinline' : playsinline ? 'playsinline' : false"
-      :poster="poster || false"
-      :src="lazyLoad(false, src || false)"
-      v-if="source === 'file'"
-    />
-    <LazyLoad
-      element-type="iframe"
-      :enable="enableLazyLoad"
-      :src="lazyLoad(false, `https://www.youtube.com/embed/${videoId}?rel=0&amp;controls=0&amp;showinfo=0` || false)"
-      width="853"
-      height="480"
-      frameborder="0"
-      allowfullscreen
-      v-else-if="source === 'youtube'"
-    />
-    <LazyLoad
-      element-type="iframe"
-      :enable="enableLazyLoad"
-      :src="lazyLoad(false, `https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0` || false)"
-      width="500"
-      height="281"
-      frameborder="0"
-      webkitallowfullscreen
-      mozallowfullscreen
-      allowfullscreen
-      v-else-if="source === 'vimeo'"
-    />
+    <ClientOnly>
+      <LazyLoad
+        :after-load="{ src: src || false }"
+        :autoplay="background ? true : autoplay"
+        :class="{ c_video_bg__video: background }"
+        :controls="background ? false : controls"
+        element-type="video"
+        :enable="lazyLoad"
+        :loop="background ? true : loop"
+        :muted="background ? true : muted"
+        :playsinline="background ? 'playsinline' : playsinline ? 'playsinline' : false"
+        :poster="poster || false"
+        v-if="source === 'file'"
+      />
+      <LazyLoad
+        allowfullscreen
+        :after-load="{ src: videoId ? `https://www.youtube.com/embed/${ videoId }?rel=0&amp;controls=0&amp;showinfo=0` : false }"
+        :check-for-native-lazy-load="lazyLoad"
+        element-type="iframe"
+        :enable="lazyLoad"
+        frameborder="0"
+        height="480"
+        :loading="loading"
+        width="853"
+        v-else-if="source === 'youtube'"
+      />
+      <LazyLoad
+        :after-load="{ src: videoId ? `https://player.vimeo.com/video/${ videoId }?title=0&byline=0&portrait=0` : false }"
+        allowfullscreen
+        :check-for-native-lazy-load="lazyLoad"
+        element-type="iframe"
+        :enable="lazyLoad"
+        frameborder="0"
+        height="281"
+        :loading="loading"
+        mozallowfullscreen
+        webkitallowfullscreen
+        width="500"
+        v-else-if="source === 'vimeo'"
+      />
+    </ClientOnly>
   </div>
 </template>
 
@@ -47,8 +53,7 @@ export default {
   },
   data() {
     return {
-      enableLazyLoad: false,
-      loaded: false,
+      lazyLoad: false,
       playerUrl: false,
     };
   },
@@ -65,23 +70,8 @@ export default {
     src: String,
     videoId: String,
   },
-  methods: {
-    lazyLoad: function(value, falseValue = false) {
-      return this.enableLazyLoad && !this.loaded ? value : falseValue;
-    },
-  },
   created() {
-    if (this.source === 'file') {
-      this.enableLazyLoad = this.loading === 'lazy';
-    } else if (['youtube', 'vimeo'].includes(this.source)) {
-      this.enableLazyLoad = this.loading === 'lazy' && !('loading' in HTMLImageElement.prototype);
-    }
+    this.lazyLoad = this.loading === 'lazy';
   },
-  mounted() {},
 };
 </script>
-
-<style lang="scss">.c_media_video {
-  $self: &;
-}
-</style>

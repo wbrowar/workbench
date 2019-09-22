@@ -53,7 +53,7 @@ export default {
       }
 
       return styles;
-    }
+    },
   },
   methods: {
     addToObserver: function(callback) {
