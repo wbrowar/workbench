@@ -55,10 +55,7 @@ export default {
     },
     handleLazy: function() {
       log('Handling Lazy Load');
-      if (this.$parent.loaded !== undefined) {
-        this.$parent.loaded = true;
-        this.removeFromObserver();
-      }
+      this.removeFromObserver();
       this.loaded = true;
     },
     inViewport: function() {
