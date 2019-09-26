@@ -36,7 +36,7 @@ import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.
 
 export default {
   components: {
-    ColorSchemeToggle
+    ColorSchemeToggle,
   },
 };
 </script>
@@ -48,7 +48,7 @@ export default {
 @import 'CSS/base/_animations.scss';
 @import 'CSS/base/_custom_properties.scss';
 @import 'CSS/base/_global.scss';
-@import 'CSS/_default.scss';
+@import 'CSS/automated/_components.scss';
 
 .fade-enter-active {
   transition: opacity 0.5s;

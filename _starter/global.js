@@ -162,6 +162,53 @@ methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ej
     });
 };
 
+methods.prebuildIconMethods = function prebuildIconMethods(callback, paths, verbose) {
+    glob(`${ paths.icon.src }**/*.svg`, function (er, files) {
+        methods.log('verbose', `Icon Files: ${ JSON.stringify(files, null, 2) }`, verbose);
+        let svgs = [];
+        files.forEach((item) => {
+            svgs.push({
+                name: path.basename(item, '.svg'),
+                path: item,
+            });
+        });
+
+        const options = {
+            svgs: svgs,
+            paths: paths,
+        };
+
+        ejs.renderFile(`${ paths.starter.templates }_js/svg.js`, options, {}, function(err, str) {
+            if (err) {
+                methods.log('warn', err);
+            }
+            fs.outputFile(paths.js.src + 'automated/svg.js', str, (err) => {
+                if(!err) {
+                    methods.log('verbose', `JS templates compiled: svg.js`, verbose);
+                    callback();
+                }
+            });
+        });
+//         files.forEach((item) => {
+//             data += `@import "Components/${ item.replace(paths.components.src, '') }";
+// `;
+//         });
+//         methods.log('verbose', data, verbose);
+//
+//         if (data) {
+//             const scssIncludesPath = paths.js.src + 'automated/svg.js';
+//             fs.outputFile(scssIncludesPath, data, (err) => {
+//                 if(!err) {
+//                     methods.log('verbose', `Writing combined SCSS files to: ${ scssIncludesPath }`, verbose);
+//                     callback();
+//                 }
+//             });
+//         } else {
+//             callback();
+//         }
+    });
+};
+
 methods.prebuildPrettier = function prebuildPrettier(options, file = null, verbose) {
     methods.log('title', `Running Prettier`);
 
@@ -184,7 +231,6 @@ methods.prebuildPrettier = function prebuildPrettier(options, file = null, verbo
 methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, verbose) {
     glob(`${ paths.components.src }**/*.scss`, function (er, files) {
         methods.log('verbose', `SCSS Files: ${ JSON.stringify(files, null, 2) }`, verbose);
-        let count = files.length;
         let data = '';
         files.forEach((item) => {
             data += `@import "Components/${ item.replace(paths.components.src, '') }";
@@ -193,7 +239,7 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
         methods.log('verbose', data, verbose);
 
         if (data) {
-            const scssIncludesPath = paths.css.src + '_default.scss';
+            const scssIncludesPath = paths.css.src + 'automated/_components.scss';
             fs.outputFile(scssIncludesPath, data, (err) => {
                 if(!err) {
                     methods.log('verbose', `Writing combined SCSS files to: ${ scssIncludesPath }`, verbose);
