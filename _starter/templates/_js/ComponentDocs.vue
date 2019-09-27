@@ -44,8 +44,10 @@
       display: flex;
       flex-flow: row wrap;
       background-color: rgb(43, 48, 59);
+      border-radius: 4px;
       box-sizing: border-box;
       margin-bottom: 40px;
+      overflow: hidden;
 
       & > a {
         display: flex;

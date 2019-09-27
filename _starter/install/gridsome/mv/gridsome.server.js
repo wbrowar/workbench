@@ -5,7 +5,8 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const path = require('path');
+const glob = require('glob-all'),
+      path = require('path');
 
 module.exports = function (api) {
   api.loadSource(({ addContentType }) => {
@@ -18,6 +19,20 @@ module.exports = function (api) {
     // 3. Uncomment the code below and replace 'helloWorld' with the section handle
 
     // await createPagesForCraftSection('helloWorld', api);
+
+    // Create style inventory pages
+    if (process.env.NODE_ENV !== 'production') {
+      const componentDocPages = glob.sync(`./_source/_js/automated/dev/*.vue`);
+      componentDocPages.forEach((item) => {
+        api.createPage({
+          path: `/dev/docs/${ path.basename(item, '.vue') }`,
+          component: `./_source/_js/automated/dev/${ path.basename(item) }`,
+          context: {
+            slug: path.basename(item)
+          }
+        });
+      });
+    }
   });
 
   api.configureWebpack({
@@ -26,7 +41,8 @@ module.exports = function (api) {
         Components: path.resolve(__dirname, './_source/_components/'),
         CSS: path.resolve(__dirname, './_source/_css/'),
         JS: path.resolve(__dirname, './_source/_js/'),
-        Starter: path.resolve(__dirname, './_source/'),
+        Starter: path.resolve(__dirname, './_starter/'),
+        Source: path.resolve(__dirname, './_source/'),
       }
     }
   })
