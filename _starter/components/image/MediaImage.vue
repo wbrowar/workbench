@@ -1,5 +1,5 @@
 <template>
-  <figure :is="background ? 'div' : 'figure'" :class="background ? 'c_image_bg' : false">
+  <figure :is="background ? type : 'figure'" :class="background ? 'c_image_bg' : false">
     <picture class="c_image" :class="{ c_image_bg__image: background }">
       <ClientOnly>
         <LazyLoad
@@ -9,10 +9,10 @@
           :check-for-native-lazy-load="lazyLoad"
           :element-type="lastSource(index) ? 'img' : 'source'"
           :enabled="lazyLoad"
-          :height="source.height || false"
           :intrinsicsize="source.intrinsicsize || false"
           :loading="loading"
           :media="source.media || false"
+          :sizes="lastSource(index) ? source.sizes || '100vw' : false"
           :type="source.type || false"
           :width="source.width || false"
           v-for="(source, index) in sources"
@@ -40,14 +40,11 @@ export default {
     alt: String,
     background: { type: Boolean, default: false },
     caption: String,
-    intrinsicsize: String,
-    loading: { default: 'lazy' },
-    placeholder: { default: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' },
-    sizes: { default: '100vw' },
+    loading: { type: String, default: 'lazy' },
+    placeholder: { type: String, default: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' },
+    sizes: { type: String, default: '100vw' },
     sources: { type: Array, required: true },
-    type: { default: 'figure' },
-    width: Number,
-    height: Number,
+    type: { type: String, default: 'div' },
   },
   methods: {
     lastSource: function(index) {

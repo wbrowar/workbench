@@ -77,7 +77,7 @@ export default {
   },
   created() {
     if (this.checkForNativeLazyLoad) {
-      this.nativeLazyLoad = ('loading' in HTMLImageElement.prototype);
+      this.nativeLazyLoad = 'loading' in HTMLImageElement.prototype;
     }
   },
   mounted() {

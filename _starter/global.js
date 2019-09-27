@@ -139,6 +139,40 @@ methods.parseArgv = function parseArgv() {
     }
 };
 
+methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, verbose) {
+    glob(`${ paths.components.src }**/demo.vue`, function (er, files) {
+        methods.log('verbose', `Icon Files: ${ JSON.stringify(files, null, 2) }`, verbose);
+        let components = [];
+        let count = files.length;
+        files.forEach((item) => {
+            components.push(path.dirname(item).split(path.sep).pop());
+        });
+
+        files.forEach((item) => {
+            const filePath = `${ paths.js.src }automated/dev/${ path.dirname(item).split(path.sep).pop() }.vue`;
+            const options = {
+                components: components,
+                handle: path.dirname(item).split(path.sep).pop(),
+            };
+
+            ejs.renderFile(`${ paths.starter.templates }_js/ComponentDocs.vue`, options, {}, function(err, str) {
+                if (err) {
+                    methods.log('warn', err);
+                }
+                fs.outputFile(filePath, str, (err) => {
+                    if(!err) {
+                        methods.log('verbose', `Component Docs template created: automated/dev/${ filePath }`, verbose);
+                        count--;
+                        if (count === 0) {
+                            callback();
+                        }
+                    }
+                });
+            });
+        });
+    });
+};
+
 methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ejsVars, verbose) {
     glob(`${ paths.starter.templates }_css/*.{css,scss}`, function (er, files) {
         methods.log('verbose', `CSS templates: ${ JSON.stringify(files, null, 2) }`, verbose);
@@ -189,23 +223,6 @@ methods.prebuildIconMethods = function prebuildIconMethods(callback, paths, verb
                 }
             });
         });
-//         files.forEach((item) => {
-//             data += `@import "Components/${ item.replace(paths.components.src, '') }";
-// `;
-//         });
-//         methods.log('verbose', data, verbose);
-//
-//         if (data) {
-//             const scssIncludesPath = paths.js.src + 'automated/svg.js';
-//             fs.outputFile(scssIncludesPath, data, (err) => {
-//                 if(!err) {
-//                     methods.log('verbose', `Writing combined SCSS files to: ${ scssIncludesPath }`, verbose);
-//                     callback();
-//                 }
-//             });
-//         } else {
-//             callback();
-//         }
     });
 };
 

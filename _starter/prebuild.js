@@ -8,7 +8,8 @@ let pkg = require(`${ process.cwd() }/package.json`);
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
-const runCssTemplates = argv.options.csstemplates || false,
+const runComponentDocs = argv.options.componentdocs || false,
+      runCssTemplates = argv.options.csstemplates || false,
       runIconMethods  = argv.options.iconmethods || false,
       runPrettier     = argv.options.prettier || false,
       runScssIncludes = argv.options.scssincludes || false,
@@ -24,6 +25,15 @@ let ejsVars = Object.assign({
 async function run() {
     if (runPrettier) {
         g.prebuildPrettier(pkg.prettier, null, verbose);
+    }
+
+    if (runComponentDocs) {
+        const componentDocs = g.asyncFunction(
+          `Creating Component Docs`, `Component Docs Created`, (resolve) => {
+              g.prebuildComponentDocs(resolve, paths, verbose);
+          }
+        );
+        let componentDocsComplete = await componentDocs;
     }
 
     if (runCssTemplates) {
