@@ -4,7 +4,7 @@
       <ClientOnly>
         <LazyLoad
           :key="index"
-          :alt="alt && lastSource(index)"
+          :alt="alt && lastSource(index) ? alt : false"
           :after-load="{ src: lastSource(index) ? source.src || placeholder : false, srcset: source.srcset || false }"
           :check-for-native-lazy-load="lazyLoad"
           :element-type="lastSource(index) ? 'img' : 'source'"
