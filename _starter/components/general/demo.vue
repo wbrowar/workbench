@@ -2,7 +2,7 @@
   <div>
     <CodeExample
       title="Colors"
-      description="Colors configured in the `package.json` file."
+      description="Color schemes configured in the `package.json` file. The `light` scheme is shown by default. The `dark` theme appears when the browser is set to dark mode."
       v-if="globalData.pkg.colors"
     >
       <div v-for="(scheme, index) in globalData.pkg.colors" :key="index">
@@ -16,7 +16,7 @@
       </div>
     </CodeExample>
 
-    <CodeExample title="Colors" description="Colors configured in the `package.json` file." v-if="globalData.pkg.fonts">
+    <CodeExample title="Fonts" description="Fonts configured in the `package.json` file. Change the sample text to preview different words and characters in each font." v-if="globalData.pkg.fonts">
       <div v-for="(font, index) in globalData.pkg.fonts" :key="index">
         <h3 style="margin: 20px 0;">{{ index }}</h3>
         <FontSample :font="font" :size="parseFloat(fontSampleSize)" :text="fontSampleText" />
