@@ -7,6 +7,7 @@
       <nav class="ui__nav">
         <g-link class="ui__nav__link" to="/">Home</g-link>
         <g-link class="ui__nav__link" to="/about">About</g-link>
+        <g-link class="ui__nav__link" to="/dev/docs/general">Docs</g-link>
       </nav>
     </header>
     <transition name="fade" appear>

@@ -23,6 +23,13 @@ let ejsVars = Object.assign({
 }, pkg.ejs);
 
 async function run() {
+    const clean = g.asyncFunction(
+      `Removing Prebuild Files`, `Prebuild Files Removed`, (resolve) => {
+          g.prebuildClean(resolve, paths, verbose);
+      }
+    );
+    let cleanComplete = await clean;
+
     if (runPrettier) {
         g.prebuildPrettier(pkg.prettier, null, verbose);
     }
@@ -30,7 +37,7 @@ async function run() {
     if (runComponentDocs) {
         const componentDocs = g.asyncFunction(
           `Creating Component Docs`, `Component Docs Created`, (resolve) => {
-              g.prebuildComponentDocs(resolve, paths, verbose);
+              g.prebuildComponentDocs(resolve, paths, pkg, verbose);
           }
         );
         let componentDocsComplete = await componentDocs;

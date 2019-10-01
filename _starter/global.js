@@ -139,7 +139,25 @@ methods.parseArgv = function parseArgv() {
     }
 };
 
-methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, verbose) {
+methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
+  glob(`${ paths.js.src }automated/dev/**/*`, function (er, files) {
+    methods.log('verbose', `Removing Files: ${ JSON.stringify(files, null, 2) }`, verbose);
+    let count = files.length;
+
+    files.forEach((item) => {
+      fs.remove(item, err => {
+        if (err) return console.error(err);
+
+        count--;
+        if (count === 0) {
+          callback();
+        }
+      });
+    });
+  });
+};
+
+methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, pkg, verbose) {
     glob(`${ paths.components.src }**/demo.vue`, function (er, files) {
         methods.log('verbose', `Icon Files: ${ JSON.stringify(files, null, 2) }`, verbose);
         let components = [];
@@ -153,6 +171,7 @@ methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, 
             const options = {
                 components: components,
                 handle: path.dirname(item).split(path.sep).pop(),
+                pkg: pkg,
             };
 
             ejs.renderFile(`${ paths.starter.templates }_js/ComponentDocs.vue`, options, {}, function(err, str) {

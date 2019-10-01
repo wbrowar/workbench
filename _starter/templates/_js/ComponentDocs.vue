@@ -4,7 +4,7 @@
       <div class="dev__components__nav">
         <g-link :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</g-link>
       </div>
-      <demo />
+      <demo :global-data="{ pkg: pkg }" />
     </div>
   </Layout>
 </template>
@@ -18,9 +18,13 @@
     },
     data() {
       return {
-        pages: ['<%- components.join("','") %>'],
         currentPageHandle: '<%- handle %>',
+        pages: ['<%- components.join("','") %>'],
+        pkg: false,
       };
+    },
+    created() {
+      this.pkg = JSON.parse(`<%- JSON.stringify(pkg) %>`);
     },
     methods: {
       titleCase: function(str) {
@@ -80,6 +84,11 @@
   h2 {
     margin: 0.8em 0 0.2em;
     font-size: 1.2rem;
+  }
+  h3 {
+    margin-bottom: 0.2em;
+    font-size: 1.1rem;
+    color: rgb(122, 134, 158);
   }
   p {
     margin-bottom: 20px;

@@ -154,7 +154,53 @@ async function run() {
                 moveFile(config, delimiter);
             });
 
-            // move demo.ejs
+            // Create demo.vue
+            const demoVue = `<template>
+  <div>
+    <h1>Title</h1>
+    <p>Description</p>
+
+    <CodeExample :code="code.default" title="Required Title" description="Optional description.">
+      <p>Demo</p>
+    </CodeExample>
+
+    <PropsTable :props="props" />
+  </div>
+</template>
+
+<script>
+import CodeExample from 'Starter/style_inventory/vue/CodeExample';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+
+export default {
+  components: {
+    IconSVG,
+    CodeExample,
+    PropsTable,
+  },
+  data() {
+    return {
+      code: false,
+      props: false,
+    };
+  },
+  props: {
+    globalData: Object,
+  },
+  created() {
+    this.code = {
+      default: \`<p>Demo</p>\`,
+        };
+        this.props = [
+            { name: 'test', type: 'String',  default: \`''\`, description: \`Test\` },
+        ];
+    },
+};
+</script>`;
+
+            fs.outputFileSync(`${ paths.components.src }${ answers.handle }/demo.vue`, demoVue);
+
+            // Create demo.ejs
             const twigCode = answers.templates.includes('twig') ? `,
   twig: {
     code:

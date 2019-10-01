@@ -1,7 +1,7 @@
 <template>
-  <div class="root">
+  <div class="docs__props_table">
     <h2>Props</h2>
-    <table class="root__table">
+    <table class="docs__props_table__table">
       <thead>
         <tr>
           <th>Name</th>
@@ -43,7 +43,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .root {
+  .docs__props_table {
     $self: &;
 
     margin: 50px 0;
