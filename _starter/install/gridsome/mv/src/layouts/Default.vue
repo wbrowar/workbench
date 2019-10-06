@@ -2,7 +2,7 @@
   <div>
     <header class="ui__header">
       <strong>
-        <g-link to="/">{{ $static.metaData.siteName }}</g-link>
+        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
       </strong>
       <nav class="ui__nav">
         <g-link class="ui__nav__link" to="/">Home</g-link>
@@ -26,7 +26,7 @@
 
 <static-query>
 query {
-  metaData {
+  metadata {
     siteName
   }
 }
