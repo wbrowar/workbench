@@ -1,15 +1,13 @@
 .c_header {
   $self: &;
 
-  @include text_modifiers($self);
-
   @at-root #{$self}--1 {
     @include font('apple_bold');
-    @include fz(8, 4rem, '900px');
+    @include fz(6, 3rem, 900);
   }
   @at-root #{$self}--2 {
     @include font('apple_bold');
-    @include fz(4, 2rem, '700px');
+    @include fz(4, 2rem, 700);
   }
   @at-root #{$self}--3 {
     @include font('apple_bold');

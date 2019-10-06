@@ -1,38 +1,37 @@
 <template>
-    <div :is="elementType" :style="boxStyles">
-        <slot />
-    </div>
+  <div class="c_box" :is="elementType" :class="boxClasses" :style="boxStyles">
+    <slot />
+  </div>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-            }
-        },
-        props: {
-            elementType: { type: String, default: 'div' },
-        },
-        computed: {
-            boxStyles: function() {
-                let styles = { };
+export default {
+  data() {
+    return {};
+  },
+  props: {
+    demo: { type: Boolean, default: false },
+    elementType: { type: String, default: 'div' },
+  },
+  computed: {
+    boxClasses: function() {
+      let classes = {};
 
-                return styles;
-            },
-        },
-        methods: {
-        },
-        created() {
-        },
-        mounted() {
-        }
-    }
+      if (this.demo) {
+        classes['c_box--demo'] = true;
+      }
+
+      return classes || null;
+    },
+    boxStyles: function() {
+      let styles = {};
+
+      return styles || null;
+    },
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-    .c_box {
-        $self: &;
-
-        background: red;
-    }
+<style lang="scss">
+// Set styles in _source/_components/box/_box.scss
 </style>

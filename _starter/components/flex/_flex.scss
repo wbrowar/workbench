@@ -1,0 +1,16 @@
+.c_flex {
+  $self: &;
+
+  display: flex;
+
+  @at-root #{$self}--centered {
+    align-items: center;
+    justify-content: center;
+    flex-flow: column wrap;
+  }
+  @at-root #{$self}--stretched {
+    & > * {
+      flex-grow: 1;
+    }
+  }
+}

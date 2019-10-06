@@ -41,7 +41,10 @@ export default {
     background: { type: Boolean, default: false },
     caption: String,
     loading: { type: String, default: 'lazy' },
-    placeholder: { type: String, default: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' },
+    placeholder: {
+      type: String,
+      default: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+    },
     sizes: { type: String, default: '100vw' },
     sources: { type: Array, required: true },
     type: { type: String, default: 'div' },

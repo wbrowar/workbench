@@ -16,7 +16,11 @@
       </div>
     </CodeExample>
 
-    <CodeExample title="Fonts" description="Fonts configured in the `package.json` file. Change the sample text to preview different words and characters in each font." v-if="globalData.pkg.fonts">
+    <CodeExample
+      title="Fonts"
+      description="Fonts configured in the `package.json` file. Change the sample text to preview different words and characters in each font."
+      v-if="globalData.pkg.fonts"
+    >
       <div v-for="(font, index) in globalData.pkg.fonts" :key="index">
         <h3 style="margin: 20px 0;">{{ index }}</h3>
         <FontSample :font="font" :size="parseFloat(fontSampleSize)" :text="fontSampleText" />
@@ -66,8 +70,6 @@ export default {
   created() {
     this.fontSampleSize = `1`;
     this.fontSampleText = `The quick brown fox jumps over the lazy dog`;
-
-    console.log(this.globalData.pkg);
   },
 };
 </script>

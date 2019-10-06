@@ -166,6 +166,8 @@ methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, 
             components.push(path.dirname(item).split(path.sep).pop());
         });
 
+        components.sort(function(x,y){ return x == 'general' ? -1 : y == 'general' ? 1 : 0; });
+
         files.forEach((item) => {
             const filePath = `${ paths.js.src }automated/dev/${ path.dirname(item).split(path.sep).pop() }.vue`;
             const options = {

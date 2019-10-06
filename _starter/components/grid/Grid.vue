@@ -1,5 +1,5 @@
 <template>
-  <div :is="elementType" :style="gridStyles">
+  <div class="c_grid c_grid--js" :is="elementType" :style="gridStyles" v-bind="box">
     <slot />
   </div>
 </template>
@@ -7,6 +7,12 @@
 <script>
 export default {
   props: {
+    box: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
     columns: Number,
     columnWidth: { type: String, default: '1fr' },
     elementType: { type: String, default: 'div' },

@@ -170,17 +170,19 @@ async function run() {
 
 <script>
 import CodeExample from 'Starter/style_inventory/vue/CodeExample';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
 import PropsTable from 'Starter/style_inventory/vue/PropsTable';
 
 export default {
   components: {
-    IconSVG,
     CodeExample,
+    CssModifiers,
     PropsTable,
   },
   data() {
     return {
       code: false,
+      modifiers: false,
       props: false,
     };
   },
@@ -190,11 +192,14 @@ export default {
   created() {
     this.code = {
       default: \`<p>Demo</p>\`,
-        };
-        this.props = [
-            { name: 'test', type: 'String',  default: \`''\`, description: \`Test\` },
-        ];
-    },
+    };
+    this.modifiers = [
+        { name: 'test', description: \`Test\` },
+    ];
+    this.props = [
+        { name: 'test', type: 'String',  default: \`''\`, description: \`Test\` },
+    ];
+  }
 };
 </script>`;
 

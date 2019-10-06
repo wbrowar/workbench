@@ -11,49 +11,50 @@
 .c_grid {
   $self: &;
 
-  @include box_modifiers($self);
+  &:not(#{$self}--js) {
+    $grid: &;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-gap: $grid_gap;
 
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  grid-gap: $grid_gap;
-
-  @include mq($mq_grid_start) {
-    @at-root #{$self}--2 {
-      @include c_grid_columns(2);
-
-      @at-root #{&}-3 {
+    @include mq($mq_grid_start) {
+      @at-root #{$grid}#{$self}--2 {
         @include c_grid_columns(2);
 
-        @include mq(900px) {
-          @include c_grid_columns(3);
-        }
-
-        @at-root #{&}-4 {
+        @at-root #{&}-3 {
           @include c_grid_columns(2);
 
           @include mq(900px) {
             @include c_grid_columns(3);
           }
+
+          @at-root #{&}-4 {
+            @include c_grid_columns(2);
+
+            @include mq(900px) {
+              @include c_grid_columns(3);
+            }
+            @include mq(1200px) {
+              @include c_grid_columns(4);
+            }
+          }
+        }
+      }
+      @at-root #{$grid}#{$self}--3 {
+        @include c_grid_columns(3);
+
+        @at-root #{&}-4 {
+          @include c_grid_columns(3);
+
           @include mq(1200px) {
             @include c_grid_columns(4);
           }
         }
       }
-    }
-    @at-root #{$self}--3 {
-      @include c_grid_columns(3);
-
-      @at-root #{&}-4 {
-        @include c_grid_columns(3);
-
-        @include mq(1200px) {
-          @include c_grid_columns(4);
-        }
+      @at-root #{$grid}#{$self}--4 {
+        @include c_grid_columns(4);
       }
-    }
-    @at-root #{$self}--4 {
-      @include c_grid_columns(4);
     }
   }
 }

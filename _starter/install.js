@@ -69,6 +69,7 @@ async function run() {
     componentDirectories.forEach((item) => {
         const defaultComponents = [
             'animate',
+            'box',
             'button',
             'buttons',
             'color_scheme_toggle',

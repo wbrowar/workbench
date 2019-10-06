@@ -1,0 +1,11 @@
+.c_box {
+  $self: &;
+
+  @include box_modifiers($self);
+
+  @at-root #{$self}--demo {
+    @extend .fpo;
+    height: 200px;
+    width: 200px;
+  }
+}
