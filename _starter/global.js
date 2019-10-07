@@ -144,16 +144,20 @@ methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
     methods.log('verbose', `Removing Files: ${ JSON.stringify(files, null, 2) }`, verbose);
     let count = files.length;
 
-    files.forEach((item) => {
-      fs.remove(item, err => {
-        if (err) return console.error(err);
+    if (count > 0) {
+        files.forEach((item) => {
+          fs.remove(item, err => {
+            if (err) return console.error(err);
 
-        count--;
-        if (count === 0) {
-          callback();
-        }
-      });
-    });
+            count--;
+            if (count === 0) {
+              callback();
+            }
+          });
+        });
+    } else {
+        callback();
+    }
   });
 };
 

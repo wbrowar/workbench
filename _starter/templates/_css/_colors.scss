@@ -4,15 +4,19 @@
 <% if (scheme === 'light') { -%>
 <% for (const color in pkg.colors[scheme]) { -%>
 <% let colorVal = pkg.colors[scheme][color] -%>
-    --color-<%- color %>-rgb: #{ red(<%- colorVal %>) }, #{ green(<%- colorVal %>) }, #{ blue(<%- colorVal %>) };
+    --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
+    --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
+    --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
     --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
-    --color-<%- color %>: rgba(var(--color-<%- color %>-rgb), var(--color-<%- color %>-a));
+    --color-<%- color %>: hsla(var(--color-<%- color %>-h), var(--color-<%- color %>-s), var(--color-<%- color %>-l), var(--color-<%- color %>-a));
 <% } -%>
   @if $includeLightScheme {
     @media (prefers-color-scheme: light) {
     <% for (const color in pkg.colors[scheme]) { -%>
     <% let colorVal = pkg.colors[scheme][color] -%>
-      --color-<%- color %>-rgb: #{ red(<%- colorVal %>) }, #{ green(<%- colorVal %>) }, #{ blue(<%- colorVal %>) };
+      --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
+      --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
+      --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
       --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
     <% } -%>
     }
@@ -21,7 +25,9 @@
   @media (prefers-color-scheme: <%- scheme %>) {
 <% for (const color in pkg.colors[scheme]) { -%>
 <% let colorVal = pkg.colors[scheme][color] -%>
-      --color-<%- color %>-rgb: #{ red(<%- colorVal %>) }, #{ green(<%- colorVal %>) }, #{ blue(<%- colorVal %>) };
+      --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
+      --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
+      --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
       --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
 <% } -%>
   }
@@ -42,7 +48,9 @@
   @at-root #{&}#{$selector_prefix}<%- scheme %>#{$selector_suffix} {
 <% for (const color in pkg.colors[scheme]) { -%>
 <% let colorVal = pkg.colors[scheme][color] -%>
-    --color-<%- color %>-rgb: #{ red(<%- colorVal %>) }, #{ green(<%- colorVal %>) }, #{ blue(<%- colorVal %>) };
+    --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
+    --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
+    --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
     --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
 <% } -%>
   }
