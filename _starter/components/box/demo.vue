@@ -3,6 +3,8 @@
     <h1>Box</h1>
     <p>Helper styles for easier layout. Used as base for other components.</p>
 
+    <ImportPath path="import Box from 'Components/box/Box';" />
+
     <CodeExample title="Demo" description="A fixed FPO element." :code="code.demo">
       <Box demo>
         <p>Demo</p>
@@ -19,6 +21,7 @@
 import Box from 'Components/box/Box';
 import CodeExample from 'Starter/style_inventory/vue/CodeExample';
 import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath';
 import PropsTable from 'Starter/style_inventory/vue/PropsTable';
 
 export default {
@@ -26,6 +29,7 @@ export default {
     Box,
     CodeExample,
     CssModifiers,
+    ImportPath,
     PropsTable,
   },
   data() {

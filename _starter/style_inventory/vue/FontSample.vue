@@ -1,15 +1,11 @@
 <template>
-  <div class="docs__font_sample" :style="fontStyles" @click="copyToClipboard(handle)" :title="`Click to copy '${ handle }' to clipboard`">{{ text }}</div>
+  <div class="docs__font_sample" :style="fontStyles" @click="copyToClipboard(`@include font('${ handle }');`)" :title="`Click to copy '${ `@include font('${ handle }');` }' to clipboard`">{{ text }}</div>
 </template>
 
 <script>
   import { log } from 'JS/global';
 
   export default {
-    data() {
-      return {
-      };
-    },
     props: {
       font: { type: Object, required: true },
       handle: { type: String, required: true },
@@ -45,5 +41,6 @@
     font-size: calc(var(--docs-font-sample-size, 1) * 1rem);
     padding-bottom: 0.2em;
     border-bottom: 1px solid rgba(211, 220, 231, 0.7);
+    cursor: pointer;
   }
 </style>

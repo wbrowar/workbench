@@ -23,4 +23,8 @@
   &:hover {
     opacity: 0.7;
   }
+
+  @at-root #{$self}--pointer {
+    cursor: pointer;
+  }
 }

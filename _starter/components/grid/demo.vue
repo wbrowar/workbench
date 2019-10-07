@@ -7,6 +7,8 @@
     </p>
     <p><em>NOTE: These are just helpers and custom CSS grids can be used throughout your sections and pages.</em></p>
 
+    <ImportPath path="import Grid from 'Components/grid/Grid';" />
+
     <CodeExample
       title="Column-based Grid"
       description="Set the amount of columns to create a simple, equally-spaced grid."
@@ -62,6 +64,7 @@ import Grid from 'Components/grid/Grid';
 import MediaImage from 'Components/image/MediaImage';
 import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
 import CodeExample from 'Starter/style_inventory/vue/CodeExample';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath';
 import PropsTable from 'Starter/style_inventory/vue/PropsTable';
 
 export default {
@@ -70,6 +73,7 @@ export default {
     MediaImage,
     CodeExample,
     CssModifiers,
+    ImportPath,
     PropsTable,
   },
   data() {

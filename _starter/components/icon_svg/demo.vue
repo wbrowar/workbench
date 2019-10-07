@@ -3,6 +3,8 @@
     <h1>Icons (SVG)</h1>
     <p>Create SVG elements from the files in the `_source/_icon/` folder.</p>
 
+    <ImportPath path="import IconSVG from 'Components/icon_svg/IconSVG.vue';" />
+
     <CodeExample :code="code.default" title="SVG element" description="An <svg> element.">
       <div style="width: 40px;">
         <IconSVG handle="plus" />
@@ -45,12 +47,14 @@
 <script>
 import IconSVG from 'Components/icon_svg/IconSVG.vue';
 import CodeExample from 'Starter/style_inventory/vue/CodeExample';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath';
 import PropsTable from 'Starter/style_inventory/vue/PropsTable';
 
 export default {
   components: {
     IconSVG,
     CodeExample,
+    ImportPath,
     PropsTable,
   },
   data() {

@@ -16,7 +16,9 @@
       />
       <LazyLoad
         allowfullscreen
-        :after-load="{ src: videoId ? `https://www.youtube.com/embed/${ videoId }?rel=0&amp;controls=0&amp;showinfo=0` : false }"
+        :after-load="{
+          src: videoId ? `https://www.youtube.com/embed/${videoId}?rel=0&amp;controls=0&amp;showinfo=0` : false,
+        }"
         :check-for-native-lazy-load="lazyLoad"
         element-type="iframe"
         :enable="lazyLoad"
@@ -27,7 +29,7 @@
         v-else-if="source === 'youtube'"
       />
       <LazyLoad
-        :after-load="{ src: videoId ? `https://player.vimeo.com/video/${ videoId }?title=0&byline=0&portrait=0` : false }"
+        :after-load="{ src: videoId ? `https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0` : false }"
         allowfullscreen
         :check-for-native-lazy-load="lazyLoad"
         element-type="iframe"

@@ -3,6 +3,8 @@
     <h1>Image</h1>
     <p>The image component can be used as a foreground image or a background image.</p>
 
+    <ImportPath path="import MediaImage from 'Components/image/MediaImage.vue';" />
+
     <CodeExample :code="code.img" title="Content Image" description="A basic <img> element.">
       <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png` }]" />
     </CodeExample>
@@ -24,12 +26,14 @@
 <script>
 import MediaImage from 'Components/image/MediaImage.vue';
 import CodeExample from 'Starter/style_inventory/vue/CodeExample';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath';
 import PropsTable from 'Starter/style_inventory/vue/PropsTable';
 
 export default {
   components: {
     MediaImage,
     CodeExample,
+    ImportPath,
     PropsTable,
   },
   data() {

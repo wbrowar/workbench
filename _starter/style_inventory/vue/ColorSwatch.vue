@@ -12,10 +12,6 @@
   import { log } from 'JS/global';
 
   export default {
-    data() {
-      return {
-      };
-    },
     props: {
       color: { type: String, required: true },
       name: { type: String, required: true },
@@ -48,6 +44,7 @@
       background-size: 20px 20px;
       background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
       border-radius: 3px;
+      cursor: pointer;
     }
     @at-root #{$self}__color {
       margin-bottom: 6px;
@@ -66,6 +63,7 @@
     }
     @at-root #{$self}__variable {
       font-weight: 700;
+      cursor: pointer;
     }
   }
 </style>
