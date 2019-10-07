@@ -40,7 +40,7 @@ export default {
         classes.push('c_flex--stretched');
       }
 
-      return classes.length ? classes : null ;
+      return classes.length ? classes : null;
     },
     flexStyles: function() {
       let styles = {

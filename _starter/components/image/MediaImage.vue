@@ -1,5 +1,5 @@
 <template>
-  <figure :is="background ? type : 'figure'" :class="background ? 'c_image_bg' : false">
+  <figure :is="background ? elementType : 'figure'" :class="background ? 'c_image_bg' : false">
     <picture class="c_image" :class="{ c_image_bg__image: background }">
       <ClientOnly>
         <LazyLoad
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
+import LazyLoad from 'Components/lazy_load/LazyLoad';
 
 export default {
   components: {
@@ -32,7 +32,6 @@ export default {
   },
   data() {
     return {
-      elementType: 'figure',
       lazyLoad: false,
     };
   },
@@ -40,6 +39,7 @@ export default {
     alt: String,
     background: { type: Boolean, default: false },
     caption: String,
+    elementType: { type: String, default: 'div' },
     loading: { type: String, default: 'lazy' },
     placeholder: {
       type: String,
@@ -47,7 +47,6 @@ export default {
     },
     sizes: { type: String, default: '100vw' },
     sources: { type: Array, required: true },
-    type: { type: String, default: 'div' },
   },
   methods: {
     lastSource: function(index) {

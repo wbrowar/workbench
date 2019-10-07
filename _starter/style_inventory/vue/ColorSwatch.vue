@@ -1,14 +1,16 @@
 <template>
   <div class="docs__color_swatch">
-    <div class="docs__color_swatch__checkers">
+    <div class="docs__color_swatch__checkers" @click="copyToClipboard(`$color_${ name }`)" :title="`Click to copy '$color_${ name }' to clipboard`">
       <div class="docs__color_swatch__color" :style="{ backgroundColor: color }"></div>
     </div>
-    <div class="docs__color_swatch__variable">$color_{{ name }}</div>
+    <div class="docs__color_swatch__variable" @click="copyToClipboard(`$color_${ name }`)" :title="`Click to copy '$color_${ name }' to clipboard`">$color_{{ name }}</div>
     <div class="docs__color_swatch__value">{{ color }}</div>
   </div>
 </template>
 
 <script>
+  import { log } from 'JS/global';
+
   export default {
     data() {
       return {
@@ -17,6 +19,15 @@
     props: {
       color: { type: String, required: true },
       name: { type: String, required: true },
+    },
+    methods: {
+      copyToClipboard: function (text) {
+        navigator.clipboard.writeText(text).then(function() {
+          log(`Copied to clipboard: ${ text }`);
+        }, function() {
+          log(`Could not copy ${ text } to clipboard`);
+        });
+      },
     },
   };
 </script>

@@ -6,17 +6,17 @@
   @at-root #{&} > img {
     height: auto;
   }
-  @supports (--custom:property) {
+  @supports (--custom: property) {
     @at-root #{&} {
       position: relative;
     }
     @at-root #{&}::before {
-      content: "";
+      content: '';
       display: block;
-      padding-bottom: calc(100% / (#{ $ratio }));
+      padding-bottom: calc(100% / (#{$ratio}));
     }
     @if $style_child != '' {
-      @at-root #{ $style_child }  {
+      @at-root #{ $style_child } {
         position: absolute;
         top: 0;
         left: 0;
@@ -32,6 +32,17 @@
   @include automated_color_modifiers($self, 'background-color');
   @at-root #{$self}--center {
     text-align: center;
+  }
+  @at-root #{$self}--full {
+    width: 100%;
+    height: 100%;
+
+    @at-root #{&}--height {
+      height: 100%;
+    }
+    @at-root #{&}--width {
+      width: 100%;
+    }
   }
   @at-root #{$self}--margin {
     margin-top: $spacing_text;
@@ -69,6 +80,25 @@
     }
     @at-root #{&}--left {
       padding-left: $spacing_text;
+    }
+  }
+  @at-root #{$self}--v {
+    width: 100vw;
+    height: 100vh;
+
+    @at-root #{&}--min {
+      @at-root #{&}--height {
+        min-height: 100vh;
+      }
+      @at-root #{&}--width {
+        min-width: 100vw;
+      }
+    }
+    @at-root #{&}--height {
+      height: 100vh;
+    }
+    @at-root #{&}--width {
+      width: 100vw;
     }
   }
 }
@@ -138,7 +168,10 @@
 @mixin layout_centered_image_text {
   position: relative;
 
-  @at-root #{&}__background, #{&}__middle, #{&}__foreground, #{&}__url_mask {
+  @at-root #{&}__background,
+    #{&}__middle,
+    #{&}__foreground,
+    #{&}__url_mask {
     position: absolute;
     top: 0;
     left: 0;
@@ -180,10 +213,16 @@
     .mktoFormRow {
       margin-bottom: 14px;
     }
-    .mktoOffset, .mktoGutter, .mktoClear {
+    .mktoOffset,
+    .mktoGutter,
+    .mktoClear {
       display: none !important;
     }
-    .mktoTextField, .mktoTelField, .mktoEmailField, textarea, select {
+    .mktoTextField,
+    .mktoTelField,
+    .mktoEmailField,
+    textarea,
+    select {
       float: none !important;
       width: 100% !important;
       box-sizing: border-box;
@@ -242,8 +281,7 @@
 }
 
 @mixin bg_2x {
-  @media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (min-resolution: 192dpi) {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
     @content;
   }
 }
@@ -264,7 +302,13 @@
 
 // SVG
 // Turn SVG fill to color
-@mixin svg_color($color: $color_white, $color_paths: true, $color_polygons: true, $color_rects: true, $color_circles: true) {
+@mixin svg_color(
+  $color: $color_white,
+  $color_paths: true,
+  $color_polygons: true,
+  $color_rects: true,
+  $color_circles: true
+) {
   @if $color_paths == true {
     path {
       fill: $color;
@@ -293,6 +337,9 @@
   @include automated_color_modifiers($self, 'color');
   @at-root #{$self}--center {
     text-align: center;
+  }
+  @at-root #{$self}--hide {
+    @include hide_text;
   }
   @at-root #{$self}--margin {
     margin-top: $spacing_text;
@@ -335,7 +382,9 @@
 }
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
-  text-indent: -99999px;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 // Add ellipsis to a single line of text when the amount of text no longer fits
 @mixin truncate {

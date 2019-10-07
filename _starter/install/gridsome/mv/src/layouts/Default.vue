@@ -2,7 +2,7 @@
   <div>
     <header class="ui__header">
       <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
+        <g-link to="/"><IconSVG handle="plus" width="40px" height="40px" /><div class="c_text--hide">{{ $static.metadata.siteName }}</div></g-link>
       </strong>
       <nav class="ui__nav">
         <g-link class="ui__nav__link" to="/">Home</g-link>
@@ -34,10 +34,12 @@ query {
 
 <script>
 import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.vue';
+import IconSVG from 'Components/icon_svg/IconSVG';
 
 export default {
   components: {
     ColorSchemeToggle,
+    IconSVG,
   },
 };
 </script>

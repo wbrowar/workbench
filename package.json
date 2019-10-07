@@ -14,7 +14,7 @@
       "alert_warning": "rgb(238, 199, 0)"
     },
     "dark": {
-      "white": "rgb(230, 230, 230)"
+      "white": "rgb(240, 240, 240)"
     }
   },
   "fonts": {
@@ -23,6 +23,24 @@
       "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
       "fontStyle": "normal",
       "fontWeight": "normal"
+    },
+    "apple_bold": {
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "normal",
+      "fontWeight": "700"
+    },
+    "apple_italic": {
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "italic",
+      "fontWeight": "normal"
+    },
+    "apple_bold_italic": {
+      "fontFamily": "-apple-system",
+      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      "fontStyle": "italic",
+      "fontWeight": "700"
     },
     "eaves": {
       "fontFamily": "'MrEavesXLSanRRegular'",

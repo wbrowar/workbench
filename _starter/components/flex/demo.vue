@@ -10,7 +10,11 @@
       </Flex>
     </CodeExample>
 
-    <CodeExample :code="code.center" title="Centered Children" description="A shortcut for centering children elements in a column.">
+    <CodeExample
+      :code="code.center"
+      title="Centered Children"
+      description="A shortcut for centering children elements in a column."
+    >
       <Flex center :box="{ demo: true }">
         <span><strong>Header</strong></span>
         <span>Subheader</span>
@@ -92,8 +96,9 @@ export default {
         name: 'elementType',
         type: 'String',
         default: `'div'`,
-        description: `Change the element of the grid wrapper for semantic HTML or accessibility.`,
+        description: `Change the element of the flex wrapper for semantic HTML or accessibility.`,
       },
+      { name: 'height', type: 'String', description: `Sets the 'height' CSS property.` },
       { name: 'justify', type: 'String', description: `Sets the 'justify-content' CSS property.` },
       {
         name: 'stretch',
@@ -101,6 +106,7 @@ export default {
         default: `false`,
         description: `Shortcut to set the children’s 'flex-grow' property to '1'`,
       },
+      { name: 'width', type: 'String', description: `Sets the 'width' CSS property.` },
       { name: 'wrap', type: 'String', description: `Sets the 'flex-wrap' CSS property.` },
     ];
   },

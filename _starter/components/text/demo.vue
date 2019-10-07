@@ -70,6 +70,7 @@ export default {
     </ol>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <p>Excepteur sint occaecat cupidatat non <strong>proident</strong>, sunt in culpa qui <em>officia deserunt</em> mollit <em><strong>anim</strong></em> id <strong><em>est laborum</em></strong>.</p>
 </div>`;
 
     this.code = {
@@ -78,6 +79,7 @@ export default {
 
     this.modifiers = [
       { name: 'center', description: `Sets 'text-align: center'` },
+      { name: 'hide', description: `Hides text from view but keeps it available for screen readers.` },
       { name: 'margin', description: `Adds margin above and below the text based on the value of $spacing_text.` },
       { name: 'margin--auto', description: `Sets 'margin-left: auto' and 'margin-right: auto'` },
       { name: 'margin--top' },

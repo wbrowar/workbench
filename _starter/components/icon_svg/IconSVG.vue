@@ -17,15 +17,19 @@ export default {
     color: String,
     colorVar: String,
     handle: { type: String, required: true },
+    height: String,
     image: { type: Boolean, default: false },
     replacements: { type: Object },
+    width: String,
   },
   computed: {
     colorVarString: function() {
       return this.colorVar ? `var(--color-${this.colorVar})` : null;
     },
     svgAttributes: function() {
-      let attrs = {};
+      let attrs = {
+        style: {},
+      };
 
       if (this.background) {
         attrs = {
@@ -48,6 +52,13 @@ export default {
             },
           };
         }
+      }
+
+      if (this.height) {
+        attrs.style.height = this.height;
+      }
+      if (this.width) {
+        attrs.style.width = this.width;
       }
 
       return attrs;

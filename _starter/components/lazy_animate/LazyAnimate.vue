@@ -1,5 +1,7 @@
 <template>
-  <div :class="animated ? 'c_animate--animated' : false" :style="styles"><slot></slot></div>
+  <div :element-type="elementType" :class="animated ? 'c_animate--animated' : false" :style="styles" v-bind="box">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
@@ -17,6 +19,12 @@ export default {
     };
   },
   props: {
+    box: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
     cssAnimation: String,
     cssEnd: {
       type: Object,
@@ -31,6 +39,7 @@ export default {
       },
     },
     cssTransition: String,
+    elementType: { type: String, default: 'div' },
     observerMargin: { type: String, default: '-100px' },
     observerThreshold: { type: Number, default: 0 },
     options: {
@@ -58,6 +67,7 @@ export default {
   methods: {
     addToObserver: function(callback) {
       log('Adding to Animate Observer');
+
       if (typeof this.observer !== 'object') {
         this.observer = new IntersectionObserver(
           (entries) => {
@@ -113,7 +123,6 @@ export default {
       }
     },
   },
-  created() {},
   mounted() {
     if (this.type === 'css') {
       if (this.inViewport()) {

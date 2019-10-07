@@ -1,25 +1,27 @@
 <template>
   <Layout class="home">
-    <section class="home__example">
+    <section class="home__example c_box--full">
       <MediaImage background alt="FPO image" :sources="[{ src: `/img/FPO.png` }]" />
     </section>
-    <section element-type="section" class="home__example">
+    <Flex center element-type="section" class="home__example c_box--v">
       <h2 class="c_header c_header--2">Section 2</h2>
-    </section>
-    <section element-type="section" class="home__example">
+    </Flex>
+    <Flex center element-type="section" class="home__example c_box--v">
       <h2 class="c_header c_header--3">Section 3</h2>
-    </section>
-    <section element-type="section" class="home__example">
+    </Flex>
+    <Flex center element-type="section" class="home__example c_box--v">
       <h2 class="c_header c_header--4">Section 4</h2>
-    </section>
+    </Flex>
   </Layout>
 </template>
 
 <script>
+import Flex from 'Components/flex/Flex';
 import MediaImage from 'Components/image/MediaImage';
 
 export default {
   components: {
+    Flex,
     MediaImage,
   },
   metaInfo: {
@@ -33,10 +35,6 @@ export default {
   $self: &;
 
   @at-root #{$self}__example {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
     background-color: colora('black', 0.5);
     color: colora('white', 0.5);
 

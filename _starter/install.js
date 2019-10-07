@@ -73,6 +73,7 @@ async function run() {
             'button',
             'buttons',
             'color_scheme_toggle',
+            'flex',
             'grid',
             'general',
             'header',

@@ -121,7 +121,9 @@ export default {
   </LazyAnimate>
 </ClientOnly>`,
     };
+
     this.props = [
+      { name: 'box', type: 'Object', description: `Props to pass into the containing Box component.` },
       {
         name: 'cssAnimation',
         type: 'String',
@@ -137,6 +139,12 @@ export default {
         name: 'cssTransition',
         type: 'String',
         description: `(CSS) The CSS transitions used in CSS animations. This can be omitted if a transition is already set in CSS.`,
+      },
+      {
+        name: 'elementType',
+        type: 'String',
+        default: `'div'`,
+        description: `Change the element of the wrapper element for semantic HTML or accessibility.`,
       },
       {
         name: 'observerMargin',

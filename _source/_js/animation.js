@@ -17,7 +17,7 @@ export function animate(animation, el, options) {
       });
       break;
     case 'custom':
-      let props = JSON.parse(options.properties);
+      let props = typeof options.properties === 'string' ? JSON.parse(options.properties) : options.properties;
       props.ease = Power0.easeNone;
       props.yoyoEase = Power0.easeNone;
 
