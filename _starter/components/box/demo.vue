@@ -85,6 +85,7 @@ export default {
       { name: 'margin--right' },
       { name: 'margin--bottom' },
       { name: 'margin--left' },
+      { name: 'mask', description: `Sets 'position: absolute;' and fills the width and height of the container.` },
       { name: 'padding', description: `Adds padding above and below the text based on the value of $spacing_text.` },
       { name: 'padding--top' },
       { name: 'padding--right' },

@@ -1,5 +1,7 @@
 <template>
-  <button class="c_color_scheme_toggle" @click="updateColorScheme">{{ schemeId.toUpperCase() }}</button>
+  <button class="c_color_scheme_toggle" @click="updateColorScheme">
+    <slot>{{ schemeId.toUpperCase() }}</slot>
+  </button>
 </template>
 
 <script>
