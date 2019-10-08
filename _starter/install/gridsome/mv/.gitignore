@@ -10,3 +10,4 @@ dist/*
 logs/*
 node_modules/*
 vendor/*
+src/.temp
