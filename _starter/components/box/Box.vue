@@ -10,6 +10,7 @@ export default {
     return {};
   },
   props: {
+    aspect: String,
     demo: { type: Boolean, default: false },
     elementType: { type: String, default: 'div' },
   },
@@ -17,6 +18,9 @@ export default {
     boxClasses: function() {
       let classes = {};
 
+      if (this.aspect) {
+        classes['c_box--aspect'] = true;
+      }
       if (this.demo) {
         classes['c_box--demo'] = true;
       }
@@ -25,6 +29,10 @@ export default {
     },
     boxStyles: function() {
       let styles = {};
+
+      if (this.aspect) {
+        styles['--aspect'] = this.aspect;
+      }
 
       return styles || null;
     },

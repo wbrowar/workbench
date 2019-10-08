@@ -3,7 +3,7 @@
 
   --aspect: 16/9;
 
-  @at-root #{$self}:not(.guide_c_video--no_aspect) {
+  @at-root #{$self}:not(.c_video_bg) {
     @include aspect(var(--aspect), 'iframe, video');
   }
 }

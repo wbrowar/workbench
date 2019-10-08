@@ -3,6 +3,9 @@
 
   @include box_modifiers($self);
 
+  @at-root #{$self}--aspect {
+    @include aspect($style_child: '& > *:first-child');
+  }
   @at-root #{$self}--demo {
     @extend .fpo;
     height: 200px;

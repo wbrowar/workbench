@@ -5,6 +5,15 @@
 
     <ImportPath path="import Box from 'Components/box/Box';" />
 
+    <CodeExample title="Aspect Box" description="Constrain width and height to an aspect ratio." :code="code.aspect">
+      <Box class="c_box--alert_error" aspect="21/9">
+        <div class="c_text c_text--white"><p>Content</p></div>
+      </Box>
+      <Box class="c_box--alert_success" :aspect="$mq | mq({ sm: '1', md: '21/9' })">
+        <div class="c_text c_text--white"><p>Content</p></div>
+      </Box>
+    </CodeExample>
+
     <CodeExample title="Demo" description="A fixed FPO element." :code="code.demo">
       <Box demo>
         <p>Demo</p>
@@ -44,6 +53,12 @@ export default {
   },
   created() {
     this.code = {
+      aspect: `<Box class="c_box--alert_error" aspect="21/9">
+  <div class="c_text c_text--white"><p>Content</p></div>
+</Box>
+<Box class="c_box--alert_success" :aspect="$mq | mq({ sm: '1', md: '21/9' })">
+  <div class="c_text c_text--white"><p>Content</p></div>
+</Box>`,
       demo: `<Box demo>
   <p>Demo</p>
 </Box>`,

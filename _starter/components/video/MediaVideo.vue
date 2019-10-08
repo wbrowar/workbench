@@ -1,5 +1,5 @@
 <template>
-  <div class="c_video" :class="{ c_video_bg: background }">
+  <Box :element-type="elementType" class="c_video" :class="{ c_video_bg: background }" v-bind="box">
     <ClientOnly>
       <LazyLoad
         :after-load="{ src: src || false }"
@@ -43,14 +43,16 @@
         v-else-if="source === 'vimeo'"
       />
     </ClientOnly>
-  </div>
+  </Box>
 </template>
 
 <script>
+import Box from 'Components/box/Box';
 import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
 export default {
   components: {
+    Box,
     LazyLoad,
   },
   data() {
@@ -62,8 +64,15 @@ export default {
   props: {
     autoplay: { type: Boolean, default: false },
     background: { type: Boolean, default: false },
+    box: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
     controls: { type: Boolean, default: true },
-    loading: { default: 'lazy' }, // lazy, auto, eager
+    elementType: { type: String, default: 'div' },
+    loading: { type: String, default: 'lazy' }, // lazy, auto, eager
     loop: { type: Boolean, default: false },
     muted: { type: Boolean, default: false },
     playsinline: { type: Boolean, default: false },

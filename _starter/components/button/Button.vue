@@ -1,13 +1,15 @@
 <template>
-  <span :is="elementTypeComputed"
-        :class="{ 'c_button': styleAsButton, 'c_button--pointer': styleAsButton && href }"
-        :aria-label="ariaLabel || null"
-        :href="!useGLink ? href || null : null"
-        :target="newWindow ? '_blank' : target || null"
-        :to="useGLink ? href || null : null"
-        :rel="newWindow || target ? 'noopener' : null"
-        @click="clickThroughAction"
-  ><slot>{{ labelText }}</slot></span>
+  <span
+    :is="elementTypeComputed"
+    :class="{ c_button: styleAsButton, 'c_button--pointer': styleAsButton && href }"
+    :aria-label="ariaLabel || null"
+    :href="!useGLink ? href || null : null"
+    :target="newWindow ? '_blank' : target || null"
+    :to="useGLink ? href || null : null"
+    :rel="newWindow || target ? 'noopener' : null"
+    @click="clickThroughAction"
+    ><slot>{{ labelText }}</slot></span
+  >
 </template>
 
 <script>
@@ -56,8 +58,7 @@ export default {
       }
     },
   },
-  created() {
-  },
+  created() {},
   mounted() {},
 };
 </script>
