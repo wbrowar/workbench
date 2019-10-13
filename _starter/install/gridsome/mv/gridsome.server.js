@@ -11,6 +11,12 @@ const glob = require('glob-all'),
 module.exports = function (api) {
   api.loadSource(({ addContentType }) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api
+
+    store.addMetadata('devMode', process.env.NODE_ENV !== 'production');
+
+    if (process.env.ENABLE_DOCS || false) {
+      store.addMetadata('devDocs', true);
+    }
   })
 
   api.createPages(async (api) => {
