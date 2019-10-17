@@ -14,8 +14,7 @@ This is here for my own storage, but please [let me know if you have any feedbac
 Documentation can be found in the [GitHub wiki](https://github.com/wbrowar/WB-Starter/wiki)
 
 
----
- Release Notes
+## Release Notes
 #### 5.2.0
 ##### Components
 - :rocket: Added a new `ColorSchemeToggle` Vue component
