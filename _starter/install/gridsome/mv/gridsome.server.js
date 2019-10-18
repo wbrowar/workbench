@@ -9,7 +9,7 @@ const glob = require('glob-all'),
       path = require('path');
 
 module.exports = function (api) {
-  api.loadSource(({ addContentType }) => {
+  api.loadSource((store) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api
 
     store.addMetadata('devMode', process.env.NODE_ENV !== 'production');
