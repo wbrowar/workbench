@@ -1,6 +1,67 @@
 {
+  "scripts": {
+    "ci:build": "npm run prebuild && vue-cli-service build",
+    "component": "node ./_starter/component.js",
+    "dev": "npm run prebuild && vue-cli-service serve",
+    "prebuild": "node ./_starter/prebuild.js --componentdocs --csstemplates --iconmethods --prettier --scssincludes",
+    "prod": "npm run prebuild && vue-cli-service build",
+    "watch": "npm run prebuild && vue-cli-service serve"
+  },
+  "prettier": {
+    "files": "{_source,src}/**/*.{js,json,scss,vue}",
+    "options": "--write"
+  },
+  "styleInventory": {
+    "enabled": false
+  },
+  "paths": {
+    "base": {
+      "src": ""
+    },
+    "components": {
+      "grouped": true,
+      "src": "_source/_components/"
+    },
+    "css": {
+      "dist": "static/css/",
+      "src": "_source/_css/"
+    },
+    "favicon": {
+      "dist": "static/favicon/",
+      "src": "_source/_favicon/"
+    },
+    "icon": {
+      "dist": "static/icon/",
+      "src": "_source/_icon/"
+    },
+    "img": {
+      "dist": "static/img/",
+      "src": "_source/_img/"
+    },
+    "js": {
+      "dist": "static/js/",
+      "src": "_source/_js/"
+    },
+    "templates": {
+      "dist": "static/",
+      "src": "_source/_templates/"
+    }
+  },
   "dependencies": {
-    "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
+    "core-js": "^3.1.2",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.6",
+    "vuex": "^3.0.1",
+    "style-resources-loader": "^1.2.1",
+    "vue-mq": "^1.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.0.0",
+    "@vue/cli-plugin-router": "^4.0.0",
+    "@vue/cli-plugin-vuex": "^4.0.0",
+    "@vue/cli-service": "^4.0.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.0",
+    "vue-template-compiler": "^2.6.10"
   }
 }
