@@ -261,12 +261,12 @@ methods.prebuildPrettier = function prebuildPrettier(options, file = null, verbo
             files = file;
         }
     } else {
-        if (glob.sync(options.files)) {
+        if (glob.sync(options.files).length > 0) {
             files = options.files;
         }
     }
 
-    if (files || false) {
+    if (files) {
         methods.verboseExec(`prettier --config ./.prettierrc ${ options.options || '' } "${ files }"`, verbose);
         methods.log('title', `Prettier Ran`);
     } else {
