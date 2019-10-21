@@ -36,7 +36,7 @@ let ejsVars = {
 };
 
 // set other variables
-const starterProjects = ['craft3', 'craftplugin', 'html', 'vue'];
+const starterProjects = ['craft3', 'craftplugin', 'html'];
 let localConfig = false;
 
 // check if npm and composer are installed
@@ -99,7 +99,7 @@ async function run() {
                 { name: 'Craft 3', value: 'craft3' },
                 { name: 'Gridsome', value: 'gridsome' },
                 { name: 'HTML', value: 'html' },
-                { name: 'Vue', value: 'vue' },
+                { name: 'Vue SPA', value: 'vue' },
                 { name: 'Craft Plugin', value: 'craftplugin' },
             ],
         },
@@ -237,15 +237,6 @@ async function run() {
             },
             validate: (answer) => {
                 return answer !== '';
-            },
-        },
-        {
-            type: 'confirm',
-            name: 'headless',
-            message: 'Will this be a headless CMS?',
-            default: false,
-            when: (answers) => {
-                return ['craft3'].includes(answers.projectType);
             },
         },
         {
