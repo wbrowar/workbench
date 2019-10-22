@@ -30,7 +30,17 @@
           log(`Could not copy ${ text } to clipboard`);
         });
       },
+      loadFont: function () {
+        const font = new FontFace(`${ this.font.fontFamily }`, `url(${ this.font.files.woff2 })`);
+        // wait for font to be loaded
+        font.load();
+        // add font to document
+        document.fonts.add(font);
+      }
     },
+    mounted() {
+      this.loadFont();
+    }
   };
 </script>
 
