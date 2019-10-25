@@ -7,6 +7,7 @@
 <script>
 export default {
   props: {
+    align: String,
     box: {
       type: Object,
       default: () => {
@@ -17,6 +18,7 @@ export default {
     columnWidth: { type: String, default: '1fr' },
     elementType: { type: String, default: 'div' },
     gap: { type: String, default: '0' },
+    justify: String,
     rows: Number,
     rowHeight: { type: String, default: 'auto' },
     templateColumns: String,
@@ -26,7 +28,9 @@ export default {
     gridStyles: function() {
       let styles = {
         display: 'grid',
+        alignItems: this.align || null,
         gridGap: this.gap || false,
+        justifyContent: this.justify || null,
       };
 
       if (this.templateColumns) {

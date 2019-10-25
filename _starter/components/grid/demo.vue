@@ -109,6 +109,7 @@ export default {
 </div>`,
     };
     this.props = [
+      { name: 'align', type: 'String', description: `Sets the 'align-items' CSS property.` },
       { name: 'box', type: 'Object', description: `Props to pass into the containing Box component.` },
       { name: 'columns', type: 'Number', description: `Set the amount of columns in a evenly spaced column layout.` },
       {
@@ -124,6 +125,7 @@ export default {
         description: `Change the element of the grid wrapper for semantic HTML or accessibility.`,
       },
       { name: 'gap', type: 'String', default: `'0'`, description: `Sets the 'grid-gap' property.` },
+      { name: 'justify', type: 'String', description: `Sets the 'justify-content' CSS property.` },
       { name: 'rows', type: 'Number', description: `Set the amount of rows in a grid.` },
       {
         name: 'rowHeight',
