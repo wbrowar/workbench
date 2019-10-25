@@ -1,9 +1,15 @@
 <template>
   <span
     :is="elementTypeComputed"
-    :class="{ c_button: styleAsButton, 'c_button--pointer': styleAsButton && href }"
+    :class="{
+      c_button: styleAsButton,
+      'c_button--pointer': styleAsButton && href,
+      'c_button--outline': outline,
+      'c_button--reset': reset,
+    }"
     :aria-label="ariaLabel || null"
     :href="!useGLink ? href || null : null"
+    :style="color ? { '--button-color': `var(--color-${color})` } : null"
     :target="newWindow ? '_blank' : target || null"
     :to="useGLink ? href || null : null"
     :rel="newWindow || target ? 'noopener' : null"
@@ -23,10 +29,13 @@ export default {
     action: Function,
     actionArgs: Array,
     ariaLabel: String,
+    color: String,
     elementType: { type: String, default: 'button' },
     href: String,
     labelText: String,
     newWindow: { type: Boolean, default: false },
+    outline: { type: Boolean, default: false },
+    reset: { type: Boolean, default: false },
     target: String,
     unstyle: { type: Boolean, default: false },
   },
@@ -48,23 +57,15 @@ export default {
     },
   },
   methods: {
-    clickThroughAction: function() {
+    clickThroughAction: function(event) {
       if (this.action) {
         if (this.actionArgs) {
-          this.action(...this.actionArgs);
+          this.action(event, ...this.actionArgs);
         } else {
-          this.action();
+          this.action(event);
         }
       }
     },
   },
-  created() {},
-  mounted() {},
 };
 </script>
-
-<style lang="scss">
-.c_button {
-  $self: &;
-}
-</style>

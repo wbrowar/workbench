@@ -110,11 +110,18 @@ export default {
     };
 
     this.modifiers = [{ name: 'pointer', description: `Turns the cursor to a pointer.` }];
+      { name: 'outline', description: `Changes style of button to outline version.` },
+    ];
 
     this.props = [
       { name: 'action', type: 'Function', description: `A Javascript function to fire, instead of visiting a URL.` },
       { name: 'actionArgs', type: 'Array', description: `An array of arguments to pass into the action function.` },
       { name: 'ariaLabel', type: 'String', description: `Sets the 'aria-label' attribute on a button.` },
+      {
+        name: 'color',
+        type: 'String',
+        description: `Sets color of button to one of the colors defined in 'package.json'.`,
+      },
       {
         name: 'elementType',
         type: 'String',
@@ -124,6 +131,8 @@ export default {
       { name: 'href', type: 'String', description: `The destination URL for CTA buttons.` },
       { name: 'labelText', type: 'String', description: `Label text shown on a button if a prop is not passed in.` },
       { name: 'newWindow', type: 'Boolean', default: `false`, description: `Sets 'target="_blank" rel="noopener"'.` },
+      { name: 'outline', type: 'Boolean', default: `false`, description: `Adds the 'outline' modifier.` },
+      { name: 'reset', type: 'Boolean', default: `false`, description: `Applies button_reset SCSS mixin.` },
       { name: 'target', type: 'String', description: `Sets the 'target' attribute if 'newWindow' is not used.` },
       {
         name: 'unstyle',

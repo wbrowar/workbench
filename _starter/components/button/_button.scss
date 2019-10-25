@@ -1,6 +1,8 @@
 .c_button {
   $self: &;
 
+  --button-color: #{$color_red};
+  @include automated_color_modifiers($self, '--button-color');
   @include button_reset;
   display: flex;
   flex-flow: row nowrap;
@@ -9,7 +11,7 @@
   padding: 0.8em 20px 0.7em;
   width: 100%;
   max-width: 300px;
-  background-color: $color_black;
+  background-color: var(--button-color);
   border: none;
   box-sizing: border-box;
   letter-spacing: 1px;
@@ -24,7 +26,18 @@
     opacity: 0.7;
   }
 
+  @at-root #{$self}--block {
+    display: block;
+  }
   @at-root #{$self}--pointer {
     cursor: pointer;
+  }
+  @at-root #{$self}--reset {
+    @include button_reset;
+  }
+  @at-root #{$self}--outline {
+    background: none;
+    border: 2px solid var(--button-color);
+    color: var(--button-color);
   }
 }

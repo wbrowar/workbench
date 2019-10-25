@@ -14,6 +14,7 @@ export default {
   },
   props: {
     background: { type: Boolean, default: false },
+    backgroundSize: String,
     color: String,
     colorVar: String,
     handle: { type: String, required: true },
@@ -35,6 +36,7 @@ export default {
         attrs = {
           style: {
             backgroundImage: svg.background(this.handle, this.replacements || {}),
+            backgroundSize: this.backgroundSize || null,
           },
         };
       } else if (this.image) {
@@ -55,10 +57,10 @@ export default {
       }
 
       if (this.height) {
-        attrs.style.height = this.height;
+        attrs.style.height = `${this.height}px`;
       }
       if (this.width) {
-        attrs.style.width = this.width;
+        attrs.style.width = `${this.width}px`;
       }
 
       return attrs;
@@ -69,6 +71,17 @@ export default {
 
 <style lang="scss">
 .c_icon_svg {
+  width: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  & > svg {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
   @at-root #{&}--color {
     @include svg_color(#{var(--color)});
   }

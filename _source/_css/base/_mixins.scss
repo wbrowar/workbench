@@ -113,6 +113,7 @@
 // BUTTON
 // Reset button element styles
 @mixin button_reset {
+  @include focus_outline();
   border: none;
   margin: 0;
   padding: 0;
@@ -146,6 +147,17 @@
 // CSS CUSTOM PROPERTIES
 @mixin set_var($var, $value) {
   #{str-slice($var, 5, -2)}: $value;
+}
+
+// FOCUS OUTLINE
+@mixin focus_outline($outline_style: 1px auto red) {
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: $outline_style;
+  }
 }
 
 // FONTS
