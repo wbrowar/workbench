@@ -1,34 +1,54 @@
 <template>
-    <div class="vue_accordion">
-        <slot></slot>
-    </div>
+  <dl class="c_accordion">
+    <slot />
+  </dl>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                tabs: []
-            };
-        },
-        props: {
-            accordionId: { required: true },
-        },
-        created() {
-            this.tabs = this.$children;
+import { log } from 'JS/global';
 
-            VueEvent.$on('tab-selected', (accordionId, tab) => {
-                if (accordionId === this.accordionId) {
-                    this.selectTab(tab);
-                }
-            });
-        },
-        methods: {
-            selectTab(selectedTabTitle) {
-                this.tabs.forEach(tab => {
-                    tab.isActive = (tab.title === selectedTabTitle);
-                });
-            }
-        }
+export default {
+  data() {
+    return {
+      tabs: [],
+    };
+  },
+  props: {
+    firstTabOpen: { type: Boolean, default: true },
+  },
+  methods: {
+    toggleTabHandler: function(uid) {
+      log('Opening Accordion Tab', uid);
+      this.tabs.forEach((tab) => {
+        tab.isOpen = tab._uid === uid;
+      });
+    },
+  },
+  mounted() {
+    let children = this.$children;
+    while (children && !this.tabs.length) {
+      // Find if children contain instance of AccordionTab
+      if (
+        children.some((item) => {
+          return item.$options._componentTag === 'AccordionTab';
+        })
+      ) {
+        // Sets tabs to identified AccordionTab components
+        this.tabs = children.filter((item) => {
+          return item.$options._componentTag === 'AccordionTab';
+        });
+        log('tabs', this.tabs);
+      }
+      children = children[0].$children;
     }
+
+    if (this.tabs) {
+      const tabTotal = this.tabs.length;
+      for (let i = 0; i < tabTotal; i++) {
+        this.tabs[i].isOpen = this.firstTabOpen && i === 0;
+        this.tabs[i].toggleTabHandler = this.toggleTabHandler;
+      }
+    }
+  },
+};
 </script>

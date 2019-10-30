@@ -1,0 +1,10 @@
+<% let component = {
+  title: "Accordion",
+  description: "A new component.",
+  background: "light",
+  html: {
+    code:
+`<div class="c_accordion">DEMO CODE</div>`
+  }
+} %>
+<%- include(paths.starter.styleInventory + '_demo.ejs', { component: component, paths: paths, pkg: pkg, release: release }) %>
