@@ -45,24 +45,24 @@
     }
   }
   @at-root #{$self}--margin {
-    margin-top: $spacing_text;
-    margin-bottom: $spacing_text;
+    margin-top: var(--box-margin-top, var(--box-mt, #{ $spacing_box }));
+    margin-bottom: var(--box-margin-bottom, var(--box-mb, #{ $spacing_box }));
 
     @at-root #{&}--auto {
       margin-right: auto;
       margin-left: auto;
     }
     @at-root #{&}--top {
-      margin-top: $spacing_text;
+      margin-top: var(--box-margin-top, var(--box-mt, #{ $spacing_box }));
     }
     @at-root #{&}--right {
-      margin-right: $spacing_text;
+      margin-right: var(--box-margin-right, var(--box-mr, #{ $spacing_box }));
     }
     @at-root #{&}--bottom {
-      margin-bottom: $spacing_text;
+      margin-bottom: var(--box-margin-bottom, var(--box-mb, #{ $spacing_box }));
     }
     @at-root #{&}--left {
-      margin-left: $spacing_text;
+      margin-left: var(--box-margin-left, var(--box-ml, #{ $spacing_box }));
     }
   }
   @at-root #{$self}--mask {
@@ -73,20 +73,20 @@
     height: 100%;
   }
   @at-root #{$self}--padding {
-    padding-top: $spacing_text;
-    padding-bottom: $spacing_text;
+    padding-top: var(--box-padding-top, var(--box-pt, #{ $spacing_box }));
+    padding-bottom: var(--box-padding-bottom, var(--box-pb, #{ $spacing_box }));
 
     @at-root #{&}--top {
-      padding-top: $spacing_text;
+      padding-top: var(--box-padding-top, var(--box-pt, #{ $spacing_box }));
     }
     @at-root #{&}--right {
-      padding-right: $spacing_text;
+      padding-right: var(--box-padding-right, var(--box-pr, #{ $spacing_box }));
     }
     @at-root #{&}--bottom {
-      padding-bottom: $spacing_text;
+      padding-bottom: var(--box-padding-bottom, var(--box-pb, #{ $spacing_box }));
     }
     @at-root #{&}--left {
-      padding-left: $spacing_text;
+      padding-left: var(--box-padding-left, var(--box-pl, #{ $spacing_box }));
     }
   }
   @at-root #{$self}--v {
@@ -361,41 +361,41 @@
     @include hide_text;
   }
   @at-root #{$self}--margin {
-    margin-top: $spacing_text;
-    margin-bottom: $spacing_text;
+    margin-top: var(--text-margin-top, var(--text-mt, #{ $spacing_text }));
+    margin-bottom: var(--text-margin-bottom, var(--text-mb, #{ $spacing_text }));
 
     @at-root #{&}--auto {
       margin-right: auto;
       margin-left: auto;
     }
     @at-root #{&}--top {
-      margin-top: $spacing_text;
+      margin-top: var(--text-margin-top, var(--text-mt, #{ $spacing_text }));
     }
     @at-root #{&}--right {
-      margin-right: $spacing_text;
+      margin-right: var(--text-margin-right, var(--text-mr, #{ $spacing_text }));
     }
     @at-root #{&}--bottom {
-      margin-bottom: $spacing_text;
+      margin-bottom: var(--text-margin-bottom, var(--text-mb, #{ $spacing_text }));
     }
     @at-root #{&}--left {
-      margin-left: $spacing_text;
+      margin-left: var(--text-margin-left, var(--text-ml, #{ $spacing_text }));
     }
   }
   @at-root #{$self}--padding {
-    padding-top: $spacing_text;
-    padding-bottom: $spacing_text;
+    padding-top: var(--text-padding-top, var(--text-pt, #{ $spacing_text }));
+    padding-bottom: var(--text-padding-bottom, var(--text-pb, #{ $spacing_text }));
 
     @at-root #{&}--top {
-      padding-top: $spacing_text;
+      padding-top: var(--text-padding-top, var(--text-pt, #{ $spacing_text }));
     }
     @at-root #{&}--right {
-      padding-right: $spacing_text;
+      padding-right: var(--text-padding-right, var(--text-pr, #{ $spacing_text }));
     }
     @at-root #{&}--bottom {
-      padding-bottom: $spacing_text;
+      padding-bottom: var(--text-padding-bottom, var(--text-pb, #{ $spacing_text }));
     }
     @at-root #{&}--left {
-      padding-left: $spacing_text;
+      padding-left: var(--text-padding-left, var(--text-pl, #{ $spacing_text }));
     }
   }
 }

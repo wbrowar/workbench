@@ -52,7 +52,7 @@ export default {
   created() {
     this.fontSampleText = `<h1 class="c_header c_header--1">Page Header</h1>
 <div class="c_text">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <p>Lorem ipsum dolor sit amet, <a href="/">consectetur adipiscing elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     <p>Excepteur sint occaecat cupidatat non <b>proident</b>, sunt in culpa qui <i>officia deserunt</i> mollit <i><b>anim</b></i> id <b><i>est laborum</i></b>.</p>
     <ul>
         <li>List item I</li>

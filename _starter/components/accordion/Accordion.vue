@@ -1,5 +1,5 @@
 <template>
-  <dl class="c_accordion">
+  <dl class="c_accordion" :class="{ 'c_accordion_tab--open': isOpen }">
     <slot />
   </dl>
 </template>
@@ -20,7 +20,7 @@ export default {
     toggleTabHandler: function(uid) {
       log('Opening Accordion Tab', uid);
       this.tabs.forEach((tab) => {
-        tab.isOpen = tab._uid === uid;
+        tab.isOpen = tab._uid === uid ? !tab.isOpen : false;
       });
     },
   },
