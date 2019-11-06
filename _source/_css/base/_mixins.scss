@@ -263,10 +263,12 @@
 // MEDIA QUERIES
 // Quickly write simple media queries
 // @include mq(600) {  }
-@mixin _mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '', $rem: false) {
-  $breakpointVal: $breakpoint;
+@mixin _mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '', $unit: 'px') {
+  $breakpointVal: #{ strip_unit($breakpoint) }px;
 
-  @if $rem {
+  @if $unit == 'em' {
+    $breakpointVal: #{ strip_unit($breakpoint) }em;
+  } @else if $unit == 'rem' {
     $breakpointVal: px_to_rem($breakpoint);
   }
 
@@ -281,26 +283,32 @@
   }
 }
 
-@mixin mq($breakpoint, $additional_media: '', $rem: false) {
-  @include _mq_handler('min', 'width', $breakpoint, $additional_media, $rem) {
+@mixin mq($breakpoint, $additional_media: '', $unit: false) {
+  @include _mq_handler('min', 'width', $breakpoint, $additional_media, $unit) {
     @content;
   }
 }
 
-@mixin mq_max($breakpoint, $additional_media: '', $rem: false) {
-  @include _mq_handler('max', 'width', ($breakpoint - 1), $additional_media, $rem) {
+@mixin mq_max($breakpoint, $additional_media: '', $unit: false) {
+  @include _mq_handler('max', 'width', ($breakpoint - 1), $additional_media, $unit) {
     @content;
   }
 }
 
-@mixin mq_v($breakpoint, $additional_media: '', $rem: false) {
-  @include _mq_handler('min', 'height', $breakpoint, $additional_media, $rem) {
+@mixin mq_v($breakpoint, $additional_media: '', $unit: false) {
+  @include _mq_handler('min', 'height', $breakpoint, $additional_media, $unit) {
     @content;
   }
 }
 
-@mixin mq_vmax($breakpoint, $additional_media: '', $rem: false) {
-  @include _mq_handler('max', 'height', ($breakpoint - 1), $additional_media, $rem) {
+@mixin mq_vmax($breakpoint, $additional_media: '', $unit: false) {
+  @include _mq_handler('max', 'height', ($breakpoint - 1), $additional_media, $unit) {
+    @content;
+  }
+}
+
+@mixin bg_2x {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
     @content;
   }
 }
