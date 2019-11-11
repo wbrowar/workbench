@@ -1,16 +1,20 @@
 <template>
-  <div :element-type="elementType" :class="animated ? 'c_animate--animated' : false" :style="styles" v-bind="box">
+  <Box :element-type="elementType" :class="animated ? 'c_animate--animated' : false" :style="styles" v-bind="box">
     <slot></slot>
-  </div>
+  </Box>
 </template>
 
 <script>
 import { log, warn } from 'JS/global.js';
 import * as io from 'intersection-observer';
+import Box from 'Components/box/Box';
 
 let animations = false;
 
 export default {
+  components: {
+    Box,
+  },
   data() {
     return {
       animated: false,
