@@ -1,12 +1,30 @@
 @keyframes fadeIn {
-  0% { display: none; opacity: 0; }
-  1% { display: block; opacity: 0; }
-  100% { display: block; opacity: 1; }
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+  }
 }
 @keyframes fadeOut {
-  0% { display: block; opacity: 1; }
-  99% { display: block; opacity: 0; }
-  100% { display: none; opacity: 0; }
+  0% {
+    display: block;
+    opacity: 1;
+  }
+  99% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
 }
 
 .enhanced {
@@ -16,7 +34,7 @@
         transition: transform $anim_duration_slide ease-out;
 
         &:active {
-          transform: translateY(3%) scale(.92, .92);
+          transform: translateY(3%) scale(0.92, 0.92);
         }
       }
     }

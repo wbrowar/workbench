@@ -6,7 +6,7 @@
       <em>NOTE: this component relies on Javascript so it must be wrapped in `ClientOnly` on Gridsome projects.</em>
     </p>
 
-    <ImportPath path="import LazyAnimate from 'Components/lazy_animate/LazyAnimate';" />
+    <ImportPath path="import LazyAnimate from 'Components/lazy_animate/LazyAnimate.vue';" />
 
     <CodeExample
       title="CSS Transition Animation"
@@ -66,12 +66,12 @@
 </template>
 
 <script>
-import LazyAnimate from 'Components/lazy_animate/LazyAnimate';
-import MediaImage from 'Components/image/MediaImage';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import LazyAnimate from 'Components/lazy_animate/LazyAnimate.vue';
+import MediaImage from 'Components/image/MediaImage.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

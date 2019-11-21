@@ -3,7 +3,7 @@
     <h1>Buttons</h1>
     <p>Link to internal or external URLs or create a button element to fire a Javascript function.</p>
 
-    <ImportPath path="import Button from 'Components/button/Button';" />
+    <ImportPath path="import Button from 'Components/button/Button.vue';" />
 
     <CodeExample
       :code="code.href"
@@ -56,13 +56,13 @@
 </template>
 
 <script>
-import { log } from 'JS/global';
-import Box from 'Components/box/Box';
-import Button from 'Components/button/Button';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import { log } from 'JS/global.js';
+import Box from 'Components/box/Box.vue';
+import Button from 'Components/button/Button.vue';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

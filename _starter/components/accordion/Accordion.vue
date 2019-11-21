@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { log } from 'JS/global';
+import { log } from 'JS/global.js';
 
 export default {
   data() {

@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import ColorSwatch from 'Starter/style_inventory/vue/ColorSwatch';
-import FontSample from 'Starter/style_inventory/vue/FontSample';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import ColorSwatch from 'Starter/style_inventory/vue/ColorSwatch.vue';
+import FontSample from 'Starter/style_inventory/vue/FontSample.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

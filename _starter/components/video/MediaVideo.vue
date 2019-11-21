@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box';
+import Box from 'Components/box/Box.vue';
 import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
 export default {

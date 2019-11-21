@@ -4,7 +4,7 @@
 
 <script>
 import * as svg from 'JS/automated/svg.js';
-import MediaImage from 'Components/image/MediaImage';
+import MediaImage from 'Components/image/MediaImage.vue';
 
 export default {
   data() {

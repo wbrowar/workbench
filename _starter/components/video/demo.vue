@@ -3,7 +3,7 @@
     <h1>Video</h1>
     <p>Play a video from a URL or embed a video iframe player from YouTube or Vimeo.</p>
 
-    <ImportPath path="import MediaVideo from 'Components/video/MediaVideo';" />
+    <ImportPath path="import MediaVideo from 'Components/video/MediaVideo.vue';" />
 
     <CodeExample
       :code="code.file"
@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box';
-import MediaVideo from 'Components/video/MediaVideo';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import Box from 'Components/box/Box.vue';
+import MediaVideo from 'Components/video/MediaVideo.vue';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

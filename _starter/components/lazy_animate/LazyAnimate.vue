@@ -7,7 +7,7 @@
 <script>
 import { log, warn } from 'JS/global.js';
 import * as io from 'intersection-observer';
-import Box from 'Components/box/Box';
+import Box from 'Components/box/Box.vue';
 
 let animations = false;
 

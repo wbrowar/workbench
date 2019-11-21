@@ -3,7 +3,7 @@
     <h1>Box</h1>
     <p>Helper styles for easier layout. Used as base for other components.</p>
 
-    <ImportPath path="import Box from 'Components/box/Box';" />
+    <ImportPath path="import Box from 'Components/box/Box.vue';" />
 
     <CodeExample title="Aspect Box" description="Constrain width and height to an aspect ratio." :code="code.aspect">
       <Box class="c_box--alert_error" aspect="21/9">
@@ -27,11 +27,11 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import Box from 'Components/box/Box.vue';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

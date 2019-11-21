@@ -2,7 +2,7 @@
   <Layout>
     <div class="dev__components">
       <div class="dev__components__nav">
-        <g-link :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</g-link>
+        <<%- pkg.projectType === 'gridsome' ? 'g-link' : 'router-link' %> :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</<%- pkg.projectType === 'gridsome' ? 'g-link' : 'router-link' %>>
       </div>
       <demo :global-data="{ pkg: pkg }" />
     </div>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import demo from 'Components/<%- handle %>/demo';
+  import demo from 'Components/<%- handle %>/demo.vue';
 
   export default {
     components: {

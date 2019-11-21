@@ -2,7 +2,7 @@
   <div>
     <h1>Flexbox</h1>
 
-    <ImportPath path="import Flex from 'Components/flex/Flex';" />
+    <ImportPath path="import Flex from 'Components/flex/Flex.vue';" />
 
     <CodeExample :code="code.default" title="Flexbox" description="A simple flexbox wrapper.">
       <Flex>
@@ -38,12 +38,12 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box';
-import Flex from 'Components/flex/Flex';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import Box from 'Components/box/Box.vue';
+import Flex from 'Components/flex/Flex.vue';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

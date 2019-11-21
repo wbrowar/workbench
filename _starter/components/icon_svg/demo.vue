@@ -46,9 +46,9 @@
 
 <script>
 import IconSVG from 'Components/icon_svg/IconSVG.vue';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {
