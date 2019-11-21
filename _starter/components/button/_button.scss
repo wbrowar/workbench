@@ -1,7 +1,7 @@
 .c_button {
   $self: &;
 
-  --button-color: #{$color_red};
+  --button-color: #{$color_black};
   @include automated_color_modifiers($self, '--button-color');
   @include button_reset;
   display: flex;

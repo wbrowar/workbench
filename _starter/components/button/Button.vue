@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { log } from 'JS/global.jq';
+import { log } from 'JS/global.js';
 
 export default {
   data() {

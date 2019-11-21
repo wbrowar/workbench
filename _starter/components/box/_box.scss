@@ -7,7 +7,7 @@
     @include aspect($style_child: '& > *:first-child');
   }
   @at-root #{$self}--demo {
-    @extend .fpo;
+    @extend .fpo !optional;
     height: 200px;
     width: 200px;
   }
