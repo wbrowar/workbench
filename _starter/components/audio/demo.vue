@@ -3,7 +3,7 @@
     <h1>Audio</h1>
     <p>Play an audio file using the native browser audio player.</p>
 
-    <ImportPath path="import MediaAudio from 'Components/audio/MediaAudio';" />
+    <ImportPath path="import MediaAudio from 'Components/audio/MediaAudio.vue';" />
 
     <CodeExample
       :code="code.file"
@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box';
-import MediaAudio from 'Components/audio/MediaAudio';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import Box from 'Components/box/Box.vue';
+import MediaAudio from 'Components/audio/MediaAudio.vue';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

@@ -6,7 +6,7 @@
       component and AccordionTab components for the content.
     </p>
 
-    <ImportPath path="import Accordion from 'Components/accordion/Accordion';" />
+    <ImportPath path="import Accordion from 'Components/accordion/Accordion.vue';" />
 
     <CodeExample :code="code.accordion" title="Accordion">
       <Accordion>
@@ -22,7 +22,7 @@
     <h1>Accordion Tab</h1>
     <p>An accordion tab is made up of an AccordionTab component and two slots: the 'header' is what gets clicked on to show and hide the 'content' slot. An accordion tab can be used as a child within an Accordion component, or it can be used on it's own to hide single pieces of content.</p>
 
-    <ImportPath path="import AccordionTab from 'Components/accordion/AccordionTab';" />
+    <ImportPath path="import AccordionTab from 'Components/accordion/AccordionTab.vue';" />
 
     <CodeExample :code="code.accordionTab" title="Single Accordion Tab">
       <AccordionTab open toggle-self>
@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import { log } from 'JS/global';
-import Accordion from 'Components/accordion/Accordion';
-import AccordionTab from 'Components/accordion/AccordionTab';
-import Grid from 'Components/grid/Grid';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import { log } from 'JS/global.js';
+import Accordion from 'Components/accordion/Accordion.vue';
+import AccordionTab from 'Components/accordion/AccordionTab.vue';
+import Grid from 'Components/grid/Grid.vue';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {

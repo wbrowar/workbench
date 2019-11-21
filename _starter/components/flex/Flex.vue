@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box';
+import Box from 'Components/box/Box.vue';
 
 export default {
   components: {

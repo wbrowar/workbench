@@ -109,7 +109,7 @@ export default {
 </div>`,
     };
 
-    this.modifiers = [{ name: 'pointer', description: `Turns the cursor to a pointer.` }];
+    this.modifiers = [{ name: 'pointer', description: `Turns the cursor to a pointer.` },
       { name: 'outline', description: `Changes style of button to outline version.` },
     ];
 
