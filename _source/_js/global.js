@@ -32,7 +32,11 @@ function logger(type = 'log', args) {
           console.error(spacer + spirit, args[i]);
           break;
         case 'log':
-          console.log(spacer + spirit, args[i]);
+          if (['object','array'].includes(typeof args[i])) {
+            console.table(args[i]);
+          } else {
+            console.log(spacer + spirit, args[i]);
+          }
           break;
         case 'warn':
           console.warn(spacer + spirit, args[i]);

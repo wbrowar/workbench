@@ -25,8 +25,6 @@ let routes = [
   },
 ];
 
-console.table(process.env);
-
 if (process.env.VUE_APP_ENABLE_DOCS) {
   docsComponents.forEach((item) => {
     routes.push({
