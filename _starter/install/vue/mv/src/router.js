@@ -1,10 +1,15 @@
+import { docsComponents } from 'JS/automated/docs.js';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueMeta from 'vue-meta';
 import Home from 'Views/Home.vue';
 
+Vue.use(VueMeta, {
+  refreshOnceOnNavigation: true,
+});
 Vue.use(VueRouter);
 
-const routes = [
+let routes = [
   {
     path: '/',
     name: 'home',
@@ -20,13 +25,14 @@ const routes = [
   },
 ];
 
-if (process.env.ENABLE_DOCS) {
-  const componentDocPages = glob.sync(`./_source/_js/automated/dev/*.vue`);
-  componentDocPages.forEach((item) => {
+console.table(process.env);
+
+if (process.env.VUE_APP_ENABLE_DOCS) {
+  docsComponents.forEach((item) => {
     routes.push({
-      path: `/dev/docs/${path.basename(item, '.vue')}`,
-      name: "docs_${ path.basename(item, '.vue') }",
-      component: () => import(`JS/automated/dev/${path.basename(item)}`),
+      path: `/dev/docs/${item}`,
+      name: `dev_docs_${item}`,
+      component: () => import(`JS/automated/dev/${item}.vue`),
     });
   });
 }

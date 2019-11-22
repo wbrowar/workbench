@@ -24,7 +24,7 @@ module.exports = function (api) {
     // await createPagesForCraftSection('helloWorld', api);
 
     // Create style inventory pages
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.ENABLE_DOCS || false) {
       const componentDocPages = glob.sync(`./_source/_js/automated/dev/*.vue`);
       componentDocPages.forEach((item) => {
         api.createPage({
@@ -56,7 +56,6 @@ async function createPagesForCraftSection(section, { graphql, createPage }) {
     query {
       craft {
         entries(limit: null, section: "${ section }") {
-          slug
           uri
           ... on craft_EntryInterface {
             sectionHandle
@@ -71,7 +70,7 @@ async function createPagesForCraftSection(section, { graphql, createPage }) {
       path: `/${ node.uri }`,
       component: `./src/templates/${ node.sectionHandle }.vue`,
       context: {
-        slug: node.slug
+        uri: node.uri
       }
     })
   });

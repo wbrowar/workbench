@@ -163,7 +163,7 @@ methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
 
 methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, pkg, verbose) {
     glob(`${ paths.components.src }**/demo.vue`, function (er, files) {
-        methods.log('verbose', `Icon Files: ${ JSON.stringify(files, null, 2) }`, verbose);
+        methods.log('verbose', `Docs Files: ${ JSON.stringify(files, null, 2) }`, verbose);
         let components = [];
         let count = files.length;
         files.forEach((item) => {
@@ -193,6 +193,32 @@ methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, 
                         }
                     }
                 });
+            });
+        });
+    });
+};
+
+methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback, paths, verbose) {
+    glob(`${ paths.components.src }**/demo.vue`, function (er, files) {
+        methods.log('verbose', `Docs Files for List: ${ JSON.stringify(files, null, 2) }`, verbose);
+        let components = [];
+        files.forEach((item) => {
+            components.push(path.dirname(item).split(path.sep).pop());
+        });
+
+        const options = {
+            components: components,
+        };
+
+        ejs.renderFile(`${ paths.starter.templates }_js/docs.js`, options, {}, function(err, str) {
+            if (err) {
+                methods.log('warn', err);
+            }
+            fs.outputFile(paths.js.src + 'automated/docs.js', str, (err) => {
+                if(!err) {
+                    methods.log('verbose', `JS templates compiled: docs.js`, verbose);
+                    callback();
+                }
             });
         });
     });

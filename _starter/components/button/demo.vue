@@ -22,14 +22,14 @@
       description="Fire a Javascript function by passing it through as a Vue method."
     >
       <div class="c_buttons c_buttons--center">
-        <ClientOnly>
+        <!-- ClientOnly -->
           <Button :action="clickThroughAction" label-text="Button Clicked!" />
           <Button
             :action="clickThroughAction"
             :action-args="['Different Message']"
             label-text="Message from argument"
           />
-        </ClientOnly>
+        <!-- /ClientOnly -->
       </div>
     </CodeExample>
 
@@ -95,10 +95,10 @@ export default {
   <Button new-window href="http://google.com" label-text="Google (external)" />
 </div>`,
       action: `<div class="c_buttons c_buttons--center">
-  <ClientOnly>
+  <!-- ClientOnly -->
     <Button :action="clickThroughAction" label-text="Button Clicked!" />
     <Button :action="clickThroughAction" :action-args="['Different Message']" label-text="Message from argument" />
-  </ClientOnly>
+  <!-- /ClientOnly -->
 </div>`,
       unstyled: `<div class="c_buttons c_buttons--right">
   <Button new-window unstyle href="http://google.com" label-text="Unstyled Button" />

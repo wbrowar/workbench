@@ -1,12 +1,12 @@
 <template>
-  <Layout>
+  <<%- pkg.projectType === 'gridsome' ? 'Layout' : 'div' %>>
     <div class="dev__components">
       <div class="dev__components__nav">
         <<%- pkg.projectType === 'gridsome' ? 'g-link' : 'router-link' %> :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</<%- pkg.projectType === 'gridsome' ? 'g-link' : 'router-link' %>>
       </div>
       <demo :global-data="{ pkg: pkg }" />
     </div>
-  </Layout>
+  </<%- pkg.projectType === 'gridsome' ? 'Layout' : 'div' %>>
 </template>
 
 <script>
@@ -41,25 +41,8 @@
     $self: &;
 
     margin: 0 auto;
-    padding: 200px 0;
+    padding: 60px 0;
     max-width: 800px;
-
-    h1:not(.c_header) {
-      margin-bottom: 0.3em;
-      font-size: 1.5rem;
-    }
-    h2:not(.c_header) {
-      margin: 0.8em 0 0.2em;
-      font-size: 1.2rem;
-    }
-    h3:not(.c_header) {
-      margin-bottom: 0.2em;
-      font-size: 1.1rem;
-      color: rgb(122, 134, 158);
-    }
-    p {
-      margin-bottom: 20px;
-    }
 
     @at-root #{$self}__nav {
       display: flex;
@@ -93,5 +76,21 @@
         }
       }
     }
+  }
+  h1 {
+    margin-bottom: 0.3em;
+    font-size: 1.5rem;
+  }
+  h2 {
+    margin: 0.8em 0 0.2em;
+    font-size: 1.2rem;
+  }
+  h3 {
+    margin-bottom: 0.2em;
+    font-size: 1.1rem;
+    color: rgb(122, 134, 158);
+  }
+  p {
+    margin-bottom: 20px;
   }
 </style>

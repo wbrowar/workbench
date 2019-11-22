@@ -1,0 +1,1 @@
+export const docsComponents = ['<%- components.join("','") %>'];

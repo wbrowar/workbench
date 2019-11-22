@@ -1,6 +1,6 @@
 <template>
   <Box :element-type="elementType" class="c_video" :class="{ c_video_bg: background }" v-bind="box">
-    <ClientOnly>
+    <!-- ClientOnly -->
       <LazyLoad
         :after-load="{ src: src || false }"
         :autoplay="background ? true : autoplay"
@@ -42,7 +42,7 @@
         width="500"
         v-else-if="source === 'vimeo'"
       />
-    </ClientOnly>
+    <!-- /ClientOnly -->
   </Box>
 </template>
 

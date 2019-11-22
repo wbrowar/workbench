@@ -13,7 +13,7 @@
       description="Use CSS Transitions to move from the `css-start` state to the `css-end` state upon entering the viewport."
       :code="code.css1"
     >
-      <ClientOnly>
+      <!-- ClientOnly -->
         <LazyAnimate
           :css-start="{ opacity: 0, transform: `translateY(100px)` }"
           :css-end="{ opacity: 1 }"
@@ -21,7 +21,7 @@
         >
           <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
         </LazyAnimate>
-      </ClientOnly>
+      <!-- /ClientOnly -->
     </CodeExample>
 
     <CodeExample
@@ -29,11 +29,11 @@
       description="Use Greensock for more complicated animations. NOTE: this will lazy load Greensock when it is in use."
       :code="code.js1"
     >
-      <ClientOnly>
+      <!-- ClientOnly -->
         <LazyAnimate style="opacity: 0;" type="slide-in" :options="{ y: 100 }">
           <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
         </LazyAnimate>
-      </ClientOnly>
+      <!-- /ClientOnly -->
     </CodeExample>
 
     <CodeExample
@@ -41,7 +41,7 @@
       description="Use Greensock to animate a CSS Custom Property."
       :code="code.js2"
     >
-      <ClientOnly>
+      <!-- ClientOnly -->
         <LazyAnimate
           type="custom"
           :options="{
@@ -58,7 +58,7 @@
             style="width: 100%; height: 400px; background-color: hsl(var(--demo-background-color, 0), 80%, 80%);"
           ></div>
         </LazyAnimate>
-      </ClientOnly>
+      <!-- /ClientOnly -->
     </CodeExample>
 
     <PropsTable :props="props" />
@@ -93,7 +93,7 @@ export default {
   },
   created() {
     this.code = {
-      css1: `<ClientOnly>
+      css1: `<!-- ClientOnly -->
   <LazyAnimate
     :css-start="{ opacity: 0, transform: \`translateY(100px)\` }"
     :css-end="{ opacity: 1 }"
@@ -101,8 +101,8 @@ export default {
   >
     <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\`, width: 758, height: 758 }]" />
   </LazyAnimate>
-</ClientOnly>`,
-      js1: `<ClientOnly>
+<!-- /ClientOnly -->`,
+      js1: `<!-- ClientOnly -->
   <LazyAnimate
     style="opacity: 0;"
     type="slide-in"
@@ -110,8 +110,8 @@ export default {
   >
     <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\`, width: 758, height: 758 }]" />
   </LazyAnimate>
-</ClientOnly>`,
-      js2: `<ClientOnly>
+<!-- /ClientOnly -->`,
+      js2: `<!-- ClientOnly -->
   <LazyAnimate
     type="custom"
     :options="{ properties: {
@@ -123,7 +123,7 @@ export default {
   >
     <div style="width: 100%; height: 400px; background-color: hsl(var(--demo-background-color, 0), 80%, 80%);"></div>
   </LazyAnimate>
-</ClientOnly>`,
+<!-- /ClientOnly -->`,
     };
 
     this.props = [

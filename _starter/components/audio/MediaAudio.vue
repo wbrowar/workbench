@@ -1,6 +1,6 @@
 <template>
   <div class="c_audio">
-    <ClientOnly>
+    <!-- ClientOnly -->
       <LazyLoad
         :after-load="{ src: src || false }"
         element-type="audio"
@@ -8,7 +8,7 @@
         :controls="controls"
         :loop="loop"
       />
-    </ClientOnly>
+    <!-- /ClientOnly -->
   </div>
 </template>
 

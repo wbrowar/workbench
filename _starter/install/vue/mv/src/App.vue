@@ -7,7 +7,3 @@
     <router-view />
   </div>
 </template>
-
-<style lang="scss">
-  @import 'CSS/automated/_components.scss';
-</style>

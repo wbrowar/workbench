@@ -11,9 +11,9 @@
           class="root__color_grid"
           style="display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, 174px); grid-template-rows: auto;"
         >
-          <ClientOnly>
+          <!-- ClientOnly -->
             <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
-          </ClientOnly>
+          <!-- /ClientOnly -->
         </div>
       </div>
     </CodeExample>
@@ -25,9 +25,9 @@
     >
       <div v-for="(font, index) in globalData.pkg.fonts" :key="index">
         <h3 style="margin: 20px 0;">{{ index }}</h3>
-        <ClientOnly>
+        <!-- ClientOnly -->
           <FontSample :font="font" :handle="index" :size="parseFloat(fontSampleSize)" :text="fontSampleText" />
-        </ClientOnly>
+        <!-- /ClientOnly -->
       </div>
       <div style="display: grid; grid-template-columns: auto 80px; grid-gap: 30px; margin-top: 60px;">
         <div>

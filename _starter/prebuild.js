@@ -37,10 +37,16 @@ async function run() {
     if (runComponentDocs) {
         const componentDocs = g.asyncFunction(
           `Creating Component Docs`, `Component Docs Created`, (resolve) => {
-              g.prebuildComponentDocs(resolve, paths, pkg, verbose);
+            g.prebuildComponentDocs(resolve, paths, pkg, verbose);
+          }
+        );
+        const componentDocsList = g.asyncFunction(
+          `Creating Component Docs List`, `Component Docs List Created`, (resolve) => {
+            g.prebuildComponentDocsList(resolve, paths, verbose);
           }
         );
         let componentDocsComplete = await componentDocs;
+        let componentDocsListComplete = await componentDocsList;
     }
 
     if (runCssTemplates) {

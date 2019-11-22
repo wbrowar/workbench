@@ -11,6 +11,10 @@
 import Button from 'Components/button/Button.vue';
 
 export default {
+  metaInfo: {
+    title: 'Title',
+    titleTemplate: null,
+  },
   name: 'home',
   components: {
     Button,
