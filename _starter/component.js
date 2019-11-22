@@ -173,10 +173,10 @@ async function run() {
 </template>
 
 <script>
-import CodeExample from 'Starter/style_inventory/vue/CodeExample';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable';
+import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
+import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
+import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
+import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
 
 export default {
   components: {
