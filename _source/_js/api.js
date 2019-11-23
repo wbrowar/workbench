@@ -2,18 +2,18 @@
 //  📬 Interact with external apis
 
 import axios from 'axios';
-import { log } from './global.js';
-import { defaultHeaders, defaultUrl } from './settings.js';
+import { log } from 'JS/global.js';
+import { apiDefaultHeaders, apiDefaultUrl } from 'JS/settings.js';
 
 export default class Api {
   constructor(args = {}) {
-    this.headers = args.headers || defaultHeaders;
+    this.headers = args.headers || apiDefaultHeaders;
     this.callback = args.callback;
     this.data = args.data || null;
     this.query = args.query || null;
     this.status = 'idle';
     this.type = args.type || 'graphql';
-    this.url = args.url || defaultUrl;
+    this.url = args.url || apiDefaultUrl;
     this.variables = args.variables || null;
 
     if (this.query) {

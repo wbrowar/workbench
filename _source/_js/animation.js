@@ -2,45 +2,46 @@
 //  🖌 Global animations used around the website
 
 import { log, warn } from './global.js';
-import { TweenMax, Power0, Power1 } from 'gsap/TweenMax';
+import gsap from 'gsap';
 
 export function animate(animation, el, options) {
   const delay = options.delay !== undefined ? _randomFromRange(options.delay) : 0,
+    ease = options.speed !== undefined ? options.ease : 'power2',
     speed = options.speed !== undefined ? _randomFromRange(options.speed) : 0.5;
 
   switch (animation) {
     case 'background-color':
-      TweenMax.to(el, speed, {
+      gsap.to(el, speed, {
         backgroundColor: options.color || 'transparent',
         delay: delay,
-        ease: Power1.easeOut,
+        ease: ease,
       });
       break;
     case 'custom':
       let props = typeof options.properties === 'string' ? JSON.parse(options.properties) : options.properties;
-      props.ease = Power0.easeNone;
-      props.yoyoEase = Power0.easeNone;
+      props.ease = ease;
+      props.yoyoEase = ease;
 
-      TweenMax.to(el, speed, props);
+      gsap.to(el, speed, props);
       break;
     case 'fade-in':
-      TweenMax.to(el, speed, {
+      gsap.to(el, speed, {
         delay: delay,
-        ease: Power1.easeOut,
+        ease: ease,
         opacity: 1,
       });
       break;
     case 'fade-out':
-      TweenMax.to(el, speed, {
+      gsap.to(el, speed, {
         delay: delay,
-        ease: Power1.easeOut,
+        ease: ease,
         opacity: 0,
       });
       break;
     case 'slide-in':
-      TweenMax.to(el, speed, {
+      gsap.to(el, speed, {
         delay: delay,
-        ease: Power1.easeOut,
+        ease: ease,
         opacity: 1,
         x: 0,
         y: 0,

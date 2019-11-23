@@ -1,8 +1,12 @@
 //  SETTINGS
 //  🤫 A common place to store and import variables used in api.js
 
-export const defaultHeaders = {
-  // Authorization: 'Bearer CHAMGE_ME',
+// API
+export const apiDefaultHeaders = {
+  Authorization: `Bearer ${process.env.VUE_APP_CRAFT_AUTH_TOKEN}`,
   'Content-Type': 'application/json;charset=UTF-8',
 };
-export const defaultUrl = 'CHAMGE_ME';
+export const apiDefaultUrl = process.env.VUE_APP_CRAFT_API_URL;
+
+// DEV
+export const devEnableDocs = process.env.VUE_APP_ENABLE_DOCS === 'true';

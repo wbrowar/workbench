@@ -401,6 +401,7 @@ async function run() {
                 update: answers.npmInstaller + ' update',
             },
             name: handle,
+            projectType: answers.projectType,
             version: '1.0.0',
             browserSync: {
                 url: answers.localUrl,
