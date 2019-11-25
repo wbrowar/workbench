@@ -33,7 +33,9 @@ export default class Api {
         },
         headers: this.headers,
       }).then((result) => {
-        this.callback(result);
+        if (typeof this.callback === 'function') {
+          this.callback(result);
+        }
         log('GraphQL Request', result);
         this.status = 'idle';
       });
