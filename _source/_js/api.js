@@ -21,6 +21,30 @@ export default class Api {
     }
   }
 
+  // Make a GraphQL request
+  // Usage:
+
+  // You can create an API and query it later:
+  // const api = new Api();
+  // const query = `{
+  //   ping
+  // }`;
+  // log(api.request(query));
+
+  // Or perform a query right away
+  //   const query = `{
+  //   ping
+  // }`;
+  // const api = new Api({
+  //   callback: (response) => {
+  //     log(api.request(response.data));
+  //   },
+  //   query: query,
+  //   variables: {
+  //     slug: this.$route.params.slug,
+  //   },
+  // });
+
   graphqlRequest(query, variables = null) {
     if (this.status === 'idle') {
       this.status = 'loading';
@@ -42,6 +66,7 @@ export default class Api {
     }
   }
 
+  // Make a request based on the request types above (currently only graphqlRequest)
   request(query, variables = null) {
     switch (this.type) {
       case 'graphql':
