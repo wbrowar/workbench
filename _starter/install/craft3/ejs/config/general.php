@@ -10,22 +10,22 @@ return [
     // Global settings
     '*' => [
         'aliases' => [
-            '@basePath' => realpath(dirname(__DIR__)) . getenv('BASE_PATH'),
+            '@baseAssetPath' => getenv('BASE_ASSET_PATH'),
+            '@baseAssetUrl' => getenv('BASE_ASSET_URL'),
+            '@basePath' => getenv('BASE_PATH'),
             '@baseUrl' => getenv('BASE_URL'),
-            '@baseAssetPath' => realpath(dirname(__DIR__)) . getenv('BASE_PATH') . 'u',
-            '@baseAssetUrl' => getenv('BASE_URL') . 'u',
         ],
+        'baseCpUrl' => getenv('CP_BASE_URL'),
         'cacheDuration' => false,
         'cpTrigger' => '<%- install.cpTrigger %>',
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
         ),
-        'enableStyleInventory' => getenv('STYLE_INVENTORY') ?: false,
+        'enableStyleInventory' => (bool)getenv('STYLE_INVENTORY') ?? false,
         'enableCsrfProtection' => true,
         'generateTransformsBeforePageLoad' => true,
-        'headlessMode' => getenv('IS_HEADLESS') ?: false,
-        'isSystemLive' => getenv('IS_SYSTEM_LIVE') ?: false,
+        'isSystemLive' => (bool)getenv('IS_SYSTEM_LIVE') ?? false,
         'omitScriptNameInUrls' => true,
         'securityKey' => getenv('SECURITY_KEY'),
         'siteUrl' => getenv('DEFAULT_SITE_URL'),
