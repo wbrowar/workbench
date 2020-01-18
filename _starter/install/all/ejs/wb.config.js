@@ -11,6 +11,17 @@ module.exports = {
     default: {
       white: "rgb(255, 255, 255)",
       black: "rgb(0, 0, 0)",
+      gray: {
+        '100': '#f5f5f5',
+        '200': '#eeeeee',
+        '300': '#e0e0e0',
+        '400': '#bdbdbd',
+        '500': '#9e9e9e',
+        '600': '#757575',
+        '700': '#616161',
+        '800': '#424242',
+        '900': '#212121',
+      },
       alert_success: "rgb(45, 176, 51)",
       alert_error: "rgb(176, 25, 22)",
       alert_warning: "rgb(238, 199, 0)"
@@ -24,7 +35,7 @@ module.exports = {
     //   white: "rgb(255, 255, 255)",
     // }
     // Define colors that override by class
-    // high-contrast: {
+    // high_contrast: {
     //   white: "rgb(255, 255, 255)",
     // }
   },
@@ -32,26 +43,6 @@ module.exports = {
     'apple': {
       fontFamily: "-apple-system",
       fallbackStack: "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      fontStyle: "normal",
-      fontWeight: "normal"
-    },
-    'apple-bold': {
-      fontFamily: "-apple-system",
-      fallbackStack: "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      fontStyle: "normal",
-      fontWeight: "700"
-    },
-    'apple-italic': {
-      fontFamily: "-apple-system",
-      fallbackStack: "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      fontStyle: "italic",
-      fontWeight: "normal"
-    },
-    'apple-bold-italic': {
-      fontFamily: "-apple-system",
-      fallbackStack: "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      fontStyle: "italic",
-      fontWeight: "700"
     },
     'eaves': {
       fontFamily: "'MrEavesXLSanRRegular'",

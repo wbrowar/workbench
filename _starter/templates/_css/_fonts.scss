@@ -1,24 +1,16 @@
-<% for (const font in pkg.fonts) { %><% if (pkg.fonts[font].files !== undefined) { %>$font_embedded_<%- font %>: false;<% }; %>
-<% }; %>
-
-@mixin embed_font($font_name) {
-  <% let first = true %>@at-root {<% for (const font in pkg.fonts) { %><% if (pkg.fonts[font].files !== undefined) { %>
-    @<% if (!first) { %>else <% } %>if $font_name == '<%- font %>' {
-      @if $font_embedded_<%- font %> == false {
-        $font_embedded_<%- font %>: true;
-        @font-face {
-            font-family: <%- pkg.fonts[font].fontFamily %>;
-            src: url('<%= pkg.fonts[font].files.eot %>');
-            src: url('<%= pkg.fonts[font].files.eot %>?#iefix') format('embedded-opentype')<% if (pkg.fonts[font].files.woff2 !== undefined) { %>,
-                 url('<%= pkg.fonts[font].files.woff2 %>') format('woff2')<% } %><% if (pkg.fonts[font].files.woff !== undefined) { %>,
-                 url('<%= pkg.fonts[font].files.woff %>') format('woff')<% } %>;
-            font-style: <%= pkg.fonts[font].fontStyle %>;
-            font-weight: <%= pkg.fonts[font].fontWeight %>;
-            font-display: swap;
-        }
-      }
-    }<% first = false %><% }; %><% }; %>
+@mixin automated_fonts {<% for (const font in wb.fonts) { %><% if (wb.fonts[font].files !== undefined) { %>
+  @font-face {
+    font-family: <%- wb.fonts[font].fontFamily %>;
+    src: url('<%= wb.fonts[font].files.eot %>');
+    src: url('<%= wb.fonts[font].files.eot %>?#iefix') format('embedded-opentype')<% if (wb.fonts[font].files.woff2 !== undefined) { %>,
+    url('<%= wb.fonts[font].files.woff2 %>') format('woff2')<% } %><% if (wb.fonts[font].files.woff !== undefined) { %>,
+  url('<%= wb.fonts[font].files.woff %>') format('woff')<% } %>;
+    font-display: <%= wb.fonts[font].fontDisplay || 'swap' %>;
+    font-style: <%= wb.fonts[font].fontStyle || 'normal' %>;
+    font-weight: <%= wb.fonts[font].fontWeight || 'normal' %>;
   }
+<% }; -%>
+<% }; -%>
 }
 
 // Embed fonts from font service or hosted locally
@@ -27,12 +19,12 @@
   $font_fallbacks: sans-serif !default;
   $font_weight: normal !default;
   $font_style: normal !default;
-<% first = true %><% for (const font in pkg.fonts) { %>
+<% first = true %><% for (const font in wb.fonts) { %>
   @<% if (!first) { %>else <% } %>if $font_name == '<%- font %>' {
-    $font_family: <%- pkg.fonts[font].fontFamily %>;
-    $font_fallbacks: <%- pkg.fonts[font].fallbackStack %>;
-    $font_style: <%- pkg.fonts[font].fontStyle %>;
-    $font_weight: <%- pkg.fonts[font].fontWeight %>;
+    $font_family: <%- wb.fonts[font].fontFamily %>;
+    $font_fallbacks: <%- wb.fonts[font].fallbackStack || '' %>;
+    $font_style: <%- wb.fonts[font].fontStyle || 'normal' %>;
+    $font_weight: <%- wb.fonts[font].fontWeight || 'normal' %>;
   }<% first = false %><% }; %>
 
   font: {
@@ -40,6 +32,4 @@
     weight: $font_weight;
     style: $font_style;
   }
-
-  @include embed_font($font_name);
 }

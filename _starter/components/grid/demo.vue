@@ -62,10 +62,10 @@
 <script>
 import Grid from 'Components/grid/Grid.vue';
 import MediaImage from 'Components/image/MediaImage.vue';
-import CssModifiers from 'Starter/dovs/vue/CssModifiers.vue';
-import CodeExample from 'Starter/dovs/vue/CodeExample.vue';
-import ImportPath from 'Starter/dovs/vue/ImportPath.vue';
-import PropsTable from 'Starter/dovs/vue/PropsTable.vue';
+import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
+import CodeExample from 'Starter/docs/vue/CodeExample.vue';
+import ImportPath from 'Starter/docs/vue/ImportPath.vue';
+import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
 export default {
   components: {

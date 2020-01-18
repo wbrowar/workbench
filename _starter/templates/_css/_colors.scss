@@ -1,58 +1,43 @@
 // COLORS
-@mixin automated_colors($includeLightScheme: false) {
-<% for (const scheme in pkg.colors) { -%>
-<% if (scheme === 'light') { -%>
-<% for (const color in pkg.colors[scheme]) { -%>
-<% let colorVal = pkg.colors[scheme][color] -%>
-    --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
-    --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
-    --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
+@mixin automated_colors {
+<% for (const scheme in colors) { -%>
+<% if (scheme === 'default') { -%>
+<% for (const color in colors[scheme]) { -%>
+<% let colorVal = colors[scheme][color] -%>
+    --color-<%- color %>-hsl: #{ hue(<%- colorVal %>) }, #{ saturation(<%- colorVal %>) }, #{ lightness(<%- colorVal %>) };
     --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
-    --color-<%- color %>: hsla(var(--color-<%- color %>-h), var(--color-<%- color %>-s), var(--color-<%- color %>-l), var(--color-<%- color %>-a));
+    --color-<%- color %>: hsla(var(--color-<%- color %>-hsl), var(--color-<%- color %>-a));
 <% } -%>
-  @if $includeLightScheme {
-    @media (prefers-color-scheme: light) {
-    <% for (const color in pkg.colors[scheme]) { -%>
-    <% let colorVal = pkg.colors[scheme][color] -%>
-      --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
-      --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
-      --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
-      --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
-    <% } -%>
-    }
-  }
-<% } else { -%>
+<% } else if (['dark', 'light'].includes(scheme)) { -%>
   @media (prefers-color-scheme: <%- scheme %>) {
-<% for (const color in pkg.colors[scheme]) { -%>
-<% let colorVal = pkg.colors[scheme][color] -%>
-      --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
-      --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
-      --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
+<% for (const color in colors[scheme]) { -%>
+<% let colorVal = colors[scheme][color] -%>
+      --color-<%- color %>-hsl: #{ hue(<%- colorVal %>) }, #{ saturation(<%- colorVal %>) }, #{ lightness(<%- colorVal %>) };
       --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
 <% } -%>
   }
 <% } } -%>
 }
 
-<% for (const color in pkg.colors.light) { %>$color_<%- color %>: var(--color-<%- color %>);
+<% for (const color in colors.default) { %>$color_<%- color %>: var(--color-<%- color %>);
 <% } %>
-<% for (const color in pkg.colors.light) { %>$color_<%- color %>_raw: <%- pkg.colors.light[color] %>;
+<% for (const color in colors.default) { %>$color_<%- color %>_raw: <%- colors.default[color] %>;
 <% } %>
-@mixin automated_color_modifiers($selector, $property) {<% for (const color in pkg.colors.light) { %>
+@mixin automated_color_modifiers($selector, $property) {<% for (const color in colors.default) { %>
   @at-root #{ $selector}--<%- color %> {
     #{$property}: $color_<%- color %>;
   };<% } %>
 }
 @mixin automated_color_schemes($selector_prefix: '.color_scheme--', $selector_suffix: '') {
-<% for (const scheme in pkg.colors) { -%>
+<% for (const scheme in colors) { -%>
+<% if (scheme !== 'default') { -%>
   @at-root #{&}#{$selector_prefix}<%- scheme %>#{$selector_suffix} {
-<% for (const color in pkg.colors[scheme]) { -%>
-<% let colorVal = pkg.colors[scheme][color] -%>
-    --color-<%- color %>-h: #{ hue(<%- colorVal %>) };
-    --color-<%- color %>-s: #{ saturation(<%- colorVal %>) };
-    --color-<%- color %>-l: #{ lightness(<%- colorVal %>) };
+<% for (const color in colors[scheme]) { -%>
+<% let colorVal = colors[scheme][color] -%>
+    --color-<%- color %>-hsl: #{ hue(<%- colorVal %>) }, #{ saturation(<%- colorVal %>) }, #{ lightness(<%- colorVal %>) };
     --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
 <% } -%>
   }
+<% } -%>
 <% } -%>
 }

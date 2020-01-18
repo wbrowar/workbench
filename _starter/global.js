@@ -167,6 +167,26 @@ methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback,
 };
 
 methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ejsVars, verbose) {
+    methods.log('dump', ejsVars);
+    // Process color object so that nested shades are on the top level
+    ejsVars.colors = {};
+    const themeColors = ejsVars.wb.colors;
+    Object.keys(themeColors).forEach((schemeKey) => {
+        Object.keys(themeColors[schemeKey]).forEach((colorKey) => {
+            if (!ejsVars.colors[schemeKey]) {
+                ejsVars.colors[schemeKey] = {};
+            }
+            if (typeof themeColors[schemeKey][colorKey] === 'string') {
+                ejsVars.colors[schemeKey][colorKey] = themeColors[schemeKey][colorKey];
+            } else {
+                Object.keys(themeColors[schemeKey][colorKey]).forEach((shadeKey) => {
+                    ejsVars.colors[schemeKey][`${colorKey}_${shadeKey}`] = themeColors[schemeKey][colorKey][shadeKey];
+                })
+            }
+        });
+    });
+
+    // Process CSS Templates
     glob(`${ paths.starter.templates }_css/*.{css,scss}`, function (er, files) {
         methods.log('verbose', `CSS templates: ${ JSON.stringify(files, null, 2) }`, verbose);
         let count = files.length;
@@ -284,7 +304,33 @@ methods.snake = function snake(text) {
         .replace(/-+$/, '');            // Trim - from end of text
 };
 
-// determine if a command should be displayed in terminal when running shell commands
+// Prepare theme options from wb.config.js for tailwind.config.js
+methods.tailwindConfig = function tailwindConfig(wb) {
+    // Prepare colors for Tailwind
+    let colors = {};
+    const themeColors = wb.colors.default;
+    Object.keys(themeColors).forEach((colorKey) => {
+        if (typeof themeColors[colorKey] === 'string') {
+            colors[colorKey] = `var(--color-${colorKey})`;
+        } else {
+            if (!colors[colorKey]) {
+                colors[colorKey] = {};
+            }
+            Object.keys(themeColors[colorKey]).forEach((shadeKey) => {
+                colors[colorKey][shadeKey] = `var(--color-${colorKey}_${shadeKey})`;
+            })
+        }
+    });
+
+    let newConfig = {
+        theme: {
+            colors: colors,
+            fontFamily: {},
+        }
+    };
+};
+
+// Determine if a command should be displayed in terminal when running shell commands
 methods.verboseExec = function verboseExec(command, verbose = false) {
     if (verbose) {
         methods.log('running', command);
