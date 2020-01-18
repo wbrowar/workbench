@@ -20,8 +20,11 @@
       return {
         currentPageHandle: '<%- handle %>',
         pages: ['<%- components.join("','") %>'],
-        wb: require(`${ process.cwd() }/wb.config.js`),
+        wb: false,
       };
+    },
+    created() {
+      this.wb = JSON.parse(`<%- JSON.stringify(wb) %>`);
     },
     methods: {
       titleCase: function(str) {

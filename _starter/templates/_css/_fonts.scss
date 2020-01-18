@@ -16,19 +16,17 @@
 // Embed fonts from font service or hosted locally
 @mixin font($font_name) {
   $font_family: '';
-  $font_fallbacks: sans-serif !default;
   $font_weight: normal !default;
   $font_style: normal !default;
 <% first = true %><% for (const font in wb.fonts) { %>
   @<% if (!first) { %>else <% } %>if $font_name == '<%- font %>' {
-    $font_family: <%- wb.fonts[font].fontFamily %>;
-    $font_fallbacks: <%- wb.fonts[font].fallbackStack || '' %>;
+    $font_family: <%- wb.fonts[font].fontStack || wb.fonts[font].fontFamily || '' %>;
     $font_style: <%- wb.fonts[font].fontStyle || 'normal' %>;
     $font_weight: <%- wb.fonts[font].fontWeight || 'normal' %>;
   }<% first = false %><% }; %>
 
   font: {
-    family: $font_family, $font_fallbacks;
+    family: $font_family;
     weight: $font_weight;
     style: $font_style;
   }

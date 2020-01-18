@@ -41,12 +41,11 @@ module.exports = {
   },
   fonts: {
     'apple': {
-      fontFamily: "-apple-system",
-      fallbackStack: "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      fontStack: "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
     },
     'eaves': {
       fontFamily: "'MrEavesXLSanRRegular'",
-      fallbackStack: "Helvetica, Arial, sans-serif",
+      fontStack: "'MrEavesXLSanRRegular', Helvetica, Arial, sans-serif",
       fontStyle: "normal",
       fontWeight: "normal",
       files: {

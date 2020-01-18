@@ -306,8 +306,10 @@ methods.snake = function snake(text) {
 
 // Prepare theme options from wb.config.js for tailwind.config.js
 methods.tailwindConfig = function tailwindConfig(wb) {
-    // Prepare colors for Tailwind
     let colors = {};
+    let fontFamily = {};
+
+    // Prepare colors for Tailwind
     const themeColors = wb.colors.default;
     Object.keys(themeColors).forEach((colorKey) => {
         if (typeof themeColors[colorKey] === 'string') {
@@ -322,12 +324,17 @@ methods.tailwindConfig = function tailwindConfig(wb) {
         }
     });
 
-    let newConfig = {
+    // Prepare font families for Tailwind
+    Object.keys(wb.fonts).forEach((fontKey) => {
+        fontFamily[fontKey] = wb.fonts['fontStack'];
+    });
+
+    return _.merge({
         theme: {
             colors: colors,
-            fontFamily: {},
-        }
-    };
+            fontFamily: fontFamily,
+            screens: wb.mq || {},
+        }}, wb.tailwind);
 };
 
 // Determine if a command should be displayed in terminal when running shell commands
