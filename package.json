@@ -5,106 +5,6 @@
     "commit": "node ./_starter/commit.js",
     "deploy": "npm run commit"
   },
-  "colors": {
-    "light": {
-      "white": "rgb(255, 255, 255)",
-      "black": "rgb(0, 0, 0)",
-      "alert_success": "rgb(45, 176, 51)",
-      "alert_error": "rgb(176, 25, 22)",
-      "alert_warning": "rgb(238, 199, 0)"
-    },
-    "dark": {
-      "white": "rgb(240, 240, 240)"
-    }
-  },
-  "fonts": {
-    "apple": {
-      "fontFamily": "-apple-system",
-      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      "fontStyle": "normal",
-      "fontWeight": "normal"
-    },
-    "apple_bold": {
-      "fontFamily": "-apple-system",
-      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      "fontStyle": "normal",
-      "fontWeight": "700"
-    },
-    "apple_italic": {
-      "fontFamily": "-apple-system",
-      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      "fontStyle": "italic",
-      "fontWeight": "normal"
-    },
-    "apple_bold_italic": {
-      "fontFamily": "-apple-system",
-      "fallbackStack": "BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-      "fontStyle": "italic",
-      "fontWeight": "700"
-    },
-    "eaves": {
-      "fontFamily": "'MrEavesXLSanRRegular'",
-      "fallbackStack": "Helvetica, Arial, sans-serif",
-      "fontStyle": "normal",
-      "fontWeight": "normal",
-      "files": {
-        "eot": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
-        "woff": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
-        "woff2": "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
-      }
-    }
-  },
-  "cssIcons": [
-    "close",
-    "location",
-    "minus",
-    "plus"
-  ],
-  "ejs": {},
-  "prettier": {
-    "files": "_source/**/*.{js,json,scss,vue}",
-    "options": "--write"
-  },
-  "paths": {
-    "base": {
-      "build": "_build/",
-      "dist": "",
-      "release": "",
-      "siteUrl": {
-        "dev": "/",
-        "prod": "/"
-      },
-      "src": "_source/"
-    },
-    "components": {
-      "grouped": true,
-      "src": "_components/"
-    },
-    "css": {
-      "dist": "public/css/",
-      "src": "_css/"
-    },
-    "favicon": {
-      "dist": "public/favicon/",
-      "src": "_favicon/"
-    },
-    "icon": {
-      "dist": "public/icon/",
-      "src": "_icon/"
-    },
-    "img": {
-      "dist": "public/img/",
-      "src": "_img/"
-    },
-    "js": {
-      "dist": "public/js/",
-      "src": "_js/"
-    },
-    "templates": {
-      "dist": "public/",
-      "src": "_templates/"
-    }
-  },
   "name": "example-project",
   "private": true,
   "license": "MIT",
@@ -112,26 +12,27 @@
     "type": "git",
     "url": "https://github.com/wbrowar/WB-Starter.git"
   },
-  "version": "5.0.0",
+  "version": "6.0.0",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.1",
     "cleave.js": "^1.5.3",
-    "gsap": "^3.0.1",
+    "gsap": "^3.0.5",
     "intersection-observer": "^0.7.0",
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "chalk": "^3.0.0",
-    "ejs": "^2.7.4",
+    "ejs": "^3.0.1",
     "fs-extra": "^8.1.0",
     "glob-all": "^3.1.0",
     "import-glob-loader": "^1.1.0",
-    "inquirer": "^7.0.0",
+    "inquirer": "^7.0.3",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
     "request": "^2.88.0",
-    "sass-loader": "^8.0.0",
-    "semver": "^6.3.0"
+    "sass-loader": "^8.0.2",
+    "semver": "^7.1.1",
+    "tailwindcss":"^1.2.0-canary.5"
   }
 }

@@ -2,7 +2,6 @@
 const autoprefixer = require('autoprefixer'),
     browserSync = require('browser-sync').create(),
     critical = require('critical'),
-    das = require('./das.js'),
     ejs = require('ejs'),
     favicons = require('favicons'),
     fs = require('fs-extra'),
@@ -102,9 +101,6 @@ let browsersyncReady = {
 
 
 async function run() {
-    dasReset();
-    dasAnimate('rainbow', { key: '7,5', color: '#c2ff07', title: 'Compiling Icons' }); // SPC
-
     if (runBump) {
         const bumpPackageVersion       = bumpPackage();
         let bumpPackageVersionComplete = await bumpPackageVersion;
@@ -117,7 +113,6 @@ async function run() {
     // run build tasks
     if (runBuild) {
         g.log('title', `Running Build`);
-        dasAnimate('rainbow', { key: 'KEY_B', color: '#c2ff07', title: 'Building' });
 
         const buildCleanAll                      = clean();
         let buildCleanComplete                   = await buildCleanAll;
@@ -166,7 +161,6 @@ async function run() {
         }
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Build Complete' });
-        dasRemove('KEY_B');
     }
 
     if (runCritCss) {
@@ -181,7 +175,6 @@ async function run() {
 
     if (runPublish) {
         g.log('title', `Running Publish`);
-        dasAnimate('rainbow', { key: 'KEY_P', color: '#c2ff07', title: 'Publishing' });
 
         if (fs.existsSync(paths.starter.release)) {
             const removeReleaseFiles = g.asyncFunction(
@@ -235,15 +228,12 @@ async function run() {
         g.log('verbose', `Project moved to release directory.`, verbose);
 
         notifier.notify({ 'title': notify.name, 'icon': notify.icon, 'message': 'Project Published' });
-        dasRemove('KEY_P');
     } else if (runWatch) {
         g.log('title', `Running Watch`);
 
         if (pkg.browserSync.url === 'CHANGE_ME') {
             g.log('warn', 'Browsersync is not set up, yet. Add your local site URL to the Browsersync setting in package.json.')
         } else {
-            dasAnimate('rainbow', { key: 'KEY_W', color: '#c2ff07', title: 'Watching' });
-
             browserSync.init({
                 browser: pkg.browserSync.browser,
                 proxy: pkg.browserSync.url,
@@ -375,7 +365,6 @@ async function run() {
 
     // BYE
     if (!runWatch) {
-        dasRemove('7,5'); // SPC
         g.log('app', `End`);
     }
 }
@@ -546,7 +535,6 @@ async function compileCssTemplates() {
 
 async function compileCss() {
     g.log('title', `Compiling CSS`);
-    dasAnimate('highlight', { key: 'KEY_C', color: '#c2ff07', title: 'Compiling CSS' });
 
     const p = await new Promise(resolve => {
         glob(`${ paths.css.src }/*.scss`, function (er, files) {
@@ -586,13 +574,11 @@ async function compileCss() {
         });
     }).then(() => '');
     g.log('title', `CSS Compiled`);
-    dasRemove('KEY_C');
     return p;
 }
 
 async function compileFavicon() {
     g.log('title', `Generating Favicons`);
-    dasAnimate('highlight', { key: 'KEY_F', color: '#c2ff07', title: 'Generating Favicons' });
 
     const p = await new Promise(resolve => {
         favicons(`${ paths.favicon.src }favicon.png`, {
@@ -638,13 +624,11 @@ async function compileFavicon() {
         });
     }).then(()=>'');
     g.log('title', `Favicons Generated`);
-    dasRemove('KEY_C');
     return p;
 }
 
 async function compileIcon() {
     g.log('title', `Compiling Icons`);
-    dasAnimate('highlight', { key: 'KEY_S', color: '#c2ff07', title: 'Compiling Icons' });
 
     const p = await new Promise(resolve => {
         glob(`${ paths.icon.src }*.svg`, function (er, files) {
@@ -664,13 +648,11 @@ async function compileIcon() {
         });
     }).then(()=>'');
     g.log('title', `Icons Compiled`);
-    dasRemove('KEY_S');
     return p;
 }
 
 async function compileImg() {
     g.log('title', `Compiling Images`);
-    dasAnimate('highlight', { key: 'KEY_I', color: '#c2ff07', title: 'Compiling Images' });
 
     const p = await new Promise(resolve => {
         // if img folder doesn't exist, create it
@@ -735,13 +717,11 @@ async function compileImg() {
         });
     }).then(()=>'');
     g.log('title', `Images Compiled`);
-    dasRemove('KEY_I');
     return p;
 }
 
 async function compileJs() {
     g.log('title', `Compiling JS`);
-    dasAnimate('highlight', { key: 'KEY_J', color: '#c2ff07', title: 'Compiling JS' });
 
     const p = await new Promise(resolve => {
         if (pkg.webpack.entries.js || false) {
@@ -791,36 +771,7 @@ async function compileJs() {
         }
     }).then(()=>'');
     g.log('title', `JS Compiled`);
-    dasRemove('KEY_J');
     return p;
-}
-
-async function dasAnimate(anim, options = { }) {
-    if (localConfig.das || false) {
-        if (localConfig.das.enabled || false) {
-            options['verbose'] = verbose;
-            g.log('verbose', `Running Das animation: ${ anim }`, verbose);
-            das.animate(anim, options, verbose);
-        }
-    }
-}
-async function dasRemove(zone, options = { }) {
-    if (localConfig.das || false) {
-        if (localConfig.das.enabled || false) {
-            options['verbose'] = verbose;
-            g.log('verbose', `Removing Das Zone: ${ zone }`, verbose);
-            das.remove(zone, options, verbose);
-        }
-    }
-}
-async function dasReset() {
-    if (localConfig.das || false) {
-        if (localConfig.das.enabled || false) {
-            g.log('verbose', `Resetting Das`, verbose);
-            dasRemove('KEY_W');
-            dasRemove('7,5'); // SPC
-        }
-    }
 }
 
 async function compileTemplates() {

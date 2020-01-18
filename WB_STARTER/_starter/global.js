@@ -21,6 +21,56 @@ methods.asyncFunction = async function asyncFunction(startMessage, endMessage, f
     return p;
 };
 
+// bump version
+// methods.bumpVersion = function bumpVersion(version, release = 'patch') {
+//     return semver.inc(version, release);
+// };
+
+// get dist and src paths based on base path options
+methods.getPaths = function getPaths(paths) {
+    return {
+        components: {
+            src: process.cwd() + '/' + paths.base.src + paths.components.src,
+        },
+        css: {
+            dist: process.cwd() + '/' + paths.base.dist + paths.css.dist,
+            src: process.cwd() + '/' + paths.base.src + paths.css.src,
+        },
+        favicon: {
+            dist: process.cwd() + '/' + paths.base.dist + paths.favicon.dist,
+            src: process.cwd() + '/' + paths.base.src + paths.favicon.src,
+        },
+        icon: {
+            dist: process.cwd() + '/' + paths.base.dist + paths.icon.dist,
+            src: process.cwd() + '/' + paths.base.src + paths.icon.src,
+        },
+        img: {
+            dist: process.cwd() + '/' + paths.base.dist + paths.img.dist,
+            src: process.cwd() + '/' + paths.base.src + paths.img.src,
+        },
+        js: {
+            dist: process.cwd() + '/' + paths.base.dist + paths.js.dist,
+            src: process.cwd() + '/' + paths.base.src + paths.js.src,
+        },
+        templates: {
+            dist: process.cwd() + '/' + paths.base.dist + paths.templates.dist,
+            src: process.cwd() + '/' + paths.base.src + paths.templates.src,
+        },
+        starter: {
+            backups: process.cwd() + '/_starter/backups/',
+            build: process.cwd() + paths.base.build,
+            components: process.cwd() + '/_starter/components/',
+            templates: process.cwd() + '/_starter/templates/',
+            styleInventory: process.cwd() + '/_starter/style_inventory/',
+        }
+    }
+};
+
+// get version number based on build environment
+// methods.getVersion = function getVersion(release, version) {
+//     return release ? version : null;
+// };
+
 // display a message in the command line
 methods.log = function log(type = 'message', message, verbose = false) {
     switch (type) {

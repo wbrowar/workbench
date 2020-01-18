@@ -36,7 +36,6 @@ let ejsVars = {
 };
 
 // set other variables
-const starterProjects = ['craft3', 'craftplugin', 'html'];
 let localConfig = false;
 
 // check if npm and composer are installed
@@ -93,21 +92,35 @@ async function run() {
     const questions = [
         {
             type: 'list',
-            name: 'projectType',
+            name: 'installEnd',
             message: 'What kind of project are you building?',
             choices: [
-                { name: 'Craft 3', value: 'craft3' },
-                { name: 'Gridsome', value: 'gridsome' },
-                { name: 'HTML', value: 'html' },
-                { name: 'Vue SPA', value: 'vue' },
-                { name: 'Craft Plugin', value: 'craftplugin' },
+                { name: 'Front-end', value: 'front' },
+                { name: 'Back-end', value: 'back' },
             ],
+        },
+        {
+            type: 'list',
+            name: 'projectType',
+            message: (answers) => {
+                return answers.installEnd === 'front' ? 'Front-end framework' : 'Back-end platform';
+            },
+            choices: (answers) => {
+                return answers.installEnd === 'front' ? [
+                    { name: 'Gridsome', value: 'gridsome' },
+                    { name: 'HTML', value: 'html' },
+                    { name: 'Twig', value: 'twig' },
+                    { name: 'Vue SPA', value: 'vue' },
+                ] : [
+                    { name: 'Craft 3', value: 'craft3' },
+                    { name: 'Craft Plugin', value: 'craftplugin' },
+                ]
+            },
         },
         {
             type: 'input',
             name: 'handle',
             message: 'Handle',
-            default: 'my-plugin',
             default: () => {
                 return argv.options.handle || '';
             },
@@ -132,7 +145,7 @@ async function run() {
                 return ['craft3'].includes(answers.projectType);
             },
             when: (answers) => {
-                return !['craftplugin'].includes(answers.projectType);
+                return answers.installEnd === 'back' && !['craftplugin'].includes(answers.projectType);
             },
         },
         {
@@ -141,7 +154,7 @@ async function run() {
             message: 'Database Host',
             default: localConfig ? (localConfig.dbHost || '127.0.0.1') : '127.0.0.1',
             when: (answers) => {
-                return answers.setupDb;
+                return answers.installEnd === 'back' && answers.setupDb;
             },
         },
         {
@@ -150,7 +163,7 @@ async function run() {
             message: 'Database Username',
             default: localConfig ? (localConfig.dbUser || 'root') : 'root',
             when: (answers) => {
-                return answers.setupDb;
+                return answers.installEnd === 'back' && answers.setupDb;
             },
         },
         {
@@ -159,7 +172,7 @@ async function run() {
             message: 'Database Password',
             default: localConfig ? (localConfig.dbPass || '') : '',
             when: (answers) => {
-                return answers.setupDb;
+                return answers.installEnd === 'back' && answers.setupDb;
             },
         },
         {
@@ -168,7 +181,7 @@ async function run() {
             message: 'Database Port',
             default: localConfig ? (localConfig.dbPort || '') : '',
             when: (answers) => {
-                return answers.setupDb;
+                return answers.installEnd === 'back' && answers.setupDb;
             },
         },
         {
@@ -176,7 +189,7 @@ async function run() {
             name: 'dbPrefix',
             message: 'Database Prefix',
             when: (answers) => {
-                return answers.setupDb;
+                return answers.installEnd === 'back' && answers.setupDb;
             },
         },
         {
@@ -313,7 +326,6 @@ async function run() {
             default: argv.options.npminstaller || localConfig ? (localConfig.npmInstaller || 'npm') : 'npm',
             choices: [
                 { name: 'npm', value: 'npm' },
-                { name: 'pnpm', value: 'pnpm' },
                 { name: 'Yarn', value: 'yarn' },
             ],
         },
@@ -372,28 +384,28 @@ async function run() {
             g.log('verbose', `Created mysql database: '${ handle }'`, verbose);
         }
 
-        if (starterProjects.includes(answers.projectType)) {
-            mergeIntoPkg(`${process.cwd()}/_starter/install/_starter/setup/package.json`);
-
-            const editPkgComponents = g.asyncFunction(
-                `Adding Selected Components to package.json`, `Selected Components Added`, (resolve) => {
-                    let selectedComponents = answers.components;
-                    const defaults = glob.sync(`${ process.cwd() }/_starter/style_inventory/defaults/*`);
-                    defaults.forEach((item) => {
-                        selectedComponents.push(`@${ path.basename(item, path.extname(item)) }`);
-                    });
-                    Object.keys(pkg.styleInventory['pages']).forEach((key) => {
-                        const filteredComponents = pkg.styleInventory['pages'][key].components.filter(component => selectedComponents.includes(component));
-                        if (filteredComponents.length > 0) {
-                            pkg.styleInventory['pages'][key].components = filteredComponents;
-                        } else {
-                            delete pkg.styleInventory['pages'][key];
-                        }
-                    });
-                    resolve();
-                });
-            let editPkgComponentsComplete = await editPkgComponents;
-        }
+        // if (starterProjects.includes(answers.projectType)) {
+        //     mergeIntoPkg(`${process.cwd()}/_starter/install/_starter/setup/package.json`);
+        //
+        //     const editPkgComponents = g.asyncFunction(
+        //         `Adding Selected Components to package.json`, `Selected Components Added`, (resolve) => {
+        //             let selectedComponents = answers.components;
+        //             const defaults = glob.sync(`${ process.cwd() }/_starter/style_inventory/defaults/*`);
+        //             defaults.forEach((item) => {
+        //                 selectedComponents.push(`@${ path.basename(item, path.extname(item)) }`);
+        //             });
+        //             Object.keys(pkg.styleInventory['pages']).forEach((key) => {
+        //                 const filteredComponents = pkg.styleInventory['pages'][key].components.filter(component => selectedComponents.includes(component));
+        //                 if (filteredComponents.length > 0) {
+        //                     pkg.styleInventory['pages'][key].components = filteredComponents;
+        //                 } else {
+        //                     delete pkg.styleInventory['pages'][key];
+        //                 }
+        //             });
+        //             resolve();
+        //         });
+        //     let editPkgComponentsComplete = await editPkgComponents;
+        // }
         g.log('title', 'Updating package.json values with dynamic data', verbose);
         pkg = _.merge(pkg, {
             scripts: {
@@ -401,32 +413,10 @@ async function run() {
                 update: answers.npmInstaller + ' update',
             },
             name: handle,
-            projectType: answers.projectType,
             version: '1.0.0',
-            browserSync: {
-                url: answers.localUrl,
-            },
-            paths: {
-                base: {
-                    siteUrl: {
-                        dev: answers.localUrl,
-                    }
-                }
-            },
         });
 
         mergeIntoPkg(`${process.cwd()}/_starter/install/${ answers.projectType }/setup/package.json`);
-
-        if (answers.projectType === 'craft3') {
-            pkg.scripts['update'] = answers.npmInstaller + ' update && ./craft update all --backup';
-            pkg.paths.base.siteUrl.dev = `{{ siteUrl }}`;
-            pkg.paths.base.siteUrl.prod = `{{ siteUrl }}`;
-        } else if (answers.projectType === 'craftplugin') {
-            pkg.paths.css.dist = `src/assetbundles/${ handle }/dist/css/`;
-            pkg.paths.icon.dist = `src/assetbundles/${ handle }/dist/icon/`;
-            pkg.paths.img.dist = `src/assetbundles/${ handle }/dist/img/`;
-            pkg.paths.js.dist = `src/assetbundles/${ handle }/dist/js/`;
-        }
 
         g.log('verbose', `Updating package.json file`, verbose);
         const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
@@ -444,19 +434,17 @@ async function run() {
             });
         let removeGitkeepComplete = await removeGitkeep;
 
-        if (starterProjects.includes(answers.projectType)) {
-            const moveAllInstallFiles = g.asyncFunction(
-                `Moving Default Files`, `Default Files Moved`, (resolve) => {
-                    globMove(`${ process.cwd() }/_starter/install/_starter/mv/**/*`, `_starter/install/_starter/mv/`, ``, resolve);
-                });
-            let moveAllInstallFilesComplete = await moveAllInstallFiles;
+        const moveAllInstallFiles = g.asyncFunction(
+          `Moving Default Files`, `Default Files Moved`, (resolve) => {
+              globMove(`${ process.cwd() }/_starter/install/all/mv/**/*`, `_starter/install/all/mv/`, ``, resolve);
+          });
+        let moveAllInstallFilesComplete = await moveAllInstallFiles;
 
-            const compileAllInstallFiles = g.asyncFunction(
-                `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
-                    globEjs(`${ process.cwd() }/_starter/install/_starter/ejs/**/*`, `_starter/install/_starter/ejs/`, ``, resolve);
-                });
-            let compileAllInstallFilesComplete = await compileAllInstallFiles;
-        }
+        const compileAllInstallFiles = g.asyncFunction(
+          `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
+              globEjs(`${ process.cwd() }/_starter/install/all/ejs/**/*`, `_starter/install/all/ejs/`, ``, resolve);
+          });
+        let compileAllInstallFilesComplete = await compileAllInstallFiles;
 
         const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ answers.projectType }/`;
 
@@ -525,13 +513,20 @@ async function run() {
             }
         });
 
-        g.log('title', 'Updating NPM packages', verbose);
-        g.verboseExec(answers.npmInstaller + ` update`, verbose);
-        g.log('verbose', `NPM Packages updated`, verbose);
+        if (answers.installEnd === 'front') {
+            g.log('title', 'Updating NPM packages', verbose);
+            g.verboseExec(answers.npmInstaller + ` update`, verbose);
+            g.log('verbose', `NPM Packages updated`, verbose);
 
-        g.log('title', 'Running Initial Build Script', verbose);
-        g.verboseExec(`npm run dev`, true);
-        g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
+            // g.log('title', 'Running Initial Build Script', verbose);
+            // g.verboseExec(`npm run dev`, true);
+            // g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
+        } else if (answers.installEnd === 'back') {
+            g.verboseExec(`rm -f package.json`, verbose);
+            g.verboseExec(`rm -f package-lock.json`, verbose);
+            g.verboseExec(`rm -rf node_modules`, verbose);
+            g.log('verbose', `Removed node_modules and package.json`, verbose);
+        }
 
         if (answers.setupRepo) {
             g.log('title', 'Setting up GitHub repo');
