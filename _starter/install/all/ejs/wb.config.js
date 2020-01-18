@@ -1,6 +1,6 @@
 const paths = {
-  source: process.cwd() + '/_source/',
-  starter: process.cwd() + '/_starter/',
+  sourcePath: process.cwd() + '/_source/',
+  starterPath: process.cwd() + '/_starter/',
 };
 
 module.exports = {
@@ -73,26 +73,28 @@ module.exports = {
   },
   paths: {
     components: {
-      src: `${paths.source}_components/`,
+      src: `${paths.sourcePath}_components/`,
     },
     css: {
-      src: `${paths.source}_css/`,
+      src: `${paths.sourcePath}_css/`,
     },
     favicon: {
-      src: `${paths.source}_favicon/`,
+      src: `${paths.sourcePath}_favicon/`,
     },
     icon: {
-      src: `${paths.source}_icon/`,
+      src: `${paths.sourcePath}_icon/`,
     },
     img: {
-      src: `${paths.source}_img/`,
+      src: `${paths.sourcePath}_img/`,
     },
     js: {
-      src: `${paths.source}_js/`,
+      src: `${paths.sourcePath}_js/`,
     },
     starter: {
-      components: `${paths.starter}components/`,
-      templates: `${paths.starter}templates/`,
+      components: `${paths.starterPath}components/`,
+      source: paths.sourcePath,
+      starter: paths.starterPath,
+      templates: `${paths.starterPath}templates/`,
     }
   },
   prettier: {
