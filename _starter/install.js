@@ -518,9 +518,9 @@ async function run() {
             g.verboseExec(answers.npmInstaller + ` update`, verbose);
             g.log('verbose', `NPM Packages updated`, verbose);
 
-            // g.log('title', 'Running Initial Build Script', verbose);
-            // g.verboseExec(`npm run dev`, true);
-            // g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
+            g.log('title', 'Running Initial Build Script', verbose);
+            g.verboseExec(`npm run dev`, true);
+            g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
         } else if (answers.installEnd === 'back') {
             g.verboseExec(`rm -f package.json`, verbose);
             g.verboseExec(`rm -f package-lock.json`, verbose);

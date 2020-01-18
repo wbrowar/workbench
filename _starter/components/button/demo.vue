@@ -59,10 +59,10 @@
 import { log } from 'JS/global.js';
 import Box from 'Components/box/Box.vue';
 import Button from 'Components/button/Button.vue';
-import CodeExample from 'Starter/style_inventory/vue/CodeExample.vue';
-import CssModifiers from 'Starter/style_inventory/vue/CssModifiers.vue';
-import ImportPath from 'Starter/style_inventory/vue/ImportPath.vue';
-import PropsTable from 'Starter/style_inventory/vue/PropsTable.vue';
+import CodeExample from 'Starter/dovs/vue/CodeExample.vue';
+import CssModifiers from 'Starter/dovs/vue/CssModifiers.vue';
+import ImportPath from 'Starter/dovs/vue/ImportPath.vue';
+import PropsTable from 'Starter/dovs/vue/PropsTable.vue';
 
 export default {
   components: {
