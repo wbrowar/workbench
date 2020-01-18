@@ -77,35 +77,28 @@ module.exports = {
   },
   // Config options for build process
   name: '<%- install.handle %>',
+  ejs: {
+
+  },
   paths: {
     components: {
-      // grouped: true,
-      src: `${process.cwd()}/${paths.source}_components/`
+      src: `${paths.source}_components/`
     },
     css: {
-      // dist: "public/css/",
-      src: `${process.cwd()}/${paths.source}_css/`
+      src: `${paths.source}_css/`
     },
     favicon: {
-      // dist: "public/favicon/",
-      src: `${process.cwd()}/${paths.source}_favicon/`
+      src: `${paths.source}_favicon/`
     },
     icon: {
-      // dist: "public/icon/",
-      src: `${process.cwd()}/${paths.source}_icon/`
+      src: `${paths.source}_icon/`
     },
     img: {
-      // dist: "public/img/",
-      src: `${process.cwd()}/${paths.source}_img/`
+      src: `${paths.source}_img/`
     },
     js: {
-      // dist: "public/js/",
-      src: `${process.cwd()}/${paths.source}_js/`
+      src: `${paths.source}_js/`
     },
-    templates: {
-      // dist: "public/",
-      src: `${process.cwd()}/${paths.source}_templates/`
-    }
   },
   prettier: {
     files: "{_source,src}_source/**/*.{js,json,scss,vue}",

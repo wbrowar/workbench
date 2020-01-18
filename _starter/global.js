@@ -7,8 +7,7 @@ const chalk = require('chalk'),
       exec = require('child_process'),
       fs = require('fs-extra'),
       glob = require('glob-all'),
-      path = require('path'),
-      semver = require('semver');
+      path = require('path');
 
 // Synchronously run a function and wait for a callback to fire
 methods.asyncFunction = async function asyncFunction(startMessage, endMessage, func) {
@@ -104,7 +103,7 @@ methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
   });
 };
 
-methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, pkg, verbose) {
+methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, wb, verbose) {
     glob(`${ paths.components.src }**/demo.vue`, function (er, files) {
         methods.log('verbose', `Docs Files: ${ JSON.stringify(files, null, 2) }`, verbose);
         let components = [];
@@ -120,7 +119,7 @@ methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, 
             const options = {
                 components: components,
                 handle: path.dirname(item).split(path.sep).pop(),
-                pkg: pkg,
+                wb: wb,
             };
 
             ejs.renderFile(`${ paths.starter.templates }_js/ComponentDocs.vue`, options, {}, function(err, str) {
