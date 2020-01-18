@@ -121,19 +121,19 @@ async function run() {
                 switch (item) {
                     case 'css':
                         config = Object.assign({
-                            src: `${ paths.starter }templates/_components/new/HANDLE.scss`,
+                            src: `${ paths.starter.templates }_components/new/HANDLE.scss`,
                             dist: `${ paths.components.src }${ answers.handle }/_${ answers.handle }.scss`,
                         }, config);
                         break;
                     case 'twig':
                         config = Object.assign({
-                            src: `${ paths.starter }templates/_components/new/HANDLE.twig`,
+                            src: `${ paths.starter.templates }_components/new/HANDLE.twig`,
                             dist: `${ paths.components.src }${ answers.handle }/${ answers.handle }.twig`,
                         }, config);
                         break;
                     case 'vue':
                         config = Object.assign({
-                            src: `${ paths.starter }templates/_components/new/HANDLE.vue`,
+                            src: `${ paths.starter.templates }_components/new/HANDLE.vue`,
                             dist: `${ paths.components.src }${ answers.handle }/${ answers.name.replace(/\s+/g, '') }.vue`,
                         }, config);
                         break;

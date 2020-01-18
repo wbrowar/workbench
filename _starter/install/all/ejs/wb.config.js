@@ -82,23 +82,27 @@ module.exports = {
   },
   paths: {
     components: {
-      src: `${paths.source}_components/`
+      src: `${paths.source}_components/`,
     },
     css: {
-      src: `${paths.source}_css/`
+      src: `${paths.source}_css/`,
     },
     favicon: {
-      src: `${paths.source}_favicon/`
+      src: `${paths.source}_favicon/`,
     },
     icon: {
-      src: `${paths.source}_icon/`
+      src: `${paths.source}_icon/`,
     },
     img: {
-      src: `${paths.source}_img/`
+      src: `${paths.source}_img/`,
     },
     js: {
-      src: `${paths.source}_js/`
+      src: `${paths.source}_js/`,
     },
+    starter: {
+      components: `${paths.starter}components/`,
+      templates: `${paths.starter}templates/`,
+    }
   },
   prettier: {
     files: "{_source,src}_source/**/*.{js,json,scss,vue}",
