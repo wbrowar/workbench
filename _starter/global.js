@@ -122,7 +122,7 @@ methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, 
                 wb: wb,
             };
 
-            ejs.renderFile(`${ paths.starter.templates }_js/ComponentDocs.vue`, options, {}, function(err, str) {
+            ejs.renderFile(`${ paths.starter.templates }_vue/ComponentDocs.vue`, options, {}, function(err, str) {
                 if (err) {
                     methods.log('warn', err);
                 }

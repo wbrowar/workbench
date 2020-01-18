@@ -77,8 +77,9 @@ module.exports = {
   },
   // Config options for build process
   name: '<%- install.handle %>',
+  projectType: '<%- install.projectType %>',
   ejs: {
-
+    // Define any data to be processed with EJS
   },
   paths: {
     components: {

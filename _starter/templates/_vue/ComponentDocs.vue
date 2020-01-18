@@ -1,12 +1,12 @@
 <template>
-  <<%- pkg.projectType === 'gridsome' ? 'Layout' : 'div' %>>
+  <<%- wb.projectType === 'gridsome' ? 'Layout' : 'div' %>>
     <div class="dev__components">
       <div class="dev__components__nav">
-        <<%- pkg.projectType === 'gridsome' ? 'g-link' : 'router-link' %> :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</<%- pkg.projectType === 'gridsome' ? 'g-link' : 'router-link' %>>
+        <<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %> :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %>>
       </div>
-      <demo class="dev__components__demo" :global-data="{ pkg: pkg }" />
+      <demo class="dev__components__demo" :global-data="{ wb: wb }" />
     </div>
-  </<%- pkg.projectType === 'gridsome' ? 'Layout' : 'div' %>>
+  </<%- wb.projectType === 'gridsome' ? 'Layout' : 'div' %>>
 </template>
 
 <script>
@@ -20,11 +20,8 @@
       return {
         currentPageHandle: '<%- handle %>',
         pages: ['<%- components.join("','") %>'],
-        pkg: false,
+        wb: require(`${ process.cwd() }/wb.config.js`),
       };
-    },
-    created() {
-      this.pkg = JSON.parse(`<%- JSON.stringify(pkg) %>`);
     },
     methods: {
       titleCase: function(str) {
