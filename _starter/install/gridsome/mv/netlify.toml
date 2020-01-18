@@ -1,0 +1,5 @@
+[build]
+    environment = { CRAFT_API_URL="REPLACE_URI", CRAFT_AUTH_TOKEN="REPLACE_TOKEN", DEV_MODE="true", ENABLE_DOCS="true"}
+
+[context.production]
+    environment = { CRAFT_API_URL="REPLACE_URI", CRAFT_AUTH_TOKEN="REPLACE_TOKEN", DEV_MODE="false", ENABLE_DOCS="false"}

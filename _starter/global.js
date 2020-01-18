@@ -2,7 +2,8 @@
 let methods = {};
 
 // import node modules
-const chalk = require('chalk'),
+const _ = require('lodash'),
+      chalk = require('chalk'),
       ejs = require('ejs'),
       exec = require('child_process'),
       fs = require('fs-extra'),

@@ -6,15 +6,16 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 const glob = require('glob-all'),
-      path = require('path');
+      path = require('path'),
+      wb = require(`./wb.config.js`);
 
 module.exports = function (api) {
   api.loadSource((store) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api
 
-    store.addMetadata('devMode', process.env.NODE_ENV !== 'production');
-    store.addMetadata('devDocs', process.env.ENABLE_DOCS || false);
-  })
+    store.addMetadata('devMode', process.env.DEV_MODE == 'true' ? true : false);
+    store.addMetadata('devDocs', process.env.ENABLE_DOCS == 'true' ? true : false);
+  });
 
   api.createPages(async (api) => {
     // 1. Get the section handle for the Craft entries you want to build out
@@ -41,11 +42,11 @@ module.exports = function (api) {
   api.configureWebpack({
     resolve: {
       alias: {
-        Components: path.resolve(__dirname, './_source/_components/'),
-        CSS: path.resolve(__dirname, './_source/_css/'),
-        JS: path.resolve(__dirname, './_source/_js/'),
-        Starter: path.resolve(__dirname, './_starter/'),
-        Source: path.resolve(__dirname, './_source/'),
+        Components: path.resolve(wb.paths.components.src),
+        CSS: path.resolve(wb.paths.css.src),
+        JS: path.resolve(wb.paths.js.src),
+        Source: path.resolve(wb.paths.starter.source),
+        Starter: path.resolve(wb.paths.starter.starter),
       }
     }
   })

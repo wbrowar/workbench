@@ -4,18 +4,19 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const path = require('path');
+const path = require('path'),
+      wb = require(`./wb.config.js`);
 
 function addStyleResource (rule) {
   rule.use('style-resource')
       .loader('style-resources-loader')
       .options({
         patterns: [
-          path.resolve(__dirname, './_source/_css/automated/_colors.scss'),
-          path.resolve(__dirname, './_source/_css/automated/_fonts.scss'),
-          path.resolve(__dirname, './_source/_css/base/_functions.scss'),
-          path.resolve(__dirname, './_source/_css/base/_variables.scss'),
-          path.resolve(__dirname, './_source/_css/base/_mixins.scss'),
+          path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
+          path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
+          path.resolve(`${wb.paths.css.src}base/_functions.scss`),
+          path.resolve(`${wb.paths.css.src}base/_variables.scss`),
+          path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
         ],
       })
 }
