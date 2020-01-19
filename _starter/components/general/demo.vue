@@ -3,9 +3,9 @@
     <CodeExample
       title="Colors"
       description="Color schemes configured in the `package.json` file. The `light` scheme is shown by default. The `dark` theme appears when the browser is set to dark mode."
-      v-if="globalData.pkg.colors"
+      v-if="globalData.wb.colors"
     >
-      <div v-for="(scheme, index) in globalData.pkg.colors" :key="index">
+      <div v-for="(scheme, index) in colorSwatches" :key="index">
         <h3 style="margin: 20px 0;">{{ index }}</h3>
         <div
           class="root__color_grid"
@@ -21,9 +21,9 @@
     <CodeExample
       title="Fonts"
       description="Fonts configured in the `package.json` file. Change the sample text to preview different words and characters in each font."
-      v-if="globalData.pkg.fonts"
+      v-if="globalData.wb.fonts"
     >
-      <div v-for="(font, index) in globalData.pkg.fonts" :key="index">
+      <div v-for="(font, index) in globalData.wb.fonts" :key="index">
         <h3 style="margin: 20px 0;">{{ index }}</h3>
         <!-- ClientOnly -->
           <FontSample :font="font" :handle="index" :size="parseFloat(fontSampleSize)" :text="fontSampleText" />
@@ -46,6 +46,10 @@
         </div>
       </div>
     </CodeExample>
+
+    <CodeExample title="Tailwind Explorer" description="Test Tailwind classes and see the results.">
+      <TailwindTester />
+    </CodeExample>
   </div>
 </template>
 
@@ -54,6 +58,7 @@ import CodeExample from 'Starter/docs/vue/CodeExample.vue';
 import ColorSwatch from 'Starter/docs/vue/ColorSwatch.vue';
 import FontSample from 'Starter/docs/vue/FontSample.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
+import TailwindTester from 'Starter/docs/vue/TailwindTester.vue';
 
 export default {
   components: {
@@ -61,11 +66,14 @@ export default {
     ColorSwatch,
     FontSample,
     PropsTable,
+    TailwindTester,
   },
   data() {
     return {
+      colorSwatches: {},
       fontSampleSize: false,
       fontSampleText: false,
+      tailwindSample: false,
     };
   },
   props: {
@@ -74,6 +82,23 @@ export default {
   created() {
     this.fontSampleSize = `2`;
     this.fontSampleText = `The quick brown fox jumps over the lazy dog`;
+
+    Object.keys(this.globalData.wb.colors).forEach((schemeKey) => {
+      let scheme = this.globalData.wb.colors[schemeKey];
+
+      if (!this.colorSwatches[schemeKey]) {
+        this.colorSwatches[schemeKey] = {};
+      }
+      Object.keys(scheme).forEach((colorKey) => {
+        if (typeof scheme[colorKey] === 'string') {
+          this.colorSwatches[schemeKey][colorKey] = scheme[colorKey];
+        } else {
+          Object.keys(scheme[colorKey]).forEach((shadeKey) => {
+            this.colorSwatches[schemeKey][`${colorKey}_${shadeKey}`] = scheme[colorKey][shadeKey];
+          })
+        }
+      });
+    });
   },
 };
 </script>

@@ -1,15 +1,16 @@
-const path = require('path');
+const path = require('path'),
+      wb = require(`./wb.config.js`);
 
 function addStyleResource (rule) {
   rule.use('style-resource')
     .loader('style-resources-loader')
     .options({
       patterns: [
-        path.resolve(__dirname, './_source/_css/automated/_colors.scss'),
-        path.resolve(__dirname, './_source/_css/automated/_fonts.scss'),
-        path.resolve(__dirname, './_source/_css/base/_functions.scss'),
-        path.resolve(__dirname, './_source/_css/base/_variables.scss'),
-        path.resolve(__dirname, './_source/_css/base/_mixins.scss'),
+        path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
+        path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
+        path.resolve(`${wb.paths.css.src}base/_functions.scss`),
+        path.resolve(`${wb.paths.css.src}base/_variables.scss`),
+        path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
       ],
     })
 }
@@ -25,10 +26,11 @@ module.exports = {
     config.resolve = {
       alias: {
         '@$': path.resolve(__dirname, './src/'),
-        Components: path.resolve(__dirname, './_source/_components/'),
-        CSS: path.resolve(__dirname, './_source/_css/'),
-        JS: path.resolve(__dirname, './_source/_js/'),
-        Starter: path.resolve(__dirname, './_starter/'),
+        Components: path.resolve(wb.paths.components.src),
+        CSS: path.resolve(wb.paths.css.src),
+        JS: path.resolve(wb.paths.js.src),
+        Source: path.resolve(wb.paths.starter.source),
+        Starter: path.resolve(wb.paths.starter.starter),
         Views: path.resolve(__dirname, './src/views/'),
       },
     }

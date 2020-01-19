@@ -3,6 +3,7 @@
 
 import DefaultLayout from '~/layouts/Default.vue';
 import VueMq from 'vue-mq';
+import { wb } from 'JS/automated/wb.js';
 
 export default function(Vue, { router, head, isClient }) {
   // Set default layout as a global component
@@ -12,10 +13,8 @@ export default function(Vue, { router, head, isClient }) {
   // Customize `defaultBreakpoint` for SSR
   Vue.use(VueMq, {
     breakpoints: {
-      sm: 500,
-      md: 768,
-      lg: 1300,
-      xlg: Infinity,
+      ...wb.mq,
+      xxl: Infinity,
     },
     defaultBreakpoint: 'sm',
   });

@@ -30,7 +30,14 @@ async function run() {
           g.prebuildClean(resolve, wb.paths, verbose);
       }
     );
+    const wbConfig = g.asyncFunction(
+      `Creating Component Docs List`, `Component Docs List Created`, (resolve) => {
+          g.prebuildWbConfig(resolve, wb.paths, wb, verbose);
+      }
+    );
+
     let cleanComplete = await clean;
+    let wbConfigComplete = await wbConfig;
 
     if (runPrettier) {
         g.prebuildPrettier(wb.prettier, null, verbose);
@@ -44,7 +51,7 @@ async function run() {
         );
         const componentDocsList = g.asyncFunction(
           `Creating Component Docs List`, `Component Docs List Created`, (resolve) => {
-            g.prebuildComponentDocsList(resolve, wb.paths, verbose);
+            g.prebuildComponentDocsList(resolve, wb.paths, wb, verbose);
           }
         );
         let componentDocsComplete = await componentDocs;

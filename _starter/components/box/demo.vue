@@ -98,8 +98,8 @@ export default {
       { name: 'v--width', description: `Sets 'width: 100vw'` },
     ];
 
-    if (this.globalData.pkg.colors.light !== undefined) {
-      const colorKeys = Object.keys(this.globalData.pkg.colors.light);
+    if (this.globalData.wb.colors.light !== undefined) {
+      const colorKeys = Object.keys(this.globalData.wb.colors.light);
 
       colorKeys.forEach((item) => {
         this.modifiers.push({ name: item, description: `Change text color to the value of $color_${item}` });

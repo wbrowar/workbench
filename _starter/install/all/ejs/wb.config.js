@@ -43,24 +43,24 @@ module.exports = {
     'apple': {
       fontStack: "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
     },
-    'eaves': {
-      fontFamily: "'MrEavesXLSanRRegular'",
-      fontStack: "'MrEavesXLSanRRegular', Helvetica, Arial, sans-serif",
-      fontStyle: "normal",
-      fontWeight: "normal",
-      files: {
-        eot: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
-        woff: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
-        woff2: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
-      }
-    }
+    // 'eaves': {
+    //   fontFamily: "'MrEavesXLSanRRegular'",
+    //   fontStack: "'MrEavesXLSanRRegular', Helvetica, Arial, sans-serif",
+    //   fontStyle: "normal",
+    //   fontWeight: "normal",
+    //   files: {
+    //     eot: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
+    //     woff: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
+    //     woff2: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
+    //   }
+    // }
   },
   mq: {
-    // Define breakpoints used in Tailwind and vue-mq
-    sm: '640px',
-    md: '768px',
-    lg: '1024px',
-    xl: '1280px',
+    // Define breakpoints (in pixel values) used in Tailwind and vue-mq
+    sm: 640,
+    md: 768,
+    lg: 1024,
+    xl: 1300,
   },
   tailwind: {
     // Define values to merge into tailwind.config.js, other than those defined above

@@ -3,13 +3,13 @@
     <h1>Text</h1>
     <p>Style basic text content elements, like `p`, `ol`, and `ul` tags by wrapping them in 'c_text'.</p>
 
-    <CodeExample title="Header 1" :code="code.h1">
+    <CodeExample title="Text Styling">
       <div v-html="fontSampleText"></div>
     </CodeExample>
 
     <CodeExample title="Sample" description="Change the text above.">
       <div>
-        <label for="font_sample_text_input" style="display: block; margin-bottom: 3px">Sample Text</label>
+        <label for="font_sample_text_input" style="display: block; margin-bottom: 3px; font-size: 0.9rem;">Sample Text</label>
         <textarea
           name="font_sample_text_input"
           v-model="fontSampleText"
@@ -93,8 +93,8 @@ export default {
       { name: 'padding--left' },
     ];
 
-    if (this.globalData.pkg.colors.light !== undefined) {
-      const colorKeys = Object.keys(this.globalData.pkg.colors.light);
+    if (this.globalData.wb.colors.light !== undefined) {
+      const colorKeys = Object.keys(this.globalData.wb.colors.light);
 
       colorKeys.forEach((item) => {
         this.modifiers.push({ name: item, description: `Change text color to the value of $color_${item}` });

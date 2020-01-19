@@ -141,7 +141,7 @@ methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, 
     });
 };
 
-methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback, paths, verbose) {
+methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback, paths, wb, verbose) {
     glob(`${ paths.components.src }**/demo.vue`, function (er, files) {
         methods.log('verbose', `Docs Files for List: ${ JSON.stringify(files, null, 2) }`, verbose);
         let components = [];
@@ -151,6 +151,7 @@ methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback,
 
         const options = {
             components: components,
+            wb: wb,
         };
 
         ejs.renderFile(`${ paths.starter.templates }_js/docs.js`, options, {}, function(err, str) {
@@ -287,6 +288,25 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
     });
 };
 
+methods.prebuildWbConfig = function prebuildWbConfig(callback, paths, wb, verbose) {
+    methods.log('verbose', `Converting WB Config for front-end use`, verbose);
+    const options = {
+        wb: wb,
+    };
+
+    ejs.renderFile(`${ paths.starter.templates }_js/wb.js`, options, {}, function(err, str) {
+        if (err) {
+            methods.log('warn', err);
+        }
+        fs.outputFile(paths.js.src + 'automated/wb.js', str, (err) => {
+            if(!err) {
+                methods.log('verbose', `JS templates compiled: wb.js`, verbose);
+                callback();
+            }
+        });
+    });
+};
+
 methods.slugify = function slugify(text) {
     return text.toString().toLowerCase()
         .replace(/\s+/g, '-')           // Replace spaces with -
@@ -309,6 +329,7 @@ methods.snake = function snake(text) {
 methods.tailwindConfig = function tailwindConfig(wb) {
     let colors = {};
     let fontFamily = {};
+    let screens = {};
 
     // Prepare colors for Tailwind
     const themeColors = wb.colors.default;
@@ -330,11 +351,16 @@ methods.tailwindConfig = function tailwindConfig(wb) {
         fontFamily[fontKey] = wb.fonts['fontStack'];
     });
 
+    // Prepare media queries for Tailwind
+    Object.keys(wb.mq).forEach((mqKey) => {
+        screens[mqKey] = `${wb.mq[mqKey]}px`;
+    });
+
     return _.merge({
         theme: {
             colors: colors,
             fontFamily: fontFamily,
-            screens: wb.mq || {},
+            screens: screens,
         }}, wb.tailwind);
 };
 
