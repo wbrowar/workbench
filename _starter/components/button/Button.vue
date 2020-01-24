@@ -1,35 +1,33 @@
 <template>
   <span
     :is="elementTypeComputed"
-    :class="{
-      c_button: styleAsButton,
-      'c_button--pointer': styleAsButton && href,
-      'c_button--outline': outline,
-      'c_button--reset': reset,
-    }"
+    :class="classes"
     :aria-label="ariaLabel || null"
-    :href="!useGLink ? href || null : null"
-    :style="color ? { '--button-color': `var(--color-${color})` } : null"
+    :href="formattedHref"
     :target="newWindow ? '_blank' : target || null"
-    :to="useGLink ? href || null : null"
+    :to="useRouterLink ? formattedHref || null : null"
     :rel="newWindow || target ? 'noopener' : null"
-    @click="clickThroughAction"
-    ><slot>{{ labelText }}</slot></span
-  >
+    @click="onClick"
+    ><slot>{{ labelText }}</slot></span>
 </template>
 
 <script>
 import { log } from 'JS/global.js';
+import Box from 'Components/box/Box.vue';
+import wb from 'JS/automated/wb.js';
 
 export default {
+  components: {
+    Box,
+  },
   data() {
-    return {};
+    return {
+    };
   },
   props: {
-    action: Function,
-    actionArgs: Array,
     ariaLabel: String,
-    color: String,
+    colorBg: { type: String, default: 'black' },
+    colorText: { type: String, default: 'white' },
     elementType: { type: String, default: 'button' },
     href: String,
     labelText: String,
@@ -40,32 +38,66 @@ export default {
     unstyle: { type: Boolean, default: false },
   },
   computed: {
+    classes: function() {
+      let classes = [];
+      if (this.styleAsButton) {
+        // Add default component styles
+        classes.push('flex flex-row flex-no-wrap items-center justify-center px-5 py-3');
+        classes.push(`bg-${this.colorBg}`);
+        classes.push(`text-${this.colorText}`);
+      }
+      if (this.styleAsButton && this.href) {
+        classes.push('cursor-pointer');
+      }
+      return classes;
+    },
     elementTypeComputed: function() {
-      if (this.useGLink) {
-        return 'g-link';
+      if (this.useRouterLink) {
+        return wb.projectType === 'gridsome' ? 'g-link' : 'router-link';
       }
       return this.href ? 'a' : this.elementType;
+    },
+    formattedHref: function() {
+      if (this.href) {
+        if (this.href === '/') {
+          // Return the homepage
+          return `/`;
+        } else if (this.href.startsWith('http://') || this.href.startsWith('https://')) {
+          return this.href;
+        } else {
+          return (this.href.startsWith('/') ? '' : '/') + this.href + (this.href.endsWith('/') ? '' : '/');
+        }
+      }
+
+      return false;
     },
     styleAsButton: function() {
       return this.unstyle === false && Object.keys(this.$slots).length === 0;
     },
-    useGLink: function() {
+    useRouterLink: function() {
       if (this.href) {
-        return this.href.startsWith('/');
+        return this.formattedHref.startsWith('/');
       }
       return false;
     },
   },
   methods: {
-    clickThroughAction: function(event) {
-      if (this.action) {
-        if (this.actionArgs) {
-          this.action(event, ...this.actionArgs);
-        } else {
-          this.action(event);
-        }
-      }
+    onClick: function(event) {
+      this.$emit('onClick', event);
     },
   },
 };
 </script>
+
+<style lang="scss">
+  .c_button {
+    $self: &;
+
+    @at-root #{$self}--pointer {
+      @apply cursor-pointer;
+    }
+    @at-root #{$self}--reset {
+      @include button_reset;
+    }
+  }
+</style>

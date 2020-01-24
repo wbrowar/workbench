@@ -11,7 +11,7 @@
 
 <script>
   import demo from 'Components/<%- handle %>/demo.vue';
-  import { wb } from 'JS/automated/wb.js';
+  import wb from 'JS/automated/wb.js';
 
   export default {
     components: {

@@ -2,7 +2,7 @@
   <div>
     <header class="ui__header">
       <strong>
-        <g-link to="/"><IconSVG handle="plus" width="40px" height="40px" /><div class="c_text--hide">{{ $static.metadata.siteName }}</div></g-link>
+        <g-link to="/"><IconSVG handle="plus" width="40" height="40" /><div class="c_text--hide">{{ $static.metadata.siteName }}</div></g-link>
       </strong>
       <nav class="ui__nav">
         <g-link class="ui__nav__link" to="/">Home</g-link>

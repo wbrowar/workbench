@@ -8,28 +8,22 @@
     <CodeExample
       :code="code.href"
       title="CTA Buttons"
-      description="Link to internal pages or link to external URLs. Links that start with '/' will be converted to 'g-link' elements to work with Gridsome projects."
+      :description="`Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${ globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link' }' components to work with Vue Router.`"
     >
       <div class="c_buttons">
         <Button href="/about/" label-text="About (internal)" />
-        <Button new-window href="http://google.com" label-text="Google (external)" />
+        <Button new-window href="https://vuejs.org/" label-text="Vue Website (external)" />
       </div>
     </CodeExample>
 
     <CodeExample
       :code="code.action"
       title="Action Buttons"
-      description="Fire a Javascript function by passing it through as a Vue method."
+      description="Fire a Javascript function when the button is clicked. When no argument is passed through, a MouseEvent object will be returned."
     >
       <div class="c_buttons c_buttons--center">
-        <!-- ClientOnly -->
-          <Button :action="clickThroughAction" label-text="Button Clicked!" />
-          <Button
-            :action="clickThroughAction"
-            :action-args="['Different Message']"
-            label-text="Message from argument"
-          />
-        <!-- /ClientOnly -->
+        <Button @onClick="clickThroughAction" label-text="Get Click Event" />
+        <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
       </div>
     </CodeExample>
 
@@ -39,11 +33,11 @@
       description="Use the same props as regular buttons but add your own style. Passing a prop into a Button will automatically unstyle it, but styles can be added via CSS classes."
     >
       <div class="c_buttons c_buttons--right">
-        <Button new-window unstyle href="http://google.com" label-text="Unstyled Button" />
-        <Button new-window href="http://google.com">
+        <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
+        <Button new-window href="https://vuejs.org/">
           <Box demo />
         </Button>
-        <Button class="c_button c_button--pointer" new-window unstyle href="http://google.com"
+        <Button class="c_button c_button--pointer" new-window unstyle href="https://vuejs.org/"
           ><span>🎨 Style by classes</span></Button
         >
       </div>
@@ -51,7 +45,7 @@
 
     <PropsTable :props="props" />
 
-    <CssModifiers root-class="c_button" :modifiers="modifiers" />
+<!--    <CssModifiers root-class="c_button" :modifiers="modifiers" />-->
   </div>
 </template>
 
@@ -92,20 +86,18 @@ export default {
     this.code = {
       href: `<div class="c_buttons">
   <Button href="/about/" label-text="About (internal)" />
-  <Button new-window href="http://google.com" label-text="Google (external)" />
+  <Button new-window href="https://vuejs.org/" label-text="Vue Website (external)" />
 </div>`,
       action: `<div class="c_buttons c_buttons--center">
-  <!-- ClientOnly -->
-    <Button :action="clickThroughAction" label-text="Button Clicked!" />
-    <Button :action="clickThroughAction" :action-args="['Different Message']" label-text="Message from argument" />
-  <!-- /ClientOnly -->
+  <Button @onClick="clickThroughAction" label-text="Get Click Event" />
+  <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
 </div>`,
       unstyled: `<div class="c_buttons c_buttons--right">
-  <Button new-window unstyle href="http://google.com" label-text="Unstyled Button" />
-  <Button new-window href="http://google.com">
+  <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
+  <Button new-window href="https://vuejs.org/">
     <Box demo />
   </Button>
-  <Button class="c_button c_button--pointer" new-window unstyle href="http://google.com"><span>🎨 Style by classes</span></Button>
+  <Button class="c_button c_button--pointer" new-window unstyle href="https://vuejs.org/"><span>🎨 Style by classes</span></Button>
 </div>`,
     };
 
@@ -114,8 +106,6 @@ export default {
     ];
 
     this.props = [
-      { name: 'action', type: 'Function', description: `A Javascript function to fire, instead of visiting a URL.` },
-      { name: 'actionArgs', type: 'Array', description: `An array of arguments to pass into the action function.` },
       { name: 'ariaLabel', type: 'String', description: `Sets the 'aria-label' attribute on a button.` },
       {
         name: 'color',
