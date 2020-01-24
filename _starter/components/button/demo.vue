@@ -37,7 +37,7 @@
         <Button new-window href="https://vuejs.org/">
           <Box demo />
         </Button>
-        <Button class="c_button c_button--pointer" new-window unstyle href="https://vuejs.org/"
+        <Button class="c_button c_button--default c_button--pointer" new-window unstyle href="https://vuejs.org/"
           ><span>🎨 Style by classes</span></Button
         >
       </div>
@@ -108,11 +108,6 @@ export default {
     this.props = [
       { name: 'ariaLabel', type: 'String', description: `Sets the 'aria-label' attribute on a button.` },
       {
-        name: 'color',
-        type: 'String',
-        description: `Sets color of button to one of the colors defined in 'package.json'.`,
-      },
-      {
         name: 'elementType',
         type: 'String',
         default: `'button'`,
@@ -124,6 +119,12 @@ export default {
       { name: 'outline', type: 'Boolean', default: `false`, description: `Adds the 'outline' modifier.` },
       { name: 'reset', type: 'Boolean', default: `false`, description: `Applies button_reset SCSS mixin.` },
       { name: 'target', type: 'String', description: `Sets the 'target' attribute if 'newWindow' is not used.` },
+      {
+        name: 'theme',
+        type: 'String',
+        default: `'default'`,
+        description: `Extends button styles with colors and other sets of properties.`,
+      },
       {
         name: 'unstyle',
         type: 'Boolean',

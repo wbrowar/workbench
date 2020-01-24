@@ -3,7 +3,8 @@
 
 import DefaultLayout from '~/layouts/Default.vue';
 import VueMq from 'vue-mq';
-import { wb } from 'JS/automated/wb.js';
+import wb from 'JS/automated/wb.js';
+import 'CSS/app.scss';
 
 export default function(Vue, { router, head, isClient }) {
   // Set default layout as a global component

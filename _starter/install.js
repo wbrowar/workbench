@@ -70,7 +70,6 @@ async function run() {
             'animate',
             'box',
             'button',
-            'buttons',
             'color_scheme_toggle',
             'flex',
             'grid',

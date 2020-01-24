@@ -13,12 +13,10 @@
 
 <script>
 import { log } from 'JS/global.js';
-import Box from 'Components/box/Box.vue';
 import wb from 'JS/automated/wb.js';
 
 export default {
   components: {
-    Box,
   },
   data() {
     return {
@@ -26,8 +24,6 @@ export default {
   },
   props: {
     ariaLabel: String,
-    colorBg: { type: String, default: 'black' },
-    colorText: { type: String, default: 'white' },
     elementType: { type: String, default: 'button' },
     href: String,
     labelText: String,
@@ -35,19 +31,21 @@ export default {
     outline: { type: Boolean, default: false },
     reset: { type: Boolean, default: false },
     target: String,
+    theme: { type: String, default: 'default' },
     unstyle: { type: Boolean, default: false },
   },
   computed: {
     classes: function() {
       let classes = [];
       if (this.styleAsButton) {
-        // Add default component styles
-        classes.push('flex flex-row flex-no-wrap items-center justify-center px-5 py-3');
-        classes.push(`bg-${this.colorBg}`);
-        classes.push(`text-${this.colorText}`);
-      }
-      if (this.styleAsButton && this.href) {
-        classes.push('cursor-pointer');
+        classes.push('c_button');
+
+        if (this.theme) {
+          classes.push(`c_button--${this.theme}`);
+        }
+        if (this.href) {
+          classes.push('cursor-pointer');
+        }
       }
       return classes;
     },
@@ -93,6 +91,15 @@ export default {
   .c_button {
     $self: &;
 
+    @apply flex flex-row flex-no-wrap items-center justify-center px-5 py-3;
+
+    @at-root #{$self}--default {
+      @apply bg-black text-white;
+
+      @at-root #{&}:hover {
+        @apply opacity-60;
+      }
+    }
     @at-root #{$self}--pointer {
       @apply cursor-pointer;
     }
