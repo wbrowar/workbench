@@ -28,12 +28,24 @@ module.exports = {
     },
     // Define colors for (prefers-color-scheme: dark)
     // dark: {
-    //   white: "rgb(240, 240, 240)"
+    //   white: "rgb(40, 40, 40)",
+    //   black: "rgb(200, 200, 200)",
+    //   gray: {
+    //     '100': '#212121',
+    //     '200': '#424242',
+    //     '300': '#616161',
+    //     '400': '#757575',
+    //     '500': '#9e9e9e',
+    //     '600': '#bdbdbd',
+    //     '700': '#e0e0e0',
+    //     '800': '#eeeeee',
+    //     '900': '#f5f5f5',
+    //   },
     // },
     // Define colors for (prefers-color-scheme: light)
     // light: {
     //   white: "rgb(255, 255, 255)",
-    // }
+    // },
     // Define colors that override by class
     // high_contrast: {
     //   white: "rgb(255, 255, 255)",

@@ -1,5 +1,6 @@
 // GLOBAL
 @include automated_fonts;
+@include automated_color_schemes;
 
 ::selection {
   background-color: colora('black', 0.5);

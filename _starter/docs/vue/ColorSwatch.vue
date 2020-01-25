@@ -8,12 +8,16 @@
     <div class="docs__color_swatch__options">
       <p class="docs__color_swatch__options__title">{{ name }}</p>
       <div class="docs__color_swatch__option" @click="copyToClipboard(`bg-${name}`)" :title="`Click to copy 'bg-${name}' to clipboard`">
-        <div class="docs__color_swatch__checkers"><div class="docs__color_swatch__option__display" :style="{ backgroundColor: color }"></div></div>
+        <div class="docs__color_swatch__checkers"><div class="docs__color_swatch__option__display" :class="`bg-${name}`"></div></div>
         <div class="docs__color_swatch__option__label">Background</div>
       </div>
       <div class="docs__color_swatch__option" @click="copyToClipboard(`text-${name}`)" :title="`Click to copy 'text-${name}' to clipboard`">
-        <div><div class="docs__color_swatch__option__display bg-white" :style="{ color: color }">A</div></div>
+        <div><div class="docs__color_swatch__option__display bg-white" :class="`text-${name}`">A</div></div>
         <div class="docs__color_swatch__option__label">Text</div>
+      </div>
+      <div class="docs__color_swatch__option" @click="copyToClipboard(`border-${name}`)" :title="`Click to copy 'border-${name}' to clipboard`">
+        <div><div class="docs__color_swatch__option__display bg-white border-8 border-solid" :class="`border-${name}`"></div></div>
+        <div class="docs__color_swatch__option__label">Border</div>
       </div>
     </div>
   </div>
@@ -122,9 +126,9 @@
         width: 40px;
         height: 40px;
         border-radius: 3px;
-        border: 1px solid rgba(43, 48, 59, 0.1);
+        /*border: 1px solid rgba(43, 48, 59, 0.1);*/
         /*box-shadow: inset 1px 4px 5px rgba(43, 48, 59, 0.1);*/
-        font-size: 2rem;
+        font-size: 2.4rem;
         font-weight: 900;
       }
       @at-root #{&}__label {

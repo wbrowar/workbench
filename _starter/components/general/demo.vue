@@ -2,7 +2,7 @@
   <div>
     <CodeExample
       title="Colors"
-      description="Color schemes configured in the `package.json` file. The `light` scheme is shown by default. The `dark` theme appears when the browser is set to dark mode."
+      description="Color schemes configured in the `package.json` file. The `default` scheme is shown by default. The `dark` theme appears when the browser is set to dark mode."
       v-if="globalData.wb.colors"
     >
       <div v-for="(scheme, index) in colorSwatches" :key="index">

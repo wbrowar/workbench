@@ -2,7 +2,7 @@
   <div class="docs__code_example" :class="{ 'docs__code_example--code': code }">
     <h2>{{ title }}</h2>
     <p v-if="description">{{ description }}</p>
-    <div class="docs__code_example__output" :style="{ backgroundColor: dark ? 'rgb(43, 48, 59)' : 'rgb(255, 255, 255)' }">
+    <div class="docs__code_example__output border border-solid border-gray-300" :class="[`bg-${dark ? 'black' : 'white'}`]">
       <slot />
     </div>
     <div class="docs__code_example__code" v-text.trim="code" v-if="code"></div>
@@ -29,7 +29,6 @@
     @at-root #{$self}__output {
       padding: 20px;
       box-sizing: border-box;
-      border: 1px solid rgba(211, 220, 231, 0.7);
       border-radius: 4px;
 
       @at-root #{$self}--code & {
