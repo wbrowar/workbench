@@ -94,7 +94,7 @@ export default {
           this.colorSwatches[schemeKey][colorKey] = scheme[colorKey];
         } else {
           Object.keys(scheme[colorKey]).forEach((shadeKey) => {
-            this.colorSwatches[schemeKey][`${colorKey}_${shadeKey}`] = scheme[colorKey][shadeKey];
+            this.colorSwatches[schemeKey][`${colorKey}-${shadeKey}`] = scheme[colorKey][shadeKey];
           })
         }
       });

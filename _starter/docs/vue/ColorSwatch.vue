@@ -3,8 +3,19 @@
     <div class="docs__color_swatch__checkers" @click="copyToClipboard(`$color_${ name }`)" :title="`Click to copy '$color_${ name }' to clipboard`">
       <div class="docs__color_swatch__color" :style="{ backgroundColor: color }"></div>
     </div>
-    <div class="docs__color_swatch__variable" @click="copyToClipboard(`$color_${ name }`)" :title="`Click to copy '$color_${ name }' to clipboard`">$color_{{ name }}</div>
+    <div class="docs__color_swatch__variable" @click="copyToClipboard(name)" :title="`Click to copy 'name' to clipboard`">{{ name }}</div>
     <div class="docs__color_swatch__value">{{ color }}</div>
+    <div class="docs__color_swatch__options">
+      <p class="docs__color_swatch__options__title">{{ name }}</p>
+      <div class="docs__color_swatch__option" @click="copyToClipboard(`bg-${name}`)" :title="`Click to copy 'bg-${name}' to clipboard`">
+        <div class="docs__color_swatch__checkers"><div class="docs__color_swatch__option__display" :style="{ backgroundColor: color }"></div></div>
+        <div class="docs__color_swatch__option__label">Background</div>
+      </div>
+      <div class="docs__color_swatch__option" @click="copyToClipboard(`text-${name}`)" :title="`Click to copy 'text-${name}' to clipboard`">
+        <div><div class="docs__color_swatch__option__display bg-white" :style="{ color: color }">A</div></div>
+        <div class="docs__color_swatch__option__label">Text</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -64,6 +75,62 @@
     @at-root #{$self}__variable {
       font-weight: 700;
       cursor: pointer;
+    }
+    @at-root #{$self}__options {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 10px;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(255, 255, 255);
+      transition: opacity .2s ease-out;
+      opacity: 0;
+
+      & > * {
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      @at-root #{$self}:hover & {
+        opacity: 1;
+      }
+
+      @at-root #{&}__title {
+        color: rgba(43, 48, 59, .4);
+      }
+    }
+    @at-root #{$self}__option {
+      display: grid;
+      grid-template-columns: 40px auto;
+      grid-template-rows: 40px;
+      gap: 10px;
+      align-items: center;
+      cursor: pointer;
+
+      @at-root #{&}__header {
+        font-size: 1.1rem;
+        color: #2b303b;
+      }
+      @at-root #{&}__display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 3px;
+        border: 1px solid rgba(43, 48, 59, 0.1);
+        /*box-shadow: inset 1px 4px 5px rgba(43, 48, 59, 0.1);*/
+        font-size: 2rem;
+        font-weight: 900;
+      }
+      @at-root #{&}__label {
+        font-size: 0.8rem;
+        color: #2b303b;
+      }
     }
   }
 </style>

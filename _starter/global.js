@@ -182,7 +182,7 @@ methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ej
                 ejsVars.colors[schemeKey][colorKey] = themeColors[schemeKey][colorKey];
             } else {
                 Object.keys(themeColors[schemeKey][colorKey]).forEach((shadeKey) => {
-                    ejsVars.colors[schemeKey][`${colorKey}_${shadeKey}`] = themeColors[schemeKey][colorKey][shadeKey];
+                    ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = themeColors[schemeKey][colorKey][shadeKey];
                 })
             }
         });
@@ -341,7 +341,7 @@ methods.tailwindConfig = function tailwindConfig(wb) {
                 colors[colorKey] = {};
             }
             Object.keys(themeColors[colorKey]).forEach((shadeKey) => {
-                colors[colorKey][shadeKey] = `var(--color-${colorKey}_${shadeKey})`;
+                colors[colorKey][shadeKey] = `var(--color-${colorKey}-${shadeKey})`;
             })
         }
     });

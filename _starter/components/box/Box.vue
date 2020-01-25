@@ -39,7 +39,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-// Set styles in _source/_components/box/_box.scss
-</style>

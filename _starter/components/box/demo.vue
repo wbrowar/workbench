@@ -6,11 +6,11 @@
     <ImportPath path="import Box from 'Components/box/Box.vue';" />
 
     <CodeExample title="Aspect Box" description="Constrain width and height to an aspect ratio." :code="code.aspect">
-      <Box class="c_box--alert_error" aspect="21/9">
-        <div class="c_text c_text--white"><p>Content</p></div>
+      <Box class="bg-alert_error" aspect="21/9">
+        <div class="c_text text-white"><p>Content</p></div>
       </Box>
-      <Box class="c_box--alert_success" :aspect="$mq | mq({ sm: '1', md: '21/9' })">
-        <div class="c_text c_text--white"><p>Content</p></div>
+      <Box class="bg-alert_success" :aspect="$mq | mq({ sm: '1', md: '21/9' })">
+        <div class="c_text text-white"><p>Content</p></div>
       </Box>
     </CodeExample>
 
