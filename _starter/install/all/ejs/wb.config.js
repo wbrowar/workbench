@@ -52,9 +52,11 @@ module.exports = {
     // }
   },
   fonts: {
+    // Set up fonts for Tailwind by defining a `fontStack`
     'apple': {
       fontStack: "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
     },
+    // For fonts loaded locally, via @font-face, define both a `fontFamily` and a `fontStack`, then provide at least one font file path
     // 'eaves': {
     //   fontFamily: "'MrEavesXLSanRRegular'",
     //   fontStack: "'MrEavesXLSanRRegular', Helvetica, Arial, sans-serif",
