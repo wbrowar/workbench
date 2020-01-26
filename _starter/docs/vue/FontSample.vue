@@ -1,5 +1,5 @@
 <template>
-  <div class="docs__font_sample" :style="fontStyles" @click="copyToClipboard(`@include font('${ handle }');`)" :title="`Click to copy '${ `@include font('${ handle }');` }' to clipboard`">{{ text }}</div>
+  <div class="docs__font_sample" :class="classes" :style="{ '--docs-font-sample-size': size }" @click="copyToClipboard(copyString)" :title="`Click to copy '${ `${copyString}` }' to clipboard`">{{ text }}</div>
 </template>
 
 <script>
@@ -7,20 +7,26 @@
 
   export default {
     props: {
-      font: { type: Object, required: true },
       handle: { type: String, required: true },
-      text: { type: String, required: true },
       size: { type: Number, required: true },
+      text: { type: String, required: true },
+      weight: String,
     },
     computed: {
-      fontStyles: function() {
-        return {
-          '--docs-font-sample-size': this.size,
-          fontFamily: this.font.fontStack || '',
-          fontStyle: this.font.fontStyle || 'normal',
-          fontWeight: this.font.fontWeight || 'normal',
+      classes: function() {
+        let classes = [];
+
+        classes.push([`text-${this.handle}`]);
+
+        if (this.weight) {
+          classes.push([`font-${this.weight}`]);
         }
-      }
+
+        return classes;
+      },
+      copyString: function() {
+        return this.weight ? `text-${this.handle} font-${this.weight}` : `text-${this.handle}`;
+      },
     },
     methods: {
       copyToClipboard: function (text) {
@@ -30,19 +36,7 @@
           log(`Could not copy ${ text } to clipboard`);
         });
       },
-      loadFont: function () {
-        if (this.font.files) {
-          const font = new FontFace(`${ this.font.fontFamily }`, `url(${ this.font.files.woff2 })`);
-          // wait for font to be loaded
-          font.load();
-          // add font to document
-          document.fonts.add(font);
-        }
-      }
     },
-    mounted() {
-      this.loadFont();
-    }
   };
 </script>
 

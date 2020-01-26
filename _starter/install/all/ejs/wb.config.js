@@ -24,7 +24,7 @@ module.exports = {
       },
       alert_success: "rgb(45, 176, 51)",
       alert_error: "rgb(176, 25, 22)",
-      alert_warning: "rgb(238, 199, 0)"
+      alert_warning: "rgb(238, 199, 0)",
     },
     // Define colors for (prefers-color-scheme: dark)
     // dark: {
@@ -49,12 +49,23 @@ module.exports = {
     // Define colors that override by class
     // high_contrast: {
     //   white: "rgb(255, 255, 255)",
-    // }
+    // },
   },
   fonts: {
     // Set up fonts for Tailwind by defining a `fontStack`
     'apple': {
       fontStack: "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
+      demoWeights: [
+        'hairline',
+        'thin',
+        'light',
+        'normal',
+        'medium',
+        'semibold',
+        'bold',
+        'extrabold',
+        'black',
+      ],
     },
     // For fonts loaded locally, via @font-face, define both a `fontFamily` and a `fontStack`, then provide at least one font file path
     // 'eaves': {
@@ -65,8 +76,8 @@ module.exports = {
     //   files: {
     //     eot: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
     //     woff: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
-    //     woff2: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2"
-    //   }
+    //     woff2: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2",
+    //   }.
     // }
   },
   mq: {
@@ -117,7 +128,7 @@ module.exports = {
       src: `${paths.sourcePath}_img/`,
     },
     js: {
-      src: `${paths.sourcePath}_js/`,
+      src: `${paths.sourcePath}_js/`,d
     },
     starter: {
       components: `${paths.starterPath}components/`,
@@ -128,6 +139,6 @@ module.exports = {
   },
   prettier: {
     files: "{_source,src}_source/**/*.{js,json,scss,vue}",
-    options: "--write"
+    options: "--write",
   },
 };

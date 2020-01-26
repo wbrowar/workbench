@@ -1,22 +1,5 @@
 <template>
   <div>
-    <CodeExample
-      title="Colors"
-      description="Color schemes configured in the `package.json` file. The `default` scheme is shown by default. The `dark` theme appears when the browser is set to dark mode."
-      v-if="globalData.wb.colors"
-    >
-      <div v-for="(scheme, index) in colorSwatches" :key="index">
-        <h3 style="margin: 20px 0;">{{ index }}</h3>
-        <div
-          class="root__color_grid"
-          style="display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, 174px); grid-template-rows: auto;"
-        >
-          <!-- ClientOnly -->
-            <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
-          <!-- /ClientOnly -->
-        </div>
-      </div>
-    </CodeExample>
 
     <CodeExample
       title="Fonts"
@@ -24,10 +7,14 @@
       v-if="globalData.wb.fonts"
     >
       <div v-for="(font, index) in globalData.wb.fonts" :key="index">
-        <h3 style="margin: 20px 0;">{{ index }}</h3>
-        <!-- ClientOnly -->
-          <FontSample :font="font" :handle="index" :size="parseFloat(fontSampleSize)" :text="fontSampleText" />
-        <!-- /ClientOnly -->
+        <div v-for="weight in font.demoWeights" :key="weight" v-if="font.demoWeights">
+          <h3 style="margin: 20px 0;">{{ index }}-{{ weight }}</h3>
+          <FontSample :handle="index" :size="parseFloat(fontSampleSize)" :text="fontSampleText" :weight="weight" />
+        </div>
+        <div v-else>
+          <h3 style="margin: 20px 0;">{{ index }}</h3>
+          <FontSample :handle="index" :size="parseFloat(fontSampleSize)" :text="fontSampleText" />
+        </div>
       </div>
       <div style="display: grid; grid-template-columns: auto 80px; grid-gap: 30px; margin-top: 60px;">
         <div>
@@ -43,6 +30,29 @@
             v-model="fontSampleSize"
             style="padding: 5px; width: 100%;"
           />
+        </div>
+      </div>
+    </CodeExample>
+
+
+
+
+
+
+    <CodeExample
+      title="Colors"
+      description="Color schemes configured in the `package.json` file. The `default` scheme is shown by default. The `dark` theme appears when the browser is set to dark mode."
+      v-if="globalData.wb.colors"
+    >
+      <div v-for="(scheme, index) in colorSwatches" :key="index">
+        <h3 style="margin: 20px 0;">{{ index }}</h3>
+        <div
+          class="root__color_grid"
+          style="display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, 174px); grid-template-rows: auto;"
+        >
+          <!-- ClientOnly -->
+            <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
+          <!-- /ClientOnly -->
         </div>
       </div>
     </CodeExample>
