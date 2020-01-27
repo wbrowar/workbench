@@ -26,12 +26,10 @@ let routes = [
 ];
 
 if (process.env.VUE_APP_ENABLE_DOCS) {
-  docsComponents.forEach((item) => {
-    routes.push({
-      path: `/dev/docs/${item}`,
-      name: `dev_docs_${item}`,
-      component: () => import(`JS/automated/dev/${item}.vue`),
-    });
+  routes.push({
+    path: `/dev/docs/:slug`,
+    name: `dev_docs`,
+    component: () => import(`JS/automated/ComponentDocs.vue`),
   });
 }
 

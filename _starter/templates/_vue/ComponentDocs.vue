@@ -4,25 +4,27 @@
       <div class="dev__components__nav">
         <<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %> :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %>>
       </div>
-      <demo class="dev__components__demo" :global-data="{ wb: wb }" />
+      <div :is="currentPageHandle" class="dev__components__demo" :global-data="{ wb: wb }" />
     </div>
   </<%- wb.projectType === 'gridsome' ? 'Layout' : 'div' %>>
 </template>
 
 <script>
-  import demo from 'Components/<%- handle %>/demo.vue';
+  import { docsComponents, imports } from 'JS/automated/docs.js';
   import wb from 'JS/automated/wb.js';
 
   export default {
-    components: {
-      demo,
-    },
+    components: imports,
     data() {
       return {
-        currentPageHandle: '<%- handle %>',
-        pages: ['<%- components.join("','") %>'],
+        pages: docsComponents,
         wb: wb,
       };
+    },
+    computed: {
+      currentPageHandle: function() {
+        return `wb-${this.$route.path.substring(10, this.$route.path.length - 1)}`;
+      },
     },
     methods: {
       titleCase: function(str) {

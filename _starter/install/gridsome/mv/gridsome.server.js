@@ -26,13 +26,15 @@ module.exports = function (api) {
 
     // Create style inventory pages
     if (process.env.ENABLE_DOCS || false) {
-      const componentDocPages = glob.sync(`./_source/_js/automated/dev/*.vue`);
+      // const componentDocPages = glob.sync(`./_source/_js/automated/dev/*.vue`);
+      const componentDocPages = glob.sync(`${ wb.paths.components.src }**/demo.vue`);
       componentDocPages.forEach((item) => {
+        const slug = path.dirname(item).split(path.sep).pop();
         api.createPage({
-          path: `/dev/docs/${ path.basename(item, '.vue') }`,
-          component: `./_source/_js/automated/dev/${ path.basename(item) }`,
+          path: `/dev/docs/${ slug }`,
+          component: `${ wb.paths.js.src }automated/ComponentDocs.vue`,
           context: {
-            slug: path.basename(item)
+            slug: slug,
           }
         });
       });
