@@ -17,8 +17,9 @@
     </transition>
     <footer class="ui__footer">
       <ClientOnly>
-        <ColorSchemeToggle scheme-id="default" :all-schemes="['default', 'dark']" />
-        <ColorSchemeToggle scheme-id="dark" :all-schemes="['default', 'dark']" />
+        <ColorSchemeToggle scheme-id="default" title="Reset to default color scheme">🌎</ColorSchemeToggle>
+        <ColorSchemeToggle scheme-id="dark" title="Turn on dark color scheme (override browser setting)">🌒</ColorSchemeToggle>
+        <ColorSchemeToggle scheme-id="light" title="Turn on light color scheme (override browser setting)">🌖</ColorSchemeToggle>
       </ClientOnly>
     </footer>
   </div>
@@ -45,14 +46,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'CSS/automated/_colors.scss';
-@import 'CSS/automated/_fonts.scss';
-@import 'CSS/lib/_reset.scss';
-@import 'CSS/base/_animations.scss';
-@import 'CSS/base/_custom_properties.scss';
-@import 'CSS/base/_global.scss';
-@import 'CSS/automated/_components.scss';
-
 .fade-enter-active {
   transition: opacity 0.5s;
 }

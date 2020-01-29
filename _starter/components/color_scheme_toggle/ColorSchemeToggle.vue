@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { addClass, hasClass, removeClass } from 'JS/global.js';
+import { addClass, hasClass, log, removeClass } from 'JS/global.js';
+import wb from 'JS/automated/wb.js';
 
 export default {
   data() {
@@ -15,7 +16,6 @@ export default {
   },
   props: {
     method: { default: 'class' },
-    allSchemes: false,
     schemeId: { required: true },
     targetSelector: { default: 'html' },
   },
@@ -30,15 +30,22 @@ export default {
           }
           break;
         case 'event':
-          window.VueEvent.$emit('set-color-scheme', this.schemeId);
+          window.VueEvent.$emit('setColorScheme', this.schemeId);
           break;
       }
     },
   },
   created() {
     // Set array of schemes other than this one
-    this.otherSchemes = this.allSchemes ? this.allSchemes.filter((scheme) => scheme !== this.schemeId) : [];
+    this.otherSchemes = Object.keys(wb.colors) ? Object.keys(wb.colors).filter((scheme) => scheme !== this.schemeId) : [];
   },
-  mounted() {},
 };
 </script>
+
+<style lang="scss">
+  .c_color_scheme_toggle {
+    $self: &;
+
+    @include button_reset;
+  }
+</style>
