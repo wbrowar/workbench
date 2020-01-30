@@ -4,10 +4,11 @@
       <div v-html="tailwindSample"></div>
       <hr>
       <textarea
+        class="bg-black text-white rounded"
         name="font_sample_text_input"
         v-model="tailwindSample"
         rows="30"
-        style="padding: 5px; width: 100%; font-size: 0.9rem; color: #319795;"
+        style="padding: 5px; width: 100%; font-size: 0.9rem;"
       ></textarea>
     </div>
   </div>

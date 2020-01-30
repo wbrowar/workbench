@@ -7,6 +7,7 @@
 
     <CodeExample
       :code="code.href"
+      copy-text='<Button href="" label-text="" />'
       title="CTA Buttons"
       :description="`Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${ globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link' }' components to work with Vue Router.`"
     >
@@ -18,6 +19,7 @@
 
     <CodeExample
       :code="code.action"
+      copy-text='<Button @onClick="" />'
       title="Action Buttons"
       description="Fire a Javascript function when the button is clicked. When no argument is passed through, a MouseEvent object will be returned."
     >

@@ -6,7 +6,7 @@
       <slot />
     </div>
     <div class="docs__code_example__code" v-text.trim="code" v-if="code"></div>
-      <div class="docs__code_example__copy" :title="`Copy ${copyText} to clipboard`" @click="copyToClipboard(copyText)" v-if="copyText">COPY {{ copyText }}</div>
+    <div class="docs__code_example__copy" :title="`Copy ${copyText} to clipboard`" @click="copyToClipboard(copyText)" v-if="copyText"><span class="mr-2 opacity-60">COPY</span> {{ copyText }}</div>
   </div>
 </template>
 
@@ -55,7 +55,7 @@
       position: absolute;
       bottom: -40px;
       left: 6px;
-      padding: 1em 3em;
+      padding: 1em 2.5em;
       height: 40px;
       border-radius: 0 0 10px 10px;
       background-color: rgba(211, 220, 231, 0.2);
