@@ -1,11 +1,11 @@
 <template>
-    <div class="c_overlay" :class="{ 'c_overlay--active': isActive }" v-show="isActive">
-        <div class="c_overlay__mask" @click="closeOverlay"></div>
-        <div class="c_overlay__content">
-            <div class="c_overlay__content__inner" v-if="isActive">
+    <div class="c-overlay" :class="{ 'c-overlay--active': isActive }" v-show="isActive">
+        <div class="c-overlay__mask" @click="closeOverlay"></div>
+        <div class="c-overlay__content">
+            <div class="c-overlay__content__inner" v-if="isActive">
                 <slot></slot>
             </div>
-            <div class="c_overlay__content__close icon_close" @click="closeOverlay">Close</div>
+            <div class="c-overlay__content__close icon_close" @click="closeOverlay">Close</div>
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@
 
                 this.$nextTick(function () {
                     if (window.lazy !== undefined) {
-                        window.lazy.updateLoad('.c_overlay--active');
+                        window.lazy.updateLoad('.c-overlay--active');
                     }
                 });
             });
@@ -53,7 +53,7 @@
     <%- include(paths.css.src + 'base/_mixins.scss') %>
 
     $_mq_overlay_1: 700px;
-    .c_overlay {
+    .c-overlay {
         display: flex;
         align-items: center;
         justify-content: center;

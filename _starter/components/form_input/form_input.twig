@@ -22,7 +22,7 @@
 {% set classes = (classes ?? false) ? classes|merge([rootClass ~ '--' ~ type]) : [rootClass ~ '--' ~ type] %}
 
 {% if type == 'submit' %}
-    {% set inputClasses = (inputClasses ~ ' c_button')|trim %}
+    {% set inputClasses = (inputClasses ~ ' c-button')|trim %}
 {% endif %}
 
 {% if vue or format or validate %}

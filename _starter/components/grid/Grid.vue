@@ -1,5 +1,5 @@
 <template>
-  <div class="c_grid c_grid--js" :is="elementType" :style="gridStyles" v-bind="box">
+  <div class="c-grid c-grid--js" :is="elementType" :style="gridStyles" v-bind="box">
     <slot />
   </div>
 </template>

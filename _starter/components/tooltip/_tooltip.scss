@@ -1,4 +1,4 @@
-.c_tooltip--example {
+.c-tooltip--example {
     @include box_modifiers($self: &);
     >div {
         padding-top: $spacing_text;
@@ -6,7 +6,7 @@
     }
 }
 
-@mixin c_tooltip_common {
+@mixin c-tooltip_common {
     $self: &;
     cursor: help;
     position: relative;
@@ -42,7 +42,7 @@
     &:hover,
     &:focus,
     &:active,
-    &.c_tooltip--open {
+    &.c-tooltip--open {
         &:after,
         &:before {
             opacity: 1;
@@ -51,11 +51,11 @@
         }
     }
     @include mq_max (639px) {
-        @include c_tooltip_default;
+        @include c-tooltip_default;
     }
 }
 
-@mixin c_tooltip_default {
+@mixin c-tooltip_default {
     &:after {
         bottom: 100%;
         left: 50%;
@@ -82,12 +82,12 @@
 }
 
 [data-tooltip] {
-    @include c_tooltip_common;
-    @include c_tooltip_default;
+    @include c-tooltip_common;
+    @include c-tooltip_default;
 }
 
 [data-tooltip-right] {
-    @include c_tooltip_common;
+    @include c-tooltip_common;
     &:after {
         content: attr(data-tooltip-right);
         top: 50%;
@@ -104,12 +104,12 @@
         transform: translate3d(1rem, -50%, 0) rotate(45deg);
     }
     @include mq_max (639px) {
-        @include c_tooltip_default;
+        @include c-tooltip_default;
     }
 }
 
 [data-tooltip-left] {
-    @include c_tooltip_common;
+    @include c-tooltip_common;
     &:after {
         content: attr(data-tooltip-left);
         top: 50%;
@@ -126,12 +126,12 @@
         transform: translate3d(-1rem, -50%, 0) rotate(45deg);
     }
     @include mq_max (639px) {
-        @include c_tooltip_default;
+        @include c-tooltip_default;
     }
 }
 
 [data-tooltip-bottom] {
-    @include c_tooltip_common;
+    @include c-tooltip_common;
     &:after {
         content: attr(data-tooltip-bottom);
         top: 100%;
@@ -148,6 +148,6 @@
         transform: translate3d(-50%, 1rem, 0) rotate(45deg);
     }
     @include mq_max (639px) {
-        @include c_tooltip_default;
+        @include c-tooltip_default;
     }
 }

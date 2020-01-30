@@ -1,5 +1,5 @@
 <template>
-    <div class="c_slider__slide" :class="['c_slider__slide--' + currentStatus, 'c_slider__slide--' + previousStatus + '-to-' + currentStatus]">
+    <div class="c-slider__slide" :class="['c-slider__slide--' + currentStatus, 'c-slider__slide--' + previousStatus + '-to-' + currentStatus]">
         <slot></slot>
     </div>
 </template>
@@ -36,7 +36,7 @@
         100% { transform: translateX(0) }
     }
 
-    .c_slider__slide {
+    .c-slider__slide {
         $self: &;
 
         position: absolute;

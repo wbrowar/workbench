@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Text</h1>
-    <p>Style basic text content elements, like `p`, `ol`, and `ul` tags by wrapping them in 'c_text'.</p>
+    <p>Style basic text content elements, like `p`, `ol`, and `ul` tags by wrapping them in 'c-text'.</p>
 
     <CodeExample title="Text Styling">
       <div v-html="fontSampleText"></div>
@@ -19,7 +19,7 @@
       </div>
     </CodeExample>
 
-    <CssModifiers root-class="c_text" :modifiers="modifiers" />
+    <CssModifiers root-class="c-text" :modifiers="modifiers" />
   </div>
 </template>
 
@@ -50,8 +50,8 @@ export default {
     globalData: Object,
   },
   created() {
-    this.fontSampleText = `<h1 class="c_header c_header--1">Page Header</h1>
-<div class="c_text">
+    this.fontSampleText = `<h1 class="c-header c-header--1">Page Header</h1>
+<div class="c-text">
     <p>Lorem ipsum dolor sit amet, <a href="/">consectetur adipiscing elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     <p>Excepteur sint occaecat cupidatat non <b>proident</b>, sunt in culpa qui <i>officia deserunt</i> mollit <i><b>anim</b></i> id <b><i>est laborum</i></b>.</p>
     <ul>
@@ -60,8 +60,8 @@ export default {
         <li>List item III</li>
     </ul>
 </div>
-<h2 class="c_header c_header--2">Section Subheader</h2>
-<div class="c_text">
+<h2 class="c-header c-header--2">Section Subheader</h2>
+<div class="c-text">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     <ol>
         <li>List item I</li>

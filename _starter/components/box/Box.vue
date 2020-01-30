@@ -1,5 +1,5 @@
 <template>
-  <div class="c_box" :is="elementType" :class="boxClasses" :style="boxStyles">
+  <div class="c-box" :is="elementType" :class="boxClasses" :style="boxStyles">
     <slot />
   </div>
 </template>
@@ -19,10 +19,10 @@ export default {
       let classes = {};
 
       if (this.aspect) {
-        classes['c_box--aspect'] = true;
+        classes['c-box--aspect'] = true;
       }
       if (this.demo) {
-        classes['c_box--demo'] = true;
+        classes['c-box--demo'] = true;
       }
 
       return classes || null;

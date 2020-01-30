@@ -10,7 +10,7 @@
       title="CTA Buttons"
       :description="`Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${ globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link' }' components to work with Vue Router.`"
     >
-      <div class="c_buttons">
+      <div class="c-buttons">
         <Button href="/about/" label-text="About (internal)" />
         <Button new-window href="https://vuejs.org/" label-text="Vue Website (external)" />
       </div>
@@ -21,7 +21,7 @@
       title="Action Buttons"
       description="Fire a Javascript function when the button is clicked. When no argument is passed through, a MouseEvent object will be returned."
     >
-      <div class="c_buttons c_buttons--center">
+      <div class="c-buttons c-buttons--center">
         <Button @onClick="clickThroughAction" label-text="Get Click Event" />
         <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
       </div>
@@ -32,12 +32,12 @@
       title="Unstyled Buttons"
       description="Use the same props as regular buttons but add your own style. Passing a prop into a Button will automatically unstyle it, but styles can be added via CSS classes."
     >
-      <div class="c_buttons c_buttons--right">
+      <div class="c-buttons c-buttons--right">
         <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
         <Button new-window href="https://vuejs.org/">
           <Box demo />
         </Button>
-        <Button class="c_button c_button--default c_button--pointer" new-window unstyle href="https://vuejs.org/"
+        <Button class="c-button c-button--default c-button--pointer" new-window unstyle href="https://vuejs.org/"
           ><span>🎨 Style by classes</span></Button
         >
       </div>
@@ -45,7 +45,7 @@
 
     <PropsTable :props="props" />
 
-<!--    <CssModifiers root-class="c_button" :modifiers="modifiers" />-->
+<!--    <CssModifiers root-class="c-button" :modifiers="modifiers" />-->
   </div>
 </template>
 
@@ -84,20 +84,20 @@ export default {
   },
   created() {
     this.code = {
-      href: `<div class="c_buttons">
+      href: `<div class="c-buttons">
   <Button href="/about/" label-text="About (internal)" />
   <Button new-window href="https://vuejs.org/" label-text="Vue Website (external)" />
 </div>`,
-      action: `<div class="c_buttons c_buttons--center">
+      action: `<div class="c-buttons c-buttons--center">
   <Button @onClick="clickThroughAction" label-text="Get Click Event" />
   <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
 </div>`,
-      unstyled: `<div class="c_buttons c_buttons--right">
+      unstyled: `<div class="c-buttons c-buttons--right">
   <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
   <Button new-window href="https://vuejs.org/">
     <Box demo />
   </Button>
-  <Button class="c_button c_button--pointer" new-window unstyle href="https://vuejs.org/"><span>🎨 Style by classes</span></Button>
+  <Button class="c-button c-button--pointer" new-window unstyle href="https://vuejs.org/"><span>🎨 Style by classes</span></Button>
 </div>`,
     };
 

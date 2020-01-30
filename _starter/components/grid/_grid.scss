@@ -8,7 +8,7 @@
   }
 }
 
-.c_grid {
+.c-grid {
   $self: &;
 
   &:not(#{$self}--js) {

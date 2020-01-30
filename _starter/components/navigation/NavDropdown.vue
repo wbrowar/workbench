@@ -1,5 +1,5 @@
 <template>
-    <ul class="c_navigation__menu">
+    <ul class="c-navigation__menu">
         <li v-for="(firstLvlItem, firstLvlIndex) in navArray">
             <component :is="firstLvlItem.href && !firstLvlItem.children ? 'a' : 'button'"
                        @click="$parent.childNavToggleSubNav({itemId: firstLvlItem.itemId, childItemId: false, event: $event})"
@@ -9,7 +9,7 @@
                        @keydown.left="firstLvlItem.itemId === currentItemId ? [$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, childItemId: false, event: $event}), $parent.childNavNavigateDirectionBackward({prevItemId: navArray[firstLvlIndex - 1] ? navArray[firstLvlIndex - 1].itemId : navArray[navArray.length - 1].itemId})] : $parent.childNavNavigateDirectionBackward({prevItemId: navArray[firstLvlIndex - 1] ? navArray[firstLvlIndex - 1].itemId : navArray[navArray.length - 1].itemId})"
                        @keydown.esc="$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, childItemId: false, event: $event})"
                        :href="firstLvlItem.href && !firstLvlItem.children ? firstLvlItem.href : false"
-                       class="c_navigation__menu__menu_item"
+                       class="c-navigation__menu__menu_item"
                        :class="firstLvlItem.classes"
                        :aria-live="firstLvlItem.children ? 'aggresive' : false"
                        :aria-expanded="firstLvlItem.children ? (firstLvlItem.itemId === currentItemId ? 'true' : 'false') : false"
@@ -28,7 +28,7 @@
                                @keydown.left="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? $parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, childItemId: secondLvlItem.itemId, event: $event}) : false) : false;"
                                @keydown.esc="$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, childItemId: false, event: $event})"
                                :href="secondLvlItem.href && !secondLvlItem.children ? secondLvlItem.href : false"
-                               class="c_navigation__menu__menu_item"
+                               class="c-navigation__menu__menu_item"
                                :class="secondLvlItem.classes"
                                :aria-live="secondLvlItem.children ? 'aggresive' : false"
                                :aria-expanded="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? 'true' : 'false') : false"
@@ -37,7 +37,7 @@
                                     {{ secondLvlItem.label }}
                                     <span v-if="secondLvlItem.children" aria-hidden="true">&#x25B6;</span>
                     </component>
-                    <ul :hidden="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? false : true) : true" v-if="secondLvlItem.children" class="c_navigation__menu__sub_menu">
+                    <ul :hidden="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? false : true) : true" v-if="secondLvlItem.children" class="c-navigation__menu__sub_menu">
                         <li v-for="(thirdLvlItem, thirdLvlIndex) in secondLvlItem.children">
                             <component :is="thirdLvlItem.href && !thirdLvlItem.children ? 'a' : 'button'"
                                        :href="thirdLvlItem.href && !thirdLvlItem.children ? thirdLvlItem.href : false"
@@ -45,7 +45,7 @@
                                        @keydown.down="$parent.childNavNavigateDirectionForward({nextItemId: secondLvlItem.children[thirdLvlIndex + 1] ? secondLvlItem.children[thirdLvlIndex + 1].itemId : secondLvlItem.children[0].itemId})"
                                        @keydown.up="$parent.childNavNavigateDirectionBackward({prevItemId: secondLvlItem.children[thirdLvlIndex - 1] ? secondLvlItem.children[thirdLvlIndex - 1].itemId : secondLvlItem.children[secondLvlItem.children.length - 1].itemId})"
                                        @keydown.left="$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, childItemId: secondLvlItem.itemId, event: $event, setFocusToParentItem: true})"
-                                       class="c_navigation__menu__menu_item"
+                                       class="c-navigation__menu__menu_item"
                                        :class="thirdLvlItem.classes"
                                        :set-focus="thirdLvlItem.itemId == setFocusToItemId ? [$parent.childNavSetNavItemFocus() && true] : false">
                                             {{ thirdLvlItem.label }}
@@ -90,14 +90,14 @@
     <%- include(paths.css.src + 'automated/_colors.scss') %>
     <%- include(paths.css.src + 'base/_mixins.scss') %>
 
-     .c_navigation {
+     .c-navigation {
          $self: &;
 
          & {
              background: gray;
          }
          &--nav_dropdown {
-            & .c_navigation__menu{
+            & .c-navigation__menu{
                 text-align:right;
                 &--open{
 
@@ -145,22 +145,22 @@
                                  top:0;
                                  transform: translateX(100%);
                              }
-                             button.c_navigation__menu__menu_item--out-of-viewport-right + ul{
+                             button.c-navigation__menu__menu_item--out-of-viewport-right + ul{
                                  transform: translateX(-100%);
                              }
-                             button.c_navigation__menu__menu_item--out-of-viewport-left + ul{
+                             button.c-navigation__menu__menu_item--out-of-viewport-left + ul{
                                  transform: translateX(100%);
                              }
                          }
                      }
-                     button.c_navigation__menu__menu_item--out-of-viewport-right + ul{
+                     button.c-navigation__menu__menu_item--out-of-viewport-right + ul{
                          left:auto;
                          right: 0;
                          button{
                              justify-content:flex-end;
                          }
                      }
-                     button.c_navigation__menu__menu_item--out-of-viewport-left + ul{
+                     button.c-navigation__menu__menu_item--out-of-viewport-left + ul{
                          left: 0;
                          right:auto;
                          button{

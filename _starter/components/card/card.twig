@@ -13,7 +13,7 @@
 
 {% block content -%}
     {% if image ?? false %}
-        <div class="c_card__image{% if imageTheme ?? false %} c_card__image--{{ imageTheme }}{% endif %}">
+        <div class="c-card__image{% if imageTheme ?? false %} c-card__image--{{ imageTheme }}{% endif %}">
             {% set options = {
                 image: image,
                 lazyLoad: lazyLoad,
@@ -25,35 +25,35 @@
                     ],
                 }
             } %}
-            {{ component.c('image_bg', { classes: ['c_card__image__background'], image: options }) }}
+            {{ component.c('image_bg', { classes: ['c-card__image__background'], image: options }) }}
 
             {% if imageForeground ?? false %}
-                <div class="c_card__image__middle"></div>
-                <div class="c_card__image__foreground">{{ imageForeground|raw }}</div>
+                <div class="c-card__image__middle"></div>
+                <div class="c-card__image__foreground">{{ imageForeground|raw }}</div>
             {% endif %}
             {% if imageUrl ?? false %}
-                <a class="c_card__image__url_mask" href="{{ imageUrl }}"></a>
+                <a class="c-card__image__url_mask" href="{{ imageUrl }}"></a>
             {% endif %}
         </div>
     {% endif %}
     {% if info ?? false %}
-        <div class="c_card__info">
+        <div class="c-card__info">
             {% if info.title ?? false %}
-                <h1 class="c_card__info__title c_header c_header--3">{{ info.title }}</h1>
+                <h1 class="c-card__info__title c-header c-header--3">{{ info.title }}</h1>
             {% endif %}
             {% if info.subtitle ?? false %}
-                <h1 class="c_card__info__subtitle">{{ info.subtitle }}</h1>
+                <h1 class="c-card__info__subtitle">{{ info.subtitle }}</h1>
             {% endif %}
             {% if info.phone ?? info.fax ?? info.email ?? false %}
-                <div class="c_card__info__contact">
+                <div class="c-card__info__contact">
                     {% if info.phone ?? false %}
-                        <a class="c_card__info__phone" href="tel:+1{{ info.phone|replace('-', '') }}">P: {{ info.phone }}</a>
+                        <a class="c-card__info__phone" href="tel:+1{{ info.phone|replace('-', '') }}">P: {{ info.phone }}</a>
                     {% endif %}
                     {% if info.fax ?? false %}
-                        <a class="c_card__info__fax" href="tel:+1{{ info.fax|replace('-', '') }}">F: {{ info.fax }}</a>
+                        <a class="c-card__info__fax" href="tel:+1{{ info.fax|replace('-', '') }}">F: {{ info.fax }}</a>
                     {% endif %}
                     {% if info.email ?? false %}
-                        <a class="c_card__info__email" href="mailto:{{ info.email }}">{{ info.email }}</a>
+                        <a class="c-card__info__email" href="mailto:{{ info.email }}">{{ info.email }}</a>
                     {% endif %}
                     {% if info.otherContact %}
                         {% for item in info.otherContact %}
@@ -63,10 +63,10 @@
                 </div>
             {% endif %}
             {% if info.summary ?? false %}
-                <div class="c_card__info__summary c_text">{{ truncateOnWord(info.summary, 200, ' …')|markdown|typogrify }}</div>
+                <div class="c-card__info__summary c-text">{{ truncateOnWord(info.summary, 200, ' …')|markdown|typogrify }}</div>
             {% endif %}
             {% if (info.buttonLabel ?? false) and (info.buttonUrl ?? false) %}
-                {{ component.c('button', { classes: ['c_card__info__button'], label: info.buttonLabel, url: info.buttonUrl }) }}
+                {{ component.c('button', { classes: ['c-card__info__button'], label: info.buttonLabel, url: info.buttonUrl }) }}
             {% endif %}
         </div>
     {% endif %}

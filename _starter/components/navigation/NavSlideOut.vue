@@ -1,5 +1,5 @@
 <template>
-    <ul class="c_navigation__menu c_navigation__menu__level_1" :class="'c_navigation__menu--' + openDirection">
+    <ul class="c-navigation__menu c-navigation__menu__level_1" :class="'c-navigation__menu--' + openDirection">
         <li v-for="(firstLvlItem, firstLvlIndex) in navArray">
             <component :is="firstLvlItem.href && !firstLvlItem.children ? 'a' : 'button'"
                        @click="$parent.childNavToggleSubNav({itemId: firstLvlItem.itemId, event: $event}); focusToId('back_to_' + firstLvlItem.itemId);"
@@ -10,7 +10,7 @@
                        @keydown.esc="$parent.childNavNavClose()"
                        @mouseover="$parent.childNavRemoveNavItemFocusId"
                        :href="firstLvlItem.href && !firstLvlItem.children ? firstLvlItem.href : false"
-                       class="c_navigation__menu__menu_item"
+                       class="c-navigation__menu__menu_item"
                        :class="firstLvlItem.classes"
                        :hidden="hidden"
                        :aria-live="firstLvlItem.children ? 'aggresive' : false"
@@ -21,7 +21,7 @@
                 {{ firstLvlItem.label }}
                 <span v-if="firstLvlItem.children && openDirection == 'right'" aria-hidden="true">&#x276F;</span>
             </component>
-            <ul :hidden="firstLvlItem.children ? (firstLvlItem.itemId === currentItemId ? false : true) : true" v-if="firstLvlItem.children" v-show="firstLvlItem.children" class="c_navigation__menu__level_2" :class="firstLvlItem.children ? (firstLvlItem.itemId === currentItemId ? 'c_navigation__menu__level_2--open' : false) : 'c_navigation__menu__level_2--open'">
+            <ul :hidden="firstLvlItem.children ? (firstLvlItem.itemId === currentItemId ? false : true) : true" v-if="firstLvlItem.children" v-show="firstLvlItem.children" class="c-navigation__menu__level_2" :class="firstLvlItem.children ? (firstLvlItem.itemId === currentItemId ? 'c-navigation__menu__level_2--open' : false) : 'c-navigation__menu__level_2--open'">
                 <li><button
                         :id="'back_to_' + firstLvlItem.itemId"
                         @click="$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, event: $event, loopArray: firstLvlItem.children, setFocusToParentItem: true})"
@@ -45,7 +45,7 @@
                                @keydown.right="navKeyboardPressed({firstLvlItem: firstLvlItem, secondLvlItem: secondLvlItem, loopIndex: secondLvlIndex, loopArray: firstLvlItem.children, openDirection: openDirection, event: $event})"
                                @keydown.esc="$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, event: $event})"
                                :href="secondLvlItem.href && !secondLvlItem.children ? secondLvlItem.href : false"
-                               class="c_navigation__menu__menu_item"
+                               class="c-navigation__menu__menu_item"
                                :class="secondLvlItem.classes"
                                :aria-live="secondLvlItem.children ? 'aggresive' : false"
                                :aria-expanded="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? 'true' : 'false') : false"
@@ -56,7 +56,7 @@
                         {{ secondLvlItem.label }}
                         <span v-if="secondLvlItem.children && openDirection == 'right'" aria-hidden="true">&#x276F;</span>
                     </component>
-                    <ul :hidden="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? false : true) : true" v-if="secondLvlItem.children" v-show="secondLvlItem.children" class="c_navigation__menu__level_3" :class="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? 'c_navigation__menu__level_3--open' : false) : 'c_navigation__menu__level_3--open'">
+                    <ul :hidden="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? false : true) : true" v-if="secondLvlItem.children" v-show="secondLvlItem.children" class="c-navigation__menu__level_3" :class="secondLvlItem.children ? (secondLvlItem.itemId === currentChildItemId ? 'c-navigation__menu__level_3--open' : false) : 'c-navigation__menu__level_3--open'">
                         <li><button
                                 :id="'back_to_' + secondLvlItem.itemId"
                                 @click="$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, childItemId: secondLvlItem.itemId, event: $event, loopArray: secondLvlItem.children, setFocusToParentItem: true})"
@@ -80,7 +80,7 @@
                                        @keydown.left="navKeyboardPressed({firstLvlItem: firstLvlItem, secondLvlItem: secondLvlItem, thirdLvlItem: thirdLvlItem, loopIndex: thirdLvlIndex, loopArray: secondLvlItem.children, openDirection: openDirection, event: $event})"
                                        @keydown.esc="$parent.childNavCloseSubNav({itemId: firstLvlItem.itemId, childItemId: secondLvlItem.itemId, event: $event})"
                                        @mouseover="$parent.childNavRemoveNavItemFocusId"
-                                       class="c_navigation__menu__menu_item"
+                                       class="c-navigation__menu__menu_item"
                                        :class="thirdLvlItem.classes"
                                        :set-focus="thirdLvlItem.itemId == setFocusToItemId ? [$parent.childNavSetNavItemFocus() && true] : false">
                                 {{ thirdLvlItem.label }}
@@ -260,7 +260,7 @@
     <%- include(paths.css.src + 'automated/_colors.scss') %>
     <%- include(paths.css.src + 'base/_mixins.scss') %>
 
-     .c_navigation {
+     .c-navigation {
          $self: &;
          position:relative;
          height:4rem;
@@ -268,7 +268,7 @@
              background: gray;
          }
          &--nav_slide_out {
-             & .c_navigation__menu {
+             & .c-navigation__menu {
                  height:100vh;
                  position:fixed;
                  top:0;
@@ -332,7 +332,7 @@
                      text-align:left;
                      left:0;
                      transform: translateX(-100%);
-                     .c_navigation__menu__level_2, .c_navigation__menu__level_3{
+                     .c-navigation__menu__level_2, .c-navigation__menu__level_3{
                          transform: translateX(-100%);
                          [aria-expanded="true"] + &{
                              transform: translateX(0);
@@ -343,7 +343,7 @@
                      text-align:right;
                      right:0;
                      transform: translateX(100%);
-                     .c_navigation__menu__level_2, .c_navigation__menu__level_3{
+                     .c-navigation__menu__level_2, .c-navigation__menu__level_3{
                          transform: translateX(100%);
                          [aria-expanded="true"] + &{
                              transform: translateX(0);

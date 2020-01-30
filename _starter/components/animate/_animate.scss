@@ -6,7 +6,7 @@
   }
 }
 
-.c_animate {
+.c-animate {
   $self: &;
 
   .enhanced & {
@@ -61,8 +61,8 @@
           @include _can_transition(transform $anim_duration_slide ease-out);
         }
 
-        @at-root &:hover > .c_animate--rollover--scale__background,
-          &:focus > .c_animate--rollover--scale__background {
+        @at-root &:hover > .c-animate--rollover--scale__background,
+          &:focus > .c-animate--rollover--scale__background {
           transform: scale(1.25, 1.25);
         }
       }

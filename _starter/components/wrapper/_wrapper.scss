@@ -1,4 +1,4 @@
-.c_wrapper {
+.c-wrapper {
   $self: &;
 
   @include box_modifiers($self);

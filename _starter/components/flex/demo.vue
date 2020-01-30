@@ -33,7 +33,7 @@
 
     <PropsTable :props="props" />
 
-    <CssModifiers root-class="c_flex" :modifiers="modifiers" />
+    <CssModifiers root-class="c-flex" :modifiers="modifiers" />
   </div>
 </template>
 

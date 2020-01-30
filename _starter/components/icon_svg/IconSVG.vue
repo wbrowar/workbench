@@ -1,5 +1,5 @@
 <template>
-  <div class="c_icon_svg" v-bind="svgAttributes" v-html="svgHtml || null"></div>
+  <div class="c-icon_svg" v-bind="svgAttributes" v-html="svgHtml || null"></div>
 </template>
 
 <script>
@@ -48,7 +48,7 @@ export default {
         this.svgHtml = svg.html(this.handle, this.replacements || {});
         if (this.color || this.colorVar) {
           attrs = {
-            class: 'c_icon_svg--color',
+            class: 'c-icon_svg--color',
             style: {
               '--color': this.colorVarString || this.color,
             },
@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style lang="scss">
-.c_icon_svg {
+.c-icon_svg {
   width: 100%;
   background-position: center center;
   background-repeat: no-repeat;

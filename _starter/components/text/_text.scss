@@ -1,4 +1,4 @@
-.c_text {
+.c-text {
   $self: &;
 
   @include text_modifiers($self);

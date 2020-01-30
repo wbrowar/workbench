@@ -50,7 +50,7 @@
       description="A 2-column grid, that splits into 3-columns at 900px."
       :code="code.cssGrid1"
     >
-      <div class="c_grid c_grid--2-3">
+      <div class="c-grid c-grid--2-3">
         <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png` }]" />
         <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png` }]" />
         <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png` }]" />
@@ -102,7 +102,7 @@ export default {
   <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\` }]" />
   <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\` }]" />
 </Grid>`,
-      cssGrid1: `<div class="c_grid c_grid--2-3">
+      cssGrid1: `<div class="c-grid c-grid--2-3">
   <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\` }]" />
   <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\` }]" />
   <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\` }]" />

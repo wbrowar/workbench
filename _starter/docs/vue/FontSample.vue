@@ -25,7 +25,7 @@
         return classes;
       },
       copyString: function() {
-        return this.weight ? `text-${this.handle} font-${this.weight}` : `text-${this.handle}`;
+        return this.weight ? `font-${this.handle} font-${this.weight}` : `font-${this.handle}`;
       },
     },
     methods: {

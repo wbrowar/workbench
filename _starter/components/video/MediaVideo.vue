@@ -1,10 +1,10 @@
 <template>
-  <Box :element-type="elementType" class="c_video" :class="{ c_video_bg: background }" v-bind="box">
+  <Box :element-type="elementType" class="c-video" :class="{ 'c-video_bg': background }" v-bind="box">
     <!-- ClientOnly -->
       <LazyLoad
         :after-load="{ src: src || false }"
         :autoplay="background ? true : autoplay"
-        :class="{ c_video_bg__video: background }"
+        :class="{ 'c-video_bg__video': background }"
         :controls="background ? false : controls"
         element-type="video"
         :enable="lazyLoad"

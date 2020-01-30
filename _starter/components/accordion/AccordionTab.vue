@@ -1,9 +1,9 @@
 <template>
-  <div class="c_accordion_tab">
-    <div class="c_accordion_tab__header" @click="onHeaderClicked">
+  <div class="c-accordion_tab">
+    <div class="c-accordion_tab__header" @click="onHeaderClicked">
       <slot name="header" />
     </div>
-    <div class="c_accordion_tab__content" v-show="isOpen">
+    <div class="c-accordion_tab__content" v-show="isOpen">
       <slot name="content" />
     </div>
   </div>
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss">
-.c_accordion_tab {
+.c-accordion_tab {
   $self: &;
 
   @at-root #{$self}__header {

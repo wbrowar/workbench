@@ -17,13 +17,13 @@
 {% endif %}
 
 {% block content -%}
-    <div class="c_meter__wrapper" style="--progress: {{ value }};">
+    <div class="c-meter__wrapper" style="--progress: {{ value }};">
         {% if (min ?? false) or min == '0' %}
-            <div class="c_meter__label c_meter__label--min">{{ min }}</div>
+            <div class="c-meter__label c-meter__label--min">{{ min }}</div>
         {% endif %}
         {% if (max ?? false) or max == '0' %}
-            <div class="c_meter__label c_meter__label--max">{{ max }}</div>
+            <div class="c-meter__label c-meter__label--max">{{ max }}</div>
         {% endif %}
-        <div class="c_meter__progress"><div class="c_meter__label c_meter__label--progress"></div></div>
+        <div class="c-meter__progress"><div class="c-meter__label c-meter__label--progress"></div></div>
     </div>
 {%- endblock %}

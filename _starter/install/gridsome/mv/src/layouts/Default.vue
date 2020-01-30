@@ -16,6 +16,7 @@
       </main>
     </transition>
     <footer class="ui__footer">
+      <span>Color Scheme: </span>
       <ClientOnly>
         <ColorSchemeToggle scheme-id="default" title="Reset to default color scheme">🌎</ColorSchemeToggle>
         <ColorSchemeToggle scheme-id="dark" title="Turn on dark color scheme (override browser setting)">🌒</ColorSchemeToggle>

@@ -1,5 +1,5 @@
 <template>
-  <Box class="c_flex" :element-type="elementType" :class="flexClasses" :style="flexStyles" v-bind="box">
+  <Box class="c-flex" :element-type="elementType" :class="flexClasses" :style="flexStyles" v-bind="box">
     <slot />
   </Box>
 </template>
@@ -34,10 +34,10 @@ export default {
       let classes = [];
 
       if (this.center) {
-        classes.push('c_flex--centered');
+        classes.push('c-flex--centered');
       }
       if (this.stretch) {
-        classes.push('c_flex--stretched');
+        classes.push('c-flex--stretched');
       }
 
       return classes.length ? classes : null;

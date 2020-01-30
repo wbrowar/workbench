@@ -1,5 +1,5 @@
 <template>
-  <Box :element-type="elementType" :class="animated ? 'c_animate--animated' : false" :style="styles" v-bind="box">
+  <Box :element-type="elementType" :class="animated ? 'c-animate--animated' : false" :style="styles" v-bind="box">
     <slot></slot>
   </Box>
 </template>

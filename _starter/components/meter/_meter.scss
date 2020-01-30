@@ -1,11 +1,11 @@
 $_height: 20px;
 
-@keyframes c_meter--bar {
+@keyframes c-meter--bar {
   0%   { width: 0 }
   100% { width: var(--progress) }
 }
 
-.c_meter {
+.c-meter {
   $self: &;
 
   @at-root #{$self}__wrapper {
@@ -32,7 +32,7 @@ $_height: 20px;
       width: 0;
     }
     @at-root #{$self}--animate.animated & {
-      animation: c_meter--bar 1.5s ease-out forwards;
+      animation: c-meter--bar 1.5s ease-out forwards;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="c_resize_container" :class="wrapperClasses" :style="wrapperStyles"><slot></slot></div>
+  <div class="c-resize_container" :class="wrapperClasses" :style="wrapperStyles"><slot></slot></div>
 </template>
 
 <script>

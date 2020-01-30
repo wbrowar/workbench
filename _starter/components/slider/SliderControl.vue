@@ -1,13 +1,13 @@
 <template>
-    <div class="c_slider_control" v-if="totalSlides > 1">
-        <div class="c_slider_control__back" v-html="labelBack" v-if="showBack" @click="setSlideIndex(currentSlide - 1)"></div>
-        <div class="c_slider_control__indicators" v-if="showIndicators && (indicatorType === 'dots') && (maxNodes >= totalSlides)">
-            <div class="c_slider_control__indicator_dot" :class="{ active: index === currentSlide }" v-for="(item, index) in totalSlides" @click="setSlideIndex(index)">{{ index + 1 }}</div>
+    <div class="c-slider_control" v-if="totalSlides > 1">
+        <div class="c-slider_control__back" v-html="labelBack" v-if="showBack" @click="setSlideIndex(currentSlide - 1)"></div>
+        <div class="c-slider_control__indicators" v-if="showIndicators && (indicatorType === 'dots') && (maxNodes >= totalSlides)">
+            <div class="c-slider_control__indicator_dot" :class="{ active: index === currentSlide }" v-for="(item, index) in totalSlides" @click="setSlideIndex(index)">{{ index + 1 }}</div>
         </div>
-        <div class="c_slider_control__indicators" v-else-if="showIndicators && (indicatorType === 'numbers') && (maxNodes >= totalSlides)">
-            <span class="c_slider_control__indicator_number">{{ currentSlide + 1 }}</span>{{ numberIndicatorDivider }}<span class="c_slider_control__indicator_number">{{ totalSlides }}</span>
+        <div class="c-slider_control__indicators" v-else-if="showIndicators && (indicatorType === 'numbers') && (maxNodes >= totalSlides)">
+            <span class="c-slider_control__indicator_number">{{ currentSlide + 1 }}</span>{{ numberIndicatorDivider }}<span class="c-slider_control__indicator_number">{{ totalSlides }}</span>
         </div>
-        <div class="c_slider_control__next" v-html="labelNext" v-if="showNext" @click="setSlideIndex(currentSlide + 1)"></div>
+        <div class="c-slider_control__next" v-html="labelNext" v-if="showNext" @click="setSlideIndex(currentSlide + 1)"></div>
     </div>
 </template>
 
@@ -56,7 +56,7 @@
     <%- include(paths.css.src + 'base/_mixins.scss') %>
 
     $_dot_size: 10px;
-    .c_slider_control {
+    .c-slider_control {
         display: flex;
         flex-flow: row nowrap;
         align-items: center;

@@ -3,8 +3,7 @@
 @include automated_color_schemes;
 
 ::selection {
-  background-color: colora('black', 0.5);
-  color: $color_white;
+  @apply bg-black text-white;
 }
 
 html {

@@ -1,7 +1,7 @@
 <template>
-    <div class="c_slider" :style="{ height: (sliderHeight > 0) ? sliderHeight + 'px' : null }">
+    <div class="c-slider" :style="{ height: (sliderHeight > 0) ? sliderHeight + 'px' : null }">
         <slider-slide v-for="(slide, index) in slidesData" :key="index" v-if="slidesData">
-            <div class="c_slider__slide__content">
+            <div class="c-slider__slide__content">
                 <div v-for="(content, index) in slide" :key="index" v-html="content"></div>
             </div>
         </slider-slide>
@@ -267,7 +267,7 @@
     <%- include(paths.css.src + 'automated/_colors.scss') %>
     <%- include(paths.css.src + 'base/_mixins.scss') %>
 
-    .c_slider {
+    .c-slider {
         $self: &;
 
         position: relative;

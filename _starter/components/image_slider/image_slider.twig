@@ -13,13 +13,13 @@
 {% set slides = slides %}
 
 {% block content -%}
-    <slider class="c_image_slider__slider{% if sliderClasses ?? false %} {{ sliderClasses }}{% endif %}"
+    <slider class="c-image_slider__slider{% if sliderClasses ?? false %} {{ sliderClasses }}{% endif %}"
             slider-id="{{ sliderId }}"
             interval="{{ sliderInterval }}"{% if sliderAttributes ?? false %} {{ sliderAttributes|raw }}{% endif %}>
         {% for item in slides %}
-            <slider-slide class="c_image_slider__slide">
+            <slider-slide class="c-image_slider__slide">
                 {% if (item.image ?? false) or (item.video ?? false) %}
-                    <div class="c_image_slider__slide__background">
+                    <div class="c-image_slider__slide__background">
                         {% if item.video ?? false %}
                             {% set video = item.video|merge({ lazyLoad: false }) %}
                             {{ component.c('video_bg', { video: video }) }}
@@ -30,13 +30,13 @@
                     </div>
                 {% endif %}
                 {% if item.middle ?? false %}
-                    <div class="c_image_slider__slide__middle">{{ item.middle|raw }}</div>
+                    <div class="c-image_slider__slide__middle">{{ item.middle|raw }}</div>
                 {% endif %}
                 {% if item.foreground ?? false %}
-                    <div class="c_image_slider__slide__foreground">{{ item.foreground|raw }}</div>
+                    <div class="c-image_slider__slide__foreground">{{ item.foreground|raw }}</div>
                 {% endif %}
                 {% if item.url ?? false %}
-                    <a class="c_image_slider__slide__url_mask" href="{{ item.url }}"></a>
+                    <a class="c-image_slider__slide__url_mask" href="{{ item.url }}"></a>
                 {% endif %}
             </slider-slide>
         {% endfor %}

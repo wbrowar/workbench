@@ -1,6 +1,6 @@
 <template>
     <form @submit="submitForm">
-        <div class="c_form__errors_wrapper c_message c_message--error c_text" v-if="errors.length">
+        <div class="c-form__errors_wrapper c-message c-message--error c-text" v-if="errors.length">
             <b>Please correct the following error(s):</b>
             <ul>
                 <li v-for="error in errors">{{ error.message }}</li>

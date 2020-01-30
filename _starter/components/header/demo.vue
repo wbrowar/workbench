@@ -4,19 +4,19 @@
     <p>
       Style page and section headers. The numbers used for each header can be treated like an ID and does not have to be
       related to size or hierarchy. The style is not affected by the HTML tag used for the header element. That
-      means—for example—an H2 can be styled as `c_header--1`.
+      means—for example—an H2 can be styled as `c-header-1`.
     </p>
 
-    <CodeExample title="Header 1" :code="code.h1">
-      <div class="c_header c_header--1">{{ fontSampleText }}</div>
+    <CodeExample title="Header 1" :code="code.h1" copy-text="c-header-1">
+      <div class="c-header-1">{{ fontSampleText }}</div>
     </CodeExample>
 
-    <CodeExample title="Header 2" :code="code.h2">
-      <div class="c_header c_header--2">{{ fontSampleText }}</div>
+    <CodeExample title="Header 2" :code="code.h2" copy-text="c-header-2">
+      <div class="c-header-2">{{ fontSampleText }}</div>
     </CodeExample>
 
-    <CodeExample title="Header 3" :code="code.h3">
-      <div class="c_header c_header--3">{{ fontSampleText }}</div>
+    <CodeExample title="Header 3" :code="code.h3" copy-text="c-header-3">
+      <div class="c-header-3">{{ fontSampleText }}</div>
     </CodeExample>
 
     <CodeExample title="Sample" description="Change the header text above.">
@@ -58,9 +58,9 @@ export default {
     this.fontSampleText = `The quick brown fox jumps over the lazy dog`;
 
     this.code = {
-      h1: `<h1 class="c_header c_header--1">${this.fontSampleText}</h1>`,
-      h2: `<h2 class="c_header c_header--2">${this.fontSampleText}</h2>`,
-      h3: `<h3 class="c_header c_header--3">${this.fontSampleText}</h3>`,
+      h1: `<h1 class="c-header-1">${this.fontSampleText}</h1>`,
+      h2: `<h2 class="c-header-2">${this.fontSampleText}</h2>`,
+      h3: `<h3 class="c-header-3">${this.fontSampleText}</h3>`,
     };
   },
 };

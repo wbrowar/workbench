@@ -76,8 +76,10 @@ export default {
     },
   },
   created() {
-    if (this.checkForNativeLazyLoad) {
-      this.nativeLazyLoad = 'loading' in HTMLImageElement.prototype;
+    if (process.isClient) {
+      if (this.checkForNativeLazyLoad) {
+        this.nativeLazyLoad = 'loading' in HTMLImageElement.prototype;
+      }
     }
   },
   mounted() {

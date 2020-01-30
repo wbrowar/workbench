@@ -1,6 +1,6 @@
 <template>
-    <button class="c_navigation__menu_toggle"
-            :class="isNavOpened ? 'c_navigation__menu_toggle--open' : false"
+    <button class="c-navigation__menu_toggle"
+            :class="isNavOpened ? 'c-navigation__menu_toggle--open' : false"
             id="menu_button"
             @click="navButtonClicked()"
             @keydown.down="navButtonKeyboardPressed($event)"
@@ -8,13 +8,13 @@
             @keydown.left="navButtonKeyboardPressed($event)"
             @keydown.right="navButtonKeyboardPressed($event)"
             :aria-expanded="isNavOpened ? 'true' : 'false'">
-        <div class="c_navigation__menu_toggle__icon">
+        <div class="c-navigation__menu_toggle__icon">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <span class="c_navigation__menu_toggle__label">Menu</span>
+        <span class="c-navigation__menu_toggle__label">Menu</span>
     </button>
 </template>
 
@@ -51,7 +51,7 @@
 </script>
 
 <style lang="scss">
-    .c_navigation {
+    .c-navigation {
         $self: &;
         @at-root #{$self}__menu_toggle {
             display: flex;

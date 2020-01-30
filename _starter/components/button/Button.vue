@@ -38,10 +38,10 @@ export default {
     classes: function() {
       let classes = [];
       if (this.styleAsButton) {
-        classes.push('c_button');
+        classes.push('c-button');
 
         if (this.theme) {
-          classes.push(`c_button--${this.theme}`);
+          classes.push(`c-button--${this.theme}`);
         }
         if (this.href) {
           classes.push('cursor-pointer');
@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .c_button {
+  .c-button {
     $self: &;
 
     @apply flex flex-row flex-no-wrap items-center justify-center px-5 py-3;

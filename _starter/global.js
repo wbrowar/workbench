@@ -113,8 +113,6 @@ methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, 
             components.push(path.dirname(item).split(path.sep).pop());
         });
 
-        components.sort(function(x,y){ return x == 'general' ? -1 : y == 'general' ? 1 : 0; });
-
         const options = {
             components: components,
             wb: wb,
@@ -141,6 +139,8 @@ methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback,
         files.forEach((item) => {
             components.push(path.dirname(item).split(path.sep).pop());
         });
+
+        components.sort(function(x,y){ return x == 'general' ? -1 : y == 'general' ? 1 : 0; });
 
         const options = {
             components: components,
@@ -341,7 +341,7 @@ methods.tailwindConfig = function tailwindConfig(wb) {
 
     // Prepare font families for Tailwind
     Object.keys(wb.fonts).forEach((fontKey) => {
-        fontFamily[fontKey] = wb.fonts['fontStack'];
+        fontFamily[fontKey] = wb.fonts[fontKey]['fontStack'];
     });
 
     // Prepare media queries for Tailwind

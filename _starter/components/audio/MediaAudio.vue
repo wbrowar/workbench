@@ -1,5 +1,5 @@
 <template>
-  <div class="c_audio">
+  <div class="c-audio">
     <!-- ClientOnly -->
       <LazyLoad
         :after-load="{ src: src || false }"

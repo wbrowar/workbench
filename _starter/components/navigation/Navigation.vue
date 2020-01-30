@@ -1,10 +1,10 @@
 <template>
-    <nav class="c_navigation" :class="currentNav ? 'c_navigation--' + currentNav.replace(/-/g, '_') : false" v-click-outside="childNavNavClose.bind(null, {preventMenuButtonFocus: true})">
+    <nav class="c-navigation" :class="currentNav ? 'c-navigation--' + currentNav.replace(/-/g, '_') : false" v-click-outside="childNavNavClose.bind(null, {preventMenuButtonFocus: true})">
         <slot name="navigation" v-if="!navArray.length || (!mobileNav && !desktopNav)">
         </slot>
         <nav-button v-if="navArray.length && navIconMenu && navIconMenu == currentNav"></nav-button>
         <component v-if="navArray.length && mobileNav && (currentNav == mobileNav)"
-                   :class="(currentNav == mobileNav) && navOpened ? 'c_navigation__menu--open' : false"
+                   :class="(currentNav == mobileNav) && navOpened ? 'c-navigation__menu--open' : false"
                    :nav-array="navArray"
                    :is="mobileNav"
                    :current-item-id="currentItemId"
@@ -13,7 +13,7 @@
                    :hidden="showNavIcon && !navOpened">
         </component>
         <component v-if="navArray.length && desktopNav && (currentNav == desktopNav)"
-                   :class="(currentNav == desktopNav) && navOpened ? 'c_navigation__menu--open' : false"
+                   :class="(currentNav == desktopNav) && navOpened ? 'c-navigation__menu--open' : false"
                    :nav-array="navArray"
                    :is="desktopNav"
                    :current-item-id="currentItemId"
@@ -289,23 +289,23 @@
             },
             setViewportClasses(){
                 this.$nextTick(function(){
-                    let openSubMenus = document.querySelectorAll('.c_navigation__menu button[aria-expanded="true"]');
+                    let openSubMenus = document.querySelectorAll('.c-navigation__menu button[aria-expanded="true"]');
 
                     for(let i = 0;i < openSubMenus.length;i++){
-                        openSubMenus[i].classList.remove('c_navigation__menu__menu_item--out-of-viewport-top','c_navigation__menu__menu_item--out-of-viewport-bottom','c_navigation__menu__menu_item--out-of-viewport-left','c_navigation__menu__menu_item--out-of-viewport-right');
+                        openSubMenus[i].classList.remove('c-navigation__menu__menu_item--out-of-viewport-top','c-navigation__menu__menu_item--out-of-viewport-bottom','c-navigation__menu__menu_item--out-of-viewport-left','c-navigation__menu__menu_item--out-of-viewport-right');
                         if(openSubMenus[i].nextElementSibling){
                             let outOfViewport = this.isOutOfViewport(openSubMenus[i].nextElementSibling);
                             if(outOfViewport.top){
-                                openSubMenus[i].classList.add('c_navigation__menu__menu_item--out-of-viewport-top');
+                                openSubMenus[i].classList.add('c-navigation__menu__menu_item--out-of-viewport-top');
                             }
                             if(outOfViewport.bottom){
-                                openSubMenus[i].classList.add('c_navigation__menu__menu_item--out-of-viewport-bottom');
+                                openSubMenus[i].classList.add('c-navigation__menu__menu_item--out-of-viewport-bottom');
                             }
                             if(outOfViewport.left){
-                                openSubMenus[i].classList.add('c_navigation__menu__menu_item--out-of-viewport-left');
+                                openSubMenus[i].classList.add('c-navigation__menu__menu_item--out-of-viewport-left');
                             }
                             if(outOfViewport.right){
-                                openSubMenus[i].classList.add('c_navigation__menu__menu_item--out-of-viewport-right');
+                                openSubMenus[i].classList.add('c-navigation__menu__menu_item--out-of-viewport-right');
                             }
                         }
                     }
@@ -466,7 +466,7 @@
     <%- include(paths.css.src + 'automated/_colors.scss') %>
     <%- include(paths.css.src + 'base/_mixins.scss') %>
 
-    .c_navigation {
+    .c-navigation {
         $self: &;
 
         & {
@@ -476,7 +476,7 @@
         button{
             @include button_reset;
         }
-        button.c_navigation__menu_toggle{
+        button.c-navigation__menu_toggle{
             margin:0 auto;
         }
 
