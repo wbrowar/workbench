@@ -128,7 +128,7 @@ module.exports = {
       src: `${paths.sourcePath}_img/`,
     },
     js: {
-      src: `${paths.sourcePath}_js/`,d
+      src: `${paths.sourcePath}_js/`,
     },
     starter: {
       components: `${paths.starterPath}components/`,
