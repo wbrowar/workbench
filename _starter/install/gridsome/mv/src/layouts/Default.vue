@@ -4,10 +4,10 @@
       <strong>
         <g-link to="/"><IconSVG handle="plus" width="40" height="40" /><div class="c_text--hide">{{ $static.metadata.siteName }}</div></g-link>
       </strong>
-      <nav class="ui__nav">
-        <g-link class="ui__nav__link" to="/">Home</g-link>
-        <g-link class="ui__nav__link" to="/about">About</g-link>
-        <g-link class="ui__nav__link" to="/dev/docs/general">Docs</g-link>
+      <nav class="c-buttons">
+        <Button label-text="Home" href="/" />
+        <Button label-text="About" href="/about" />
+        <Button label-text="Docs" href="/dev/docs/general" />
       </nav>
     </header>
     <transition name="fade" appear>
@@ -35,11 +35,13 @@ query {
 </static-query>
 
 <script>
+import Button from 'Components/button/Button';
 import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.vue';
 import IconSVG from 'Components/icon_svg/IconSVG';
 
 export default {
   components: {
+    Button,
     ColorSchemeToggle,
     IconSVG,
   },

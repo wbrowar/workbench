@@ -1,6 +1,6 @@
 <template>
   <figure :is="background ? elementType : 'figure'" :class="background ? 'c-image_bg' : false">
-    <picture class="c-image" :class="{ c-image_bg__image: background }">
+    <picture class="c-image" :class="{ 'c-image_bg__image': background }">
       <!-- ClientOnly -->
         <LazyLoad
           :key="index"

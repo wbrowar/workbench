@@ -1,1 +1,1 @@
-export const wb = JSON.parse(`<%- JSON.stringify(wb) %>`);
+export default JSON.parse(`<%- JSON.stringify(wb) %>`);
