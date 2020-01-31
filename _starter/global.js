@@ -320,8 +320,12 @@ methods.snake = function snake(text) {
 
 // Prepare theme options from wb.config.js for tailwind.config.js
 methods.tailwindConfig = function tailwindConfig(wb) {
+    let colorsList = [];
+    let opacityList = [];
     let colors = {};
     let fontFamily = {};
+    let opacity = {};
+    let plugins = [];
     let screens = {};
 
     // Prepare colors for Tailwind
@@ -329,12 +333,14 @@ methods.tailwindConfig = function tailwindConfig(wb) {
     Object.keys(themeColors).forEach((colorKey) => {
         if (typeof themeColors[colorKey] === 'string') {
             colors[colorKey] = `var(--color-${colorKey})`;
+            colorsList.push(colorKey);
         } else {
             if (!colors[colorKey]) {
                 colors[colorKey] = {};
             }
             Object.keys(themeColors[colorKey]).forEach((shadeKey) => {
                 colors[colorKey][shadeKey] = `var(--color-${colorKey}-${shadeKey})`;
+                colorsList.push(`${colorKey}-${shadeKey}`);
             })
         }
     });
@@ -343,6 +349,36 @@ methods.tailwindConfig = function tailwindConfig(wb) {
     Object.keys(wb.fonts).forEach((fontKey) => {
         fontFamily[fontKey] = wb.fonts[fontKey]['fontStack'];
     });
+
+    // Prepare opacity values for Tailwind
+    Object.keys(wb.opacity).forEach((key) => {
+        opacity[key] = wb.opacity[key];
+    });
+
+    // Add plugins
+    plugins.push(
+      function({ addUtilities }) {
+          let newUtilities = {};
+
+          colorsList.forEach((color) => {
+              Object.keys(wb.opacity).forEach((opacityKey) => {
+                  newUtilities[`.bg-${color}-${opacityKey}`] = {
+                      backgroundColor: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`
+                  };
+                  newUtilities[`.text-${color}-${opacityKey}`] = {
+                      color: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`
+                  };
+                  newUtilities[`.border-${color}-${opacityKey}`] = {
+                      borderColor: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`
+                  };
+              });
+          });
+
+          addUtilities(newUtilities, {
+              variants: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+          });
+      }
+    );
 
     // Prepare media queries for Tailwind
     Object.keys(wb.mq).forEach((mqKey) => {
@@ -353,8 +389,11 @@ methods.tailwindConfig = function tailwindConfig(wb) {
         theme: {
             colors: colors,
             fontFamily: fontFamily,
+            opacity: opacity,
             screens: screens,
-        }}, wb.tailwind);
+        },
+        plugins: plugins,
+    }, wb.tailwind);
 };
 
 // Determine if a command should be displayed in terminal when running shell commands
