@@ -1,7 +1,7 @@
 <template>
   <div class="docs__code_example" :class="{ 'docs__code_example--code': code }">
     <h2>{{ title }}</h2>
-    <p v-if="description">{{ description }}</p>
+    <p class="mb-4" v-if="description">{{ description }}</p>
     <div class="docs__code_example__output border border-solid border-gray-300" :class="[`bg-${dark ? 'black' : 'white'}`]">
       <slot />
     </div>

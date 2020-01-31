@@ -12,17 +12,17 @@
     }
     b,
     strong {
-      @include font('apple_bold');
+      @apply font-semibold;
     }
     i,
     em {
-      @include font('apple_italic');
+      @apply italic;
     }
     b i,
     i b,
     strong em,
     em strong {
-      @include font('apple_bold_italic');
+      @apply font-semibold italic;
     }
   }
   ol,

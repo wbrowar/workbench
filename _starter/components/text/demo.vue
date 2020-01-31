@@ -11,15 +11,15 @@
       <div>
         <label for="font_sample_text_input" style="display: block; margin-bottom: 3px; font-size: 0.9rem;">Sample Text</label>
         <textarea
+          class="dev__components__input"
           name="font_sample_text_input"
           v-model="fontSampleText"
           rows="30"
-          style="padding: 5px; width: 100%;"
         ></textarea>
       </div>
     </CodeExample>
 
-    <CssModifiers root-class="c-text" :modifiers="modifiers" />
+<!--    <CssModifiers root-class="c-text" :modifiers="modifiers" />-->
   </div>
 </template>
 

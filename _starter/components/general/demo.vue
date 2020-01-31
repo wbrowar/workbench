@@ -11,9 +11,7 @@
           class="root__color_grid"
           style="display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, 174px); grid-template-rows: auto;"
         >
-          <!-- ClientOnly -->
           <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
-          <!-- /ClientOnly -->
         </div>
       </div>
     </CodeExample>
@@ -36,17 +34,26 @@
       <div style="display: grid; grid-template-columns: auto 80px; grid-gap: 30px; margin-top: 60px;">
         <div>
           <label for="font_sample_text_input" style="display: block; margin-bottom: 3px">Sample Text</label>
-          <input id="font_sample_text_input" type="text" v-model="fontSampleText" style="padding: 5px; width: 100%;" />
+          <input id="font_sample_text_input" class="dev__components__input" type="text" v-model="fontSampleText" />
         </div>
         <div>
           <label for="font_sample_size_input" style="display: block; margin-bottom: 3px">Size (rem)</label>
           <input
             id="font_sample_size_input"
+            class="dev__components__input"
             type="number"
             step="0.01"
             v-model="fontSampleSize"
-            style="padding: 5px; width: 100%;"
           />
+        </div>
+      </div>
+    </CodeExample>
+
+    <CodeExample title="Opacity" description="Opacity used in Tailwind config" copy-text='opacity-50'>
+      <div class="flex">
+        <div class="flex flex-col justify-center w-20 h-20 text-center" :class="[`bg-black-${index}`]" style="-webkit-text-stroke: 1px hsla(var(--color-white-hsl), 0.3)" v-for="(item, index) in globalData.wb.opacity">
+          <p class="font-semibold text-2xl">{{ item }}</p>
+          <p class="font-semibold text-xs">{{ index }}</p>
         </div>
       </div>
     </CodeExample>
