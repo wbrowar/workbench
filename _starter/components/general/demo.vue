@@ -49,9 +49,20 @@
       </div>
     </CodeExample>
 
-    <CodeExample title="Opacity" description="Opacity used in Tailwind config" copy-text='opacity-50'>
+    <CodeExample title="Media Queries" description="Media queries used in Tailwind and vue-mq.">
       <div class="flex">
-        <div class="flex flex-col justify-center w-20 h-20 text-center" :class="[`bg-black-${index}`]" style="-webkit-text-stroke: 1px hsla(var(--color-white-hsl), 0.3)" v-for="(item, index) in globalData.wb.opacity">
+        <div class="flex flex-col justify-center flex-grow flex-shrink text-gray-700 text-center bg-gray-400 px-4 py-2 text-3xl">📱</div>
+        <div class="flex flex-col justify-center flex-grow flex-shrink text-gray-700 text-center bg-gray-400 px-4 py-2 border-l border-solid border-black-40" v-for="(item, index) in globalData.wb.mq" :key="index">
+          <p class="font-semibold text-2xl">{{ item }}</p>
+          <p class="font-semibold text-sm">{{ index }}</p>
+        </div>
+        <div class="flex flex-col justify-center flex-grow flex-shrink text-gray-700 text-center bg-gray-400 px-4 py-2 border-l border-solid border-black-40 text-3xl">🖥</div>
+      </div>
+    </CodeExample>
+
+    <CodeExample title="Opacity" description="Opacity used in Tailwind config." copy-text='opacity-50'>
+      <div class="flex">
+        <div class="flex flex-col justify-center flex-grow flex-shrink w-20 h-20 text-center" :class="[`bg-black-${index}`]" style="-webkit-text-stroke: 1px hsla(var(--color-white-hsl), 0.3)" v-for="(item, index) in globalData.wb.opacity" :key="index">
           <p class="font-semibold text-2xl">{{ item }}</p>
           <p class="font-semibold text-xs">{{ index }}</p>
         </div>
