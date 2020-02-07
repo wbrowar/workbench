@@ -1,19 +1,6 @@
 .c-buttons {
   $self: &;
 
-  @include box_modifiers($self);
-
-  display: grid;
+  @apply grid gap-5;
   grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
-  grid-gap: $grid_gap;
-
-  @at-root #{&}--left {
-    justify-content: flex-start;
-  }
-  @at-root #{&}--center {
-    justify-content: center;
-  }
-  @at-root #{&}--right {
-    justify-content: flex-end;
-  }
 }

@@ -1,12 +1,11 @@
 @tailwind base;
 @import 'automated/_colors.scss';
 @import 'automated/_fonts.scss';
-@import 'lib/_reset.scss';
 @import 'base/_animations.scss';
+@import 'base/_global.scss';
 @import 'base/_custom_properties.scss';
 
 @tailwind components;
 @import 'automated/_components.scss';
 
 @tailwind utilities;
-@import 'base/_global.scss';

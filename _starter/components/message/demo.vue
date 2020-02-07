@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Title</h1>
+    <h1 class="dev__components__demo__header">Title</h1>
     <p>Description</p>
 
     <ImportPath path="import Message from 'Components/message/Message.vue';" />
@@ -14,7 +14,7 @@
 
     <PropsTable :props="props.message" />
 
-    <h1>Title</h1>
+    <h1 class="dev__components__demo__header">Title</h1>
     <p>Description</p>
 
     <ImportPath path="import Message from 'Components/message/Message.vue';" />

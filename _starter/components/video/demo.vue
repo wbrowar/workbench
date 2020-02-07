@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Video</h1>
+    <h1 class="dev__components__demo__header">Video</h1>
     <p>Play a video from a URL or embed a video iframe player from YouTube or Vimeo.</p>
 
     <ImportPath path="import MediaVideo from 'Components/video/MediaVideo.vue';" />

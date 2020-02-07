@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Image</h1>
+    <h1 class="dev__components__demo__header">Image</h1>
     <p>The image component can be used as a foreground image or a background image.</p>
 
     <ImportPath path="import MediaImage from 'Components/image/MediaImage.vue';" />

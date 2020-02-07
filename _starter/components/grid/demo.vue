@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Grid</h1>
+    <h1 class="dev__components__demo__header">Grid</h1>
     <p>
       Use CSS Grid to lay out content at breakpoints defined in `src/main.js` OR use CSS to lay out content in
       predefined CSS grids.

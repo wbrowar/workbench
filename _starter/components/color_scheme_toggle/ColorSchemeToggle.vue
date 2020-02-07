@@ -1,5 +1,5 @@
 <template>
-  <button class="c-color_scheme_toggle" @click="updateColorScheme">
+  <button class="c-color_scheme_toggle" @click="onClick">
     <slot>{{ schemeId.toUpperCase() }}</slot>
   </button>
 </template>
@@ -15,24 +15,38 @@ export default {
     };
   },
   props: {
-    method: { default: 'class' },
-    schemeId: { required: true },
-    targetSelector: { default: 'html' },
+    method: { type: String, default: 'class' },
+    remember: { type: Boolean, default: false },
+    schemeId: { type: String, required: true },
+    targetSelector: { type: String, default: 'html' },
   },
   methods: {
+    onClick: function() {
+      this.updateColorScheme();
+
+      if (this.remember) {
+        if (this.schemeId === 'default') {
+          localStorage.removeItem('preference:colorScheme');
+        } else {
+          localStorage.setItem('preference:colorScheme', this.schemeId);
+        }
+      }
+    },
     updateColorScheme: function() {
       switch (this.method) {
         case 'class':
           const el = document.querySelector(this.targetSelector);
           if (!hasClass(el, `scheme-${this.schemeId}`)) {
             this.otherSchemes.forEach((item) => removeClass(el, `scheme-${item}`));
-            addClass(el, `scheme-${this.schemeId}`);
+            if (this.schemeId !== 'default') {
+              addClass(el,`scheme-${this.schemeId}`);
+            }
           }
           break;
         case 'event':
-          window.VueEvent.$emit('setColorScheme', this.schemeId);
+          this.$emit('setColorScheme', this.schemeId);
           break;
-      }
+      };
     },
   },
   created() {
@@ -40,6 +54,14 @@ export default {
     this.otherSchemes = Object.keys(wb.colors)
       ? Object.keys(wb.colors).filter((scheme) => scheme !== this.schemeId)
       : [];
+  },
+  mounted() {
+    if (this.remember && localStorage.getItem('preference:colorScheme')) {
+      if (localStorage.getItem('preference:colorScheme') === this.schemeId) {
+        log('changing it');
+        this.updateColorScheme();
+      }
+    }
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Flexbox</h1>
+    <h1 class="dev__components__demo__header">Flexbox</h1>
 
     <ImportPath path="import Flex from 'Components/flex/Flex.vue';" />
 

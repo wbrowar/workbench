@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Lazy Animation</h1>
+    <h1 class="dev__components__demo__header">Lazy Animation</h1>
     <p>Animate elements upon entering the viewport.</p>
     <p>
       <em>NOTE: this component relies on Javascript so it must be wrapped in `ClientOnly` on Gridsome projects.</em>

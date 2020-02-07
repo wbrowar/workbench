@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Audio</h1>
+    <h1 class="dev__components__demo__header">Audio</h1>
     <p>Play an audio file using the native browser audio player.</p>
 
     <ImportPath path="import MediaAudio from 'Components/audio/MediaAudio.vue';" />

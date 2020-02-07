@@ -8,7 +8,8 @@
     :to="useRouterLink ? formattedHref || null : null"
     :rel="newWindow || target ? 'noopener' : null"
     @click="onClick"
-    ><slot>{{ labelText }}</slot></span>
+    ><slot>{{ labelText }}</slot></span
+  >
 </template>
 
 <script>
@@ -16,11 +17,9 @@ import { log } from 'JS/global.js';
 import wb from 'JS/automated/wb.js';
 
 export default {
-  components: {
-  },
+  components: {},
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     ariaLabel: String,
@@ -88,23 +87,23 @@ export default {
 </script>
 
 <style lang="scss">
-  .c-button {
-    $self: &;
+.c-button {
+  $self: &;
 
-    @apply flex flex-row flex-no-wrap items-center justify-center px-5 py-3;
+  @apply flex flex-row flex-no-wrap items-center justify-center px-5 py-3;
 
-    @at-root #{$self}--default {
-      @apply bg-black text-white;
+  @at-root #{$self}--default {
+    @apply bg-black text-white;
 
-      @at-root #{&}:hover {
-        @apply opacity-60;
-      }
-    }
-    @at-root #{$self}--pointer {
-      @apply cursor-pointer;
-    }
-    @at-root #{$self}--reset {
-      @include button_reset;
+    @at-root #{&}:hover {
+      @apply opacity-60;
     }
   }
+  @at-root #{$self}--pointer {
+    @apply cursor-pointer;
+  }
+  @at-root #{$self}--reset {
+    @include button_reset;
+  }
+}
 </style>

@@ -77,15 +77,15 @@
       }
     }
     @at-root #{$self}__demo {
-      h1:not(.c_header) {
+      @at-root h1#{&}__header {
         margin-bottom: 0.3em;
         font-size: 1.5rem;
       }
-      h2:not(.c_header) {
+      @at-root h2#{&}__header {
         margin: 0.8em 0 0.2em;
         font-size: 1.2rem;
       }
-      h3:not(.c_header) {
+      @at-root h3#{&}__header {
         margin-bottom: 0.2em;
         font-size: 1.1rem;
         color: rgb(122, 134, 158);
@@ -93,6 +93,9 @@
       & > p {
         margin-bottom: 20px;
       }
+    }
+    @at-root #{$self}__input {
+      @apply p-4 w-full bg-black-50 text-white rounded;
     }
   }
 </style>

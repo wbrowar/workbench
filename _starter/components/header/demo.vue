@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Headers</h1>
+    <h1 class="dev__components__demo__header">Headers</h1>
     <p>
       Style page and section headers. The numbers used for each header can be treated like an ID and does not have to be
       related to size or hierarchy. The style is not affected by the HTML tag used for the header element. That

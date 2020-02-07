@@ -1,6 +1,6 @@
 <template>
   <div class="docs__modifiers_table">
-    <h2>Modifiers</h2>
+    <h2 class="dev__components__demo__header">Modifiers</h2>
     <table class="docs__modifiers_table__table">
       <thead>
         <tr>

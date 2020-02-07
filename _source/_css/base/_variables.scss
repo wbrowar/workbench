@@ -1,21 +1,3 @@
-// ANIMATIONS
-$anim_duration_default: 0.3s;
-$anim_duration_fade: $anim_duration_default;
-$anim_duration_slide: $anim_duration_default;
-
 // LAYOUT
-$footer_height: var(--footer-height);
-$grid_gap: var(--grid-gap);
-$line_thickness: 1px;
-$max_width: var(--max-width);
-$max_width_text: var(--max-width-text);
-$spacing_box: var(--spacing-box);
-$spacing_text: var(--spacing-text);
 $ui_masthead_height: var(--ui-masthead-height);
 $ui_footer_height: var(--ui-footer-height);
-
-// MEDIA QUERIES
-$mq_grid_start: 700px;
-
-// Z-INDEX
-$z_ui: 1000;

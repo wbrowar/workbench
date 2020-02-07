@@ -26,109 +26,6 @@
   }
 }
 
-// BOX
-// Default modifiers that affect spacing and layout of box elements
-@mixin box_modifiers($self: &) {
-  @include automated_color_modifiers($self, 'background-color');
-  @at-root #{$self}--center {
-    text-align: center;
-  }
-  @at-root #{$self}--full {
-    width: 100%;
-    height: 100%;
-
-    @at-root #{&}--height {
-      height: 100%;
-    }
-    @at-root #{&}--width {
-      width: 100%;
-    }
-  }
-  @at-root #{$self}--justify {
-    @at-root #{&}--start {
-      justify-self: start;
-    }
-    @at-root #{&}--center {
-      justify-self: center;
-    }
-    @at-root #{&}--end {
-      justify-self: end;
-    }
-  }
-  @at-root #{$self}--margin {
-    margin-top: var(--box-margin-top, var(--box-mt, #{ $spacing_box }));
-    margin-bottom: var(--box-margin-bottom, var(--box-mb, #{ $spacing_box }));
-
-    @at-root #{&}--auto {
-      margin-right: auto;
-      margin-left: auto;
-    }
-    @at-root #{&}--top {
-      margin-top: var(--box-margin-top, var(--box-mt, #{ $spacing_box }));
-    }
-    @at-root #{&}--right {
-      margin-right: var(--box-margin-right, var(--box-mr, #{ $spacing_box }));
-    }
-    @at-root #{&}--bottom {
-      margin-bottom: var(--box-margin-bottom, var(--box-mb, #{ $spacing_box }));
-    }
-    @at-root #{&}--left {
-      margin-left: var(--box-margin-left, var(--box-ml, #{ $spacing_box }));
-    }
-  }
-  @at-root #{$self}--mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  @at-root #{$self}--max {
-    @at-root #{&}--width {
-      max-width: var(--box-max-width, var(--box-mw, #{$max_width}));
-    }
-    @at-root #{&}--height {
-      max-height: var(--box-max-height, var(--box-mh, #{$max_width}));
-    }
-  }
-  @at-root #{$self}--padding {
-    padding-top: var(--box-padding-top, var(--box-pt, #{ $spacing_box }));
-    padding-bottom: var(--box-padding-bottom, var(--box-pb, #{ $spacing_box }));
-
-    @at-root #{&}--top {
-      padding-top: var(--box-padding-top, var(--box-pt, #{ $spacing_box }));
-    }
-    @at-root #{&}--right {
-      padding-right: var(--box-padding-right, var(--box-pr, #{ $spacing_box }));
-    }
-    @at-root #{&}--bottom {
-      padding-bottom: var(--box-padding-bottom, var(--box-pb, #{ $spacing_box }));
-    }
-    @at-root #{&}--left {
-      padding-left: var(--box-padding-left, var(--box-pl, #{ $spacing_box }));
-    }
-  }
-  @at-root #{$self}--v {
-    width: 100vw;
-    height: 100vh;
-
-    @at-root #{&}--min {
-      @at-root #{&}--height {
-        min-height: 100vh;
-      }
-      @at-root #{&}--width {
-        min-width: 100vw;
-      }
-    }
-    @at-root #{&}--height {
-      height: 100vh;
-    }
-    @at-root #{&}--width {
-      width: 100vw;
-    }
-  }
-}
-
 // BUTTON
 // Reset button element styles
 @mixin button_reset {
@@ -283,10 +180,10 @@
 // Quickly write simple media queries
 // @include mq(600) {  }
 @mixin _mq_handler($mq_min_max, $mq_direction, $breakpoint, $additional_media: '', $unit: 'px') {
-  $breakpointVal: #{ strip_unit($breakpoint) }px;
+  $breakpointVal: #{strip_unit($breakpoint)}px;
 
   @if $unit == 'em' {
-    $breakpointVal: #{ strip_unit($breakpoint) }em;
+    $breakpointVal: #{strip_unit($breakpoint)}em;
   } @else if $unit == 'rem' {
     $breakpointVal: px_to_rem($breakpoint);
   }
@@ -378,63 +275,6 @@
 }
 
 // TEXT
-// Default modifiers that affect spacing and layout of text
-@mixin text_modifiers($self: &) {
-  @include automated_color_modifiers($self, 'color');
-  @at-root #{$self}--center {
-    text-align: center;
-  }
-  @at-root #{$self}--hide {
-    @include hide_text;
-  }
-  @at-root #{$self}--margin {
-    margin-top: var(--text-margin-top, var(--text-mt, #{ $spacing_text }));
-    margin-bottom: var(--text-margin-bottom, var(--text-mb, #{ $spacing_text }));
-
-    @at-root #{&}--auto {
-      margin-right: auto;
-      margin-left: auto;
-    }
-    @at-root #{&}--top {
-      margin-top: var(--text-margin-top, var(--text-mt, #{ $spacing_text }));
-    }
-    @at-root #{&}--right {
-      margin-right: var(--text-margin-right, var(--text-mr, #{ $spacing_text }));
-    }
-    @at-root #{&}--bottom {
-      margin-bottom: var(--text-margin-bottom, var(--text-mb, #{ $spacing_text }));
-    }
-    @at-root #{&}--left {
-      margin-left: var(--text-margin-left, var(--text-ml, #{ $spacing_text }));
-    }
-  }
-  @at-root #{$self}--padding {
-    padding-top: var(--text-padding-top, var(--text-pt, #{ $spacing_text }));
-    padding-bottom: var(--text-padding-bottom, var(--text-pb, #{ $spacing_text }));
-
-    @at-root #{&}--top {
-      padding-top: var(--text-padding-top, var(--text-pt, #{ $spacing_text }));
-    }
-    @at-root #{&}--right {
-      padding-right: var(--text-padding-right, var(--text-pr, #{ $spacing_text }));
-    }
-    @at-root #{&}--bottom {
-      padding-bottom: var(--text-padding-bottom, var(--text-pb, #{ $spacing_text }));
-    }
-    @at-root #{&}--left {
-      padding-left: var(--text-padding-left, var(--text-pl, #{ $spacing_text }));
-    }
-  }
-  @at-root #{$self}--uppercase {
-    text-transform: uppercase;
-  }
-  @at-root #{$self}--lowercase {
-    text-transform: lowercase;
-  }
-  @at-root #{$self}--capitalize {
-    text-transform: capitalize;
-  }
-}
 // Hide text for things like buttons or links that are replaced with a background image
 @mixin hide_text {
   text-indent: 100%;

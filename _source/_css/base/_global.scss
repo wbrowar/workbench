@@ -8,7 +8,7 @@
 
 html {
   @include automated_color_schemes;
-  @include font('apple');
+  @apply font-apple;
   line-height: 1.4;
   background-color: $color_white;
   color: $color_black;

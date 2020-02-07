@@ -1,6 +1,6 @@
 <template>
   <div class="docs__props_table">
-    <h2>Props</h2>
+    <h2 class="dev__components__demo__header">Props</h2>
     <table class="docs__props_table__table">
       <thead>
         <tr>

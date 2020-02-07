@@ -1,5 +1,5 @@
 <template>
-  <div class="docs__import_path" @click="copyToClipboard(path)" title="Click to copy"><i>{{ path }}</i></div>
+  <div class="docs__import_path" @click="copyToClipboard(path)" title="Click to copy">{{ path }}</div>
 </template>
 
 <script>
@@ -34,8 +34,9 @@
     background-color: #252525;
     border-radius: 7px;
     box-sizing: border-box;
-    font-size: 18px;
-    font-weight: 700;
+    font-family: "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, monospace;
+    font-size: 16px;
+    font-weight: 100;
     color: #a7e08b;
     cursor: pointer;
 

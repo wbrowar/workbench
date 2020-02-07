@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Box</h1>
+    <h1 class="dev__components__demo__header">Box</h1>
     <p>Helper styles for easier layout. Used as base for other components.</p>
 
     <ImportPath path="import Box from 'Components/box/Box.vue';" />

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Accordion</h1>
+    <h1 class="dev__components__demo__header">Accordion</h1>
     <p>
       Create an accordion to show and hide information, like Q&As. An accordion is made up of a wrapper Accordion
       component and AccordionTab components for the content.
@@ -19,7 +19,7 @@
 
     <PropsTable :props="accordionProps" />
 
-    <h1>Accordion Tab</h1>
+    <h1 class="dev__components__demo__header">Accordion Tab</h1>
     <p>An accordion tab is made up of an AccordionTab component and two slots: the 'header' is what gets clicked on to show and hide the 'content' slot. An accordion tab can be used as a child within an Accordion component, or it can be used on it's own to hide single pieces of content.</p>
 
     <ImportPath path="import AccordionTab from 'Components/accordion/AccordionTab.vue';" />

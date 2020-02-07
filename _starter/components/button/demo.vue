@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Buttons</h1>
+    <h1 class="dev__components__demo__header">Buttons</h1>
     <p>Link to internal or external URLs or create a button element to fire a Javascript function.</p>
 
     <ImportPath path="import Button from 'Components/button/Button.vue';" />
@@ -9,7 +9,11 @@
       :code="code.href"
       copy-text='<Button href="" label-text="" />'
       title="CTA Buttons"
-      :description="`Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${ globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link' }' components to work with Vue Router.`"
+      :description="
+        `Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${
+          globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link'
+        }' components to work with Vue Router.`
+      "
     >
       <div class="c-buttons">
         <Button href="/about/" label-text="About (internal)" />
@@ -23,7 +27,7 @@
       title="Action Buttons"
       description="Fire a Javascript function when the button is clicked. When no argument is passed through, a MouseEvent object will be returned."
     >
-      <div class="c-buttons c-buttons--center">
+      <div class="c-buttons justify-center">
         <Button @onClick="clickThroughAction" label-text="Get Click Event" />
         <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
       </div>
@@ -34,7 +38,7 @@
       title="Unstyled Buttons"
       description="Use the same props as regular buttons but add your own style. Passing a prop into a Button will automatically unstyle it, but styles can be added via CSS classes."
     >
-      <div class="c-buttons c-buttons--right">
+      <div class="c-buttons justify-end">
         <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
         <Button new-window href="https://vuejs.org/">
           <Box demo />
@@ -47,7 +51,9 @@
 
     <PropsTable :props="props" />
 
-<!--    <CssModifiers root-class="c-button" :modifiers="modifiers" />-->
+    <EventsTable :events="events" />
+
+    <!--    <CssModifiers root-class="c-button" :modifiers="modifiers" />-->
   </div>
 </template>
 
@@ -57,6 +63,7 @@ import Box from 'Components/box/Box.vue';
 import Button from 'Components/button/Button.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
 import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
+import EventsTable from 'Starter/docs/vue/EventsTable.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
@@ -66,6 +73,7 @@ export default {
     Button,
     CodeExample,
     CssModifiers,
+    EventsTable,
     ImportPath,
     PropsTable,
   },
@@ -90,11 +98,11 @@ export default {
   <Button href="/about/" label-text="About (internal)" />
   <Button new-window href="https://vuejs.org/" label-text="Vue Website (external)" />
 </div>`,
-      action: `<div class="c-buttons c-buttons--center">
+      action: `<div class="c-buttons justify-center">
   <Button @onClick="clickThroughAction" label-text="Get Click Event" />
   <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
 </div>`,
-      unstyled: `<div class="c-buttons c-buttons--right">
+      unstyled: `<div class="c-buttons justify-end">
   <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
   <Button new-window href="https://vuejs.org/">
     <Box demo />
@@ -103,8 +111,13 @@ export default {
 </div>`,
     };
 
-    this.modifiers = [{ name: 'pointer', description: `Turns the cursor to a pointer.` },
+    this.modifiers = [
+      { name: 'pointer', description: `Turns the cursor to a pointer.` },
       { name: 'outline', description: `Changes style of button to outline version.` },
+    ];
+
+    this.events = [
+      { name: 'onClick', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
     ];
 
     this.props = [

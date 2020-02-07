@@ -163,6 +163,7 @@ async function run() {
 <script>
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
 import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
+import EventsTable from 'Starter/docs/vue/EventsTable.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
@@ -170,6 +171,7 @@ export default {
   components: {
     CodeExample,
     CssModifiers,
+    EventsTable,
     ImportPath,
     PropsTable,
   },
@@ -187,11 +189,14 @@ export default {
     this.code = {
       default: \`<p>Demo</p>\`,
     };
+    this.events = [
+        { name: 'onExample', arguments: 'example', description: \`Example description.\` },
+    ];
     this.modifiers = [
-        { name: 'test', description: \`Test\` },
+        { name: 'example', description: \`Example description.\` },
     ];
     this.props = [
-        { name: 'test', type: 'String',  default: \`''\`, description: \`Test\` },
+        { name: 'example', type: 'String',  default: \`''\`, description: \`Example description.\` },
     ];
   }
 };

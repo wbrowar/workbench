@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Icons (SVG)</h1>
+    <h1 class="dev__components__demo__header">Icons (SVG)</h1>
     <p>Create SVG elements from the files in the `_source/_icon/` folder.</p>
 
     <ImportPath path="import IconSVG from 'Components/icon_svg/IconSVG.vue';" />

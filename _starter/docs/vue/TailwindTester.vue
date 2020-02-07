@@ -1,8 +1,7 @@
 <template>
   <div class="docs__tailwind_tester">
     <div>
-      <div v-html="tailwindSample"></div>
-      <hr>
+      <div class="mb-6" v-html="tailwindSample"></div>
       <textarea
         class="dev__components__input"
         name="font_sample_text_input"

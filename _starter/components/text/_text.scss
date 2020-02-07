@@ -1,54 +1,36 @@
 .c-text {
   $self: &;
 
-  @include text_modifiers($self);
-
   p {
-    margin-bottom: $spacing_text;
-    line-height: 1.6;
+    @apply mb-5 leading-normal;
 
     &:last-child {
-      margin-bottom: 0;
+      @apply mb-0;
     }
-    b,
-    strong {
+    b, strong {
       @apply font-semibold;
     }
-    i,
-    em {
+    i, em {
       @apply italic;
     }
-    b i,
-    i b,
-    strong em,
-    em strong {
+    b i, i b, strong em, em strong {
       @apply font-semibold italic;
     }
   }
-  ol,
-  ul {
-    margin-bottom: $spacing_text;
+  ol, ul {
+    @apply mb-5 leading-normal;
 
     &:last-child {
-      margin-bottom: 0;
+      @apply mb-0;
     }
 
     li {
-      margin-bottom: 0.6em;
-      margin-left: 1.5em;
+      @apply mb-2 ml-6;
       break-inside: avoid;
     }
   }
   ol {
-    @at-root #{$self}--2_column_lists#{&} {
-      @include mq(500px) {
-        column-count: 2;
-        column-gap: 50px;
-      }
-    }
-  }
-  ul {
-    @at-root #{$self}--2_column_lists#{&} {
+    @at-root #{&}-2-column {
       @include mq(500px) {
         column-count: 2;
         column-gap: 50px;
@@ -56,7 +38,19 @@
     }
 
     li {
-      list-style: disc outside;
+      @apply list-decimal;
+    }
+  }
+  ul {
+    @at-root #{&}-2-column {
+      @include mq(500px) {
+        column-count: 2;
+        column-gap: 50px;
+      }
+    }
+
+    li {
+      @apply list-disc;
     }
   }
 }
