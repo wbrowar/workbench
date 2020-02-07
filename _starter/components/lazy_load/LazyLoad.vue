@@ -4,7 +4,6 @@
 
 <script>
 import { log } from 'JS/global.js';
-import * as io from 'intersection-observer';
 
 export default {
   data() {
@@ -30,7 +29,7 @@ export default {
       } else if (this.beforeLoad) {
         return this.beforeLoad;
       }
-      return false;
+      return null;
     },
   },
   methods: {
@@ -75,14 +74,12 @@ export default {
       }
     },
   },
-  created() {
+  mounted() {
     if (process.isClient) {
       if (this.checkForNativeLazyLoad) {
         this.nativeLazyLoad = 'loading' in HTMLImageElement.prototype;
       }
     }
-  },
-  mounted() {
     if (this.enabled && this.checkForNativeLazyLoad ? !this.nativeLazyLoad : true) {
       if (this.inViewport()) {
         log('Lazy Load in Viewport');

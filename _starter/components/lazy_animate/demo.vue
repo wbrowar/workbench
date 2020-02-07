@@ -9,18 +9,33 @@
     <ImportPath path="import LazyAnimate from 'Components/lazy_animate/LazyAnimate.vue';" />
 
     <CodeExample
+      title="Tailwind Transition Animation"
+      description="Combine Tailwind classes to transition upon entering the viewport. Classes set in `observer-classes` are ignored if element is in viewport before mounting."
+      :code="code.tailwind"
+    >
+      <!-- ClientOnly -->
+        <LazyAnimate
+          class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
+          observer-classes="transition duration-700"
+        >
+          <p class="font-bold text-gray-800 text-5xl">Text that animates!</p>
+        </LazyAnimate>
+      <!-- /ClientOnly -->
+    </CodeExample>
+
+    <CodeExample
       title="CSS Transition Animation"
       description="Use CSS Transitions to move from the `css-start` state to the `css-end` state upon entering the viewport."
       :code="code.css1"
     >
       <!-- ClientOnly -->
-        <LazyAnimate
-          :css-start="{ opacity: 0, transform: `translateY(100px)` }"
-          :css-end="{ opacity: 1 }"
-          css-transition="opacity .4s ease-out, transform .4s ease-out"
-        >
-          <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
-        </LazyAnimate>
+      <LazyAnimate
+        :css-start="{ opacity: 0, transform: `translateY(100px)` }"
+        :css-end="{ opacity: 1 }"
+        css-transition="opacity .4s ease-out, transform .4s ease-out"
+      >
+        <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
+      </LazyAnimate>
       <!-- /ClientOnly -->
     </CodeExample>
 
@@ -30,9 +45,9 @@
       :code="code.js1"
     >
       <!-- ClientOnly -->
-        <LazyAnimate style="opacity: 0;" type="slide-in" :options="{ y: 100 }">
-          <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
-        </LazyAnimate>
+      <LazyAnimate style="opacity: 0;" type="slide-in" :options="{ y: 100 }">
+        <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
+      </LazyAnimate>
       <!-- /ClientOnly -->
     </CodeExample>
 
@@ -42,22 +57,22 @@
       :code="code.js2"
     >
       <!-- ClientOnly -->
-        <LazyAnimate
-          type="custom"
-          :options="{
-            properties: {
-              '--demo-background-color': 160,
-              startAt: {
-                '--demo-background-color': 0,
-              },
+      <LazyAnimate
+        type="custom"
+        :options="{
+          properties: {
+            '--demo-background-color': 160,
+            startAt: {
+              '--demo-background-color': 0,
             },
-            speed: 2,
-          }"
-        >
-          <div
-            style="width: 100%; height: 400px; background-color: hsl(var(--demo-background-color, 0), 80%, 80%);"
-          ></div>
-        </LazyAnimate>
+          },
+          speed: 2,
+        }"
+      >
+        <div
+          style="width: 100%; height: 400px; background-color: hsl(var(--demo-background-color, 0), 80%, 80%);"
+        ></div>
+      </LazyAnimate>
       <!-- /ClientOnly -->
     </CodeExample>
 
@@ -93,6 +108,14 @@ export default {
   },
   created() {
     this.code = {
+      tailwind: `<!-- ClientOnly -->
+  <LazyAnimate
+    class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
+    observer-classes="transition duration-700"
+  >
+    <p class="font-bold text-5xl">Text that animates!</p>
+  </LazyAnimate>
+<!-- /ClientOnly -->`,
       css1: `<!-- ClientOnly -->
   <LazyAnimate
     :css-start="{ opacity: 0, transform: \`translateY(100px)\` }"
@@ -149,6 +172,11 @@ export default {
         type: 'String',
         default: `'div'`,
         description: `Change the element of the wrapper element for semantic HTML or accessibility.`,
+      },
+      {
+        name: 'observerClasses',
+        type: 'String',
+        description: `Classes that are set only when intersection observer is active.`,
       },
       {
         name: 'observerMargin',

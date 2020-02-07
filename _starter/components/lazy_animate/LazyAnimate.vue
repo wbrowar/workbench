@@ -1,20 +1,15 @@
 <template>
-  <Box :element-type="elementType" :class="animated ? 'c-animate--animated' : false" :style="styles" v-bind="box">
+  <div :is="elementType" :class="classes" :style="styles" v-bind="attrs">
     <slot></slot>
-  </Box>
+  </div>
 </template>
 
 <script>
 import { log, warn } from 'JS/global.js';
-import * as io from 'intersection-observer';
-import Box from 'Components/box/Box.vue';
 
 let animations = false;
 
 export default {
-  components: {
-    Box,
-  },
   data() {
     return {
       animated: false,
@@ -23,7 +18,7 @@ export default {
     };
   },
   props: {
-    box: {
+    attrs: {
       type: Object,
       default: () => {
         return {};
@@ -44,6 +39,7 @@ export default {
     },
     cssTransition: String,
     elementType: { type: String, default: 'div' },
+    observerClasses: String,
     observerMargin: { type: String, default: '-100px' },
     observerThreshold: { type: Number, default: 0 },
     options: {
@@ -56,6 +52,22 @@ export default {
     type: { type: String, default: 'css' },
   },
   computed: {
+    classes: function() {
+      let attrs = [];
+
+      if (this.animated) {
+        attrs.push('animated');
+      }
+
+      if (this.observer && this.observerClasses) {
+        attrs.push(this.observerClasses);
+      }
+
+      if (attrs.length) {
+        return attrs;
+      }
+      return null;
+    },
     styles: function() {
       let styles = this.animated ? this.cssEnd : this.cssStart;
 

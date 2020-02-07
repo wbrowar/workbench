@@ -1,5 +1,6 @@
 const paths = {
   sourcePath: process.cwd() + '/_source/',
+  srcPath: process.cwd() + '/src/',
   starterPath: process.cwd() + '/_starter/',
 };
 
@@ -22,26 +23,26 @@ module.exports = {
         '800': '#424242',
         '900': '#212121',
       },
-      alert_success: "rgb(45, 176, 51)",
-      alert_error: "rgb(176, 25, 22)",
-      alert_warning: "rgb(238, 199, 0)",
+      success: "rgb(45, 176, 51)",
+      error: "rgb(176, 25, 22)",
+      warning: "rgb(238, 199, 0)",
     },
     // Define colors for (prefers-color-scheme: dark)
-    // dark: {
-    //   white: "rgb(40, 40, 40)",
-    //   black: "rgb(200, 200, 200)",
-    //   gray: {
-    //     '100': '#212121',
-    //     '200': '#424242',
-    //     '300': '#616161',
-    //     '400': '#757575',
-    //     '500': '#9e9e9e',
-    //     '600': '#bdbdbd',
-    //     '700': '#e0e0e0',
-    //     '800': '#eeeeee',
-    //     '900': '#f5f5f5',
-    //   },
-    // },
+    dark: {
+      white: "rgb(40, 40, 40)",
+      black: "rgb(200, 200, 200)",
+      gray: {
+        '100': '#212121',
+        '200': '#424242',
+        '300': '#616161',
+        '400': '#757575',
+        '500': '#9e9e9e',
+        '600': '#bdbdbd',
+        '700': '#e0e0e0',
+        '800': '#eeeeee',
+        '900': '#f5f5f5',
+      },
+    },
     // Define colors for (prefers-color-scheme: light)
     // light: {
     //   white: "rgb(255, 255, 255)",
@@ -102,6 +103,12 @@ module.exports = {
   },
   tailwind: {
     // Define values to merge into tailwind.config.js, other than those defined above
+    variants: {
+      backgroundColor: ['responsive', 'hover', 'focus', 'animated'],
+      opacity: ['responsive', 'hover', 'focus', 'animated'],
+      textColor: ['responsive', 'hover', 'focus', 'animated'],
+      translate: ['responsive', 'hover', 'focus', 'animated'],
+    }
   },
   // Config options for build process
   name: '<%- install.handle %>',
@@ -131,6 +138,7 @@ module.exports = {
     starter: {
       components: `${paths.starterPath}components/`,
       source: paths.sourcePath,
+      src: paths.srcPath,
       starter: paths.starterPath,
       templates: `${paths.starterPath}templates/`,
     }

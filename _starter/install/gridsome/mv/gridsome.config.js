@@ -5,28 +5,33 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 const path = require('path'),
-      wb = require(`./wb.config.js`);
+  purgecss = require('@fullhuman/postcss-purgecss'),
+  tailwind = require('tailwindcss'),
+  wb = require(`./wb.config.js`);
+
+const postcssPlugins = [
+  tailwind(),
+];
+
+if (process.env.NODE_ENV === 'production') postcssPlugins.push(purgecss());
 
 function addStyleResource (rule) {
   rule.use('style-resource')
-      .loader('style-resources-loader')
-      .options({
-        patterns: [
-          path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
-          path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
-          path.resolve(`${wb.paths.css.src}base/_functions.scss`),
-          path.resolve(`${wb.paths.css.src}base/_variables.scss`),
-          path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
-        ],
-      })
+    .loader('style-resources-loader')
+    .options({
+      patterns: [
+        path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
+        path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
+        path.resolve(`${wb.paths.css.src}base/_functions.scss`),
+        path.resolve(`${wb.paths.css.src}base/_variables.scss`),
+        path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
+      ],
+    })
 }
 
 module.exports = {
   siteName: 'Gridsome',
   plugins: [
-    {
-      use: 'gridsome-plugin-tailwindcss',
-    },
     // {
     //   use: '@gridsome/source-graphql',
     //   options: {
@@ -38,6 +43,13 @@ module.exports = {
     //   },
     // },
   ],
+  css: {
+    loaderOptions: {
+      postcss: {
+        plugins: postcssPlugins,
+      },
+    },
+  },
   chainWebpack (config) {
     // Load variables for all vue-files
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];

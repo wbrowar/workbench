@@ -5,15 +5,13 @@
 <% for (const color in colors[scheme]) { -%>
 <% let colorVal = colors[scheme][color] -%>
     --color-<%- color %>-hsl: #{ hue(<%- colorVal %>) }, #{ saturation(<%- colorVal %>) }, #{ lightness(<%- colorVal %>) };
-    --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
-    --color-<%- color %>: hsla(var(--color-<%- color %>-hsl), var(--color-<%- color %>-a));
+    --color-<%- color %>: hsla(var(--color-<%- color %>-hsl), #{ alpha(<%- colorVal %>) });
 <% } -%>
 <% } else if (['dark', 'light'].includes(scheme)) { -%>
   @media (prefers-color-scheme: <%- scheme %>) {
 <% for (const color in colors[scheme]) { -%>
 <% let colorVal = colors[scheme][color] -%>
       --color-<%- color %>-hsl: #{ hue(<%- colorVal %>) }, #{ saturation(<%- colorVal %>) }, #{ lightness(<%- colorVal %>) };
-      --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
 <% } -%>
   }
 <% } } -%>
@@ -28,14 +26,13 @@
     #{$property}: $color_<%- color %>;
   };<% } %>
 }
-@mixin automated_color_schemes($selector_prefix: '.color_scheme--', $selector_suffix: '') {
+@mixin automated_color_schemes($selector_prefix: '.scheme-', $selector_suffix: '') {
 <% for (const scheme in colors) { -%>
 <% if (scheme !== 'default') { -%>
   @at-root #{&}#{$selector_prefix}<%- scheme %>#{$selector_suffix} {
 <% for (const color in colors[scheme]) { -%>
 <% let colorVal = colors[scheme][color] -%>
     --color-<%- color %>-hsl: #{ hue(<%- colorVal %>) }, #{ saturation(<%- colorVal %>) }, #{ lightness(<%- colorVal %>) };
-    --color-<%- color %>-a: #{ alpha(<%- colorVal %>) };
 <% } -%>
   }
 <% } -%>

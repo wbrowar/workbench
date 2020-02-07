@@ -1,16 +1,22 @@
 <template>
-    <div class="c_<%- handle %>">
+    <div class="c-<%- handle %>">
 
     </div>
 </template>
 
 <script>
+    import { log } from 'JS/global.js';
+    
     export default {
+        components: {
+        },
         data() {
             return {
             }
         },
         props: {
+        },
+        computed: {
         },
         methods: {
         },
@@ -22,12 +28,7 @@
 </script>
 
 <style lang="scss">
-    // @import './_source/_css/automated/_colors';
-    // @import './_source/_css/automated/_fonts';
-    // @import './_source/_css/base/_variables.scss';
-    // @import './_source/_css/base/_mixins.scss';
-
-    .c_<%- handle %> {
+    .c-<%- handle %> {
         $self: &;
 
     }

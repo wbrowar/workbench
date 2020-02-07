@@ -24,9 +24,9 @@ export default {
       switch (this.method) {
         case 'class':
           const el = document.querySelector(this.targetSelector);
-          if (!hasClass(el, `color_scheme--${this.schemeId}`)) {
-            this.otherSchemes.forEach((item) => removeClass(el, `color_scheme--${item}`));
-            addClass(el, `color_scheme--${this.schemeId}`);
+          if (!hasClass(el, `scheme-${this.schemeId}`)) {
+            this.otherSchemes.forEach((item) => removeClass(el, `scheme-${item}`));
+            addClass(el, `scheme-${this.schemeId}`);
           }
           break;
         case 'event':
@@ -37,15 +37,17 @@ export default {
   },
   created() {
     // Set array of schemes other than this one
-    this.otherSchemes = Object.keys(wb.colors) ? Object.keys(wb.colors).filter((scheme) => scheme !== this.schemeId) : [];
+    this.otherSchemes = Object.keys(wb.colors)
+      ? Object.keys(wb.colors).filter((scheme) => scheme !== this.schemeId)
+      : [];
   },
 };
 </script>
 
 <style lang="scss">
-  .c-color_scheme_toggle {
-    $self: &;
+.c-color_scheme_toggle {
+  $self: &;
 
-    @include button_reset;
-  }
+  @include button_reset;
+}
 </style>
