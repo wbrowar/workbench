@@ -1,14 +1,16 @@
 <template>
   <div>
-    <header class="ui__header">
-      <strong>
-        <g-link to="/"><IconSVG handle="plus" width="40" height="40" /><div class="c_text--hide">{{ $static.metadata.siteName }}</div></g-link>
-      </strong>
-      <nav class="c-buttons">
-        <Button label-text="Home" href="/" />
-        <Button label-text="About" href="/about" />
-        <Button label-text="Docs" href="/dev/docs/general" />
-      </nav>
+    <header class="ui__header sticky">
+      <div class="c-wrapper flex flex-row items-center h-full">
+        <strong>
+          <Button unstyle href="/" /><IconSVG handle="plus" width="40" height="40" /><div class="sr-only">{{ $static.metadata.siteName }}</div></Button>
+        </strong>
+        <nav class="c-buttons justify-end flex-grow">
+          <Button unstyle label-text="Home" href="/" />
+          <Button unstyle label-text="About" href="/about" />
+          <Button unstyle label-text="Docs" href="/dev/docs/general" />
+        </nav>
+      </div>
     </header>
     <transition name="fade" appear>
       <main>
@@ -16,12 +18,14 @@
       </main>
     </transition>
     <footer class="ui__footer">
-      <span>Color Scheme: </span>
-      <ClientOnly>
-        <ColorSchemeToggle scheme-id="default" title="Reset to default color scheme">🌎</ColorSchemeToggle>
-        <ColorSchemeToggle scheme-id="dark" title="Turn on dark color scheme (override browser setting)">🌒</ColorSchemeToggle>
-        <ColorSchemeToggle scheme-id="light" title="Turn on light color scheme (override browser setting)">🌖</ColorSchemeToggle>
-      </ClientOnly>
+      <div class="c-wrapper py-1">
+        <span>Color Scheme: </span>
+        <ClientOnly>
+          <ColorSchemeToggle class="mx-2" remember scheme-id="default" title="Reset to default color scheme">❌</ColorSchemeToggle>
+          <ColorSchemeToggle class="mx-2" remember scheme-id="dark" title="Turn on dark color scheme (override browser setting)">🌑</ColorSchemeToggle>
+          <ColorSchemeToggle class="mx-2" remember scheme-id="light" title="Turn on light color scheme (override browser setting)">🌕</ColorSchemeToggle>
+        </ClientOnly>
+      </div>
     </footer>
   </div>
 </template>
@@ -62,7 +66,6 @@ export default {
   @at-root #{$self}__header {
     $header: &;
 
-    position: sticky;
     height: $ui_masthead_height;
   }
   @at-root #{$self}__footer {

@@ -1,13 +1,5 @@
 // COLOR FUNCTIONS
 
-// Change alpha of a color
-// @param {String} $color_name - Number to remove unit from
-// @return {Number} $alpha - Unitless number
-// colora('black', .5)
-@function colora($color_name, $alpha) {
-  @return hsla(var(--color-#{$color_name}-h), var(--color-#{$color_name}-s), var(--color-#{$color_name}-l), $alpha);
-}
-
 // STRIP UNIT
 // Remove the unit of a length
 // @param {Number} $number - Number to remove unit from

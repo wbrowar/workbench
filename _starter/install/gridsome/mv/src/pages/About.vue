@@ -1,7 +1,7 @@
 <template>
   <Layout class="about">
-    <article class="about__example">
-      <h1 class="c_header c_header--1">About</h1>
+    <article class="about__example flex items-center justify-center bg-gray-700-30 text-black-50">
+      <h1 class="c-header-1">About</h1>
     </article>
   </Layout>
 </template>
@@ -19,12 +19,7 @@ export default {
   $self: &;
 
   @at-root #{$self}__example {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: colora('white', 0.5);
-    height: calc(100vh - #{$ui_masthead_height});
-    color: colora('black', 0.5);
+    height: calc(100vh - #{$ui_masthead_height} - #{$ui_footer_height});
   }
 }
 </style>
