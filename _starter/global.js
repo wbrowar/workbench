@@ -357,6 +357,13 @@ methods.tailwindConfig = function tailwindConfig(wb) {
 
     // Add plugins
     plugins.push(
+      function({ addVariant, e }) {
+          addVariant('animated', ({ modifySelectors, separator }) => {
+              modifySelectors(({ className }) => {
+                  return `.${e(`animated${separator}${className}`)}.animated`
+              })
+          })
+      },
       function({ addUtilities }) {
           let newUtilities = {};
 
@@ -375,7 +382,7 @@ methods.tailwindConfig = function tailwindConfig(wb) {
           });
 
           addUtilities(newUtilities, {
-              variants: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+              variants: ['responsive', 'hover', 'focus', 'active', 'group-hover', 'animated'],
           });
       }
     );
