@@ -1,8 +1,9 @@
 <template>
-  <figure :is="background ? elementType : 'figure'" :class="background ? 'c-image_bg' : false">
-    <picture class="c-image" :class="{ 'c-image_bg__image': background }">
+  <figure :is="background ? elementType : 'figure'" :class="classes">
+    <picture class="c-image" :class="containerClasses">
       <!-- ClientOnly -->
         <LazyLoad
+          :class="imageClasses"
           :key="index"
           :alt="alt && lastSource(index) ? alt : false"
           :after-load="{ src: lastSource(index) ? source.src || placeholder : false, srcset: source.srcset || false }"
@@ -15,6 +16,7 @@
           :sizes="lastSource(index) ? source.sizes || '100vw' : false"
           :type="source.type || false"
           :width="source.width || false"
+          :height="source.height || false"
           v-for="(source, index) in sources"
         />
       <!-- /ClientOnly -->
@@ -41,12 +43,52 @@ export default {
     caption: String,
     elementType: { type: String, default: 'div' },
     loading: { type: String, default: 'lazy' },
+    imageClass: String,
+    pictureClass: String,
     placeholder: {
       type: String,
       default: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
     },
     sizes: { type: String, default: '100vw' },
     sources: { type: Array, required: true },
+  },
+  computed: {
+    classes: function() {
+      let classes = [];
+
+      if (this.background) {
+        classes.push(`c-image_bg`);
+      }
+
+      if (classes.length) {
+        return classes;
+      }
+    },
+    containerClasses: function() {
+      let classes = [];
+
+      if (this.background) {
+        classes.push(`c-image_bg__image`);
+      }
+      if (this.pictureClass) {
+        classes.push(this.pictureClass);
+      }
+
+      if (classes.length) {
+        return classes;
+      }
+    },
+    imageClasses: function() {
+      let classes = [];
+
+      if (this.imageClass) {
+        classes.push(this.imageClass);
+      }
+
+      if (classes.length) {
+        return classes;
+      }
+    },
   },
   methods: {
     lastSource: function(index) {
