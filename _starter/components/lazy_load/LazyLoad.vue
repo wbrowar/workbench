@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { log } from 'JS/global.js';
+import { log, processIsClient } from 'JS/global.js';
 
 export default {
   data() {
@@ -34,23 +34,25 @@ export default {
   },
   methods: {
     addToObserver: function() {
-      log('Adding to Load Observer');
-      if (typeof this.observer !== 'object') {
-        this.observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                this.handleLazy();
-              }
-            });
-          },
-          {
-            rootMargin: this.observerMargin,
-            threshold: this.observerThreshold,
-          }
-        );
+      if (processIsClient) {
+        log('Adding to Load Observer');
+        if (typeof this.observer !== 'object') {
+          this.observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  this.handleLazy();
+                }
+              });
+            },
+            {
+              rootMargin: this.observerMargin,
+              threshold: this.observerThreshold,
+            }
+          );
+        }
+        this.observer.observe(this.$el);
       }
-      this.observer.observe(this.$el);
     },
     handleLazy: function() {
       log('Handling Lazy Load');
@@ -75,7 +77,7 @@ export default {
     },
   },
   mounted() {
-    if (process.isClient) {
+    if (processIsClient) {
       if (this.checkForNativeLazyLoad) {
         this.nativeLazyLoad = 'loading' in HTMLImageElement.prototype;
       }

@@ -17,7 +17,7 @@ export default {
   props: {
     method: { type: String, default: 'class' },
     remember: { type: Boolean, default: false },
-    schemeId: { type: String, required: true },
+    schemeId: { type: String, default: 'default' },
     targetSelector: { type: String, default: 'html' },
   },
   methods: {
@@ -31,22 +31,21 @@ export default {
           localStorage.setItem('preference:colorScheme', this.schemeId);
         }
       }
+
+      this.$emit('onClick');
     },
     updateColorScheme: function() {
       switch (this.method) {
         case 'class':
           const el = document.querySelector(this.targetSelector);
-          if (!hasClass(el, `scheme-${this.schemeId}`)) {
-            this.otherSchemes.forEach((item) => removeClass(el, `scheme-${item}`));
-            if (this.schemeId !== 'default') {
-              addClass(el,`scheme-${this.schemeId}`);
-            }
+          this.otherSchemes.forEach((item) => removeClass(el, `scheme-${item}`));
+          if (this.schemeId !== 'default') {
+            addClass(el,`scheme-${this.schemeId}`);
           }
           break;
-        case 'event':
-          this.$emit('setColorScheme', this.schemeId);
-          break;
       };
+
+      this.$emit('updatedColorScheme', this.schemeId);
     },
   },
   created() {

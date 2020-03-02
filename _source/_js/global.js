@@ -1,3 +1,5 @@
+import wb from 'JS/automated/wb.js';
+
 //  GLOBAL
 const devMode = process.env.NODE_ENV || 'development';
 
@@ -83,6 +85,17 @@ export function hasClass(el, className) {
   } else {
     return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
   }
+}
+export function processIsClient() {
+  let isClient = true;
+
+  switch (wb.projectType) {
+    case 'gridsome':
+      isClient = process.isClient();
+      break;
+  }
+
+  return isClient;
 }
 function ready(fn) {
   if (document.readyState !== 'loading') {

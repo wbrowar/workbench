@@ -4,7 +4,7 @@
 
 <script>
 import ResizeObserver from 'resize-observer-polyfill';
-import { error, log } from 'JS/global.js';
+import { error, log, processIsClient } from 'JS/global.js';
 
 export default {
   data() {
@@ -44,20 +44,22 @@ export default {
     this.sizes = JSON.parse(this.mqSizes);
   },
   mounted() {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const { left, top, width, height } = entry.contentRect;
-        log('Resizing', entry, left, top, width, height);
+    if (processIsClient) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          const { left, top, width, height } = entry.contentRect;
+          log('Resizing', entry, left, top, width, height);
 
-        this.currentSize = {};
-        this.sizes.forEach((size) => {
-          if (width >= size.width) {
-            this.currentSize = size;
-          }
-        });
-      }
-    });
-    resizeObserver.observe(this.$el);
+          this.currentSize = {};
+          this.sizes.forEach((size) => {
+            if (width >= size.width) {
+              this.currentSize = size;
+            }
+          });
+        }
+      });
+      resizeObserver.observe(this.$el);
+    }
   },
 };
 </script>

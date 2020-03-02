@@ -110,6 +110,18 @@ module.exports = {
       translate: ['responsive', 'hover', 'focus', 'animated'],
     }
   },
+  tailwindPlugins: [
+    // Define Tailwind plugins
+    // function({ addUtilities }) {
+    //   const newUtilities = {
+    //     '.text-vertical': {
+    //       writingMode: 'vertical-rl',
+    //     },
+    //   };
+    //
+    //   addUtilities(newUtilities, { variants: ['responsive'] });
+    // },
+  ],
   // Config options for build process
   name: '<%- install.handle %>',
   projectType: '<%- install.projectType %>',

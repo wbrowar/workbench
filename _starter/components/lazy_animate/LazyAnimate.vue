@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { log, warn } from 'JS/global.js';
+import { log, warn, processIsClient } from 'JS/global.js';
 
 let animations = false;
 
@@ -82,25 +82,27 @@ export default {
   },
   methods: {
     addToObserver: function(callback) {
-      log('Adding to Animate Observer');
+      if (processIsClient) {
+        log('Adding to Animate Observer');
 
-      if (typeof this.observer !== 'object') {
-        this.observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                if (this.reset) {
-                  this.animated = false;
+        if (typeof this.observer !== 'object') {
+          this.observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  if (this.reset) {
+                    this.animated = false;
+                  }
+                  callback();
                 }
-                callback();
-              }
-            });
-          },
-          {
-            rootMargin: this.observerMargin,
-            threshold: this.observerThreshold,
-          }
-        );
+              });
+            },
+            {
+              rootMargin: this.observerMargin,
+              threshold: this.observerThreshold,
+            }
+          );
+        }
       }
       this.observer.observe(this.$el);
     },

@@ -42,8 +42,9 @@ export default {
     background: { type: Boolean, default: false },
     caption: String,
     elementType: { type: String, default: 'div' },
-    loading: { type: String, default: 'lazy' },
+    ignoreScheme: { type: Boolean, default: false },
     imageClass: String,
+    loading: { type: String, default: 'lazy' },
     pictureClass: String,
     placeholder: {
       type: String,
@@ -58,6 +59,9 @@ export default {
 
       if (this.background) {
         classes.push(`c-image_bg`);
+      }
+      if (this.ignoreScheme) {
+        classes.push(`c-image-ignore-scheme`);
       }
 
       if (classes.length) {
@@ -100,3 +104,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .c-image {
+    $self: &;
+
+    @at-root #{$self}:not(.c-image-ignore-scheme) {
+      .scheme-dark & {
+        img {
+          filter: brightness(.8) contrast(1.2);
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        img {
+          filter: brightness(.8) contrast(1.2);
+        }
+      }
+    }
+  }
+</style>
