@@ -5,6 +5,7 @@ const _ = require('lodash');
 const g = require('./global.js');
 
 // load config files
+let tailwind = require(`${ process.cwd() }/tailwind.config.js`);
 let wb = require(`${ process.cwd() }/wb.config.js`);
 
 // set constants
@@ -30,13 +31,19 @@ async function run() {
           g.prebuildClean(resolve, wb.paths, verbose);
       }
     );
+    const tailwindConfig = g.asyncFunction(
+      `Converting Tailwind Config for front-end use`, `Tailwind Config converted`, (resolve) => {
+        g.prebuildTailwindConfig(resolve, wb.paths, tailwind, verbose);
+      }
+    );
     const wbConfig = g.asyncFunction(
-      `Creating Component Docs List`, `Component Docs List Created`, (resolve) => {
-          g.prebuildWbConfig(resolve, wb.paths, wb, verbose);
+      `Converting Tailwind Config for front-end use`, `WB Config converted`, (resolve) => {
+        g.prebuildWbConfig(resolve, wb.paths, wb, verbose);
       }
     );
 
     let cleanComplete = await clean;
+    let tailwindConfigComplete = await tailwindConfig;
     let wbConfigComplete = await wbConfig;
 
     if (runPrettier) {

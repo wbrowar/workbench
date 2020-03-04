@@ -1,5 +1,5 @@
 <template>
-  <div class="docs__font_sample" :class="classes" :style="{ '--docs-font-sample-size': size }" @click="copyToClipboard(copyString)" :title="`Click to copy '${ `${copyString}` }' to clipboard`">{{ text }}</div>
+  <div class="docs__font_sample" :class="classes" @click="copyToClipboard(copyString)" :title="`Click to copy '${ `${copyString}` }' to clipboard`">{{ text }}</div>
 </template>
 
 <script>
@@ -8,7 +8,7 @@
   export default {
     props: {
       handle: { type: String, required: true },
-      size: { type: Number, required: true },
+      size: { type: String, required: true },
       text: { type: String, required: true },
       weight: String,
     },
@@ -16,7 +16,7 @@
       classes: function() {
         let classes = [];
 
-        classes.push([`text-${this.handle}`]);
+        classes.push([`text-${this.handle}`, `text-${this.size}`]);
 
         if (this.weight) {
           classes.push([`font-${this.weight}`]);
@@ -25,7 +25,7 @@
         return classes;
       },
       copyString: function() {
-        return this.weight ? `font-${this.handle} font-${this.weight}` : `font-${this.handle}`;
+        return this.weight ? `font-${this.handle} text-${this.size} font-${this.weight}` : `font-${this.handle} text-${this.size}`;
       },
     },
     methods: {
@@ -44,9 +44,6 @@
   .docs__font_sample {
     $self: &;
 
-    font-size: calc(var(--docs-font-sample-size, 1) * 1rem);
-    padding-bottom: 0.2em;
-    border-bottom: 1px solid rgba(211, 220, 231, 0.7);
     cursor: pointer;
   }
 </style>

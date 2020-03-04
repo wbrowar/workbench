@@ -4,13 +4,14 @@
       <div class="dev__components__nav">
         <<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %> :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %>>
       </div>
-      <div :is="currentPageHandle" class="dev__components__demo" :global-data="{ wb: wb }" />
+      <div :is="currentPageHandle" class="dev__components__demo" :global-data="{ tailwind: tailwind, wb: wb }" />
     </div>
   </<%- wb.projectType === 'gridsome' ? 'Layout' : 'div' %>>
 </template>
 
 <script>
   import { docsComponents, imports } from 'JS/automated/docs.js';
+  import tailwind from 'JS/automated/tailwind.js';
   import wb from 'JS/automated/wb.js';
 
   export default {
@@ -18,6 +19,7 @@
     data() {
       return {
         pages: docsComponents,
+        tailwind: tailwind,
         wb: wb,
       };
     },

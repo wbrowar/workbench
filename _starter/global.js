@@ -285,8 +285,25 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
   });
 };
 
+methods.prebuildTailwindConfig = function prebuildTailwindConfig(callback, paths, config, verbose) {
+  const options = {
+    config: config,
+  };
+
+  ejs.renderFile(`${paths.starter.templates}_js/tailwind.js`, options, {}, function(err, str) {
+    if (err) {
+      methods.log('warn', err);
+    }
+    fs.outputFile(paths.js.src + 'automated/tailwind.js', str, (err) => {
+      if (!err) {
+        methods.log('verbose', `JS templates compiled: tailwind.js`, verbose);
+        callback();
+      }
+    });
+  });
+};
+
 methods.prebuildWbConfig = function prebuildWbConfig(callback, paths, wb, verbose) {
-  methods.log('verbose', `Converting WB Config for front-end use`, verbose);
   const options = {
     wb: wb,
   };
@@ -408,6 +425,13 @@ methods.tailwindConfig = function tailwindConfig(wb) {
     },
     plugins: plugins,
   }, wb.tailwind);
+
+  fs.outputFile(paths.js.src + 'automated/tailwind.config.js', str, (err) => {
+    if (!err) {
+      methods.log('verbose', `Component Docs template created.`, verbose);
+      callback();
+    }
+  });
 };
 
 // Determine if a command should be displayed in terminal when running shell commands

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addClass, hasClass, log, removeClass } from 'JS/global.js';
+import { addClass, log, removeClass } from 'JS/global.js';
 import wb from 'JS/automated/wb.js';
 
 export default {
@@ -38,7 +38,9 @@ export default {
       switch (this.method) {
         case 'class':
           const el = document.querySelector(this.targetSelector);
-          this.otherSchemes.forEach((item) => removeClass(el, `scheme-${item}`));
+          this.otherSchemes.forEach((item) => {
+            removeClass(el, `scheme-${item}`);
+          });
           if (this.schemeId !== 'default') {
             addClass(el,`scheme-${this.schemeId}`);
           }

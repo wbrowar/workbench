@@ -104,9 +104,9 @@ module.exports = {
   tailwind: {
     // Define values to merge into tailwind.config.js, other than those defined above
     variants: {
-      backgroundColor: ['responsive', 'hover', 'focus', 'animated'],
+      backgroundColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
       opacity: ['responsive', 'hover', 'focus', 'animated'],
-      textColor: ['responsive', 'hover', 'focus', 'animated'],
+      textColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
       translate: ['responsive', 'hover', 'focus', 'animated'],
     }
   },
