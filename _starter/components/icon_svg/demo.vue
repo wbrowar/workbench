@@ -18,15 +18,15 @@
       description="Change colors of <svg> elements. NOTE: This does not work with background or image SVG icons."
     >
       <div style="width: 40px;">
-        <IconSVG handle="plus" color="rgb(255, 0, 255)" />
-        <IconSVG handle="plus" color-var="white" />
-        <IconSVG handle="plus" :replacements="{ '<polygon': `<polygon fill='yellow'` }" />
+        <IconSVG class="text-gray-400" handle="plus" />
+        <IconSVG class="text-white md:text-gray-600" handle="plus" />
+        <IconSVG class="text-gray-800 hover:text-gray-300" handle="plus" />
       </div>
     </CodeExample>
 
     <CodeExample :code="code.image" title="Background SVG" description="Sets the SVG to a CSS background url.">
       <div style="width: 40px;">
-        <IconSVG handle="close" background style="width: 40px; height: 40px;" />
+        <IconSVG class="text-teal-400" handle="close" background style="width: 40px; height: 40px;" />
       </div>
     </CodeExample>
 
@@ -36,7 +36,7 @@
       description="Creates and image with the SVG set to its src attribute."
     >
       <div style="width: 40px;">
-        <IconSVG handle="minus" image />
+        <IconSVG class="text-teal-400" handle="minus" image />
       </div>
     </CodeExample>
 
@@ -69,9 +69,9 @@ export default {
   created() {
     this.code = {
       default: `<IconSVG handle="plus" />`,
-      changeColors: `<IconSVG handle="plus" color="rgb(255, 0, 255)" />
-<IconSVG handle="plus" color-var="white" />
-<IconSVG handle="plus" :replacements="{ '<polygon': \`<polygon fill='yellow'\` }" />`,
+      changeColors: `<IconSVG class="text-gray-400" handle="plus" />
+<IconSVG class="text-white md:text-gray-600" handle="plus" />
+<IconSVG class="text-gray-800 hover:text-gray-300" handle="plus" />`,
       image: `<IconSVG handle="close" background />`,
       background: `<IconSVG handle="minus" image />`,
     };

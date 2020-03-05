@@ -4,7 +4,6 @@
 
 <script>
 import * as svg from 'JS/automated/svg.js';
-import MediaImage from 'Components/image/MediaImage.vue';
 
 export default {
   data() {
@@ -15,8 +14,6 @@ export default {
   props: {
     background: { type: Boolean, default: false },
     backgroundSize: String,
-    color: String,
-    colorVar: String,
     handle: { type: String, required: true },
     height: String,
     image: { type: Boolean, default: false },
@@ -24,9 +21,6 @@ export default {
     width: String,
   },
   computed: {
-    colorVarString: function() {
-      return this.colorVar ? `var(--color-${this.colorVar})` : null;
-    },
     svgAttributes: function() {
       let attrs = {
         style: {},
@@ -46,14 +40,6 @@ export default {
         };
       } else {
         this.svgHtml = svg.html(this.handle, this.replacements || {});
-        if (this.color || this.colorVar) {
-          attrs = {
-            class: 'c-icon_svg--color',
-            style: {
-              '--color': this.colorVarString || this.color,
-            },
-          };
-        }
       }
 
       if (this.height) {
@@ -77,13 +63,10 @@ export default {
   background-size: contain;
 
   & > svg {
-    max-width: 100%;
-    width: 100%;
-    height: 100%;
-  }
-
-  @at-root #{&}--color {
-    @include svg_color(#{var(--color)});
+    width: var(--svg-w, 100%);
+    height: var(--svg-h, 100%);
+    max-width: var(--svg-max-w, 100%);
+    max-height: var(--svg-max-h);
   }
 }
 </style>
