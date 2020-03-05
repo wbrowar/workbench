@@ -57,7 +57,7 @@
       </div>
     </CodeExample>
 
-    <CodeExample title="Spacing" description="Tailwind spacing units. Used for margins, padding, ">
+    <CodeExample title="Spacing" description="Tailwind spacing units. Used for margins, padding, and gaps.">
       <div class="flex flex-wrap bg-black-50">
         <div class="flex flex-col justify-center w-20 h-20 bg-white even:bg-black text-black even:text-white text-center" style="-webkit-text-stroke: 1px hsla(var(--color-white-hsl), 0.3)" :style="{ width: item }" v-for="(item, index) in twConfig.theme.spacing" :key="index">
           <p class="font-semibold text-2xl">{{ index }}</p>

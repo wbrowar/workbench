@@ -2,6 +2,7 @@ const paths = {
   sourcePath: process.cwd() + '/_source/',
   srcPath: process.cwd() + '/src/',
   starterPath: process.cwd() + '/_starter/',
+  staticPath: process.cwd() + '/static/',
 };
 
 module.exports = {
@@ -128,6 +129,11 @@ module.exports = {
   ejs: {
     // Define any data to be processed with EJS
   },
+  favicon: {
+    distPath: 'img/meta/',
+    themeColor: '#fff',
+    tileColor: '#fff',
+  },
   paths: {
     components: {
       src: `${paths.sourcePath}_components/`,
@@ -152,6 +158,7 @@ module.exports = {
       source: paths.sourcePath,
       src: paths.srcPath,
       starter: paths.starterPath,
+      static: paths.staticPath,
       templates: `${paths.starterPath}templates/`,
     }
   },

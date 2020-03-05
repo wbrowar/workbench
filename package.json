@@ -3,7 +3,8 @@
     "cnvm": "nvm use 11",
     "update": "npm update",
     "commit": "node ./_starter/commit.js",
-    "deploy": "npm run commit"
+    "deploy": "npm run commit",
+    "favicon": "node ./_starter/favicon.js"
   },
   "name": "example-project",
   "private": true,
@@ -23,6 +24,7 @@
   "devDependencies": {
     "chalk": "^3.0.0",
     "ejs": "^3.0.1",
+    "favicons": "^6.0.0",
     "fs-extra": "^8.1.0",
     "@fullhuman/postcss-purgecss": "^2.0.6",
     "glob-all": "^3.1.0",
