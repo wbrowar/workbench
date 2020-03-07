@@ -1,9 +1,0 @@
-{% extends 'partials/_component.twig' %}
-
-{# Variables #}
-{% set image = (image ?? false) ? image|merge({ class: class ~ '__image' }) : { class: class ~ '__image' } %}
-
-{% block content -%}
-    {% import 'macros/component.twig' as component %}
-    {{ component.c('image', image) }}
-{%- endblock %}

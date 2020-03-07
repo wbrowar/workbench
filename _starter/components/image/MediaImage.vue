@@ -10,7 +10,6 @@
           :check-for-native-lazy-load="lazyLoad"
           :element-type="lastSource(index) ? 'img' : 'source'"
           :enabled="lazyLoad"
-          :intrinsicsize="source.intrinsicsize || false"
           :loading="loading"
           :media="source.media || false"
           :sizes="lastSource(index) ? source.sizes || '100vw' : false"
@@ -57,9 +56,6 @@ export default {
     classes: function() {
       let classes = [];
 
-      if (this.background) {
-        classes.push(`c-image_bg`);
-      }
       if (this.ignoreScheme) {
         classes.push(`c-image-ignore-scheme`);
       }
@@ -72,7 +68,7 @@ export default {
       let classes = [];
 
       if (this.background) {
-        classes.push(`c-image_bg__image`);
+        classes.push(`block relative top-0 left-0 w-full h-full overflow-hidden`);
       }
       if (this.pictureClass) {
         classes.push(this.pictureClass);
@@ -85,6 +81,9 @@ export default {
     imageClasses: function() {
       let classes = [];
 
+      if (this.background) {
+        classes.push(`h-full object-cover`);
+      }
       if (this.imageClass) {
         classes.push(this.imageClass);
       }
