@@ -1,5 +1,18 @@
 const wb = require(`./wb.config.js`);
 
+let content = [
+  `${wb.paths.components.src}**/*.vue`,
+  `${wb.paths.starter.src}**/*.vue`,
+  `${wb.paths.starter.src}**/*.js`,
+  `${wb.paths.starter.src}**/*.jsx`,
+  `${wb.paths.starter.src}**/*.html`,
+  `${wb.paths.starter.src}**/*.pug`,
+  `${wb.paths.starter.src}**/*.md`,
+];
+if (process.env.ENABLE_DOCS === 'true') {
+  content.push(`${wb.paths.starter.starter}docs/**/*.vue`);
+}
+
 let whitelist = [
   'body',
   'html',
@@ -15,15 +28,7 @@ let whitelistPatterns = [
 ];
 
 module.exports = {
-  content: [
-    `${wb.paths.components.src}**/*.vue`,
-    `${wb.paths.starter.src}**/*.vue`,
-    `${wb.paths.starter.src}**/*.js`,
-    `${wb.paths.starter.src}**/*.jsx`,
-    `${wb.paths.starter.src}**/*.html`,
-    `${wb.paths.starter.src}**/*.pug`,
-    `${wb.paths.starter.src}**/*.md`,
-  ],
+  content: content,
   whitelist: whitelist,
   whitelistPatterns: whitelistPatterns,
   extractors: [

@@ -13,8 +13,8 @@ module.exports = function (api) {
   api.loadSource((store) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api
 
-    store.addMetadata('devMode', process.env.DEV_MODE == 'true' ? true : false);
-    store.addMetadata('devDocs', process.env.ENABLE_DOCS == 'true' ? true : false);
+    store.addMetadata('devMode', process.env.DEV_MODE === 'true');
+    store.addMetadata('devDocs', process.env.ENABLE_DOCS === 'true');
   });
 
   api.createPages(async (api) => {
