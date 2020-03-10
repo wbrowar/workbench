@@ -4,19 +4,15 @@ const inquirer = require('inquirer');
 // import global functions
 const g = require('./global.js');
 
-// load package file
-let pkg = require(`${ process.cwd() }/package.json`);
-
 // set constants
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
 const commitMessage = argv.options.commitmessage || false,
-      verbose       = pkg.overrideVerbose || argv.options.verbose || false;
+      verbose       = argv.options.verbose || false;
 
 // other variables
 let publishAnswers = {};
-
 
 async function run() {
     const askCommitQuestions = g.asyncFunction(
