@@ -1,5 +1,5 @@
 <template>
-  <dl class="c-accordion" :class="{ 'c-accordion_tab--open': isOpen }">
+  <dl class="c-accordion">
     <slot />
   </dl>
 </template>

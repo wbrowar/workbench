@@ -1,5 +1,5 @@
 <template>
-  <div class="c-icon_svg" v-bind="svgAttributes" v-html="svgHtml || null"></div>
+  <div class="c-icon-svg" v-bind="svgAttributes" v-html="svgHtml || null"></div>
 </template>
 
 <script>
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style lang="scss">
-.c-icon_svg {
+.c-icon-svg {
   width: 100%;
   background-position: center center;
   background-repeat: no-repeat;

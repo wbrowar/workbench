@@ -40,7 +40,7 @@ export default {
         classes.push('c-button');
 
         if (this.theme) {
-          classes.push(`c-button--${this.theme}`);
+          classes.push(`c-button-${this.theme}`);
         }
         if (this.href) {
           classes.push('cursor-pointer');
@@ -92,7 +92,7 @@ export default {
 
   @apply flex flex-row flex-no-wrap items-center justify-center px-5 py-3;
 
-  @at-root #{$self}--default {
+  @at-root #{$self}-default {
     @apply bg-black text-white;
 
     @at-root #{&}:hover {

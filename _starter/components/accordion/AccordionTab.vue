@@ -1,9 +1,9 @@
 <template>
-  <div class="c-accordion_tab">
-    <div class="c-accordion_tab__header" @click="onHeaderClicked">
+  <div class="c-accordion-tab" :class="{ 'c-accordion-tab-open': isOpen }">
+    <div class="cursor-pointer" :class="headerClass || null" @click="onHeaderClicked">
       <slot name="header" />
     </div>
-    <div class="c-accordion_tab__content" v-show="isOpen">
+    <div :class="contentClass || null" v-show="isOpen">
       <slot name="content" />
     </div>
   </div>
@@ -20,6 +20,8 @@ export default {
     };
   },
   props: {
+    contentClass: Array,
+    headerClass: Array,
     open: { type: Boolean, default: false },
     toggleSelf: { type: Boolean, default: false },
   },
@@ -39,13 +41,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.c-accordion_tab {
-  $self: &;
-
-  @at-root #{$self}__header {
-    cursor: pointer;
-  }
-}
-</style>

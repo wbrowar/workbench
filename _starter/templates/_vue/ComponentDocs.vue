@@ -39,6 +39,7 @@
 </script>
 
 <style lang="scss">
+  /*! purgecss start ignore */
   .dev__components {
     $self: &;
 
@@ -100,4 +101,5 @@
       @apply p-4 w-full bg-black-50 text-white rounded;
     }
   }
+  /*! purgecss end ignore */
 </style>

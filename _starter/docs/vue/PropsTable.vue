@@ -43,6 +43,7 @@
 </script>
 
 <style lang="scss" scoped>
+  /*! purgecss start ignore */
   .docs__props_table {
     $self: &;
 
@@ -69,4 +70,5 @@
       }
     }
   }
+  /*! purgecss end ignore */
 </style>

@@ -2,6 +2,7 @@
   <div class="c-audio">
     <!-- ClientOnly -->
       <LazyLoad
+        class="w-full"
         :after-load="{ src: src || false }"
         element-type="audio"
         :enable="lazyLoad"

@@ -1,5 +1,5 @@
 <template>
-    <div class="c-scroll_updater" :style="scrollStyles"><slot></slot></div>
+    <div class="c-scroll-updater" :style="scrollStyles"><slot></slot></div>
 </template>
 
 <script>

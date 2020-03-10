@@ -32,6 +32,7 @@
 </script>
 
 <style lang="scss" scoped>
+  /*! purgecss start ignore */
   .docs__code_example {
     $self: &;
 
@@ -82,4 +83,5 @@
       color: #91a8c3;
     }
   }
+  /*! purgecss end ignore */
 </style>

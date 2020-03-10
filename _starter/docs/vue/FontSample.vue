@@ -41,9 +41,11 @@
 </script>
 
 <style lang="scss" scoped>
+  /*! purgecss start ignore */
   .docs__font_sample {
     $self: &;
 
     cursor: pointer;
   }
+  /*! purgecss end ignore */
 </style>

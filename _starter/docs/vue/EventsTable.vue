@@ -41,6 +41,7 @@
 </script>
 
 <style lang="scss" scoped>
+  /*! purgecss start ignore */
   .docs__events_table {
     $self: &;
 
@@ -67,4 +68,5 @@
       }
     }
   }
+  /*! purgecss end ignore */
 </style>

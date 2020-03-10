@@ -33,6 +33,7 @@
 </script>
 
 <style lang="scss" scoped>
+  /*! purgecss start ignore */
   .docs__modifiers_table {
     $self: &;
 
@@ -59,4 +60,5 @@
       }
     }
   }
+  /*! purgecss end ignore */
 </style>

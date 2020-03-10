@@ -1,5 +1,5 @@
 <template>
-  <div class="c_messenger" :class="containerClassess">
+  <div class="c-messenger" :class="containerClassess">
     <ClientOnly>
       <transition-group name="c-messenger-fade">
         <Message class="m-2 first:mt-0" @closedMessage="removeMessage" v-bind="message" v-for="message in messages" :key="message.messageId" />

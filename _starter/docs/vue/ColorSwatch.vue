@@ -44,6 +44,7 @@
 </script>
 
 <style lang="scss" scoped>
+  /*! purgecss start ignore */
   .docs__color_swatch {
     $self: &;
 
@@ -137,4 +138,5 @@
       }
     }
   }
+  /*! purgecss end ignore */
 </style>

@@ -1,27 +1,28 @@
 <template>
-  <Box :element-type="elementType" class="c-video" :class="{ 'c-video_bg': background }" v-bind="box">
+  <Box :element-type="elementType" class="c-video relative" :class="classes" v-bind="box">
     <!-- ClientOnly -->
       <LazyLoad
+        :class="videoClasses"
         :after-load="{ src: src || false }"
         :autoplay="background ? true : autoplay"
-        :class="{ 'c-video_bg__video': background }"
         :controls="background ? false : controls"
         element-type="video"
-        :enable="lazyLoad"
+        :enabled="lazyLoad"
         :loop="background ? true : loop"
         :muted="background ? true : muted"
-        :playsinline="background ? 'playsinline' : playsinline ? 'playsinline' : false"
+        :playsinline="background ? 'playsinline' : playsinline ? 'playsinline' : null"
         :poster="poster || false"
         v-if="source === 'file'"
       />
       <LazyLoad
+        :class="videoClasses"
         allowfullscreen
         :after-load="{
           src: videoId ? `https://www.youtube.com/embed/${videoId}?rel=0&amp;controls=0&amp;showinfo=0` : false,
         }"
         :check-for-native-lazy-load="lazyLoad"
         element-type="iframe"
-        :enable="lazyLoad"
+        :enabled="lazyLoad"
         frameborder="0"
         height="480"
         :loading="loading"
@@ -29,11 +30,12 @@
         v-else-if="source === 'youtube'"
       />
       <LazyLoad
+        :class="videoClasses"
         :after-load="{ src: videoId ? `https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0` : false }"
         allowfullscreen
         :check-for-native-lazy-load="lazyLoad"
         element-type="iframe"
-        :enable="lazyLoad"
+        :enabled="lazyLoad"
         frameborder="0"
         height="281"
         :loading="loading"
@@ -79,7 +81,36 @@ export default {
     poster: String,
     source: { type: String, default: 'file' }, // file, youtube, vimeo
     src: String,
+    videoClass: String,
     videoId: String,
+  },
+  computed: {
+    classes: function() {
+      let classes = [];
+
+      if (this.background) {
+        classes.push(`w-full h-full`);
+      } else {
+        classes.push(`pb-16/9`);
+      }
+
+      if (classes.length) {
+        return classes;
+      }
+    },
+    videoClasses: function() {
+      let classes = [];
+
+      classes.push(`absolute w-full h-full object-cover`);
+
+      if (this.videoClass) {
+        classes.push(this.videoClass);
+      }
+
+      if (classes.length) {
+        return classes;
+      }
+    },
   },
   created() {
     this.lazyLoad = this.loading === 'lazy';

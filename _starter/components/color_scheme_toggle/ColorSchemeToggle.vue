@@ -1,5 +1,5 @@
 <template>
-  <button class="c-color_scheme_toggle" @click="onClick">
+  <button class="c-color-scheme-toggle" @click="onClick">
     <slot>{{ schemeId.toUpperCase() }}</slot>
   </button>
 </template>
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss">
-.c-color_scheme_toggle {
+.c-color-scheme-toggle {
   $self: &;
 
   @include button_reset;

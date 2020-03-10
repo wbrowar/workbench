@@ -1,5 +1,5 @@
 <template>
-    <div class="c-overlay" :class="{ 'c-overlay--active': isActive }" v-show="isActive">
+    <div class="c-overlay" :class="{ 'c-overlay-active': isActive }" v-show="isActive">
         <div class="c-overlay__mask" @click="closeOverlay"></div>
         <div class="c-overlay__content">
             <div class="c-overlay__content__inner" v-if="isActive">

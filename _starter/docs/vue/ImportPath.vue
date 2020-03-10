@@ -22,6 +22,7 @@
 </script>
 
 <style lang="scss" scoped>
+  /*! purgecss start ignore */
   @keyframes docs-hop {
     0% { transform: translateY(0) }
     40% { transform: translateY(-4px) }
@@ -47,4 +48,5 @@
       background-color: #3c4a32;
     }
   }
+  /*! purgecss end ignore */
 </style>

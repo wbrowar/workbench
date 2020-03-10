@@ -1,9 +1,0 @@
-.c-video {
-  $self: &;
-
-  --aspect: 16/9;
-
-  @at-root #{$self}:not(.c-video_bg) {
-    @include aspect(var(--aspect), 'iframe, video');
-  }
-}
