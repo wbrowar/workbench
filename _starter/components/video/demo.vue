@@ -26,9 +26,9 @@
       title="Background Video"
       description="Autoplay a video as a background to its containing box."
     >
-      <Box demo>
+      <div class="fpo w-48 h-48">
         <MediaVideo background src="https://starter.wbrowar.com/video/clip.mp4" />
-      </Box>
+      </div>
     </CodeExample>
 
     <PropsTable :props="props" />
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box.vue';
 import MediaVideo from 'Components/video/MediaVideo.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
 import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
@@ -45,7 +44,6 @@ import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
 export default {
   components: {
-    Box,
     MediaVideo,
     CodeExample,
     CssModifiers,
@@ -67,9 +65,9 @@ export default {
       file: `<MediaVideo src="https://starter.wbrowar.com/video/clip.mp4" />`,
       youtube: `<MediaVideo source="youtube" video-id="G4Sn91t1V4g" />`,
       vimeo: `<MediaVideo source="vimeo" video-id="356935968" />`,
-      background: `<Box demo>
+      background: `<div class="fpo w-48 h-48">
   <MediaVideo background src="https://starter.wbrowar.com/video/clip.mp4" />
-</Box>`,
+</div>`,
     };
     this.modifiers = [{ name: 'test', description: `Test` }];
     this.props = [

@@ -342,7 +342,6 @@ methods.snake = function snake(text) {
 // Prepare theme options from wb.config.js for tailwind.config.js
 methods.tailwindConfig = function tailwindConfig(wb) {
   let colorsList = [];
-  let opacityList = [];
   let colors = {};
   let fontFamily = {};
   let opacity = {};
@@ -351,6 +350,22 @@ methods.tailwindConfig = function tailwindConfig(wb) {
 
   // Prepare colors for Tailwind
   const themeColors = wb.colors.default;
+  // Add Docs colors
+  if (wb.enableDocs) {
+    _.merge(themeColors, {
+      'dev-gray': {
+        '100': '#f5f5f5',
+        '200': '#eeeeee',
+        '300': '#e0e0e0',
+        '400': '#bdbdbd',
+        '500': '#9e9e9e',
+        '600': '#757575',
+        '700': '#616161',
+        '800': '#424242',
+        '900': '#212121',
+      }
+    });
+  }
   Object.keys(themeColors).forEach((colorKey) => {
     if (typeof themeColors[colorKey] === 'string') {
       colors[colorKey] = `var(--color-${colorKey})`;

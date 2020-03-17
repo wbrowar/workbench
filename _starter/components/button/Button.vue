@@ -29,6 +29,7 @@ export default {
     newWindow: { type: Boolean, default: false },
     outline: { type: Boolean, default: false },
     reset: { type: Boolean, default: false },
+    retainStyle: { type: Boolean, default: false },
     target: String,
     theme: { type: String, default: 'default' },
     unstyle: { type: Boolean, default: false },
@@ -37,10 +38,12 @@ export default {
     classes: function() {
       let classes = [];
       if (this.styleAsButton) {
-        classes.push('c-button');
+        classes.push('flex flex-row flex-no-wrap items-center justify-center px-5 py-3');
 
-        if (this.theme) {
-          classes.push(`c-button-${this.theme}`);
+        switch (this.theme) {
+          case 'default':
+            classes.push(`bg-black text-white rounded hover:opacity-60`);
+            break;
         }
         if (this.href) {
           classes.push('cursor-pointer');
@@ -69,7 +72,7 @@ export default {
       return false;
     },
     styleAsButton: function() {
-      return this.unstyle === false && Object.keys(this.$slots).length === 0;
+      return this.retainStyle || (this.unstyle === false && Object.keys(this.$slots).length === 0);
     },
     useRouterLink: function() {
       if (this.href) {
@@ -90,19 +93,7 @@ export default {
 .c-button {
   $self: &;
 
-  @apply flex flex-row flex-no-wrap items-center justify-center px-5 py-3;
-
-  @at-root #{$self}-default {
-    @apply bg-black text-white;
-
-    @at-root #{&}:hover {
-      @apply opacity-60;
-    }
-  }
-  @at-root #{$self}--pointer {
-    @apply cursor-pointer;
-  }
-  @at-root #{$self}--reset {
+  @at-root #{$self}-reset {
     @include button_reset;
   }
 }

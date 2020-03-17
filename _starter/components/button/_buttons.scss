@@ -1,6 +1,10 @@
 .c-buttons {
   $self: &;
 
-  @apply grid gap-5;
+  @apply grid gap-5 items-start;
   grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+
+  @at-root #{&}-stretch {
+    @apply items-stretch;
+  }
 }

@@ -41,11 +41,9 @@
       <div class="c-buttons justify-end">
         <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
         <Button new-window href="https://vuejs.org/">
-          <Box demo />
+          <div class="fpo w-48 h-12"><span>Prop</span></div>
         </Button>
-        <Button class="c-button c-button--default c-button--pointer" new-window unstyle href="https://vuejs.org/"
-          ><span>🎨 Style by classes</span></Button
-        >
+        <Button retain-style href="https://vuejs.org/"><span>🎨 Props with style</span></Button>
       </div>
     </CodeExample>
 
@@ -59,7 +57,6 @@
 
 <script>
 import { log } from 'JS/global.js';
-import Box from 'Components/box/Box.vue';
 import Button from 'Components/button/Button.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
 import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
@@ -69,7 +66,6 @@ import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
 export default {
   components: {
-    Box,
     Button,
     CodeExample,
     CssModifiers,
@@ -105,9 +101,9 @@ export default {
       unstyled: `<div class="c-buttons justify-end">
   <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />
   <Button new-window href="https://vuejs.org/">
-    <Box demo />
+    <div class="fpo w-48 h-12"><span>Prop</span></div>
   </Button>
-  <Button class="c-button c-button--pointer" new-window unstyle href="https://vuejs.org/"><span>🎨 Style by classes</span></Button>
+  <Button retain-style href="https://vuejs.org/"><span>🎨 Props with style</span></Button>
 </div>`,
     };
 
@@ -133,6 +129,7 @@ export default {
       { name: 'newWindow', type: 'Boolean', default: `false`, description: `Sets 'target="_blank" rel="noopener"'.` },
       { name: 'outline', type: 'Boolean', default: `false`, description: `Adds the 'outline' modifier.` },
       { name: 'reset', type: 'Boolean', default: `false`, description: `Applies button_reset SCSS mixin.` },
+      { name: 'retainStyle', type: 'Boolean', default: `false`, description: `Forces default styles to be used when a button contains a prop.` },
       { name: 'target', type: 'String', description: `Sets the 'target' attribute if 'newWindow' is not used.` },
       {
         name: 'theme',

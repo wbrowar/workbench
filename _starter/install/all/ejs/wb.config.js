@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const paths = {
   sourcePath: process.cwd() + '/_source/',
   srcPath: process.cwd() + '/src/',
@@ -8,6 +11,7 @@ const paths = {
 module.exports = {
   // Colors values that are converted to CSS custom properties
   // Accepts any CSS color value as a string, or an object of color shades
+  // These will replace Tailwind’s default color settings
   colors: {
     // Define colors
     default: {
@@ -55,6 +59,7 @@ module.exports = {
   },
   fonts: {
     // Set up fonts for Tailwind by defining a `fontStack`
+    // These will replace Tailwind’s default font stack settings
     'apple': {
       fontStack: "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
       demoWeights: [
@@ -84,12 +89,15 @@ module.exports = {
   },
   mq: {
     // Define breakpoints (in pixel values) used in Tailwind and vue-mq
+    // These will replace Tailwind’s default media query settings
     sm: 640,
     md: 768,
     lg: 1024,
     xl: 1300,
   },
   opacity: {
+    // Define opacity values used to create opacity utility classes
+    // These will replace Tailwind’s default opacity settings
     '0': '0',
     '10': '0.1',
     '20': '0.2',
@@ -104,6 +112,20 @@ module.exports = {
   },
   tailwind: {
     // Define values to merge into tailwind.config.js, other than those defined above
+    theme: {
+      extend: {
+        gridTemplateColumns: {
+          'it': 'max-content 1fr', // icon | text
+          'ti': '1fr max-content', // text | icon
+        },
+        gridTemplateRows: {
+          'card': 'max-content auto', // fixed header height | fluid body
+        },
+        padding: {
+          '16/9': '56.25%',
+        },
+      }
+    },
     variants: {
       backgroundColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
       opacity: ['responsive', 'hover', 'focus', 'animated'],
@@ -113,6 +135,7 @@ module.exports = {
   },
   tailwindPlugins: [
     // Define Tailwind plugins
+    // Use this when variants are needed for specific classes
     // function({ addUtilities }) {
     //   const newUtilities = {
     //     '.text-vertical': {
@@ -126,6 +149,8 @@ module.exports = {
   // Config options for build process
   name: '<%- install.handle %>',
   projectType: '<%- install.projectType %>',
+  devMode: process.env.NODE_ENV !== 'production',
+  enableDocs: process.env.ENABLE_DOCS === 'true',
   ejs: {
     // Define any data to be processed with EJS
   },

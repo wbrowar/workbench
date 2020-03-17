@@ -11,7 +11,7 @@
           class="root__color_grid"
           style="display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, 174px); grid-template-rows: auto;"
         >
-          <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
+          <ColorSwatch :name="name" :color="item" v-if="!name.startsWith('dev-')" v-for="(item, name) in scheme" :key="name" />
         </div>
       </div>
     </CodeExample>

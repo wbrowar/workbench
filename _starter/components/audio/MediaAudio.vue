@@ -3,6 +3,7 @@
     <!-- ClientOnly -->
       <LazyLoad
         class="w-full"
+        :class="auidoClass"
         :after-load="{ src: src || false }"
         element-type="audio"
         :enable="lazyLoad"
@@ -26,6 +27,7 @@ export default {
     LazyLoad,
   },
   props: {
+    auidoClass: String,
     controls: { type: Boolean, default: true },
     loading: { type: String, default: 'lazy' },
     loop: { type: Boolean, default: false },

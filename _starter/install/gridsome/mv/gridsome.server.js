@@ -13,8 +13,8 @@ module.exports = function (api) {
   api.loadSource((store) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api
 
-    store.addMetadata('devMode', process.env.DEV_MODE === 'true');
-    store.addMetadata('devDocs', process.env.ENABLE_DOCS === 'true');
+    store.addMetadata('devMode', wb.devMode);
+    store.addMetadata('devDocs', wb.enableDocs);
   });
 
   api.createPages(async (api) => {
@@ -25,7 +25,7 @@ module.exports = function (api) {
     // await createPagesForCraftSection('helloWorld', api);
 
     // Create style inventory pages
-    if (process.env.ENABLE_DOCS || false) {
+    if (wb.enableDocs) {
       // const componentDocPages = glob.sync(`./_source/_js/automated/dev/*.vue`);
       const componentDocPages = glob.sync(`${ wb.paths.components.src }**/demo.vue`);
       componentDocPages.forEach((item) => {
