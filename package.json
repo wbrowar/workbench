@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chalk": "^3.0.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "favicons": "^6.0.0",
     "fs-extra": "^8.1.0",
