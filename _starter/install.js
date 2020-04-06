@@ -470,7 +470,6 @@ async function run() {
 
         g.log('title', 'Running project specific install scripts', verbose);
         if (['craft3'].includes(answers.projectType)) {
-            g.verboseExec(`mv example.env .env`, verbose);
             g.verboseExec(`mv ./craft ./craft`, verbose);
             g.log('verbose', `Craft files moved`, verbose);
 
