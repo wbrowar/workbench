@@ -464,12 +464,13 @@ async function run() {
             g.log('verbose', `No project templates to move`, verbose);
         }
 
-        if (fs.existsSync(`${ process.cwd() }/EXAMPLE.env`)) {
-            fs.copySync(`${ process.cwd() }/EXAMPLE.env`, `${ process.cwd() }/.env`);
+        if (fs.existsSync(`${ process.cwd() }/INSTALL.env`)) {
+            fs.copySync(`${ process.cwd() }/INSTALL.env`, `${ process.cwd() }/.env`);
         }
 
         g.log('title', 'Running project specific install scripts', verbose);
         if (['craft3'].includes(answers.projectType)) {
+            g.verboseExec(`mv example.env .env`, verbose);
             g.verboseExec(`mv ./craft ./craft`, verbose);
             g.log('verbose', `Craft files moved`, verbose);
 
