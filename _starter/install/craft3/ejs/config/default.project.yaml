@@ -1,55 +1,18 @@
-dateModified: 1565988869
+dateModified: 1586223371
 email:
   fromEmail: $EMAIL_SYSTEM_EMAIL_ADDRESS
   fromName: $EMAIL_SENDER_NAME
   template: ''
-  transportType: craft\mail\transportadapters\Sendmail
   transportSettings: null
+  transportType: craft\mail\transportadapters\Sendmail
 fieldGroups:
   31591f3c-b2da-4ef4-877a-4756a80b1d50:
     name: Common
 plugins:
-  typedlinkfield:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  seomatic:
-    edition: standard
-    enabled: true
-    schemaVersion: 3.0.8
-  redactor:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.3.0
-  minify:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  imager:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.0.0
-  image-resizer:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.0.0
-  guide:
-    edition: pro
-    enabled: true
-    schemaVersion: 2.0.0
-    settings:
-      templatePath: _guide
-      assetVolume: 8a7e7f5c-8ffc-43f6-b356-6e22c003bd43
-      clientName: ''
-      myCompanyName: ''
   admin-bar:
     edition: standard
     enabled: true
     schemaVersion: 3.1.0
-  content-stats:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.0.0
   communicator:
     edition: standard
     enabled: true
@@ -60,6 +23,10 @@ plugins:
       enableEmailSupport: ''
       enableEmailSupportForm: '1'
       enableGlobalWidget: ''
+  content-stats:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
   cp-field-inspect:
     edition: standard
     enabled: true
@@ -68,79 +35,139 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 2.1.2
+  guide:
+    edition: pro
+    enabled: true
+    schemaVersion: 2.0.0
+    settings:
+      assetVolume: 8a7e7f5c-8ffc-43f6-b356-6e22c003bd43
+      clientName: ''
+      myCompanyName: ''
+      templatePath: _guide
+  image-optimize:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  image-resizer:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  imager:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  minify:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  redactor:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.3.0
+  seomatic:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.0.8
+    settings:
+      addHrefLang: true
+      addXDefaultHrefLang: true
+      cpTitlePrefix: '⚙ '
+      devModeCpTitlePrefix: '&#x1f6a7;⚙ '
+      devModeTitlePrefix: '&#x1f6a7; '
+      displayAnalysisSidebar: true
+      displayPreviewSidebar: true
+      environment: $ENVIRONMENT
+      generatorEnabled: true
+      headersEnabled: true
+      lowercaseCanonicalUrl: '1'
+      maxDescriptionLength: 155
+      maxTitleLength: 70
+      pluginName: SEO
+      regenerateSitemapsAutomatically: true
+      renderEnabled: true
+      separatorChar: '|'
+      sidebarDisplayPreviewTypes:
+        - google
+        - twitter
+        - facebook
+      siteGroupsSeparate: '1'
+      siteUrlOverride: ''
+      sitemapsEnabled: true
+      socialMediaPreviewTarget: true
+  typedlinkfield:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
 sections:
   804fec4f-1997-47dc-908b-589f0b3fd640:
-    name: Home
-    handle: home
-    type: single
     enableVersioning: true
-    propagationMethod: all
-    siteSettings:
-      1a456e16-c64d-4f15-a96f-908626ede7a4:
-        enabledByDefault: true
-        hasUrls: true
-        uriFormat: __home__
-        template: pages/home
     entryTypes:
       47e686ee-1042-4b78-bf1c-4fcdae245c80:
-        name: Home
         handle: home
         hasTitleField: false
-        titleLabel: null
-        titleFormat: '{section.name|raw}'
+        name: Home
         sortOrder: 1
-  8780f4ca-f1e9-4eab-8c64-2c668a7b346e:
-    name: 'Basic Page'
-    handle: basicPage
-    type: structure
-    enableVersioning: true
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: home
+    name: Home
     propagationMethod: all
     siteSettings:
       1a456e16-c64d-4f15-a96f-908626ede7a4:
         enabledByDefault: true
         hasUrls: true
-        uriFormat: '{parent.uri}/{slug}'
-        template: pages/basic_page
-    structure:
-      uid: 4e08f68d-a34d-4dbe-9cfe-546c8229dfa6
-      maxLevels: null
+        template: pages/home
+        uriFormat: __home__
+    type: single
+  8780f4ca-f1e9-4eab-8c64-2c668a7b346e:
+    enableVersioning: true
     entryTypes:
       691d9b0d-87ab-40fc-a935-eae3b57bb8e7:
-        name: 'Basic Page'
         handle: basicPage
         hasTitleField: true
-        titleLabel: Title
-        titleFormat: null
+        name: 'Basic Page'
         sortOrder: 1
+        titleFormat: null
+        titleLabel: Title
+    handle: basicPage
+    name: 'Basic Page'
+    propagationMethod: all
+    siteSettings:
+      1a456e16-c64d-4f15-a96f-908626ede7a4:
+        enabledByDefault: true
+        hasUrls: true
+        template: pages/basic_page
+        uriFormat: '{parent.uri}/{slug}'
+    structure:
+      maxLevels: null
+      uid: 4e08f68d-a34d-4dbe-9cfe-546c8229dfa6
+    type: structure
 siteGroups:
   9c94fc46-354f-4e2d-b28c-a884a5ea683c:
     name: $SITE_NAME
 sites:
   1a456e16-c64d-4f15-a96f-908626ede7a4:
-    name: $SITE_NAME
-    handle: default
-    language: en-US
-    hasUrls: true
     baseUrl: $DEFAULT_SITE_URL
-    sortOrder: 1
+    handle: default
+    hasUrls: true
+    language: en-US
+    name: $SITE_NAME
     primary: true
     siteGroup: 9c94fc46-354f-4e2d-b28c-a884a5ea683c
+    sortOrder: 1
 system:
   edition: pro
-  name: $SITE_NAME
   live: true
-  schemaVersion: 3.2.16
+  name: $SITE_NAME
+  schemaVersion: 3.4.10
   timeZone: America/New_York
 users:
-  requireEmailVerification: true
   allowPublicRegistration: false
   defaultGroup: null
-  photoVolumeUid: null
-  photoSubpath: ''
   groups:
     0e71a30c-d2bc-4643-86e8-4ef88987fdf0:
-      name: 'SEO Editor'
       handle: seoEditor
+      name: 'SEO Editor'
       permissions:
         - accessplugin-guide
         - accessplugin-seomatic
@@ -173,8 +200,8 @@ users:
         - 'seomatic:tracking-scripts'
         - 'seomatic:plugin-settings'
     15c02845-ac7d-4a42-baaf-b528aa2798bb:
-      name: 'Content Editor'
       handle: contentEditor
+      name: 'Content Editor'
       permissions:
         - accessplugin-communicator
         - accessplugin-guide
@@ -199,8 +226,8 @@ users:
         - 'editpeerentrydrafts:804fec4f-1997-47dc-908b-589f0b3fd640'
         - 'editentries:804fec4f-1997-47dc-908b-589f0b3fd640'
     1de3ee0e-4424-4cd7-b8d9-fbae086a2473:
-      name: 'Guide Editor'
       handle: guideEditor
+      name: 'Guide Editor'
       permissions:
         - accessplugin-guide
         - accesscp
@@ -209,8 +236,8 @@ users:
         - deleteguides
         - useorganizer
     46a24753-03de-403c-96c4-568e5885df44:
-      name: 'Content Author'
       handle: contentAuthor
+      name: 'Content Author'
       permissions:
         - accessplugin-communicator
         - accessplugin-guide
@@ -225,8 +252,8 @@ users:
         - 'publishentries:804fec4f-1997-47dc-908b-589f0b3fd640'
         - 'editentries:804fec4f-1997-47dc-908b-589f0b3fd640'
     48c65c4b-8797-4301-9213-274e2037ace4:
-      name: 'User Admin'
       handle: userAdmin
+      name: 'User Admin'
       permissions:
         - accessplugin-communicator
         - accessplugin-guide
@@ -243,22 +270,25 @@ users:
         - impersonateusers
         - editusers
         - deleteusers
+  photoSubpath: ''
+  photoVolumeUid: null
+  requireEmailVerification: true
 volumes:
   8a7e7f5c-8ffc-43f6-b356-6e22c003bd43:
-    name: Guide
     handle: guide
-    type: craft\volumes\Local
     hasUrls: true
-    url: '@baseUrl/guide'
+    name: Guide
     settings:
       path: '@basePath/guide'
     sortOrder: 1
-  8d7b2379-848e-4919-920a-51ad22e0484b:
-    name: Imports
-    handle: imports
     type: craft\volumes\Local
+    url: '@baseUrl/guide'
+  8d7b2379-848e-4919-920a-51ad22e0484b:
+    handle: imports
     hasUrls: true
-    url: '@baseAssetUrl/imports/'
+    name: Imports
     settings:
       path: '@baseAssetPath/imports/'
     sortOrder: 2
+    type: craft\volumes\Local
+    url: '@baseAssetUrl/imports/'
