@@ -50,10 +50,6 @@ plugins:
       siteUrlOverride: ''
       sitemapsEnabled: true
       socialMediaPreviewTarget: true
-  typedlinkfield:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
 siteGroups:
   9c94fc46-354f-4e2d-b28c-a884a5ea683c:
     name: $SITE_NAME
