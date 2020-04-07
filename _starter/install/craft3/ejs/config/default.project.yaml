@@ -1,4 +1,4 @@
-dateModified: 1586224621
+dateModified: 1586225262
 email:
   fromEmail: $EMAIL_SYSTEM_EMAIL_ADDRESS
   fromName: $EMAIL_SENDER_NAME
@@ -10,16 +10,20 @@ fieldGroups:
     name: Common
 plugins:
   cp-field-inspect:
+    enabled: true
     schemaVersion: 1.0.0
   guide:
+    enabled: true
     schemaVersion: 2.0.0
   image-optimize:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
   image-resizer:
+    enabled: true
     schemaVersion: 2.0.0
   redactor:
+    enabled: true
     schemaVersion: 2.3.0
   seomatic:
     enabled: true
