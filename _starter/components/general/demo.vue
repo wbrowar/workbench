@@ -37,7 +37,7 @@
           <input id="font_sample_text_input" class="dev__components__input" type="text" v-model="fontSampleText" />
         </div>
         <div>
-          <label for="font_sample_size_input" style="display: block; margin-bottom: 3px">Size (rem)</label>
+          <label for="font_sample_size_input" style="display: block; margin-bottom: 3px">Size</label>
 
           <select class="dev__components__input appearance-none" v-model="fontSampleSize">
             <option :value="item" v-for="item in Object.keys(twConfig.theme.fontSize)">{{ item }}</option>
