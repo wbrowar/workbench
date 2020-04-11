@@ -9,7 +9,7 @@ let content = [
   `${wb.paths.starter.src}**/*.pug`,
   `${wb.paths.starter.src}**/*.md`,
 ];
-if (process.env.ENABLE_DOCS === 'true') {
+if (wb.enableDocs) {
   content.push(`${wb.paths.starter.starter}docs/**/*.vue`);
 }
 

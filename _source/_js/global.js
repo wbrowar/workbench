@@ -13,6 +13,9 @@ export function error(...args) {
 export function log(...args) {
   logger('log', args);
 }
+export function table(...args) {
+  logger('log', args);
+}
 export function warn(...args) {
   logger('warn', args);
 }
@@ -34,11 +37,10 @@ function logger(type = 'log', args) {
           console.error(spacer + spirit, args[i]);
           break;
         case 'log':
-          if (['object','array'].includes(typeof args[i])) {
-            console.table(args[i]);
-          } else {
-            console.log(spacer + spirit, args[i]);
-          }
+          console.log(spacer + spirit, args[i]);
+          break;
+        case 'table':
+          console.table(args[i]);
           break;
         case 'warn':
           console.warn(spacer + spirit, args[i]);

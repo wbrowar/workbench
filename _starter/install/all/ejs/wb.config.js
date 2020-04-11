@@ -150,7 +150,7 @@ module.exports = {
   // Config options for build process
   name: '<%- install.handle %>',
   projectType: '<%- install.projectType %>',
-  devMode: process.env.NODE_ENV !== 'production',
+  devMode: process.env.DEV_MODE === 'true',
   enableDocs: process.env.ENABLE_DOCS === 'true',
   ejs: {
     // Define any data to be processed with EJS
