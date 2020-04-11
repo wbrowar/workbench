@@ -47,7 +47,7 @@
     </CodeExample>
 
     <CodeExample title="Media Queries" description="Media queries used in Tailwind and vue-mq.">
-      <div class="flex">
+      <div class="flex flex-wrap">
         <div class="flex flex-col justify-center flex-grow flex-shrink text-gray-700 text-center bg-gray-400 px-4 py-2 text-3xl">📱</div>
         <div class="flex flex-col justify-center flex-grow flex-shrink text-gray-700 text-center bg-gray-400 px-4 py-2 border-l border-solid border-black-40" v-for="(item, index) in twConfig.theme.screens" :key="index">
           <p class="font-semibold text-2xl">{{ item }}</p>
@@ -58,9 +58,9 @@
     </CodeExample>
 
     <CodeExample title="Opacity" description="Opacity used in Tailwind config." copy-text='opacity-50'>
-      <div class="flex">
-        <div class="flex flex-col justify-center flex-grow flex-shrink w-20 text-center" v-for="(item, index) in twConfig.theme.opacity" :key="index">
-          <div class="pb-1/1" :class="[`bg-black-${index}`]"></div>
+      <div class="flex flex-wrap">
+        <div class="flex flex-col justify-center flex-grow flex-shrink w-16 text-center" v-for="(item, index) in twConfig.theme.opacity" :key="index">
+          <div class="h-16" :class="[`bg-black-${index}`]"></div>
           <p class="font-semibold text-2xl">{{ index }}</p>
           <p class="font-semibold text-xs" style="opacity: 0.4;">{{ item }}</p>
         </div>
@@ -68,14 +68,13 @@
     </CodeExample>
 
     <CodeExample title="Spacing" description="Tailwind spacing units. Used for margins, padding, and gaps.">
-      <div style="column-count: 3">
+      <div :style="{ columnCount: $mq === 'sm' ? 1 : 3 }">
         <div class="grid grid-cols-it gap-2 my-1 items-center" style="break-inside: avoid" v-for="(item, index) in twConfig.theme.spacing" :key="index">
           <div class="w-20 bg-black" :class="[`h-${index}`]"></div>
           <p class="font-semibold text-xs">{{ index }}<span style="margin-left: 1em; opacity: 0.4;">{{ item }}</span></p>
         </div>
       </div>
     </CodeExample>
-
 
     <CodeExample
       title="SVG Icons"
@@ -84,7 +83,7 @@
     >
       <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
         <div class="grid grid-cols-it gap-2 my-1 items-center" v-for="(icon, index) in svgIcons" :key="index">
-          <IconSVG class="w-10" :handle="icon" />
+          <IconSVG class="w-10 h-10" :handle="icon" />
           <p class="text-xs">{{ icon }}</p>
         </div>
       </div>
