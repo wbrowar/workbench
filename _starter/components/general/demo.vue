@@ -57,20 +57,35 @@
       </div>
     </CodeExample>
 
-    <CodeExample title="Spacing" description="Tailwind spacing units. Used for margins, padding, and gaps.">
-      <div class="flex flex-wrap bg-black-50">
-        <div class="flex flex-col justify-center w-20 h-20 bg-white even:bg-black text-black even:text-white text-center" style="-webkit-text-stroke: 1px hsla(var(--color-white-hsl), 0.3)" :style="{ width: item }" v-for="(item, index) in twConfig.theme.spacing" :key="index">
+    <CodeExample title="Opacity" description="Opacity used in Tailwind config." copy-text='opacity-50'>
+      <div class="flex">
+        <div class="flex flex-col justify-center flex-grow flex-shrink w-20 text-center" v-for="(item, index) in twConfig.theme.opacity" :key="index">
+          <div class="pb-1/1" :class="[`bg-black-${index}`]"></div>
           <p class="font-semibold text-2xl">{{ index }}</p>
-          <p class="font-semibold text-xs">{{ item }}</p>
+          <p class="font-semibold text-xs" style="opacity: 0.4;">{{ item }}</p>
         </div>
       </div>
     </CodeExample>
 
-    <CodeExample title="Opacity" description="Opacity used in Tailwind config." copy-text='opacity-50'>
-      <div class="flex">
-        <div class="flex flex-col justify-center flex-grow flex-shrink w-20 h-20 text-center" :class="[`bg-black-${index}`]" style="-webkit-text-stroke: 1px hsla(var(--color-white-hsl), 0.3)" v-for="(item, index) in twConfig.theme.opacity" :key="index">
-          <p class="font-semibold text-2xl">{{ item }}</p>
-          <p class="font-semibold text-xs">{{ index }}</p>
+    <CodeExample title="Spacing" description="Tailwind spacing units. Used for margins, padding, and gaps.">
+      <div style="column-count: 3">
+        <div class="grid grid-cols-it gap-2 my-1 items-center" style="break-inside: avoid" v-for="(item, index) in twConfig.theme.spacing" :key="index">
+          <div class="w-20 bg-black" :class="[`h-${index}`]"></div>
+          <p class="font-semibold text-xs">{{ index }}<span style="margin-left: 1em; opacity: 0.4;">{{ item }}</span></p>
+        </div>
+      </div>
+    </CodeExample>
+
+
+    <CodeExample
+      title="SVG Icons"
+      description="Icons available within the design system."
+      v-if="svgIcons"
+    >
+      <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
+        <div class="grid grid-cols-it gap-2 my-1 items-center" v-for="(icon, index) in svgIcons" :key="index">
+          <IconSVG class="w-10" :handle="icon" />
+          <p class="text-xs">{{ icon }}</p>
         </div>
       </div>
     </CodeExample>
@@ -83,7 +98,9 @@
 
 <script>
 import { log } from 'JS/global.js';
+import { icons } from 'JS/automated/svg.js';
 import resolveConfig from 'tailwindcss/resolveConfig';
+import IconSVG from 'Components/icon_svg/IconSVG.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
 import ColorSwatch from 'Starter/docs/vue/ColorSwatch.vue';
 import FontSample from 'Starter/docs/vue/FontSample.vue';
@@ -92,6 +109,7 @@ import TailwindTester from 'Starter/docs/vue/TailwindTester.vue';
 
 export default {
   components: {
+    IconSVG,
     CodeExample,
     ColorSwatch,
     FontSample,
@@ -104,6 +122,7 @@ export default {
       twConfig: {},
       fontSampleSize: false,
       fontSampleText: false,
+      svgIcons: false,
       tailwindSample: false,
     };
   },
@@ -133,6 +152,8 @@ export default {
         }
       });
     });
+
+    this.svgIcons = Object.keys(icons);
   },
   methods: {
     copyToClipboard: function (text) {

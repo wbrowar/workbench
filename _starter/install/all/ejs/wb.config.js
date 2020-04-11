@@ -122,6 +122,7 @@ module.exports = {
           'card': 'max-content auto', // fixed header height | fluid body
         },
         padding: {
+          '1/1': '100%',
           '16/9': '56.25%',
         },
       }

@@ -1,3 +1,14 @@
+@mixin _anchor_text {
+  @apply underline;
+
+  &:hover, &:focus {
+    @apply opacity-50;
+  }
+  &:active {
+    @apply opacity-50;
+  }
+}
+
 .c-text {
   $self: &;
 
@@ -16,6 +27,9 @@
     b i, i b, strong em, em strong {
       @apply font-semibold italic;
     }
+    a {
+      @include _anchor_text;
+    }
   }
   ol, ul {
     @apply mb-5 leading-normal;
@@ -27,6 +41,10 @@
     li {
       @apply mb-2 ml-6;
       break-inside: avoid;
+
+      a {
+        @include _anchor_text;
+      }
     }
   }
   ol {
