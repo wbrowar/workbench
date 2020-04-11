@@ -44,7 +44,7 @@ export default {
     this.sizes = JSON.parse(this.mqSizes);
   },
   mounted() {
-    if (processIsClient) {
+    if (processIsClient(process)) {
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
           const { left, top, width, height } = entry.contentRect;

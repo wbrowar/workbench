@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     addToObserver: function() {
-      if (processIsClient) {
+      if (processIsClient(process)) {
         log('Adding to Load Observer');
         if (typeof this.observer !== 'object') {
           this.observer = new IntersectionObserver(
@@ -77,7 +77,7 @@ export default {
     },
   },
   mounted() {
-    if (processIsClient) {
+    if (processIsClient(process)) {
       if (this.checkForNativeLazyLoad) {
         this.nativeLazyLoad = 'loading' in HTMLImageElement.prototype;
       }

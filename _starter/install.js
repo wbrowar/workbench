@@ -8,7 +8,7 @@ const _ = require('lodash'),
       path = require('path');
 
 // import global functions
-const g = require('./global.js');
+const g = require('./functions.js');
 
 if (!fs.existsSync(`${ process.cwd() }/_starter/install`)) {
     g.log('warn', `Install Has Already Completed and Cannot Be Run Again`);

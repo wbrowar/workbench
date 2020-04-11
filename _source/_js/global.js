@@ -86,13 +86,15 @@ export function hasClass(el, className) {
     return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
   }
 }
-export function processIsClient() {
+export function processIsClient(process = null) {
   let isClient = true;
 
-  switch (wb.projectType) {
-    case 'gridsome':
-      isClient = process.isClient();
-      break;
+  if (process) {
+    switch (wb.projectType) {
+      case 'gridsome':
+        isClient = process.isClient;
+        break;
+    }
   }
 
   return isClient;

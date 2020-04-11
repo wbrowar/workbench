@@ -2,7 +2,7 @@
 const _ = require('lodash');
 
 // import global functions
-const g = require('./global.js');
+const g = require('./functions.js');
 
 // load config files
 let tailwind = require(`${ process.cwd() }/tailwind.config.js`);

@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     addToObserver: function(callback) {
-      if (processIsClient) {
+      if (processIsClient(process)) {
         log('Adding to Animate Observer');
 
         if (typeof this.observer !== 'object') {

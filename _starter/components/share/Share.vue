@@ -27,7 +27,7 @@
     },
     methods: {
       shareUrlHandler: function() {
-        if (processIsClient && this.canShare) {
+        if (processIsClient(process) && this.canShare) {
           let shareInfo = { url: this.shareUrl };
 
           if (this.shareTitle) {
@@ -50,7 +50,7 @@
       }
     },
     created() {
-      if (processIsClient) {
+      if (processIsClient(process)) {
         if (navigator.share) {
           this.canShare = true;
         }

@@ -6,7 +6,7 @@ const ejs = require('ejs'),
       path = require('path');
 
 // import global functions
-const g = require('./global.js');
+const g = require('./functions.js');
 
 // load config files
 let wb = require(`${ process.cwd() }/wb.config.js`);

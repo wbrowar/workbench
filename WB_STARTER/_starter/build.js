@@ -16,7 +16,7 @@ const autoprefixer = require('autoprefixer'),
     webpack = require('webpack');
 
 // import global functions
-const g = require('./global.js');
+const g = require('./functions.js');
 
 // HELLO
 g.log('app', `Beginning`);

@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 
 // import global functions
-const g = require('./global.js');
+const g = require('./functions.js');
 
 // set constants
 const argv = g.parseArgv();
