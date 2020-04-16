@@ -5,15 +5,15 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 const path = require('path'),
-  purgecss = require('@fullhuman/postcss-purgecss'),
-  tailwind = require('tailwindcss'),
-  wb = require(`./wb.config.js`);
+      purgecss = require('@fullhuman/postcss-purgecss'),
+      tailwind = require('tailwindcss'),
+      wb = require(`./wb.config.js`);
 
 const postcssPlugins = [
   tailwind(),
 ];
 
-if (!wb.devMode) postcssPlugins.push(purgecss(require('./purgecss.config.js')));
+if (wb.postcss.enablePurgeCss) postcssPlugins.push(purgecss(require('./purgecss.config.js')));
 
 function addStyleResource (rule) {
   rule.use('style-resource')
@@ -35,10 +35,10 @@ module.exports = {
     // {
     //   use: '@gridsome/source-graphql',
     //   options: {
-    //     url: process.env.CRAFT_API_URL,
+    //     url: process.env.VUE_APP_CRAFT_API_URL,
     //     fieldName: 'craft',
     //     headers: {
-    //       Authorization: `Bearer ${ process.env.CRAFT_AUTH_TOKEN }`
+    //       Authorization: `Bearer ${ process.env.VUE_APP_CRAFT_AUTH_TOKEN }`
     //     },
     //   },
     // },

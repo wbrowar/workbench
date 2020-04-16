@@ -1,3 +1,16 @@
 {
-  "plugins": ["@babel/plugin-syntax-dynamic-import"]
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-spread"
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": 3
+      }
+    ]
+  ]
 }

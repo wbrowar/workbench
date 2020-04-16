@@ -17,21 +17,16 @@ function addStyleResource (rule) {
 
 module.exports = {
   configureWebpack: config => {
-    if (process.env.NODE_ENV === 'production') {
-      // mutate config for production...
-    } else {
-      // mutate for development...
-    }
-
     config.resolve = {
       alias: {
-        '@$': path.resolve(__dirname, './src/'),
+        '@$': path.resolve(wb.paths.starter.src),
         Components: path.resolve(wb.paths.components.src),
         CSS: path.resolve(wb.paths.css.src),
+        GQL: path.resolve(`${wb.paths.starter.src}gql/`),
         JS: path.resolve(wb.paths.js.src),
         Source: path.resolve(wb.paths.starter.source),
         Starter: path.resolve(wb.paths.starter.starter),
-        Views: path.resolve(__dirname, './src/views/'),
+        Views: path.resolve(`${wb.paths.starter.src}views/`),
       },
     }
   },

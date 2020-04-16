@@ -44,11 +44,16 @@ module.exports = function (api) {
   api.configureWebpack({
     resolve: {
       alias: {
+        '@$': path.resolve(wb.paths.starter.src),
         Components: path.resolve(wb.paths.components.src),
         CSS: path.resolve(wb.paths.css.src),
+        GQL: path.resolve(`${wb.paths.starter.src}gql/`),
         JS: path.resolve(wb.paths.js.src),
+        Layouts: path.resolve(`${wb.paths.starter.src}layouts/`),
+        Pages: path.resolve(`${wb.paths.starter.src}pages/`),
         Source: path.resolve(wb.paths.starter.source),
         Starter: path.resolve(wb.paths.starter.starter),
+        Templates: path.resolve(`${wb.paths.starter.src}templates/`),
       }
     }
   })
