@@ -11,12 +11,12 @@
 </template>
 
 <script>
-  import { devEnableDocs } from 'JS/settings.js';
+  import wb from 'JS/automated/wb.js';
 
   export default {
     data() {
       return {
-        showDocsLink: devEnableDocs,
+        showDocsLink: wb.enableDocs,
       };
     },
   };
