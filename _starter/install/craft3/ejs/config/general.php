@@ -15,8 +15,7 @@ return [
             '@basePath' => getenv('BASE_PATH'),
             '@baseUrl' => getenv('BASE_URL'),
         ],
-        'baseCpUrl' => getenv('CP_BASE_URL'),
-        'cacheDuration' => false,
+        'baseCpUrl' => getenv('CP_BASE_URL') ?? getenv('BASE_URL'),
         'cpTrigger' => '<%- install.cpTrigger %>',
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
@@ -38,7 +37,7 @@ return [
         // Craft defined config settings
         'allowAdminChanges' => false,
         'allowUpdates' => false,
-        'backupOnUpdate' => false,
+        'backupOnUpdate' => true,
         'devMode' => false,
         'enableTemplateCaching' => true,
 //        'run­QueueAu­to­mat­i­cal­ly' => false,
@@ -49,7 +48,7 @@ return [
         // Craft defined config settings
         'allowAdminChanges' => false,
         'allowUpdates' => false,
-        'backupOnUpdate' => false,
+        'backupOnUpdate' => true,
         'devMode' => false,
         'enableTemplateCaching' => true,
         'rememberedUserSessionDuration' => 31557600,

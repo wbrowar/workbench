@@ -1,8 +1,5 @@
 import wb from 'JS/automated/wb.js';
 
-//  GLOBAL
-const devMode = process.env.NODE_ENV || 'development';
-
 // LOGGING FUNCTIONS
 export function dir(...args) {
   logger('dir', args);
@@ -22,7 +19,7 @@ export function warn(...args) {
 function logger(type = 'log', args) {
   const spirit = '🚀';
 
-  if (devMode) {
+  if (wb.devMode) {
     for (let i = 0; i < args.length; i++) {
       const spacer = i > 0 ? '◉ ' : '';
       switch (type) {

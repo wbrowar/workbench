@@ -7,6 +7,3 @@ export const apiDefaultHeaders = {
   'Content-Type': 'application/json;charset=UTF-8',
 };
 export const apiDefaultUrl = process.env.VUE_APP_CRAFT_API_URL;
-
-// DEV
-export const devEnableDocs = process.env.VUE_APP_ENABLE_DOCS === 'true';

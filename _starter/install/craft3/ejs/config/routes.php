@@ -22,4 +22,6 @@ return [
     'dev/search' => ['template' => 'dev/_search'],
     'dev/inv' => ['template' => 'dev/_style_inv'],
     'dev/inv/<invPage:(.*)>' => ['template' => 'dev/_style_inv'],
+    // 'home' => ['template' => '_layout.twig'], // Enable for headless CMS
+    // 'api' => 'graphql/api', // Enable for headless CMS
 ];
