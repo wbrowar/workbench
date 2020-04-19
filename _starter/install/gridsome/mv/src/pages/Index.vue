@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import MediaImage from 'Components/image/MediaImage';
+import MediaImage from 'Components/image/MediaImage.vue';
 
 export default {
   components: {

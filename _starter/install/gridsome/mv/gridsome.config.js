@@ -5,16 +5,35 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 const autoprefixer = require('autoprefixer'),
-      path = require('path'),
-      purgecss = require('@fullhuman/postcss-purgecss'),
-      tailwind = require('tailwindcss'),
-      wb = require(`./wb.config.js`);
+  path = require('path'),
+  purgecss = require('@fullhuman/postcss-purgecss'),
+  tailwind = require('tailwindcss'),
+  wb = require(`./wb.config.js`);
 
+// Gridsome setup
+const gridsomePlugins = [];
+
+// Adds Ben Sheedy’s Craft CMS (GraphQL) plugin if using CraftCMS
+if (process.env.GRIDSOME_CRAFT_API_URL) {
+  let soureCraftGraphqlHeaders = process.env.CRAFT_AUTH_TOKEN ? { Authorization: `Bearer ${ process.env.CRAFT_AUTH_TOKEN }` } : null;
+
+  gridsomePlugins.push({
+    use: '@bhws/gridsome-source-craft-graphql',
+    options: {
+      url: process.env.GRIDSOME_CRAFT_API_URL,
+      fieldName: 'craft',
+      typeName: 'craft',
+      headers: soureCraftGraphqlHeaders,
+      livePreview: process.env.GRIDSOME_LIVE_PREVIEW || false,
+    }
+  });
+}
+
+// PostCSS setup
 const postcssPlugins = [
   tailwind(),
   autoprefixer(),
 ];
-
 if (wb.postcss.enablePurgeCss) postcssPlugins.push(purgecss(require('./purgecss.config.js')));
 
 function addStyleResource (rule) {
@@ -33,18 +52,7 @@ function addStyleResource (rule) {
 
 module.exports = {
   siteName: 'Gridsome',
-  plugins: [
-    // {
-    //   use: '@gridsome/source-graphql',
-    //   options: {
-    //     url: process.env.VUE_APP_CRAFT_API_URL,
-    //     fieldName: 'craft',
-    //     headers: {
-    //       Authorization: `Bearer ${ process.env.VUE_APP_CRAFT_AUTH_TOKEN }`
-    //     },
-    //   },
-    // },
-  ],
+  plugins: gridsomePlugins,
   css: {
     loaderOptions: {
       postcss: {

@@ -9,9 +9,9 @@
     "watch": "npm run prebuild && gridsome develop"
   },
   "dependencies": {
+    "@bhws/gridsome-source-craft-graphql": "^0.0.14",
     "gridsome": "^0.7.12",
     "@gridsome/plugin-critical": "^0.1.6",
-    "@gridsome/source-graphql": "^0.1.0",
     "gridsome-plugin-sass-resources-loader": "^0.0.3",
     "gridsome-plugin-tailwindcss": "^2.2.32",
     "style-resources-loader": "^1.3.3",

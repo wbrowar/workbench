@@ -22,13 +22,13 @@
       v-if="globalData.wb.fonts"
     >
       <div v-for="(font, index) in globalData.wb.fonts" :key="index">
-        <div class="flex items-center justify-between" v-for="weight in font.demoWeights" :key="weight" v-if="font.demoWeights">
+        <div class="flex items-center justify-between border-b" v-for="weight in font.demoWeights" :key="weight" v-if="font.demoWeights">
           <FontSample :handle="index" :size="fontSampleSize" :text="fontSampleText" :weight="weight" />
-          <h3 class="my-3 cursor-pointer"><span class="mx-1" :title="`Click to copy 'text-${index}'`" @click="copyToClipboard(`text-${index}`)">{{ index }}</span><span class="mx-1" :title="`Click to copy 'font-${weight}'`" @click="copyToClipboard(`font-${weight}`)">{{ weight }}</span><span class="mx-1" :title="`Click to copy 'text-${fontSampleSize}'`" @click="copyToClipboard(`text-${fontSampleSize}`)">{{ fontSampleSize }}</span></h3>
+          <h3 class="cursor-pointer"><span class="mx-1" :title="`Click to copy 'text-${index}'`" @click="copyToClipboard(`text-${index}`)">{{ index }}</span><span class="mx-1" :title="`Click to copy 'font-${weight}'`" @click="copyToClipboard(`font-${weight}`)">{{ weight }}</span><span class="mx-1" :title="`Click to copy 'text-${fontSampleSize}'`" @click="copyToClipboard(`text-${fontSampleSize}`)">{{ fontSampleSize }}</span></h3>
         </div>
-        <div class="flex justify-between" v-else>
+        <div class="flex justify-between border-b" v-else>
           <FontSample :handle="index" :size="fontSampleSize" :text="fontSampleText" />
-          <h3 class="my-3 cursor-pointer"><span class="mx-1" :title="`Click to copy 'text-${index}'`" @click="copyToClipboard(`text-${index}`)">{{ index }}</span><span class="mx-1" :title="`Click to copy 'text-${fontSampleSize}'`" @click="copyToClipboard(`text-${fontSampleSize}`)">{{ fontSampleSize }}</span></h3>
+          <h3 class="cursor-pointer"><span class="mx-1" :title="`Click to copy 'text-${index}'`" @click="copyToClipboard(`text-${index}`)">{{ index }}</span><span class="mx-1" :title="`Click to copy 'text-${fontSampleSize}'`" @click="copyToClipboard(`text-${fontSampleSize}`)">{{ fontSampleSize }}</span></h3>
         </div>
       </div>
       <div style="display: grid; grid-template-columns: auto 80px; grid-gap: 30px; margin-top: 60px;">
@@ -132,7 +132,7 @@ export default {
     this.twConfig = resolveConfig(this.globalData.tailwind);
     log(this.twConfig.theme);
 
-    this.fontSampleSize = `2xl`;
+    this.fontSampleSize = `base`;
     this.fontSampleText = `The quick brown fox jumps over the lazy dog`;
 
     Object.keys(this.globalData.wb.colors).forEach((schemeKey) => {

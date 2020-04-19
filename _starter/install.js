@@ -346,6 +346,17 @@ async function run() {
             handle = ejsVars.handle = answers.handle || '';
         }
 
+        if (answers.projectType) {
+            switch (answers.projectType) {
+                case 'gridsome':
+                    ejsVars.appEnvPrefix = 'GRIDSOME_';
+                    break;
+                case 'vue':
+                    ejsVars.appEnvPrefix = 'VUE_APP_';
+                    break;
+            }
+        }
+
         if (answers.saveConfig) {
             g.log('title', `Saving Local Configuring File`);
             localConfig = {};
