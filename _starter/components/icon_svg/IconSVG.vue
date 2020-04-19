@@ -57,7 +57,6 @@ export default {
 
 <style lang="scss">
 .c-icon-svg {
-  width: 100%;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
