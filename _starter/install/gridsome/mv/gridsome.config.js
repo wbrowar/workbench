@@ -4,13 +4,15 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const path = require('path'),
+const autoprefixer = require('autoprefixer'),
+      path = require('path'),
       purgecss = require('@fullhuman/postcss-purgecss'),
       tailwind = require('tailwindcss'),
       wb = require(`./wb.config.js`);
 
 const postcssPlugins = [
   tailwind(),
+  autoprefixer(),
 ];
 
 if (wb.postcss.enablePurgeCss) postcssPlugins.push(purgecss(require('./purgecss.config.js')));
