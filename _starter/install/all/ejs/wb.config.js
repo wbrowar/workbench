@@ -147,6 +147,56 @@ module.exports = {
     //   addUtilities(newUtilities, { variants: ['responsive'] });
     // },
   ],
+<% if (install.projectType === 'marketo') { %>marketo: {
+    // Define variables for the head and body. NOTE: a head and body array are required, even if they are empty arrays
+    variables: {
+      head: [
+        {
+          // String example
+          label: "Example Single Line Text",
+          id: "example_single_line_text",
+          type: "mktoString",
+          default: "Example Headline",
+          allowHtml: false,
+        },
+        {
+          // Color example
+          label: "Example Color",
+          id: "example_color",
+          type: "mktoColor",
+          default: "#FF00FF",
+        },
+        {
+          // Boolean example
+          label: "Example Lightswitch",
+          id: "example_lightswitch",
+          type: "mktoBoolean",
+          default: true,
+        },
+      ],
+      body: [
+        {
+          // Image example
+          label: "Example Text",
+          id: "example_text",
+          type: "mktoText",
+          default: `<p>Optionally add default text for the editable text area.</p>`,
+        },
+        // {
+        //   // Image example
+        //   label: "Example Image",
+        //   id: "example_image",
+        //   type: "mktoImg",
+        // },
+        // {
+        //   // Form example
+        //   label: "Form Example",
+        //   id: "example_form",
+        //   type: "mktoForm",
+        // },
+      ],
+    },
+  },<% } -%>
   // Config options for build process
   name: '<%- install.handle %>',
   projectType: '<%- install.projectType %>',
@@ -179,6 +229,7 @@ module.exports = {
     js: {
       src: `${paths.sourcePath}_js/`,
     },
+    publicPath: `/`,
     starter: {
       components: `${paths.starterPath}components/`,
       source: paths.sourcePath,

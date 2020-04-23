@@ -15,14 +15,14 @@ let routes = [
     name: 'home',
     component: Home,
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ 'Views/About.vue'),
-  },
+  // {
+  //   path: '/about',
+  //   name: 'about',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ 'Views/About.vue'),
+  // },
 ];
 
 if (process.env.VUE_APP_ENABLE_DOCS) {
@@ -35,7 +35,7 @@ if (process.env.VUE_APP_ENABLE_DOCS) {
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: '/',
   routes,
 });
 

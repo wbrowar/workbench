@@ -37,4 +37,5 @@ module.exports = {
       addStyleResource(config.module.rule('scss').oneOf(type));
     });
   },
+  publicPath: process.env.NODE_ENV === 'production' && wb.paths.publicPath ? wb.paths.publicPath : '/',
 };

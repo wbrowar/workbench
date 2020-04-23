@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "postbuild": "node ./_starter/postbuild.js --marketovars",
+    "prod": "npm run prebuild && vue-cli-service build && npm run postbuild"
+  }
+}

@@ -82,6 +82,58 @@ methods.parseArgv = function parseArgv() {
   };
 };
 
+
+// POSTBUILD
+methods.postbuildMarketoVariables = function postbuildMarketoVariables(callback, paths, config, verbose) {
+  const options = {
+    config: config,
+  };
+
+  methods.log('dump', config.wb.marketo.variables, true);
+
+  if (config.wb.marketo.variables.head) {
+    ejs.renderFile(`${paths.starter.templates}_html/marketo_vars.ejs`, { metaVars: [], variables: config.wb.marketo.variables.head }, {}, function(err, headString) {
+      if (err) {
+        methods.log('warn', err);
+      }
+      methods.log('verbose', `Compiled marketo values for <head>`, verbose);
+      methods.log('dump', headString, verbose);
+
+      if (config.wb.marketo.variables.body) {
+        ejs.renderFile(`${paths.starter.templates}_html/marketo_vars.ejs`, { metaVars: config.wb.marketo.variables.head, variables: config.wb.marketo.variables.body }, {}, function(err, bodyString) {
+          if (err) {
+            methods.log('warn', err);
+          }
+          methods.log('verbose', `Compiled marketo values for <body>`, verbose);
+          methods.log('dump', bodyString, verbose);
+
+          if (fs.existsSync('./dist/index.html')) {
+            const indexFile = fs.readFileSync('./dist/index.html', 'utf8');
+
+            if (indexFile) {
+              const updatedIndexFile = indexFile.replace(`</head>`, `${headString}</head>`).replace(`<body>`, `<body><div id="marketo_variables" class="hidden">${bodyString}</div>`);
+
+              methods.log('dump', updatedIndexFile, verbose);
+              fs.renameSync('./dist/index.html', './dist/index_BACKUP.html');
+              fs.outputFile('./dist/index.html', updatedIndexFile, (err) => {
+                if (!err) {
+                  callback();
+                }
+              });
+            }
+          }
+        });
+      } else {
+        methods.log('warn', `Object for wb.marketo.variables.body missing`);
+      }
+    });
+  } else {
+    methods.log('warn', `Object for wb.marketo.variables.head missing`);
+  }
+};
+
+
+// PREBUILD
 methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
   glob(`${paths.js.src}automated/dev/**/*`, function(er, files) {
     methods.log('verbose', `Removing Files: ${JSON.stringify(files, null, 2)}`, verbose);

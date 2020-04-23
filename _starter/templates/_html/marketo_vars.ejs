@@ -1,0 +1,14 @@
+<% variables.forEach((v) => { -%>
+<% if (v.type === 'mktoText') { -%>
+<div id="<%- v.id %>" class="mktoText marketo_body_variable" data-type="mktoText" mktoName="<%- v.id %>"><% if (v.default) { %><%- v.default %><% } %></div>
+<% } else if (v.type === 'mktoString') { -%>
+<meta id="<%- v.id %>" class="mktoString" mktoName="<%- v.id %>"<% if (v.default) { %> default="<%- v.default %>"<% } %>>
+<% } else if (v.type === 'mktoBoolean') { -%>
+<meta id="<%- v.id %>" class="mktoBoolean" mktoName="<%- v.id %>"<% if (v.default) { %> default="true"<% } else { %> default="true"<% } %>>
+<% } else if (v.type === 'mktoColor') { -%>
+<meta id="<%- v.id %>" class="mktoColor" mktoName="<%- v.id %>"<% if (v.default) { %> default="<%- v.default %>"<% } %>>
+<% } -%>
+<% }) -%>
+<% metaVars.forEach((v) => { -%>
+<div class="marketo_meta_variable" data-name="<%- v.id %>" data-type="<%- v.type %>">${<%- v.id %>}</div>
+<% }) -%>

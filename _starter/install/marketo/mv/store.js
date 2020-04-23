@@ -9,13 +9,12 @@ let mutations = {};
 let actions = {};
 let modules = {};
 
-// Example
-// state['example'] = false;
-// mutations['updatemExample'] = function(state, newExampleObject) {
-//   log('Updated Example: ', newExampleObject);
-//
-//   state.example = newExampleObject;
-// };
+state['marketo'] = false;
+mutations['updatemMarketo'] = function(state, newMarketoObject) {
+  log('Updated Marketo: ', newMarketoObject);
+
+  state.marketo = newMarketoObject;
+};
 
 export default new Vuex.Store({
   state: state,
