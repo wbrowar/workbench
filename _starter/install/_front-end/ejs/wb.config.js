@@ -147,7 +147,7 @@ module.exports = {
     //   addUtilities(newUtilities, { variants: ['responsive'] });
     // },
   ],
-<% if (install.projectType === 'marketo') { %>marketo: {
+<% if (install.projectType === 'marketo-vue') { %>marketo: {
     // Define variables for the head and body. NOTE: a head and body array are required, even if they are empty arrays
     variables: {
       head: [

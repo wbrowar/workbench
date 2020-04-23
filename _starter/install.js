@@ -360,15 +360,15 @@ async function run() {
                     break;
                 case 'gridsome':
                     ejsVars.appEnvPrefix = 'GRIDSOME_';
-                    installDirectories = ['front-end', 'gridsome'];
+                    installDirectories = ['_front-end', 'gridsome'];
                     break;
                 case 'marketo-vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
-                    installDirectories = ['front-end', 'vue', 'marketo-vue'];
+                    installDirectories = ['_front-end', 'vue', 'marketo-vue'];
                     break;
                 case 'vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
-                    installDirectories = ['front-end', 'vue'];
+                    installDirectories = ['_front-end', 'vue'];
                     break;
             }
         }
@@ -532,14 +532,14 @@ async function run() {
             g.log('verbose', `Craft and plugins updated`, verbose);
         }
 
-        g.log('title', 'Moving selected components', verbose);
-        answers.components.forEach((item) => {
-            if (!item.startsWith('@')) {
-                g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
-            }
-        });
-
         if (answers.installEnd === 'front') {
+            g.log('title', 'Moving selected components', verbose);
+            answers.components.forEach((item) => {
+                if (!item.startsWith('@')) {
+                    g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
+                }
+            });
+
             g.log('title', 'Updating NPM packages', verbose);
             g.verboseExec(answers.npmInstaller + ` update`, verbose);
             g.log('verbose', `NPM Packages updated`, verbose);
