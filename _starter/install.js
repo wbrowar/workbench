@@ -364,7 +364,7 @@ async function run() {
                     break;
                 case 'marketo-vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
-                    installDirectories = ['front-end', 'vue', 'marketo'];
+                    installDirectories = ['front-end', 'vue', 'marketo-vue'];
                     break;
                 case 'vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
@@ -649,7 +649,7 @@ function globRemove(pattern, resolve) {
 }
 
 async function installDirectory(name, finished) {
-    const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ answers.projectType }/`;
+    const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ name }/`;
 
     mergeIntoPkg(`${process.cwd()}/_starter/install/${ name }/setup/package.json`);
 
