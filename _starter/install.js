@@ -105,7 +105,8 @@ async function run() {
                 return answers.installEnd === 'front' ? [
                     { name: 'Gridsome', value: 'gridsome' },
                     { name: 'HTML', value: 'html' },
-                    { name: 'Twig', value: 'twig' },
+                    { name: 'Marketo Vue SPA', value: 'marketo-vue' },
+                    // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
                 ] : [
                     { name: 'Craft 3', value: 'craft3' },
@@ -346,11 +347,39 @@ async function run() {
             handle = ejsVars.handle = answers.handle || '';
         }
 
+        // Assign install directories
+        let installDirectories = [];
+
+        if (answers.projectType) {
+            switch (answers.projectType) {
+                case 'craft3':
+                    installDirectories = ['craft3'];
+                    break;
+                case 'craftplugin':
+                    installDirectories = ['craft3'];
+                    break;
+                case 'gridsome':
+                    ejsVars.appEnvPrefix = 'GRIDSOME_';
+                    installDirectories = ['front-end', 'gridsome'];
+                    break;
+                case 'marketo-vue':
+                    ejsVars.appEnvPrefix = 'VUE_APP_';
+                    installDirectories = ['front-end', 'vue', 'marketo'];
+                    break;
+                case 'vue':
+                    ejsVars.appEnvPrefix = 'VUE_APP_';
+                    installDirectories = ['front-end', 'vue'];
+                    break;
+            }
+        }
+
+        // Assign ENV prefix
         if (answers.projectType) {
             switch (answers.projectType) {
                 case 'gridsome':
                     ejsVars.appEnvPrefix = 'GRIDSOME_';
                     break;
+                case 'marketo-vue':
                 case 'vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
                     break;
@@ -423,7 +452,28 @@ async function run() {
             version: '1.0.0',
         });
 
-        mergeIntoPkg(`${process.cwd()}/_starter/install/${ answers.projectType }/setup/package.json`);
+        // Install
+        if (installDirectories[0]) {
+            const installDir0 = g.asyncFunction(
+              `Installing directory: ${installDirectories[0]}`, `Directory: ${installDirectories[0]} installed`, (resolve) => {
+                  installDirectory(installDirectories[0], resolve);
+              });
+            let installDir0Complete = await installDir0;
+        }
+        if (installDirectories[1]) {
+            const installDir1 = g.asyncFunction(
+              `Installing directory: ${installDirectories[1]}`, `Directory: ${installDirectories[1]} installed`, (resolve) => {
+                  installDirectory(installDirectories[1], resolve);
+              });
+            let installDir1Complete = await installDir1;
+        }
+        if (installDirectories[2]) {
+            const installDir2 = g.asyncFunction(
+              `Installing directory: ${installDirectories[2]}`, `Directory: ${installDirectories[2]} installed`, (resolve) => {
+                  installDirectory(installDirectories[2], resolve);
+              });
+            let installDir2Complete = await installDir2;
+        }
 
         g.log('verbose', `Updating package.json file`, verbose);
         const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
@@ -440,40 +490,6 @@ async function run() {
                 globRemove(`${ process.cwd() }/_source/**/.gitkeep`, resolve);
             });
         let removeGitkeepComplete = await removeGitkeep;
-
-        const moveAllInstallFiles = g.asyncFunction(
-          `Moving Default Files`, `Default Files Moved`, (resolve) => {
-              globMove(`${ process.cwd() }/_starter/install/all/mv/**/*`, `_starter/install/all/mv/`, ``, resolve);
-          });
-        let moveAllInstallFilesComplete = await moveAllInstallFiles;
-
-        const compileAllInstallFiles = g.asyncFunction(
-          `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
-              globEjs(`${ process.cwd() }/_starter/install/all/ejs/**/*`, `_starter/install/all/ejs/`, ``, resolve);
-          });
-        let compileAllInstallFilesComplete = await compileAllInstallFiles;
-
-        const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ answers.projectType }/`;
-
-        if (fs.existsSync(`${ projectTypeInstallDirectory }ejs`)) {
-            const compileProjectInstallFiles = g.asyncFunction(
-                `Compiling Project Templates`, `Project Templates Compiled`, (resolve) => {
-                    globEjs(`${ projectTypeInstallDirectory }ejs/**/*`, `_starter/install/${ answers.projectType }/ejs/`, ``, resolve);
-                });
-            let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
-        } else {
-            g.log('verbose', `No project templates to compile`, verbose);
-        }
-
-        if (fs.existsSync(`${ projectTypeInstallDirectory }mv`)) {
-            const compileProjectInstallFiles = g.asyncFunction(
-                `Moving Project Templates`, `Project Templates Moved`, (resolve) => {
-                    globMove(`${ projectTypeInstallDirectory }mv/**/*`, `_starter/install/${ answers.projectType }/mv/`, ``, resolve);
-                });
-            let compileProjectInstallFilesComplete = await compileProjectInstallFiles;
-        } else {
-            g.log('verbose', `No project templates to move`, verbose);
-        }
 
         if (fs.existsSync(`${ process.cwd() }/INSTALL.env`)) {
             fs.copySync(`${ process.cwd() }/INSTALL.env`, `${ process.cwd() }/.env`);
@@ -630,6 +646,34 @@ function globRemove(pattern, resolve) {
             resolve();
         }
     });
+}
+
+async function installDirectory(name, finished) {
+    const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ answers.projectType }/`;
+
+    mergeIntoPkg(`${process.cwd()}/_starter/install/${ name }/setup/package.json`);
+
+    if (fs.existsSync(`${ projectTypeInstallDirectory }mv`)) {
+        const moveInstallFiles = g.asyncFunction(
+          `Moving Default Files`, `Default Files Moved`, (resolve) => {
+              globMove(`${process.cwd()}/_starter/install/${name}/mv/**/*`, `_starter/install/${name}/mv/`, ``, resolve);
+          });
+        let moveInstallFilesComplete = await moveInstallFiles;
+    } else {
+        g.log('verbose', `No project templates to move`, verbose);
+    }
+
+    if (fs.existsSync(`${ projectTypeInstallDirectory }ejs`)) {
+        const compileInstallFiles = g.asyncFunction(
+          `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
+              globEjs(`${process.cwd()}/_starter/install/${name}/ejs/**/*`, `_starter/install/${name}/ejs/`, ``, resolve);
+          });
+        let compileInstallFilesComplete = await compileInstallFiles;
+    } else {
+        g.log('verbose', `No project templates to compile`, verbose);
+    }
+
+    finished();
 }
 
 function mergeIntoPkg(pkgFile) {
