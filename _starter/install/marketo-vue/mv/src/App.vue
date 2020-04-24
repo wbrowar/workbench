@@ -1,6 +1,23 @@
 <template>
   <div>
+    <div class="absolute y-0 right-0 bg-black-90 p-4 text-white" v-if="marketo.show_marketo_docs">
+      <div class="mx-auto max-w-lg">
+        <p class="text-2xl mb-1">Elements</p>
+        <div class="mt-2 first:mt-0 border-t border-white-30 mb-8 px-2 py-2" v-for="(item, key) in marketoDescriptions.body" :key="key">
+          <p class="text-lg mb-1">{{ item.label }}</p>
+          <p class="text-white-60">{{ item.description }}</p>
+        </div>
+
+        <p class="text-2xl mb-1">Variables</p>
+        <div class="mt-2 first:mt-0 border-t border-white-30 px-2 py-2" v-for="(item, key) in marketoDescriptions.meta" :key="key">
+          <p class="text-lg mb-1">{{ item.label }}</p>
+          <p class="text-white-60">{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+
     <router-view />
+
     <div class="flex flex-row items-center bg-black" v-if="devMode || showDocsLink">
       <span class="p-3 text-white text-xs">Dev Mode: {{ devMode ? 'ON' : 'OFF' }}</span>
       <span class="p-3 text-white text-xs">Dev Links:</span>
@@ -11,7 +28,7 @@
 </template>
 
 <script>
-  import { getMarketoVariables } from 'JS/marketo.js';
+  import { getMarketoDescriptions, getMarketoVariables } from 'JS/marketo.js';
   import { log } from 'JS/global.js';
   import wb from 'JS/automated/wb.js';
 
@@ -19,6 +36,7 @@
     data() {
       return {
         devMode: wb.devMode,
+        marketoDescriptions: false,
         mutationObserver: false,
         showDocsLink: wb.enableDocs,
       };
@@ -32,6 +50,11 @@
         }
       },
     },
+    computed: {
+      marketo() {
+        return this.$store.state.marketo;
+      },
+    },
     mounted() {
       this.marketoVariablesUpdated();
 
@@ -41,8 +64,10 @@
         this.mutationObserver.observe(marketoVariablesContainer, { attributes: true, childList: true, subtree: true });
         log('Added mutation observer');
       } else {
-        log('Using fallback variables');
+        log('Marketo variables div not found. Using fallback variables');
       }
+
+      this.marketoDescriptions = getMarketoDescriptions();
     },
     destroyed() {
       if (this.mutationObserver) {
