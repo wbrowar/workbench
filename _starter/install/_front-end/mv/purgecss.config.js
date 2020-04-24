@@ -21,6 +21,7 @@ let whitelist = [
   'g-image',
   'g-image--lazy',
   'g-image--loaded',
+  'hidden',
 ];
 
 let whitelistPatterns = [

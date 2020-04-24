@@ -200,8 +200,8 @@ module.exports = {
   // Config options for build process
   name: '<%- install.handle %>',
   projectType: '<%- install.projectType %>',
-  devMode: process.env.<%- appEnvPrefix %>DEV_MODE,
-  enableDocs: process.env.<%- appEnvPrefix %>ENABLE_DOCS,
+  devMode: process.env.<%- appEnvPrefix %>DEV_MODE === 'true',
+  enableDocs: process.env.<%- appEnvPrefix %>ENABLE_DOCS === 'true',
   ejs: {
     // Define any data to be processed with EJS
   },
@@ -240,7 +240,7 @@ module.exports = {
     }
   },
   postcss: {
-    enablePurgeCss: !process.env.<%- appEnvPrefix %>DEV_MODE ? process.env.<%- appEnvPrefix %>POSTCSS_PURGECSS || false : false,
+    enablePurgeCss: process.env.NODE_ENV === 'production' ? process.env.<%- appEnvPrefix %>POSTCSS_PURGECSS === 'true' || false : false,
   },
   prettier: {
     files: "{_source,src}_source/**/*.{js,json,scss,vue}",
