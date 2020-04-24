@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const paths = {
+  publicPath: `/`,
   sourcePath: process.cwd() + '/_source/',
   srcPath: process.cwd() + '/src/',
   starterPath: process.cwd() + '/_starter/',
@@ -229,7 +230,7 @@ module.exports = {
     js: {
       src: `${paths.sourcePath}_js/`,
     },
-    publicPath: `/`,
+    publicPath: paths.publicPath,
     starter: {
       components: `${paths.starterPath}components/`,
       source: paths.sourcePath,
@@ -240,7 +241,7 @@ module.exports = {
     }
   },
   postcss: {
-    enablePurgeCss: process.env.NODE_ENV === 'production' ? process.env.<%- appEnvPrefix %>POSTCSS_PURGECSS === 'true' || false : false,
+    enablePurgeCss: (process.env.NODE_ENV === 'production' && process.env.VUE_APP_DEV_MODE !== 'true' && process.env.VUE_APP_ENABLE_DOCS !== 'true') ? process.env.VUE_APP_POSTCSS_PURGECSS === 'true' || false : false,
   },
   prettier: {
     files: "{_source,src}_source/**/*.{js,json,scss,vue}",

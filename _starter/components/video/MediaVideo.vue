@@ -87,7 +87,7 @@ export default {
       if (this.background) {
         classes.push(`w-full h-full`);
       } else {
-        classes.push(`pb-16/9`);
+        classes.push(`w-full pb-16/9`);
       }
 
       if (classes.length) {

@@ -79,6 +79,7 @@ async function run() {
             'lazy_load',
             'resize_container',
             'text',
+            'video',
             'wrapper',
         ];
         const componentName = path.basename(item);
