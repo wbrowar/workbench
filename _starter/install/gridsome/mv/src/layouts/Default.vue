@@ -18,14 +18,6 @@
       </main>
     </transition>
     <footer class="ui__footer">
-      <div class="c-wrapper py-1">
-        <span>Color Scheme: </span>
-        <ClientOnly>
-          <ColorSchemeToggle class="mx-2" remember scheme-id="default" title="Reset to default color scheme">❌</ColorSchemeToggle>
-          <ColorSchemeToggle class="mx-2" remember scheme-id="dark" title="Turn on dark color scheme (override browser setting)">🌑</ColorSchemeToggle>
-          <ColorSchemeToggle class="mx-2" remember scheme-id="light" title="Turn on light color scheme (override browser setting)">🌕</ColorSchemeToggle>
-        </ClientOnly>
-      </div>
     </footer>
   </div>
 </template>

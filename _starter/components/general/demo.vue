@@ -89,6 +89,22 @@
       </div>
     </CodeExample>
 
+    <CodeExample title="Transitions" description="Preview transition timing.">
+      <div class="grid grid-cols-ti gap-4">
+        <select class="dev__components__input appearance-none" v-model="transitionTiming">
+          <option :value="item" v-for="item in Object.keys(twConfig.theme.transitionTimingFunction)">{{ item }}</option>
+        </select>
+
+        <button class="dev__components__input appearance-none" @click="transitionExampleActive = !transitionExampleActive">Animate!</button>
+      </div>
+
+      <div class="grid gap-4 md:grid-flow-col">
+        <div class="flex items-center justify-center mt-4 w-12 h-12 bg-black transform transition-transform" :class="[`duration-${item}`, transitionTiming, { 'translate-y-full': transitionExampleActive }]" v-for="item in Object.keys(twConfig.theme.transitionDuration)" :key="item">
+          <p class="text-xs text-white">{{ item }}</p>
+        </div>
+      </div>
+    </CodeExample>
+
     <CodeExample title="Tailwind Explorer" description="Test Tailwind classes and see the results.">
       <TailwindTester />
     </CodeExample>
@@ -123,6 +139,8 @@ export default {
       fontSampleText: false,
       svgIcons: false,
       tailwindSample: false,
+      transitionExampleActive: false,
+      transitionTiming: 'out',
     };
   },
   props: {

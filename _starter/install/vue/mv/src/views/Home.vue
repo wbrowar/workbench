@@ -1,23 +1,22 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <Button label="Google" href="http://google.com" />
-    Hello!
+    <div class="text-white bg-black">
+      <div class="c-wrapper py-12 min-h-screen flex flex-col items-center justify-center">
+        <h1 class="c-header-1">Hello, 🌎</h1>
+        <div class="c-text text-2xl">This app has been installed and ready for programming.</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Button from 'Components/button/Button.vue';
-
-export default {
-  metaInfo: {
-    title: 'Title',
-    titleTemplate: null,
-  },
-  name: 'home',
-  components: {
-    Button,
-  },
-};
+  export default {
+    metaInfo: {
+      title: 'Title',
+      titleTemplate: null,
+    },
+    name: 'home',
+    components: {
+    },
+  };
 </script>
