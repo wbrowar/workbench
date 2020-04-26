@@ -15,13 +15,12 @@ Documentation can be found in the [GitHub wiki](https://github.com/wbrowar/WB-St
 
 
 ## Release Notes
-#### 5.2.0
+#### 6.0.0
 ##### Starter
-- :fire: Removed `das.js` used for DAS keyboard effects.
-
-
 - :rocket:
 - :wrench:
+- :fire:
+
 
 ## Credits
 This project has been created with help and advice from @khalwat, @MarcHartwig13, @zsackett-dixonschwabl, @ds-mfoster, @muneath.
