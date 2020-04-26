@@ -13,14 +13,12 @@
       description="Combine Tailwind classes to transition upon entering the viewport. Classes set in `observer-classes` are ignored if element is in viewport before mounting."
       :code="code.tailwind"
     >
-      <!-- ClientOnly -->
-        <LazyAnimate
-          class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
-          observer-classes="transition duration-700"
-        >
-          <p class="font-bold text-gray-800 text-5xl">Text that animates!</p>
-        </LazyAnimate>
-      <!-- /ClientOnly -->
+      <LazyAnimate
+        class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
+        observer-classes="transition duration-700"
+      >
+        <p class="font-bold text-gray-800 text-5xl">Text that animates!</p>
+      </LazyAnimate>
     </CodeExample>
 
     <CodeExample

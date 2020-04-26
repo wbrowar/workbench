@@ -1,7 +1,6 @@
 <template>
   <figure :is="background ? elementType : 'figure'" :class="classes">
     <picture class="c-image" :class="containerClasses">
-      <!-- ClientOnly -->
       <LazyLoad
         :class="imageClasses"
         :key="index"
@@ -18,7 +17,6 @@
         :height="source.height || false"
         v-for="(source, index) in sources"
       />
-      <!-- /ClientOnly -->
     </picture>
     <figcaption v-if="elementType === 'figure' && caption">{{ caption }}</figcaption>
   </figure>

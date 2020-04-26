@@ -1,16 +1,14 @@
 <template>
   <div class="c-audio">
-    <!-- ClientOnly -->
-      <LazyLoad
-        class="w-full"
-        :class="auidoClass"
-        :after-load="{ src: src || false }"
-        element-type="audio"
-        :enable="lazyLoad"
-        :controls="controls"
-        :loop="loop"
-      />
-    <!-- /ClientOnly -->
+    <LazyLoad
+      class="w-full"
+      :class="auidoClass"
+      :after-load="{ src: src || false }"
+      element-type="audio"
+      :enable="lazyLoad"
+      :controls="controls"
+      :loop="loop"
+    />
   </div>
 </template>
 
