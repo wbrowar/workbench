@@ -46,6 +46,21 @@
       </div>
     </CodeExample>
 
+    <CodeExample
+      title="SVG Icons"
+      description="Icons available within the design system."
+      v-if="svgIcons"
+    >
+      <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
+        <div class="grid grid-cols-it gap-2 my-1 items-center" v-for="(icon, index) in svgIcons" :key="index">
+          <div class="w-10 h-10" @click="copyToClipboard(`<IconSVG handle='${icon}' />`)">
+            <IconSVG class="w-10 h-10" :handle="icon" />
+          </div>
+          <p class="text-xs">{{ icon }}</p>
+        </div>
+      </div>
+    </CodeExample>
+
     <CodeExample title="Media Queries" description="Media queries used in Tailwind and vue-mq.">
       <div class="flex flex-wrap">
         <div class="flex flex-col justify-center flex-grow flex-shrink text-gray-700 text-center bg-gray-400 px-4 py-2 text-3xl">📱</div>
@@ -54,16 +69,6 @@
           <p class="font-semibold text-sm">{{ index }}</p>
         </div>
         <div class="flex flex-col justify-center flex-grow flex-shrink text-gray-700 text-center bg-gray-400 px-4 py-2 border-l border-solid border-black-40 text-3xl">🖥</div>
-      </div>
-    </CodeExample>
-
-    <CodeExample title="Opacity" description="Opacity used in Tailwind config." copy-text='opacity-50'>
-      <div class="flex flex-wrap">
-        <div class="flex flex-col justify-center flex-grow flex-shrink w-16 text-center" v-for="(item, index) in twConfig.theme.opacity" :key="index">
-          <div class="h-16" :class="[`bg-black-${index}`]"></div>
-          <p class="font-semibold text-2xl">{{ index }}</p>
-          <p class="font-semibold text-xs" style="opacity: 0.4;">{{ item }}</p>
-        </div>
       </div>
     </CodeExample>
 
@@ -76,20 +81,25 @@
       </div>
     </CodeExample>
 
-    <CodeExample
-      title="SVG Icons"
-      description="Icons available within the design system."
-      v-if="svgIcons"
-    >
-      <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
-        <div class="grid grid-cols-it gap-2 my-1 items-center" v-for="(icon, index) in svgIcons" :key="index">
-          <IconSVG class="w-10 h-10" :handle="icon" />
-          <p class="text-xs">{{ icon }}</p>
+    <CodeExample title="Border Radius" description="Border radius settings.">
+      <div class="md:flex md:space-x-4">
+        <div class="flex items-center justify-center w-20 h-20 bg-black" :class="[item === 'default' ? 'rounded' : `rounded-${item}`]" v-for="item in Object.keys(twConfig.theme.borderRadius)" :key="item" :title="`Click to copy '${item === 'default' ? 'rounded' : `rounded-${item}`}'`" @click="copyToClipboard(item === 'default' ? 'rounded' : `rounded-${item}`)">
+          <p class="text-xs text-white">{{ item }}</p>
         </div>
       </div>
     </CodeExample>
 
-    <CodeExample title="Transitions" description="Preview transition timing.">
+    <CodeExample title="Opacity" description="Opacity used in Tailwind config.">
+      <div class="flex flex-wrap">
+        <div class="flex flex-col justify-center flex-grow flex-shrink w-16 text-center" v-for="(item, index) in twConfig.theme.opacity" :key="index">
+          <div class="h-16" :class="[`bg-black-${index}`]" :title="`Click to copy 'opacity-${index}'`" @click="copyToClipboard(`opacity-${index}`)"></div>
+          <p class="mt-1 font-semibold text-2xl">{{ index }}</p>
+          <p class="font-semibold text-xs" style="opacity: 0.4;">{{ item }}</p>
+        </div>
+      </div>
+    </CodeExample>
+
+    <CodeExample title="Transitions" description="Preview transition timing durations and timing functions.">
       <div class="grid grid-cols-ti gap-4">
         <select class="dev__components__input appearance-none" v-model="transitionTiming">
           <option :value="item" v-for="item in Object.keys(twConfig.theme.transitionTimingFunction)">{{ item }}</option>
@@ -98,8 +108,8 @@
         <button class="dev__components__input appearance-none" @click="transitionExampleActive = !transitionExampleActive">Animate!</button>
       </div>
 
-      <div class="grid gap-4 md:grid-flow-col">
-        <div class="flex items-center justify-center mt-4 w-12 h-12 bg-black transform transition-transform" :class="[`duration-${item}`, transitionTiming, { 'translate-y-full': transitionExampleActive }]" v-for="item in Object.keys(twConfig.theme.transitionDuration)" :key="item">
+      <div class="md:flex md:space-x-4 mt-4">
+        <div class="flex items-center justify-center w-16 h-16 bg-black rounded-lg transform transition-transform" :class="[`duration-${item}`, transitionTiming, { 'translate-y-full': transitionExampleActive }]" v-for="item in Object.keys(twConfig.theme.transitionDuration)" :key="item" :title="`Click to copy 'duration-${item}'`" @click="copyToClipboard(`duration-${item}`)">
           <p class="text-xs text-white">{{ item }}</p>
         </div>
       </div>
@@ -148,7 +158,7 @@ export default {
   },
   created() {
     this.twConfig = resolveConfig(this.globalData.tailwind);
-    log(this.twConfig.theme);
+    log('Tailwind Config', this.twConfig.theme);
 
     this.fontSampleSize = `base`;
     this.fontSampleText = `The quick brown fox jumps over the lazy dog`;

@@ -4,8 +4,8 @@
       <div class="flex flex-row items-center">
         <span class="p-3 text-white text-xs">Dev Mode: {{ devMode ? 'ON ⚙️' : 'OFF' }}</span>
         <span class="p-3 text-white text-xs">Dev Links:</span>
-        <router-link class="p-3 text-white hover:text-black hover:bg-white transition-colors duration-150" to="/">Home</router-link>
-        <router-link class="p-3 text-white hover:text-black hover:bg-white transition-colors duration-150" to="/dev/docs/general/" v-if="showDocsLink">Docs</router-link>
+        <router-link class="p-3 text-white hover:text-black hover:bg-white transition-colors duration-500" to="/">Home</router-link>
+        <router-link class="p-3 text-white hover:text-black hover:bg-white transition-colors duration-500" to="/dev/docs/general/" v-if="showDocsLink">Docs</router-link>
       </div>
     </div>
     <div class="flex flex-row">
