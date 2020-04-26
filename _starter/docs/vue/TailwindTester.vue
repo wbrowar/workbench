@@ -24,7 +24,7 @@
     created() {
       this.tailwindSample = `<div class="md:flex">
   <div class="md:flex-shrink-0">
-    <img class="rounded-lg md:w-56" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" alt="Woman paying for a purchase">
+    <img class="rounded-lg md:w-56" src="/img/FPO.png" alt="FPO image">
   </div>
   <div class="mt-4 md:mt-0 md:ml-6">
     <div class="uppercase tracking-wide text-sm text-dev-gray-600 font-bold">Marketing</div>

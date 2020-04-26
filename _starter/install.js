@@ -67,6 +67,7 @@ async function run() {
     let componentOptions = [];
     componentDirectories.forEach((item) => {
         const defaultComponents = [
+            'accessibility',
             'box',
             'button',
             'color_scheme_toggle',
