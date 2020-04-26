@@ -356,8 +356,11 @@ methods.prebuildTailwindConfig = function prebuildTailwindConfig(callback, paths
 };
 
 methods.prebuildWbConfig = function prebuildWbConfig(callback, paths, wb, verbose) {
+  const clonedWb = Object.assign({}, wb);
+  delete clonedWb.paths;
+
   const options = {
-    wb: wb,
+    wb: clonedWb,
   };
 
   ejs.renderFile(`${paths.starter.templates}_js/wb.js`, options, {}, function(err, str) {

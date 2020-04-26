@@ -1,10 +1,11 @@
 {
   "scripts": {
     "cnvm": "nvm use 11",
-    "update": "npm update",
     "commit": "node ./_starter/commit.js",
+    "component": "node ./_starter/component.js",
     "deploy": "npm run commit",
-    "favicon": "node ./_starter/favicon.js"
+    "favicon": "node ./_starter/favicon.js",
+    "update": "npm update"
   },
   "browserslist": [
     "last 1 version"

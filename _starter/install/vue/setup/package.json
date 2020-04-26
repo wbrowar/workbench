@@ -1,12 +1,10 @@
 {
   "scripts": {
     "ci:build": "vue-cli-service build",
-    "component": "node ./_starter/component.js",
     "deploy": "npm run prebuild && npm run commit",
     "dev": "npm run prebuild && vue-cli-service serve",
     "prebuild": "node ./_starter/prebuild.js --componentdocs --csstemplates --iconmethods --prettier --scssincludes",
-    "prod": "npm run prebuild && vue-cli-service build",
-    "watch": "npm run prebuild && vue-cli-service serve"
+    "prod": "npm run prebuild && vue-cli-service build"
   },
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
