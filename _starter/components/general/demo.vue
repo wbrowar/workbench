@@ -118,6 +118,22 @@
     <CodeExample title="Tailwind Explorer" description="Test Tailwind classes and see the results.">
       <TailwindTester />
     </CodeExample>
+
+    <CodeExample title="REM Converter" description="Convert pixels to REM, based on 16px equals 1rem.">
+      <div class="grid grid-cols-4 gap-4 items-center">
+        <div class="flex items-center">
+          <input id="rem_converter_from" class="dev__components__input" type="text" v-model.number="remConverterFrom" />
+          <span class="ml-1">{{ remConverterConversion === 'pxToRem' ? 'px' : 'rem' }}</span>
+        </div>
+        <div>
+          <select class="dev__components__input appearance-none" v-model="remConverterConversion">
+            <option value="pxToRem">Pixels to REM</option>
+            <option value="remToPx">REM to Pixels</option>
+          </select>
+        </div>
+        <div class="col-span-2 text-4xl">= <span>{{ remConverterResults }}</span></div>
+      </div>
+    </CodeExample>
   </div>
 </template>
 
@@ -144,17 +160,24 @@ export default {
   data() {
     return {
       colorSwatches: {},
-      twConfig: {},
       fontSampleSize: false,
       fontSampleText: false,
+      remConverterConversion: 'pxToRem', // pxToRem, remToPx
+      remConverterFrom: 16,
       svgIcons: false,
       tailwindSample: false,
       transitionExampleActive: false,
       transitionTiming: 'out',
+      twConfig: {},
     };
   },
   props: {
     globalData: Object,
+  },
+  computed: {
+    remConverterResults() {
+      return this.remConverterConversion === 'pxToRem' ? `${(this.remConverterFrom / 16)}rem` : `${(this.remConverterFrom * 16)}px`;
+    },
   },
   created() {
     this.twConfig = resolveConfig(this.globalData.tailwind);
