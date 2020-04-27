@@ -1,22 +1,22 @@
 <template>
-  <div class="c-dev_bar lg:flex lg:flex-row lg:justify-between w-full bg-black-60" :class="classes" v-if="isVisible">
+  <div class="c-dev_bar flex flex-row flex-no-wrap justify-between w-full bg-black-60 overflow-x-scroll" :class="classes" v-if="isVisible">
     <div class="flex flex-row">
-      <div class="flex flex-row items-center">
-        <span class="p-3 text-white text-xs">Dev Mode: {{ devMode ? '⚙️ON' : '🚀OFF' }}</span>
+      <div class="flex flex-row flex-no-wrap items-center">
+        <span class="p-3 text-white whitespace-no-wrap text-xs">Dev Mode: {{ devMode ? '⚙️ON' : '🚀OFF' }}</span>
         <span class="p-3 text-white text-xs">Links:</span>
-        <Button class="p-3 text-white hover:text-black hover:bg-white transition-colors duration-500" unstyle href="/" label-text="🏠Home" />
-        <Button class="p-3 text-white hover:text-black hover:bg-white transition-colors duration-500" unstyle href="/dev/docs/general/" label-text="📚Docs" />
-        <Button class="p-3 text-white hover:text-black hover:bg-white transition-colors duration-500" unstyle v-bind="link" v-for="(link, index) in links" :key="index" />
+        <Button class="p-3 text-white hover:text-black whitespace-no-wrap hover:bg-white-70 transition-colors duration-500" unstyle href="/" label-text="🏠Home" />
+        <Button class="p-3 text-white hover:text-black whitespace-no-wrap hover:bg-white-70 transition-colors duration-500" unstyle href="/dev/docs/general/" label-text="📚Docs" />
+        <Button class="p-3 text-white hover:text-black whitespace-no-wrap hover:bg-white-70 transition-colors duration-500" unstyle v-bind="link" v-for="(link, index) in links" :key="index" />
       </div>
     </div>
     <div class="flex flex-row">
       <div class="flex flex-row items-center" v-if="showColorSchemeToggles">
-        <span class="p-3 text-white text-xs">Color Scheme:</span>
+        <span class="p-3 text-white whitespace-no-wrap text-xs">Color Scheme:</span>
         <ColorSchemeToggle class="mx-2 focus:outline-none" remember scheme-id="default" title="Reset to default color scheme" v-if="showColorSchemeToggles">🚫</ColorSchemeToggle>
         <ColorSchemeToggle class="mx-2 focus:outline-none" remember :scheme-id="index" v-for="(label, index) in colorSchemes" :key="index">{{ label }}</ColorSchemeToggle>
       </div>
       <div class="p-3 flex flex-row items-center space-x-2">
-        <span class="text-white text-xs">Display:</span>
+        <span class="text-white whitespace-no-wrap text-xs">Display:</span>
         <span class="cursor-pointer" @click="toggleSticky" v-if="isSticky">❄️</span>
         <span class="cursor-pointer" @click="toggleSticky" v-else>🌊</span>
         <span class="cursor-pointer" @click="isVisible = false">❌</span>

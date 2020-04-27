@@ -71,6 +71,7 @@ async function run() {
             'box',
             'button',
             'color_scheme_toggle',
+            'dev_bar',
             'general',
             'header',
             'icon_svg',
