@@ -72,12 +72,28 @@
       </div>
     </CodeExample>
 
-    <CodeExample title="Spacing" description="Tailwind spacing units. Used for margins, padding, and gaps.">
+    <CodeExample title="Spacing" description="Tailwind spacing units. Used for margins, padding, widths, heights, and gaps.">
       <div :style="{ columnCount: $mq === 'sm' ? 1 : 3 }">
         <div class="grid grid-cols-it gap-2 my-1 items-center" style="break-inside: avoid" v-for="(item, index) in twConfig.theme.spacing" :key="index">
           <div class="w-20 bg-black" :class="[`h-${index}`]"></div>
           <p class="font-semibold text-xs">{{ index }}<span style="margin-left: 1em; opacity: 0.4;">{{ item }}</span></p>
         </div>
+      </div>
+    </CodeExample>
+
+    <CodeExample title="REM Converter" description="Convert pixels to REM, based on: 16px equals 1rem.">
+      <div class="grid grid-cols-4 gap-4 items-center">
+        <div class="flex items-center">
+          <input id="rem_converter_from" class="dev__components__input" type="text" v-model.number="remConverterFrom" />
+          <span class="ml-1">{{ remConverterConversion === 'pxToRem' ? 'px' : 'rem' }}</span>
+        </div>
+        <div>
+          <select class="dev__components__input appearance-none" v-model="remConverterConversion">
+            <option value="pxToRem">Pixels to REM</option>
+            <option value="remToPx">REM to Pixels</option>
+          </select>
+        </div>
+        <div class="col-span-2 text-4xl">= <span>{{ remConverterResults }}</span></div>
       </div>
     </CodeExample>
 
@@ -117,22 +133,6 @@
 
     <CodeExample title="Tailwind Explorer" description="Test Tailwind classes and see the results.">
       <TailwindTester />
-    </CodeExample>
-
-    <CodeExample title="REM Converter" description="Convert pixels to REM, based on 16px equals 1rem.">
-      <div class="grid grid-cols-4 gap-4 items-center">
-        <div class="flex items-center">
-          <input id="rem_converter_from" class="dev__components__input" type="text" v-model.number="remConverterFrom" />
-          <span class="ml-1">{{ remConverterConversion === 'pxToRem' ? 'px' : 'rem' }}</span>
-        </div>
-        <div>
-          <select class="dev__components__input appearance-none" v-model="remConverterConversion">
-            <option value="pxToRem">Pixels to REM</option>
-            <option value="remToPx">REM to Pixels</option>
-          </select>
-        </div>
-        <div class="col-span-2 text-4xl">= <span>{{ remConverterResults }}</span></div>
-      </div>
     </CodeExample>
   </div>
 </template>

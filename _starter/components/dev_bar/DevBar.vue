@@ -1,5 +1,5 @@
 <template>
-  <div class="c-dev_bar flex flex-row flex-no-wrap justify-between w-full bg-black-60 overflow-x-scroll" :class="classes" v-if="isVisible">
+  <div class="c-dev_bar flex flex-row flex-no-wrap justify-between w-full bg-black-60 overflow-x-scroll scrolling-touch" :class="classes" v-if="isVisible">
     <div class="flex flex-row">
       <div class="flex flex-row flex-no-wrap items-center">
         <span class="p-3 text-white whitespace-no-wrap text-xs">Dev Mode: {{ devMode ? '⚙️ON' : '🚀OFF' }}</span>
