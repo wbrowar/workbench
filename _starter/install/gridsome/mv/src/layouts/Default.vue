@@ -1,24 +1,12 @@
 <template>
   <div>
-    <header class="ui__header sticky">
-      <div class="c-wrapper flex flex-row items-center h-full">
-        <strong>
-          <Button unstyle href="/" /><IconSVG handle="plus" width="40" height="40" /><div class="sr-only">{{ $static.metadata.siteName }}</div></Button>
-        </strong>
-        <nav class="c-buttons justify-end flex-grow">
-          <Button unstyle label-text="Home" href="/" />
-          <Button unstyle label-text="About" href="/about" />
-          <Button unstyle label-text="Docs" href="/dev/docs/general" />
-        </nav>
-      </div>
-    </header>
     <transition name="fade" appear>
       <main>
         <slot />
       </main>
     </transition>
-    <footer class="ui__footer">
-    </footer>
+
+    <DevBar v-if="devMode || showDocsLink" />
   </div>
 </template>
 
@@ -31,6 +19,7 @@ query {
 </static-query>
 
 <script>
+import wb from 'JS/automated/wb.js';
 import Button from 'Components/button/Button';
 import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.vue';
 import IconSVG from 'Components/icon_svg/IconSVG';
@@ -39,7 +28,14 @@ export default {
   components: {
     Button,
     ColorSchemeToggle,
+    DevBar: () => import('Components/dev_bar/DevBar.vue'),
     IconSVG,
+  },
+  data() {
+    return {
+      devMode: wb.devMode,
+      showDocsLink: wb.enableDocs,
+    };
   },
 };
 </script>
@@ -50,20 +46,5 @@ export default {
 }
 .fade-enter {
   opacity: 0;
-}
-
-.ui {
-  $self: &;
-
-  @at-root #{$self}__header {
-    $header: &;
-
-    height: $ui_masthead_height;
-  }
-  @at-root #{$self}__footer {
-    $header: &;
-
-    height: $ui_footer_height;
-  }
 }
 </style>

@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div class="h-48"></div>
     <router-view />
     <CraftLivePreview :endpoint="craftApiEndpoint" v-if="craftApiEndpoint" />
-
-    <DevBar v-if="devMode || showDocsLink" />
   </div>
 </template>
 
@@ -18,9 +15,7 @@
 </static-query>
 
 <script>
-  let vueComponents = {
-    DevBar: () => import('Components/dev_bar/DevBar.vue'),
-  };
+  let vueComponents = {};
 
   if (process.env.GRIDSOME_CRAFT_API_URL) {
     vueComponents['CraftLivePreview'] = () => import ('@bhws/gridsome-source-craft-graphql/CraftLivePreview');
@@ -39,12 +34,6 @@
           }
         ]
       }
-    },
-    data() {
-      return {
-        devMode: wb.devMode,
-        showDocsLink: wb.enableDocs,
-      };
     },
     computed: {
       craftApiEndpoint() {
