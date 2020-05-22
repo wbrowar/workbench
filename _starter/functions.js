@@ -459,14 +459,16 @@ methods.tailwindConfig = function tailwindConfig(wb) {
       let newUtilities = {};
 
       colorsList.forEach((color) => {
+        const formattedColor = color.endsWith('-default') ? color.substring(0, color.length - 8) : color;
+
         Object.keys(wb.opacity).forEach((opacityKey) => {
-          newUtilities[`.bg-${color}-${opacityKey}`] = {
+          newUtilities[`.bg-${formattedColor}-${opacityKey}`] = {
             backgroundColor: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`,
           };
-          newUtilities[`.text-${color}-${opacityKey}`] = {
+          newUtilities[`.text-${formattedColor}-${opacityKey}`] = {
             color: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`,
           };
-          newUtilities[`.border-${color}-${opacityKey}`] = {
+          newUtilities[`.border-${formattedColor}-${opacityKey}`] = {
             borderColor: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`,
           };
         });

@@ -133,7 +133,30 @@ module.exports = {
       opacity: ['responsive', 'hover', 'focus', 'animated'],
       textColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
       translate: ['responsive', 'hover', 'focus', 'animated'],
-    }
+    },
+    purge: {
+      enabled: (process.env.NODE_ENV === 'production' && process.env.<%- appEnvPrefix %>DEV_MODE !== 'true' && process.env.<%- appEnvPrefix %>ENABLE_DOCS !== 'true') ? process.env.<%- appEnvPrefix %>POSTCSS_PURGECSS === 'true' || false : false,
+      content: [
+        `${paths.sourcePath}_components/**/*.vue`,
+        `${paths.srcPath}**/*.vue`,
+        `${paths.sourcePath}_js/**/*.js`
+      ],
+      options: {
+        whitelist: [
+          'body',
+          'html',
+          'img',
+          'a',
+          'g-image',
+          'g-image--lazy',
+          'g-image--loaded',
+          'hidden',
+        ],
+        whitelistPatterns: [
+          /scheme/,
+        ],
+      }
+    },
   },
   tailwindPlugins: [
     // Define Tailwind plugins
@@ -264,7 +287,6 @@ module.exports = {
     }
   },
   postcss: {
-    enablePurgeCss: (process.env.NODE_ENV === 'production' && process.env.VUE_APP_DEV_MODE !== 'true' && process.env.VUE_APP_ENABLE_DOCS !== 'true') ? process.env.VUE_APP_POSTCSS_PURGECSS === 'true' || false : false,
   },
   prettier: {
     files: "{_source,src}_source/**/*.{js,json,scss,vue}",

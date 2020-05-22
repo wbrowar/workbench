@@ -13,9 +13,11 @@
         :media="source.media || false"
         :sizes="lastSource(index) ? source.sizes || '100vw' : false"
         :type="source.type || false"
+        :src="lastSource(index) ? placeholder : null"
         :width="source.width || false"
         :height="source.height || false"
         v-for="(source, index) in sources"
+        v-if="showWebp ? true : source.type !== 'image/webp'"
       />
     </picture>
     <figcaption v-if="elementType === 'figure' && caption">{{ caption }}</figcaption>
@@ -23,6 +25,7 @@
 </template>
 
 <script>
+  import wb from 'JS/automated/wb.js';
   import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
   export default {
@@ -32,6 +35,7 @@
     data() {
       return {
         lazyLoad: false,
+        showWebp: !wb.devMode,
       };
     },
     props: {
@@ -41,7 +45,11 @@
       elementType: { type: String, default: 'div' },
       ignoreScheme: { type: Boolean, default: false },
       imageClass: String,
-      loading: { type: String, default: 'lazy' },
+      loading: {
+        type: String,
+        default: 'lazy',
+        validator: value => ['auto', 'eager', 'lazy'].includes(value),
+      },
       pictureClass: String,
       placeholder: {
         type: String,

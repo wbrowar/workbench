@@ -21,7 +21,7 @@
       description="Fonts configured in the `package.json` file. Change the sample text to preview different words and characters in each font."
       v-if="globalData.wb.fonts"
     >
-      <div v-for="(font, index) in globalData.wb.fonts" :key="index">
+      <div class="mb-4" v-for="(font, index) in globalData.wb.fonts" :key="index">
         <div class="flex items-center justify-between border-b" v-for="weight in font.demoWeights" :key="weight" v-if="font.demoWeights">
           <FontSample :handle="index" :size="fontSampleSize" :text="fontSampleText" :weight="weight" />
           <h3 class="cursor-pointer"><span class="mx-1" :title="`Click to copy 'text-${index}'`" @click="copyToClipboard(`text-${index}`)">{{ index }}</span><span class="mx-1" :title="`Click to copy 'font-${weight}'`" @click="copyToClipboard(`font-${weight}`)">{{ weight }}</span><span class="mx-1" :title="`Click to copy 'text-${fontSampleSize}'`" @click="copyToClipboard(`text-${fontSampleSize}`)">{{ fontSampleSize }}</span></h3>
@@ -118,7 +118,8 @@
     <CodeExample title="Transitions" description="Preview transition timing durations and timing functions.">
       <div class="grid grid-cols-ti gap-4">
         <select class="dev__components__input appearance-none" v-model="transitionTiming">
-          <option :value="item" v-for="item in Object.keys(twConfig.theme.transitionTimingFunction)">{{ item }}</option>
+          <option value="__none__">Select Timing Function</option>
+          <option :value="`ease-${item}`" v-for="item in Object.keys(twConfig.theme.transitionTimingFunction)">{{ `ease-${item}` }}</option>
         </select>
 
         <button class="dev__components__input appearance-none" @click="transitionExampleActive = !transitionExampleActive">Animate!</button>
@@ -167,7 +168,7 @@ export default {
       svgIcons: false,
       tailwindSample: false,
       transitionExampleActive: false,
-      transitionTiming: 'out',
+      transitionTiming: '__none__',
       twConfig: {},
     };
   },
@@ -196,12 +197,19 @@ export default {
         if (typeof scheme[colorKey] === 'string') {
           this.colorSwatches[schemeKey][colorKey] = scheme[colorKey];
         } else {
+          if (scheme[colorKey]['default']) {
+            this.colorSwatches[schemeKey][`${colorKey}`] = scheme[colorKey]['default'];
+          }
           Object.keys(scheme[colorKey]).forEach((shadeKey) => {
-            this.colorSwatches[schemeKey][`${colorKey}-${shadeKey}`] = scheme[colorKey][shadeKey];
+            if (shadeKey !== 'default') {
+              this.colorSwatches[schemeKey][`${colorKey}-${shadeKey}`] = scheme[colorKey][shadeKey];
+            }
           })
         }
       });
     });
+
+    log('The Colors!', this.colorSwatches);
 
     this.svgIcons = Object.keys(icons);
   },

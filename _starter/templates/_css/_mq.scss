@@ -1,0 +1,3 @@
+// MEDIA QUERIES
+<% for (const mq in wb.mq) { %>$mq_<%- mq %>: <%- wb.mq[mq] %>;
+<% }; -%>

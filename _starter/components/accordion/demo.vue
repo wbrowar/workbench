@@ -39,7 +39,6 @@
 import { log } from 'JS/global.js';
 import Accordion from 'Components/accordion/Accordion.vue';
 import AccordionTab from 'Components/accordion/AccordionTab.vue';
-import Grid from 'Components/grid/Grid.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
 import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
@@ -49,7 +48,6 @@ export default {
   components: {
     Accordion,
     AccordionTab,
-    Grid,
     CodeExample,
     CssModifiers,
     ImportPath,

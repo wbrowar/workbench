@@ -85,7 +85,7 @@ export function hasClass(el, className) {
     return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
   }
 }
-export function processIsClient(process = null) {
+export function processIsClient() {
   let isClient = true;
 
   if (process) {

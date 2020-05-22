@@ -16,7 +16,7 @@
       classes: function() {
         let classes = [];
 
-        classes.push([`text-${this.handle}`, `text-${this.size}`]);
+        classes.push([`font-${this.handle}`, `text-${this.size}`]);
 
         if (this.weight) {
           classes.push([`font-${this.weight}`]);

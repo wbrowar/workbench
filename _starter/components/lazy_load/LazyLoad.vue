@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     addToObserver: function() {
-      if (processIsClient(process)) {
+      if (processIsClient()) {
         log('Adding to Load Observer');
         if (typeof this.observer !== 'object') {
           this.observer = new IntersectionObserver(
@@ -77,17 +77,21 @@ export default {
     },
   },
   mounted() {
-    if (processIsClient(process)) {
+    if (processIsClient()) {
       if (this.checkForNativeLazyLoad) {
         this.nativeLazyLoad = 'loading' in HTMLImageElement.prototype;
       }
     }
-    if (this.enabled && this.checkForNativeLazyLoad ? !this.nativeLazyLoad : true) {
-      if (this.inViewport()) {
-        log('Lazy Load in Viewport');
-        this.handleLazy();
+    if (this.enabled) {
+      if (this.checkForNativeLazyLoad ? !this.nativeLazyLoad : true) {
+        if (this.inViewport()) {
+          log('Lazy Load in Viewport');
+          this.handleLazy();
+        } else {
+          this.addToObserver();
+        }
       } else {
-        this.addToObserver();
+        this.handleLazy();
       }
     } else {
       this.handleLazy();

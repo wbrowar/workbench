@@ -14,6 +14,7 @@ return [
             '@baseAssetUrl' => getenv('BASE_ASSET_URL'),
             '@basePath' => getenv('BASE_PATH'),
             '@baseUrl' => getenv('BASE_URL'),
+            '@baseCpUrl' => getenv('CP_BASE_URL') ?? getenv('BASE_URL'),
         ],
         'baseCpUrl' => getenv('CP_BASE_URL') ?? getenv('BASE_URL'),
         'cpTrigger' => '<%- install.cpTrigger %>',
@@ -25,6 +26,7 @@ return [
         'enableCsrfProtection' => true,
         'generateTransformsBeforePageLoad' => true,
         'isSystemLive' => (bool)getenv('IS_SYSTEM_LIVE') ?? false,
+        'maxUploadFileSize' => 67108864, // 64M in binary bytes
         'omitScriptNameInUrls' => true,
         'securityKey' => getenv('SECURITY_KEY'),
         'siteUrl' => getenv('DEFAULT_SITE_URL'),
