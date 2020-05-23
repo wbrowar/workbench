@@ -536,7 +536,7 @@ async function run() {
             });
 
             g.log('title', 'Updating NPM packages', verbose);
-            g.verboseExec(answers.npmInstaller + ` update`, verbose);
+            g.verboseExec(answers.npmInstaller + ` install`, verbose);
             g.log('verbose', `NPM Packages updated`, verbose);
 
             g.log('title', 'Running Initial Build Script', verbose);
