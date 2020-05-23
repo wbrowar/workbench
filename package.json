@@ -41,6 +41,7 @@
     "prettier": "^2.0.5",
     "request": "^2.88.2",
     "sass-loader": "^8.0.2",
-    "semver": "^7.3.2"
+    "semver": "^7.3.2",
+    "tailwindcss": "^1.3.5"
   }
 }
