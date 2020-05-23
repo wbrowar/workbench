@@ -109,6 +109,7 @@ async function run() {
                     { name: 'Gridsome', value: 'gridsome' },
                     { name: 'HTML', value: 'html' },
                     { name: 'Marketo Vue SPA', value: 'marketo-vue' },
+                    { name: 'Nuxt', value: 'nuxt' },
                     // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
                 ] : [
@@ -369,22 +370,13 @@ async function run() {
                     ejsVars.appEnvPrefix = 'VUE_APP_';
                     installDirectories = ['_front-end', 'vue', 'marketo-vue'];
                     break;
+                case 'nuxt':
+                    ejsVars.appEnvPrefix = '';
+                    installDirectories = ['_front-end', 'nuxt'];
+                    break;
                 case 'vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
                     installDirectories = ['_front-end', 'vue'];
-                    break;
-            }
-        }
-
-        // Assign ENV prefix
-        if (answers.projectType) {
-            switch (answers.projectType) {
-                case 'gridsome':
-                    ejsVars.appEnvPrefix = 'GRIDSOME_';
-                    break;
-                case 'marketo-vue':
-                case 'vue':
-                    ejsVars.appEnvPrefix = 'VUE_APP_';
                     break;
             }
         }

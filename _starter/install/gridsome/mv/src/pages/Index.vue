@@ -26,18 +26,18 @@ export default {
 .home {
   $self: &;
 
-  @at-root #{$self}__example {
-    @apply bg-black-50 text-white-50;
-
-    &:first-child {
-      height: calc(100vh - #{$ui_masthead_height});
-    }
-    &:last-child {
-      height: calc(100vh - #{$ui_footer_height});
-    }
-    &:nth-child(odd) {
-      @apply bg-black-60;
-    }
-  }
+  //@at-root #{$self}__example {
+  //  @apply bg-black-50 text-white-50;
+  //
+  //  &:first-child {
+  //    height: calc(100vh - #{$ui_masthead_height});
+  //  }
+  //  &:last-child {
+  //    height: calc(100vh - #{$ui_footer_height});
+  //  }
+  //  &:nth-child(odd) {
+  //    @apply bg-black-60;
+  //  }
+  //}
 }
 </style>

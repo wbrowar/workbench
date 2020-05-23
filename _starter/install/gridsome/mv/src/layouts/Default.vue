@@ -20,16 +20,10 @@ query {
 
 <script>
 import wb from 'JS/automated/wb.js';
-import Button from 'Components/button/Button';
-import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.vue';
-import IconSVG from 'Components/icon_svg/IconSVG';
 
 export default {
   components: {
-    Button,
-    ColorSchemeToggle,
     DevBar: () => import('Components/dev_bar/DevBar.vue'),
-    IconSVG,
   },
   data() {
     return {
