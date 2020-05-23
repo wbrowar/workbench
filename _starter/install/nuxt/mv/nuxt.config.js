@@ -42,8 +42,6 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/style-resources-module
     '@nuxtjs/style-resources',
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    // '@nuxtjs/tailwindcss',
   ],
   /*
    ** Nuxt.js modules
@@ -53,6 +51,19 @@ export default {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    // Doc: https://github.com/Developmint/nuxt-purgecss
+    ['nuxt-purgecss', {
+      enabled: (process.env.NODE_ENV === 'production' && process.env.DEV_MODE !== 'true' && process.env.ENABLE_DOCS !== 'true') ? process.env.POSTCSS_PURGECSS === 'true' || false : false,
+    }],
+    ['nuxt-mq', {
+        // Default breakpoint for SSR
+        defaultBreakpoint: 'default',
+        breakpoints: {
+          ...wb.mq,
+          lg: Infinity,
+        }
+      }
+    ]
   ],
   /*
    ** Axios module configuration
@@ -110,6 +121,7 @@ export default {
           const slug = path.dirname(item).split(path.sep).pop();
           routes.push({
             path: `/dev/docs/${slug}`,
+            name: 'component-docs',
             component: `${wb.paths.js.src}automated/ComponentDocs.vue`,
             params: {
               slug: slug,

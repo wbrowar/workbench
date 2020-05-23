@@ -135,28 +135,7 @@ module.exports = {
       translate: ['responsive', 'hover', 'focus', 'animated'],
     },
     purge: {
-      enabled: (process.env.NODE_ENV === 'production' && process.env.<%- appEnvPrefix %>DEV_MODE !== 'true' && process.env.<%- appEnvPrefix %>ENABLE_DOCS !== 'true') ? process.env.<%- appEnvPrefix %>POSTCSS_PURGECSS === 'true' || false : false,
-      content: [
-        `${paths.sourcePath}_components/**/*.vue`,
-        `${paths.sourcePath}_js/**/*.js`,
-        <% if (install.projectType === 'nuxt') { %>`${paths.srcPath}layouts/**/*.vue`,
-        `${paths.srcPath}pages/**/*.vue`,<% } else { %>`${paths.srcPath}**/*.vue`,<% } else { %>
-      ],
-      options: {
-        whitelist: [
-          'body',
-          'html',
-          'img',
-          'a',
-          'g-image',
-          'g-image--lazy',
-          'g-image--loaded',
-          'hidden',
-        ],
-        whitelistPatterns: [
-          /scheme/,
-        ],
-      }
+      enabled: false,
     },
   },
   tailwindPlugins: [
