@@ -10,14 +10,12 @@
 </template>
 
 <script>
-  import MediaImage from 'Components/image/MediaImage.vue';
-
-export default {
-  components: {
-    MediaImage,
-  }
-}
+// export default {
+//   components: {
+//   }
+// }
 </script>
 
 <style lang="scss">
+// Styles
 </style>

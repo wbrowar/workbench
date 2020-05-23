@@ -27,18 +27,10 @@
 
 <script>
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
-import ColorSwatch from 'Starter/docs/vue/ColorSwatch.vue';
-import FontSample from 'Starter/docs/vue/FontSample.vue';
-import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
 export default {
   components: {
     CodeExample,
-    ColorSwatch,
-    CssModifiers,
-    FontSample,
-    PropsTable,
   },
   data() {
     return {

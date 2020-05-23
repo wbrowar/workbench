@@ -68,9 +68,9 @@ export function classToggle(selector, getClass) {
   });
 }
 export function gaTrack(category, action, label) {
-  if (!devMode) {
-    if (typeof ga === 'function') {
-      ga('send', 'event', category, action, label);
+  if (!wb.devMode) {
+    if (typeof window.ga === 'function') {
+      window.ga('send', 'event', category, action, label);
     } else {
       console.warn('Google Analytics is not set up.');
     }
@@ -98,13 +98,6 @@ export function processIsClient() {
 
   return isClient;
 }
-function ready(fn) {
-  if (document.readyState !== 'loading') {
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn);
-  }
-}
 export function removeClass(el, className) {
   if (hasClass(el, className)) {
     if (el.classList) {
@@ -118,6 +111,7 @@ export function removeClass(el, className) {
   }
 }
 export function slugify(text) {
+  /* eslint-disable */
   return text
     .toString()
     .toLowerCase()
@@ -126,8 +120,10 @@ export function slugify(text) {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
     .replace(/^-+/, '') // Trim - from start of text
     .replace(/-+$/, ''); // Trim - from end of text
+  /* eslint-enable */
 }
 export function snake(text) {
+  /* eslint-disable */
   return text
     .toString()
     .toLowerCase()
@@ -136,6 +132,7 @@ export function snake(text) {
     .replace(/\-\-+/g, '_') // Replace multiple - with single -
     .replace(/^-+/, '') // Trim - from start of text
     .replace(/-+$/, ''); // Trim - from end of text
+  /* eslint-enable */
 }
 
 // INIT FUNCTIONS

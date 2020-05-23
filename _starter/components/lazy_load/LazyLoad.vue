@@ -23,7 +23,7 @@ export default {
     observerThreshold: { default: 0 },
   },
   computed: {
-    loadAttributes: function() {
+    loadAttributes() {
       if (this.loaded && this.afterLoad) {
         return this.afterLoad;
       } else if (this.beforeLoad) {
@@ -33,7 +33,7 @@ export default {
     },
   },
   methods: {
-    addToObserver: function() {
+    addToObserver() {
       if (processIsClient()) {
         log('Adding to Load Observer');
         if (typeof this.observer !== 'object') {
@@ -54,12 +54,12 @@ export default {
         this.observer.observe(this.$el);
       }
     },
-    handleLazy: function() {
+    handleLazy() {
       log('Handling Lazy Load');
       this.removeFromObserver();
       this.loaded = true;
     },
-    inViewport: function() {
+    inViewport() {
       const rect = this.$el.getBoundingClientRect();
 
       return (
@@ -69,7 +69,7 @@ export default {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
       );
     },
-    removeFromObserver: function() {
+    removeFromObserver() {
       if (this.observer) {
         log('Removing from Load Observer');
         this.observer.disconnect();

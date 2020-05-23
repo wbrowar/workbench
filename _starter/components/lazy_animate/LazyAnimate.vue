@@ -52,8 +52,8 @@ export default {
     type: { type: String, default: 'css' },
   },
   computed: {
-    classes: function() {
-      let attrs = [];
+    classes() {
+      const attrs = [];
 
       if (this.animated) {
         attrs.push('animated');
@@ -68,8 +68,8 @@ export default {
       }
       return null;
     },
-    styles: function() {
-      let styles = this.animated ? this.cssEnd : this.cssStart;
+    styles() {
+      const styles = this.animated ? this.cssEnd : this.cssStart;
 
       if (this.cssAnimation) {
         styles.animation = this.animated ? this.cssAnimation : null;
@@ -81,7 +81,7 @@ export default {
     },
   },
   methods: {
-    addToObserver: function(callback) {
+    addToObserver(callback) {
       if (processIsClient(process)) {
         log('Adding to Animate Observer');
 
@@ -106,7 +106,7 @@ export default {
       }
       this.observer.observe(this.$el);
     },
-    handleCssAnimation: function() {
+    handleCssAnimation() {
       log('Handling Lazy Animate (css)');
 
       if (!this.reset) {
@@ -114,7 +114,7 @@ export default {
       }
       this.animated = true;
     },
-    handleJsAnimation: function() {
+    handleJsAnimation() {
       log('Handling Lazy Animate (js)');
 
       animations.animate(this.type, this.$el, this.options);
@@ -124,7 +124,7 @@ export default {
       }
       this.animated = true;
     },
-    inViewport: function() {
+    inViewport() {
       const rect = this.$el.getBoundingClientRect();
 
       return (
@@ -134,7 +134,7 @@ export default {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
       );
     },
-    removeFromObserver: function() {
+    removeFromObserver() {
       if (this.observer) {
         log('Removing from Animate Observer');
         this.observer.disconnect();
@@ -160,7 +160,7 @@ export default {
             this.addToObserver(this.handleJsAnimation);
           }
         })
-        .catch((error) => warn('An error occurred while loading animation.js'));
+        .catch((error) => warn('An error occurred while loading animation.js', error));
     }
   },
   destroyed() {

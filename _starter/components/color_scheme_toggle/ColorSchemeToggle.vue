@@ -21,7 +21,7 @@ export default {
     targetSelector: { type: String, default: 'html' },
   },
   methods: {
-    onClick: function() {
+    onClick() {
       this.updateColorScheme();
 
       if (this.remember) {
@@ -34,18 +34,18 @@ export default {
 
       this.$emit('onClick');
     },
-    updateColorScheme: function() {
+    updateColorScheme() {
+      const el = document.querySelector(this.targetSelector);
       switch (this.method) {
         case 'class':
-          const el = document.querySelector(this.targetSelector);
           this.otherSchemes.forEach((item) => {
             removeClass(el, `scheme-${item}`);
           });
           if (this.schemeId !== 'default') {
-            addClass(el,`scheme-${this.schemeId}`);
+            addClass(el, `scheme-${this.schemeId}`);
           }
           break;
-      };
+      }
 
       this.$emit('updatedColorScheme', this.schemeId);
     },

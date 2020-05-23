@@ -21,7 +21,7 @@ export default {
     width: String,
   },
   computed: {
-    svgAttributes: function() {
+    svgAttributes() {
       let attrs = {
         style: {},
       };
@@ -39,6 +39,7 @@ export default {
           src: svg.src(this.handle, this.replacements || {}),
         };
       } else {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.svgHtml = svg.html(this.handle, this.replacements || {});
       }
 

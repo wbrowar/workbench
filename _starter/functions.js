@@ -306,7 +306,11 @@ methods.prebuildPrettier = function prebuildPrettier(options, file = null, verbo
   }
 
   if (files) {
-    methods.verboseExec(`prettier --config ./.prettierrc ${options.options || ''} "${files}"`, verbose);
+    if (options.command === 'eslint') {
+      methods.verboseExec(`eslint --fix --ext .js,.vue --ignore-path .gitignore .`, verbose);
+    } else {
+      methods.verboseExec(`prettier --config ./.prettierrc ${options.options || ''} "${files}"`, verbose);
+    }
     methods.log('title', `Prettier Ran`);
   } else {
     methods.log('title', `Prettier Ran but No Files Were Updated`);

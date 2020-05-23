@@ -9,11 +9,9 @@
       :code="code.href"
       copy-text='<Button href="" label-text="" />'
       title="CTA Buttons"
-      :description="
-        `Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${
-          globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link'
-        }' components to work with Vue Router.`
-      "
+      :description="`Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${
+        globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link'
+      }' components to work with Vue Router.`"
     >
       <div class="c-buttons">
         <Button href="/about/" label-text="About (internal)" />
@@ -59,7 +57,6 @@
 import { log } from 'JS/global.js';
 import Button from 'Components/button/Button.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
 import EventsTable from 'Starter/docs/vue/EventsTable.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
@@ -68,7 +65,6 @@ export default {
   components: {
     Button,
     CodeExample,
-    CssModifiers,
     EventsTable,
     ImportPath,
     PropsTable,
@@ -84,7 +80,7 @@ export default {
     globalData: Object,
   },
   methods: {
-    clickThroughAction: function(message = 'Button clicked!') {
+    clickThroughAction(message = 'Button clicked!') {
       log(message);
     },
   },
@@ -112,9 +108,7 @@ export default {
       { name: 'outline', description: `Changes style of button to outline version.` },
     ];
 
-    this.events = [
-      { name: 'onClick', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
-    ];
+    this.events = [{ name: 'onClick', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` }];
 
     this.props = [
       { name: 'ariaLabel', type: 'String', description: `Sets the 'aria-label' attribute on a button.` },
@@ -129,7 +123,12 @@ export default {
       { name: 'newWindow', type: 'Boolean', default: `false`, description: `Sets 'target="_blank" rel="noopener"'.` },
       { name: 'outline', type: 'Boolean', default: `false`, description: `Adds the 'outline' modifier.` },
       { name: 'reset', type: 'Boolean', default: `false`, description: `Applies button_reset SCSS mixin.` },
-      { name: 'retainStyle', type: 'Boolean', default: `false`, description: `Forces default styles to be used when a button contains a prop.` },
+      {
+        name: 'retainStyle',
+        type: 'Boolean',
+        default: `false`,
+        description: `Forces default styles to be used when a button contains a prop.`,
+      },
       { name: 'target', type: 'String', description: `Sets the 'target' attribute if 'newWindow' is not used.` },
       {
         name: 'theme',

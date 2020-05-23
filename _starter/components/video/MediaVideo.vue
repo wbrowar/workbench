@@ -81,8 +81,8 @@ export default {
     videoId: String,
   },
   computed: {
-    classes: function() {
-      let classes = [];
+    classes() {
+      const classes = [];
 
       if (this.background) {
         classes.push(`w-full h-full`);
@@ -93,9 +93,10 @@ export default {
       if (classes.length) {
         return classes;
       }
+      return null;
     },
-    videoClasses: function() {
-      let classes = [];
+    videoClasses() {
+      const classes = [];
 
       classes.push(`absolute w-full h-full object-cover`);
 
@@ -106,6 +107,7 @@ export default {
       if (classes.length) {
         return classes;
       }
+      return null;
     },
   },
   created() {

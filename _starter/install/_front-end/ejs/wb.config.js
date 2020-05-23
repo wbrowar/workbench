@@ -4,7 +4,7 @@ dotenv.config();
 const paths = {
   publicPath: `/`,
   sourcePath: process.cwd() + '/_source/',
-  srcPath: process.cwd() + '/src/',
+  srcPath: process.cwd() + '/<% if (install.projectType !== \'nuxt\') { %>src/<% } %>',
   starterPath: process.cwd() + '/_starter/',
   staticPath: process.cwd() + '/static/',
 };
@@ -138,8 +138,9 @@ module.exports = {
       enabled: (process.env.NODE_ENV === 'production' && process.env.<%- appEnvPrefix %>DEV_MODE !== 'true' && process.env.<%- appEnvPrefix %>ENABLE_DOCS !== 'true') ? process.env.<%- appEnvPrefix %>POSTCSS_PURGECSS === 'true' || false : false,
       content: [
         `${paths.sourcePath}_components/**/*.vue`,
-        `${paths.srcPath}**/*.vue`,
-        `${paths.sourcePath}_js/**/*.js`
+        `${paths.sourcePath}_js/**/*.js`,
+        <% if (install.projectType === 'nuxt') { %>`${paths.srcPath}layouts/**/*.vue`,
+        `${paths.srcPath}pages/**/*.vue`,<% } else { %>`${paths.srcPath}**/*.vue`,<% } else { %>
       ],
       options: {
         whitelist: [
@@ -289,7 +290,7 @@ module.exports = {
   postcss: {
   },
   prettier: {
-    files: "{_source,src}_source/**/*.{js,json,scss,vue}",
+    files: "{_source,src}/**/*.{js,json,scss,vue}",
     options: "--write",
   },
 };

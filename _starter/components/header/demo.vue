@@ -21,7 +21,7 @@
 
     <CodeExample title="Sample" description="Change the header text above.">
       <div>
-        <label for="font_sample_text_input" style="display: block; margin-bottom: 3px">Sample Text</label>
+        <label for="font_sample_text_input" style="display: block; margin-bottom: 3px;">Sample Text</label>
         <input id="font_sample_text_input" type="text" v-model="fontSampleText" style="padding: 5px; width: 100%;" />
       </div>
     </CodeExample>
@@ -30,18 +30,10 @@
 
 <script>
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
-import ColorSwatch from 'Starter/docs/vue/ColorSwatch.vue';
-import FontSample from 'Starter/docs/vue/FontSample.vue';
-import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
 export default {
   components: {
     CodeExample,
-    ColorSwatch,
-    CssModifiers,
-    FontSample,
-    PropsTable,
   },
   data() {
     return {

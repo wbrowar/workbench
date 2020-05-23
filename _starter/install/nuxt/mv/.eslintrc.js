@@ -14,10 +14,19 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended'
   ],
+  ignorePatterns: [
+    '_starter/*.js',
+    '_starter/docs/**/*.js',
+    '_starter/docs/**/*.vue',
+    '_source/_js/automated/**/*.js',
+    '_source/_js/automated/**/*.vue',
+  ],
   plugins: [
     'prettier'
   ],
   // add your custom rules here
   rules: {
+    'vue/attributes-order': 'off',
+    'vue/order-in-components': 'off',
   }
 }

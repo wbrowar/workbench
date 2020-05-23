@@ -1,7 +1,7 @@
-import { log } from 'JS/global.js';
+// import { log } from 'JS/global.js';
 
-let stateItems = {};
-let mutationItems = {};
+const stateItems = {};
+const mutationItems = {};
 
 // Example
 // USAGE: $store.state.prefs.example
@@ -13,5 +13,5 @@ let mutationItems = {};
 //   state.example = newExampleObject;
 // };
 
-export const state = () => (stateItems);
+export const state = () => stateItems;
 export const mutations = mutationItems;

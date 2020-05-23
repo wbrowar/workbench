@@ -77,7 +77,11 @@ export default {
     };
     this.props = [
       { name: 'background', type: 'Boolean', description: `Turns the SVG into a background url style element.` },
-      { name: 'backgroundSize', type: 'String', description: `Override the background size to make it easier to resize icons.` },
+      {
+        name: 'backgroundSize',
+        type: 'String',
+        description: `Override the background size to make it easier to resize icons.`,
+      },
       { name: 'color', type: 'String', description: `Style <svg> elements with a CSS color.` },
       {
         name: 'colorVar',

@@ -1,7 +1,8 @@
 @mixin _anchor_text {
   @apply underline;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     @apply opacity-50;
   }
   &:active {
@@ -18,20 +19,26 @@
     &:last-child {
       @apply mb-0;
     }
-    b, strong {
+    b,
+    strong {
       @apply font-semibold;
     }
-    i, em {
+    i,
+    em {
       @apply italic;
     }
-    b i, i b, strong em, em strong {
+    b i,
+    i b,
+    strong em,
+    em strong {
       @apply font-semibold italic;
     }
     a {
       @include _anchor_text;
     }
   }
-  ol, ul {
+  ol,
+  ul {
     @apply mb-5 leading-normal;
 
     &:last-child {

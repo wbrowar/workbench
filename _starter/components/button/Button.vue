@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { log } from 'JS/global.js';
+// import { log } from 'JS/global.js';
 import wb from 'JS/automated/wb.js';
 
 export default {
@@ -35,8 +35,8 @@ export default {
     unstyle: { type: Boolean, default: false },
   },
   computed: {
-    classes: function() {
-      let classes = [];
+    classes() {
+      const classes = [];
       if (this.styleAsButton) {
         classes.push('flex flex-row flex-no-wrap items-center justify-center px-5 py-3');
 
@@ -51,13 +51,13 @@ export default {
       }
       return classes;
     },
-    elementTypeComputed: function() {
+    elementTypeComputed() {
       if (this.useRouterLink) {
         return wb.projectType === 'gridsome' ? 'g-link' : 'router-link';
       }
       return this.href ? 'a' : this.elementType;
     },
-    formattedHref: function() {
+    formattedHref() {
       if (this.href) {
         if (this.href === '/') {
           // Return the homepage
@@ -71,10 +71,10 @@ export default {
 
       return false;
     },
-    styleAsButton: function() {
+    styleAsButton() {
       return this.retainStyle || (this.unstyle === false && Object.keys(this.$slots).length === 0);
     },
-    useRouterLink: function() {
+    useRouterLink() {
       if (this.href) {
         return this.formattedHref.startsWith('/');
       }
@@ -82,7 +82,7 @@ export default {
     },
   },
   methods: {
-    onClick: function(event) {
+    onClick(event) {
       this.$emit('onClick', event);
     },
   },
