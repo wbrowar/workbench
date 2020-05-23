@@ -4,7 +4,7 @@ dotenv.config();
 const paths = {
   publicPath: `/`,
   sourcePath: process.cwd() + '/_source/',
-  srcPath: process.cwd() + '/<% if (install.projectType !== \'nuxt\') { %>src/<% } %>',
+  srcPath: process.cwd() + '/<% if (!["nuxt"].includes(install.projectType)) { %>src/<% } %>',
   starterPath: process.cwd() + '/_starter/',
   staticPath: process.cwd() + '/static/',
 };
