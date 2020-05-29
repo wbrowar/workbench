@@ -81,6 +81,7 @@ async function run() {
             'lazy_load',
             'resize_container',
             'text',
+            'touch_box',
             'video',
             'wrapper',
         ];
