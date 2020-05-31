@@ -45,10 +45,11 @@ export default {
     };
   },
   props: {
+    aspectRatio: String,
     autoplay: { type: Boolean, default: false },
     carouselHeading: String,
     debounceDuration: { type: Number, default: 500 },
-    height: { type: Number, required: true },
+    height: Number,
     indicatorClass: { type: String, default: 'p-2 bg-white cursor-pointer' },
     indicatorCurrentClass: { type: String, default: 'bg-black-80 text-white' },
     indicatorNumbers: { type: Boolean, default: false },
@@ -79,7 +80,12 @@ export default {
     styles() {
       const styles = {};
 
-      if (this.height) {
+      if (this.aspectRatio) {
+        const ratio = this.aspectRatio.split('/');
+        const x = ratio[0].trim();
+        const y = ratio[1].trim();
+        styles.paddingBottom = `${(y / x) * 100}%`;
+      } else if (this.height) {
         styles.height = `${this.height}px`;
       }
 
@@ -141,6 +147,8 @@ export default {
             slide.isCurrent = false;
           }
         }
+
+        this.$emit('currentSlideUpdated', this.currentSlideIndex);
 
         setTimeout(() => {
           this.status = 'idle';

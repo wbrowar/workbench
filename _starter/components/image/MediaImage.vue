@@ -86,7 +86,7 @@ export default {
       return null;
     },
     filteredSources() {
-      return this.showWebp ? this.sources.forEach((item) => item.type !== 'image/webp') : this.sources;
+      return this.showWebp ? this.sources : this.sources.filter((item) => item.type !== 'image/webp');
     },
     imageClasses() {
       const classes = [];

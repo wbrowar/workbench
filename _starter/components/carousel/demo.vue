@@ -36,6 +36,8 @@
 
     <PropsTable :props="props.default" />
 
+    <EventsTable :events="events.default" />
+
     <h1>Carousel Slide</h1>
     <p>
       The CarouselSlide component does not take any props or fires any events. It contains all of the code that handles
@@ -145,6 +147,13 @@ export default {
 </div>`,
     };
     this.events = {
+      default: [
+        {
+          name: 'currentSlideUpdated',
+          arguments: 'Number (index number)',
+          description: `Fires when slide index has been updated.`,
+        },
+      ],
       controls: [
         {
           name: 'onGoTo',
