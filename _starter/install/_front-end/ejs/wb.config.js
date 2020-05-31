@@ -129,7 +129,8 @@ module.exports = {
       }
     },
     variants: {
-      backgroundColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
+      // Variants added by WB-Starter: animated, current
+      backgroundColor: ['responsive', 'current', 'hover', 'focus', 'animated', 'even', 'odd'],
       opacity: ['responsive', 'hover', 'focus', 'animated'],
       textColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
       translate: ['responsive', 'hover', 'focus', 'animated'],

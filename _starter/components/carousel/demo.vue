@@ -192,12 +192,6 @@ export default {
           description: `Classes used to style individual indicator nodes.`,
         },
         {
-          name: 'indicatorCurrentClass',
-          type: 'String',
-          default: `'bg-black-80 text-white'`,
-          description: `Classes used to distinguish the currently active indicator node.`,
-        },
-        {
           name: 'indicatorNumbers',
           type: 'Boolean',
           default: `false`,

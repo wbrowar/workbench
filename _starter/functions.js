@@ -459,6 +459,13 @@ methods.tailwindConfig = function tailwindConfig(wb) {
         });
       });
     }),
+    plugin(function({ addVariant, e }) {
+      addVariant('current', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.${e(`current${separator}${className}`)}.current`;
+        });
+      });
+    }),
     plugin(function({ addUtilities }) {
       let newUtilities = {};
 

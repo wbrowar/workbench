@@ -14,7 +14,7 @@
     <slot name="controls" v-if="isActive" />
     <ul :class="indicatorWrapperClass" v-if="isActive">
       <li
-        :class="[indicatorClass, { [indicatorCurrentClass]: index === currentSlideIndex + 1 }]"
+        :class="[indicatorClass, { current: index === currentSlideIndex + 1 }]"
         v-for="index in slides.length"
         :key="index"
         @click="goToSlideIndex(index - 1)"
@@ -50,8 +50,7 @@ export default {
     carouselHeading: String,
     debounceDuration: { type: Number, default: 500 },
     height: Number,
-    indicatorClass: { type: String, default: 'p-2 bg-white cursor-pointer' },
-    indicatorCurrentClass: { type: String, default: 'bg-black-80 text-white' },
+    indicatorClass: { type: String, default: 'p-2 bg-white-50 current:bg-white cursor-pointer' },
     indicatorNumbers: { type: Boolean, default: false },
     indicatorWrapperClass: {
       type: String,

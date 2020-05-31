@@ -2,6 +2,7 @@
   <transition :name="transitionName">
     <li
       class="c-carousel-slide absolute top-0 w-full h-full"
+      :class="{ current: isCurrent }"
       :style="styles"
       :aria-hidden="!isCurrent"
       v-show="isCurrent"
