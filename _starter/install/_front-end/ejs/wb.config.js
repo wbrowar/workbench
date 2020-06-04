@@ -230,6 +230,7 @@ module.exports = {
   projectType: '<%- install.projectType %>',
   devMode: process.env.<%- appEnvPrefix %>DEV_MODE === 'true',
   enableDocs: process.env.<%- appEnvPrefix %>ENABLE_DOCS === 'true',
+  // colorCustomProperties: true, // Transform color value into CSS Custom Properties. Enables color schemes.
   ejs: {
     // Define any data to be processed with EJS
   },

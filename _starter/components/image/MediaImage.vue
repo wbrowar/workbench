@@ -19,7 +19,7 @@
         v-for="(source, index) in filteredSources"
       />
     </picture>
-    <figcaption v-if="elementType === 'figure' && caption">{{ caption }}</figcaption>
+    <figcaption :class="captionClass" v-if="elementType === 'figure' && caption">{{ caption }}</figcaption>
   </figure>
 </template>
 
@@ -41,6 +41,7 @@ export default {
     alt: String,
     background: { type: Boolean, default: false },
     caption: String,
+    captionClass: String,
     elementType: { type: String, default: 'div' },
     ignoreScheme: { type: Boolean, default: false },
     imageClass: String,

@@ -427,14 +427,14 @@ methods.tailwindConfig = function tailwindConfig(wb) {
   }
   Object.keys(themeColors).forEach((colorKey) => {
     if (typeof themeColors[colorKey] === 'string') {
-      colors[colorKey] = `var(--color-${colorKey})`;
+      colors[colorKey] = wb.colorCustomProperties === false ? themeColors[colorKey] : `var(--color-${colorKey})`;
       colorsList.push(colorKey);
     } else {
       if (!colors[colorKey]) {
         colors[colorKey] = {};
       }
       Object.keys(themeColors[colorKey]).forEach((shadeKey) => {
-        colors[colorKey][shadeKey] = `var(--color-${colorKey}-${shadeKey})`;
+        colors[colorKey][shadeKey] = wb.colorCustomProperties === false ? themeColors[colorKey][shadeKey] : `var(--color-${colorKey}-${shadeKey})`;
         colorsList.push(`${colorKey}-${shadeKey}`);
       });
     }
@@ -491,7 +491,7 @@ methods.tailwindConfig = function tailwindConfig(wb) {
     }),
   );
   wb.tailwindPlugins.forEach((item) => {
-      plugins.push(plugin(item));
+    plugins.push(plugin(item));
   });
 
   // Prepare media queries for Tailwind
