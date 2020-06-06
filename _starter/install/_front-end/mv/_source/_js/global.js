@@ -25,21 +25,27 @@ function logger(type = 'log', args) {
       switch (type) {
         case 'dir':
           if (typeof args[i] === 'string') {
+            // eslint-disable-next-line no-console
             console.dir(spacer + spirit + ' ' + args[i]);
           } else {
+            // eslint-disable-next-line no-console
             console.dir(args[i]);
           }
           break;
         case 'error':
+          // eslint-disable-next-line no-console
           console.error(spacer + spirit, args[i]);
           break;
         case 'log':
+          // eslint-disable-next-line no-console
           console.log(spacer + spirit, args[i]);
           break;
         case 'table':
+          // eslint-disable-next-line no-console
           console.table(args[i]);
           break;
         case 'warn':
+          // eslint-disable-next-line no-console
           console.warn(spacer + spirit, args[i]);
           break;
       }
@@ -72,10 +78,10 @@ export function gaTrack(category, action, label) {
     if (typeof window.ga === 'function') {
       window.ga('send', 'event', category, action, label);
     } else {
-      console.warn('Google Analytics is not set up.');
+      warn('Google Analytics is not set up.');
     }
   } else {
-    console.log('GA Tracking Preview: ', category, action, label);
+    log('GA Tracking Preview: ', category, action, label);
   }
 }
 export function hasClass(el, className) {

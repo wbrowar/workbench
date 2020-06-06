@@ -409,6 +409,7 @@ methods.tailwindConfig = function tailwindConfig(wb) {
 
   // Prepare colors for Tailwind
   const themeColors = wb.colors.default;
+  const flattenedThemeColors = {};
   // Add Docs colors
   if (wb.enableDocs) {
     _.merge(themeColors, {
@@ -427,15 +428,17 @@ methods.tailwindConfig = function tailwindConfig(wb) {
   }
   Object.keys(themeColors).forEach((colorKey) => {
     if (typeof themeColors[colorKey] === 'string') {
-      colors[colorKey] = wb.colorCustomProperties === false ? themeColors[colorKey] : `var(--color-${colorKey})`;
+      colors[colorKey] = wb.colorOptions.enableCustomProperties === false ? themeColors[colorKey] : `var(--color-${colorKey})`;
       colorsList.push(colorKey);
+      flattenedThemeColors[colorKey] = themeColors[colorKey];
     } else {
       if (!colors[colorKey]) {
         colors[colorKey] = {};
       }
       Object.keys(themeColors[colorKey]).forEach((shadeKey) => {
-        colors[colorKey][shadeKey] = wb.colorCustomProperties === false ? themeColors[colorKey][shadeKey] : `var(--color-${colorKey}-${shadeKey})`;
+        colors[colorKey][shadeKey] = wb.colorOptions.enableCustomProperties === false ? themeColors[colorKey][shadeKey] : `var(--color-${colorKey}-${shadeKey})`;
         colorsList.push(`${colorKey}-${shadeKey}`);
+        flattenedThemeColors[`${colorKey}-${shadeKey}`] = themeColors[colorKey][shadeKey];
       });
     }
   });
@@ -452,6 +455,47 @@ methods.tailwindConfig = function tailwindConfig(wb) {
 
   // Add plugins
   plugins.push(
+    // Add color opacity shorthand syntax to each color
+    plugin(function({ addUtilities }) {
+      let newUtilities = {};
+
+      // Add new utilities
+      colorsList.forEach((color) => {
+        const formattedColorName = color.endsWith('-default') ? color.substring(0, color.length - 8) : color;
+
+        // Create raw color utility
+        wb.colorOptions.utilities.forEach((utility) => {
+          if (utility.enabled.includes('val')) {
+            newUtilities[`.${utility.prefix}-${formattedColorName}-val`] = {
+              [utility.property]: flattenedThemeColors[color],
+            };
+          }
+        })
+
+        // Create opacity shorthand utilities
+        Object.keys(wb.opacity).forEach((opacityKey) => {
+          wb.colorOptions.utilities.forEach((utility) => {
+            if (utility.enabled.includes('opacity')) {
+              newUtilities[`.${utility.prefix}-${formattedColorName}-${opacityKey}`] = {
+                [utility.property]: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`,
+              };
+            }
+          })
+        });
+      });
+
+      // Get color scheme variants
+      const schemes = Object.keys(wb.colors).filter(scheme => scheme !== 'default');
+      const schemeVariants = [];
+      schemes.forEach((scheme) => {
+        schemeVariants.push(`${scheme}-class`, `${scheme}-scheme`);
+      });
+
+      addUtilities(newUtilities, {
+        variants: [...wb.colorOptions.variants, ...schemeVariants],
+      });
+    }),
+    // Modify a property after LazyAnimate has been activated on an element
     plugin(function({ addVariant, e }) {
       addVariant('animated', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
@@ -459,6 +503,7 @@ methods.tailwindConfig = function tailwindConfig(wb) {
         });
       });
     }),
+    // A generic "current" class that can be used in components where you need to identify one item in a list of like elements
     plugin(function({ addVariant, e }) {
       addVariant('current', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
@@ -466,30 +511,39 @@ methods.tailwindConfig = function tailwindConfig(wb) {
         });
       });
     }),
-    plugin(function({ addUtilities }) {
-      let newUtilities = {};
-
-      colorsList.forEach((color) => {
-        const formattedColor = color.endsWith('-default') ? color.substring(0, color.length - 8) : color;
-
-        Object.keys(wb.opacity).forEach((opacityKey) => {
-          newUtilities[`.bg-${formattedColor}-${opacityKey}`] = {
-            backgroundColor: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`,
-          };
-          newUtilities[`.text-${formattedColor}-${opacityKey}`] = {
-            color: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`,
-          };
-          newUtilities[`.border-${formattedColor}-${opacityKey}`] = {
-            borderColor: `hsla(var(--color-${color}-hsl), ${wb.opacity[opacityKey]});`,
-          };
-        });
-      });
-
-      addUtilities(newUtilities, {
-        variants: ['responsive', 'hover', 'focus', 'active', 'group-hover', 'animated'],
-      });
-    }),
   );
+
+  // Modify an element based on color scheme (other than the default color scheme)
+  Object.keys(wb.colors).forEach((scheme) => {
+    if (scheme !== 'default') {
+      plugins.push(
+        plugin(function ({ addVariant, e }) {
+          addVariant(`${scheme}-class`, ({ modifySelectors, separator }) => {
+            modifySelectors(({ className }) => {
+              return `.scheme-${scheme} .${e(`${scheme}${separator}${className}`)}`;
+            });
+          });
+        }),
+      );
+
+      if (['dark', 'light'].includes(scheme)) {
+        plugins.push(
+          plugin(function ({ addVariant, e, postcss }) {
+            addVariant(`${scheme}-scheme`, ({ container, separator }) => {
+              const supportsRule = postcss.atRule({ name: `media`, params: `(prefers-color-scheme: ${scheme})` })
+              supportsRule.append(container.nodes)
+              container.append(supportsRule)
+              supportsRule.walkRules(rule => {
+                rule.selector = `.${e(`${scheme}${separator}${rule.selector.slice(1)}`)}`
+              })
+            });
+          }),
+        );
+      }
+    }
+  });
+
+  // Add all plugins from the tailwind config in wb.config.js
   wb.tailwindPlugins.forEach((item) => {
     plugins.push(plugin(item));
   });

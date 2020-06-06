@@ -5,18 +5,49 @@
       description="Color schemes configured in the `package.json` file. The `default` scheme is shown by default. The `dark` theme appears when the browser is set to dark mode."
       v-if="globalData.wb.colors"
     >
-      <div v-for="(scheme, index) in colorSwatches" :key="index">
-        <h3 style="margin: 20px 0;">{{ index }}</h3>
-        <div
-          class="root__color_grid"
-          style="
-            display: grid;
-            grid-gap: 20px;
-            grid-template-columns: repeat(auto-fit, 174px);
-            grid-template-rows: auto;
-          "
-        >
-          <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
+      <div class="space-y-24">
+        <div v-for="(scheme, index) in colorSwatches" :key="index">
+          <div
+            class="root__color_grid"
+            style="
+              display: grid;
+              grid-gap: 20px;
+              grid-template-columns: repeat(auto-fit, 174px);
+              grid-template-rows: auto;
+            "
+          >
+            <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
+          </div>
+
+          <div class="mt-10 space-y-4" v-if="index === 'default'">
+            <h2 class="dev__components__demo__header">Default Colors</h2>
+            <p>
+              Colors are turned into CSS Custom Properties by default. To use the raw value of a color in the "default"
+              color scheme, append `-val` to the end of the color class.
+            </p>
+            <p>
+              For example, `bg-white-val` will always be white, not matter if a color scheme inverts it or changes its
+              value.
+            </p>
+            <p>
+              <em
+                >NOTE: Raw values are meant to override colors in places where dynamically changing a color causes
+                issues. Using it everywhere isn't recommended.</em
+              >
+            </p>
+          </div>
+          <div class="mt-10 space-y-4" v-else>
+            <h2 class="dev__components__demo__header">Color Scheme: {{ index }}</h2>
+            <p>
+              The Tailwind config includes overrides to automatically enable {{ index }} mode. Any color defined above
+              will override the color that uses the same name in the default scheme.
+            </p>
+            <p>
+              There is a {{ index }} mode variant available so specific colors can be defined on an element when in
+              {{ index }} mode. For example, `text-black {{ index }}:text-white` will turn text from black to white when
+              in {{ index }} mode.
+            </p>
+          </div>
         </div>
       </div>
     </CodeExample>

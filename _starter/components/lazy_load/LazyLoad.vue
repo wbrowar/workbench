@@ -18,9 +18,9 @@ export default {
     beforeLoad: Object,
     checkForNativeLazyLoad: { type: Boolean, default: false },
     elementType: { type: String, default: 'div' },
-    enabled: { default: true },
-    observerMargin: { default: '50%' },
-    observerThreshold: { default: 0 },
+    enabled: { type: Boolean, default: true },
+    observerMargin: { type: String, default: '50%' },
+    observerThreshold: { type: Number, default: 0 },
   },
   computed: {
     loadAttributes() {

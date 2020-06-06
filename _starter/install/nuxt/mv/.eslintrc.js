@@ -27,6 +27,8 @@ module.exports = {
   // add your custom rules here
   rules: {
     'vue/attributes-order': 'off',
+    'vue/no-v-html': 'off',
     'vue/order-in-components': 'off',
-  }
-}
+    'vue/require-default-prop': 'off',
+  },
+};
