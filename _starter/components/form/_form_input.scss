@@ -1,0 +1,116 @@
+@mixin _field_default {
+  //display: block;
+  //padding: 0.95em;
+  //width: 100%;
+  //@include font('graphik_regular');
+  //border: 1px solid $color_gray_112;
+  //border-radius: $border_radius;
+  //box-sizing: border-box;
+  //
+  //&::placeholder {
+  //  color: $color_black;
+  //}
+}
+
+.c_form_input {
+  $self: &;
+
+  //margin-bottom: var(--form-input-mb, 1.6rem);
+  //
+  //@at-root input[type='text'],
+  //  input[type='email'],
+  //  input[type='number'],
+  //  input[type='password'],
+  //  input[type='search'],
+  //  input[type='tel'],
+  //  input[type='url'] {
+  //  @include _field_default;
+  //}
+  ///* Hide HTML5 Up and Down arrows. */
+  //input[type='number']::-webkit-outer-spin-button,
+  //input[type='number']::-webkit-inner-spin-button {
+  //  -webkit-appearance: none;
+  //  margin: 0;
+  //}
+  //
+  //input[type='number'] {
+  //  -moz-appearance: textfield;
+  //}
+  //textarea {
+  //  @include _field_default;
+  //  height: 220px;
+  //  resize: none;
+  //}
+  //select {
+  //  @include _field_default;
+  //  padding-right: 40px;
+  //  width: 100%;
+  //  border-radius: 0;
+  //  background-color: transparent;
+  //  -webkit-appearance: none;
+  //  -moz-appearance: none;
+  //  appearance: none;
+  //  background: var(--select-icon) no-repeat calc(100% - 10px) center;
+  //  background-repeat: no-repeat;
+  //  background-size: 20px 10px;
+  //  &::-ms-expand {
+  //    display: none;
+  //  }
+  //}
+  //
+  //@at-root #{$self}__label {
+  //  display: block;
+  //  margin-bottom: 0.09em;
+  //  text-transform: uppercase;
+  //  @include font('graphik_semibold');
+  //  font-size: 1.13rem;
+  //}
+  //
+  //@at-root #{$self}--hidden {
+  //  @include hide_text;
+  //  margin-bottom: 0;
+  //  width: 0;
+  //  height: 0;
+  //  overflow: hidden;
+  //}
+  //@at-root #{$self}--invalid {
+  //  background-color: lighten($color_red_raw, 45) !important;
+  //  border-color: $color_red !important;
+  //}
+  //
+  //@at-root #{$self}__required_indicator {
+  //  display: inline-block;
+  //  margin-left: 0.1em;
+  //  color: $color_red;
+  //}
+  //@at-root #{$self}__error {
+  //  margin-top: 0.3em;
+  //  @include font('graphik_semibold');
+  //  font-size: 0.9em;
+  //  color: $color_red;
+  //}
+  //@at-root #{$self}__icon_checkbox {
+  //  $checkbox: &;
+  //
+  //  @at-root #{&}__header {
+  //    display: grid;
+  //    grid-template-columns: 20px auto;
+  //    gap: 6px;
+  //    margin: 1rem 0 0.7rem;
+  //    @include font('graphik_semibold');
+  //    font-size: 0.8rem;
+  //    color: $color_red;
+  //  }
+  //  @at-root #{$checkbox}__unchecked_options {
+  //    padding: 30px;
+  //
+  //    @at-root #{&} #{$checkbox} {
+  //      background-color: $color_white;
+  //
+  //      @at-root #{&}:hover {
+  //        background-color: $color_yellow;
+  //      }
+  //    }
+  //  }
+  //}
+}
