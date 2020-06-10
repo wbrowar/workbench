@@ -16,27 +16,25 @@ import { slugify } from 'JS/global.js';
 export default {
   props: {
     anchor: { type: Boolean, default: false },
-    headerLevel: { type: Number, default: 2 },
+    headerLevel: { type: Number, default: 2, validator: (value) => [1, 2, 3, 4, 5, 6].includes(value) },
     text: { type: String, required: true },
   },
   computed: {
     classes() {
       const classes = [];
 
-      if (this.headerLevel === 2) {
-        classes.push(`c-header-2 mt-16 mb-2`);
+      if (this.headerLevel === 1) {
+        classes.push(`c-header-1`);
+      } else if (this.headerLevel === 2) {
+        classes.push(`c-header-2`);
       } else if (this.headerLevel === 3) {
-        classes.push(`c-header-3 mt-8 mb-1`);
+        classes.push(`c-header-3`);
       }
 
       return classes;
     },
     elementType() {
-      if (this.headerLevel === 3) {
-        return 'h3';
-      }
-
-      return 'h2';
+      return `h${this.headerLevel}`;
     },
     containerId() {
       return slugify(this.text);

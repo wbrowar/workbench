@@ -6,29 +6,25 @@
     <ImportPath path="import Grid from 'Components/folder/ComponentName';" />
 
     <CodeExample :code="code.default" title="Required Title" description="Optional description.">
-      <p>Demo</p>
+      <Subheader anchor :header-level="1" text="Subheader Text Goes Here" />
     </CodeExample>
 
     <PropsTable :props="props" />
-
-    <CssModifiers root-class="c_root_class" :modifiers="modifiers" />
   </div>
 </template>
 
 <script>
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
-// import EventsTable from 'Starter/docs/vue/EventsTable.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
+import Subheader from 'Components/subheader/Subheader.vue';
 
 export default {
   components: {
     CodeExample,
-    CssModifiers,
-    // EventsTable,
     ImportPath,
     PropsTable,
+    Subheader,
   },
   data() {
     return {
