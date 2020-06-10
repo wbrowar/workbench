@@ -1,6 +1,12 @@
 <template>
   <div class="c_form_input">
-    <FormLabel :input-id="formattedInputId" :label-text="labelText" :required="required" v-if="labelText" />
+    <FormLabel
+      :class="labelClasses"
+      :input-id="formattedInputId"
+      :label-text="labelText"
+      :required="required"
+      v-if="labelText"
+    />
     <textarea
       v-model="inputValue"
       ref="input"
@@ -38,12 +44,11 @@
       <select v-bind="inputAttributes" v-model="inputValue" @blur="validateField" @change="valueChanged">
         <option v-if="inputPlaceholder" class="placeholder" selected disabled value="">{{ inputPlaceholder }}</option>
         <option
-          v-if="inputOptions"
           :selected="option.value === startingValue"
           :value="option.value"
           v-for="(option, index) in inputOptions"
           :key="index"
-          >{{ option.label }}</option
+        >{{ option.label }}</option
         >
       </select>
     </div>
@@ -69,17 +74,15 @@
 </template>
 
 <script>
-import { log } from 'JS/global.js';
-import * as svgs from 'JS/automated/svg.js';
+// import { log } from 'JS/global.js';
 import FormLabel from 'Components/form/FormLabel.vue';
-import IconSVG from 'Components/icon_svg/IconSVG.vue';
 
 export default {
   components: {
     cleave: () => import('vue-cleave-component'),
     FormLabel,
     FormInputCheckbox: () => import('Components/form/FormInputCheckbox.vue'),
-    IconSVG,
+    // IconSVG,
   },
   data() {
     return {
@@ -95,23 +98,24 @@ export default {
     formatOptions: Object,
     formatType: String,
     inputAttr: Object,
-    inputClasses: String,
+    inputClass: String,
     inputId: String,
     inputName: { type: String, required: true },
     inputOptions: Array,
     inputPlaceholder: String,
     inputType: { type: String, default: 'text' },
+    labelClass: String,
     startingValue: [Array, String],
     labelText: String,
     required: { type: Boolean, default: false },
     validationType: String,
   },
   computed: {
-    formattedInputId: function() {
+    formattedInputId() {
       return this.inputId || `input-${this.inputName}`;
     },
-    inputAttributes: function() {
-      let attrs = { style: {} };
+    inputAttributes() {
+      const attrs = { style: {} };
 
       attrs.id = this.formattedInputId;
       attrs.class = this.inputClasses || [];
@@ -144,7 +148,27 @@ export default {
 
       return attrs;
     },
-    passesRequired: function() {
+    inputClasses() {
+      const classes = [];
+
+      classes.push(`p-2 border-2 boder-black-70`);
+
+      if (this.inputClass) {
+        classes.push(this.inputClass);
+      }
+
+      return classes;
+    },
+    labelClasses() {
+      const classes = [];
+
+      if (this.labelClass) {
+        classes.push(this.labelClass);
+      }
+
+      return classes;
+    },
+    passesRequired() {
       let passes = false;
       if (this.inputValue) {
         switch (typeof this.inputValue) {
@@ -158,12 +182,12 @@ export default {
       }
       return passes;
     },
-    validationEnabled: function() {
+    validationEnabled() {
       return this.validationType;
     },
   },
   methods: {
-    addValue: function(value) {
+    addValue(value) {
       if (typeof this.inputValue === 'object') {
         if (!this.inputValue.includes(value)) {
           this.inputValue.push(value);
@@ -171,13 +195,13 @@ export default {
         }
       }
     },
-    removeValue: function(value) {
+    removeValue(value) {
       if (typeof this.inputValue === 'object') {
         this.inputValue = this.inputValue.filter((item) => item !== value);
         this.validateField();
       }
     },
-    toggleValue: function(value) {
+    toggleValue(value) {
       if (typeof this.inputValue === 'object') {
         if (this.inputValue.includes(value)) {
           this.removeValue(value);
@@ -186,18 +210,18 @@ export default {
         }
       }
     },
-    updateValue: function(value) {
+    updateValue(value) {
       this.inputValue = value;
       this.validateField();
     },
-    setErrorForFormId: function(message = null) {
+    setErrorForFormId(message = null) {
       this.error = this.errorMessage || message;
       this.$emit('formSetError', this.inputName, this.error);
     },
-    removeErrorForFormId: function() {
+    removeErrorForFormId() {
       this.$emit('formRemoveError', this.inputName);
     },
-    validateField: function() {
+    validateField() {
       this.isValid = true;
 
       if (this.validationEnabled) {
@@ -236,25 +260,26 @@ export default {
         }
       }
     },
-    validEmail: function(value) {
+    validEmail(value) {
+      // eslint-disable-next-line no-useless-escape
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return { valid: re.test(value), message: 'Please enter a valid email address.' };
     },
     // validSelect: function(value) {
     //   return { valid: value != '', message: 'Please choose a valid option.' };
     // },
-    validTel: function(value) {
+    validTel(value) {
       const re = /^\d{10}$/;
       return { valid: re.test(value), message: 'Please enter a valid phone number.' };
     },
-    validText: function(value) {
+    validText(value) {
       return { valid: value !== '', message: 'Please enter text.' };
     },
-    validZip: function(value) {
+    validZip(value) {
       const re = /^\d{5}$/;
       return { valid: re.test(value), message: 'Please enter a valid ZIP code.' };
     },
-    valueChanged: function() {
+    valueChanged() {
       this.$emit('onValueChange', this.inputName, this.inputValue);
     },
   },

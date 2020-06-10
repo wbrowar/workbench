@@ -49,6 +49,7 @@ export default {
 .c-subheader {
   $self: &;
   position: relative;
+  scroll-margin-top: 1em;
 
   @at-root #{$self}-anchor {
     & > *:first-child {
