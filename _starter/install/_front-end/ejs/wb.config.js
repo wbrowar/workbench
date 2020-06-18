@@ -230,7 +230,7 @@ module.exports = {
   projectType: '<%- install.projectType %>',
   devMode: process.env.<%- appEnvPrefix %>DEV_MODE === 'true',
   enableDocs: process.env.<%- appEnvPrefix %>ENABLE_DOCS === 'true',
-  enableWebp: process.env.ENABLE_WEBP === 'true',
+  enableWebp: process.env.<%- appEnvPrefix %>ENABLE_WEBP === 'true',
   colorOptions: {
     enableCustomProperties: false,
     utilities: [

@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "nuxt": "^2.12.2",
-    "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/dotenv": "^1.4.1"
   },
   "devDependencies": {
