@@ -52,9 +52,7 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     // Doc: https://github.com/Developmint/nuxt-purgecss
-    ['nuxt-purgecss', {
-      enabled: (process.env.NODE_ENV === 'production' && process.env.DEV_MODE !== 'true' && process.env.ENABLE_DOCS !== 'true') ? process.env.POSTCSS_PURGECSS === 'true' || false : false,
-    }],
+    'nuxt-purgecss',
     ['nuxt-mq', {
         // Default breakpoint for SSR
         defaultBreakpoint: 'default',
@@ -71,6 +69,30 @@ export default {
    */
   axios: {},
   pageTransition: 'page',
+  purgeCSS: {
+    enabled:
+      process.env.NODE_ENV === 'production' && process.env.DEV_MODE !== 'true' && process.env.ENABLE_DOCS !== 'true'
+        ? process.env.POSTCSS_PURGECSS === 'true' || false
+        : false,
+    paths: [
+      `_source/_components/**/*.vue`,
+      `pages/**/*.vue`,
+      `partials/**/*.vue`,
+      ...(wb.enableDocs ? [`_starter/docs/**/*.vue`] : []),
+    ],
+    whitelist: ['body', 'html', 'img', 'a', 'nuxt-link', 'hidden'],
+    whitelistPatterns: [/scheme/],
+    whitelistPatternsChildren: [/^token/, /^pre/, /^code/],
+    extractors: [
+      {
+        extractor: (content) => {
+          const contentWithoutStyleBlocks = content.replace(/<style[^]+?<\/style>/gi, '');
+          return contentWithoutStyleBlocks.match(/[A-Za-z0-9-_/:]*[A-Za-z0-9-_/]+/g) || [];
+        },
+        extensions: ['vue', 'js', 'jsx', 'md', 'html', 'pug'],
+      },
+    ],
+  },
   /*
    ** Build configuration
    */

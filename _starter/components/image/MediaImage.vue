@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       lazyLoad: false,
-      showWebp: !wb.devMode,
     };
   },
   props: {
@@ -87,7 +86,15 @@ export default {
       return null;
     },
     filteredSources() {
-      return this.showWebp ? this.sources : this.sources.filter((item) => item.type !== 'image/webp');
+      const sources = [];
+
+      this.sources.forEach((source) => {
+        if ((wb.enableWebp && source.type === 'image/webp') || source.type !== 'image/webp') {
+          sources.push(source);
+        }
+      });
+
+      return sources;
     },
     imageClasses() {
       const classes = [];
