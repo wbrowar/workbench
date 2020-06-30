@@ -1,1 +1,0 @@
-export default JSON.parse(`<%- JSON.stringify(wb) %>`);

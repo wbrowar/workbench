@@ -2,7 +2,7 @@
 //  📈 Helpers for Marketo landing page templates
 
 import { log } from 'JS/global.js';
-import { bodyVars, headVars } from '~/variables.js';
+import variables from 'JS/automated/variables.js';
 
 export function getMarketoDescriptions() {
   let descriptions = {
@@ -10,13 +10,13 @@ export function getMarketoDescriptions() {
     meta: [],
   };
 
-  bodyVars.forEach((v) => {
+  variables.body.forEach((v) => {
     if (v.description) {
       descriptions.body.push({ label: v.label, description: v.description });
     }
   });
 
-  headVars.forEach((v) => {
+  variables.head.forEach((v) => {
     if (v.description) {
       descriptions.meta.push({ label: v.label, description: v.description });
     }
@@ -26,7 +26,7 @@ export function getMarketoDescriptions() {
 }
 
 export function getMarketoVariables() {
-  let variables = {};
+  let vars = {};
 
   // Find all meta Marketo variables that have been parsed and saved into the body
   const varsFromMeta = document.querySelectorAll('.marketo_meta_variable');
@@ -36,7 +36,7 @@ export function getMarketoVariables() {
     varsFromMeta.forEach((el) => {
       if (el.hasAttribute('data-name')) {
         const name = el.getAttribute('data-name');
-        const settings = headVars.find((item) => name === item.id);
+        const settings = variables.head.find((item) => name === item.id);
         let value = null;
 
         if (name && settings) {
@@ -51,7 +51,7 @@ export function getMarketoVariables() {
 
         if (value !== null) {
           log('Adding meta variable', name);
-          variables[name] = value;
+          vars[name] = value;
         }
       }
     });
@@ -65,7 +65,7 @@ export function getMarketoVariables() {
     varsFromBody.forEach((el) => {
       if (el.hasAttribute('data-name')) {
         const name = el.getAttribute('data-name');
-        const settings = bodyVars.find((item) => name === item.id);
+        const settings = variables.body.find((item) => name === item.id);
         let value = null;
 
         if (name && settings) {
@@ -87,27 +87,27 @@ export function getMarketoVariables() {
 
         if (value !== null) {
           log('Adding meta variable', name);
-          variables[name] = value;
+          vars[name] = value;
         }
       }
     });
   }
 
-  // Fill in any missing variables with default values found in wb.config.js
-  headVars.forEach((v) => {
-    if (!Object.keys(variables).includes(v.id)) {
+  // Fill in any missing variables with default values found in src/variables.js
+  variables.head.forEach((v) => {
+    if (!Object.keys(vars).includes(v.id)) {
       log('Adding meta variable from fallback', v.id);
-      variables[v.id] = v.default || false;
+      vars[v.id] = v.default || false;
     }
   });
-  bodyVars.forEach((v) => {
-    if (!Object.keys(variables).includes(v.id)) {
+  variables.body.forEach((v) => {
+    if (!Object.keys(vars).includes(v.id)) {
       log('Adding meta variable from fallback', v.id);
-      variables[v.id] = v.default || false;
+      vars[v.id] = v.default || false;
     }
   });
 
-  return variables;
+  return vars;
 }
 
 // INIT FUNCTIONS

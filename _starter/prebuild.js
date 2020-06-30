@@ -1,5 +1,6 @@
 // import node modules
-const _ = require('lodash');
+const _ = require('lodash'),
+      fs = require('fs-extra');
 
 // import global functions
 const g = require('./functions.js');
@@ -33,17 +34,27 @@ async function run() {
     );
     const tailwindConfig = g.asyncFunction(
       `Converting Tailwind Config for front-end use`, `Tailwind Config converted`, (resolve) => {
-        g.prebuildTailwindConfig(resolve, wb.paths, tailwind, verbose);
+        g.prebuildConfigToEsm(resolve, wb.paths, tailwind, 'tailwind', verbose);
+      }
+    );
+    const variables = g.asyncFunction(
+      `Converting variables for front-end use`, `Variables converted`, (resolve) => {
+        if (fs.existsSync(`${wb.paths.starter.src}variables.js`)) {
+          g.prebuildConfigToEsm(resolve, wb.paths, require(`${wb.paths.starter.src}variables.js`), 'variables', verbose);
+        } else {
+          resolve();
+        }
       }
     );
     const wbConfig = g.asyncFunction(
-      `Converting Tailwind Config for front-end use`, `WB Config converted`, (resolve) => {
+      `Converting WB Config for front-end use`, `WB Config converted`, (resolve) => {
         g.prebuildWbConfig(resolve, wb.paths, wb, verbose);
       }
     );
 
     let cleanComplete = await clean;
     let tailwindConfigComplete = await tailwindConfig;
+    let variablesComplete = await variables;
     let wbConfigComplete = await wbConfig;
 
     if (runPrettier) {

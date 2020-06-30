@@ -1,4 +1,3 @@
-import { docsComponents } from 'JS/automated/docs.js';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueMeta from 'vue-meta';

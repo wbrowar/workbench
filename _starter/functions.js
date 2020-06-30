@@ -89,18 +89,18 @@ methods.postbuildMarketoVariables = function postbuildMarketoVariables(callback,
     config: config,
   };
 
-  methods.log('dump', config.wb.marketo.variables, true);
+  methods.log('dump', config.variables, true);
 
-  if (config.wb.marketo.variables.head) {
-    ejs.renderFile(`${paths.starter.templates}_html/marketo_vars.ejs`, { metaVars: [], variables: config.wb.marketo.variables.head }, {}, function(err, headString) {
+  if (config.variables.head) {
+    ejs.renderFile(`${paths.starter.templates}_html/marketo_vars.ejs`, { metaVars: [], variables: config.variables.head }, {}, function(err, headString) {
       if (err) {
         methods.log('warn', err);
       }
       methods.log('verbose', `Compiled marketo values for <head>`, verbose);
       methods.log('dump', headString, verbose);
 
-      if (config.wb.marketo.variables.body) {
-        ejs.renderFile(`${paths.starter.templates}_html/marketo_vars.ejs`, { metaVars: config.wb.marketo.variables.head, variables: config.wb.marketo.variables.body }, {}, function(err, bodyString) {
+      if (config.variables.body) {
+        ejs.renderFile(`${paths.starter.templates}_html/marketo_vars.ejs`, { metaVars: config.variables.head, variables: config.variables.body }, {}, function(err, bodyString) {
           if (err) {
             methods.log('warn', err);
           }
@@ -124,11 +124,11 @@ methods.postbuildMarketoVariables = function postbuildMarketoVariables(callback,
           }
         });
       } else {
-        methods.log('warn', `Object for wb.marketo.variables.body missing`);
+        methods.log('warn', `Object for variables.body missing`);
       }
     });
   } else {
-    methods.log('warn', `Object for wb.marketo.variables.head missing`);
+    methods.log('warn', `Object for variables.head missing`);
   }
 };
 
@@ -213,6 +213,24 @@ methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback,
           callback();
         }
       });
+    });
+  });
+};
+
+methods.prebuildConfigToEsm = function prebuildConfigToEsm(callback, paths, config, outputFilename, verbose) {
+  const options = {
+    config: config,
+  };
+
+  ejs.renderFile(`${paths.starter.templates}_js/config.js`, options, {}, function(err, str) {
+    if (err) {
+      methods.log('warn', err);
+    }
+    fs.outputFile(paths.js.src + `automated/${outputFilename}.js`, str, (err) => {
+      if (!err) {
+        methods.log('verbose', `JS templates compiled: automated/${outputFilename}.js`, verbose);
+        callback();
+      }
     });
   });
 };
@@ -341,33 +359,15 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
   });
 };
 
-methods.prebuildTailwindConfig = function prebuildTailwindConfig(callback, paths, config, verbose) {
-  const options = {
-    config: config,
-  };
-
-  ejs.renderFile(`${paths.starter.templates}_js/tailwind.js`, options, {}, function(err, str) {
-    if (err) {
-      methods.log('warn', err);
-    }
-    fs.outputFile(paths.js.src + 'automated/tailwind.js', str, (err) => {
-      if (!err) {
-        methods.log('verbose', `JS templates compiled: tailwind.js`, verbose);
-        callback();
-      }
-    });
-  });
-};
-
 methods.prebuildWbConfig = function prebuildWbConfig(callback, paths, wb, verbose) {
   const clonedWb = Object.assign({}, wb);
   delete clonedWb.paths;
 
   const options = {
-    wb: clonedWb,
+    config: clonedWb,
   };
 
-  ejs.renderFile(`${paths.starter.templates}_js/wb.js`, options, {}, function(err, str) {
+  ejs.renderFile(`${paths.starter.templates}_js/config.js`, options, {}, function(err, str) {
     if (err) {
       methods.log('warn', err);
     }

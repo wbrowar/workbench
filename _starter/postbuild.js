@@ -2,7 +2,8 @@
 const _ = require('lodash');
 
 // import global functions
-const g = require('./functions.js');
+const g = require('./functions.js'),
+      fs = require('fs-extra');
 
 // load config files
 let wb = require(`${ process.cwd() }/wb.config.js`);
@@ -19,6 +20,10 @@ let ejsVars = _.merge({
     paths: wb.paths,
     wb: wb,
 }, wb.ejs);
+
+if (fs.existsSync(`${ wb.paths.starter.src }/variables.js`)) {
+    ejsVars.variables = require(`${ wb.paths.starter.src }/variables.js`);
+}
 
 async function run() {
     if (runMarketoVariables) {

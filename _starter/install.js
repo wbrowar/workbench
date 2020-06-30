@@ -107,8 +107,8 @@ async function run() {
             },
             choices: (answers) => {
                 return answers.installEnd === 'front' ? [
-                    { name: 'Gridsome', value: 'gridsome' },
-                    { name: 'HTML', value: 'html' },
+                    // { name: 'Gridsome', value: 'gridsome' },
+                    // { name: 'HTML', value: 'html' },
                     { name: 'Marketo Vue SPA', value: 'marketo-vue' },
                     { name: 'Nuxt', value: 'nuxt' },
                     // { name: 'Twig', value: 'twig' },
