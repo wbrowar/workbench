@@ -2,6 +2,7 @@
 //  📈 Helpers for Marketo landing page templates
 
 import { log } from 'JS/global.js';
+import { bodyVars, headVars } from '@/variables.js';
 import wb from 'JS/automated/wb.js';
 
 export function getMarketoDescriptions() {
@@ -10,13 +11,13 @@ export function getMarketoDescriptions() {
     meta: [],
   };
 
-  wb.marketo.variables.body.forEach((v) => {
+  bodyVars.forEach((v) => {
     if (v.description) {
       descriptions.body.push({ label: v.label, description: v.description });
     }
   });
 
-  wb.marketo.variables.head.forEach((v) => {
+  headVars.forEach((v) => {
     if (v.description) {
       descriptions.meta.push({ label: v.label, description: v.description });
     }
@@ -36,7 +37,7 @@ export function getMarketoVariables() {
     metaVars.forEach((el) => {
       if (el.hasAttribute('data-name')) {
         const name = el.getAttribute('data-name');
-        const settings = wb.marketo.variables.head.find((item) => name === item.id);
+        const settings = headVars.find((item) => name === item.id);
         let value = null;
 
         if (name && settings) {
@@ -65,7 +66,7 @@ export function getMarketoVariables() {
     bodyVars.forEach((el) => {
       if (el.hasAttribute('data-name')) {
         const name = el.getAttribute('data-name');
-        const settings = wb.marketo.variables.body.find((item) => name === item.id);
+        const settings = bodyVars.find((item) => name === item.id);
         let value = null;
 
         if (name && settings) {
@@ -93,13 +94,13 @@ export function getMarketoVariables() {
   }
 
   // Fill in any missing variables with default values found in wb.config.js
-  wb.marketo.variables.head.forEach((v) => {
+  headVars.forEach((v) => {
     if (!Object.keys(variables).includes(v.id)) {
       log('Adding meta variable from fallback', v.id);
       variables[v.id] = v.default || false;
     }
   });
-  wb.marketo.variables.body.forEach((v) => {
+  bodyVars.forEach((v) => {
     if (!Object.keys(variables).includes(v.id)) {
       log('Adding meta variable from fallback', v.id);
       variables[v.id] = v.default || false;
