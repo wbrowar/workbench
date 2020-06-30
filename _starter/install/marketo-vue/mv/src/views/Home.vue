@@ -13,8 +13,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Button from 'Components/button/Button.vue';
+// ~ is an alias to /src
+// import Button from 'Components/button/Button.vue';
 import MediaImage from 'Components/image/MediaImage.vue';
 import MediaVideo from 'Components/video/MediaVideo.vue';
 
@@ -25,7 +25,7 @@ export default {
   },
   name: 'home',
   components: {
-    Button,
+    // Button,
     MediaImage,
     MediaVideo,
   },

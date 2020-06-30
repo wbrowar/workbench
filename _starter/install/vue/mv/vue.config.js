@@ -19,7 +19,7 @@ module.exports = {
   configureWebpack: config => {
     config.resolve = {
       alias: {
-        '@$': path.resolve(wb.paths.starter.src),
+        '~': path.resolve(wb.paths.starter.src),
         Components: path.resolve(wb.paths.components.src),
         CSS: path.resolve(wb.paths.css.src),
         GQL: path.resolve(`${wb.paths.starter.src}gql/`),
@@ -37,5 +37,6 @@ module.exports = {
       addStyleResource(config.module.rule('scss').oneOf(type));
     });
   },
+  lintOnSave: wb.devMode,
   publicPath: process.env.NODE_ENV === 'production' && wb.paths.publicPath ? wb.paths.publicPath : '/',
 };

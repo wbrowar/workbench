@@ -2,8 +2,7 @@
 //  📈 Helpers for Marketo landing page templates
 
 import { log } from 'JS/global.js';
-import { bodyVars, headVars } from '@/variables.js';
-import wb from 'JS/automated/wb.js';
+import { bodyVars, headVars } from '~/variables.js';
 
 export function getMarketoDescriptions() {
   let descriptions = {
@@ -30,11 +29,11 @@ export function getMarketoVariables() {
   let variables = {};
 
   // Find all meta Marketo variables that have been parsed and saved into the body
-  const metaVars = document.querySelectorAll('.marketo_meta_variable');
+  const varsFromMeta = document.querySelectorAll('.marketo_meta_variable');
 
   // Add each variable after validating their content
-  if (metaVars.length) {
-    metaVars.forEach((el) => {
+  if (varsFromMeta.length) {
+    varsFromMeta.forEach((el) => {
       if (el.hasAttribute('data-name')) {
         const name = el.getAttribute('data-name');
         const settings = headVars.find((item) => name === item.id);
@@ -59,11 +58,11 @@ export function getMarketoVariables() {
   }
 
   // Find all body Marketo variables
-  const bodyVars = document.querySelectorAll('.marketo_body_variable');
+  const varsFromBody = document.querySelectorAll('.marketo_body_variable');
 
   // Add each variable after validating their content
-  if (bodyVars.length) {
-    bodyVars.forEach((el) => {
+  if (varsFromBody.length) {
+    varsFromBody.forEach((el) => {
       if (el.hasAttribute('data-name')) {
         const name = el.getAttribute('data-name');
         const settings = bodyVars.find((item) => name === item.id);
@@ -71,7 +70,7 @@ export function getMarketoVariables() {
 
         if (name && settings) {
           switch (settings.type) {
-            case 'mktoImg':
+            case 'mktoImg': {
               const mktoImgImage = document.getElementById(name);
               if (mktoImgImage) {
                 value = {
@@ -80,6 +79,7 @@ export function getMarketoVariables() {
                 };
               }
               break;
+            }
             default:
               value = el.innerHTML;
           }
