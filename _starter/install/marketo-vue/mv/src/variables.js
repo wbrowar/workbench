@@ -40,7 +40,14 @@ module.exports = {
       label: 'Video Example',
       id: 'example_video',
       type: 'mktoString',
-      default: `G4Sn91t1V4g`,
+      default: ``,
+    },
+    {
+      // Form example
+      label: 'Form Example',
+      id: 'example_form',
+      type: 'mktoString',
+      default: ``,
     },
   ],
   // Define variables that appear in the body
@@ -50,7 +57,7 @@ module.exports = {
       label: 'Example Text',
       id: 'example_text',
       type: 'mktoText',
-      default: `<p>Optionally add default text for the editable text area.</p>`,
+      default: ``,
       description: `Example rich text field.`,
     },
     {
@@ -60,14 +67,8 @@ module.exports = {
       type: 'mktoImg',
       default: {
         alt: `Bright fuchsia image with FPO written in the center of it.`,
-        src: `${wb.paths.publicPath}img/FPO.png`,
+        src: ``,
       },
-    },
-    {
-      // Form example
-      label: 'Form Example',
-      id: 'example_form',
-      type: 'mktoForm',
     },
   ],
 };
