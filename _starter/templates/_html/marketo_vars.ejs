@@ -2,22 +2,22 @@
 <% const v = variables[i] -%>
 <% if (v.type === 'mktoForm') { -%>
 <div class="marketo_body_variable" data-name="<%- v.id %>">
-<div id="<%- v.id %>" class="mktoForm" mktoName="<%- (i + 1).toString() + '. ' + v.label %>"></div>
+<div id="<%- v.id %>" class="mktoForm" mktoName="<%- v.label %>"></div>
 </div>
 <% } else if (v.type === 'mktoImg') { -%>
 <div class="marketo_body_variable" data-name="<%- v.id %>">
-<img id="<%- v.id %>" class="mktoImg" mktoName="<%- (i + 1).toString() + '. ' + v.label %>"<% if (v.default) { %><% if (v.default.src) { %> src="<%- (v.default.src) %>"<% } %><% if (v.default.alt) { %> alt="<%- (v.default.alt) %>"<% } %><% } %>>
+<img id="<%- v.id %>" class="mktoImg" mktoName="<%- v.label %>"<% if (v.default) { %><% if (v.default.src) { %> src="<%- (v.default.src) %>"<% } %><% if (v.default.alt) { %> alt="<%- (v.default.alt) %>"<% } %><% } %>>
 </div>
 <% } else if (v.type === 'mktoText') { -%>
-<div id="<%- v.id %>" class="mktoText marketo_body_variable" mktoName="<%- (i + 1).toString() + '. ' + v.label %>" data-name="<%- v.id %>"><% if (v.default) { %><%- v.default %><% } %></div>
+<div id="<%- v.id %>" class="mktoText marketo_body_variable" mktoName="<%- v.label %>" data-name="<%- v.id %>"><% if (v.default) { %><%- v.default %><% } %></div>
 <% } else if (v.type === 'mktoVideo') { -%>
-<div id="<%- v.id %>" class="mktoVideo marketo_body_variable" mktoName="<%- (i + 1).toString() + '. ' + v.label %>" data-name="<%- v.id %>"></div>
+<div id="<%- v.id %>" class="mktoVideo marketo_body_variable" mktoName="<%- v.label %>" data-name="<%- v.id %>"></div>
 <% } else if (v.type === 'mktoString') { -%>
-<meta id="<%- v.id %>" class="mktoString" mktoName="<%- (i + 1).toString() + '. ' + v.label %>"<% if (v.default) { %> default="<%- v.default %>"<% } %>>
+<meta id="<%- v.id %>" class="mktoString" mktoName="<%- v.label %>"<% if (v.default) { %> default="<%- v.default %>"<% } %>>
 <% } else if (v.type === 'mktoBoolean') { -%>
-<meta id="<%- v.id %>" class="mktoBoolean" mktoName="<%- (i + 1).toString() + '. ' + v.label %>"<% if (v.default) { %> default="true"<% } else { %> default="true"<% } %>>
+<meta id="<%- v.id %>" class="mktoBoolean" mktoName="<%- v.label %>"<% if (v.default) { %> default="true"<% } else { %> default="true"<% } %>>
 <% } else if (v.type === 'mktoColor') { -%>
-<meta id="<%- v.id %>" class="mktoColor" mktoName="<%- (i + 1).toString() + '. ' + v.label %>"<% if (v.default) { %> default="<%- v.default %>"<% } %>>
+<meta id="<%- v.id %>" class="mktoColor" mktoName="<%- v.label %>"<% if (v.default) { %> default="<%- v.default %>"<% } %>>
 <% } -%>
 <% } -%>
 <% metaVars.forEach((v) => { -%>

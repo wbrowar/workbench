@@ -12,8 +12,8 @@
       <MarketoForm
         marketo-account="XXX-XXX-XXX"
         :marketo-form-id="XXX"
-        marketo-form-domain="//app-sjXX.marketo.com"
-        marketo-form-load-script="//app-sjXX.marketo.com/js/forms2/js/forms2.min.js"
+        marketo-form-domain="//app-XXXX.marketo.com"
+        marketo-form-load-script="//app-XXXX.marketo.com/js/forms2/js/forms2.min.js"
       />
     </CodeExample>
 
@@ -55,8 +55,8 @@ export default {
       default: `<MarketoForm
   marketo-account="XXX-XXX-XXX"
   :marketo-form-id="XXX"
-  marketo-form-domain="//app-sjXX.marketo.com"
-  marketo-form-load-script="//app-sjXX.marketo.com/js/forms2/js/forms2.min.js"
+  marketo-form-domain="//app-XXXX.marketo.com"
+  marketo-form-load-script="//app-XXXX.marketo.com/js/forms2/js/forms2.min.js"
 />`,
     };
     this.events = [{ name: 'onExample', arguments: 'example', description: `Example description.` }];
