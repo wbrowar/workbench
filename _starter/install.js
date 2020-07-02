@@ -62,33 +62,6 @@ if (fs.existsSync(`${ os.homedir() }/.wb-starter.config.json`)) {
 async function run() {
     g.log('title', `Configuring Project`);
 
-    const componentDirectories = glob.sync(`./_starter/components/*/`);
-
-    let componentOptions = [];
-    componentDirectories.forEach((item) => {
-        const defaultComponents = [
-            'accessibility',
-            'box',
-            'button',
-            'color_scheme_toggle',
-            'dev_bar',
-            'general',
-            'header',
-            'icon_svg',
-            'image',
-            'image_bg',
-            'lazy_animate',
-            'lazy_load',
-            'resize_container',
-            'text',
-            'touch_box',
-            'video',
-            'wrapper',
-        ];
-        const componentName = path.basename(item);
-        componentOptions.push({ checked: defaultComponents.includes(componentName), name: componentName, value: componentName });
-    });
-
     const questions = [
         {
             type: 'list',
@@ -319,7 +292,40 @@ async function run() {
             type: 'checkbox',
             name: 'components',
             message: 'Select the components you would like to use by default?',
-            choices: componentOptions,
+            choices: (answers) => {
+                const componentDirectories = glob.sync(`./_starter/components/*/`);
+                let componentOptions = [];
+                componentDirectories.forEach((item) => {
+                    const defaultComponents = [
+                        'accessibility',
+                        'button',
+                        'color_scheme_toggle',
+                        'dev_bar',
+                        'general',
+                        'header',
+                        'icon_svg',
+                        'image',
+                        'lazy_animate',
+                        'lazy_load',
+                        'text',
+                        'touch_box',
+                        'video',
+                        'wrapper',
+                    ];
+
+                    // Add project specific component defaults
+                    switch (answers.projectType) {
+                        case 'marketo-vue':
+                            defaultComponents.push('marketo_form');
+                            break;
+                    }
+
+                    const componentName = path.basename(item);
+                    componentOptions.push({ checked: defaultComponents.includes(componentName), name: componentName, value: componentName });
+                });
+
+                return componentOptions;
+            },
         },
         {
             type: 'list',
