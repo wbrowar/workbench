@@ -20,7 +20,15 @@ export function gqlToObject(data) {
   }, {});
 
   // Flatten metaTagContainer values into string
-  const meta = metaTagContainer ? Object.values(metaTagContainer).reduce((flat, next) => flat.concat(next), []) : null;
+  const meta = metaTagContainer
+    ? Object.values(metaTagContainer).reduce((flat, next) => {
+      if (next.name === 'description') {
+        // Override description tag with updated description
+        next.hid = 'description';
+      }
+      return flat.concat(next);
+    }, [])
+    : null;
 
   // Flatten metaLinkContainer values into string
   const link = metaLinkContainer
@@ -38,7 +46,7 @@ export function gqlToObject(data) {
   const jsonLd = metaJsonLdContainer
     ? Object.entries(metaJsonLdContainer).map((value) => ({
         type: 'application/ld+json',
-        innerHTML: JSON.stringify(value),
+        innerHTML: JSON.stringify(value[1]),
       }))
     : [];
 
