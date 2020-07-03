@@ -47,11 +47,6 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    // Doc: https://github.com/Developmint/nuxt-purgecss
     'nuxt-purgecss',
     ['nuxt-mq', {
         // Default breakpoint for SSR
@@ -67,7 +62,6 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
   pageTransition: 'page',
   purgeCSS: {
     enabled:
