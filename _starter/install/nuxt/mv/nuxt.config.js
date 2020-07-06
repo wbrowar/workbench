@@ -139,7 +139,7 @@ export default {
           const slug = path.dirname(item).split(path.sep).pop();
           routes.push({
             path: `/dev/docs/${slug}`,
-            name: 'component-docs',
+            name: `component-docs-${slug}`,
             component: `${wb.paths.js.src}automated/ComponentDocs.vue`,
             params: {
               slug: slug,
