@@ -1,100 +1,18 @@
+// import axios from 'axios';
+
 const path = require('path');
 const glob = require('glob-all');
 const wb = require(`./wb.config.js`);
 
 export default {
-  mode: 'spa',
-  /*
-   ** Headers of the page
-   */
-  head: {
-    title: process.env.npm_package_name || '',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || '',
-      },
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-  },
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: { color: '#fff' },
-  /*
-   ** Global CSS
-   */
-  css: [
-    `${path.resolve(wb.paths.css.src)}/app.scss`,
-  ],
-  /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: [],
-  /*
-   ** Nuxt.js dev-modules
-   */
-  buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/style-resources-module
-    '@nuxtjs/style-resources',
-  ],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: [
-    'nuxt-purgecss',
-    ['nuxt-mq', {
-        // Default breakpoint for SSR
-        defaultBreakpoint: 'default',
-        breakpoints: {
-          ...wb.mq,
-          lg: Infinity,
-        }
-      }
-    ]
-  ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  pageTransition: 'page',
-  purgeCSS: {
-    enabled:
-      process.env.NODE_ENV === 'production' && process.env.DEV_MODE !== 'true' && process.env.ENABLE_DOCS !== 'true'
-        ? process.env.POSTCSS_PURGECSS === 'true' || false
-        : false,
-    paths: [
-      `_source/_components/**/*.vue`,
-      `pages/**/*.vue`,
-      `partials/**/*.vue`,
-      ...(wb.enableDocs ? [`_starter/docs/**/*.vue`] : []),
-    ],
-    whitelist: ['body', 'html', 'img', 'a', 'nuxt-link', 'hidden'],
-    whitelistPatterns: [/scheme/],
-    whitelistPatternsChildren: [/^token/, /^pre/, /^code/],
-    extractors: [
-      {
-        extractor: (content) => {
-          const contentWithoutStyleBlocks = content.replace(/<style[^]+?<\/style>/gi, '');
-          return contentWithoutStyleBlocks.match(/[A-Za-z0-9-_/:]*[A-Za-z0-9-_/]+/g) || [];
-        },
-        extensions: ['vue', 'js', 'jsx', 'md', 'html', 'pug'],
-      },
-    ],
-  },
-  /*
-   ** Build configuration
-   */
   build: {
-    /*
-     ** You can extend webpack config here
-     */
     extractCSS: true,
+    html: {
+      minify: {
+        minifyCSS: false,
+        minifyJS: false,
+      },
+    },
     postcss: {
       plugins: {
         tailwindcss: path.resolve(__dirname, './tailwind.config.js'),
@@ -112,26 +30,110 @@ export default {
       config.resolve.alias.Templates = path.resolve(`${wb.paths.starter.src}templates/`);
     },
   },
-  /*
-   ** Load SCSS into all components
-   */
-  styleResources: {
-    scss: [
-      path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
-      path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
-      path.resolve(`${wb.paths.css.src}base/_functions.scss`),
-      path.resolve(`${wb.paths.css.src}base/_variables.scss`),
-      path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
+  buildModules: [
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/style-resources',
+  ],
+  components: ['~/components/', { path: wb.paths.components.src, ignore: [`**/demo.vue`] }],
+  css: [
+    `${path.resolve(wb.paths.css.src)}/app.scss`,
+  ],
+  // generate: {
+  //   fallback: true,
+  //   routes() {
+  //     return axios
+  //       .post(
+  //         process.env.CRAFT_API_URL,
+  //         {
+  //           query: `query {
+  //   entries(limit: null) {
+  //     uri
+  //   }
+  // }`,
+  //         },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${process.env.CRAFT_AUTH_TOKEN}`,
+  //           },
+  //         }
+  //       )
+  //       .then((res) => {
+  //         return res.data.data.entries.map((entry) => {
+  //           return entry.uri === '__home__' ? `/` : `/${entry.uri}`;
+  //         });
+  //       });
+  //   },
+  // },
+  head: {
+    title: process.env.npm_package_name || '',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || '',
+      },
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  },
+  loading: { color: '#fff' },
+  modules: [
+    // '@nuxt/http',
+    'nuxt-purgecss',
+    ['nuxt-mq', {
+      // Default breakpoint for SSR
+      defaultBreakpoint: 'default',
+      breakpoints: {
+        ...wb.mq,
+        lg: Infinity,
+      }
+    }
+    ]
+  ],
+  pageTransition: 'page',
+  plugins: [
+    // '~/plugins/craft.js',
+    // '~/plugins/preview.client.js'
+  ],
+  // privateRuntimeConfig: {
+  //   craftApiUrl: process.env.CRAFT_API_URL,
+  //   craftAuthToken: process.env.CRAFT_AUTH_TOKEN,
+  // },
+  // publicRuntimeConfig: {
+  //   livePreview: process.env.LIVE_PREVIEW === 'true',
+  //   craftApiUrl: process.env.LIVE_PREVIEW === 'true' ? process.env.CRAFT_API_URL : '',
+  //   // craftApiUrl: process.env.CRAFT_API_URL,
+  //   craftAuthToken: process.env.LIVE_PREVIEW === 'true' ? process.env.CRAFT_AUTH_TOKEN : '',
+  // },
+  purgeCSS: {
+    enabled:
+      process.env.NODE_ENV === 'production' && process.env.DEV_MODE !== 'true' && process.env.ENABLE_DOCS !== 'true'
+        ? process.env.POSTCSS_PURGECSS === 'true' || false
+        : false,
+    paths: [
+      `_source/_components/**/*.vue`,
+      `pages/**/*.vue`,
+      `components/**/*.vue`,
+      ...(wb.enableDocs ? [`_starter/docs/**/*.vue`] : []),
+    ],
+    whitelist: ['body', 'html', 'img', 'a', 'nuxt-link', 'hidden'],
+    whitelistPatterns: [/scheme/],
+    whitelistPatternsChildren: [/^token/, /^pre/, /^code/],
+    extractors: [
+      {
+        extractor: (content) => {
+          const contentWithoutStyleBlocks = content.replace(/<style[^]+?<\/style>/gi, '');
+          return contentWithoutStyleBlocks.match(/[A-Za-z0-9-_/:]*[A-Za-z0-9-_/]+/g) || [];
+        },
+        extensions: ['vue', 'js', 'jsx', 'md', 'html', 'pug'],
+      },
     ],
   },
-  /*
-   ** Extend Vue Router
-   */
   router: {
     extendRoutes(routes, resolve) {
       // Create style inventory pages
       if (wb.enableDocs) {
-        // const componentDocPages = glob.sync(`./_source/_js/automated/dev/*.vue`);
         const componentDocPages = glob.sync(`${wb.paths.components.src}**/demo.vue`);
         componentDocPages.forEach((item) => {
           const slug = path.dirname(item).split(path.sep).pop();
@@ -146,5 +148,15 @@ export default {
         });
       }
     }
-  }
+  },
+  styleResources: {
+    scss: [
+      path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
+      path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
+      path.resolve(`${wb.paths.css.src}base/_functions.scss`),
+      path.resolve(`${wb.paths.css.src}base/_variables.scss`),
+      path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
+    ],
+  },
+  target: 'static',
 }

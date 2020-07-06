@@ -1,4 +1,3 @@
-import { log } from 'JS/global';
 import wb from 'JS/automated/wb.js';
 
 // Based on files generated into /img/meta/
