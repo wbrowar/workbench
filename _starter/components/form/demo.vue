@@ -22,6 +22,22 @@
             { label: 'Germany', value: 'de' },
           ]"
         />
+        <ValidatedFormInput
+          input-name="checkboxes"
+          input-type="checkboxes"
+          :input-options="[
+            { label: 'USA', value: 'us' },
+            { label: 'Germany', value: 'de' },
+          ]"
+        />
+        <ValidatedFormInput
+          input-name="radio"
+          input-type="radio"
+          :input-options="[
+            { label: 'USA', value: 'us' },
+            { label: 'Germany', value: 'de' },
+          ]"
+        />
         <ValidatedFormInput input-name="comments" label-text="Comments" input-type="textarea" />
       </ValidatedForm>
     </CodeExample>

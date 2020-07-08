@@ -285,6 +285,10 @@ export default {
     },
   },
   mounted() {
+    if (['checkboxes', 'radio'].includes(this.inputType)) {
+      this.inputValue = [];
+    }
+
     if (this.startingValue) {
       this.inputValue = this.startingValue;
     }
