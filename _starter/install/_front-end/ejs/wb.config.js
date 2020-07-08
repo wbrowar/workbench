@@ -159,7 +159,7 @@ module.exports = {
   enableDocs: process.env.<%- appEnvPrefix %>ENABLE_DOCS === 'true',
   enableWebp: process.env.<%- appEnvPrefix %>ENABLE_WEBP === 'true',
   colorOptions: {
-    enableCustomProperties: false,
+    enableCustomProperties: true,
     utilities: [
       // Create color utilities from values in colors.default
       { property: 'backgroundColor', prefix: 'bg', enabled: ['opacity', 'val'] },
