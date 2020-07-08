@@ -24,7 +24,7 @@
         :key="option.value"
       />
       <div class="sr-only">
-        <input type="hidden" :name="inputName" :value="inputValue ? inputValue.join(`;`) : ''" @keyup="valueChanged" />
+        <input type="hidden" :name="inputName" :value="inputValue ? inputValue.join(`|`) : ''" />
       </div>
     </div>
     <div v-else-if="inputType === 'radio' && inputOptions">
@@ -37,7 +37,7 @@
         :key="option.value"
       />
       <div class="sr-only">
-        <input type="hidden" :name="inputName" :value="inputValue" @keyup="valueChanged" />
+        <input type="hidden" :name="inputName" :value="inputValue" />
       </div>
     </div>
     <div v-else-if="inputType === 'select' && inputOptions">
@@ -150,7 +150,7 @@ export default {
     inputClasses() {
       const classes = [];
 
-      classes.push(`p-2 border-2 boder-black-70`);
+      classes.push(`p-2 border-2 boder-black-70 bg-white`);
 
       if (this.inputClass) {
         classes.push(this.inputClass);
@@ -210,9 +210,11 @@ export default {
           this.addValue(value);
         }
       }
+      this.valueChanged();
     },
     updateValue(value) {
       this.inputValue = value;
+      this.valueChanged();
       this.validateField();
     },
     setErrorForFormId(message = null) {
