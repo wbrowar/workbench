@@ -10,29 +10,15 @@
       :class="{ 'c_form_input_checkbox__radio--checked': inputChecked }"
       v-else-if="inputMode === 'radio'"
     ></div>
-    <MediaImage :sources="[{ src: iconUrl }]" v-if="iconUrl" />
     <span class="c_form_input_checkbox__close_label">{{ labelText }}</span>
-    <IconSVG
-      class="c_form_input_checkbox__close"
-      stroke-color-var="gray_112"
-      handle="circle_close"
-      width="30"
-      height="30"
-      v-if="closeButton"
-    />
   </div>
 </template>
 
 <script>
-import { log } from 'JS/global.js';
-import MediaImage from 'Components/image/MediaImage.vue';
-import IconSVG from 'Components/icon_svg/IconSVG.vue';
+// import { log } from 'JS/global.js';
 
 export default {
-  components: {
-    MediaImage,
-    IconSVG,
-  },
+  components: {},
   data() {
     return {
       fields: [],
@@ -42,13 +28,17 @@ export default {
     closeButton: { type: Boolean, default: false },
     iconUrl: String,
     inputChecked: { type: Boolean, default: false },
-    inputMode: { type: String, default: 'button' }, // button, checkbox, radio
+    inputMode: {
+      type: String,
+      default: 'button',
+      validator: (value) => ['button', 'checkbox', 'radio'].includes(value),
+    },
     labelText: { type: String, required: true },
   },
   computed: {
-    styles: function() {
-      let styles = {};
-      let gridColumns = [];
+    styles() {
+      const styles = {};
+      const gridColumns = [];
 
       if (['checkbox', 'radio'].includes(this.inputMode)) {
         gridColumns.push('var(--input-width)');
@@ -67,7 +57,7 @@ export default {
     },
   },
   methods: {
-    onClickHandler: function() {
+    onClickHandler() {
       this.$emit('onClick');
     },
   },
@@ -81,7 +71,7 @@ export default {
   //--input-width: 20px;
   //--icon-width: 35px;
   //--close-width: 30px;
-//
+  //
   //display: grid;
   //grid-template-rows: minmax(30px, auto);
   //gap: 0.7rem;
@@ -90,13 +80,13 @@ export default {
   //font-size: 1.1rem;
   //line-height: 1;
   //cursor: pointer;
-//
+  //
   //@at-root #{$self}__checkbox {
   //  border: 1.5px solid var(--color-black);
   //  border-radius: 4px;
   //  width: 20px;
   //  height: 20px;
-//
+  //
   //  @at-root #{&}--checked {
   //    background-color: $color_yellow;
   //  }
@@ -106,7 +96,7 @@ export default {
   //  border-radius: 50%;
   //  width: 20px;
   //  height: 20px;
-//
+  //
   //  @at-root #{&}--checked {
   //    background-color: $color_yellow;
   //  }

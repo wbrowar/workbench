@@ -1,17 +1,15 @@
 <template>
-  <form class="c_form" :action="action" :method="method" @submit="submitForm">
+  <form :action="action || null" :method="method" @submit="submitForm">
     <slot></slot>
-    <div class="c_buttons c_buttons--center" v-if="showSubmitButton">
-      <Button class="c_box--shadow--right" :label-text="submitButtonLabel || 'Submit'" />
+    <div v-if="showSubmitButton">
+      <Button :label-text="submitButtonLabel || 'Submit'" />
     </div>
   </form>
 </template>
 
 <script>
-import axios from 'axios';
 import { log } from 'JS/global.js';
 import Button from 'Components/button/Button.vue';
-import { error } from 'JS/global';
 
 export default {
   components: {
@@ -26,13 +24,13 @@ export default {
   },
   props: {
     action: String,
-    method: { type: String, default: 'get' }, // get, post
+    method: { type: String, default: 'get', validator: (value) => ['get', 'post'].includes(value) },
     showSubmitButton: { type: Boolean, default: true },
     submitButtonLabel: String,
     validate: { type: Boolean, default: false },
   },
   methods: {
-    checkForExistingError: function(name, message) {
+    checkForExistingError(name, message) {
       for (let i = 0; i < this.errors.length; i++) {
         if (this.errors[i].fieldName === name && this.errors[i].message === message) {
           return true;
@@ -40,9 +38,9 @@ export default {
       }
       return false;
     },
-    submitForm: function(e) {
+    submitForm(e) {
       if (this.status === 'idle') {
-        let inputData = {};
+        const inputData = {};
         let submit = true;
 
         this.inputs.forEach((input) => {

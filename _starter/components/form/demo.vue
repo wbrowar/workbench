@@ -29,7 +29,6 @@
     <PropsTable :props="props.form" />
 
     <h1>Form Input</h1>
-    <p>Description</p>
 
     <ImportPath path="import ValidatedFormInput from 'Components/form/ValidatedFormInput.vue';" />
 
@@ -81,7 +80,7 @@
 
     <PropsTable :props="props.input" />
 
-    <!--    <CssModifiers root-class="c_root_class" :modifiers="modifiers" />-->
+    <EventsTable :events="events.input" />
   </div>
 </template>
 
@@ -154,6 +153,13 @@ export default {
     { label: 'Germany', value: 'de' },
   ]"
 />`,
+    };
+    this.events = {
+      input: [
+        { name: 'formSetError', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
+        { name: 'formRemoveError', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
+        { name: 'onValueChange', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
+      ],
     };
     this.modifiers = [{ name: 'test', description: `Test` }];
     this.props = {

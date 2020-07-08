@@ -1,5 +1,5 @@
 <template>
-  <div class="c_form_input">
+  <div>
     <FormLabel
       :class="labelClasses"
       :input-id="formattedInputId"
@@ -23,7 +23,7 @@
         v-for="option in inputOptions"
         :key="option.value"
       />
-      <div class="c_text--hide--collapse">
+      <div class="sr-only">
         <input type="hidden" :name="inputName" :value="inputValue ? inputValue.join(`;`) : ''" @keyup="valueChanged" />
       </div>
     </div>
@@ -36,7 +36,7 @@
         v-for="option in inputOptions"
         :key="option.value"
       />
-      <div class="c_text--hide--collapse">
+      <div class="sr-only">
         <input type="hidden" :name="inputName" :value="inputValue" @keyup="valueChanged" />
       </div>
     </div>
@@ -48,7 +48,7 @@
           :value="option.value"
           v-for="(option, index) in inputOptions"
           :key="index"
-        >{{ option.label }}</option
+          >{{ option.label }}</option
         >
       </select>
     </div>
@@ -69,7 +69,7 @@
       v-else
     />
 
-    <div class="c_form_input__error" v-if="!isValid">{{ error }}</div>
+    <div class="text-error text-sm" v-if="!isValid">{{ error }}</div>
   </div>
 </template>
 
@@ -82,7 +82,6 @@ export default {
     cleave: () => import('vue-cleave-component'),
     FormLabel,
     FormInputCheckbox: () => import('Components/form/FormInputCheckbox.vue'),
-    // IconSVG,
   },
   data() {
     return {
@@ -126,7 +125,7 @@ export default {
         attrs.placeholder = this.inputPlaceholder;
       }
       if (!this.isValid) {
-        attrs.class.push(['c_form_input--invalid']);
+        attrs.class.push([`border-error`]);
       }
       if (this.required) {
         attrs.required = this.required;
@@ -161,6 +160,8 @@ export default {
     },
     labelClasses() {
       const classes = [];
+
+      classes.push(`block`);
 
       if (this.labelClass) {
         classes.push(this.labelClass);
