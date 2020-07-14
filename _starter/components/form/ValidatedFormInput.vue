@@ -150,7 +150,7 @@ export default {
     inputClasses() {
       const classes = [];
 
-      classes.push(`p-2 border-2 boder-black-70 bg-white`);
+      classes.push(`p-2 border-2 w-full bg-white`);
 
       if (this.inputClass) {
         classes.push(this.inputClass);

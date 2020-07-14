@@ -31,7 +31,7 @@ export default {
     inputClasses() {
       const classes = [];
 
-      classes.push(`flex items-center justify-center w-4 h-4 border-2 border-black`);
+      classes.push(`flex items-center justify-center w-4 h-4 border-2`);
 
       if (this.inputMode === 'radio') {
         classes.push(`rounded-full`);
