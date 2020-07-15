@@ -18,6 +18,7 @@ const runComponentDocs = argv.options.componentdocs || false,
       runIconMethods   = argv.options.iconmethods || false,
       runPrettier      = argv.options.prettier || false,
       runScssIncludes  = argv.options.scssincludes || false,
+      runSraper        = argv.options.scraper || false,
       verbose          = argv.options.verbose || false;
 
 // set variables based on wb options
@@ -101,6 +102,15 @@ async function run() {
             }
         );
         let scssIncludesComplete = await scssIncludes;
+    }
+
+    if (runSraper) {
+      const scraper = g.asyncFunction(
+        `Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
+          g.prebuildScraper(resolve, wb.paths, wb.scraper, verbose);
+        }
+      );
+      let scraperComplete = await scraper;
     }
 }
 

@@ -9,7 +9,8 @@ const _ = require('lodash'),
   fs = require('fs-extra'),
   glob = require('glob-all'),
   path = require('path'),
-  plugin = require('tailwindcss/plugin');
+  plugin = require('tailwindcss/plugin')
+  requestSync = require('sync-request');
 
 // Synchronously run a function and wait for a callback to fire
 methods.asyncFunction = async function asyncFunction(startMessage, endMessage, func) {
@@ -357,6 +358,80 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
       callback();
     }
   });
+};
+
+methods.prebuildScraper = function prebuildScraper(callback, paths, options, verbose) {
+  let count = options.pages.length;
+
+  if (count > 0) {
+    options.pages.forEach((page) => {
+
+      if (page.dist && page.src) {
+        methods.log('verbose', `Scraping page: ${page.src}`, verbose);
+        const request = requestSync('GET', page.src);
+        if (request.statusCode === 200 || page.allow404) {
+          // Output page to dist
+          let pagBody = request.body;
+          if (options.replacements) {
+            Object.keys(options.replacements).forEach((key) => {
+              pagBody = pagBody.replace(/${key}/g, options.replacements[key]);
+            });
+          }
+          fs.outputFileSync(page.dist, pagBody);
+          methods.log('verbose', `Wrote file: ${page.dist}`, verbose);
+
+          // Extract URLs form sitemap index and parse secondary pages
+          if (page.type === 'sitemap') {
+            methods.log('verbose', `Extracting sitemap URLs from ${page.src}`, verbose);
+            const removedDates = request.body.toString().replace(/(<lastmod>(.....)+<\/lastmod>)/ig,"");
+            const removedTags = removedDates.replace(/(<([^>]+)>)/ig,",");
+            const replacedRoots = removedTags.replace(new RegExp(page.sitemapRootSrc,"g"),page.sitemapRootDist);
+            const subSitemaps = replacedRoots.split(',').filter((item) => item !== '');
+
+            if (subSitemaps) {
+              subSitemaps.forEach((subPage) => {
+                const subPageRequest = requestSync('GET', subPage);
+
+                if (subPageRequest.statusCode === 200) {
+                  fs.outputFileSync(subPage.replace(page.sitemapRootDist, paths.starter.static), subPageRequest.body);
+                }
+              });
+            }
+            methods.log('dump', subSitemaps, verbose);
+          }
+        }
+
+        count--;
+        if (count === 0) {
+          callback();
+        }
+      }
+    });
+  } else {
+    callback();
+  }
+
+  // glob(`${paths.js.src}automated/dev/**/*`, function(er, files) {
+  //   methods.log('verbose', `Removing Files: ${JSON.stringify(files, null, 2)}`, verbose);
+  //   let count = files.length;
+  //
+  //   if (count > 0) {
+  //     files.forEach((item) => {
+  //       fs.remove(item, err => {
+  //         if (err) {
+  //           return console.error(err);
+  //         }
+  //
+  //         count--;
+  //         if (count === 0) {
+  //           callback();
+  //         }
+  //       });
+  //     });
+  //   } else {
+  //     callback();
+  //   }
+  // });
 };
 
 methods.prebuildWbConfig = function prebuildWbConfig(callback, paths, wb, verbose) {
