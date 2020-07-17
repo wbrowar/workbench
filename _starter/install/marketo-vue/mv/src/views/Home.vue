@@ -11,7 +11,7 @@
           class="my-8 border border-black shadow-lg"
           :alt="marketo.example_image.alt"
           :sources="[{ src: marketo.example_image.src }]"
-          v-if="marketo.example_image.src"
+          v-if="marketo.example_image"
         />
         <MediaVideo source="youtube" :video-id="marketo.example_video" v-if="marketo.example_video" />
       </div>

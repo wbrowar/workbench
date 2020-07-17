@@ -4,6 +4,7 @@
     "prod": "npm run prebuild && vue-cli-service build && npm run postbuild"
   },
   "dependencies": {
-    "loadjs": "^4.2.0"
+    "loadjs": "^4.2.0",
+    "esm": "^3.2.25"
   }
 }
