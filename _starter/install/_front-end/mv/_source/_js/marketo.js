@@ -2,7 +2,7 @@
 //  📈 Helpers for Marketo landing page templates
 
 import { log } from 'JS/global.js';
-import variables from 'JS/automated/variables.js';
+import { variables } from '~/variables.mjs';
 
 export function getMarketoDescriptions() {
   let descriptions = {

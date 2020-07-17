@@ -1,15 +1,6 @@
-const wb = require('../wb.config.js');
-
-module.exports = {
+export const variables = {
   // Define variables that appear in the head
   head: [
-    {
-      label: 'Show Marketo Docs',
-      id: 'show_marketo_docs',
-      type: 'mktoBoolean',
-      default: false,
-      description: `Show landing page docs.`,
-    },
     {
       // String example
       label: 'Example Single Line Text',
@@ -67,7 +58,7 @@ module.exports = {
       type: 'mktoImg',
       default: {
         alt: `Bright fuchsia image with FPO written in the center of it.`,
-        src: ``,
+        src: `/img/FPO.png`,
       },
     },
   ],
