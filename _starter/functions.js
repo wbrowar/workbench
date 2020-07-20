@@ -618,6 +618,10 @@ methods.tailwindConfig = function tailwindConfig(wb) {
     }
   });
 
+  // Add basic colors to color scheme
+  colors.transparent = 'transparent';
+  colors.current = 'currentColor';
+
   // Add all plugins from the tailwind config in wb.config.js
   wb.tailwindPlugins.forEach((item) => {
     plugins.push(plugin(item));
