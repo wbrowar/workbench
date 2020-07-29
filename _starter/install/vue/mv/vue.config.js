@@ -8,6 +8,7 @@ function addStyleResource (rule) {
       patterns: [
         path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
         path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
+        path.resolve(`${wb.paths.css.src}automated/_mq.scss`),
         path.resolve(`${wb.paths.css.src}base/_functions.scss`),
         path.resolve(`${wb.paths.css.src}base/_variables.scss`),
         path.resolve(`${wb.paths.css.src}base/_mixins.scss`),

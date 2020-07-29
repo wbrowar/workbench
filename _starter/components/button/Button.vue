@@ -53,7 +53,16 @@ export default {
     },
     elementTypeComputed() {
       if (this.useRouterLink) {
-        return wb.projectType === 'gridsome' ? 'g-link' : 'router-link';
+        let linkType = 'router-link';
+        switch (wb.projectType) {
+          case 'gridsome':
+            linkType = 'g-link';
+            break;
+          case 'nuxt':
+            linkType = 'nuxt-link';
+            break;
+        }
+        return linkType;
       }
       return this.href ? 'a' : this.elementType;
     },
@@ -65,7 +74,7 @@ export default {
         } else if (this.href.startsWith('http://') || this.href.startsWith('https://')) {
           return this.href;
         } else {
-          return (this.href.startsWith('/') ? '' : '/') + this.href + (this.href.endsWith('/') ? '' : '/');
+          return (this.href.startsWith('/') ? '' : '/') + this.href;
         }
       }
 
