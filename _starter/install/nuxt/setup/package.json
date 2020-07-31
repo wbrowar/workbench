@@ -11,7 +11,7 @@
     "@nuxt/http": "^0.5.10"
   },
   "devDependencies": {
-    "core-js": "^2.6.11",
+    "core-js": "^3.6.5",
     "babel-jest": "^26.2.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.5.0",
