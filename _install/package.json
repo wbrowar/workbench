@@ -8,7 +8,7 @@
     "url": "https://github.com/wbrowar/WB-Starter.git"
   },
   "version": "6.0.0",
-  "requiredInstallerVersion": "15",
+  "requiredInstallerVersion": "16",
   "devDependencies": {
     "ejs": "^3.1.2",
     "fs-extra": "^9.0.0",
