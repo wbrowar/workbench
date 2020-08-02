@@ -97,13 +97,13 @@ async function run() {
                 return answers.installEnd === 'front' ? [
                     // { name: 'Gridsome', value: 'gridsome' },
                     // { name: 'HTML', value: 'html' },
-                    { name: 'Marketo Vue SPA', value: 'marketo-vue' },
                     { name: 'Nuxt', value: 'nuxt' },
                     // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
+                    { name: 'Marketo Vue SPA', value: 'marketo-vue' },
                 ] : [
                     { name: 'Craft 3', value: 'craft3' },
-                    { name: 'Craft Plugin', value: 'craftplugin' },
+                    // { name: 'Craft Plugin', value: 'craftplugin' },
                 ]
             },
         },
@@ -446,8 +446,7 @@ async function run() {
         g.log('title', 'Updating package.json values with dynamic data', verbose);
         pkg = _.merge(pkg, {
             scripts: {
-                cnvm: 'nvm use ' + process.version,
-                update: npmInstaller + ' update',
+                update: npmInstaller + ' install',
             },
             name: handle,
             version: '1.0.0',

@@ -1,5 +1,7 @@
 {
-  "scripts": {},
+  "scripts": {
+    "cnvm": "nvm use"
+  },
   "name": "wb-starter-installer",
   "private": true,
   "license": "MIT",

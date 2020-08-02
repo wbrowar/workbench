@@ -309,33 +309,6 @@ methods.prebuildIconMethods = function prebuildIconMethods(callback, paths, verb
   });
 };
 
-methods.prebuildPrettier = function prebuildPrettier(options, file = null, verbose) {
-  methods.log('title', `Running Prettier`);
-
-  let files = false;
-
-  if (file) {
-    if (glob.sync(options.files).includes(file)) {
-      files = file;
-    }
-  } else {
-    if (glob.sync(options.files).length > 0) {
-      files = options.files;
-    }
-  }
-
-  if (files) {
-    if (options.command === 'eslint') {
-      methods.verboseExec(`eslint --fix --ext .js,.vue --ignore-path .gitignore .`, verbose);
-    } else {
-      methods.verboseExec(`prettier --config ./.prettierrc ${options.options || ''} "${files}"`, verbose);
-    }
-    methods.log('title', `Prettier Ran`);
-  } else {
-    methods.log('title', `Prettier Ran but No Files Were Updated`);
-  }
-};
-
 methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, verbose) {
   glob(`${paths.components.src}**/*.scss`, function(er, files) {
     methods.log('verbose', `SCSS Files: ${JSON.stringify(files, null, 2)}`, verbose);

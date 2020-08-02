@@ -216,12 +216,6 @@ module.exports = {
       templates: `${paths.starterPath}templates/`,
     }
   },
-  postcss: {
-  },
-  prettier: {
-    files: "{_source,src}/**/*.{js,json,scss,vue}",
-    options: "--write",
-  },
   scraper: {
     pages: [
       // {

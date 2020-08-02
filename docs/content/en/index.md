@@ -1,28 +1,24 @@
 ---
-title: Introduction
-description: 'Overview of Guide for Craft CMS'
+title: Installation
+description: 'Scaffolding installer for front-end and back-end projects.'
 position: 101
 category: Getting started
-version: 2.2.0
+version: 6.1.0
 fullscreen: false
 ---
 
-![Guide 2](/img/guide-header.png)
+<alert>
 
-## Guide 2 for Craft CMS 3
+NOTE: these instructions are for macOS. Commands for Linux might be slightly different. I don‘t *think* Windows is supported.
 
-Craft CMS is intuitive. Marketing plans and organizational workflows—not so much. Guide lets you create a user manual within Craft CMS so clients don‘t need to go far to get the answers they need.
+</alert>
 
-Guide is made up of two parts:
-- [The commercial plugin for Craft 3](https://plugins.craftcms.com/guide)
-- [The open source user guide template](https://github.com/wbrowar/craft-guide-templates)
+1. Install [new-wb](https://www.npmjs.com/package/new-wb) by running `npm install -g new-wb`.
+1. Run `new-wb` in the directory of your choice.
+1. Enter the required information requested by various sets of prompts.
 
-*Note: The license fee for the PRO edition this plugin is $49 via the [Craft Plugin Store](https://plugins.craftcms.com/guide). A LITE edition is offered for free.*
+<alert type="info">
 
-![Guide in the Control Panel](/img/guide-overview.png)
+NOTE: Running `new-wb --dev` will install WB-Starter from the `dev` branch.
 
-
-## Requirements
-
-- This plugin requires Craft CMS 3.2 or later.
-- A browser that support CSS Grid Layout and CSS Custom Properties.
+</alert>

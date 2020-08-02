@@ -16,9 +16,8 @@ const argv = g.parseArgv();
 const runComponentDocs = argv.options.componentdocs || false,
       runCssTemplates  = argv.options.csstemplates || false,
       runIconMethods   = argv.options.iconmethods || false,
-      runPrettier      = argv.options.prettier || false,
       runScssIncludes  = argv.options.scssincludes || false,
-      runSraper        = argv.options.scraper || false,
+      runScraper       = argv.options.scraper || false,
       verbose          = argv.options.verbose || false;
 
 // set variables based on wb options
@@ -57,10 +56,6 @@ async function run() {
     let tailwindConfigComplete = await tailwindConfig;
     // let variablesComplete = await variables;
     let wbConfigComplete = await wbConfig;
-
-    if (runPrettier) {
-        g.prebuildPrettier(wb.prettier, null, verbose);
-    }
 
     if (runComponentDocs) {
         const componentDocs = g.asyncFunction(
@@ -104,7 +99,7 @@ async function run() {
         let scssIncludesComplete = await scssIncludes;
     }
 
-    if (runSraper) {
+    if (runScraper) {
       const scraper = g.asyncFunction(
         `Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
           g.prebuildScraper(resolve, wb.paths, wb.scraper, verbose);
