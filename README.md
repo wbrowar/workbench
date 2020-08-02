@@ -6,20 +6,12 @@ My personal framework for front-end development includes some SASS, HTML, and JS
 This is here for my own storage, but please [let me know if you have any feedback or suggestions](https://github.com/wbrowar/WB-Starter/issues).
 
 ## Requirements
-- [Node.js](https://nodejs.org/en/) (requires v11+)
+- [Node.js](https://nodejs.org/en/) (requires v14+) installed via [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md)
 - [Composer](https://getcomposer.org) (for Craft-based projects)
 
 ## Documentation
 
-Documentation can be found in the [GitHub wiki](https://github.com/wbrowar/WB-Starter/wiki)
-
-
-## Release Notes
-#### 6.0.0
-##### Starter
-- :rocket:
-- :wrench:
-- :fire:
+Documentation can be found in the [GitHub wiki](http://starter.wbrowar.com/)
 
 
 ## Credits
