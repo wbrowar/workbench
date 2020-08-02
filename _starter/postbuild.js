@@ -21,8 +21,9 @@ let ejsVars = _.merge({
     wb: wb,
 }, wb.ejs);
 
-if (fs.existsSync(`${ wb.paths.starter.src }/variables.js`)) {
-    ejsVars.variables = require(`${ wb.paths.starter.src }/variables.js`);
+if (fs.existsSync(`${ process.cwd() }/variables-node.js`)) {
+    ejsVars.variables = require(`${ process.cwd() }/variables-node.js`);
+    g.log('dump', ejsVars.variables, true);
 }
 
 async function run() {

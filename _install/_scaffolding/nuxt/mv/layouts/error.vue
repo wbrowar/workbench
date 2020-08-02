@@ -43,7 +43,7 @@ export default {
     return { title: 'Page not found!' };
   },
   props: {
-    error: String,
+    error: Object,
   },
 };
 </script>

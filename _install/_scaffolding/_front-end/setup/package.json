@@ -1,25 +1,18 @@
 {
   "scripts": {
-    "cnvm": "nvm use 11",
+    "ci:build": "vue-cli-service build",
     "commit": "node ./_starter/commit.js",
     "component": "node ./_starter/component.js",
-    "deploy": "npm run commit",
+    "deploy": "npm run prebuild && npm run commit",
+    "dev": "npm run prebuild && vue-cli-service serve",
     "favicon": "node ./_starter/favicon.js",
-    "update": "npm update"
+    "prebuild": "node ./_starter/prebuild.js --componentdocs --csstemplates --iconmethods --prettier --scssincludes",
+    "prod": "npm run prebuild && vue-cli-service build",
+    "update": "npm install"
   },
-  "browserslist": [
-    "last 1 version"
-  ],
   "name": "example-project",
   "private": true,
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wbrowar/WB-Starter.git"
-  },
-  "version": "6.0.0",
   "dependencies": {
-    "autoprefixer": "9.8.0",
     "axios": "^0.19.2",
     "gsap": "^3.2.6",
     "intersection-observer": "^0.10.0",
@@ -29,18 +22,10 @@
   "devDependencies": {
     "chalk": "^4.0.0",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.2",
     "favicons": "^6.0.0",
-    "fs-extra": "^9.0.0",
-    "@fullhuman/postcss-purgecss": "^2.1.2",
-    "glob-all": "^3.2.1",
-    "import-glob-loader": "^1.1.0",
     "inquirer": "^7.1.0",
     "lodash": "^4.17.15",
     "node-sass": "^4.14.0",
-    "sass-loader": "^8.0.2",
-    "semver": "^7.3.2",
-    "sync-request": "^6.1.0",
-    "tailwindcss": "^1.4.6"
+    "sass-loader": "^8.0.2"
   }
 }

@@ -1,5 +1,6 @@
-// import node modules
+// Import node modules
 const _ = require('lodash'),
+      chalk = require('chalk'),
       ejs = require('ejs'),
       fs = require('fs-extra'),
       glob = require('glob-all'),
@@ -7,46 +8,60 @@ const _ = require('lodash'),
       os = require('os'),
       path = require('path');
 
-// import global functions
+// Import global functions
+fs.copySync(`../../_starter/functions.js`, `./functions.js`)
 const g = require('./functions.js');
 
-if (!fs.existsSync(`${ process.cwd() }/_starter/install`)) {
-    g.log('warn', `Install Has Already Completed and Cannot Be Run Again`);
-    process.exit();
-}
-
 // HELLO
-g.log(`Installing WB-Starter`);
+g.log('app', `Installing WB-Starter Project`);
 
-// load package file
+// Load package file
 let pkg = require(`${ process.cwd() }/package.json`);
 
-// set constants
+// Set constants
 const argv = g.parseArgv();
 
-// use CLI arguments to set variables
-const verbose = argv.options.verbose || false;
-let   handle  = argv.options.handle || false;
+// Use CLI arguments to set variables
+const projectDirectory = argv.options['project-dir'] || '',
+      verbose          = argv.options.verbose || false;
+let   handle           = argv.options.handle || false,
+      installerVersion = argv.options.version || '0';
 
-// set variables to be processed by EJS
+// Set variables to be processed by EJS
 let ejsVars = {
-    projectDir: process.cwd(),
+    nodeVersion: process.version,
+    projectDir: projectDirectory,
     pkg: pkg,
     securityKey: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 };
 
-// set other variables
-let localConfig = false;
+// Set other variables
+let enableInstall = false,
+    localConfig   = false
+    npmInstaller = 'npm';
 
-// check if npm and composer are installed
+// Check that new-wb and WB-Starter versions are compatible
+const installerVersionJoined = installerVersion.split('.').join('');
+const installerVersionString = installerVersionJoined.startsWith('0') ? installerVersionJoined.substr(1) : installerVersionJoined;
+if (installerVersionString === pkg.requiredInstallerVersion) {
+    enableInstall = true;
+} else {
+    g.log('warn', `Version of new-wb does not match WB-Starter installer version. Cancelling installation.\n`, verbose);
+    g.log('message', 'Update new-wb then try again:\n  run `npm install -g new-wb`\n');
+    process.exit();
+}
+
+// Check if npm and composer are installed
 if (verbose) {
-    g.log('warn', `Running install using --verbose will expose passwords in the terminal. Only share the output with people you trust with those passwords.`, verbose);
-    g.log('verbose', `getting composer version`, verbose);
-    g.verboseExec(`composer --version`, verbose);
-    g.log('verbose', `getting node version`, verbose);
+    g.log('warn', `Running install using --verbose will expose passwords in the terminal. Only share the output with people you trust with those secrets.`, verbose);
+    g.log('verbose', `Getting new-wb installer version`, verbose);
+    g.log('message', installerVersion, verbose);
+    g.log('verbose', `Getting node version`, verbose);
     g.verboseExec(`node -v`, verbose);
-    g.log('verbose', `getting npm version`, verbose);
+    g.log('verbose', `Getting npm version`, verbose);
     g.verboseExec(`npm -v`, verbose);
+    g.log('verbose', `Getting composer version`, verbose);
+    g.verboseExec(`composer --version`, verbose);
 }
 
 // get local config file
@@ -293,7 +308,7 @@ async function run() {
             name: 'components',
             message: 'Select the components you would like to use by default?',
             choices: (answers) => {
-                const componentDirectories = glob.sync(`./_starter/components/*/`);
+                const componentDirectories = glob.sync(`${projectDirectory}/_starter/components/*/`);
                 let componentOptions = [];
                 componentDirectories.forEach((item) => {
                     const defaultComponents = [
@@ -331,11 +346,14 @@ async function run() {
             type: 'list',
             name: 'npmInstaller',
             message: 'npm installer',
-            default: argv.options.npminstaller || localConfig ? (localConfig.npmInstaller || 'npm') : 'npm',
+            default: localConfig ? (localConfig.npmInstaller || 'npm') : 'npm',
             choices: [
                 { name: 'npm', value: 'npm' },
                 { name: 'Yarn', value: 'yarn' },
             ],
+            when: (answers) => {
+                return !localConfig.npmInstaller;
+            },
         },
         {
             type: 'confirm',
@@ -356,6 +374,9 @@ async function run() {
 
         if (answers.handle) {
             handle = ejsVars.handle = answers.handle || '';
+        }
+        if (answers.npmInstaller) {
+            npmInstaller = answers.npmInstaller;
         }
 
         // Assign install directories
@@ -408,7 +429,7 @@ async function run() {
                 localConfig['gitOrg'] = answers.gitOrg;
                 localConfig['gitPrivate'] = answers.gitPrivate;
             }
-            localConfig['npmInstaller'] = answers.npmInstaller;
+            localConfig['npmInstaller'] = npmInstaller;
 
             fs.outputFileSync(`${ os.homedir() }/.wb-starter.config.json`, JSON.stringify(localConfig, null, 2));
 
@@ -422,33 +443,11 @@ async function run() {
             g.log('verbose', `Created mysql database: '${ handle }'`, verbose);
         }
 
-        // if (starterProjects.includes(answers.projectType)) {
-        //     mergeIntoPkg(`${process.cwd()}/_starter/install/_starter/setup/package.json`);
-        //
-        //     const editPkgComponents = g.asyncFunction(
-        //         `Adding Selected Components to package.json`, `Selected Components Added`, (resolve) => {
-        //             let selectedComponents = answers.components;
-        //             const defaults = glob.sync(`${ process.cwd() }/_starter/style_inventory/defaults/*`);
-        //             defaults.forEach((item) => {
-        //                 selectedComponents.push(`@${ path.basename(item, path.extname(item)) }`);
-        //             });
-        //             Object.keys(pkg.styleInventory['pages']).forEach((key) => {
-        //                 const filteredComponents = pkg.styleInventory['pages'][key].components.filter(component => selectedComponents.includes(component));
-        //                 if (filteredComponents.length > 0) {
-        //                     pkg.styleInventory['pages'][key].components = filteredComponents;
-        //                 } else {
-        //                     delete pkg.styleInventory['pages'][key];
-        //                 }
-        //             });
-        //             resolve();
-        //         });
-        //     let editPkgComponentsComplete = await editPkgComponents;
-        // }
         g.log('title', 'Updating package.json values with dynamic data', verbose);
         pkg = _.merge(pkg, {
             scripts: {
                 cnvm: 'nvm use ' + process.version,
-                update: answers.npmInstaller + ' update',
+                update: npmInstaller + ' update',
             },
             name: handle,
             version: '1.0.0',
@@ -477,6 +476,18 @@ async function run() {
             let installDir2Complete = await installDir2;
         }
 
+
+        // Change working directory to project folder
+        try {
+            process.chdir(projectDirectory);
+            g.log('verbose', `Changed working directory to project folder`, verbose);
+        }
+        catch (err) {
+            g.log('warn', err, verbose);
+            process.exit();
+        }
+
+
         g.log('verbose', `Updating package.json file`, verbose);
         const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
         const pkgWithDependenciesAtTheEnd = _.merge(pkgWithoutDependencies, {
@@ -494,7 +505,7 @@ async function run() {
         let removeGitkeepComplete = await removeGitkeep;
 
         if (fs.existsSync(`${ process.cwd() }/INSTALL.env`)) {
-            fs.copySync(`${ process.cwd() }/INSTALL.env`, `${ process.cwd() }/.env`);
+            fs.moveSync(`${ process.cwd() }/INSTALL.env`, `${ process.cwd() }/.env`);
         }
 
         g.log('title', 'Running project specific install scripts', verbose);
@@ -535,16 +546,16 @@ async function run() {
         }
 
         if (answers.installEnd === 'front') {
+            g.log('title', 'Updating NPM packages', verbose);
+            g.verboseExec(npmInstaller + ` install`, verbose);
+            g.log('verbose', `NPM Packages updated`, verbose);
+
             g.log('title', 'Moving selected components', verbose);
             answers.components.forEach((item) => {
                 if (!item.startsWith('@')) {
-                    g.verboseExec(`node ./_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
+                    g.verboseExec(`node ${projectDirectory}/_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
                 }
             });
-
-            g.log('title', 'Updating NPM packages', verbose);
-            g.verboseExec(answers.npmInstaller + ` install`, verbose);
-            g.log('verbose', `NPM Packages updated`, verbose);
 
             g.log('title', 'Running Initial Build Script', verbose);
             g.verboseExec(`npm run dev`, true);
@@ -556,6 +567,10 @@ async function run() {
             g.log('verbose', `Removed node_modules and package.json`, verbose);
         }
 
+        g.log('title', `Cleaning Up`);
+        g.verboseExec(`rm -rf ${ process.cwd() }/SETUP`, verbose);
+        g.log('verbose', `Install directory deleted`, verbose);
+
         if (answers.setupRepo) {
             g.log('title', 'Setting up GitHub repo');
             const gitHubEndPoint = answers.gitOrg || false ? `https://api.github.com/orgs/${answers.gitOrg}/repos` : `https://api.github.com/user/repos`;
@@ -563,22 +578,24 @@ async function run() {
             g.verboseExec(`curl -X POST -u ${ answers.gitUser }:${ answers.gitPass } -H "Content-Type: application/json" -d '{ "name": "${ answers.gitRepo }", "private": ${ answers.gitPrivate ? "true" : "false" } }' ${gitHubEndPoint}`, verbose);
             g.log('verbose', `Created ${ answers.gitOrg ? answers.gitOrg : answers.gitUser }/${ handle } repo on GitHub`, verbose);
             g.verboseExec(`git init`, verbose);
-            g.log('verbose', `ran git init`, verbose);
+            g.log('verbose', `Ran git init`, verbose);
             g.verboseExec(`git remote add origin https://github.com/${ answers.gitOrg ? answers.gitOrg : answers.gitUser }/${ handle }.git`, verbose);
-            g.log('verbose', `set remote origin, verbose`, verbose);
+            g.log('verbose', `Set remote origin, verbose`, verbose);
             g.verboseExec(`git add -A`, verbose);
-            g.log('verbose', `added all files`, verbose);
+            g.log('verbose', `Added all files`, verbose);
             g.verboseExec(`git add -f .gitignore`, verbose);
-            g.log('verbose', `added .gitignore file`, verbose);
+            g.log('verbose', `Added .gitignore file`, verbose);
             g.verboseExec(`git commit -m "initial commit"`, verbose);
-            g.log('verbose', `created first commit`, verbose);
+            g.log('verbose', `Created first commit`, verbose);
             g.verboseExec(`git push --set-upstream origin master`, verbose);
-            g.log('verbose', `pushed first commit to GitHub`, verbose);
+            g.log('verbose', `Pushed first commit to GitHub`, verbose);
+        } else {
+            g.log('verbose', `Skipped repo step`, verbose);
         }
 
-        g.log('title', `Cleaning Up`);
-        g.verboseExec(`rm -r ${ process.cwd() }/_starter/install`, verbose);
-        g.log('verbose', `Install directory deleted`, verbose);
+        g.log('app', `WB-Starter Project Installed`);
+
+        g.log('message', chalk.dim(`\n${_bye()}\n`));
     });
 }
 
@@ -651,24 +668,26 @@ function globRemove(pattern, resolve) {
 }
 
 async function installDirectory(name, finished) {
-    const projectTypeInstallDirectory = `${ process.cwd() }/_starter/install/${ name }/`;
+    const projectTypeInstallDirectory = `${projectDirectory}/SETUP/_install/_scaffolding/${ name }`;
 
-    mergeIntoPkg(`${process.cwd()}/_starter/install/${ name }/setup/package.json`);
+    mergeIntoPkg(`${ projectTypeInstallDirectory }/setup/package.json`);
 
-    if (fs.existsSync(`${ projectTypeInstallDirectory }mv`)) {
+    g.log('verbose', `Looking for templates to move at ${projectTypeInstallDirectory}`, verbose);
+    if (fs.existsSync(`${ projectTypeInstallDirectory }/mv`)) {
         const moveInstallFiles = g.asyncFunction(
           `Moving Default Files`, `Default Files Moved`, (resolve) => {
-              globMove(`${process.cwd()}/_starter/install/${name}/mv/**/*`, `_starter/install/${name}/mv/`, ``, resolve);
+              globMove(`${projectTypeInstallDirectory}/mv/**/*`, `${projectTypeInstallDirectory}/mv/`, `${projectDirectory}/`, resolve);
           });
         let moveInstallFilesComplete = await moveInstallFiles;
     } else {
         g.log('verbose', `No project templates to move`, verbose);
     }
 
-    if (fs.existsSync(`${ projectTypeInstallDirectory }ejs`)) {
+    g.log('verbose', `Looking for EJS templates to compile at ${projectTypeInstallDirectory}`, verbose);
+    if (fs.existsSync(`${ projectTypeInstallDirectory }/ejs`)) {
         const compileInstallFiles = g.asyncFunction(
           `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
-              globEjs(`${process.cwd()}/_starter/install/${name}/ejs/**/*`, `_starter/install/${name}/ejs/`, ``, resolve);
+              globEjs(`${projectTypeInstallDirectory}/ejs/**/*`, `${projectTypeInstallDirectory}/ejs/`, `${projectDirectory}/`, resolve);
           });
         let compileInstallFilesComplete = await compileInstallFiles;
     } else {
@@ -698,5 +717,14 @@ function randomString(length, chars) {
     return result;
 }
 
+function _bye() {
+    const lines = [
+        `Coming soon`,
+    ]
+    return lines[Math.floor(Math.random()*lines.length)];
+}
+
 // INIT
-run();
+if (enableInstall) {
+    run();
+}

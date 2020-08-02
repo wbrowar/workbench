@@ -1,0 +1,20 @@
+{
+  "scripts": {},
+  "name": "wb-starter-installer",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wbrowar/WB-Starter.git"
+  },
+  "version": "6.0.0",
+  "requiredInstallerVersion": "15",
+  "devDependencies": {
+    "ejs": "^3.1.2",
+    "fs-extra": "^9.0.0",
+    "glob-all": "^3.2.1",
+    "inquirer": "^7.1.0",
+    "sync-request": "^6.1.0",
+    "tailwindcss": "^1.4.6"
+  }
+}

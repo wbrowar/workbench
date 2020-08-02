@@ -1,4 +1,4 @@
-import { log } from 'JS/global.js';
+// import { log } from 'JS/global.js';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
