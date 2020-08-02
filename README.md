@@ -11,7 +11,7 @@ This is here for my own storage, but please [let me know if you have any feedbac
 
 ## Documentation
 
-Documentation can be found in the [GitHub wiki](http://starter.wbrowar.com/)
+Documentation can be found at [starter.wbrowar.com](https://starter.wbrowar.com/)
 
 
 ## Credits
