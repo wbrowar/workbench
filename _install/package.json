@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "cnvm": "nvm use"
+    "cnvm": "source $HOME/.nvm/nvm.sh; nvm use"
   },
   "name": "wb-starter-installer",
   "private": true,
