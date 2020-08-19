@@ -9,6 +9,7 @@
   import wb from 'JS/automated/wb.js';
 
   export default {
+    name: 'App',
     components: {
       DevBar: () => import('Components/dev_bar/DevBar.vue'),
     },

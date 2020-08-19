@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "deploy": "npm run prebuild && npm run commit",
+    "prebuild": "node ./_starter/prebuild.js --componentdocs --csstemplates --iconmethods --scraper --scssincludes"
+  },
+  "dependencies": {
+    "autoprefixer": "9.8.0"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.1.2"
+  }
+}

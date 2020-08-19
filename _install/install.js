@@ -101,6 +101,7 @@ async function run() {
                     // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
                     { name: 'Marketo Vue SPA', value: 'marketo-vue' },
+                    { name: 'Vite SPA', value: 'vite' },
                 ] : [
                     { name: 'Craft 3', value: 'craft3' },
                     // { name: 'Craft Plugin', value: 'craftplugin' },
@@ -396,7 +397,7 @@ async function run() {
                     break;
                 case 'marketo-vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
-                    installDirectories = ['_front-end', 'vue', 'marketo-vue'];
+                    installDirectories = ['_front-end', 'vue-base', 'vue', 'marketo-vue'];
                     break;
                 case 'nuxt':
                     ejsVars.appEnvPrefix = '';
@@ -404,7 +405,11 @@ async function run() {
                     break;
                 case 'vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
-                    installDirectories = ['_front-end', 'vue'];
+                    installDirectories = ['_front-end', 'vue-base', 'vue'];
+                    break;
+                case 'vite':
+                    ejsVars.appEnvPrefix = 'VUE_APP_';
+                    installDirectories = ['_front-end', 'vue-base', 'vite'];
                     break;
             }
         }
