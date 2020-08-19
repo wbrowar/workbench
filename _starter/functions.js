@@ -614,13 +614,6 @@ methods.tailwindConfig = function tailwindConfig(wb) {
     },
     plugins: plugins,
   }, wb.tailwind);
-
-  fs.outputFile(paths.js.src + 'automated/tailwind.config.js', str, (err) => {
-    if (!err) {
-      methods.log('verbose', `Component Docs template created.`, verbose);
-      callback();
-    }
-  });
 };
 
 // Determine if a command should be displayed in terminal when running shell commands
