@@ -101,7 +101,7 @@ async function run() {
                     // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
                     { name: 'Marketo Vue SPA', value: 'marketo-vue' },
-                    { name: 'Vite SPA', value: 'vite' },
+                    // { name: 'Vite SPA', value: 'vite' },
                 ] : [
                     { name: 'Craft 3', value: 'craft3' },
                     // { name: 'Craft Plugin', value: 'craftplugin' },

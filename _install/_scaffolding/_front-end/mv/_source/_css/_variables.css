@@ -1,8 +1,4 @@
 :root {
-  // COLORS
-  @include automated_colors;
-
-  // LAYOUT
   --ui-masthead-height: 90px;
   --ui-footer-height: 200px;
 }

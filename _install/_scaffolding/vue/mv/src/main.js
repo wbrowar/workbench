@@ -4,7 +4,7 @@ import router from './router.js';
 import store from './store.js';
 import VueMq from 'vue-mq';
 import wb from 'JS/automated/wb.js';
-import 'CSS/app.scss';
+import 'CSS/app.css';
 
 Vue.config.productionTip = false;
 Vue.config.ignoredElements = ['g-link'];

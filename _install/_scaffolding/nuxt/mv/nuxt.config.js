@@ -36,7 +36,7 @@ export default {
   ],
   components: ['~/components/', { path: wb.paths.components.src, ignore: [`**/demo.vue`] }],
   css: [
-    `${path.resolve(wb.paths.css.src)}/app.scss`,
+    `${path.resolve(wb.paths.css.src)}/app.css`,
   ],
   // generate: {
   //   fallback: true,
@@ -149,14 +149,14 @@ export default {
       }
     }
   },
-  styleResources: {
-    scss: [
-      path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
-      path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
-      path.resolve(`${wb.paths.css.src}base/_functions.scss`),
-      path.resolve(`${wb.paths.css.src}base/_variables.scss`),
-      path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
-    ],
-  },
+  // styleResources: {
+  //   scss: [
+  //     path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
+  //     path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
+  //     path.resolve(`${wb.paths.css.src}base/_functions.scss`),
+  //     path.resolve(`${wb.paths.css.src}base/_variables.scss`),
+  //     path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
+  //   ],
+  // },
   target: 'static',
 }

@@ -4,12 +4,13 @@ let methods = {};
 // import node modules
 const _ = require('lodash'),
   chalk = require('chalk'),
+  Color = require('color'),
   ejs = require('ejs'),
   exec = require('child_process'),
   fs = require('fs-extra'),
   glob = require('glob-all'),
   path = require('path'),
-  plugin = require('tailwindcss/plugin')
+  plugin = require('tailwindcss/plugin'),
   requestSync = require('sync-request');
 
 // Synchronously run a function and wait for a callback to fire
@@ -247,10 +248,14 @@ methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ej
         ejsVars.colors[schemeKey] = {};
       }
       if (typeof themeColors[schemeKey][colorKey] === 'string') {
-        ejsVars.colors[schemeKey][colorKey] = themeColors[schemeKey][colorKey];
+        const color = Color(themeColors[schemeKey][colorKey]);
+        const hsl = color.hsl().object();
+        ejsVars.colors[schemeKey][colorKey] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
       } else {
         Object.keys(themeColors[schemeKey][colorKey]).forEach((shadeKey) => {
-          ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = themeColors[schemeKey][colorKey][shadeKey];
+          const color = Color(themeColors[schemeKey][colorKey][shadeKey]);
+          const hsl = color.hsl().object();
+          ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
         });
       }
     });
@@ -310,17 +315,17 @@ methods.prebuildIconMethods = function prebuildIconMethods(callback, paths, verb
 };
 
 methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, verbose) {
-  glob(`${paths.components.src}**/*.scss`, function(er, files) {
+  glob(`${paths.components.src}**/*.css`, function(er, files) {
     methods.log('verbose', `SCSS Files: ${JSON.stringify(files, null, 2)}`, verbose);
     let data = '';
     files.forEach((item) => {
-      data += `@import "Components/${item.replace(paths.components.src, '')}";
+      data += `@import "../../_components/${item.replace(paths.components.src, '')}";
 `;
     });
     methods.log('verbose', data, verbose);
 
     if (data) {
-      const scssIncludesPath = paths.css.src + 'automated/_components.scss';
+      const scssIncludesPath = paths.css.src + 'automated/_components.css';
       fs.outputFile(scssIncludesPath, data, (err) => {
         if (!err) {
           methods.log('verbose', `Writing combined SCSS files to: ${scssIncludesPath}`, verbose);
@@ -331,6 +336,7 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
       callback();
     }
   });
+  callback();
 };
 
 methods.prebuildScraper = function prebuildScraper(callback, paths, options, verbose) {

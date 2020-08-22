@@ -1,0 +1,23 @@
+body {
+<% for (const scheme in colors) { -%>
+<% if (scheme === 'default') { -%>
+<% for (const color in colors[scheme]) { -%>
+<% let colorVal = colors[scheme][color] -%>
+  --color-<%- color %>-hsl: <%- colorVal.hsl %>;
+  --color-<%- color %>: hsla(var(--color-<%- color %>-hsl), <%- colorVal.alpha %>);
+<% } -%>
+<% } else if (['dark', 'light'].includes(scheme)) { -%>
+  @media (prefers-color-scheme: <%- scheme %>) {
+<% for (const color in colors[scheme]) { -%>
+<% let colorVal = colors[scheme][color] -%>
+    --color-<%- color %>-hsl: <%- colorVal.hsl %>;
+<% } -%>
+  }
+  .scheme-<%- scheme %> & {
+<% for (const color in colors[scheme]) { -%>
+<% let colorVal = colors[scheme][color] -%>
+    --color-<%- color %>-hsl: <%- colorVal.hsl %>;
+<% } -%>
+  }
+<% } } -%>
+}

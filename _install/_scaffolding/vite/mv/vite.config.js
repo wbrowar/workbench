@@ -1,3 +1,6 @@
+const path = require('path'),
+      wb = require(`./wb.config.js`);
+
 module.exports = {
   alias: {
     '/~/': path.resolve(__dirname, './src'),

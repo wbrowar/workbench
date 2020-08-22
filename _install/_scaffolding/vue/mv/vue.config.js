@@ -1,20 +1,20 @@
 const path = require('path'),
       wb = require(`./wb.config.js`);
 
-function addStyleResource (rule) {
-  rule.use('style-resource')
-    .loader('style-resources-loader')
-    .options({
-      patterns: [
-        path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
-        path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
-        path.resolve(`${wb.paths.css.src}automated/_mq.scss`),
-        path.resolve(`${wb.paths.css.src}base/_functions.scss`),
-        path.resolve(`${wb.paths.css.src}base/_variables.scss`),
-        path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
-      ],
-    })
-}
+// function addStyleResource (rule) {
+//   rule.use('style-resource')
+//     .loader('style-resources-loader')
+//     .options({
+//       patterns: [
+//         path.resolve(`${wb.paths.css.src}automated/_colors.scss`),
+//         path.resolve(`${wb.paths.css.src}automated/_fonts.scss`),
+//         path.resolve(`${wb.paths.css.src}automated/_mq.scss`),
+//         path.resolve(`${wb.paths.css.src}base/_functions.scss`),
+//         path.resolve(`${wb.paths.css.src}base/_variables.scss`),
+//         path.resolve(`${wb.paths.css.src}base/_mixins.scss`),
+//       ],
+//     })
+// }
 
 module.exports = {
   configureWebpack: config => {
@@ -33,10 +33,10 @@ module.exports = {
   },
   chainWebpack: config => {
     // Load SCSS files for all Vue files
-    const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
-    types.forEach(type => {
-      addStyleResource(config.module.rule('scss').oneOf(type));
-    });
+    // const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
+    // types.forEach(type => {
+    //   addStyleResource(config.module.rule('scss').oneOf(type));
+    // });
   },
   lintOnSave: wb.devMode,
   publicPath: process.env.NODE_ENV === 'production' && wb.paths.publicPath ? wb.paths.publicPath : '/',

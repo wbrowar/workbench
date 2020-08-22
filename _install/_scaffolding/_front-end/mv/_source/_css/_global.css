@@ -1,0 +1,42 @@
+::selection {
+  @apply bg-black text-white;
+}
+
+html {
+  @include automated_color_schemes;
+  @apply font-apple;
+  line-height: 1.4;
+  background-color: var(color-white);
+  color: var(color-black);
+}
+
+button {
+  appearance: none;
+}
+figure {
+  line-height: 0;
+}
+img {
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+video {
+  width: 100%;
+}
+/*Removes outline for mouse users, but keeps outline for keyboard users*/
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/*Hide items with v-cloak attribute until Vue is loaded and ready to go*/
+[v-cloak] {
+  display: none;
+}
+
+/*Make element bright and easy to see that it needs to be swapped out during development*/
+.fpo {
+  background-color: fuchsia;
+  outline: 5px solid fuchsia;
+  color: var(color-white);
+}
