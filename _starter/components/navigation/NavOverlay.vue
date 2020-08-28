@@ -81,13 +81,8 @@
     }
 </script>
 
-<style lang="scss">
-    // include variables and mixins if needed
-    <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
-
+<style>
      .c-navigation {
-         $self: &;
          padding:10px;
          & {
              background: gray;

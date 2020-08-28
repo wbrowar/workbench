@@ -1,35 +1,25 @@
 <template>
-    <div class="c-<%- handle %>">
-
-    </div>
+  <div class="c-<%- handleKebab %>"></div>
 </template>
 
 <script>
-    import { log } from 'JS/global.js';
-    
-    export default {
-        components: {
-        },
-        data() {
-            return {
-            }
-        },
-        props: {
-        },
-        computed: {
-        },
-        methods: {
-        },
-        created() {
-        },
-        mounted() {
-        }
-    }
+// import { log } from 'JS/global.js';
+
+export default {
+  name: <%- `'${condensedName}'` %>,
+  components: {},
+  data() {
+    return {};
+  },
+  props: {},
+  computed: {},
+  methods: {},
+  created() {},
+  mounted() {},
+};
 </script>
 
-<style lang="scss">
-    .c-<%- handle %> {
-        $self: &;
-
-    }
+<style>
+.c-<%- handleKebab %> {
+}
 </style>

@@ -192,9 +192,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.c-carousel {
-  $self: &;
-}
-</style>

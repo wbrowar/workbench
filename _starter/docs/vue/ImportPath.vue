@@ -21,7 +21,7 @@
   };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   /*! purgecss start ignore */
   @keyframes docs-hop {
     0% { transform: translateY(0) }
@@ -29,8 +29,6 @@
     100% { transform: translateY(0) }
   }
   .docs__import_path {
-    $self: &;
-
     padding: 14px 20px;
     background-color: #252525;
     border-radius: 7px;

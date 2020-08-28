@@ -1,3 +1,4 @@
+/* Load fonts configured in wb.config.js */
 <% for (const font in wb.fonts) { %><% if (wb.fonts[font].files !== undefined) { %>@font-face {
   font-family: <%- wb.fonts[font].fontFamily %>;
   src: url('<%= wb.fonts[font].files.eot %>');

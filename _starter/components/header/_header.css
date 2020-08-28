@@ -1,13 +1,11 @@
 .c-header {
-  $self: &;
-
-  @at-root #{$self}-1 {
+  &-1 {
     @apply font-apple font-thin text-5xl;
   }
-  @at-root #{$self}-2 {
+  &-2 {
     @apply font-apple font-medium text-3xl;
   }
-  @at-root #{$self}-3 {
+  &-3 {
     @apply font-apple font-bold text-xl uppercase;
   }
 }

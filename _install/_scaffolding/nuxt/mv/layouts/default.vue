@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .page-enter-active {
   transition: opacity 0.3s;
 }

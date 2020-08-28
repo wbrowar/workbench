@@ -1,12 +1,10 @@
 .c-wrapper {
-  $self: &;
-
   @apply mx-auto px-10 max-w-screen-xl;
 
-  @at-root #{&}-no-padding {
+  &-no-padding {
     @apply px-0;
   }
-  @at-root #{&}-text {
+  &-text {
     @apply max-w-3xl;
   }
 }

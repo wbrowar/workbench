@@ -98,11 +98,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .c-button {
-  $self: &;
-
-  @at-root #{$self}-reset {
+  &-reset {
     @include button_reset;
   }
 }

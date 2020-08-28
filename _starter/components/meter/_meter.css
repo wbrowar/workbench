@@ -6,32 +6,30 @@ $_height: 20px;
 }
 
 .c-meter {
-  $self: &;
-
-  @at-root #{$self}__wrapper {
+  &__wrapper {
     position: relative;
     width: 100%;
     height: $_height;
     background-color: transparentize($color_black_raw, .6);
   }
-  @at-root #{$self}__label {
+  &__label {
     position: absolute;
     top: -100%;
 
-    @at-root #{&}--max {
+    &--max {
       right: 0;
       text-align: right;
     }
   }
-  @at-root #{$self}__progress {
+  &__progress {
     width: var(--progress);
     height: $_height;
     background-color: $color_black;
 
-    @at-root #{$self}--animate & {
+    &--animate & {
       width: 0;
     }
-    @at-root #{$self}--animate.animated & {
+    &--animate.animated & {
       animation: c-meter--bar 1.5s ease-out forwards;
     }
   }

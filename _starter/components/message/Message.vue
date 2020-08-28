@@ -65,13 +65,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .c-message {
-  $self: &;
-
   backdrop-filter: blur(20px);
 
-  @at-root #{$self}-grid {
+  &-grid {
     grid-template-columns: auto 50px;
   }
 }

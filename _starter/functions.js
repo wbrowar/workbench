@@ -336,7 +336,6 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
       callback();
     }
   });
-  callback();
 };
 
 methods.prebuildScraper = function prebuildScraper(callback, paths, options, verbose) {

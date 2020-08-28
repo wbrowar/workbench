@@ -60,10 +60,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  .c-share {
-    $self: &;
-
-  }
-</style>

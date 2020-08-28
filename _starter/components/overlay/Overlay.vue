@@ -48,10 +48,7 @@
     }
 </script>
 
-<style lang="scss">
-    <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
-
+<style>
     $_mq_overlay_1: 700px;
     .c-overlay {
         display: flex;
@@ -64,7 +61,7 @@
         height: 100vh;
         z-index: 50000;
 
-        @at-root #{&}__mask {
+        &__mask {
             position: absolute;
             top: 0;
             left: 0;
@@ -72,18 +69,18 @@
             height: 100%;
             background-color: transparentize($color_black_raw, .6);
         }
-        @at-root #{&}__content {
+        &__content {
             position: relative;
             width: 100%;
             height: 100%;
             background-color: $color_white;
             box-sizing: border-box;
 
-            @at-root #{&}__inner {
+            &__inner {
                 max-height: calc(100vh - 40px);
                 overflow: auto;
             }
-            @at-root #{&}__close {
+            &__close {
                 @include hide_text;
                 display: block;
                 position: absolute;

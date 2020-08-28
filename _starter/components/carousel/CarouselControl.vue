@@ -54,9 +54,3 @@ export default {
   mounted() {},
 };
 </script>
-
-<style lang="scss">
-.c-carousel-control {
-  $self: &;
-}
-</style>

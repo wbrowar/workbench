@@ -31,25 +31,23 @@
   };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   /*! purgecss start ignore */
   .docs__code_example {
-    $self: &;
-
     position: relative;
     margin: 80px 0;
 
-    @at-root #{$self}__output {
+    &__output {
       position: relative;
       padding: 20px;
       box-sizing: border-box;
       border-radius: 4px;
 
-      @at-root #{$self}--code & {
+      .docs__code_example--code & {
         border-radius: 4px 4px 0 0;
       }
     }
-    @at-root #{$self}__copy {
+    &__copy {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -68,11 +66,11 @@
       opacity: 0;
       transition: opacity 0.2s ease-out;
 
-      @at-root #{$self}:hover & {
+      .docs__code_example:hover & {
         opacity: 1;
       }
     }
-    @at-root #{$self}__code {
+    &__code {
       padding: 20px;
       background-color: rgba(211, 220, 231, 0.3);
       border-radius: 0 0 4px 4px;

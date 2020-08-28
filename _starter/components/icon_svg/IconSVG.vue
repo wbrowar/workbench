@@ -56,7 +56,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .c-icon-svg {
   background-position: center center;
   background-repeat: no-repeat;

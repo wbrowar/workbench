@@ -1,7 +1,5 @@
 .c-navigation {
-  $self: &;
-
-  @at-root #{$self}__menu_toggle{
+  &__menu_toggle{
     &[aria-expanded="true"]{
       & + ul[hidden]{
         display:block;
@@ -9,7 +7,7 @@
     }
   }
 
-  @at-root #{$self}__menu{
+  &__menu{
     .open + ul{
       display:block;
     }

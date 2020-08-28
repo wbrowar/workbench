@@ -80,15 +80,13 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .c-messenger {
-  $self: &;
-
-  @at-root #{$self}-fade {
-    @at-root #{&}-enter-active, #{&}-leave-active {
+  &-fade {
+    &-enter-active, &-leave-active {
       transition: transform .3s ease-out, opacity .3s ease-out;
     }
-    @at-root #{&}-enter, #{&}-leave-to {
+    &-enter, &-leave-to {
       transform: translateY(50px);
       opacity: 0;
     }

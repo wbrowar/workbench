@@ -123,10 +123,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .c-dev_bar {
-  $self: &;
-
   backdrop-filter: blur(0.9rem);
 }
 </style>

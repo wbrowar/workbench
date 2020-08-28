@@ -32,14 +32,12 @@
   };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   /*! purgecss start ignore */
   .docs__modifiers_table {
-    $self: &;
-
     margin: 50px 0;
 
-    @at-root #{$self}__table {
+    &__table {
       width: 100%;
 
       th {

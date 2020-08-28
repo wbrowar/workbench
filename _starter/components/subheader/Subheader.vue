@@ -43,13 +43,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .c-subheader {
-  $self: &;
   position: relative;
   scroll-margin-top: 1em;
 
-  @at-root #{$self}-anchor {
+  &-anchor {
     & > *:first-child {
       &:before {
         content: '#';

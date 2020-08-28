@@ -38,16 +38,14 @@
   };
 </script>
 
-<style lang="scss">
+<style>
   /*! purgecss start ignore */
   .dev__components {
-    $self: &;
-
     margin: 0 auto;
     padding: 60px 0;
     max-width: 800px;
 
-    @at-root #{$self}__nav {
+    &__nav {
       display: flex;
       flex-flow: row wrap;
       background-color: rgb(43, 48, 59);
@@ -79,16 +77,16 @@
         }
       }
     }
-    @at-root #{$self}__demo {
-      @at-root h1#{&}__header {
+    &__demo {
+      h1&__header {
         margin-bottom: 0.3em;
         font-size: 1.5rem;
       }
-      @at-root h2#{&}__header {
+      h2&__header {
         margin: 0.8em 0 0.2em;
         font-size: 1.2rem;
       }
-      @at-root h3#{&}__header {
+      h3&__header {
         margin-bottom: 0.2em;
         font-size: 1.1rem;
         color: rgb(122, 134, 158);
@@ -97,7 +95,7 @@
         margin-bottom: 20px;
       }
     }
-    @at-root #{$self}__input {
+    &__input {
       @apply p-4 w-full bg-black-50 text-white rounded;
     }
   }

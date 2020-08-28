@@ -25,11 +25,11 @@
     "dotenv": "^8.2.0",
     "favicons": "^6.0.0",
     "inquirer": "^7.1.0",
-    "lodash": "^4.17.15",
     "postcss-custom-media": "^7.0.8",
     "postcss-easy-import": "^3.0.0",
     "postcss-functions": "^3.0.0",
     "postcss-mixins": "^6.2.3",
-    "postcss-nested": "^4.2.3"
+    "postcss-nested": "^4.2.3",
+    "postcss-simple-vars": "^5.0.2"
   }
 }

@@ -1,4 +1,4 @@
-@mixin _anchor_text {
+@define-mixin _anchor_text {
   @apply underline;
 
   &:hover,
@@ -11,8 +11,6 @@
 }
 
 .c-text {
-  $self: &;
-
   p {
     @apply mb-5 leading-normal;
 
@@ -34,7 +32,7 @@
       @apply font-semibold italic;
     }
     a {
-      @include _anchor_text;
+      @mixin _anchor_text;
     }
   }
   ol,
@@ -50,13 +48,13 @@
       break-inside: avoid;
 
       a {
-        @include _anchor_text;
+        @mixin _anchor_text;
       }
     }
   }
   ol {
-    @at-root #{&}-2-column {
-      @include mq(500px) {
+    &-2-column {
+      @media (--mq-sm) {
         column-count: 2;
         column-gap: 50px;
       }
@@ -67,8 +65,8 @@
     }
   }
   ul {
-    @at-root #{&}-2-column {
-      @include mq(500px) {
+    &-2-column {
+      @media (--mq-sm) {
         column-count: 2;
         column-gap: 50px;
       }

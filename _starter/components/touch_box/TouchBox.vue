@@ -61,9 +61,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.c-touch_box {
-  $self: &;
-}
-</style>

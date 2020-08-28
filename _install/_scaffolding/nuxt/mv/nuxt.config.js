@@ -15,7 +15,25 @@ export default {
     },
     postcss: {
       plugins: {
+        'postcss-simple-vars': {},
+        'postcss-easy-import': {},
+        'postcss-mixins': { mixins: require(`${path.resolve(wb.paths.css.src)}/_css.mixins.js`) },
+        'postcss-functions': { functions: require(`${path.resolve(wb.paths.css.src)}/_css.functions.js`) },
+        'postcss-nested': {},
+        'postcss-custom-media': {
+          importFrom: [
+            () => {
+              const customMedia = {};
+              Object.entries(wb.mq).forEach(([key, value]) => {
+                customMedia[`--mq-${key}`] = `(min-width: ${value}px)`;
+              });
+
+              return { customMedia };
+            },
+          ],
+        },
         tailwindcss: path.resolve(__dirname, './tailwind.config.js'),
+        autoprefixer: {},
       },
     },
     extend(config, ctx) {
@@ -30,14 +48,9 @@ export default {
       config.resolve.alias.Templates = path.resolve(`${wb.paths.starter.src}templates/`);
     },
   },
-  buildModules: [
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/style-resources',
-  ],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/style-resources'],
   components: ['~/components/', { path: wb.paths.components.src, ignore: [`**/demo.vue`] }],
-  css: [
-    `${path.resolve(wb.paths.css.src)}/app.css`,
-  ],
+  css: [`${path.resolve(wb.paths.css.src)}/app.css`],
   // generate: {
   //   fallback: true,
   //   routes() {
@@ -81,15 +94,17 @@ export default {
   modules: [
     // '@nuxt/http',
     'nuxt-purgecss',
-    ['nuxt-mq', {
-      // Default breakpoint for SSR
-      defaultBreakpoint: 'default',
-      breakpoints: {
-        ...wb.mq,
-        lg: Infinity,
-      }
-    }
-    ]
+    [
+      'nuxt-mq',
+      {
+        // Default breakpoint for SSR
+        defaultBreakpoint: 'default',
+        breakpoints: {
+          ...wb.mq,
+          lg: Infinity,
+        },
+      },
+    ],
   ],
   pageTransition: 'page',
   plugins: [
@@ -136,18 +151,21 @@ export default {
       if (wb.enableDocs) {
         const componentDocPages = glob.sync(`${wb.paths.components.src}**/demo.vue`);
         componentDocPages.forEach((item) => {
-          const slug = path.dirname(item).split(path.sep).pop();
+          const slug = path
+            .dirname(item)
+            .split(path.sep)
+            .pop();
           routes.push({
             path: `/dev/docs/${slug}`,
             name: `component-docs-${slug}`,
             component: `${wb.paths.js.src}automated/ComponentDocs.vue`,
             params: {
-              slug: slug,
+              slug,
             },
           });
         });
       }
-    }
+    },
   },
   // styleResources: {
   //   scss: [
@@ -159,4 +177,4 @@ export default {
   //   ],
   // },
   target: 'static',
-}
+};

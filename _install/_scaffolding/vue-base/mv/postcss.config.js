@@ -13,6 +13,7 @@ const autoprefixer = require('autoprefixer'),
       mixins = require('postcss-mixins'),
       nested = require('postcss-nested'),
       purgecss = require('@fullhuman/postcss-purgecss'),
+      simpleVars = require('postcss-simple-vars'),
       tailwind = require('tailwindcss');
 
 // Config custom media queries
@@ -30,6 +31,7 @@ const mediaQueries = {
 }
 
 const postcssPlugins = [
+  simpleVars(),
   easyImport(),
   mixins({ mixins: mixinsMixins }),
   functions({ functions: functionFunctions }),

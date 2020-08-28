@@ -263,13 +263,8 @@
     }
 </script>
 
-<style lang="scss">
-    <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
-
+<style>
     .c-slider {
-        $self: &;
-
         position: relative;
         overflow: hidden;
     }

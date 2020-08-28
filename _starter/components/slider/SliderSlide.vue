@@ -15,10 +15,7 @@
     }
 </script>
 
-<style lang="scss">
-    <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
-
+<style>
     @keyframes slider_slide--left-to-center {
         0% { transform: translateX(-100%) }
         100% { transform: translateX(0) }
@@ -37,8 +34,6 @@
     }
 
     .c-slider__slide {
-        $self: &;
-
         position: absolute;
         top: 0;
         left: 0;
@@ -48,45 +43,45 @@
         opacity: 0;
         transition: opacity $anim_duration_fade ease-out;
 
-        @at-root #{$self}--before {
+        &--before {
             transform: translateX(-100%);
 
-            @at-root #{$self}--current-to-after {
+            &--current-to-after {
                 animation: slider_slide--center-to-left $anim_duration_slide ease-out;
             }
         }
-        @at-root #{$self}--prev {
+        &--prev {
             transform: translateX(-100%);
 
-            @at-root #{$self}--current-to-prev {
+            &--current-to-prev {
                 animation: slider_slide--center-to-left $anim_duration_slide ease-out;
             }
         }
-        @at-root #{$self}--current {
+        &--current {
             opacity: 1;
             transform: translateX(0);
 
-            @at-root #{$self}--prev-to-current {
+            &--prev-to-current {
                 animation: slider_slide--left-to-center $anim_duration_slide ease-out;
             }
-            @at-root #{$self}--next-to-current {
+            &--next-to-current {
                 animation: slider_slide--right-to-center $anim_duration_slide ease-out;
             }
         }
-        @at-root #{$self}--next {
+        &--next {
             transform: translateX(100%);
 
-            @at-root #{$self}--current-to-next {
+            &--current-to-next {
                 animation: slider_slide--center-to-right $anim_duration_slide ease-out;
             }
         }
-        @at-root #{$self}--after {
+        &--after {
             transform: translateX(100%);
 
-            @at-root #{$self}--after-to-current {
+            &--after-to-current {
                 animation: slider_slide--left-to-center $anim_duration_slide ease-out;
             }
-            @at-root #{$self}--current-to-after {
+            &--current-to-after {
                 animation: slider_slide--center-to-left $anim_duration_slide ease-out;
             }
         }

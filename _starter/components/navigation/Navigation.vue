@@ -461,14 +461,8 @@
     }
 </script>
 
-<style lang="scss">
-    // include variables and mixins if needed
-    <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
-
+<style>
     .c-navigation {
-        $self: &;
-
         & {
              background: gray;
         }
@@ -484,7 +478,7 @@
             padding:0;
         }
 
-         @at-root #{$self}__menu{
+         &__menu{
              list-style-type:none;
              margin-top:0;
              &[hidden], [hidden]{

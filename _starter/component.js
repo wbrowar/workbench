@@ -1,9 +1,9 @@
 // import node modules
 const ejs = require('ejs'),
-      fs = require('fs-extra'),
-      glob = require('glob-all'),
-      inquirer = require('inquirer'),
-      path = require('path');
+  fs = require('fs-extra'),
+  glob = require('glob-all'),
+  inquirer = require('inquirer'),
+  path = require('path');
 
 // import global functions
 const g = require('./functions.js');
@@ -13,15 +13,15 @@ let wb = require(`${ process.cwd() }/wb.config.js`);
 
 // set constants
 const argv = g.parseArgv(),
-      env = process.env.NODE_ENV || 'development';
+  env = process.env.NODE_ENV || 'development';
 
 // use CLI arguments to set variables
 const action  = (argv.options.mv || false) ? 'move' : 'new',
-      verbose = argv.options.verbose || false;
+  verbose = argv.options.verbose || false;
 
 // set variables based on wb options
 let paths = wb.paths,
-    questions;
+  questions;
 
 // set notify configs
 const notify = {
@@ -116,6 +116,8 @@ async function run() {
 
             answers.templates.forEach((item) => {
                 let config = answers;
+                config.condensedName = answers.name.replace(/\s+/g, '');
+                config.handleKebab = answers.handle.replace(/_/g, '-');
                 let delimiter = '%';
 
                 switch (item) {

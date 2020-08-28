@@ -66,11 +66,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.c-color-scheme-toggle {
-  $self: &;
-
-  @include button_reset;
-}
-</style>

@@ -1,5 +1,4 @@
 .c-tooltip--example {
-    @include box_modifiers($self: &);
     >div {
         padding-top: $spacing_text;
         padding-bottom: $spacing_text;
@@ -7,7 +6,6 @@
 }
 
 @mixin c-tooltip_common {
-    $self: &;
     cursor: help;
     position: relative;
     border-bottom: dashed thin;

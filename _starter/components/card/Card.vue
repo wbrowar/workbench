@@ -55,10 +55,3 @@
     },
   };
 </script>
-
-<style lang="scss">
-  .c-card {
-    $self: &;
-
-  }
-</style>

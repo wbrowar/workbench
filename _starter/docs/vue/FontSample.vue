@@ -40,11 +40,9 @@
   };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   /*! purgecss start ignore */
   .docs__font_sample {
-    $self: &;
-
     cursor: pointer;
   }
   /*! purgecss end ignore */

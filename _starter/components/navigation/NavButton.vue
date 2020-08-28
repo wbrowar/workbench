@@ -50,10 +50,9 @@
     }
 </script>
 
-<style lang="scss">
+<style>
     .c-navigation {
-        $self: &;
-        @at-root #{$self}__menu_toggle {
+        &__menu_toggle {
             display: flex;
             flex-flow: row nowrap;
             align-items: center;

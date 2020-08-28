@@ -43,11 +43,9 @@
   };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   /*! purgecss start ignore */
   .docs__color_swatch {
-    $self: &;
-
     position: relative;
     padding: 12px;
     background-color: rgb(255, 255, 255);
@@ -55,21 +53,21 @@
     border: 1px solid rgba(43, 48, 59, 0.1);
     height: 100%;
 
-    @at-root #{$self}__checkers {
+    &__checkers {
       background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
       background-size: 20px 20px;
       background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
       border-radius: 3px;
       cursor: pointer;
     }
-    @at-root #{$self}__color {
+    &__color {
       margin-bottom: 6px;
       padding-top: 100%;
       position: relative;
       background-color: var(--docs-color-swatch-color);
       border-radius: 3px;
     }
-    @at-root #{$self}__variable, #{$self}__value {
+    &__variable, &__value {
       margin-bottom: 2px;
       white-space: nowrap;
       overflow: hidden;
@@ -77,11 +75,11 @@
       font-size: 0.7rem;
       color: #2b303b;
     }
-    @at-root #{$self}__variable {
+    &__variable {
       font-weight: 700;
       cursor: pointer;
     }
-    @at-root #{$self}__options {
+    &__options {
       position: absolute;
       top: 0;
       left: 0;
@@ -100,15 +98,15 @@
         }
       }
 
-      @at-root #{$self}:hover & {
+      .docs__color_swatch:hover & {
         opacity: 1;
       }
 
-      @at-root #{&}__title {
+      &__title {
         color: rgba(43, 48, 59, .4);
       }
     }
-    @at-root #{$self}__option {
+    &__option {
       display: grid;
       grid-template-columns: 40px auto;
       grid-template-rows: 40px;
@@ -116,11 +114,11 @@
       align-items: center;
       cursor: pointer;
 
-      @at-root #{&}__header {
+      &__header {
         font-size: 1.1rem;
         color: #2b303b;
       }
-      @at-root #{&}__display {
+      &__display {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -132,7 +130,7 @@
         font-size: 2.4rem;
         font-weight: 900;
       }
-      @at-root #{&}__label {
+      &__label {
         font-size: 0.8rem;
         color: #2b303b;
       }

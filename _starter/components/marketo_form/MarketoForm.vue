@@ -73,9 +73,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.c-marketo_form {
-  $self: &;
-}
-</style>

@@ -1,15 +1,13 @@
 .c-image_slider {
-  $self: &;
-
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 50vw auto;
 
-  @at-root #{$self}__slider {
+  &__slider {
     width: 100%;
     height: 100%;
   }
-  @at-root #{$self}__slide {
+  &__slide {
     @include layout_centered_image_text;
   }
 }

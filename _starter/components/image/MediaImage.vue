@@ -123,11 +123,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .c-image {
-  $self: &;
-
-  @at-root #{$self}:not(.c-image-ignore-scheme) {
+  &:not(.c-image-ignore-scheme) {
     .scheme-dark & {
       img {
         filter: brightness(0.8) contrast(1.2);

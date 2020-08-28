@@ -45,13 +45,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.c-carousel-slide {
-  $self: &;
-}
-</style>
-
-<style scoped lang="scss">
+<style scoped>
 @keyframes slideLeftIn {
   0% {
     left: 100%;

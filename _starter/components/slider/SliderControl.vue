@@ -51,10 +51,7 @@
     }
 </script>
 
-<style lang="scss">
-    <%- include(paths.css.src + 'automated/_colors.scss') %>
-    <%- include(paths.css.src + 'base/_mixins.scss') %>
-
+<style>
     $_dot_size: 10px;
     .c-slider_control {
         display: flex;
@@ -63,15 +60,15 @@
         justify-content: center;
         padding: 6px;
 
-        @at-root #{&}__back {
+        &__back {
             cursor: pointer;
         }
-        @at-root #{&}__indicators {
+        &__indicators {
             display: flex;
             flex-flow: row nowrap;
             align-items: center;
         }
-        @at-root #{&}__indicator_dot {
+        &__indicator_dot {
             @include hide_text;
             position: relative;
             padding: 4px;
@@ -98,7 +95,7 @@
                 }
             }
         }
-        @at-root #{&}__next {
+        &__next {
             cursor: pointer;
         }
     }
