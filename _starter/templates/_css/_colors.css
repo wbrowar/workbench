@@ -4,8 +4,12 @@ body {
 <% if (scheme === 'default') { -%>
 <% for (const color in colors[scheme]) { -%>
 <% let colorVal = colors[scheme][color] -%>
+<% if (typeof colorVal === 'string') { -%>
+  --color-<%- color %>: <%- colorVal %>;
+<% } else { -%>
   --color-<%- color %>-hsl: <%- colorVal.hsl %>;
   --color-<%- color %>: hsla(var(--color-<%- color %>-hsl), <%- colorVal.alpha %>);
+<% } -%>
 <% } -%>
 <% } else if (['dark', 'light'].includes(scheme)) { -%>
   @media (prefers-color-scheme: <%- scheme %>) {

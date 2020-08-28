@@ -12,11 +12,11 @@
         <div class="docs__color_swatch__option__label">Background</div>
       </div>
       <div class="docs__color_swatch__option" @click="copyToClipboard(`text-${name}`)" :title="`Click to copy 'text-${name}' to clipboard`">
-        <div><div class="docs__color_swatch__option__display bg-white" :class="`text-${name}`">A</div></div>
+        <div><div class="docs__color_swatch__option__display bg-dev-white" :class="`text-${name}`">A</div></div>
         <div class="docs__color_swatch__option__label">Text</div>
       </div>
       <div class="docs__color_swatch__option" @click="copyToClipboard(`border-${name}`)" :title="`Click to copy 'border-${name}' to clipboard`">
-        <div><div class="docs__color_swatch__option__display bg-white border-8 border-solid" :class="`border-${name}`"></div></div>
+        <div><div class="docs__color_swatch__option__display bg-dev-white border-8 border-solid" :class="`border-${name}`"></div></div>
         <div class="docs__color_swatch__option__label">Border</div>
       </div>
     </div>

@@ -248,14 +248,24 @@ methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ej
         ejsVars.colors[schemeKey] = {};
       }
       if (typeof themeColors[schemeKey][colorKey] === 'string') {
-        const color = Color(themeColors[schemeKey][colorKey]);
-        const hsl = color.hsl().object();
-        ejsVars.colors[schemeKey][colorKey] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
+        if (themeColors[schemeKey][colorKey].startsWith('var(')) {
+          ejsVars.colors[schemeKey][colorKey] = themeColors[schemeKey][colorKey];
+        } else {
+          const color = Color(themeColors[schemeKey][colorKey]);
+          const hsl = color.hsl().object();
+          ejsVars.colors[schemeKey][colorKey] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
+        }
       } else {
         Object.keys(themeColors[schemeKey][colorKey]).forEach((shadeKey) => {
-          const color = Color(themeColors[schemeKey][colorKey][shadeKey]);
-          const hsl = color.hsl().object();
-          ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
+          if (typeof themeColors[schemeKey][colorKey] === 'string') {
+            if (themeColors[schemeKey][colorKey][shadeKey].startWith('var(')) {
+              ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = themeColors[schemeKey][colorKey][shadeKey];
+            } else {
+              const color = Color(themeColors[schemeKey][colorKey][shadeKey]);
+              const hsl = color.hsl().object();
+              ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
+            }
+          }
         });
       }
     });
@@ -466,17 +476,19 @@ methods.tailwindConfig = function tailwindConfig(wb) {
   // Add Docs colors
   if (wb.enableDocs) {
     _.merge(themeColors, {
+      'dev-black': 'var(--color-black, #000000)',
       'dev-gray': {
-        '100': '#f5f5f5',
-        '200': '#eeeeee',
-        '300': '#e0e0e0',
-        '400': '#bdbdbd',
-        '500': '#9e9e9e',
-        '600': '#757575',
-        '700': '#616161',
-        '800': '#424242',
-        '900': '#212121',
-      }
+        '100': 'var(--color-gray-100, #f5f5f5)',
+        '200': 'var(--color-gray-200, #eeeeee)',
+        '300': 'var(--color-gray-300, #e0e0e0)',
+        '400': 'var(--color-gray-400, #bdbdbd)',
+        '500': 'var(--color-gray-500, #9e9e9e)',
+        '600': 'var(--color-gray-600, #757575)',
+        '700': 'var(--color-gray-700, #616161)',
+        '800': 'var(--color-gray-800, #424242)',
+        '900': 'var(--color-gray-900, #212121)',
+      },
+      'dev-white': 'var(--color-white, #ffffff)',
     });
   }
   Object.keys(themeColors).forEach((colorKey) => {

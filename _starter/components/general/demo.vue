@@ -334,10 +334,10 @@ export default {
   methods: {
     copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(
-        function () {
+        function() {
           log(`Copied to clipboard: ${text}`);
         },
-        function () {
+        function() {
           log(`Could not copy ${text} to clipboard`);
         }
       );

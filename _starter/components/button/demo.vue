@@ -9,9 +9,11 @@
       :code="code.href"
       copy-text='<Button href="" label-text="" />'
       title="CTA Buttons"
-      :description="`Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${
-        globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link'
-      }' components to work with Vue Router.`"
+      :description="
+        `Link to internal pages or link to external URLs. Links that start with '/' will be converted to '${
+          globalData.wb.projectType === 'gridsome' ? 'g-link' : 'router-link'
+        }' components to work with Vue Router.`
+      "
     >
       <div class="c-buttons">
         <Button href="/about/" label-text="About (internal)" />

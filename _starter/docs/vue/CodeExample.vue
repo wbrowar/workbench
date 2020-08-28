@@ -2,7 +2,7 @@
   <div class="docs__code_example" :class="{ 'docs__code_example--code': code }">
     <h2 class="dev__components__demo__header">{{ title }}</h2>
     <p class="mb-4" v-if="description">{{ description }}</p>
-    <div class="docs__code_example__output border border-solid border-dev-gray-300" :class="[`bg-${dark ? 'black' : 'white'}`]">
+    <div class="docs__code_example__output border border-solid border-dev-gray-300" :class="[`bg-dev-${dark ? 'black' : 'white'}`]">
       <slot />
     </div>
     <div class="docs__code_example__code" v-text.trim="code" v-if="code"></div>

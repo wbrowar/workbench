@@ -6,6 +6,8 @@ html {
   @include automated_color_schemes;
   @apply font-apple;
   line-height: 1.4;
+}
+body {
   background-color: var(--color-white);
   color: var(--color-black);
 }
