@@ -257,14 +257,12 @@ methods.prebuildCssTemplates = function prebuildCssTemplates(callback, paths, ej
         }
       } else {
         Object.keys(themeColors[schemeKey][colorKey]).forEach((shadeKey) => {
-          if (typeof themeColors[schemeKey][colorKey] === 'string') {
-            if (themeColors[schemeKey][colorKey][shadeKey].startWith('var(')) {
-              ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = themeColors[schemeKey][colorKey][shadeKey];
-            } else {
-              const color = Color(themeColors[schemeKey][colorKey][shadeKey]);
-              const hsl = color.hsl().object();
-              ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
-            }
+          if (themeColors[schemeKey][colorKey][shadeKey].startsWith('var(')) {
+            ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = themeColors[schemeKey][colorKey][shadeKey];
+          } else {
+            const color = Color(themeColors[schemeKey][colorKey][shadeKey]);
+            const hsl = color.hsl().object();
+            ejsVars.colors[schemeKey][`${colorKey}-${shadeKey}`] = { hsl: `${hsl.h}, ${hsl.s}%, ${hsl.l}%`, alpha: color.alpha() };
           }
         });
       }

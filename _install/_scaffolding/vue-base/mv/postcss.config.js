@@ -24,8 +24,6 @@ const mediaQueries = {
       customMedia[`--mq-${key}`] = `(min-width: ${value}px)`;
     });
 
-    console.log(customMedia);
-
     return { customMedia };
   }],
 }
