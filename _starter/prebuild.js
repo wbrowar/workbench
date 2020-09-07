@@ -14,7 +14,6 @@ const argv = g.parseArgv();
 
 // use CLI arguments to set variables
 const runComponentDocs = argv.options.componentdocs || false,
-      runCssTemplates  = argv.options.csstemplates || false,
       runIconMethods   = argv.options.iconmethods || false,
       runScssIncludes  = argv.options.scssincludes || false,
       runScraper       = argv.options.scraper || false,
@@ -37,15 +36,6 @@ async function run() {
         g.prebuildConfigToEsm(resolve, wb.paths, tailwind, 'tailwind', verbose);
       }
     );
-    // const variables = g.asyncFunction(
-    //   `Converting variables for front-end use`, `Variables converted`, (resolve) => {
-    //     if (fs.existsSync(`${wb.paths.starter.src}variables.js`)) {
-    //       g.prebuildConfigToEsm(resolve, wb.paths, require(`${wb.paths.starter.src}variables.js`), 'variables', verbose);
-    //     } else {
-    //       resolve();
-    //     }
-    //   }
-    // );
     const wbConfig = g.asyncFunction(
       `Converting WB Config for front-end use`, `WB Config converted`, (resolve) => {
         g.prebuildWbConfig(resolve, wb.paths, wb, verbose);
@@ -54,7 +44,6 @@ async function run() {
 
     let cleanComplete = await clean;
     let tailwindConfigComplete = await tailwindConfig;
-    // let variablesComplete = await variables;
     let wbConfigComplete = await wbConfig;
 
     if (runComponentDocs) {
@@ -70,15 +59,6 @@ async function run() {
         );
         let componentDocsComplete = await componentDocs;
         let componentDocsListComplete = await componentDocsList;
-    }
-
-    if (runCssTemplates) {
-        const cssTemplates = g.asyncFunction(
-            `Compiling CSS Templates`, `CSS Templates Compiled`, (resolve) => {
-                g.prebuildCssTemplates(resolve, wb.paths, ejsVars, verbose);
-            }
-        );
-        let cssTemplatesComplete = await cssTemplates;
     }
 
     if (runIconMethods) {

@@ -19,17 +19,17 @@
     data() {
       return {
         pages: docsComponents,
-        tailwind: tailwind,
-        wb: wb,
+        tailwind,
+        wb,
       };
     },
     computed: {
-      currentPageHandle: function() {
+      currentPageHandle() {
         return `wb-${this.$route.path.substring(10, this.$route.path.length - 1)}`;
       },
     },
     methods: {
-      titleCase: function(str) {
+      titleCase(str) {
         return str.toLowerCase().split('_').map(function(word) {
           return word.replace(word[0], word[0].toUpperCase());
         }).join(' ');
@@ -96,7 +96,7 @@
       }
     }
     &__input {
-      @apply p-4 w-full bg-black-50 text-white rounded;
+      @apply p-4 w-full bg-dev-gray-700 text-white rounded;
     }
   }
   /*! purgecss end ignore */

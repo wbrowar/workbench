@@ -6,48 +6,16 @@
       v-if="globalData.wb.colors"
     >
       <div class="space-y-24">
-        <div v-for="(scheme, index) in colorSwatches" :key="index">
-          <div
-            class="root__color_grid"
-            style="
+        <div
+          class="root__color_grid"
+          style="
               display: grid;
               grid-gap: 20px;
               grid-template-columns: repeat(auto-fit, 174px);
               grid-template-rows: auto;
             "
-          >
-            <ColorSwatch :name="name" :color="item" v-for="(item, name) in scheme" :key="name" />
-          </div>
-
-          <div class="mt-10 space-y-4" v-if="index === 'default'">
-            <h2 class="dev__components__demo__header">Default Colors</h2>
-            <p>
-              Colors are turned into CSS Custom Properties by default. To use the raw value of a color in the "default"
-              color scheme, append `-val` to the end of the color class.
-            </p>
-            <p>
-              For example, `bg-white-val` will always be white, not matter if a color scheme inverts it or changes its
-              value.
-            </p>
-            <p>
-              <em
-                >NOTE: Raw values are meant to override colors in places where dynamically changing a color causes
-                issues. Using it everywhere isn't recommended.</em
-              >
-            </p>
-          </div>
-          <div class="mt-10 space-y-4" v-else>
-            <h2 class="dev__components__demo__header">Color Scheme: {{ index }}</h2>
-            <p>
-              The Tailwind config includes overrides to automatically enable {{ index }} mode. Any color defined above
-              will override the color that uses the same name in the default scheme.
-            </p>
-            <p>
-              There is a {{ index }} mode variant available so specific colors can be defined on an element when in
-              {{ index }} mode. For example, `text-black {{ index }}:text-white` will turn text from black to white when
-              in {{ index }} mode.
-            </p>
-          </div>
+        >
+          <ColorSwatch :name="name" :color="item" v-for="(item, name) in colorSwatches" :key="name" />
         </div>
       </div>
     </CodeExample>
@@ -94,17 +62,28 @@
           </h3>
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: auto 80px; grid-gap: 30px; margin-top: 60px;">
+      <div>
+        <div>
+          <label style="display: block; margin-bottom: 3px;">Size</label>
+
+          <div
+            style="display: grid; gap: 20px;"
+            :style="{ gridTemplateColumns: `repeat(${Object.keys(twConfig.theme.fontSize).length}, 1fr)` }"
+          >
+            <button
+              class="dev__components__input bg-dev-black"
+              :style="{ '--bg-opacity': fontSampleSize !== item ? '.5' : null }"
+              @click="fontSampleSize = item"
+              v-for="item in Object.keys(twConfig.theme.fontSize)"
+              :key="item"
+            >
+              {{ item }}
+            </button>
+          </div>
+        </div>
         <div>
           <label for="font_sample_text_input" style="display: block; margin-bottom: 3px;">Sample Text</label>
           <input id="font_sample_text_input" class="dev__components__input" type="text" v-model="fontSampleText" />
-        </div>
-        <div>
-          <label for="font_sample_size_input" style="display: block; margin-bottom: 3px;">Size</label>
-
-          <select class="dev__components__input appearance-none" v-model="fontSampleSize">
-            <option :value="item" v-for="item in Object.keys(twConfig.theme.fontSize)" :key="item">{{ item }}</option>
-          </select>
         </div>
       </div>
     </CodeExample>
@@ -203,8 +182,8 @@
           :key="index"
         >
           <div
-            class="h-16"
-            :class="[`bg-black-${index}`]"
+            class="h-16 bg-black"
+            :class="[`bg-opacity-${index}`]"
             :title="`Click to copy 'opacity-${index}'`"
             @click="copyToClipboard(`opacity-${index}`)"
           ></div>
@@ -303,28 +282,23 @@ export default {
     this.fontSampleSize = `base`;
     this.fontSampleText = `The quick brown fox jumps over the lazy dog`;
 
-    Object.keys(this.globalData.wb.colors).forEach((schemeKey) => {
-      const scheme = this.globalData.wb.colors[schemeKey];
+    Object.keys(this.globalData.wb.colors).forEach((key) => {
+      const color = this.globalData.wb.colors[key];
 
-      if (!this.colorSwatches[schemeKey]) {
-        this.colorSwatches[schemeKey] = {};
-      }
-      Object.keys(scheme).forEach((colorKey) => {
-        if (!colorKey.startsWith('dev-')) {
-          if (typeof scheme[colorKey] === 'string') {
-            this.colorSwatches[schemeKey][colorKey] = scheme[colorKey];
-          } else {
-            if (scheme[colorKey].default) {
-              this.colorSwatches[schemeKey][`${colorKey}`] = scheme[colorKey].default;
-            }
-            Object.keys(scheme[colorKey]).forEach((shadeKey) => {
-              if (shadeKey !== 'default') {
-                this.colorSwatches[schemeKey][`${colorKey}-${shadeKey}`] = scheme[colorKey][shadeKey];
-              }
-            });
+      if (!key.startsWith('dev-')) {
+        if (typeof color === 'string') {
+          this.colorSwatches[key] = color;
+        } else {
+          if (color.default) {
+            this.colorSwatches[`${key}`] = color.default;
           }
+          Object.keys(color).forEach((shadeKey) => {
+            if (shadeKey !== 'default') {
+              this.colorSwatches[`${key}-${shadeKey}`] = color[shadeKey];
+            }
+          });
         }
-      });
+      }
     });
 
     log('The Colors!', this.colorSwatches);

@@ -39,10 +39,10 @@ export default {
       switch (this.method) {
         case 'class':
           this.otherSchemes.forEach((item) => {
-            removeClass(el, `scheme-${item}`);
+            removeClass(el, `${item}`);
           });
           if (this.schemeId !== 'default') {
-            addClass(el, `scheme-${this.schemeId}`);
+            addClass(el, `${this.schemeId}`);
           }
           break;
       }

@@ -1,19 +1,18 @@
+@mixin font-face;
+
 ::selection {
   @apply bg-black text-white;
 }
 
 html {
-  @include automated_color_schemes;
   @apply font-apple;
-  line-height: 1.4;
 }
 body {
-  background-color: var(--color-white);
-  color: var(--color-black);
+  @apply bg-white leading-normal text-black;
 }
 
 button {
-  appearance: none;
+  @apply appearance-none;
 }
 figure {
   line-height: 0;
@@ -38,7 +37,7 @@ video {
 
 /*Make element bright and easy to see that it needs to be swapped out during development*/
 .fpo {
+  @apply text-white;
   background-color: fuchsia;
   outline: 5px solid fuchsia;
-  color: var(color-white);
 }

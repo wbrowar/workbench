@@ -1,6 +1,6 @@
 <template>
   <div
-    class="c-dev_bar flex flex-row flex-no-wrap justify-between w-full bg-black-60 overflow-x-scroll scrolling-touch z-50"
+    class="c-dev_bar flex flex-row flex-no-wrap justify-between w-full bg-dev-black bg-opacity-60 text-dev-white overflow-x-scroll scrolling-touch z-50"
     :class="classes"
     v-if="isVisible"
   >
