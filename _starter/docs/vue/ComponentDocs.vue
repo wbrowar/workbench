@@ -1,12 +1,12 @@
 <template>
-  <<%- wb.projectType === 'gridsome' ? 'Layout' : 'div' %>>
+  <div :is="wb.projectType === 'gridsome' ? 'Layout' : 'div'">
     <div class="dev__components">
       <div class="dev__components__nav">
-        <<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %> :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</<%- wb.projectType === 'gridsome' ? 'g-link' : 'router-link' %>>
+        <div :is="linkElementType" :class="{ 'dev__components__nav--current': currentPageHandle === item }" :to="`/dev/docs/${ item }/`" v-for="item in pages" :key="item">{{ titleCase(item) }}</div>
       </div>
       <div :is="currentPageHandle" class="dev__components__demo" :global-data="{ tailwind: tailwind, wb: wb }" />
     </div>
-  </<%- wb.projectType === 'gridsome' ? 'Layout' : 'div' %>>
+  </div>
 </template>
 
 <script>
@@ -26,6 +26,18 @@
     computed: {
       currentPageHandle() {
         return `wb-${this.$route.path.substring(10, this.$route.path.length - 1)}`;
+      },
+      linkElementType() {
+        let linkType = 'router-link';
+        switch (wb.projectType) {
+          case 'gridsome':
+            linkType = 'g-link';
+            break;
+          case 'nuxt':
+            linkType = 'nuxt-link';
+            break;
+        }
+        return linkType;
       },
     },
     methods: {

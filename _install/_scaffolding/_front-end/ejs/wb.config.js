@@ -119,27 +119,6 @@ module.exports = {
   devMode: process.env.<%- appEnvPrefix %>DEV_MODE === 'true',
   enableDocs: process.env.<%- appEnvPrefix %>ENABLE_DOCS === 'true',
   enableWebp: process.env.<%- appEnvPrefix %>ENABLE_WEBP === 'true',
-  colorOptions: {
-    enableCustomProperties: true,
-    utilities: [
-      // Create color utilities from values in colors.default
-      { property: 'backgroundColor', prefix: 'bg', enabled: ['opacity', 'val'] },
-      { property: 'borderColor', prefix: 'border', enabled: ['opacity', 'val'] },
-      { property: 'color', prefix: 'text', enabled: ['opacity', 'val'] },
-      // { property: 'divideColor', prefix: 'border', enabled: ['opacity', 'val'] },
-      // { property: 'placeholderColor', prefix: 'border', enabled: ['opacity', 'val'] },
-    ],
-    variants: [
-      // Enable variants for all color combinations
-      'responsive',
-      'hover',
-      'focus',
-      // 'active',
-      'group-hover',
-      'animated'
-      // 'current'
-    ],
-  },
   ejs: {
     // Define any data to be processed with EJS
   },

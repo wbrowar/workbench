@@ -6,6 +6,7 @@
 import * as svg from 'JS/automated/svg.js';
 
 export default {
+  name: 'IconSVG',
   data() {
     return {
       svgHtml: false,

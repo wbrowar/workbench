@@ -36,6 +36,7 @@ export default {
         autoprefixer: {},
       },
     },
+    transpile: ['gsap'],
     extend(config, ctx) {
       config.resolve.alias.Components = path.resolve(wb.paths.components.src);
       config.resolve.alias.CSS = path.resolve(wb.paths.css.src);
@@ -49,7 +50,10 @@ export default {
     },
   },
   buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/style-resources'],
-  components: ['~/components/', { path: wb.paths.components.src, ignore: [`**/demo.vue`] }],
+  components: [
+    // '~/components/',
+    { path: wb.paths.components.src, ignore: [`**/demo.vue`] }
+  ],
   css: [`${path.resolve(wb.paths.css.src)}/app.css`],
   // generate: {
   //   fallback: true,
@@ -158,7 +162,7 @@ export default {
           routes.push({
             path: `/dev/docs/${slug}`,
             name: `component-docs-${slug}`,
-            component: `${wb.paths.js.src}automated/ComponentDocs.vue`,
+            component: `${wb.paths.starter.starter}docs/vue/ComponentDocs.vue`,
             params: {
               slug,
             },

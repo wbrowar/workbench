@@ -13,6 +13,7 @@
 import { log } from 'JS/global.js';
 
 export default {
+  name: 'AccordionTab',
   data() {
     return {
       isOpen: false,
@@ -26,7 +27,9 @@ export default {
     toggleSelf: { type: Boolean, default: false },
   },
   methods: {
-    onHeaderClicked: function() {
+    onHeaderClicked() {
+      log('Accordion toggled');
+
       if (this.toggleTabHandler) {
         this.toggleTabHandler(this._uid);
       } else if (this.toggleSelf) {

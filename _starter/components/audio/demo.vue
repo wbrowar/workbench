@@ -18,19 +18,15 @@
 </template>
 
 <script>
-import Box from 'Components/box/Box.vue';
 import MediaAudio from 'Components/audio/MediaAudio.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
 export default {
   components: {
-    Box,
     MediaAudio,
     CodeExample,
-    CssModifiers,
     ImportPath,
     PropsTable,
   },

@@ -160,34 +160,6 @@ methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
   });
 };
 
-methods.prebuildComponentDocs = function prebuildComponentDocs(callback, paths, wb, verbose) {
-  glob(`${paths.components.src}**/demo.vue`, function(er, files) {
-    methods.log('verbose', `Docs Files: ${JSON.stringify(files, null, 2)}`, verbose);
-    let components = [];
-    let count = files.length;
-    files.forEach((item) => {
-      components.push(path.dirname(item).split(path.sep).pop());
-    });
-
-    const options = {
-      components: components,
-      wb: wb,
-    };
-
-    ejs.renderFile(`${paths.starter.templates}_vue/ComponentDocs.vue`, options, {}, function(err, str) {
-      if (err) {
-        methods.log('warn', err);
-      }
-      fs.outputFile(paths.js.src + 'automated/ComponentDocs.vue', str, (err) => {
-        if (!err) {
-          methods.log('verbose', `Component Docs template created.`, verbose);
-          callback();
-        }
-      });
-    });
-  });
-};
-
 methods.prebuildComponentDocsList = function prebuildComponentDocsList(callback, paths, wb, verbose) {
   glob(`${paths.components.src}**/demo.vue`, function(er, files) {
     methods.log('verbose', `Docs Files for List: ${JSON.stringify(files, null, 2)}`, verbose);

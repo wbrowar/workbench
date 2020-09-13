@@ -16,6 +16,7 @@
 import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
 export default {
+  name: 'MediaAudio',
   data() {
     return {
       lazyLoad: false,

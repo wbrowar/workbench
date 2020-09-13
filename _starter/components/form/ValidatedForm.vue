@@ -12,6 +12,7 @@ import { log } from 'JS/global.js';
 import Button from 'Components/button/Button.vue';
 
 export default {
+  name: 'ValidatedForm',
   components: {
     Button,
   },

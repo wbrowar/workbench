@@ -12,7 +12,11 @@
       <Accordion>
         <AccordionTab v-for="n in 3" :key="n">
           <div slot="header">Header (click to expand)</div>
-          <div slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum dicta dolore eaque enim eveniet ipsum iusto, maiores omnis perferendis sit temporibus vitae voluptatum. Aspernatur autem error numquam omnis sed?</div>
+          <div slot="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum dicta dolore eaque enim eveniet
+            ipsum iusto, maiores omnis perferendis sit temporibus vitae voluptatum. Aspernatur autem error numquam omnis
+            sed?
+          </div>
         </AccordionTab>
       </Accordion>
     </CodeExample>
@@ -20,7 +24,11 @@
     <PropsTable :props="accordionProps" />
 
     <h1 class="dev__components__demo__header">Accordion Tab</h1>
-    <p>An accordion tab is made up of an AccordionTab component and two slots: the 'header' is what gets clicked on to show and hide the 'content' slot. An accordion tab can be used as a child within an Accordion component, or it can be used on it's own to hide single pieces of content.</p>
+    <p>
+      An accordion tab is made up of an AccordionTab component and two slots: the 'header' is what gets clicked on to
+      show and hide the 'content' slot. An accordion tab can be used as a child within an Accordion component, or it can
+      be used on it's own to hide single pieces of content.
+    </p>
 
     <ImportPath path="import AccordionTab from 'Components/accordion/AccordionTab.vue';" />
 
@@ -36,11 +44,9 @@
 </template>
 
 <script>
-import { log } from 'JS/global.js';
 import Accordion from 'Components/accordion/Accordion.vue';
 import AccordionTab from 'Components/accordion/AccordionTab.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
@@ -49,7 +55,6 @@ export default {
     Accordion,
     AccordionTab,
     CodeExample,
-    CssModifiers,
     ImportPath,
     PropsTable,
   },
@@ -78,10 +83,22 @@ export default {
 </AccordionTab>`,
     };
     this.modifiers = [{ name: 'test', description: `Test` }];
-    this.accordionProps = [{ name: 'firstTabOpen', type: 'Boolean', default: `true`, description: `The first tab is opened on load.` }];
+    this.accordionProps = [
+      { name: 'firstTabOpen', type: 'Boolean', default: `true`, description: `The first tab is opened on load.` },
+    ];
     this.accordionTabProps = [
-      { name: 'open', type: 'Boolean', default: `false`, description: `Open this tab by default. This can be overwritten by a parent Accordion component.` },
-      { name: 'toggleSelf', type: 'Boolean', default: `false`, description: `When used outside of an Accordion component, setting this to 'true' enables show/hide functionality.` },
+      {
+        name: 'open',
+        type: 'Boolean',
+        default: `false`,
+        description: `Open this tab by default. This can be overwritten by a parent Accordion component.`,
+      },
+      {
+        name: 'toggleSelf',
+        type: 'Boolean',
+        default: `false`,
+        description: `When used outside of an Accordion component, setting this to 'true' enables show/hide functionality.`,
+      },
     ];
   },
 };

@@ -16,8 +16,8 @@
       <TouchBox
         class="flex items-center justify-center w-64 h-64 bg-black"
         drag-type="x"
-        @swipeLeft="swipeVal = 'swiped left'"
-        @swipeRight="swipeVal = 'swiped right'"
+        @swipe-left="swipeVal = 'swiped left'"
+        @swipe-right="swipeVal = 'swiped right'"
       >
         <p class="text-white">{{ swipeVal }}</p>
       </TouchBox>
@@ -48,6 +48,7 @@ export default {
     return {
       swipeVal: 'swipe left or right',
       code: false,
+      events: false,
       props: false,
     };
   },
@@ -59,17 +60,17 @@ export default {
       default: `<TouchBox
   class="flex items-center justify-center w-64 h-64 bg-black"
   drag-type="x"
-  @swipeLeft="swipeVal = 'swiped left'"
-  @swipeRight="swipeVal = 'swiped right'"
+  @swipe-left="swipeVal = 'swiped left'"
+  @swipe-right="swipeVal = 'swiped right'"
 >
   <p class="text-white">{{ swipeVal }}</p>
 </TouchBox>`,
     };
     this.events = [
-      { name: 'swipeUp', description: `Fires when a swipe up touch event is registered.` },
-      { name: 'swipeDown', description: `Fires when a swipe down touch event is registered.` },
-      { name: 'swipeLeft', description: `Fires when a swipe left touch event is registered.` },
-      { name: 'swipeRight', description: `Fires when a swipe right touch event is registered.` },
+      { name: 'swipe-up', description: `Fires when a swipe up touch event is registered.` },
+      { name: 'swipe-down', description: `Fires when a swipe down touch event is registered.` },
+      { name: 'swipe-left', description: `Fires when a swipe left touch event is registered.` },
+      { name: 'swipe-right', description: `Fires when a swipe right touch event is registered.` },
     ];
     this.props = [
       { name: 'dragType', type: 'String', default: `'x,y'`, description: `Sets the type argument for GSAP Draggable.` },

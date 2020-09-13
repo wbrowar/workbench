@@ -14,6 +14,7 @@
 import { slugify } from 'JS/global.js';
 
 export default {
+  name: 'Subheader',
   props: {
     anchor: { type: Boolean, default: false },
     headerLevel: { type: Number, default: 2, validator: (value) => [1, 2, 3, 4, 5, 6].includes(value) },

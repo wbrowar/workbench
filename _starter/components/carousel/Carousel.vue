@@ -32,6 +32,7 @@
 import { log } from 'JS/global.js';
 
 export default {
+  name: 'Carousel',
   components: {},
   data() {
     return {
@@ -147,7 +148,7 @@ export default {
           }
         }
 
-        this.$emit('currentSlideUpdated', this.currentSlideIndex);
+        this.$emit('current-slide-updated', this.currentSlideIndex);
 
         setTimeout(() => {
           this.status = 'idle';
@@ -159,9 +160,9 @@ export default {
     const uId = Math.floor(Math.random() * 100000000000);
     this.uId = uId;
 
-    this.$on('carouselGoTo', this.goToSlideIndex);
-    this.$on('carouselGoToNext', this.goToNextSlide);
-    this.$on('carouselGoToPrev', this.goToPrevSlide);
+    this.$on('carousel-go-to', this.goToSlideIndex);
+    this.$on('carousel-go-to-next', this.goToNextSlide);
+    this.$on('carousel-go-to-prev', this.goToPrevSlide);
   },
   mounted() {
     log('Slides', this.$children);

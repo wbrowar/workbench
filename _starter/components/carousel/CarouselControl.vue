@@ -6,6 +6,7 @@
 // import { log } from 'JS/global.js';
 
 export default {
+  name: 'CarouselControl',
   components: {},
   data() {
     return {};
@@ -33,20 +34,20 @@ export default {
       } else if (this.$parent.$options._componentTag === 'Carousel') {
         // Control parent carousel
         if (this.goTo !== undefined) {
-          this.$parent.$emit('carouselGoTo', this.goTo);
+          this.$parent.$emit('carousel-go-to', this.goTo);
         } else if (this.next) {
-          this.$parent.$emit('carouselGoToNext');
+          this.$parent.$emit('carousel-go-to-next');
         } else if (this.prev) {
-          this.$parent.$emit('carouselGoToPrev');
+          this.$parent.$emit('carousel-go-to-prev');
         }
       }
 
       if (this.goTo !== undefined) {
-        this.$emit('onGoTo', this.goTo);
+        this.$emit('on-go-to', this.goTo);
       } else if (this.next) {
-        this.$emit('onGoToNext');
+        this.$emit('on-go-to-next');
       } else if (this.prev) {
-        this.$emit('onGoToPrev');
+        this.$emit('on-go-to-prev');
       }
     },
   },

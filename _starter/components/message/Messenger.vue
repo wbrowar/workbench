@@ -2,7 +2,13 @@
   <div class="c-messenger" :class="containerClassess">
     <ClientOnly>
       <transition-group name="c-messenger-fade">
-        <Message class="m-2 first:mt-0" @closedMessage="removeMessage" v-bind="message" v-for="message in messages" :key="message.messageId" />
+        <Message
+          class="m-2 first:mt-0"
+          @closedMessage="removeMessage"
+          v-bind="message"
+          v-for="message in messages"
+          :key="message.messageId"
+        />
       </transition-group>
     </ClientOnly>
   </div>
@@ -13,6 +19,7 @@
 import Message from 'Components/message/Message.vue';
 
 export default {
+  name: 'Messenger',
   components: {
     Message,
   },
@@ -28,8 +35,8 @@ export default {
     startingMessages: Array,
   },
   computed: {
-    containerClassess: function() {
-      let classes = [];
+    containerClassess() {
+      const classes = [];
 
       if (this.docked) {
         classes.push(['my-0 mx-auto fixed bottom-0 right-0 w-full max-w-xl z-40']);
@@ -39,7 +46,7 @@ export default {
     },
   },
   methods: {
-    addMessage: function(message) {
+    addMessage(message) {
       if (message.messageId === undefined) {
         message.messageId = `message-${Date.now()}`;
       }
@@ -51,14 +58,16 @@ export default {
       }
       this.messages.push(message);
     },
-    removeMessage: function(messageId) {
-      this.messages = this.messages.filter(function(el) { return el.messageId !== messageId; });
+    removeMessage(messageId) {
+      this.messages = this.messages.filter(function(el) {
+        return el.messageId !== messageId;
+      });
     },
   },
   created() {
     if (this.startingMessages) {
       this.startingMessages.forEach((message) => {
-          this.addMessage(message);
+        this.addMessage(message);
       });
     }
 
@@ -83,10 +92,12 @@ export default {
 <style>
 .c-messenger {
   &-fade {
-    &-enter-active, &-leave-active {
-      transition: transform .3s ease-out, opacity .3s ease-out;
+    &-enter-active,
+    &-leave-active {
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     }
-    &-enter, &-leave-to {
+    &-enter,
+    &-leave-to {
       transform: translateY(50px);
       opacity: 0;
     }

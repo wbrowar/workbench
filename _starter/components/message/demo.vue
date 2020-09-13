@@ -19,11 +19,23 @@
 
     <ImportPath path="import Message from 'Components/message/Message.vue';" />
 
-    <CodeExample :code="code.staticMessenger" title="Messenger" description="Display one or more static message that can be manually closed.">
-      <Messenger :starting-messages="[{ closeButton: true, level: 'warning', messageText: 'I’m sorry, Dave. I’m afraid I can’t do that.' }]" />
+    <CodeExample
+      :code="code.staticMessenger"
+      title="Messenger"
+      description="Display one or more static message that can be manually closed."
+    >
+      <Messenger
+        :starting-messages="[
+          { closeButton: true, level: 'warning', messageText: 'I’m sorry, Dave. I’m afraid I can’t do that.' },
+        ]"
+      />
     </CodeExample>
 
-    <CodeExample :code="code.dockedMessenger" title="Docked Messenger" description="Add messages to a messenger based on user action.">
+    <CodeExample
+      :code="code.dockedMessenger"
+      title="Docked Messenger"
+      description="Add messages to a messenger based on user action."
+    >
       <div class="c-buttons mb-3">
         <Button @clicked="addMessage" label-text="Show new message" />
       </div>
@@ -32,7 +44,7 @@
 
     <PropsTable :props="props.messenger" />
 
-<!--    <CssModifiers root-class="c_root_class" :modifiers="modifiers" />-->
+    <!--    <CssModifiers root-class="c_root_class" :modifiers="modifiers" />-->
   </div>
 </template>
 
@@ -41,7 +53,6 @@ import Button from 'Components/button/Button.vue';
 import Message from 'Components/message/Message.vue';
 import Messenger from 'Components/message/Messenger.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
@@ -51,7 +62,6 @@ export default {
     Message,
     Messenger,
     CodeExample,
-    CssModifiers,
     ImportPath,
     PropsTable,
   },
@@ -66,9 +76,13 @@ export default {
     globalData: Object,
   },
   methods: {
-    addMessage: function() {
-      this.$refs.messenger.addMessage({ closeButton: true, level: 'error', messageHtml: `<p>Oh, hello! It looks like a button was pressed.</p>` });
-    }
+    addMessage() {
+      this.$refs.messenger.addMessage({
+        closeButton: true,
+        level: 'error',
+        messageHtml: `<p>Oh, hello! It looks like a button was pressed.</p>`,
+      });
+    },
   },
   created() {
     this.code = {
@@ -88,17 +102,48 @@ export default {
     this.props = {
       message: [
         { name: 'closeButton', type: 'Boolean', default: `false`, description: `Allow the user to close the message.` },
-        { name: 'duration', type: 'Number', description: `If a duration is set, the message will disappear after the set duration (set in milliseconds).` },
-        { name: 'id', type: 'String', description: `A unique identifier needed when messages are in a Messenger. If it is not set, the current timestamp will be used.` },
-        { name: 'level', type: 'String', default: `'success'`, description: `Determines the message’s theme colors. Accpets: success, warning, error` },
+        {
+          name: 'duration',
+          type: 'Number',
+          description: `If a duration is set, the message will disappear after the set duration (set in milliseconds).`,
+        },
+        {
+          name: 'id',
+          type: 'String',
+          description: `A unique identifier needed when messages are in a Messenger. If it is not set, the current timestamp will be used.`,
+        },
+        {
+          name: 'level',
+          type: 'String',
+          default: `'success'`,
+          description: `Determines the message’s theme colors. Accpets: success, warning, error`,
+        },
         { name: 'messageText', type: 'String', description: `The message content displayed as simple text.` },
         { name: 'messageHtml', type: 'String', description: `The message content parsed as HTML.` },
       ],
       messenger: [
-        { name: 'docked', type: 'Boolean', default: `false`, description: `Docking the messenger fixes its position to an area of the screen.` },
-        { name: 'messageCloseButton', type: 'Boolean', default: `false`, description: `Displays a close button on all messages, regardless of individual message settings.` },
-        { name: 'messageDuration', type: 'Number', description: `Sets a duration on all messages, regardless of individual message settings.` },
-        { name: 'startingMessages', type: 'Array', description: `An array of message properties used to display messages on load.` },
+        {
+          name: 'docked',
+          type: 'Boolean',
+          default: `false`,
+          description: `Docking the messenger fixes its position to an area of the screen.`,
+        },
+        {
+          name: 'messageCloseButton',
+          type: 'Boolean',
+          default: `false`,
+          description: `Displays a close button on all messages, regardless of individual message settings.`,
+        },
+        {
+          name: 'messageDuration',
+          type: 'Number',
+          description: `Sets a duration on all messages, regardless of individual message settings.`,
+        },
+        {
+          name: 'startingMessages',
+          type: 'Array',
+          description: `An array of message properties used to display messages on load.`,
+        },
       ],
     };
   },

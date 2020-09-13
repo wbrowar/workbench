@@ -78,6 +78,7 @@
 import FormLabel from 'Components/form/FormLabel.vue';
 
 export default {
+  name: 'ValidatedFormInput',
   components: {
     cleave: () => import('vue-cleave-component'),
     FormLabel,
@@ -219,10 +220,10 @@ export default {
     },
     setErrorForFormId(message = null) {
       this.error = this.errorMessage || message;
-      this.$emit('formSetError', this.inputName, this.error);
+      this.$emit('form-set-error', this.inputName, this.error);
     },
     removeErrorForFormId() {
-      this.$emit('formRemoveError', this.inputName);
+      this.$emit('form-remove-error', this.inputName);
     },
     validateField() {
       this.isValid = true;
@@ -283,7 +284,7 @@ export default {
       return { valid: re.test(value), message: 'Please enter a valid ZIP code.' };
     },
     valueChanged() {
-      this.$emit('onValueChange', this.inputName, this.inputValue);
+      this.$emit('value-change', this.inputName, this.inputValue);
     },
   },
   mounted() {

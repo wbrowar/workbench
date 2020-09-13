@@ -110,7 +110,7 @@ export default {
       { name: 'outline', description: `Changes style of button to outline version.` },
     ];
 
-    this.events = [{ name: 'onClick', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` }];
+    this.events = [{ name: 'clicked', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` }];
 
     this.props = [
       { name: 'ariaLabel', type: 'String', description: `Sets the 'aria-label' attribute on a button.` },

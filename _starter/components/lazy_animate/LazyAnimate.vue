@@ -10,6 +10,7 @@ import { log, warn, processIsClient } from 'JS/global.js';
 let animations = false;
 
 export default {
+  name: 'LazyAnimate',
   data() {
     return {
       animated: false,

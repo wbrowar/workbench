@@ -16,6 +16,7 @@
 // import { log } from 'JS/global.js';
 
 export default {
+  name: 'CarouselSlide',
   data() {
     return {
       isCurrent: false,
@@ -79,7 +80,6 @@ export default {
   }
 }
 
-// Fade
 .fade-enter-active,
 .fade-leave-active {
   transition-property: opacity;
@@ -92,7 +92,6 @@ export default {
   opacity: 0;
 }
 
-// Slide
 .slide-next-enter-active {
   animation-name: slideLeftIn;
   animation-duration: var(--slide-transiton-duration, 0.5s);

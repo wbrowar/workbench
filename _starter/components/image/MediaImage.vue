@@ -28,6 +28,7 @@ import wb from 'JS/automated/wb.js';
 import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
 export default {
+  name: 'MediaImage',
   components: {
     LazyLoad,
   },

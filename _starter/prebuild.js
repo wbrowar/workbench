@@ -47,17 +47,11 @@ async function run() {
     let wbConfigComplete = await wbConfig;
 
     if (runComponentDocs) {
-        const componentDocs = g.asyncFunction(
-          `Creating Component Docs`, `Component Docs Created`, (resolve) => {
-            g.prebuildComponentDocs(resolve, wb.paths, wb, verbose);
-          }
-        );
         const componentDocsList = g.asyncFunction(
           `Creating Component Docs List`, `Component Docs List Created`, (resolve) => {
             g.prebuildComponentDocsList(resolve, wb.paths, wb, verbose);
           }
         );
-        let componentDocsComplete = await componentDocs;
         let componentDocsListComplete = await componentDocsList;
     }
 

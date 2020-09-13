@@ -6,6 +6,7 @@
 import { log, processIsClient } from 'JS/global.js';
 
 export default {
+  name: 'LazyLoad',
   data() {
     return {
       loaded: false,

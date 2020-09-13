@@ -172,9 +172,9 @@ export default {
     };
     this.events = {
       input: [
-        { name: 'formSetError', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
-        { name: 'formRemoveError', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
-        { name: 'onValueChange', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
+        { name: 'form-set-error', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
+        { name: 'form-remove-error', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
+        { name: 'value-change', arguments: 'MouseEvent', description: `Fires whenever the button is clicked.` },
       ],
     };
     this.modifiers = [{ name: 'test', description: `Test` }];

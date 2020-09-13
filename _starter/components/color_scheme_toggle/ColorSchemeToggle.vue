@@ -9,6 +9,7 @@ import { addClass, log, removeClass } from 'JS/global.js';
 import wb from 'JS/automated/wb.js';
 
 export default {
+  name: 'ColorSchemeToggle',
   data() {
     return {
       otherSchemes: [],

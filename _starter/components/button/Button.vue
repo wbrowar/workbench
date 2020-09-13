@@ -17,6 +17,7 @@
 import wb from 'JS/automated/wb.js';
 
 export default {
+  name: 'Button',
   components: {},
   data() {
     return {};

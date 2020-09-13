@@ -20,6 +20,7 @@
 
 <script>
 export default {
+  name: 'Message',
   data() {
     return {
       timeout: null,
@@ -34,8 +35,8 @@ export default {
     messageHtml: String,
   },
   computed: {
-    classes: function() {
-      let classes = [];
+    classes() {
+      const classes = [];
 
       classes.push(`bg-${this.level}-70`, `text-white`, `border-${this.level}`);
 
@@ -47,7 +48,7 @@ export default {
     },
   },
   methods: {
-    closeMessage: function() {
+    closeMessage() {
       if (this.timeout) {
         clearTimeout(this.timeout);
       }
@@ -61,7 +62,7 @@ export default {
   },
   destroyed() {
     clearTimeout(this.timeout);
-  }
+  },
 };
 </script>
 

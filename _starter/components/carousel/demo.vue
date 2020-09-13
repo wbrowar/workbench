@@ -25,8 +25,8 @@
           <TouchBox
             class="absolute top-0 left-0 w-full h-full bg-black-30 z-10"
             drag-type="x"
-            @swipeLeft="onSwipeLeft"
-            @swipeRight="onSwipeRight"
+            @swipe-left="onSwipeLeft"
+            @swipe-right="onSwipeRight"
           />
           <CarouselControl class="absolute bottom-0 left-0 text-white z-50" prev>Prev</CarouselControl>
           <CarouselControl class="absolute bottom-0 right-0 text-white z-50" next>Next</CarouselControl>
@@ -129,8 +129,8 @@ export default {
     <TouchBox
       class="absolute top-0 left-0 w-full h-full bg-black-30 z-10"
       drag-type="x"
-      @swipeLeft="onSwipeLeft"
-      @swipeRight="onSwipeRight"
+      @swipe-left="onSwipeLeft"
+      @swipe-right="onSwipeRight"
     />
     <CarouselControl class="absolute bottom-0 left-0 text-white z-50" prev>Prev</CarouselControl>
     <CarouselControl class="absolute bottom-0 right-0 text-white z-50" next>Next</CarouselControl>
@@ -149,19 +149,19 @@ export default {
     this.events = {
       default: [
         {
-          name: 'currentSlideUpdated',
+          name: 'current-slide-updated',
           arguments: 'Number (index number)',
           description: `Fires when slide index has been updated.`,
         },
       ],
       controls: [
         {
-          name: 'onGoTo',
+          name: 'on-go-to',
           arguments: 'Number (index number)',
           description: `Fires when carousel is sent to a specific slide index.`,
         },
-        { name: 'onGoToNext', description: `Fires when carousel is sent to the next slide.` },
-        { name: 'onGoToPrev', description: `Fires when carousel is sent to the previous slide.` },
+        { name: 'on-go-to-next', description: `Fires when carousel is sent to the next slide.` },
+        { name: 'on-go-to-prev', description: `Fires when carousel is sent to the previous slide.` },
       ],
     };
     this.props = {

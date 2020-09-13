@@ -50,6 +50,7 @@
 import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
 export default {
+  name: 'MediaVideo',
   components: {
     LazyLoad,
   },

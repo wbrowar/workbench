@@ -10,6 +10,7 @@
 import FormLabel from 'Components/form/FormLabel.vue';
 
 export default {
+  name: 'FormInputCheckbox',
   components: { FormLabel },
   data() {
     return {

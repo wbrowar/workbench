@@ -72,6 +72,7 @@ import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.
 // :color-schemes="{ dark: '🌑', light: '🌕', high-contrast: '🔲' }"
 
 export default {
+  name: 'DevBar',
   components: {
     Button,
     ColorSchemeToggle,

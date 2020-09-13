@@ -15,7 +15,7 @@
             class="dev__components__input appearance-none"
             v-model="colorCheckerBackground"
           >
-            <option :value="item" v-for="item in Object.keys(colorSwatches.default)" :key="item">{{ item }}</option>
+            <option :value="item" v-for="item in Object.keys(colorSwatches)" :key="item">{{ item }}</option>
           </select>
         </div>
         <div>
@@ -25,7 +25,7 @@
             class="dev__components__input appearance-none"
             v-model="colorCheckerForeground"
           >
-            <option :value="item" v-for="item in Object.keys(colorSwatches.default)" :key="item">{{ item }}</option>
+            <option :value="item" v-for="item in Object.keys(colorSwatches)" :key="item">{{ item }}</option>
           </select>
         </div>
       </div>
@@ -77,21 +77,40 @@ export default {
     this.twConfig = resolveConfig(this.globalData.tailwind);
     log(this.twConfig.theme);
 
-    Object.keys(this.globalData.wb.colors).forEach((schemeKey) => {
-      const scheme = this.globalData.wb.colors[schemeKey];
+    // Object.keys(this.globalData.wb.colors).forEach((schemeKey) => {
+    //   const color = this.globalData.wb.colors[schemeKey];
+    //
+    //   if (!this.colorSwatches[schemeKey]) {
+    //     this.colorSwatches[schemeKey] = {};
+    //   }
+    //   Object.keys(scheme).forEach((colorKey) => {
+    //     if (typeof scheme[colorKey] === 'string') {
+    //       this.colorSwatches[schemeKey][colorKey] = scheme[colorKey];
+    //     } else {
+    //       Object.keys(scheme[colorKey]).forEach((shadeKey) => {
+    //         this.colorSwatches[schemeKey][`${colorKey}-${shadeKey}`] = scheme[colorKey][shadeKey];
+    //       });
+    //     }
+    //   });
+    // });
 
-      if (!this.colorSwatches[schemeKey]) {
-        this.colorSwatches[schemeKey] = {};
-      }
-      Object.keys(scheme).forEach((colorKey) => {
-        if (typeof scheme[colorKey] === 'string') {
-          this.colorSwatches[schemeKey][colorKey] = scheme[colorKey];
+    Object.keys(this.globalData.wb.colors).forEach((key) => {
+      const color = this.globalData.wb.colors[key];
+
+      if (!key.startsWith('dev-')) {
+        if (typeof color === 'string') {
+          this.colorSwatches[key] = color;
         } else {
-          Object.keys(scheme[colorKey]).forEach((shadeKey) => {
-            this.colorSwatches[schemeKey][`${colorKey}-${shadeKey}`] = scheme[colorKey][shadeKey];
+          if (color.default) {
+            this.colorSwatches[`${key}`] = color.default;
+          }
+          Object.keys(color).forEach((shadeKey) => {
+            if (shadeKey !== 'default') {
+              this.colorSwatches[`${key}-${shadeKey}`] = color[shadeKey];
+            }
           });
         }
-      });
+      }
     });
 
     log(this.colorSwatches);

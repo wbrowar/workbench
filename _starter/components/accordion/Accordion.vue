@@ -8,6 +8,7 @@
 import { log } from 'JS/global.js';
 
 export default {
+  name: 'Accordion',
   data() {
     return {
       tabs: [],
@@ -17,7 +18,7 @@ export default {
     firstTabOpen: { type: Boolean, default: true },
   },
   methods: {
-    toggleTabHandler: function(uid) {
+    toggleTabHandler(uid) {
       log('Opening Accordion Tab', uid);
       this.tabs.forEach((tab) => {
         tab.isOpen = tab._uid === uid ? !tab.isOpen : false;

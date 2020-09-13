@@ -3,10 +3,16 @@
 </template>
 
 <script>
-import { log } from 'JS/global.js';
-import { gsap, Draggable } from 'gsap/all';
+import { log, processIsClient } from 'JS/global.js';
+import { gsap } from 'gsap';
+import { Draggable } from 'gsap/Draggable.js';
+
+if (processIsClient()) {
+  gsap.registerPlugin(Draggable);
+}
 
 export default {
+  name: 'TouchBox',
   components: {},
   data() {
     return {
@@ -31,32 +37,33 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      const el = this;
-      const proxy = document.createElement('div');
+      if (processIsClient()) {
+        const el = this;
+        const proxy = document.createElement('div');
 
-      gsap.registerPlugin(Draggable);
-      Draggable.create(proxy, {
-        trigger: `.c-touch-box-${this.uClass}`,
-        type: this.dragType,
-        minimumMovement: 10,
-        onDragStart() {
-          log('Drag Start', this.getDirection());
-          switch (this.getDirection()) {
-            case 'up':
-              el.$emit('swipeUp');
-              break;
-            case 'down':
-              el.$emit('swipeDown');
-              break;
-            case 'left':
-              el.$emit('swipeLeft');
-              break;
-            case 'right':
-              el.$emit('swipeRight');
-              break;
-          }
-        },
-      });
+        Draggable.create(proxy, {
+          trigger: `.c-touch-box-${this.uClass}`,
+          type: this.dragType,
+          minimumMovement: 10,
+          onDragStart() {
+            log('Drag Start', this.getDirection());
+            switch (this.getDirection()) {
+              case 'up':
+                el.$emit('swipe-up');
+                break;
+              case 'down':
+                el.$emit('swipe-down');
+                break;
+              case 'left':
+                el.$emit('swipe-left');
+                break;
+              case 'right':
+                el.$emit('swipe-right');
+                break;
+            }
+          },
+        });
+      }
     });
   },
 };
