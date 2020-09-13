@@ -25,7 +25,7 @@
 
     <CodeExample :code="code.dockedMessenger" title="Docked Messenger" description="Add messages to a messenger based on user action.">
       <div class="c-buttons mb-3">
-        <Button @onClick="addMessage" label-text="Show new message" />
+        <Button @clicked="addMessage" label-text="Show new message" />
       </div>
       <Messenger ref="messenger" docked :message-duration="5000" />
     </CodeExample>
@@ -80,7 +80,7 @@ export default {
   { closeButton: true, level: 'warning', messageText: 'I’m sorry, Dave. I’m afraid I can’t do that.' }
 ]" />`,
       dockedMessenger: `<div class="c-buttons mb-3">
-  <Button @onClick="addMessage" label-text="Show new message" />
+  <Button @clicked="addMessage" label-text="Show new message" />
 </div>
 <Messenger ref="messenger" docked :message-duration="5000" />`,
     };

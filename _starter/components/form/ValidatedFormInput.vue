@@ -19,7 +19,7 @@
         :input-checked="inputValue ? inputValue.includes(option.value) : false"
         input-mode="checkbox"
         :label-text="option.label"
-        @onClick="toggleValue(option.value)"
+        @clicked="toggleValue(option.value)"
         v-for="option in inputOptions"
         :key="option.value"
       />
@@ -32,7 +32,7 @@
         :input-checked="option.value === inputValue"
         input-mode="radio"
         :label-text="option.label"
-        @onClick="updateValue(option.value)"
+        @clicked="updateValue(option.value)"
         v-for="option in inputOptions"
         :key="option.value"
       />

@@ -14,7 +14,7 @@
       <Share share-title="This is Header" share-text="This is the body text." :share-url="linkToShare" @shareSuccess="$refs.messenger.addMessage({ closeButton: true, level: 'success', messageHtml: `<p>URL shared!</p>` })" @shareError="displayError">
         <template v-slot:fallback>
           <div class="grid grid-cols-it gap-4 max-w-sm items-center">
-            <Button @onClick="copyToClipboard(linkToShare)" label-text="Copy" />
+            <Button @clicked="copyToClipboard(linkToShare)" label-text="Copy" />
             <p>Copy URL to clipboard: {{ linkToShare }}</p>
           </div>
         </template>
@@ -83,7 +83,7 @@ export default {
       full: `<Share share-title="This is Header" share-text="This is the body text." :share-url="linkToShare" @shareSuccess="$refs.messenger.addMessage({ closeButton: true, level: 'success', messageHtml: \`<p>URL shared!</p>\` })" @shareError="$refs.messenger.addMessage({ closeButton: true, level: 'warning', messageHtml: \`<p>URL was not shared.</p>\` })">
   <template v-slot:fallback>
     <div class="grid grid-cols-it gap-4 max-w-sm items-center">
-      <Button @onClick="copyToClipboard(linkToShare)" label-text="Copy" />
+      <Button @clicked="copyToClipboard(linkToShare)" label-text="Copy" />
       <p>Copy URL to clipboard: {{ linkToShare }}</p>
     </div>
   </template>

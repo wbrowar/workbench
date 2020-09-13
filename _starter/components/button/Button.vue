@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     onClick(event) {
-      this.$emit('onClick', event);
+      this.$emit('clicked', event);
     },
   },
 };

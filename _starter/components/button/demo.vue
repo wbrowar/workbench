@@ -23,13 +23,13 @@
 
     <CodeExample
       :code="code.action"
-      copy-text='<Button @onClick="" />'
+      copy-text='<Button @clicked="" />'
       title="Action Buttons"
       description="Fire a Javascript function when the button is clicked. When no argument is passed through, a MouseEvent object will be returned."
     >
       <div class="c-buttons justify-center">
-        <Button @onClick="clickThroughAction" label-text="Get Click Event" />
-        <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
+        <Button @clicked="clickThroughAction" label-text="Get Click Event" />
+        <Button @clicked="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
       </div>
     </CodeExample>
 
@@ -93,8 +93,8 @@ export default {
   <Button new-window href="https://vuejs.org/" label-text="Vue Website (external)" />
 </div>`,
       action: `<div class="c-buttons justify-center">
-  <Button @onClick="clickThroughAction" label-text="Get Click Event" />
-  <Button @onClick="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
+  <Button @clicked="clickThroughAction" label-text="Get Click Event" />
+  <Button @clicked="clickThroughAction('Button Clicked!')" label-text="Pass through argument" />
 </div>`,
       unstyled: `<div class="c-buttons justify-end">
   <Button new-window unstyle href="https://vuejs.org/" label-text="Unstyled Button" />

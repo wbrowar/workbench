@@ -1,6 +1,6 @@
 <template>
   <div class="c-share" v-if="canShare || this.$slots.fallback">
-    <Button @onClick="shareUrlHandler" v-if="canShare"><slot>Share</slot></Button>
+    <Button @clicked="shareUrlHandler" v-if="canShare"><slot>Share</slot></Button>
     <slot name="fallback" v-else></slot>
   </div>
 </template>

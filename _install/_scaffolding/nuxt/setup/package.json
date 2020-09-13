@@ -4,7 +4,8 @@
     "deploy": "npm run prebuild && npm run commit",
     "dev": "npm run prebuild && nuxt",
     "prebuild": "node ./_starter/prebuild.js --componentdocs --iconmethods  --scraper --scssincludes",
-    "prod": "npm run prebuild && nuxt generate"
+    "prod": "npm run prebuild && nuxt generate",
+    "test": "jest"
   },
   "dependencies": {
     "nuxt": "^2.14.0",
