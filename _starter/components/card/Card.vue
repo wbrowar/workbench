@@ -1,7 +1,7 @@
 <template>
   <div class="c-card grid grid-rows-card">
     <slot name="head"
-      ><div class="h-32" :class="headClass"><MediaImage background v-bind="headImage" /></div
+      ><div class="h-32" :class="headClass"><MediaImage class="h-full" background v-bind="headImage" /></div
     ></slot>
     <div class="p-4 flex flex-col justify-between" :class="bodyClasses">
       <slot />
