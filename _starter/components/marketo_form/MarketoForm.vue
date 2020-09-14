@@ -14,6 +14,7 @@ import { processIsClient } from 'JS/global.js';
 import loadjs from 'loadjs';
 
 export default {
+  name: 'MarketoForm',
   components: {},
   data() {
     return {};

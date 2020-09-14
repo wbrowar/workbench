@@ -29,7 +29,7 @@
 
     <PropsTable :props="props" />
 
-<!--    <CssModifiers root-class="c_root_class" :modifiers="modifiers" />-->
+    <!--    <CssModifiers root-class="c_root_class" :modifiers="modifiers" />-->
   </div>
 </template>
 
@@ -37,8 +37,6 @@
 import Button from 'Components/button/Button.vue';
 import Card from 'Components/card/Card.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
-import CssModifiers from 'Starter/docs/vue/CssModifiers.vue';
-import EventsTable from 'Starter/docs/vue/EventsTable.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
@@ -47,8 +45,6 @@ export default {
     Button,
     Card,
     CodeExample,
-    CssModifiers,
-    EventsTable,
     ImportPath,
     PropsTable,
   },
@@ -84,17 +80,21 @@ export default {
   </Card>
 </div>`,
     };
-    this.events = [
-        { name: 'onExample', arguments: 'example', description: `Example description.` },
-    ];
-    this.modifiers = [
-        { name: 'example', description: `Example description.` },
-    ];
+    this.events = [{ name: 'onExample', arguments: 'example', description: `Example description.` }];
+    this.modifiers = [{ name: 'example', description: `Example description.` }];
     this.props = [
       { name: 'bodyClass', type: 'String', description: `Classes added to the card body.` },
-      { name: 'headClass', type: 'String', description: `If a slot is not used, these classes are added around the card image.` },
-      { name: 'headImage', type: 'Object', description: `Properties passed into a MediaImage component in the card head.` },
+      {
+        name: 'headClass',
+        type: 'String',
+        description: `If a slot is not used, these classes are added around the card image.`,
+      },
+      {
+        name: 'headImage',
+        type: 'Object',
+        description: `Properties passed into a MediaImage component in the card head.`,
+      },
     ];
-  }
+  },
 };
 </script>

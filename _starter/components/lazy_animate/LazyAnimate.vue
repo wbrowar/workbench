@@ -1,11 +1,12 @@
 <template>
-  <div :is="elementType" :class="classes" :style="styles" v-bind="attrs">
+  <div :is="elementType" class="c-lazy-animate" :class="animated ? 'animated' : null" v-bind="computedAttributes">
     <slot></slot>
   </div>
 </template>
 
 <script>
 import { log, warn, processIsClient } from 'JS/global.js';
+import { merge } from 'lodash';
 
 let animations = false;
 
@@ -14,76 +15,35 @@ export default {
   data() {
     return {
       animated: false,
-      cssStyles: false,
+      animationsLoaded: false,
       observer: false,
     };
   },
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {};
-      },
-    },
-    cssAnimation: String,
-    cssEnd: {
-      type: Object,
-      default: () => {
-        return {};
-      },
-    },
-    cssStart: {
-      type: Object,
-      default: () => {
-        return {};
-      },
-    },
-    cssTransition: String,
+    afterAnimate: Object,
+    animation: Object,
+    beforeAnimate: Object,
     elementType: { type: String, default: 'div' },
-    observerClasses: String,
     observerMargin: { type: String, default: '-100px' },
     observerThreshold: { type: Number, default: 0 },
-    options: {
-      type: Object,
-      default: () => {
-        return {};
-      },
-    },
     reset: { type: Boolean, default: false },
-    type: { type: String, default: 'css' },
   },
   computed: {
-    classes() {
-      const attrs = [];
+    computedAttributes() {
+      const attributes = {};
 
-      if (this.animated) {
-        attrs.push('animated');
+      if (!this.animated && this.beforeAnimate) {
+        merge(attributes, this.beforeAnimate);
+      } else if (this.animated && this.afterAnimate) {
+        merge(attributes, this.afterAnimate);
       }
 
-      if (this.observer && this.observerClasses) {
-        attrs.push(this.observerClasses);
-      }
-
-      if (attrs.length) {
-        return attrs;
-      }
-      return null;
-    },
-    styles() {
-      const styles = this.animated ? this.cssEnd : this.cssStart;
-
-      if (this.cssAnimation) {
-        styles.animation = this.animated ? this.cssAnimation : null;
-      } else if (this.cssTransition) {
-        styles.transition = this.cssTransition;
-      }
-
-      return styles;
+      return Object.keys(attributes).length ? attributes : null;
     },
   },
   methods: {
     addToObserver(callback) {
-      if (processIsClient(process)) {
+      if (processIsClient()) {
         log('Adding to Animate Observer');
 
         if (typeof this.observer !== 'object') {
@@ -91,6 +51,7 @@ export default {
             (entries) => {
               entries.forEach((entry) => {
                 if (entry.isIntersecting) {
+                  this.$emit('intersected');
                   if (this.reset) {
                     this.animated = false;
                   }
@@ -107,18 +68,14 @@ export default {
       }
       this.observer.observe(this.$el);
     },
-    handleCssAnimation() {
+    animate() {
       log('Handling Lazy Animate (css)');
 
-      if (!this.reset) {
-        this.removeFromObserver();
+      if (this.animation?.type) {
+        animations.animate(this.animation.type, this.$el, this.animation.options || null);
       }
-      this.animated = true;
-    },
-    handleJsAnimation() {
-      log('Handling Lazy Animate (js)');
 
-      animations.animate(this.type, this.$el, this.options);
+      this.$emit('animated');
 
       if (!this.reset) {
         this.removeFromObserver();
@@ -143,31 +100,32 @@ export default {
     },
   },
   mounted() {
-    if (this.type === 'css') {
-      if (this.inViewport()) {
-        log('Lazy Animate in Viewport');
-        this.handleCssAnimation();
+    if (processIsClient()) {
+      if (this.animationsLoaded) {
+        if (this.inViewport()) {
+          log('Lazy Animate in Viewport');
+          this.animate();
+        } else {
+          this.addToObserver(this.animate);
+        }
       } else {
-        this.addToObserver(this.handleCssAnimation);
+        import(/* webpackChunkName: "animation" */ 'JS/animation.js')
+          .then((module) => {
+            animations = module;
+            this.animationsLoaded = true;
+            if (this.inViewport()) {
+              log('Lazy Animate in Viewport');
+              this.animate();
+            } else {
+              this.addToObserver(this.animate);
+            }
+          })
+          .catch((error) => warn('An error occurred while loading animation.js', error));
       }
-    } else {
-      import(/* webpackChunkName: "animation" */ 'JS/animation.js')
-        .then((module) => {
-          animations = module;
-          if (this.inViewport()) {
-            log('Lazy Animate in Viewport');
-            this.handleJsAnimation();
-          } else {
-            this.addToObserver(this.handleJsAnimation);
-          }
-        })
-        .catch((error) => warn('An error occurred while loading animation.js', error));
     }
   },
-  destroyed() {
-    if (this.observer) {
-      this.removeFromObserver();
-    }
+  beforeDestroy() {
+    this.removeFromObserver();
   },
 };
 </script>

@@ -6,6 +6,9 @@ const wb = require(`./wb.config.js`);
 
 export default {
   build: {
+    babel: {
+      plugins: ['@babel/plugin-proposal-optional-chaining'],
+    },
     extractCSS: true,
     html: {
       minify: {

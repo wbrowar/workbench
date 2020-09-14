@@ -14,8 +14,7 @@
       :code="code.tailwind"
     >
       <LazyAnimate
-        class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
-        observer-classes="transition duration-700"
+        class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100 transition duration-700"
       >
         <p class="font-bold text-gray-800 text-5xl">Text that animates!</p>
       </LazyAnimate>
@@ -26,15 +25,13 @@
       description="Use CSS Transitions to move from the `css-start` state to the `css-end` state upon entering the viewport."
       :code="code.css1"
     >
-      <!-- ClientOnly -->
       <LazyAnimate
-        :css-start="{ opacity: 0, transform: `translateY(100px)` }"
-        :css-end="{ opacity: 1 }"
-        css-transition="opacity .4s ease-out, transform .4s ease-out"
+        class="transition duration-700"
+        :before-animate="{ style: { opacity: 0, transform: `translateY(100px)` } }"
+        :after-animate="{ style: { opacity: 1 } }"
       >
         <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
       </LazyAnimate>
-      <!-- /ClientOnly -->
     </CodeExample>
 
     <CodeExample
@@ -42,11 +39,9 @@
       description="Use Greensock for more complicated animations. NOTE: this will lazy load Greensock when it is in use."
       :code="code.js1"
     >
-      <!-- ClientOnly -->
-      <LazyAnimate style="opacity: 0;" type="slide-in" :options="{ y: 100 }">
+      <LazyAnimate :animation="{ type: 'slide-in', options: { y: 100 } }" :before-animate="{ style: { opacity: 0 } }">
         <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
       </LazyAnimate>
-      <!-- /ClientOnly -->
     </CodeExample>
 
     <CodeExample
@@ -54,27 +49,31 @@
       description="Use Greensock to animate a CSS Custom Property."
       :code="code.js2"
     >
-      <!-- ClientOnly -->
       <LazyAnimate
-        type="custom"
-        :options="{
-          properties: {
-            '--demo-background-color': 160,
-            startAt: {
-              '--demo-background-color': 0,
+        :animation="{
+          type: 'custom',
+          options: {
+            properties: {
+              '--demo-background-color': 160,
+              startAt: {
+                '--demo-background-color': 0,
+              },
             },
+            speed: 2,
           },
-          speed: 2,
         }"
+        :before-animate="{ style: { opacity: 0 } }"
+        reset
       >
         <div
           style="width: 100%; height: 400px; background-color: hsl(var(--demo-background-color, 0), 80%, 80%);"
         ></div>
       </LazyAnimate>
-      <!-- /ClientOnly -->
     </CodeExample>
 
     <PropsTable :props="props" />
+
+    <EventsTable :events="events" />
   </div>
 </template>
 
@@ -82,6 +81,7 @@
 import LazyAnimate from 'Components/lazy_animate/LazyAnimate.vue';
 import MediaImage from 'Components/image/MediaImage.vue';
 import CodeExample from 'Starter/docs/vue/CodeExample.vue';
+import EventsTable from 'Starter/docs/vue/EventsTable.vue';
 import ImportPath from 'Starter/docs/vue/ImportPath.vue';
 import PropsTable from 'Starter/docs/vue/PropsTable.vue';
 
@@ -90,12 +90,14 @@ export default {
     LazyAnimate,
     MediaImage,
     CodeExample,
+    EventsTable,
     ImportPath,
     PropsTable,
   },
   data() {
     return {
       code: false,
+      events: false,
       props: false,
     };
   },
@@ -104,75 +106,78 @@ export default {
   },
   created() {
     this.code = {
-      tailwind: `<!-- ClientOnly -->
-  <LazyAnimate
-    class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
-    observer-classes="transition duration-700"
-  >
-    <p class="font-bold text-5xl">Text that animates!</p>
-  </LazyAnimate>
-<!-- /ClientOnly -->`,
-      css1: `<!-- ClientOnly -->
-  <LazyAnimate
-    :css-start="{ opacity: 0, transform: \`translateY(100px)\` }"
-    :css-end="{ opacity: 1 }"
-    css-transition="opacity .4s ease-out, transform .4s ease-out"
-  >
-    <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\`, width: 758, height: 758 }]" />
-  </LazyAnimate>
-<!-- /ClientOnly -->`,
-      js1: `<!-- ClientOnly -->
-  <LazyAnimate
-    style="opacity: 0;"
-    type="slide-in"
-    :options="{ y: 100 }"
-  >
-    <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\`, width: 758, height: 758 }]" />
-  </LazyAnimate>
-<!-- /ClientOnly -->`,
-      js2: `<!-- ClientOnly -->
-  <LazyAnimate
-    type="custom"
-    :options="{ properties: {
-      '--demo-background-color': 160,
-      startAt: {
-        '--demo-background-color': 0
-      }
-    }, speed: 2 }"
-  >
-    <div style="width: 100%; height: 400px; background-color: hsl(var(--demo-background-color, 0), 80%, 80%);"></div>
-  </LazyAnimate>
-<!-- /ClientOnly -->`,
+      tailwind: `<LazyAnimate
+  class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100 transition duration-700"
+>
+  <p class="font-bold text-gray-800 text-5xl">Text that animates!</p>
+</LazyAnimate>`,
+      css1: `<LazyAnimate
+  class="transition duration-700"
+  :before-animate="{ style: { opacity: 0, transform: \`translateY(100px)\` } }"
+  :after-animate="{ style: { opacity: 1 } }"
+>
+  <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\`, width: 758, height: 758 }]" />
+</LazyAnimate>`,
+      js1: `<LazyAnimate :animation="{ type: 'slide-in', options: { y: 100 } }" :before-animate="{ style: { opacity: 0 } }">
+  <MediaImage alt="FPO image" :sources="[{ src: \`/img/FPO.png\`, width: 758, height: 758 }]" />
+</LazyAnimate>`,
+      js2: `<LazyAnimate
+  :animation="{
+    type: 'custom',
+    options: {
+      properties: {
+        '--demo-background-color': 160,
+        startAt: {
+          '--demo-background-color': 0,
+        },
+      },
+      speed: 2,
+    },
+  }"
+  :before-animate="{ style: { opacity: 0 } }"
+  reset
+>
+  <div
+    style="width: 100%; height: 400px; background-color: hsl(var(--demo-background-color, 0), 80%, 80%);"
+  ></div>
+</LazyAnimate>`,
     };
 
+    this.events = [
+      { name: 'animated', description: `Fires every time the animation function is fired.` },
+      { name: 'intersected', description: `Fires when the wrapper element intersection fires.` },
+    ];
     this.props = [
-      { name: 'box', type: 'Object', description: `Props to pass into the containing Box component.` },
       {
-        name: 'cssAnimation',
-        type: 'String',
-        description: `(CSS) Use a CSS animation instead of a CSS transition for CSS animations.`,
-      },
-      { name: 'cssEnd', type: 'Object', description: `(CSS) The end state of a CSS transition.` },
-      {
-        name: 'cssStart',
+        name: 'afterAnimate',
         type: 'Object',
-        description: `(CSS) The starting state for an element before a transition has begun.`,
+        description: `Attributes bound to the wrapper element after the animation has fired.`,
       },
       {
-        name: 'cssTransition',
+        name: 'animation',
+        type: 'Object',
+        description: `Properties passed into 'animation.js'.`,
+      },
+      {
+        name: 'animation.options',
+        type: 'Object',
+        description: `Options to pass in to 'animation.js' that are used to configure Greensock’s animation.`,
+      },
+      {
+        name: 'animation.type',
         type: 'String',
-        description: `(CSS) The CSS transitions used in CSS animations. This can be omitted if a transition is already set in CSS.`,
+        description: `Select an animation from 'animation.js' or enter 'css' to create a CSS animation.`,
+      },
+      {
+        name: 'beforeAnimate',
+        type: 'Object',
+        description: `Attributes bound to the wrapper element before the animation has fired.`,
       },
       {
         name: 'elementType',
         type: 'String',
         default: `'div'`,
         description: `Change the element of the wrapper element for semantic HTML or accessibility.`,
-      },
-      {
-        name: 'observerClasses',
-        type: 'String',
-        description: `Classes that are set only when intersection observer is active.`,
       },
       {
         name: 'observerMargin',
@@ -187,21 +192,10 @@ export default {
         description: `If set, a custom Intersection Observer will be created with this as the 'threshold' value.`,
       },
       {
-        name: 'options',
-        type: 'Object',
-        description: `(JS) Options to pass in to 'animation.js' that are used to configure Greensock’s animation.`,
-      },
-      {
         name: 'reset',
         type: 'Boolean',
         default: `false`,
-        description: `(JS) Determine if the animation should be fired every time the element enters the viewport.`,
-      },
-      {
-        name: 'type',
-        type: 'String',
-        default: `css`,
-        description: `Select an animation from 'animation.js' or enter 'css' to create a CSS animation.`,
+        description: `Determine if the animation should be fired every time the element enters the viewport.`,
       },
     ];
   },

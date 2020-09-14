@@ -4,7 +4,7 @@
 import gsap from 'gsap';
 import { log, warn } from './global.js';
 
-export function animate(animation, el, options) {
+export function animate(animation, el, options = {}) {
   const delay = options.delay !== undefined ? _randomFromRange(options.delay) : 0;
   const ease = options.speed !== undefined ? options.ease : 'power2';
   const speed = options.speed !== undefined ? _randomFromRange(options.speed) : 0.5;
