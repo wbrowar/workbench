@@ -14,7 +14,8 @@
       :code="code.tailwind"
     >
       <LazyAnimate
-        class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100 transition duration-700"
+        class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
+        :observer-bind="{ class: 'transition duration-700' }"
       >
         <p class="font-bold text-gray-800 text-5xl">Text that animates!</p>
       </LazyAnimate>
@@ -26,9 +27,9 @@
       :code="code.css1"
     >
       <LazyAnimate
-        class="transition duration-700"
         :before-animate="{ style: { opacity: 0, transform: `translateY(100px)` } }"
         :after-animate="{ style: { opacity: 1 } }"
+        :observer-bind="{ class: 'transition duration-700' }"
       >
         <MediaImage alt="FPO image" :sources="[{ src: `/img/FPO.png`, width: 758, height: 758 }]" />
       </LazyAnimate>
@@ -107,7 +108,8 @@ export default {
   created() {
     this.code = {
       tailwind: `<LazyAnimate
-  class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100 transition duration-700"
+  class="transform translate-y-5 animated:translate-y-0 opacity-0 animated:opacity-100"
+  observer-classes="transition duration-700"
 >
   <p class="font-bold text-gray-800 text-5xl">Text that animates!</p>
 </LazyAnimate>`,
@@ -178,6 +180,11 @@ export default {
         type: 'String',
         default: `'div'`,
         description: `Change the element of the wrapper element for semantic HTML or accessibility.`,
+      },
+      {
+        name: 'observerAttributes',
+        type: 'Object',
+        description: `Attributes that are bound into the wrapper element while the observer is active.`,
       },
       {
         name: 'observerMargin',

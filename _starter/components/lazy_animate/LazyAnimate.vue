@@ -1,5 +1,5 @@
 <template>
-  <div :is="elementType" class="c-lazy-animate" :class="animated ? 'animated' : null" v-bind="computedAttributes">
+  <div :is="elementType" class="c-lazy-animate" v-bind="computedAttributes">
     <slot></slot>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
     animation: Object,
     beforeAnimate: Object,
     elementType: { type: String, default: 'div' },
+    observerBind: Object,
     observerMargin: { type: String, default: '-100px' },
     observerThreshold: { type: Number, default: 0 },
     reset: { type: Boolean, default: false },
@@ -32,10 +33,16 @@ export default {
     computedAttributes() {
       const attributes = {};
 
+      if (this.animated) {
+        attributes.class = 'animated';
+      }
+      if (this.observer && this.observerBind) {
+        this.mergeAttributes(attributes, this.observerBind);
+      }
       if (!this.animated && this.beforeAnimate) {
-        merge(attributes, this.beforeAnimate);
+        this.mergeAttributes(attributes, this.beforeAnimate);
       } else if (this.animated && this.afterAnimate) {
-        merge(attributes, this.afterAnimate);
+        this.mergeAttributes(attributes, this.afterAnimate);
       }
 
       return Object.keys(attributes).length ? attributes : null;
@@ -91,6 +98,15 @@ export default {
         rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
       );
+    },
+    mergeAttributes(attributes, newAttributes) {
+      const classes = attributes.class && newAttributes.class ? `${attributes.class} ${newAttributes.class}` : null;
+
+      merge(attributes, newAttributes);
+
+      if (classes && attributes.class) {
+        attributes.class = classes;
+      }
     },
     removeFromObserver() {
       if (this.observer) {
