@@ -342,6 +342,9 @@ async function run() {
 
                 return componentOptions;
             },
+            when: (answers) => {
+                return answers.installEnd === 'front';
+            },
         },
         {
             type: 'list',
@@ -353,7 +356,7 @@ async function run() {
                 { name: 'Yarn', value: 'yarn' },
             ],
             when: (answers) => {
-                return !localConfig.npmInstaller;
+                return !localConfig.npmInstaller && answers.installEnd === 'front';
             },
         },
         {
