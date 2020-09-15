@@ -59,6 +59,7 @@ export default {
       log('Handling Lazy Load');
       this.removeFromObserver();
       this.loaded = true;
+      this.$emit('loaded');
     },
     inViewport() {
       const rect = this.$el.getBoundingClientRect();
