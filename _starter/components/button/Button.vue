@@ -1,21 +1,32 @@
 <template>
   <span
-    :is="elementTypeComputed"
-    :class="classes"
-    :aria-label="ariaLabel || null"
-    :href="formattedHref"
-    :target="newWindow ? '_blank' : target || null"
-    :to="useRouterLink ? formattedHref || null : null"
-    :rel="newWindow || target ? 'noopener' : null"
-    @click="onClick"
-    ><slot>{{ labelText }}</slot></span
+      :is="elementTypeComputed"
+      :class="classes"
+      :aria-label="ariaLabel || null"
+      :href="formattedHref"
+      :target="newWindow ? '_blank' : target || null"
+      :to="formattedTo"
+      :rel="newWindow || target ? 'noopener' : null"
+      @click.native="onClick"
+      v-if="useRouterLink"
+  ><slot>{{ labelText }}</slot></span
+  >
+  <span
+      :is="elementTypeComputed"
+      :class="classes"
+      :aria-label="ariaLabel || null"
+      :href="formattedHref"
+      :target="newWindow ? '_blank' : target || null"
+      :rel="newWindow || target ? 'noopener' : null"
+      @click="onClick"
+      v-else
+  ><slot>{{ labelText }}</slot></span
   >
 </template>
 
 <script>
-// import { log } from 'JS/global.js';
+import { log, processIsClient } from 'JS/global.js';
 import wb from 'JS/automated/wb.js';
-
 export default {
   name: 'Button',
   components: {},
@@ -31,7 +42,9 @@ export default {
     outline: { type: Boolean, default: false },
     reset: { type: Boolean, default: false },
     retainStyle: { type: Boolean, default: false },
+    smoothAnchor: { type: Boolean, default: true },
     target: String,
+    to: Object,
     theme: { type: String, default: 'default' },
     unstyle: { type: Boolean, default: false },
   },
@@ -72,27 +85,63 @@ export default {
         if (this.href === '/') {
           // Return the homepage
           return `/`;
-        } else if (this.href.startsWith('http://') || this.href.startsWith('https://')) {
+        } else if (this.href.startsWith('http://') || this.href.startsWith('https://') || this.href.startsWith('#')) {
           return this.href;
         } else {
+          // Make sure route is relative
           return (this.href.startsWith('/') ? '' : '/') + this.href;
         }
       }
+      return null;
+    },
+    formattedTo() {
+      let to = null;
 
-      return false;
+      if (this.useRouterLink) {
+        to = {};
+
+        if (this.formattedHref) {
+          if (this.formattedHref.startsWith('#')) {
+            to.hash = this.formattedHref;
+          } else {
+            to.path = this.formattedHref;
+          }
+        }
+
+        // Overwrite all changes
+        if (this.to) {
+          to = this.to;
+        }
+      }
+
+      return to;
     },
     styleAsButton() {
       return this.retainStyle || (this.unstyle === false && Object.keys(this.$slots).length === 0);
     },
     useRouterLink() {
-      if (this.href) {
-        return this.formattedHref.startsWith('/');
+      if (this.formattedHref) {
+        return this.formattedHref.startsWith('/') || this.formattedHref.startsWith('#');
       }
       return false;
     },
   },
   methods: {
     onClick(event) {
+      log('Button Clicked!', event, this.formattedTo?.hash);
+
+      if (processIsClient()) {
+        if (this.formattedTo?.hash && this.smoothAnchor) {
+          const element = document.querySelector(this.formattedTo.hash);
+          if (element) {
+            window.scrollTo({
+              top: element.offsetTop,
+              behavior: 'smooth',
+            });
+          }
+        }
+      }
+
       this.$emit('clicked', event);
     },
   },
