@@ -15,7 +15,7 @@ const argv = g.parseArgv();
 // use CLI arguments to set variables
 const runComponentDocs = argv.options.componentdocs || false,
       runIconMethods   = argv.options.iconmethods || false,
-      runScssIncludes  = argv.options.scssincludes || false,
+      runCssIncludes   = argv.options.cssincludes || false,
       runScraper       = argv.options.scraper || false,
       verbose          = argv.options.verbose || false;
 
@@ -64,13 +64,13 @@ async function run() {
         let iconMethodsComplete = await iconMethods;
     }
 
-    if (runScssIncludes) {
-        const scssIncludes = g.asyncFunction(
-            `Combining SCSS Files`, `SCSS Files Combined`, (resolve) => {
-                g.prebuildScssIncludes(resolve, wb.paths, verbose);
+    if (runCssIncludes) {
+        const cssIncludes = g.asyncFunction(
+            `Combining PostCSS Files`, `PostCSS Files Combined`, (resolve) => {
+                g.prebuildCssIncludes(resolve, wb.paths, verbose);
             }
         );
-        let scssIncludesComplete = await scssIncludes;
+        let cssIncludesComplete = await cssIncludes;
     }
 
     if (runScraper) {

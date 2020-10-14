@@ -29,7 +29,7 @@ if (process.env.VUE_APP_ENABLE_DOCS) {
   routes.push({
     path: `/dev/docs/:slug`,
     name: `dev_docs`,
-    component: () => import(`JS/automated/ComponentDocs.vue`),
+    component: () => import(`Starter/docs/vue/ComponentDocs.vue`),
   });
 }
 

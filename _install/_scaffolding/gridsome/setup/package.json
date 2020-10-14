@@ -3,7 +3,7 @@
     "ci:build": "gridsome build",
     "deploy": "npm run prebuild && npm run commit",
     "dev": "npm run prebuild && gridsome develop",
-    "prebuild": "node ./_starter/prebuild.js --componentdocs --iconmethods --prettier --scssincludes",
+    "prebuild": "node ./_starter/prebuild.js --componentdocs --iconmethods --prettier --cssincludes",
     "prod": "npm run prebuild && gridsome build"
   },
   "dependencies": {

@@ -294,7 +294,7 @@ methods.prebuildIconMethods = function prebuildIconMethods(callback, paths, verb
   });
 };
 
-methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, verbose) {
+methods.prebuildCssIncludes = function prebuildCssIncludes(callback, paths, verbose) {
   glob(`${paths.components.src}**/*.css`, function(er, files) {
     methods.log('verbose', `SCSS Files: ${JSON.stringify(files, null, 2)}`, verbose);
     let data = '';
@@ -305,10 +305,10 @@ methods.prebuildScssIncludes = function prebuildScssIncludes(callback, paths, ve
     methods.log('verbose', data, verbose);
 
     if (data) {
-      const scssIncludesPath = paths.css.src + 'automated/_components.css';
-      fs.outputFile(scssIncludesPath, data, (err) => {
+      const cssIncludesPath = paths.css.src + 'automated/_components.pcss';
+      fs.outputFile(cssIncludesPath, data, (err) => {
         if (!err) {
-          methods.log('verbose', `Writing combined SCSS files to: ${scssIncludesPath}`, verbose);
+          methods.log('verbose', `Writing combined PostCSS files to: ${cssIncludesPath}`, verbose);
           callback();
         }
       });
