@@ -1,8 +1,11 @@
+# OS AND CODE EDITORS
+.DS_Store
+.idea
+.vscode
+
 # CRAFT DEFAULTS
 .env
-.idea
 vendor
-.DS_Store
 
 # BUILD FILES
 .cache
@@ -14,13 +17,16 @@ storage/backups
 storage/logs
 storage/runtime
 
+# DDEV
+.ddev/*
+!.ddev/scripts
+!.ddev/config.yaml
+!.ddev/config.*.yaml
+
 # ENVIRONMENT CONFIG FILES
 .env.php
+.env
 scripts/.env.sh
-
-# PHPSTORM FILES
-# Keep track of the marked directories
-!.idea/wb-web-2020-be.iml
 
 # USER UPLOADS
 web/u/*

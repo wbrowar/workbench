@@ -147,11 +147,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.c-button {
-  &-reset {
-    @include button_reset;
-  }
-}
-</style>
