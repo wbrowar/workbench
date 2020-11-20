@@ -1,0 +1,171 @@
+name: Craft CMS Deployment
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Set environment variables that can be used in future steps
+      - name: Set ENV for the `dev` branch
+        if: endsWith(github.ref, '/dev')
+        run: |
+          echo "SSH_HOST=${SSH_HOST}" >> $GITHUB_ENV
+          echo "SSH_PORT=${SSH_PORT}" >> $GITHUB_ENV
+          echo "SSH_USER=${SSH_USER}" >> $GITHUB_ENV
+          echo 'SSH_KEY<<EOF' >> $GITHUB_ENV
+          echo "${SSH_KEY}" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+          echo "PHP_RESTART_CMD=php7.3-fpm" >> $GITHUB_ENV
+        env:
+          SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
+          SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
+          SSH_USER: ${{ secrets.DEV_SSH_USER }}
+          SSH_KEY: ${{ secrets.DEV_SSH_KEY }}
+          SERVER_ROOT: ${{ secrets.DEV_SERVER_ROOT }}
+      - name: Set ENV for the `staging` branch
+        if: endsWith(github.ref, '/staging')
+        run: |
+          echo "SSH_HOST=${SSH_HOST}" >> $GITHUB_ENV
+          echo "SSH_PORT=${SSH_PORT}" >> $GITHUB_ENV
+          echo "SSH_USER=${SSH_USER}" >> $GITHUB_ENV
+          echo 'SSH_KEY<<EOF' >> $GITHUB_ENV
+          echo "${SSH_KEY}" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+          echo "SERVER_ROOT=${SERVER_ROOT}" >> $GITHUB_ENV
+          echo "PHP_RESTART_CMD=php7.3-fpm" >> $GITHUB_ENV
+        env:
+          SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+          SSH_PORT: ${{ secrets.STAGING_SSH_PORT }}
+          SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+          SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          SERVER_ROOT: ${{ secrets.STAGING_SERVER_ROOT }}
+      - name: Set ENV for the `main` branch
+        if: endsWith(github.ref, '/main')
+        run: |
+          echo "SSH_HOST=${SSH_HOST}" >> $GITHUB_ENV
+          echo "SSH_PORT=${SSH_PORT}" >> $GITHUB_ENV
+          echo "SSH_USER=${SSH_USER}" >> $GITHUB_ENV
+          echo 'SSH_KEY<<EOF' >> $GITHUB_ENV
+          echo "${SSH_KEY}" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+          echo "SERVER_ROOT=${SERVER_ROOT}" >> $GITHUB_ENV
+          echo "PHP_RESTART_CMD=php7.3-fpm" >> $GITHUB_ENV
+        env:
+          SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
+          SSH_PORT: ${{ secrets.PROD_SSH_PORT }}
+          SSH_USER: ${{ secrets.PROD_SSH_USER }}
+          SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
+          SERVER_ROOT: ${{ secrets.PROD_SERVER_ROOT }}
+
+      # Pull repository into the current pipeline
+      - name: Pull repository
+        uses: actions/checkout@v2
+
+      # Setup container with private SSH Key (used by rsync)
+      - name: Load private SSH key
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: |
+            ${{ env.SSH_KEY }}
+
+      # Prepares server before running rsync
+      # Helps test connection before running other tasks
+      - name: Prepare remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SSH_HOST }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          port: ${{ env.SSH_PORT }}
+          script: |
+            cd ${{ env.SERVER_ROOT }}/
+            mkdir -p deploy-cache
+
+      # Install PHP dependencies
+      - name: Composer install
+        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      # rsync
+      # Exclude web/uploads is there to avoid deleting user uploaded files
+      # Setting StrictHostKeyChecking=no will automatically add new host keys to the user known hosts files
+      - name: Place files into temporary folder on the server (via rsync)
+        run: |
+          rsync -a -h -v -z --delete --exclude=/.ddev/ --exclude=/.git/ --exclude=/.github/ --exclude=/web/cpresources/ --exclude=.env --exclude=/storage/ --port=${{ env.SSH_PORT }} -e "ssh -o StrictHostKeyChecking=no" ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:${{ env.SERVER_ROOT }}/deploy-cache/
+
+      # Execute Craft commands on remote server
+      - name: Execute SSH commmands on remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SSH_HOST }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          port: ${{ env.SSH_PORT }}
+          script: |
+            cd ${{ env.SERVER_ROOT }}/
+            mkdir -p releases
+            if [ ! -d "releases/${{ github.run_id }}" ];
+            then
+             echo "Creating: releases/${{ github.run_id }}"
+             cp -dR deploy-cache releases/${{ github.run_id }};
+            fi
+            echo "Creating: persistent directories"
+            mkdir -p app/cpresources
+            mkdir -p app/resized
+            mkdir -p app/storage
+            mkdir -p app/u
+            echo "Setting Permissions: persistent directories"
+            chmod 755 -R app/cpresources
+            chmod 755 -R app/resized
+            chmod 744 -R app/storage
+            chmod 755 -R app/u
+            if [ -d "app/${{ github.run_id }}/vendor" ];
+            then
+             chmod 744 -R app/${{ github.run_id }}/vendor
+            fi
+            echo "Symlinking: persistent directories and files"
+            ln -nfs ${{ env.SERVER_ROOT }}/app/storage ${{ env.SERVER_ROOT }}/releases/${{ github.run_id }}/storage
+            ln -nfs ${{ env.SERVER_ROOT }}/app/cpresources ${{ env.SERVER_ROOT }}/releases/${{ github.run_id }}/web/cpresources
+            ln -nfs ${{ env.SERVER_ROOT }}/app/resized ${{ env.SERVER_ROOT }}/releases/${{ github.run_id }}/web/resized
+            ln -nfs ${{ env.SERVER_ROOT }}/app/u ${{ env.SERVER_ROOT }}/releases/${{ github.run_id }}/web/u
+            if [ -a "app/.env" ];
+            then
+             ln -nfs ${{ env.SERVER_ROOT }}/app/.env ${{ env.SERVER_ROOT }}/releases/${{ github.run_id }}/.env;
+             echo "Running Craft Update Scripts"
+             cd ${{ env.SERVER_ROOT }}/releases/${{ github.run_id }}/
+             echo "Backing up database"
+             ./craft backup/db
+             echo "Clearing caches"
+             ./craft clear-caches/all
+             echo "Running database migrations"
+             ./craft migrate/all;
+             echo "Applying project config changes"
+             ./craft project-config/apply;
+            fi
+            echo "Linking current to revision: ${{ github.run_id }}"
+            cd ${{ env.SERVER_ROOT }}/
+            rm -f current
+            ln -s releases/${{ github.run_id }} current
+            echo "Removing old releases"
+            if [ "$GITHUB_BASE_REF" = "main" ];
+            then
+             cd ${{ env.SERVER_ROOT }}/releases && ls -t | tail -n +6 | xargs rm -rf
+            else
+             cd ${{ env.SERVER_ROOT }}/releases && ls -t | tail -n +3 | xargs rm -rf
+            fi
+
+      # Restart the PHP process on the server
+      # Use `if` to restrict this to a specific server environment:
+      # if: endsWith(github.ref, '/dev')
+      - name: Restarting PHP
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SSH_HOST }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          port: ${{ env.SSH_PORT }}
+          script: |
+            echo "Restarting PHP"
+            sudo -S service ${{ env.PHP_RESTART_CMD }} reload
