@@ -18,6 +18,7 @@ jobs:
           echo 'SSH_KEY<<EOF' >> $GITHUB_ENV
           echo "${SSH_KEY}" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
+          echo "SERVER_ROOT=${SERVER_ROOT}" >> $GITHUB_ENV
           echo "PHP_RESTART_CMD=php7.3-fpm" >> $GITHUB_ENV
         env:
           SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
