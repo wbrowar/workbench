@@ -8,8 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "nuxt": "^2.14.0",
-    "@nuxt/http": "^0.5.10"
+    "nuxt": "^2.14.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",

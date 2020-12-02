@@ -10,12 +10,14 @@
   "version": "6.0.0",
   "requiredInstallerVersion": "16",
   "devDependencies": {
+    "autoprefixer": "^9.8.6",
     "ejs": "^3.1.2",
     "fs-extra": "^9.0.0",
     "glob-all": "^3.2.1",
     "inquirer": "^7.1.0",
     "lodash": "^4.17.15",
+    "postcss": "^7.0.35",
     "sync-request": "^6.1.0",
-    "tailwindcss": "^1.4.6"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
   }
 }
