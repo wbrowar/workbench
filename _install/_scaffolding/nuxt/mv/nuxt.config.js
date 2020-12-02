@@ -20,8 +20,8 @@ export default {
       plugins: {
         'postcss-simple-vars': {},
         'postcss-easy-import': {},
-        'postcss-mixins': { mixins: require(`${path.resolve(wb.paths.css.src)}/_css.mixins.js`) },
-        'postcss-functions': { functions: require(`${path.resolve(wb.paths.css.src)}/_css.functions.js`) },
+        // 'postcss-mixins': { mixins: require(`${path.resolve(wb.paths.css.src)}/_css.mixins.js`) },
+        // 'postcss-functions': { functions: require(`${path.resolve(wb.paths.css.src)}/_css.functions.js`) },
         'postcss-nested': {},
         'postcss-custom-media': {
           importFrom: [
