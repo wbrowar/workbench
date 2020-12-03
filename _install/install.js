@@ -331,6 +331,9 @@ async function run() {
 
                     // Add project specific component defaults
                     switch (answers.projectType) {
+                        case 'html':
+                            defaultComponents.splice(0,defaultComponents.length);
+                            break;
                         case 'marketo-vue':
                             defaultComponents.push('marketo_form');
                             break;

@@ -1,26 +1,26 @@
 <template>
   <span
-      :is="elementTypeComputed"
-      :class="classes"
-      :aria-label="ariaLabel || null"
-      :href="formattedHref"
-      :target="newWindow ? '_blank' : target || null"
-      :to="formattedTo"
-      :rel="newWindow || target ? 'noopener' : null"
-      @click.native="onClick"
-      v-if="useRouterLink"
-  ><slot>{{ labelText }}</slot></span
+    :is="elementTypeComputed"
+    :class="classes"
+    :aria-label="ariaLabel || null"
+    :href="formattedHref"
+    :target="newWindow ? '_blank' : target || null"
+    :to="formattedTo"
+    :rel="newWindow || target ? 'noopener' : null"
+    @click.native="onClick"
+    v-if="useRouterLink"
+    ><slot>{{ labelText }}</slot></span
   >
   <span
-      :is="elementTypeComputed"
-      :class="classes"
-      :aria-label="ariaLabel || null"
-      :href="formattedHref"
-      :target="newWindow ? '_blank' : target || null"
-      :rel="newWindow || target ? 'noopener' : null"
-      @click="onClick"
-      v-else
-  ><slot>{{ labelText }}</slot></span
+    :is="elementTypeComputed"
+    :class="classes"
+    :aria-label="ariaLabel || null"
+    :href="formattedHref"
+    :target="newWindow ? '_blank' : target || null"
+    :rel="newWindow || target ? 'noopener' : null"
+    @click="onClick"
+    v-else
+    ><slot>{{ labelText }}</slot></span
   >
 </template>
 
