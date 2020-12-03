@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const paths = {
-  publicPath: process.env.<%- appEnvPrefix || '' %>PUBLIC_PATH || `/`,
+  publicPath: process.env.<%- appEnvPrefix %>PUBLIC_PATH || `/`,
   sourcePath: process.cwd() + '/_source/',
   srcPath: process.cwd() + '/<% if (!["nuxt"].includes(install.projectType)) { %>src/<% } %>',
   starterPath: process.cwd() + '/_starter/',
@@ -117,9 +117,9 @@ module.exports = {
   // Config options for build process
   name: '<%- install.handle %>',
   projectType: '<%- install.projectType %>',
-  devMode: process.env.<%- appEnvPrefix || '' %>DEV_MODE === 'true',
-  enableDocs: process.env.<%- appEnvPrefix || '' %>ENABLE_DOCS === 'true',
-  enableWebp: process.env.<%- appEnvPrefix || '' %>ENABLE_WEBP === 'true',
+  devMode: process.env.<%- appEnvPrefix %>DEV_MODE === 'true',
+  enableDocs: process.env.<%- appEnvPrefix %>ENABLE_DOCS === 'true',
+  enableWebp: process.env.<%- appEnvPrefix %>ENABLE_WEBP === 'true',
   ejs: {
     // Define any data to be processed with EJS
   },

@@ -96,10 +96,10 @@ async function run() {
             choices: (answers) => {
                 return answers.installEnd === 'front' ? [
                     // { name: 'Gridsome', value: 'gridsome' },
-                    { name: 'HTML (Tailwind, Webpack)', value: 'html' },
                     { name: 'Nuxt', value: 'nuxt' },
                     // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
+                    { name: 'HTML (Tailwind, Webpack)', value: 'html' },
                     { name: 'Marketo Vue SPA', value: 'marketo-vue' },
                     // { name: 'Vite SPA', value: 'vite' },
                 ] : [
@@ -378,6 +378,7 @@ async function run() {
         g.log('dump', answers, verbose);
 
         ejsVars['install'] = answers;
+        ejsVars.appEnvPrefix = '';
 
         if (answers.handle) {
             handle = ejsVars.handle = answers.handle || '';
