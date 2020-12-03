@@ -297,24 +297,21 @@ methods.prebuildIconMethods = function prebuildIconMethods(callback, paths, verb
 methods.prebuildCssIncludes = function prebuildCssIncludes(callback, paths, verbose) {
   glob(`${paths.components.src}**/*.css`, function(er, files) {
     methods.log('verbose', `SCSS Files: ${JSON.stringify(files, null, 2)}`, verbose);
-    let data = '';
+    let data = `/* CSS from _source/_components/ */
+`;
     files.forEach((item) => {
       data += `@import "../../_components/${item.replace(paths.components.src, '')}";
 `;
     });
     methods.log('verbose', data, verbose);
 
-    if (data) {
-      const cssIncludesPath = paths.css.src + 'automated/_components.pcss';
-      fs.outputFile(cssIncludesPath, data, (err) => {
-        if (!err) {
-          methods.log('verbose', `Writing combined PostCSS files to: ${cssIncludesPath}`, verbose);
-          callback();
-        }
-      });
-    } else {
-      callback();
-    }
+    const cssIncludesPath = paths.css.src + 'automated/_components.pcss';
+    fs.outputFile(cssIncludesPath, data, (err) => {
+      if (!err) {
+        methods.log('verbose', `Writing combined PostCSS files to: ${cssIncludesPath}`, verbose);
+        callback();
+      }
+    });
   });
 };
 

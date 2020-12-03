@@ -1,0 +1,26 @@
+# ENVIRONMENT AND EDITOR FILES
+.env
+.idea
+vendor
+.DS_Store
+.vscode
+
+# BUILD FILES
+dist
+.cache
+node_modules/*
+shrinkwrap.yaml
+Thumbs.db
+yarn.lock
+
+# DDEV
+.ddev/*
+!.ddev/scripts
+!.ddev/config.yaml
+!.ddev/config.*.yaml
+!.ddev/web-build
+
+# ENVIRONMENT CONFIG FILES
+.env
+
+# VSCODE

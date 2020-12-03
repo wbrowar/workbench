@@ -1,4 +1,6 @@
+const dotenv = require('dotenv');
 const path = require('path');
+dotenv.config();
 
 // Load custom pieces
 // const functionFunctions = require('./_source/_css/_css.functions.js'),
@@ -39,8 +41,9 @@ const postcssPlugins = [
   autoprefixer(),
 ];
 
-if (process.env.NODE_ENV === 'production' && process.env.VUE_APP_POSTCSS_PURGECSS === 'true')
+if (process.env.NODE_ENV === 'production' && process.env.POSTCSS_PURGECSS === 'true') {
   postcssPlugins.push(purgecss(require('./purgecss.config.js')));
+}
 
 module.exports = {
   plugins: postcssPlugins,
