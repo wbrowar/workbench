@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "ci:build": "vue-cli-service build",
-    "dev": "npm run prebuild && vue-cli-service serve",
-    "prod": "npm run prebuild && vue-cli-service build"
+    "ci:build": "webpack",
+    "dev": "npm run prebuild && webpack serve",
+    "prod": "npm run prebuild && webpack"
   },
   "name": "example-project",
   "private": true,
