@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "ci:build": "vue-cli-service build",
+    "dev": "npm run prebuild && vue-cli-service serve",
+    "prod": "npm run prebuild && vue-cli-service build"
+  },
+  "name": "example-project",
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^4.5.0",
+    "webpack": "^5.9.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

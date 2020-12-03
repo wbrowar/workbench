@@ -96,7 +96,7 @@ async function run() {
             choices: (answers) => {
                 return answers.installEnd === 'front' ? [
                     // { name: 'Gridsome', value: 'gridsome' },
-                    // { name: 'HTML', value: 'html' },
+                    { name: 'HTML (Tailwind, Webpack)', value: 'html' },
                     { name: 'Nuxt', value: 'nuxt' },
                     // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
@@ -397,6 +397,9 @@ async function run() {
                 case 'gridsome':
                     ejsVars.appEnvPrefix = 'GRIDSOME_';
                     installDirectories = ['_front-end', 'gridsome'];
+                    break;
+                case 'html':
+                    installDirectories = ['_front-end', 'html'];
                     break;
                 case 'marketo-vue':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
