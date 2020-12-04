@@ -581,11 +581,11 @@ async function run() {
         g.verboseExec(`rm -rf ${ process.cwd() }/SETUP`, verbose);
         g.log('verbose', `Install directory deleted`, verbose);
 
-        if (answers.installEnd === 'front') {
-            g.log('title', 'Running Initial Build Script', verbose);
-            g.verboseExec(`npm run dev`, true);
-            g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
-        }
+        // if (answers.installEnd === 'front') {
+        //     g.log('title', 'Running Initial Build Script', verbose);
+        //     g.verboseExec(`npm run dev`, true);
+        //     g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
+        // }
 
         if (answers.setupRepo) {
             g.log('title', 'Setting up GitHub repo');
@@ -610,6 +610,8 @@ async function run() {
         }
 
         g.log('app', `WB-Starter Project Installed`);
+        g.log('app', `Run: cd ${ handle }`);
+        g.log('app', `     npm run dev`);
 
         g.log('message', chalk.dim(`\n${_bye()}\n`));
     });

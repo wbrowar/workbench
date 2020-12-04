@@ -134,12 +134,16 @@
         <div
           class="grid grid-cols-it gap-2 my-1 items-center"
           style="break-inside: avoid;"
-          v-for="(item, index) in twConfig.theme.spacing"
-          :key="index"
+          v-for="item in spacingFormatted"
+          :key="item.key"
         >
-          <div class="w-20 bg-black" :class="[`h-${index}`]"></div>
-          <p class="font-semibold text-xs">
-            {{ index }}<span style="margin-left: 1em; opacity: 0.4;">{{ item }}</span>
+          <div class="w-16 bg-black" :class="[`h-${item.key}`]"></div>
+          <p class="grid grid-cols-it gap-3 font-semibold text-xs">
+            <span class="w-5">{{ item.key }}</span
+            ><span class="grid grid-cols-2 gap-3"
+              ><span style="opacity: 0.6;">{{ item.value }}</span
+              ><span style="opacity: 0.3;">{{ item.px }}</span></span
+            >
           </p>
         </div>
       </div>
@@ -277,6 +281,32 @@ export default {
       return this.remConverterConversion === 'pxToRem'
         ? `${this.remConverterFrom / 16}rem`
         : `${this.remConverterFrom * 16}px`;
+    },
+    spacingFormatted() {
+      const unsortedEntries = [];
+      Object.keys(this.twConfig.theme.spacing).forEach((key) => {
+        const value = this.twConfig.theme.spacing[key];
+        let px = '';
+        if (value.endsWith('rem')) {
+          px = `${value.substr(0, value.length - 3) * 16}px`;
+        } else if (value.endsWith('em')) {
+          px = `${value.substr(0, value.length - 2) * 16}px`;
+        } else if (value.endsWith('px')) {
+          px = value;
+        }
+
+        unsortedEntries.push({
+          key,
+          px,
+          value,
+        });
+      });
+
+      const entries = unsortedEntries.sort(function(left, right) {
+        return left.px.substr(0, left.px.length - 2) - right.px.substr(0, right.px.length - 2);
+      });
+
+      return entries;
     },
   },
   created() {
