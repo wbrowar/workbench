@@ -12,7 +12,7 @@ cd /var/www/html \
 
 # Search for .env to see whether we've already finished local setup
 ENV_FILE=".env"
-ENV_EXAMPLE="EXAMPLE.env"
+ENV_EXAMPLE="example.env"
 VENDOR="vendor/"
 
 # Check platform
