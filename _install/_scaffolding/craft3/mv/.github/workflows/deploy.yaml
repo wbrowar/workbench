@@ -106,7 +106,7 @@ jobs:
       # Setting StrictHostKeyChecking=no will automatically add new host keys to the user known hosts files
       - name: Place files into temporary folder on the server (via rsync)
         run: |
-          rsync -a -h -v -z --delete --exclude=/.ddev/ --exclude=/.git/ --exclude=/.github/ --exclude=/web/cpresources/ --exclude=.env --exclude=/storage/ --port=${{ env.SSH_PORT }} -e "ssh -o StrictHostKeyChecking=no" ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:${{ env.SERVER_ROOT }}/deploy-cache/
+          rsync -a -h -v -z --delete --exclude=/.ddev/ --exclude=/.git/ --exclude=/.github/ --exclude=/web/cpresources/ --exclude=.env --exclude=/node_modules/ --exclude=/storage/ --port=${{ env.SSH_PORT }} -e "ssh -o StrictHostKeyChecking=no" ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:${{ env.SERVER_ROOT }}/deploy-cache/
 
       # Execute Craft commands on remote server
       - name: Execute SSH commmands on remote server
@@ -121,8 +121,8 @@ jobs:
             mkdir -p releases
             if [ ! -d "releases/${{ github.run_id }}" ];
             then
-             echo "Creating: releases/${{ github.run_id }}"
-             cp -dR deploy-cache releases/${{ github.run_id }};
+             echo "Moving files into new release folder: releases/${{ github.run_id }}"
+             mv deploy-cache releases/${{ github.run_id }};
             fi
             echo "Creating: persistent directories"
             mkdir -p app/cpresources
