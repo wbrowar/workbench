@@ -35,6 +35,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: `index.html`,
       template: `${process.cwd()}/_source/_html/index.ejs`,
+      inject: process.env.NODE_ENV !== 'production',
+      minify: false,
+      publicPath: process.env.NODE_ENV === 'production' ? process.env.PUBLIC_PATH : '/',
+      templateParameters: {
+        isProduction: process.env.NODE_ENV === 'production',
+        publicPath: process.env.PUBLIC_PATH,
+      }
     })
   ],
   devServer: {

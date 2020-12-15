@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "ci:build": "webpack",
+    "ci:build": "npm run prod",
     "dev": "npm run prebuild && webpack serve",
-    "prod": "npm run prebuild && webpack"
+    "prod": "npm run prebuild && NODE_ENV=production DEV_MODE=false POSTCSS_PURGECSS=true webpack"
   },
   "name": "example-project",
   "private": true,
