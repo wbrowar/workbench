@@ -2,12 +2,12 @@ const wb = require(`./wb.config.js`);
 
 let content = [
   `${wb.paths.components.src}**/*.vue`,
-  `${wb.paths.starter.source}**/*.vue`,
-  `${wb.paths.starter.source}**/*.js`,
-  `${wb.paths.starter.source}**/*.jsx`,
-  `${wb.paths.starter.source}**/*.html`,
-  `${wb.paths.starter.source}**/*.ejs`,
-  `${wb.paths.starter.source}**/*.md`,
+  `${wb.paths.wb.source}**/*.vue`,
+  `${wb.paths.wb.source}**/*.js`,
+  `${wb.paths.wb.source}**/*.jsx`,
+  `${wb.paths.wb.source}**/*.html`,
+  `${wb.paths.wb.source}**/*.ejs`,
+  `${wb.paths.wb.source}**/*.md`,
 ];
 
 let whitelist = [

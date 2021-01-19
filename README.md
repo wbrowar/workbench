@@ -1,9 +1,9 @@
-WB-Starter
+Workbench
 ==========
 
 My personal framework for front-end development includes some SASS, HTML, and JS snippets that I use on a regular basis. This framework is built using Node and Webpack and it is meant to be pulled apart or modified for the project at hand. By changing settings in the `package.json` file, this can be used for one-page landing pages, as well as used in full-fledged CMS themes.
 
-This is here for my own storage, but please [let me know if you have any feedback or suggestions](https://github.com/wbrowar/WB-Starter/issues).
+This is here for my own storage, but please [let me know if you have any feedback or suggestions](https://github.com/wbrowar/workbench/issues).
 
 ## Requirements
 - [Node.js](https://nodejs.org/en/) (requires v14+) installed via [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md)
@@ -11,7 +11,7 @@ This is here for my own storage, but please [let me know if you have any feedbac
 
 ## Documentation
 
-Documentation can be found at [starter.wbrowar.com](https://starter.wbrowar.com/)
+Documentation can be found at [workbench.wbrowar.com](https://workbench.wbrowar.com/)
 
 
 ## Credits

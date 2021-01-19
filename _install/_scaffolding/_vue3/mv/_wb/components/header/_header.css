@@ -1,0 +1,11 @@
+.c-header {
+  &-1 {
+    @apply font-apple font-thin text-5xl;
+  }
+  &-2 {
+    @apply font-apple font-medium text-3xl;
+  }
+  &-3 {
+    @apply font-apple font-bold text-xl uppercase;
+  }
+}

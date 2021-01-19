@@ -1,0 +1,15 @@
+.c-navigation {
+  &__menu_toggle{
+    &[aria-expanded="true"]{
+      & + ul[hidden]{
+        display:block;
+      }
+    }
+  }
+
+  &__menu{
+    .open + ul{
+      display:block;
+    }
+  }
+}

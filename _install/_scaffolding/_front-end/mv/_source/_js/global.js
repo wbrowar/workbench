@@ -96,9 +96,9 @@ export function processIsClient() {
 
   if (process) {
     switch (wb.projectType) {
-      case 'gridsome':
-        isClient = process.isClient;
-        break;
+      // case 'gridsome':
+      //   isClient = process.isClient;
+      //   break;
     }
   }
 

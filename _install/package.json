@@ -1,11 +1,11 @@
 {
   "scripts": {},
-  "name": "wb-starter-installer",
+  "name": "workbench-installer",
   "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wbrowar/WB-Starter.git"
+    "url": "https://github.com/wbrowar/Workbench.git"
   },
   "version": "6.0.0",
   "requiredInstallerVersion": "16",

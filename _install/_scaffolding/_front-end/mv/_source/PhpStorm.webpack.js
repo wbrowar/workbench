@@ -15,7 +15,7 @@ module.exports = {
             Components: path.resolve(__dirname, '../_source/_components/'),
             CSS: path.resolve(__dirname, '../_source/_css/'),
             JS: path.resolve(__dirname, '../_source/_js/'),
-            Starter: path.resolve(__dirname, '../_starter/'),
+            WB: path.resolve(__dirname, '../_wb/'),
             Views: path.resolve(__dirname, '../src/views/'),
         }
     }

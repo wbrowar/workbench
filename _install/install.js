@@ -1,7 +1,6 @@
 // Import node modules
 const _ = require('lodash'),
       chalk = require('chalk'),
-      ejs = require('ejs'),
       fs = require('fs-extra'),
       glob = require('glob-all'),
       inquirer = require('inquirer'),
@@ -9,11 +8,11 @@ const _ = require('lodash'),
       path = require('path');
 
 // Import global functions
-fs.copySync(`../../_starter/functions.js`, `./functions.js`)
+fs.copySync(`../../_wb/functions.js`, `./functions.js`);
 const g = require('./functions.js');
 
 // HELLO
-g.log('app', `Installing WB-Starter Project`);
+g.log('app', `Installing Workbench Project`);
 
 // Load package file
 let pkg = require(`${ process.cwd() }/package.json`);
@@ -22,31 +21,31 @@ let pkg = require(`${ process.cwd() }/package.json`);
 const argv = g.parseArgv();
 
 // Use CLI arguments to set variables
-const projectDirectory = argv.options['project-dir'] || '',
-      verbose          = argv.options.verbose || false;
-let   handle           = argv.options.handle || false,
-      installerVersion = argv.options.version || '0';
+const projectDirectory = argv.options['project-dir'] || '';
+const verbose          = argv.options.verbose || false;
+let   handle           = argv.options.handle || false;
+let   installerVersion = argv.options.version || '0';
 
 // Set variables to be processed by EJS
 let ejsVars = {
     nodeVersion: process.version,
     projectDir: projectDirectory,
     pkg: pkg,
-    securityKey: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    securityKey: g.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 };
 
 // Set other variables
-let enableInstall = false,
-    localConfig   = false
-    npmInstaller = 'npm';
+let enableInstall = false;
+let localConfig   = false;
+let npmInstaller = 'npm';
 
-// Check that new-wb and WB-Starter versions are compatible
+// Check that new-wb and Workbench versions are compatible
 const installerVersionJoined = installerVersion.split('.').join('');
 const installerVersionString = installerVersionJoined.startsWith('0') ? installerVersionJoined.substr(1) : installerVersionJoined;
 if (installerVersionString === pkg.requiredInstallerVersion) {
     enableInstall = true;
 } else {
-    g.log('warn', `Version of new-wb does not match WB-Starter installer version. Cancelling installation.\n`, verbose);
+    g.log('warn', `Version of new-wb does not match Workbench installer version. Cancelling installation.\n`, verbose);
     g.log('message', 'Update new-wb then try again:\n  run `npm install -g new-wb`\n');
     process.exit();
 }
@@ -65,13 +64,13 @@ if (verbose) {
 }
 
 // get local config file
-g.log('verbose', `Looking for local configuration file in home directory: .wb-starter.config.json`, verbose);
-if (fs.existsSync(`${ os.homedir() }/.wb-starter.config.json`)) {
-    g.log('verbose', `wb-starter configuration file found`, verbose);
+g.log('verbose', `Looking for local configuration file in home directory: .workbench.config.json`, verbose);
+if (fs.existsSync(`${ os.homedir() }/.workbench.config.json`)) {
+    g.log('verbose', `workbench configuration file found`, verbose);
 
-    localConfig = require(`${ os.homedir() }/.wb-starter.config.json`);
+    localConfig = require(`${ os.homedir() }/.workbench.config.json`);
 } else {
-    g.log('verbose', `wb-starter configuration file not found`, verbose);
+    g.log('verbose', `workbench configuration file not found`, verbose);
 }
 
 async function run() {
@@ -95,16 +94,12 @@ async function run() {
             },
             choices: (answers) => {
                 return answers.installEnd === 'front' ? [
-                    // { name: 'Gridsome', value: 'gridsome' },
                     { name: 'Nuxt', value: 'nuxt' },
-                    // { name: 'Twig', value: 'twig' },
                     { name: 'Vue SPA', value: 'vue' },
                     { name: 'HTML (Tailwind, Webpack)', value: 'html' },
-                    { name: 'Marketo Vue SPA', value: 'marketo-vue' },
-                    // { name: 'Vite SPA', value: 'vite' },
+                    { name: 'Marketo Vue SPA', value: 'vue3-marketo' },
                 ] : [
                     { name: 'Craft 3', value: 'craft3' },
-                    // { name: 'Craft Plugin', value: 'craftplugin' },
                 ]
             },
         },
@@ -136,7 +131,7 @@ async function run() {
                 return ['craft3'].includes(answers.projectType);
             },
             when: (answers) => {
-                return answers.installEnd === 'back' && !['craftplugin'].includes(answers.projectType);
+                return answers.installEnd === 'back';
             },
         },
         {
@@ -309,7 +304,7 @@ async function run() {
             name: 'components',
             message: 'Select the components you would like to use by default?',
             choices: (answers) => {
-                const componentDirectories = glob.sync(`${projectDirectory}/_starter/components/*/`);
+                const componentDirectories = glob.sync(`${projectDirectory}/_wb/components/*/`);
                 let componentOptions = [];
                 componentDirectories.forEach((item) => {
                     const defaultComponents = [
@@ -334,7 +329,7 @@ async function run() {
                         case 'html':
                             defaultComponents.splice(0,defaultComponents.length);
                             break;
-                        case 'marketo-vue':
+                        case 'vue3-marketo':
                             defaultComponents.push('marketo_form');
                             break;
                     }
@@ -395,31 +390,20 @@ async function run() {
                 case 'craft3':
                     installDirectories = ['craft3'];
                     break;
-                case 'craftplugin':
-                    installDirectories = ['craft3'];
-                    break;
-                case 'gridsome':
-                    ejsVars.appEnvPrefix = 'GRIDSOME_';
-                    installDirectories = ['_front-end', 'gridsome'];
-                    break;
                 case 'html':
                     installDirectories = ['_front-end', 'html'];
                     break;
-                case 'marketo-vue':
+                case 'vue3-marketo':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
-                    installDirectories = ['_front-end', 'vue-base', 'vue', 'marketo-vue'];
+                    installDirectories = ['_front-end', 'vue-base', 'vue', 'vue3-marketo'];
                     break;
-                case 'nuxt':
+                case 'nuxt2':
                     ejsVars.appEnvPrefix = '';
                     installDirectories = ['_front-end', 'nuxt'];
                     break;
-                case 'vue':
+                case 'vue3':
                     ejsVars.appEnvPrefix = 'VUE_APP_';
                     installDirectories = ['_front-end', 'vue-base', 'vue'];
-                    break;
-                case 'vite':
-                    ejsVars.appEnvPrefix = 'VUE_APP_';
-                    installDirectories = ['_front-end', 'vue-base', 'vite'];
                     break;
             }
         }
@@ -446,7 +430,7 @@ async function run() {
             }
             localConfig['npmInstaller'] = npmInstaller;
 
-            fs.outputFileSync(`${ os.homedir() }/.wb-starter.config.json`, JSON.stringify(localConfig, null, 2));
+            fs.outputFileSync(`${ os.homedir() }/.workbench.config.json`, JSON.stringify(localConfig, null, 2));
 
             g.log('title', `Saved Local Configuring File`);
             g.log('dump', localConfig, verbose);
@@ -514,7 +498,7 @@ async function run() {
 
         const removeGitkeep = g.asyncFunction(
             `Removing Default .gitkeep Files`, `Default .gitkeep Files Removed`, (resolve) => {
-                globRemove(`${ process.cwd() }/_source/**/.gitkeep`, resolve);
+                g.globRemove(`${ process.cwd() }/_source/**/.gitkeep`, resolve, verbose);
             });
         let removeGitkeepComplete = await removeGitkeep;
 
@@ -567,7 +551,7 @@ async function run() {
             g.log('title', 'Moving selected components', verbose);
             answers.components.forEach((item) => {
                 if (!item.startsWith('@')) {
-                    g.verboseExec(`node ${projectDirectory}/_starter/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
+                    g.verboseExec(`node ${projectDirectory}/_wb/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
                 }
             });
         } else if (answers.installEnd === 'back') {
@@ -584,7 +568,7 @@ async function run() {
         // if (answers.installEnd === 'front') {
         //     g.log('title', 'Running Initial Build Script', verbose);
         //     g.verboseExec(`npm run dev`, true);
-        //     g.log('verbose', `WB Starter development script ran (npm run dev)`, verbose);
+        //     g.log('verbose', `Workbench development script ran (npm run dev)`, verbose);
         // }
 
         if (answers.setupRepo) {
@@ -609,7 +593,7 @@ async function run() {
             g.log('verbose', `Skipped repo step`, verbose);
         }
 
-        g.log('app', `WB-Starter Project Installed`);
+        g.log('app', `Workbench Project Installed`);
         g.log('app', `Run: cd ${ handle }`);
         g.log('app', `     npm run dev`);
 
@@ -621,70 +605,6 @@ async function run() {
 
 
 // CUSTOM FUNCTIONS
-function globEjs(pattern, replaceSrc, replaceDist, resolve) {
-    glob(pattern, { dot:true, nodir: true }, function (er, files) {
-        let count = files.length;
-        if (count > 0) {
-            files.forEach((item) => {
-                ejs.renderFile(item, ejsVars, {}, function(err, str) {
-                    if (err) {
-                        g.log('warn', err);
-                    }
-                    fs.outputFile(item.replace(replaceSrc, replaceDist), str, (err) => {
-                        if(!err) {
-                            g.log('verbose', `Compiled ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
-                            count--;
-                            if (count === 0) {
-                                resolve();
-                            }
-                        }
-                    });
-                });
-            });
-        } else {
-            resolve();
-        }
-    });
-}
-
-function globMove(pattern, replaceSrc, replaceDist, resolve) {
-    glob(pattern, { dot:true, nodir: true }, function (er, files) {
-        let count = files.length;
-        if (count > 0) {
-            files.forEach((item) => {
-                fs.move(item, item.replace(replaceSrc, replaceDist), { overwrite: true }).then(() => {
-                    g.log('verbose', `Moved ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
-                    count--;
-                    if (count === 0) {
-                        resolve();
-                    }
-                });
-            });
-        } else {
-            resolve();
-        }
-    });
-}
-
-function globRemove(pattern, resolve) {
-    glob(pattern, { dot:true, nodir: true }, function (er, files) {
-        let count = files.length;
-        if (count > 0) {
-            files.forEach((item) => {
-                fs.remove(item).then(() => {
-                    g.log('verbose', `Removed ✄ ${ item }`, verbose);
-                    count--;
-                    if (count === 0) {
-                        resolve();
-                    }
-                });
-            });
-        } else {
-            resolve();
-        }
-    });
-}
-
 async function installDirectory(name, finished) {
     const projectTypeInstallDirectory = `${projectDirectory}/SETUP/_install/_scaffolding/${ name }`;
 
@@ -694,7 +614,7 @@ async function installDirectory(name, finished) {
     if (fs.existsSync(`${ projectTypeInstallDirectory }/mv`)) {
         const moveInstallFiles = g.asyncFunction(
           `Moving Default Files`, `Default Files Moved`, (resolve) => {
-              globMove(`${projectTypeInstallDirectory}/mv/**/*`, `${projectTypeInstallDirectory}/mv/`, `${projectDirectory}/`, resolve);
+              g.globMove(`${projectTypeInstallDirectory}/mv/**/*`, `${projectTypeInstallDirectory}/mv/`, `${projectDirectory}/`, resolve, verbose);
           });
         let moveInstallFilesComplete = await moveInstallFiles;
     } else {
@@ -705,7 +625,7 @@ async function installDirectory(name, finished) {
     if (fs.existsSync(`${ projectTypeInstallDirectory }/ejs`)) {
         const compileInstallFiles = g.asyncFunction(
           `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
-              globEjs(`${projectTypeInstallDirectory}/ejs/**/*`, `${projectTypeInstallDirectory}/ejs/`, `${projectDirectory}/`, resolve);
+              g.globEjs(`${projectTypeInstallDirectory}/ejs/**/*`, `${projectTypeInstallDirectory}/ejs/`, `${projectDirectory}/`, resolve, verbose);
           });
         let compileInstallFilesComplete = await compileInstallFiles;
     } else {
@@ -727,12 +647,6 @@ function mergeIntoPkg(pkgFile) {
     } else {
         g.log('verbose', `Package JSON not found at: ${ pkgFile }`, verbose);
     }
-}
-
-function randomString(length, chars) {
-    let result = '';
-    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
 }
 
 function _bye() {

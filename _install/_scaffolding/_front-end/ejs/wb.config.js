@@ -4,8 +4,8 @@ dotenv.config();
 const paths = {
   publicPath: process.env.<%- appEnvPrefix %>PUBLIC_PATH || `/`,
   sourcePath: process.cwd() + '/_source/',
-  srcPath: process.cwd() + '/<% if (!["nuxt"].includes(install.projectType)) { %>src/<% } %>',
-  starterPath: process.cwd() + '/_starter/',
+  srcPath: process.cwd() + '/<% if (!['vue3-marketo', 'nuxt2', 'vue3'].includes(install.projectType)) { %>src/<% } %>',
+  workbenchPath: process.cwd() + '/_wb/',
   staticPath: process.cwd() + '/static/',
 };
 
@@ -91,7 +91,7 @@ module.exports = {
       },
     },
     variants: {
-      // Variants added by WB-Starter: animated, current
+      // Variants added by Workbench: animated, current
       backgroundColor: ['responsive', 'current', 'hover', 'focus', 'animated', 'even', 'odd'],
       opacity: ['responsive', 'hover', 'focus', 'animated'],
       textColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
@@ -130,16 +130,13 @@ module.exports = {
   },
   paths: {
     components: {
-      src: `${paths.sourcePath}_components/`,
+      src: `${paths.srcPath}components/`,
     },
     css: {
       src: `${paths.sourcePath}_css/`,
     },
     favicon: {
       src: `${paths.sourcePath}_favicon/`,
-    },
-    icon: {
-      src: `${paths.sourcePath}_icon/`,
     },
     img: {
       src: `${paths.sourcePath}_img/`,
@@ -148,13 +145,13 @@ module.exports = {
       src: `${paths.sourcePath}_js/`,
     },
     publicPath: paths.publicPath,
-    starter: {
-      components: `${paths.starterPath}components/`,
+    wb: {
+      components: `${paths.workbenchPath}components/`,
       source: paths.sourcePath,
       src: paths.srcPath,
-      starter: paths.starterPath,
+      workbench: paths.workbenchPath,
       static: paths.staticPath,
-      templates: `${paths.starterPath}templates/`,
+      templates: `${paths.workbenchPath}templates/`,
     }
   },
   scraper: {
