@@ -1,15 +1,9 @@
-// import node modules
-const ejs = require('ejs'),
-  fs = require('fs-extra'),
-  glob = require('glob-all'),
-  inquirer = require('inquirer'),
-  path = require('path');
-
-// import global functions
-const g = require('./functions.js');
-
-// load config files
-let wb = require(`${ process.cwd() }/wb.config.js`);
+import { default as ejs } from 'ejs';
+import { default as fs } from 'fs-extra';
+import { default as glob } from 'glob-all';
+import { default as inquirer } from 'inquirer';
+import { default as path } from 'path';
+import wb from '../wb.config.js';
 
 // set constants
 const argv = g.parseArgv();
@@ -21,12 +15,6 @@ const verbose = argv.options.verbose || false;
 // set variables based on wb options
 let paths = wb.paths;
 let questions;
-
-// set notify configs
-const notify = {
-    icon: `${ wb.paths.favicon.src }/favicon.png`,
-    name: wb.name,
-};
 
 async function run() {
     if (action === 'move') {

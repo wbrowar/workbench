@@ -1,21 +1,21 @@
 // Import node modules
-const _ = require('lodash'),
-      chalk = require('chalk'),
-      fs = require('fs-extra'),
-      glob = require('glob-all'),
-      inquirer = require('inquirer'),
-      os = require('os'),
-      path = require('path');
+import { default as _ } from 'lodash';
+import { default as chalk } from 'chalk';
+import { default as fs } from 'fs-extra';
+import { default as glob } from 'glob-all';
+import { default as inquirer } from 'inquirer';
+import { default as os } from 'os';
+import { default as path } from 'path';
 
 // Import global functions
 fs.copySync(`../../_wb/functions.js`, `./functions.js`);
-const g = require('./functions.js');
+const g = import('./functions.js');
 
 // HELLO
 g.log('app', `Installing Workbench Project`);
 
 // Load package file
-let pkg = require(`${ process.cwd() }/package.json`);
+let pkg = import(`${ process.cwd() }/package.json`);
 
 // Set constants
 const argv = g.parseArgv();
@@ -68,7 +68,7 @@ g.log('verbose', `Looking for local configuration file in home directory: .workb
 if (fs.existsSync(`${ os.homedir() }/.workbench.config.json`)) {
     g.log('verbose', `workbench configuration file found`, verbose);
 
-    localConfig = require(`${ os.homedir() }/.workbench.config.json`);
+    localConfig = import(`${ os.homedir() }/.workbench.config.json`);
 } else {
     g.log('verbose', `workbench configuration file not found`, verbose);
 }
@@ -639,7 +639,7 @@ function mergeIntoPkg(pkgFile) {
     if (fs.existsSync(pkgFile)) {
         g.log('verbose', `Merging new package info from: ${ pkgFile }`, verbose);
 
-        const newPkgInfo = require(pkgFile);
+        const newPkgInfo = import(pkgFile);
         pkg = _.merge(pkg, newPkgInfo);
 
         g.log('verbose', `Merged new package info:`, verbose);

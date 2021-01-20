@@ -1,19 +1,14 @@
-// import node modules
-const _ = require('lodash');
-
-// import global functions
-const g = require('./functions.js'),
-      fs = require('fs-extra');
-
-// load config files
-let wb = require(`${ process.cwd() }/wb.config.js`);
+import { default as _ } from 'lodash';
+import { default as fs } from 'fs-extra';
+import wb from '../wb.config.js';
+import * as g from './functions.js';
 
 // set constants
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
-const runMarketoVariables = argv.options.marketovars || false,
-      verbose             = argv.options.verbose || false;
+const runMarketoVariables = argv.options.marketovars || false;
+const verbose             = argv.options.verbose || false;
 
 // set variables based on wb options
 let ejsVars = _.merge({
@@ -22,7 +17,7 @@ let ejsVars = _.merge({
 }, wb.ejs);
 
 if (fs.existsSync(`./node.variables.js`)) {
-    ejsVars.variables = require(`./node.variables.js`);
+    ejsVars.variables = import(`./node.variables.js`);
     g.log('dump', ejsVars.variables, true);
 }
 

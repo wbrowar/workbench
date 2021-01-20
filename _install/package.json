@@ -2,6 +2,7 @@
   "scripts": {},
   "name": "workbench-installer",
   "private": true,
+  "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",

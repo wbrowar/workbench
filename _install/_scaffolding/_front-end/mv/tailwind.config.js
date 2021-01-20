@@ -1,7 +1,7 @@
 // Tailwind config is set in wb.config.js
 const _ = require('lodash');
 const plugin = require('tailwindcss/plugin');
-const wb = require(`${process.cwd()}/wb.config.js`);
+const wb = require(`./wb.config.js`);
 
 // Add colors
 const colors = wb.colors;
@@ -16,7 +16,7 @@ Object.keys(wb.fonts).forEach((key) => {
 
 // Add media queries
 const screens = {};
-Object.keys(wb.mq).forEach((key) => {
+Object.keys(wb.mq.tailwind).forEach((key) => {
   screens[key] = `${wb.mq[key]}px`;
 });
 

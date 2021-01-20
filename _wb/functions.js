@@ -1,15 +1,14 @@
+import { default as chalk } from 'chalk';
+import { default as ejs } from 'ejs';
+import { default as exec } from 'child_process';
+import { default as fs } from 'fs-extra';
+import { default as glob } from 'glob-all';
+
 // LIBRARY FUNCTIONS
 let methods = {};
 
-// import node modules
-const chalk = require('chalk');
-const ejs = require('ejs');
-const exec = require('child_process');
-const fs = require('fs-extra');
-const glob = require('glob-all');
-
 // Synchronously run a function and wait for a callback to fire
-methods.asyncFunction = async function asyncFunction(startMessage, endMessage, func) {
+export async function asyncFunction(startMessage, endMessage, func) {
   methods.log('title', startMessage);
 
   const p = await new Promise(resolve => {
@@ -20,7 +19,7 @@ methods.asyncFunction = async function asyncFunction(startMessage, endMessage, f
 };
 
 // Compile EJS files and move them to destination directory
-methods.globEjs = function globEjs(pattern, replaceSrc, replaceDist, callback, verbose = false) {
+export function globEjs(pattern, replaceSrc, replaceDist, callback, verbose = false) {
   glob(pattern, { dot:true, nodir: true }, function (er, files) {
     let count = files.length;
     if (count > 0) {
@@ -47,7 +46,7 @@ methods.globEjs = function globEjs(pattern, replaceSrc, replaceDist, callback, v
 }
 
 // Move files to destination directory
-methods.globMove = function globMove(pattern, replaceSrc, replaceDist, callback, verbose = false) {
+export function globMove(pattern, replaceSrc, replaceDist, callback, verbose = false) {
   glob(pattern, { dot:true, nodir: true }, function (er, files) {
     let count = files.length;
     if (count > 0) {
@@ -67,7 +66,7 @@ methods.globMove = function globMove(pattern, replaceSrc, replaceDist, callback,
 }
 
 // Remove files
-methods.globRemove = function globRemove(pattern, callback, verbose = false) {
+export function globRemove(pattern, callback, verbose = false) {
   glob(pattern, { dot:true, nodir: true }, function (er, files) {
     let count = files.length;
     if (count > 0) {
@@ -87,7 +86,7 @@ methods.globRemove = function globRemove(pattern, callback, verbose = false) {
 }
 
 // display a message in the command line
-methods.log = function log(type = 'message', message, verbose = false) {
+export function log(type = 'message', message, verbose = false) {
   switch (type) {
     case 'app':
       console.log(chalk.bgRgb(230, 20, 20)(`  ${message}  `));
@@ -117,7 +116,7 @@ methods.log = function log(type = 'message', message, verbose = false) {
 };
 
 // parse process arguments into an array format
-methods.parseArgv = function parseArgv() {
+export function parseArgv() {
   let args = [];
   let options = {};
 
@@ -154,7 +153,7 @@ methods.parseArgv = function parseArgv() {
 
 
 // PREBUILD
-methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
+export function prebuildClean(callback, paths, verbose) {
   glob(`${paths.js.src}automated/dev/**/*`, function(er, files) {
     methods.log('verbose', `Removing Files: ${JSON.stringify(files, null, 2)}`, verbose);
     let count = files.length;
@@ -178,7 +177,7 @@ methods.prebuildClean = function prebuildClean(callback, paths, verbose) {
   });
 };
 
-methods.prebuildConfigToEsm = function prebuildConfigToEsm(callback, paths, config, outputFilename, verbose) {
+export function prebuildConfigToEsm(callback, paths, config, outputFilename, verbose) {
   const options = {
     config: config,
   };
@@ -196,7 +195,7 @@ methods.prebuildConfigToEsm = function prebuildConfigToEsm(callback, paths, conf
   });
 };
 
-methods.prebuildWbConfig = function prebuildWbConfig(callback, paths, wb, verbose) {
+export function prebuildWbConfig(callback, paths, wb, verbose) {
   const clonedWb = Object.assign({}, wb);
   delete clonedWb.paths;
 
@@ -217,14 +216,26 @@ methods.prebuildWbConfig = function prebuildWbConfig(callback, paths, wb, verbos
   });
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Usage: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-methods.randomString = function randomString(length, chars) {
+export function randomString(length, chars) {
   let result = '';
   for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
   return result;
 }
 
-methods.slugify = function slugify(text) {
+export function slugify(text) {
   return text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
@@ -233,7 +244,7 @@ methods.slugify = function slugify(text) {
     .replace(/-+$/, '');            // Trim - from end of text
 };
 
-methods.snake = function snake(text) {
+export function snake(text) {
   return text.toString().toLowerCase()
     .replace(/\s+/g, '_')           // Replace spaces with _
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
@@ -243,7 +254,7 @@ methods.snake = function snake(text) {
 };
 
 // Determine if a command should be displayed in terminal when running shell commands
-methods.verboseExec = function verboseExec(command, verbose = false) {
+export function verboseExec(command, verbose = false) {
   if (verbose) {
     methods.log('running', command);
     exec.spawnSync(command, [], { stdio: 'inherit', shell: true });
@@ -251,6 +262,3 @@ methods.verboseExec = function verboseExec(command, verbose = false) {
     exec.execSync(`${command} > /dev/null 2>&1`);
   }
 };
-
-// INIT
-module.exports = methods;

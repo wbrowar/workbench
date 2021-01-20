@@ -1,12 +1,7 @@
-// import node modules
-const favicons = require('favicons'),
-      fs = require('fs-extra');
-
-// import global functions
-const g = require('./functions.js');
-
-// load config files
-let wb = require(`${ process.cwd() }/wb.config.js`);
+import { default as favicons } from 'favicons';
+import { default as fs } from 'fs-extra';
+import * as g from './functions.js';
+import wb from '../wb.config.js';
 
 // set constants
 const argv = g.parseArgv(),

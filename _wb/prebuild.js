@@ -1,41 +1,15 @@
-// import node modules
-const fs = require('fs-extra');
-
-// import global functions
-const g = require('./functions.js');
-
-// load config files
-let tailwind = require(`${ process.cwd() }/tailwind.config.js`);
-let wb = require(`${ process.cwd() }/wb.config.js`);
+import * as g from './functions.js';
+import { default as fs } from 'fs-extra';
+import wb from '../wb.config.js';
 
 // set constants
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
-const runScraper = argv.options.scraper || false,
-      verbose    = argv.options.verbose || false;
+const runScraper = argv.options.scraper || false;
+const verbose    = argv.options.verbose || false;
 
 async function run() {
-    const clean = g.asyncFunction(
-      `Removing Prebuild Files`, `Prebuild Files Removed`, (resolve) => {
-          g.prebuildClean(resolve, wb.paths, verbose);
-      }
-    );
-    const tailwindConfig = g.asyncFunction(
-      `Converting Tailwind Config for front-end use`, `Tailwind Config converted`, (resolve) => {
-        g.prebuildConfigToEsm(resolve, wb.paths, tailwind, 'tailwind', verbose);
-      }
-    );
-    const wbConfig = g.asyncFunction(
-      `Converting WB Config for front-end use`, `WB Config converted`, (resolve) => {
-        g.prebuildWbConfig(resolve, wb.paths, wb, verbose);
-      }
-    );
-
-    let cleanComplete = await clean;
-    let tailwindConfigComplete = await tailwindConfig;
-    let wbConfigComplete = await wbConfig;
-
     if (runScraper) {
       const scraper = g.asyncFunction(
         `Scraping HTML Pages`, `Pages Scraped`, (resolve) => {

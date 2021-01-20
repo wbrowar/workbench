@@ -1,6 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
 const paths = {
   publicPath: process.env.<%- appEnvPrefix %>PUBLIC_PATH || `/`,
   sourcePath: process.cwd() + '/_source/',
@@ -9,7 +6,7 @@ const paths = {
   staticPath: process.cwd() + '/static/',
 };
 
-module.exports = {
+const wb = {
   // Colors values that are converted to CSS custom properties
   // Accepts any CSS color value as a string, or an object of color shades
   // These will replace Tailwind’s default color settings
@@ -55,10 +52,18 @@ module.exports = {
   mq: {
     // Define breakpoints (in pixel values) used in Tailwind and vue-mq
     // These will replace Tailwind’s default media query settings
-    sm: 640,
-    md: 768,
-    lg: 1024,
-    xl: 1300,
+    tailwind: {
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1300,
+    },
+    vue: {
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1300,
+    },
   },
   tailwind: {
     // Define values to merge into tailwind.config.js, other than those defined above
@@ -178,3 +183,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = wb;

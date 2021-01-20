@@ -1,5 +1,6 @@
 const path = require('path');
 const wb = require(`${process.cwd()}/wb.config.js`);
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -31,6 +32,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv(),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       filename: `index.html`,
