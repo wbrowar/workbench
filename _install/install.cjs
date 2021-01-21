@@ -653,7 +653,7 @@ async function installDirectory(name, finished) {
     if (fs.existsSync(`${ projectTypeInstallDirectory }/ejs`)) {
         const compileInstallFiles = g.asyncFunction(
           `Compiling Default Templates`, `Default Templates Compiled`, (resolve) => {
-              g.globEjs(`${projectTypeInstallDirectory}/ejs/**/*`, `${projectTypeInstallDirectory}/ejs/`, `${projectDirectory}/`, resolve, verbose);
+              g.globEjs(`${projectTypeInstallDirectory}/ejs/**/*`, `${projectTypeInstallDirectory}/ejs/`, `${projectDirectory}/`, ejsVars, resolve, verbose);
           });
         let compileInstallFilesComplete = await compileInstallFiles;
     } else {

@@ -23,7 +23,7 @@ export async function asyncFunction(startMessage, endMessage, func) {
 };
 
 // Compile EJS files and move them to destination directory
-export function globEjs(pattern, replaceSrc, replaceDist, callback, verbose = false) {
+export function globEjs(pattern, replaceSrc, replaceDist, ejsVars, callback, verbose = false) {
   glob(pattern, { dot:true, nodir: true }, function (er, files) {
     let count = files.length;
     if (count > 0) {
