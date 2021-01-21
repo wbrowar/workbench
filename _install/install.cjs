@@ -97,8 +97,8 @@ async function run() {
                 },
                 choices: (answers) => {
                     return answers.installEnd === 'front' ? [
-                        { name: 'Nuxt', value: 'nuxt' },
-                        { name: 'Vue SPA', value: 'vue' },
+                        { name: 'Nuxt', value: 'nuxt2' },
+                        { name: 'Vue SPA', value: 'vue3' },
                         { name: 'HTML (Tailwind, Webpack)', value: 'html' },
                         { name: 'Marketo Vue SPA', value: 'vue3-marketo' },
                     ] : [
