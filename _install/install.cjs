@@ -8,6 +8,7 @@ const os = require('os');
 const path = require('path');
 
 // Import global functions
+let g;
 fs.copySync(`../../_wb/functions.js`, `./functions.js`);
 
 // Use CLI arguments to set variables
@@ -23,7 +24,7 @@ let localConfig   = false;
 let npmInstaller = 'npm';
 
 async function run() {
-    const g = await import('./functions.js');
+    g = await import('./functions.js');
 
     // Load package file
     let pkg = require(`${ process.cwd() }/package.json`);
