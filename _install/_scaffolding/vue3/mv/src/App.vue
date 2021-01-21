@@ -1,23 +1,22 @@
 <template>
   <div>
-    <router-view />
-    <DevBar v-if="devMode || showDocsLink" />
+    <p class="bg-black text-white p-6">Test!</p>
+    <p class="bg-black text-white p-6">Dev Mode is on!</p>
   </div>
 </template>
 
-<script>
-  import wb from 'JS/automated/wb.js';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { mapState } from 'vuex';
 
-  export default {
-    name: 'App',
-    components: {
-      DevBar: () => import('Components/dev_bar/DevBar.vue'),
-    },
-    data() {
-      return {
-        devMode: wb.devMode,
-        showDocsLink: wb.enableDocs,
-      };
-    },
-  };
+export default defineComponent({
+  name: 'App',
+  components: {},
+  computed: {
+    ...mapState(['devMode']),
+  },
+  mounted() {
+    console.log(this.devMode);
+  },
+});
 </script>

@@ -1,4 +1,4 @@
-import wb from 'JS/automated/wb.js';
+import wb from 'WB/wb.config.js';
 
 // LOGGING FUNCTIONS
 export function dir(...args) {

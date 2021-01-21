@@ -415,12 +415,12 @@ async function run() {
                         installDirectories = ['nuxt2'];
                         break;
                     case 'vue3':
-                        ejsVars.appEnvPrefix = 'VUE_APP_';
-                        installDirectories = ['vue3'];
-                        installMv = [
-                            { pattern: `${ scaffoldingDirectory }/_front-end/mv/**/*.js`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },
-                            { pattern: `${ scaffoldingDirectory }/_vue3/mv/**/*`, src: `${ scaffoldingDirectory }/_vue3/mv/`, dist: `${projectDirectory}/` },
-                        ];
+                        ejsVars.appEnvPrefix = 'VITE_';
+                        installDirectories = ['_front-end', 'vue3'];
+                        // installMv = [
+                        //     { pattern: `${ scaffoldingDirectory }/_front-end/mv/.prettierrc`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },
+                        //     { pattern: `${ scaffoldingDirectory }/vue3/mv/**/*`, src: `${ scaffoldingDirectory }/vue3/mv/`, dist: `${projectDirectory}/` },
+                        // ];
                         break;
                 }
             }

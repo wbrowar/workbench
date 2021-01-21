@@ -9,5 +9,4 @@ vendor/*
 Thumbs.db
 
 # BUILD FILES
-_build/*
 node_modules/*

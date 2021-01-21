@@ -14,8 +14,6 @@ module.exports = {
     '_wb/*.js',
     '_wb/docs/**/*.js',
     '_wb/docs/**/*.vue',
-    '_source/_js/automated/**/*.js',
-    '_source/_js/automated/**/*.vue',
   ],
 
   plugins: ['prettier'],

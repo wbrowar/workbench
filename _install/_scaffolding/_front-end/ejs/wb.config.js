@@ -51,14 +51,15 @@ const wb = {
   },
   mq: {
     // Define breakpoints (in pixel values) used in Tailwind and vue-mq
-    // These will replace Tailwind’s default media query settings
-    tailwind: {
+    breakpoints: {
       sm: 640,
       md: 768,
       lg: 1024,
       xl: 1300,
     },
-    vue: {
+    // Define breakpoints to be used in Tailwind
+    // They should match breakpoints above, but can accept any value that Tailwind can accept
+    tailwind: {
       sm: 640,
       md: 768,
       lg: 1024,

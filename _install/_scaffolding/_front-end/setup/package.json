@@ -1,33 +1,22 @@
 {
   "scripts": {
-    "ci:build": "vue-cli-service build",
-    "commit": "node ./_wb/commit.js",
     "component": "node ./_wb/component.js",
-    "deploy": "npm run prebuild && npm run commit",
-    "dev": "npm run prebuild && vue-cli-service serve",
-    "favicon": "node ./_wb/favicon.js",
-    "prebuild": "node ./_wb/prebuild.js --componentdocs --iconmethods --scraper --cssincludes",
-    "prod": "npm run prebuild && vue-cli-service build",
-    "update": "npm install"
+    "favicon": "node ./_wb/favicon.js"
   },
   "name": "example-project",
   "private": true,
   "dependencies": {
-    "axios": "^0.19.2",
-    "gsap": "^3.2.6",
-    "intersection-observer": "^0.10.0",
+    "axios": "^0.21.1",
+    "gsap": "^3.6.0",
+    "intersection-observer": "^0.12.0",
     "resize-observer-polyfill": "^1.5.1",
-    "vue-cleave-component": "^2.1.3"
+    "vue-cleave-component": "^3.0.0"
   },
   "devDependencies": {
-    "chalk": "^4.0.0",
-    "color": "^3.1.2",
+    "chalk": "^4.1.0",
+    "color": "^3.1.3",
     "dotenv": "^8.2.0",
-    "favicons": "^6.0.0",
-    "inquirer": "^7.1.0",
-    "postcss-custom-media": "^7.0.8",
-    "postcss-easy-import": "^3.0.0",
-    "postcss-nested": "^4.2.3",
-    "postcss-simple-vars": "^5.0.2"
+    "favicons": "^6.2.0",
+    "inquirer": "^7.3.3"
   }
 }
