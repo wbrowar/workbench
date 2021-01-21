@@ -69,9 +69,9 @@ export function globMove(pattern, replaceSrc, replaceDist, callback, verbose = f
   });
 }
 
-export async function globMvFromList(list, verbose = false) {
+export async function globMvFromList(list, callback, verbose = false) {
   await asyncForEach(list, async (item) => {
-    globMove(item.pattern, item.src, item.dist, null, verbose);
+    globMove(item.pattern, item.src, item.dist, callback, verbose);
   })
 }
 

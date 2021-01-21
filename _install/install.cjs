@@ -10,6 +10,13 @@ const path = require('path');
 // Import global functions
 fs.copySync(`../../_wb/functions.js`, `./functions.js`);
 
+// Use CLI arguments to set variables
+let projectDirectory;
+let scaffoldingDirectory;
+let verbose;
+let handle;
+let installerVersion;
+
 // Set other variables
 let enableInstall = false;
 let localConfig   = false;
@@ -25,11 +32,11 @@ async function run() {
     const argv = g.parseArgv();
 
     // Use CLI arguments to set variables
-    const projectDirectory     = argv.options['project-dir'] || '';
-    const scaffoldingDirectory = `${projectDirectory}/SETUP/_install/_scaffolding`;
-    const verbose              = argv.options.verbose || false;
-    let   handle               = argv.options.handle || false;
-    let   installerVersion     = argv.options.version || '0';
+    projectDirectory     = argv.options['project-dir'] || '';
+    scaffoldingDirectory = `${projectDirectory}/SETUP/_install/_scaffolding`;
+    verbose              = argv.options.verbose || false;
+    handle               = argv.options.handle || false;
+    installerVersion     = argv.options.version || '0';
 
     // Set variables to be processed by EJS
     let ejsVars = {
@@ -462,24 +469,12 @@ async function run() {
 
             // Move files from glob patterns
             if (installMv.length) {
-                const installMvFunc = g.globMvFromList(installMv, verbose);
+                const installMvFunc = g.asyncFunction(
+                  `Moving project files`, `Project files moved`, (resolve) => {
+                      g.globMvFromList(installMv, resolve, verbose);
+                  });
                 let installMvFuncComplete = await installMvFunc;
             }
-
-            // const projectTypeInstallDirectory = `${projectDirectory}/SETUP/_install/_scaffolding/${ name }`;
-            //
-            // mergeIntoPkg(`${ projectTypeInstallDirectory }/setup/package.json`);
-            //
-            // g.log('verbose', `Looking for templates to move at ${projectTypeInstallDirectory}`, verbose);
-            // if (fs.existsSync(`${ projectTypeInstallDirectory }/mv`)) {
-            //     const moveInstallFiles = g.asyncFunction(
-            //       `Moving Default Files`, `Default Files Moved`, (resolve) => {
-            //           g.globMove(`${projectTypeInstallDirectory}/mv/**/*`, `${projectTypeInstallDirectory}/mv/`, `${projectDirectory}/`, resolve, verbose);
-            //       });
-            //     let moveInstallFilesComplete = await moveInstallFiles;
-            // } else {
-            //     g.log('verbose', `No project templates to move`, verbose);
-            // }
 
             // Overwrite current directory with project-specific files
             if (installDirectories[0]) {
