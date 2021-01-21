@@ -10,39 +10,36 @@ const path = require('path');
 // Import global functions
 fs.copySync(`../../_wb/functions.js`, `./functions.js`);
 
-// Load package file
-let pkg = require(`${ process.cwd() }/package.json`);
-
-// Set constants
-const argv = g.parseArgv();
-
-// Use CLI arguments to set variables
-const projectDirectory     = argv.options['project-dir'] || '';
-const scaffoldingDirectory = `${projectDirectory}/SETUP/_install/_scaffolding`;
-const verbose              = argv.options.verbose || false;
-let   handle               = argv.options.handle || false;
-let   installerVersion     = argv.options.version || '0';
-
-// Set variables to be processed by EJS
-let ejsVars = {
-    nodeVersion: process.version,
-    projectDir: projectDirectory,
-    pkg: pkg,
-    securityKey: g.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-};
-
 // Set other variables
 let enableInstall = false;
 let localConfig   = false;
 let npmInstaller = 'npm';
 
 async function run() {
-    const g = require('./functions.js');
+    const g = await import('./functions.js');
 
-// HELLO
-    g.log('app', `Installing Workbench Project`);
+    // Load package file
+    let pkg = require(`${ process.cwd() }/package.json`);
 
-// Check that new-wb and Workbench versions are compatible
+    // Set constants
+    const argv = g.parseArgv();
+
+    // Use CLI arguments to set variables
+    const projectDirectory     = argv.options['project-dir'] || '';
+    const scaffoldingDirectory = `${projectDirectory}/SETUP/_install/_scaffolding`;
+    const verbose              = argv.options.verbose || false;
+    let   handle               = argv.options.handle || false;
+    let   installerVersion     = argv.options.version || '0';
+
+    // Set variables to be processed by EJS
+    let ejsVars = {
+        nodeVersion: process.version,
+        projectDir: projectDirectory,
+        pkg: pkg,
+        securityKey: g.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    };
+
+    // Check that new-wb and Workbench versions are compatible
     const installerVersionJoined = installerVersion.split('.').join('');
     const installerVersionString = installerVersionJoined.startsWith('0') ? installerVersionJoined.substr(1) : installerVersionJoined;
     if (installerVersionString === pkg.requiredInstallerVersion) {
@@ -53,10 +50,11 @@ async function run() {
         process.exit();
     }
 
-
     if (enableInstall) {
+        // HELLO
+        g.log('app', `Installing Workbench Project`);
 
-    // Check if npm and composer are installed
+        // Check if npm and composer are installed
         if (verbose) {
             g.log('warn', `Running install using --verbose will expose passwords in the terminal. Only share the output with people you trust with those secrets.`, verbose);
             g.log('verbose', `Getting new-wb installer version`, verbose);
@@ -69,12 +67,12 @@ async function run() {
             g.verboseExec(`composer --version`, verbose);
         }
 
-    // get local config file
+        // get local config file
         g.log('verbose', `Looking for local configuration file in home directory: .workbench.config.json`, verbose);
         if (fs.existsSync(`${ os.homedir() }/.workbench.config.json`)) {
             g.log('verbose', `workbench configuration file found`, verbose);
 
-            localConfig = import(`${ os.homedir() }/.workbench.config.json`);
+            localConfig = require(`${ os.homedir() }/.workbench.config.json`);
         } else {
             g.log('verbose', `workbench configuration file not found`, verbose);
         }
@@ -398,19 +396,19 @@ async function run() {
                         installDirectories = ['craft3'];
                         break;
                     case 'html':
-                        installDirectories = ['_front-end', 'html'];
+                        installDirectories = ['html'];
                         break;
                     case 'vue3-marketo':
                         ejsVars.appEnvPrefix = 'VUE_APP_';
-                        installDirectories = ['_front-end', 'vue-base', 'vue', 'vue3-marketo'];
+                        installDirectories = ['vue3', 'vue3-marketo'];
                         break;
                     case 'nuxt2':
                         ejsVars.appEnvPrefix = '';
-                        installDirectories = ['_front-end', 'nuxt'];
+                        installDirectories = ['nuxt2'];
                         break;
                     case 'vue3':
                         ejsVars.appEnvPrefix = 'VUE_APP_';
-                        installDirectories = ['_front-end', 'vue-base', 'vue'];
+                        installDirectories = ['vue3'];
                         installMv = [
                             { pattern: `${ scaffoldingDirectory }/_front-end/mv/**/*.js`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },
                             { pattern: `${ scaffoldingDirectory }/_vue3/mv/**/*`, src: `${ scaffoldingDirectory }/_vue3/mv/`, dist: `${projectDirectory}/` },
@@ -674,7 +672,7 @@ function mergeIntoPkg(pkgFile) {
     if (fs.existsSync(pkgFile)) {
         g.log('verbose', `Merging new package info from: ${ pkgFile }`, verbose);
 
-        const newPkgInfo = import(pkgFile);
+        const newPkgInfo = require(pkgFile);
         pkg = _.merge(pkg, newPkgInfo);
 
         g.log('verbose', `Merged new package info:`, verbose);

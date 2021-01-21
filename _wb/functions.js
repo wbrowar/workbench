@@ -70,7 +70,7 @@ export function globMove(pattern, replaceSrc, replaceDist, callback, verbose = f
 }
 
 export async function globMvFromList(list, verbose = false) {
-  asyncForEach(list, async (item) => {
+  await asyncForEach(list, async (item) => {
     globMove(item.pattern, item.src, item.dist, null, verbose);
   })
 }
