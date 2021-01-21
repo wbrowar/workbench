@@ -11,6 +11,9 @@ const path = require('path');
 let g;
 fs.copySync(`../../_wb/functions.js`, `./functions.js`);
 
+// Load package file
+let pkg = require(`${ process.cwd() }/package.json`);
+
 // Use CLI arguments to set variables
 let projectDirectory;
 let scaffoldingDirectory;
@@ -25,9 +28,6 @@ let npmInstaller = 'npm';
 
 async function run() {
     g = await import('./functions.js');
-
-    // Load package file
-    let pkg = require(`${ process.cwd() }/package.json`);
 
     // Set constants
     const argv = g.parseArgv();
