@@ -1,17 +1,17 @@
 // Import node modules
-import { default as _ } from 'lodash';
-import { default as chalk } from 'chalk';
-import { default as fs } from 'fs-extra';
-import { default as glob } from 'glob-all';
-import { default as inquirer } from 'inquirer';
-import { default as os } from 'os';
-import { default as path } from 'path';
+const _ = require('lodash');
+const chalk = require('chalk');
+const fs = require('fs-extra');
+const glob = require('glob-all');
+const inquirer = require('inquirer');
+const os = require('os');
+const path = require('path');
 
 // Import global functions
 fs.copySync(`../../_wb/functions.js`, `./functions.js`);
 
 // Load package file
-let pkg = import(`${ process.cwd() }/package.json`);
+let pkg = require(`${ process.cwd() }/package.json`);
 
 // Set constants
 const argv = g.parseArgv();
@@ -37,7 +37,7 @@ let localConfig   = false;
 let npmInstaller = 'npm';
 
 async function run() {
-    const g = await import('./functions.js');
+    const g = require('./functions.js');
 
 // HELLO
     g.log('app', `Installing Workbench Project`);
