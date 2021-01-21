@@ -15,11 +15,12 @@ fs.copySync(`../../_wb/functions.js`, `./functions.js`);
 let pkg = require(`${ process.cwd() }/package.json`);
 
 // Use CLI arguments to set variables
+let ejsVars;
+let handle;
+let installerVersion;
 let projectDirectory;
 let scaffoldingDirectory;
 let verbose;
-let handle;
-let installerVersion;
 
 // Set other variables
 let enableInstall = false;
@@ -40,7 +41,7 @@ async function run() {
     installerVersion     = argv.options.version || '0';
 
     // Set variables to be processed by EJS
-    let ejsVars = {
+    ejsVars = {
         nodeVersion: process.version,
         projectDir: projectDirectory,
         pkg: pkg,
