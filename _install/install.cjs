@@ -462,10 +462,8 @@ async function run() {
 
             // Move files from glob patterns
             if (installMv.length) {
-                const installMvComplete = async () => {
-                    await g.globMvFromList(installMv);
-                }
-                // TODO glob move from list
+                const installMvFunc = g.globMvFromList(installMv, verbose);
+                let installMvFuncComplete = await installMvFunc;
             }
 
             // const projectTypeInstallDirectory = `${projectDirectory}/SETUP/_install/_scaffolding/${ name }`;
