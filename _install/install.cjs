@@ -28,7 +28,7 @@ let localConfig   = false;
 let npmInstaller = 'npm';
 
 async function run() {
-    g = await import('./functions.js');
+    g = await import('./functions.mjs');
 
     // Set constants
     const argv = g.parseArgv();

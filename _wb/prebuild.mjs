@@ -1,4 +1,4 @@
-import * as g from './functions.js';
+import * as g from './functions.mjs';
 import { default as fs } from 'fs-extra';
 import wb from '../wb.config.js';
 

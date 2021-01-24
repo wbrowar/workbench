@@ -3,7 +3,7 @@ const path = require('path');
 dotenv.config();
 
 // Load custom pieces
-// const functionFunctions = require('./_source/_css/_css.functions.js'),
+// const functionFunctions = require('./_source/_css/_css.functions.mjs'),
 //       mixinsMixins = require('./_source/_css/_css.mixins.js');
 const wb = require('./wb.config.js');
 

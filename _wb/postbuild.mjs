@@ -1,7 +1,7 @@
 import { default as _ } from 'lodash';
 import { default as fs } from 'fs-extra';
 import wb from '../wb.config.js';
-import * as g from './functions.js';
+import * as g from './functions.mjs';
 
 // set constants
 const argv = g.parseArgv();

@@ -1,6 +1,6 @@
 import { default as favicons } from 'favicons';
 import { default as fs } from 'fs-extra';
-import * as g from './functions.js';
+import * as g from './functions.mjs';
 import wb from '../wb.config.js';
 
 // set constants

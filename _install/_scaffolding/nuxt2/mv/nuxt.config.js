@@ -21,7 +21,7 @@ export default {
         'postcss-simple-vars': {},
         'postcss-easy-import': {},
         // 'postcss-mixins': { mixins: require(`${path.resolve(wb.paths.css.src)}/_css.mixins.js`) },
-        // 'postcss-functions': { functions: require(`${path.resolve(wb.paths.css.src)}/_css.functions.js`) },
+        // 'postcss-functions': { functions: require(`${path.resolve(wb.paths.css.src)}/_css.functions.mjs`) },
         'postcss-nested': {},
         'postcss-custom-media': {
           importFrom: [
