@@ -9,7 +9,7 @@ const path = require('path');
 
 // Import global functions
 let g;
-fs.copySync(`../../_wb/functions.js`, `./functions.js`);
+fs.copySync(`../../_wb/functions.mjs`, `./functions.mjs`);
 
 // Load package file
 let pkg = require(`${ process.cwd() }/package.json`);
