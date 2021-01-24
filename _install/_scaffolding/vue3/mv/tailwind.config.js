@@ -1,26 +1,27 @@
-// Tailwind config is set in wb.config.js
+const theme = require('./_wb/config/theme.js');
+const settings = require('./_wb/config/settings.js');
+
 const _ = require('lodash');
 const plugin = require('tailwindcss/plugin');
-const wb = require(`./wb.config.js`);
 
 // Add colors
-const colors = wb.colors;
+const colors = theme.colors;
 colors.current = 'currentColor';
 colors.transparent = 'transparent';
 
 // Add fonts
 const fontFamily = {};
-Object.keys(wb.fonts).forEach((key) => {
-  fontFamily[key] = wb.fonts[key].fontStack;
+Object.keys(theme.fonts).forEach((key) => {
+  fontFamily[key] = theme.fonts[key].fontStack;
 });
 
 // Add media queries
 const screens = {};
-Object.keys(wb.mq.tailwind).forEach((key) => {
-  screens[key] = `${wb.mq[key]}px`;
+Object.keys(theme.mq.tailwind).forEach((key) => {
+  screens[key] = `${theme.mq.tailwind[key]}px`;
 });
 
-if (wb.devMode || wb.enableDocs) {
+if (settings.devMode || settings.enableDocs) {
   // Add dev colors
   _.merge(colors, {
     'dev-black': '#000000',
@@ -63,7 +64,7 @@ const pluginFunctions = [
       });
     });
   },
-  ...wb.tailwindPlugins,
+  ...theme.tailwindPlugins,
 ];
 pluginFunctions.forEach((item) => {
   plugins.push(plugin(item));
@@ -79,5 +80,5 @@ module.exports = _.merge(
     },
     plugins,
   },
-  wb.tailwind
+  theme.tailwind
 );

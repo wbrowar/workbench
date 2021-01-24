@@ -1,0 +1,10 @@
+@import 'tailwindcss/base';
+@import './_variables.css';
+@import './_global.css';
+@import './_animations.css';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+* {
+  background-color: red !important;
+}

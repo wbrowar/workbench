@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
 import * as path from 'path';
 import vue from '@vitejs/plugin-vue';
+// import * as settings from './_wb/config/settings.js';
+
+// console.log(settings);
 
 const projectRootDir = path.resolve(__dirname);
 

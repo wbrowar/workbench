@@ -2,8 +2,6 @@
   "scripts": {},
   "name": "workbench-installer",
   "private": true,
-  "type": "module",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/wbrowar/Workbench.git"

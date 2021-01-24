@@ -1,14 +1,14 @@
-const wb = require(`wb.config.js`);
+const paths = require(`./_wb/config/paths`);
 
 let content = [
-  `${wb.paths.components.src}**/*.vue`,
-  `${wb.paths.wb.src}**/*.vue`,
-  `${wb.paths.wb.src}**/*.ts`,
-  `${wb.paths.wb.src}**/*.js`,
-  `${wb.paths.wb.src}**/*.jsx`,
-  `${wb.paths.wb.src}**/*.html`,
-  `${wb.paths.wb.src}**/*.pug`,
-  `${wb.paths.wb.src}**/*.md`,
+  `${paths.components.src}**/*.vue`,
+  `${paths.wb.src}**/*.vue`,
+  `${paths.wb.src}**/*.ts`,
+  `${paths.wb.src}**/*.js`,
+  `${paths.wb.src}**/*.jsx`,
+  `${paths.wb.src}**/*.html`,
+  `${paths.wb.src}**/*.pug`,
+  `${paths.wb.src}**/*.md`,
 ];
 
 let whitelist = ['body', 'html', 'img', 'a', 'g-image', 'g-image--lazy', 'g-image--loaded', 'hidden'];
