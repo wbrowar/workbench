@@ -9,7 +9,7 @@ export const key: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
   state: {
-    devMode: import.meta.env.VITE_DEV_MODE === 'true',
+    devMode,
   },
 });
 

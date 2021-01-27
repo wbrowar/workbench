@@ -136,12 +136,13 @@ const tailwind = {
  */
 const tailwindPlugins = [];
 
-const theme = {
+/*
+ * All theme settings combined
+ */
+module.exports = {
   colors,
   fonts,
   mq,
   tailwind,
   tailwindPlugins,
 };
-
-module.exports = theme;

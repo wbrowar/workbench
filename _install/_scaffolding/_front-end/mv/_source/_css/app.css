@@ -4,7 +4,3 @@
 @import './_animations.css';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
-* {
-  background-color: red !important;
-}

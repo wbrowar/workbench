@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="bg-black text-white p-6">Test!</p>
-    <p class="bg-black text-white p-6">Dev Mode is on!</p>
+    <p class="text-white p-6 bg-bidenBlue" v-if="devMode">Dev Mode is on!</p>
   </div>
 </template>
 
@@ -14,9 +14,6 @@ export default defineComponent({
   components: {},
   computed: {
     ...mapState(['devMode']),
-  },
-  mounted() {
-    console.log(this.devMode);
   },
 });
 </script>

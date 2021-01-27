@@ -7,17 +7,15 @@ const argv = g.parseArgv();
 
 // use CLI arguments to set variables
 const runScraper = argv.options.scraper || false;
-const verbose    = argv.options.verbose || false;
+const verbose = argv.options.verbose || false;
 
 async function run() {
-    if (runScraper) {
-      const scraper = g.asyncFunction(
-        `Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
-          _prebuildScraper(resolve, wb.paths, wb.scraper, verbose);
-        }
-      );
-      let scraperComplete = await scraper;
-    }
+  if (runScraper) {
+    const scraper = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
+      _prebuildScraper(resolve, wb.paths, wb.scraper, verbose);
+    });
+    let scraperComplete = await scraper;
+  }
 }
 
 /*
@@ -29,7 +27,6 @@ function _prebuildScraper(callback, paths, options, verbose) {
 
   if (count > 0) {
     options.pages.forEach((page) => {
-
       if (page.dist && page.src) {
         g.log('verbose', `Scraping page: ${page.src}`, verbose);
         const request = requestSync('GET', page.src);
@@ -47,9 +44,9 @@ function _prebuildScraper(callback, paths, options, verbose) {
           // Extract URLs form sitemap index and parse secondary pages
           if (page.type === 'sitemap') {
             g.log('verbose', `Extracting sitemap URLs from ${page.src}`, verbose);
-            const removedDates = request.body.toString().replace(/(<lastmod>(.....)+<\/lastmod>)/ig,"");
-            const removedTags = removedDates.replace(/(<([^>]+)>)/ig,",");
-            const replacedRoots = removedTags.replace(new RegExp(page.sitemapRootSrc,"g"),page.sitemapRootDist);
+            const removedDates = request.body.toString().replace(/(<lastmod>(.....)+<\/lastmod>)/gi, '');
+            const removedTags = removedDates.replace(/(<([^>]+)>)/gi, ',');
+            const replacedRoots = removedTags.replace(new RegExp(page.sitemapRootSrc, 'g'), page.sitemapRootDist);
             const subSitemaps = replacedRoots.split(',').filter((item) => item !== '');
 
             if (subSitemaps) {
@@ -74,6 +71,6 @@ function _prebuildScraper(callback, paths, options, verbose) {
   } else {
     callback();
   }
-};
+}
 
 run();

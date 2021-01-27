@@ -1,10 +1,8 @@
 /*
  * Options used by Workbench favicon script.
  */
-const favicon = {
+module.exports = {
   distPath: 'img/meta/',
   themeColor: '#fff',
   tileColor: '#fff',
 };
-
-module.exports = favicon;

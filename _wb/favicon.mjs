@@ -1,20 +1,21 @@
 import { default as favicons } from 'favicons';
 import { default as fs } from 'fs-extra';
 import * as g from './functions.mjs';
-import wb from '../wb.config.js';
+import { default as favicon } from '../wb.favicon.js';
+import { default as paths } from '../wb.paths.js';
 
 // set constants
 const argv = g.parseArgv(),
-      distPath = wb.favicon.distPath || `img/meta/`,
-      themeColor = wb.favicon.themeColor || '#fff',
-      backgroundColor = wb.favicon.tileColor || '#fff';
+      distPath = favicon.distPath || `img/meta/`,
+      themeColor = favicon.themeColor || '#fff',
+      backgroundColor = favicon.tileColor || '#fff';
 
 // use CLI arguments to set variables
 const verbose = argv.options.verbose || false;
 
 async function run() {
-  fs.ensureDir(wb.paths.wb.static + distPath, () => {
-    const source = `${wb.paths.favicon.src}favicon.png`,                     // Source image(s). `string`, `buffer` or array of `string`
+  fs.ensureDir(paths.wb.static + distPath, () => {
+    const source = `${paths.favicon.src}favicon.png`,                     // Source image(s). `string`, `buffer` or array of `string`
     configuration = {
       path: `/${distPath}`,                     // Path for overriding default icons path. `string`
       appName: null,                            // Your application's name. `string`
@@ -66,15 +67,13 @@ async function run() {
       g.log('verbose', `Favicon html: ${response.html}`, verbose); // Array of strings (html elements)
 
       response.images.map (image => {
-        fs.writeFileSync (wb.paths.wb.static + distPath + image.name, image.contents);
+        fs.writeFileSync (paths.wb.static + distPath + image.name, image.contents);
         g.log('verbose', `Favicon image saved: ${image.name}`, verbose);
       });
       response.files.map (file => {
-        fs.writeFileSync (wb.paths.wb.static + distPath + file.name, file.contents);
+        fs.writeFileSync (paths.wb.static + distPath + file.name, file.contents);
         g.log('verbose', `Favicon file saved: ${file.name}`, verbose);
       });
-      // fs.writeFileSync (wb.paths.favicon.src + 'output.html', response.html.join());
-      // g.log('verbose', `Favicon HTML saved to: ${wb.paths.favicon.src}output.html`, verbose);
     };
 
     favicons(source, configuration, callback);

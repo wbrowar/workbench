@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "component": "node ./_wb/component.js",
-    "favicon": "node ./_wb/favicon.js"
+    "component": "node ./_wb/component.mjs",
+    "favicon": "node ./_wb/favicon.mjs"
   },
   "name": "example-project",
   "private": true,

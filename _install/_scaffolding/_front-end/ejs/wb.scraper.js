@@ -1,7 +1,7 @@
 /*
  * Options used by Workbench favicon script.
  */
-const scraper = {
+module.exports = {
   pages: [
     // {
     //   dist: `${paths.staticPath}/humans.txt`,
@@ -24,5 +24,3 @@ const scraper = {
     // },
   ],
 };
-
-module.exports = scraper;

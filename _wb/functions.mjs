@@ -4,7 +4,7 @@ import { default as exec } from 'child_process';
 import { default as fs } from 'fs-extra';
 import { default as glob } from 'glob-all';
 
-// Synchronously run a callback for each item in and arry
+// Synchronously run a callback for each item in and array
 export async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array);
@@ -15,26 +15,26 @@ export async function asyncForEach(array, callback) {
 export async function asyncFunction(startMessage, endMessage, func) {
   log('title', startMessage);
 
-  const p = await new Promise(resolve => {
+  const p = await new Promise((resolve) => {
     func(resolve);
   }).then(() => '');
   log('title', endMessage);
   return p;
-};
+}
 
 // Compile EJS files and move them to destination directory
 export function globEjs(pattern, replaceSrc, replaceDist, ejsVars, callback, verbose = false) {
-  glob(pattern, { dot:true, nodir: true }, function (er, files) {
+  glob(pattern, { dot: true, nodir: true }, function (er, files) {
     let count = files.length;
     if (count > 0) {
       files.forEach((item) => {
-        ejs.renderFile(item, ejsVars, {}, function(err, str) {
+        ejs.renderFile(item, ejsVars, {}, function (err, str) {
           if (err) {
             log('warn', err);
           }
           fs.outputFile(item.replace(replaceSrc, replaceDist), str, (err) => {
-            if(!err) {
-              log('verbose', `Compiled ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+            if (!err) {
+              log('verbose', `Compiled ${item} → ${item.replace(replaceSrc, replaceDist)}`, verbose);
               count--;
               if (count === 0) {
                 callback();
@@ -51,12 +51,12 @@ export function globEjs(pattern, replaceSrc, replaceDist, ejsVars, callback, ver
 
 // Move files to destination directory
 export function globMove(pattern, replaceSrc, replaceDist, callback, verbose = false) {
-  glob(pattern, { dot:true, nodir: true }, function (er, files) {
+  glob(pattern, { dot: true, nodir: true }, function (er, files) {
     let count = files.length;
     if (count > 0) {
       files.forEach((item) => {
         fs.move(item, item.replace(replaceSrc, replaceDist), { overwrite: true }).then(() => {
-          log('verbose', `Moved ${ item } → ${ item.replace(replaceSrc, replaceDist) }`, verbose);
+          log('verbose', `Moved ${item} → ${item.replace(replaceSrc, replaceDist)}`, verbose);
           count--;
           if (count === 0) {
             callback();
@@ -72,17 +72,17 @@ export function globMove(pattern, replaceSrc, replaceDist, callback, verbose = f
 export async function globMvFromList(list, callback, verbose = false) {
   await asyncForEach(list, async (item) => {
     globMove(item.pattern, item.src, item.dist, callback, verbose);
-  })
+  });
 }
 
 // Remove files
 export function globRemove(pattern, callback, verbose = false) {
-  glob(pattern, { dot:true, nodir: true }, function (er, files) {
+  glob(pattern, { dot: true, nodir: true }, function (er, files) {
     let count = files.length;
     if (count > 0) {
       files.forEach((item) => {
         fs.remove(item).then(() => {
-          log('verbose', `Removed ✄ ${ item }`, verbose);
+          log('verbose', `Removed ✄ ${item}`, verbose);
           count--;
           if (count === 0) {
             callback();
@@ -123,14 +123,14 @@ export function log(type = 'message', message, verbose = false) {
     default:
       console.log(message);
   }
-};
+}
 
 // parse process arguments into an array format
 export function parseArgv() {
   let args = [];
   let options = {};
 
-  process.argv.forEach(function(arg, i) {
+  process.argv.forEach(function (arg, i) {
     if (i > 1) {
       if (arg.substr(0, 2) === '--') {
         // remove leading dashes
@@ -153,24 +153,17 @@ export function parseArgv() {
     args: args,
     options: options,
   };
-};
-
-
-
-
-
-
-
+}
 
 // PREBUILD
 export function prebuildClean(callback, paths, verbose) {
-  glob(`${paths.js.src}automated/dev/**/*`, function(er, files) {
+  glob(`${paths.js.src}automated/dev/**/*`, function (er, files) {
     log('verbose', `Removing Files: ${JSON.stringify(files, null, 2)}`, verbose);
     let count = files.length;
 
     if (count > 0) {
       files.forEach((item) => {
-        fs.remove(item, err => {
+        fs.remove(item, (err) => {
           if (err) {
             return console.error(err);
           }
@@ -185,14 +178,14 @@ export function prebuildClean(callback, paths, verbose) {
       callback();
     }
   });
-};
+}
 
 export function prebuildConfigToEsm(callback, paths, config, outputFilename, verbose) {
   const options = {
     config: config,
   };
 
-  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function(err, str) {
+  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function (err, str) {
     if (err) {
       log('warn', err);
     }
@@ -203,7 +196,7 @@ export function prebuildConfigToEsm(callback, paths, config, outputFilename, ver
       }
     });
   });
-};
+}
 
 export function prebuildWbConfig(callback, paths, wb, verbose) {
   const clonedWb = Object.assign({}, wb);
@@ -213,7 +206,7 @@ export function prebuildWbConfig(callback, paths, wb, verbose) {
     config: clonedWb,
   };
 
-  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function(err, str) {
+  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function (err, str) {
     if (err) {
       log('warn', err);
     }
@@ -224,19 +217,7 @@ export function prebuildWbConfig(callback, paths, wb, verbose) {
       }
     });
   });
-};
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 // Usage: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 export function randomString(length, chars) {
@@ -246,22 +227,26 @@ export function randomString(length, chars) {
 }
 
 export function slugify(text) {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
-};
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+}
 
 export function snake(text) {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '_')           // Replace spaces with _
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '_')         // Replace multiple - with single _
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
-};
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '_') // Replace spaces with _
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '_') // Replace multiple - with single _
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+}
 
 // Determine if a command should be displayed in terminal when running shell commands
 export function verboseExec(command, verbose = false) {
@@ -271,4 +256,4 @@ export function verboseExec(command, verbose = false) {
   } else {
     exec.execSync(`${command} > /dev/null 2>&1`);
   }
-};
+}

@@ -1,9 +1,7 @@
 import { defineConfig } from 'vite';
 import * as path from 'path';
 import vue from '@vitejs/plugin-vue';
-// import * as settings from './_wb/config/settings.js';
-
-// console.log(settings);
+const settings = require('./wb.settings.js');
 
 const projectRootDir = path.resolve(__dirname);
 
@@ -19,5 +17,8 @@ export default defineConfig({
     { find: 'Source', replacement: path.resolve(projectRootDir, './_source/') },
     { find: 'WB', replacement: path.resolve(projectRootDir, './_wb/') },
   ],
+  define: {
+    devMode: settings.devMode,
+  },
   plugins: [vue()],
 });

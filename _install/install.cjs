@@ -316,7 +316,7 @@ async function run() {
                 name: 'components',
                 message: 'Select the components you would like to use by default?',
                 choices: (answers) => {
-                    const componentDirectories = glob.sync(`${projectDirectory}/_wb/components/*/`);
+                    const componentDirectories = glob.sync(componentDirectoriesGlob);
                     let componentOptions = [];
                     componentDirectories.forEach((item) => {
                         const defaultComponents = [
@@ -395,6 +395,7 @@ async function run() {
             }
 
             // Assign install directories
+            let componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/`;
             let installDirectories = [];
             let installEjs = [];
             let installMv = [];
@@ -409,14 +410,17 @@ async function run() {
                         break;
                     case 'vue3-marketo':
                         ejsVars.appEnvPrefix = 'VUE_APP_';
+                        componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/,${projectDirectory}/_install/_scaffolding/vue3/mv/_wb/components/*/`;
                         installDirectories = ['vue3', 'vue3-marketo'];
                         break;
                     case 'nuxt2':
                         ejsVars.appEnvPrefix = '';
+                        componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/,${projectDirectory}/_install/_scaffolding/_vue2/mv/_wb/components/*/`;
                         installDirectories = ['nuxt2'];
                         break;
                     case 'vue3':
                         ejsVars.appEnvPrefix = 'VITE_';
+                        componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/,${projectDirectory}/_install/_scaffolding/vue3/mv/_wb/components/*/`;
                         installDirectories = ['_front-end', 'vue3'];
                         // installMv = [
                         //     { pattern: `${ scaffoldingDirectory }/_front-end/mv/.prettierrc`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },

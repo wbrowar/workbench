@@ -1,8 +1,8 @@
 /*
- * Root directories used .
+ * Root directories used by build system paths.
  */
 const roots = {
-  publicPath: process.env.VITE_PUBLIC_PATH || `/`,
+  publicPath: process.env.<%- appEnvPrefix %>PUBLIC_PATH || `/`,
   sourcePath: process.cwd() + '/_source/',
   srcPath: process.cwd() + '/',
   workbenchPath: process.cwd() + '/_wb/',
@@ -12,7 +12,7 @@ const roots = {
 /*
  * Paths used by the build system.
  */
-const paths = {
+module.exports = {
   components: {
     src: `${roots.srcPath}components/`,
   },
@@ -38,5 +38,3 @@ const paths = {
     templates: `${roots.workbenchPath}templates/`,
   },
 };
-
-module.exports = paths;
