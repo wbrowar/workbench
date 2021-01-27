@@ -40,6 +40,13 @@ async function run() {
     handle               = argv.options.handle || false;
     installerVersion     = argv.options.version || '0';
 
+    
+    // Assign install directories
+    let componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/`;
+    let installDirectories = [];
+    let installEjs = [];
+    let installMv = [];
+
     // Set variables to be processed by EJS
     ejsVars = {
         nodeVersion: process.version,
@@ -393,12 +400,6 @@ async function run() {
             if (answers.npmInstaller) {
                 npmInstaller = answers.npmInstaller;
             }
-
-            // Assign install directories
-            let componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/`;
-            let installDirectories = [];
-            let installEjs = [];
-            let installMv = [];
 
             if (answers.projectType) {
                 switch (answers.projectType) {
