@@ -716,14 +716,14 @@ async function saveLocalConfig(config, callback) {
                 localConfig[key] = answers[key];
             }
         });
+
+        fs.outputFileSync(`${ os.homedir() }/.workbench.config.json`, JSON.stringify(localConfig, null, 2));
+
+        g.log('title', `Saved Local Configuring File to ${ os.homedir() }/.workbench.config.json:`);
+        g.log('dump', localConfig, verbose);
+
+        callback();
     });
-
-    fs.outputFileSync(`${ os.homedir() }/.workbench.config.json`, JSON.stringify(localConfig, null, 2));
-
-    g.log('title', `Saved Local Configuring File to ${ os.homedir() }/.workbench.config.json:`);
-    g.log('dump', localConfig, verbose);
-
-    callback();
 }
 
 function _bye() {
