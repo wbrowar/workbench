@@ -388,7 +388,11 @@ async function run() {
             }
 
             if (answers.saveConfig) {
-                await saveLocalConfig(answers);
+                const saveConfig = g.asyncFunction(
+                  `Saving Local Config`, `Local Config Saved`, (resolve) => {
+                      saveLocalConfig(answers, resolve);
+                  });
+                let saveConfigComplete = await saveConfig;
             }
 
             if (answers.setupDb) {
@@ -604,7 +608,7 @@ function mergeIntoPkg(pkgFile) {
     }
 }
 
-async function saveLocalConfig(config) {
+async function saveLocalConfig(config, callback) {
     g.log('title', `Saving Local Configuring File`);
     localConfig = {};
 
@@ -718,6 +722,8 @@ async function saveLocalConfig(config) {
 
     g.log('title', `Saved Local Configuring File to ${ os.homedir() }/.workbench.config.json:`);
     g.log('dump', localConfig, verbose);
+
+    callback();
 }
 
 function _bye() {
