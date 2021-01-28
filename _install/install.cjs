@@ -388,7 +388,7 @@ async function run() {
             }
 
             if (answers.saveConfig) {
-                saveLocalConfig(answers);
+                await saveLocalConfig(answers);
             }
 
             if (answers.setupDb) {
@@ -604,7 +604,7 @@ function mergeIntoPkg(pkgFile) {
     }
 }
 
-function saveLocalConfig(config) {
+async function saveLocalConfig(config) {
     g.log('title', `Saving Local Configuring File`);
     localConfig = {};
 
@@ -716,7 +716,7 @@ function saveLocalConfig(config) {
 
     fs.outputFileSync(`${ os.homedir() }/.workbench.config.json`, JSON.stringify(localConfig, null, 2));
 
-    g.log('title', `Saved Local Configuring File`);
+    g.log('title', `Saved Local Configuring File to ${ os.homedir() }/.workbench.config.json:`);
     g.log('dump', localConfig, verbose);
 }
 
