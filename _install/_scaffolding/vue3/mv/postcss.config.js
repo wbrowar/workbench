@@ -1,4 +1,4 @@
-const theme = require('./_wb/config/theme.js');
+const theme = require('./wb.theme.js');
 
 // Import PostCss plugins
 const autoprefixer = require('autoprefixer');

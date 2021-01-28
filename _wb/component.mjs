@@ -11,6 +11,7 @@ const argv = g.parseArgv();
 
 // use CLI arguments to set variables
 const action = argv.options.mv || false ? 'move' : 'new';
+const list = argv.options.list ? argv.options.list.split(',') : [];
 const verbose = argv.options.verbose || false;
 
 // set variables based on wb options
@@ -32,14 +33,15 @@ async function run() {
       if (libraryComponents.length > 0) {
         questions = [
           {
-            type: 'list',
-            name: 'component',
+            type: 'checkbox',
+            name: 'components',
             message: 'Component',
             choices: () => {
               let components = [];
 
               libraryComponents.forEach((item) => {
-                components.push({ name: path.basename(item), value: path.basename(item) });
+                const dirName = path.basename(item);
+                components.push({ checked: list.length ? list.includes(dirName) : false, name: dirName, value: dirName });
               });
 
               return components;
@@ -50,8 +52,10 @@ async function run() {
         inquirer.prompt(questions).then(function (answers) {
           g.log('verbose', `Answers:`, verbose);
           g.log('dump', answers, verbose);
-          g.log('verbose', `Moving ${answers.component}`, verbose);
-          moveExistingComponent(answers.component);
+          answers.components.forEach((component) => {
+            g.log('verbose', `Moving ${component}`, verbose);
+            moveExistingComponent(component);
+          });
         });
       } else {
         console.warn(`No components found in library.`);

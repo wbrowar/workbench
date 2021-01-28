@@ -3,6 +3,7 @@ import { default as ejs } from 'ejs';
 import { default as exec } from 'child_process';
 import { default as fs } from 'fs-extra';
 import { default as glob } from 'glob-all';
+import { default as theme } from '../wb.theme.js';
 
 // Synchronously run a callback for each item in and array
 export async function asyncForEach(array, callback) {
@@ -20,6 +21,28 @@ export async function asyncFunction(startMessage, endMessage, func) {
   }).then(() => '');
   log('title', endMessage);
   return p;
+}
+
+// Check to see if fonts need to be generated
+export function fontSettingsExist(verbose = false) {
+  log('verbose', `Checking for font settings in ./wb.theme.js`, verbose);
+
+  if (Object.keys(theme.fonts).length) {
+    const fontsWithFiles = Object.keys(theme.fonts).filter((font) => {
+      if (theme.fonts[font].files) {
+        return Object.keys(theme.fonts[font].files).length > 0;
+      }
+
+      return false;
+    });
+    if (fontsWithFiles.length) {
+      log('verbose', `Font settings found:`, verbose);
+      log('dump', theme.fonts, verbose);
+      return true;
+    }
+  }
+
+  return false;
 }
 
 // Compile EJS files and move them to destination directory
@@ -139,7 +162,13 @@ export function parseArgv() {
         // split out to key/value pairs
         if (str.indexOf('=') !== -1) {
           const strSplit = str.split('=');
-          options[strSplit[0]] = strSplit[1];
+          if (strSplit[1] === 'true') {
+            options[strSplit[0]] = true;
+          } else if (strSplit[1] === 'false') {
+            options[strSplit[0]] = false;
+          } else {
+            options[strSplit[0]] = strSplit[1];
+          }
         } else {
           options[str] = true;
         }
@@ -153,70 +182,6 @@ export function parseArgv() {
     args: args,
     options: options,
   };
-}
-
-// PREBUILD
-export function prebuildClean(callback, paths, verbose) {
-  glob(`${paths.js.src}automated/dev/**/*`, function (er, files) {
-    log('verbose', `Removing Files: ${JSON.stringify(files, null, 2)}`, verbose);
-    let count = files.length;
-
-    if (count > 0) {
-      files.forEach((item) => {
-        fs.remove(item, (err) => {
-          if (err) {
-            return console.error(err);
-          }
-
-          count--;
-          if (count === 0) {
-            callback();
-          }
-        });
-      });
-    } else {
-      callback();
-    }
-  });
-}
-
-export function prebuildConfigToEsm(callback, paths, config, outputFilename, verbose) {
-  const options = {
-    config: config,
-  };
-
-  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function (err, str) {
-    if (err) {
-      log('warn', err);
-    }
-    fs.outputFile(paths.js.src + `automated/${outputFilename}.js`, str, (err) => {
-      if (!err) {
-        log('verbose', `JS templates compiled: automated/${outputFilename}.js`, verbose);
-        callback();
-      }
-    });
-  });
-}
-
-export function prebuildWbConfig(callback, paths, wb, verbose) {
-  const clonedWb = Object.assign({}, wb);
-  delete clonedWb.paths;
-
-  const options = {
-    config: clonedWb,
-  };
-
-  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function (err, str) {
-    if (err) {
-      log('warn', err);
-    }
-    fs.outputFile(paths.js.src + 'automated/wb.js', str, (err) => {
-      if (!err) {
-        log('verbose', `JS templates compiled: wb.js`, verbose);
-        callback();
-      }
-    });
-  });
 }
 
 // Usage: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')

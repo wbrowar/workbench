@@ -25,28 +25,9 @@ const colors = {
 };
 
 /*
- * Set up fonts for Tailwind by defining a `fontStack`.
- * These will replace Tailwind’s default font stack settings.
+ * Set up fonts for Tailwind by defining a `fontStack`. These will replace Tailwind’s default font stack settings.
  *
- * For fonts loaded from a CDN or as a system font, only a fontStack is required:
- * 'apple': {
- *   fontStack: "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
- *   demoWeights: ['hairline', 'thin', 'light', 'normal', 'medium', 'semibold', 'bold', 'extrabold', 'black'],
- * },
- *
- * For fonts loaded locally, via @font-face, define both a `fontFamily` and a `fontStack`, then provide at least one font file path:
- *
- * 'eaves': {
- *   fontFamily: "'MrEavesXLSanRRegular'",
- *   fontStack: "'MrEavesXLSanRRegular', Helvetica, Arial, sans-serif",
- *   fontStyle: "normal",
- *   fontWeight: "normal",
- *   files: {
- *     eot: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
- *     woff: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
- *     woff2: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2",
- *   }.
- * }
+ * For fonts loaded locally, via @font-face, define both a `fontFamily` and a `fontStack`, then provide at least one font file path.
  *
  */
 const fonts = {
@@ -54,6 +35,17 @@ const fonts = {
     fontStack: "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
     demoWeights: ['hairline', 'thin', 'light', 'normal', 'medium', 'semibold', 'bold', 'extrabold', 'black'],
   },
+  // 'eaves': {
+  //   fontFamily: "'MrEavesXLSanRRegular'",
+  //   fontStack: "'MrEavesXLSanRRegular', Helvetica, Arial, sans-serif",
+  //   fontStyle: "normal",
+  //   fontWeight: "normal",
+  //   files: {
+  //     eot: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.eot",
+  //     woff: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff",
+  //     woff2: "/fonts/mreavesxlsanr-020415006EmigreWebOnly.woff2",
+  //   },
+  // },
 };
 
 /*

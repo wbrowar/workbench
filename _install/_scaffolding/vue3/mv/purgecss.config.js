@@ -1,4 +1,4 @@
-const paths = require(`./_wb/config/paths`);
+const paths = require(`./wb.paths.js`);
 
 let content = [
   `${paths.components.src}**/*.vue`,

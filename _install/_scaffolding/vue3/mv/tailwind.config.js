@@ -1,5 +1,5 @@
-const theme = require('./_wb/config/theme.js');
-const settings = require('./_wb/config/settings.js');
+const theme = require('./wb.theme.js');
+const settings = require('./wb.settings.js');
 
 const _ = require('lodash');
 const plugin = require('tailwindcss/plugin');

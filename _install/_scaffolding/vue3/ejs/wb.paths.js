@@ -4,9 +4,9 @@
 const roots = {
   publicPath: process.env.PUBLIC_PATH || `/`,
   sourcePath: process.cwd() + '/_source/',
-  srcPath: process.cwd() + '/',
+  srcPath: process.cwd() + '/src/',
   workbenchPath: process.cwd() + '/_wb/',
-  staticPath: process.cwd() + '/public/',
+  staticPath: process.cwd() + '/static/',
 };
 
 /*

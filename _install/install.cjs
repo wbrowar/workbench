@@ -1,4 +1,6 @@
 // Import node modules
+import { default as paths } from "../../wb-test3/wb.paths.js";
+
 const _ = require('lodash');
 const chalk = require('chalk');
 const fs = require('fs-extra');
@@ -39,13 +41,6 @@ async function run() {
     verbose              = argv.options.verbose || false;
     handle               = argv.options.handle || false;
     installerVersion     = argv.options.version || '0';
-
-    
-    // Assign install directories
-    let componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/`;
-    let installDirectories = [];
-    let installEjs = [];
-    let installMv = [];
 
     // Set variables to be processed by EJS
     ejsVars = {
@@ -145,7 +140,7 @@ async function run() {
             {
                 type: 'confirm',
                 name: 'setupDb',
-                message: 'Setup Database?',
+                message: 'Set Up Database?',
                 default: (answers) => {
                     return ['craft3'].includes(answers.projectType);
                 },
@@ -260,7 +255,7 @@ async function run() {
             {
                 type: 'confirm',
                 name: 'setupRepo',
-                message: 'Setup GitHub repo?',
+                message: 'Set Up GitHub repo?',
                 default: false,
             },
             {
@@ -319,51 +314,6 @@ async function run() {
                 }
             },
             {
-                type: 'checkbox',
-                name: 'components',
-                message: 'Select the components you would like to use by default?',
-                choices: (answers) => {
-                    const componentDirectories = glob.sync(componentDirectoriesGlob);
-                    let componentOptions = [];
-                    componentDirectories.forEach((item) => {
-                        const defaultComponents = [
-                            'accessibility',
-                            'button',
-                            'color_scheme_toggle',
-                            'dev_bar',
-                            'general',
-                            'header',
-                            'icon_svg',
-                            'image',
-                            'lazy_animate',
-                            'lazy_load',
-                            'text',
-                            'touch_box',
-                            'video',
-                            'wrapper',
-                        ];
-
-                        // Add project specific component defaults
-                        switch (answers.projectType) {
-                            case 'html':
-                                defaultComponents.splice(0,defaultComponents.length);
-                                break;
-                            case 'vue3-marketo':
-                                defaultComponents.push('marketo_form');
-                                break;
-                        }
-
-                        const componentName = path.basename(item);
-                        componentOptions.push({ checked: defaultComponents.includes(componentName), name: componentName, value: componentName });
-                    });
-
-                    return componentOptions;
-                },
-                when: (answers) => {
-                    return answers.installEnd === 'front';
-                },
-            },
-            {
                 type: 'list',
                 name: 'npmInstaller',
                 message: 'npm installer',
@@ -401,6 +351,11 @@ async function run() {
                 npmInstaller = answers.npmInstaller;
             }
 
+            // Assign install directories
+            let installDirectories = [];
+            let installEjs = [];
+            let installMv = [];
+
             if (answers.projectType) {
                 switch (answers.projectType) {
                     case 'craft3':
@@ -411,17 +366,14 @@ async function run() {
                         break;
                     case 'vue3-marketo':
                         ejsVars.appEnvPrefix = 'VUE_APP_';
-                        componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/,${projectDirectory}/_install/_scaffolding/vue3/mv/_wb/components/*/`;
                         installDirectories = ['vue3', 'vue3-marketo'];
                         break;
                     case 'nuxt2':
                         ejsVars.appEnvPrefix = '';
-                        componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/,${projectDirectory}/_install/_scaffolding/_vue2/mv/_wb/components/*/`;
                         installDirectories = ['nuxt2'];
                         break;
                     case 'vue3':
                         ejsVars.appEnvPrefix = 'VITE_';
-                        componentDirectoriesGlob = `${projectDirectory}/_wb/components/*/,${projectDirectory}/_install/_scaffolding/vue3/mv/_wb/components/*/`;
                         installDirectories = ['_front-end', 'vue3'];
                         // installMv = [
                         //     { pattern: `${ scaffoldingDirectory }/_front-end/mv/.prettierrc`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },
@@ -580,12 +532,8 @@ async function run() {
                 g.verboseExec(npmInstaller + ` install`, verbose);
                 g.log('verbose', `NPM Packages updated`, verbose);
 
-                g.log('title', 'Moving selected components', verbose);
-                answers.components.forEach((item) => {
-                    if (!item.startsWith('@')) {
-                        g.verboseExec(`node ${projectDirectory}/_wb/component.js --mv='${ item }'${ verbose ? ' --verbose' : '' }`, verbose);
-                    }
-                });
+                // Set up project basics
+                g.verboseExec(`node ${projectDirectory}/_wb/setup.mjs${verbose ? ' --verbose' : ''}`, verbose);
             } else if (answers.installEnd === 'back') {
                 g.verboseExec(`rm -f package.json`, verbose);
                 g.verboseExec(`rm -f package-lock.json`, verbose);
@@ -597,11 +545,7 @@ async function run() {
             g.verboseExec(`rm -rf ${ process.cwd() }/SETUP`, verbose);
             g.log('verbose', `Install directory deleted`, verbose);
 
-            // if (answers.installEnd === 'front') {
-            //     g.log('title', 'Running Initial Build Script', verbose);
-            //     g.verboseExec(`npm run dev`, true);
-            //     g.log('verbose', `Workbench development script ran (npm run dev)`, verbose);
-            // }
+
 
             if (answers.setupRepo) {
                 g.log('title', 'Setting up GitHub repo');

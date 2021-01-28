@@ -1,0 +1,16 @@
+<% Object.keys(fonts).forEach((key) => {
+const font = fonts[key];
+if (font.files !== undefined) { %>@font-face {
+  font-family: <%- font.fontFamily %>;
+  src: url('<%= font.files.eot %>');
+  src: url('<%= font.files.eot %>?#iefix') format('embedded-opentype')<% if (font.files.woff2 !== undefined) { %>,
+  url('<%= font.files.woff2 %>') format('woff2')<% } %><% if (font.files.woff !== undefined) { %>,
+  url('<%= font.files.woff %>') format('woff')<% } %><% if (font.files.otf !== undefined) { %>,
+  url('<%= font.files.otf %>') format('opentype')<% } %><% if (font.files.ttf !== undefined) { %>,
+  url('<%= font.files.ttf %>') format('truetype')<% } %>;
+  font-display: <%= font.fontDisplay || 'swap' %>;
+  font-style: <%= font.fontStyle || 'normal' %>;
+  font-weight: <%= font.fontWeight || 'normal' %>;
+}
+<% };
+}); -%>
