@@ -11,7 +11,7 @@ const themeColor = favicon.themeColor || '#fff';
 const backgroundColor = favicon.tileColor || '#fff';
 
 // use CLI arguments to set variables
-const verbose = argv.options.verbose || false;
+const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
 async function run() {
   fs.ensureDir(paths.wb.static + distPath, () => {

@@ -10,9 +10,9 @@ import { default as paths } from '../wb.paths.js';
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
-const action = argv.options.mv || false ? 'move' : 'new';
+const action = argv.options.mv ? 'move' : 'new';
 const list = argv.options.list ? argv.options.list.split(',') : [];
-const verbose = argv.options.verbose || false;
+const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
 // set variables based on wb options
 let questions;

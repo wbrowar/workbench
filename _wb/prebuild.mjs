@@ -6,8 +6,8 @@ import wb from '../wb.config.js';
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
-const runScraper = argv.options.scraper || false;
-const verbose = argv.options.verbose || false;
+const scraper = typeof argv.options.scraper !== 'undefined' ? argv.options.scraper : false;
+const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
 async function run() {
   if (runScraper) {

@@ -8,8 +8,9 @@ import { default as settings } from '../wb.settings.js';
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
-const runMarketoVariables = argv.options.marketovars || false;
-const verbose = argv.options.verbose || false;
+const runMarketoVariables = typeof argv.options.marketovars !== 'undefined' ? argv.options.marketovars : false;
+const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
+
 
 // set variables based on wb options
 let ejsVars = _.merge(

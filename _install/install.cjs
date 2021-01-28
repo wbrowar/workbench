@@ -1,6 +1,4 @@
 // Import node modules
-import { default as paths } from "../../wb-test3/wb.paths.js";
-
 const _ = require('lodash');
 const chalk = require('chalk');
 const fs = require('fs-extra');
