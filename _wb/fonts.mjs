@@ -11,7 +11,7 @@ const argv = g.parseArgv();
 const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
 async function run() {
-  if (g.fontSettingsExist(verbose)) {
+  if (g.fontSettingsExist(theme, verbose)) {
     g.log('verbose', `Generating @font-face CSS file.`, verbose);
     ejs.renderFile(`${paths.wb.templates}_css/_fonts.ejs`, { fonts: theme.fonts }, {}, function (err, str) {
       if (err) {

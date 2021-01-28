@@ -3,6 +3,7 @@ import { default as inquirer } from 'inquirer';
 import * as g from './functions.mjs';
 import { default as paths } from '../wb.paths.js';
 import { default as settings } from '../wb.settings.js';
+import { default as theme } from '../wb.theme.js';
 
 // set constants
 const argv = g.parseArgv();
@@ -49,7 +50,7 @@ async function run() {
       message: `Set Up Fonts?`,
       default: () => {
         g.log('verbose', `Checking for fonts that need @font-face declarations.`, verbose);
-        if (g.fontSettingsExist()) {
+        if (g.fontSettingsExist(theme)) {
           g.log('verbose', `Font settings found in ./wb.theme.js.`, verbose);
         } else {
           g.log(

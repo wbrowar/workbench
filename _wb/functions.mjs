@@ -3,7 +3,6 @@ import { default as ejs } from 'ejs';
 import { default as exec } from 'child_process';
 import { default as fs } from 'fs-extra';
 import { default as glob } from 'glob-all';
-import { default as theme } from '../wb.theme.js';
 
 // Synchronously run a callback for each item in and array
 export async function asyncForEach(array, callback) {
@@ -24,7 +23,7 @@ export async function asyncFunction(startMessage, endMessage, func) {
 }
 
 // Check to see if fonts need to be generated
-export function fontSettingsExist(verbose = false) {
+export function fontSettingsExist(theme, verbose = false) {
   log('verbose', `Checking for font settings in ./wb.theme.js`, verbose);
 
   if (Object.keys(theme.fonts).length) {
