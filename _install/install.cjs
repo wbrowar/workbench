@@ -693,28 +693,26 @@ function saveLocalConfig(config) {
         g.log('verbose', `Answers:`, verbose);
         g.log('dump', answers, verbose);
 
-        const setUpComponents = typeof answers.setUpComponents !== 'undefined' ? answers.setUpComponents : false;
-        const setUpFavicon = typeof answers.setUpFavicon !== 'undefined' ? answers.setUpFavicon : false;
-        const setUpFonts = typeof answers.setUpFonts !== 'undefined' ? answers.setUpFonts : false;
+        const configSettings = [
+            'cmsAdminEmail',
+            'cmsAdminUsername',
+            'cmsAdminPassword',
+            'cpTrigger',
+            'dbHost',
+            'dbPass',
+            'dbPort',
+            'dbUser',
+            'gitPrivate',
+            'gitOrg',
+            'gitUser',
+            'npmInstaller',
+        ];
+        configSettings.forEach((key) => {
+            if (typeof answers[key] !== 'undefined') {
+                localConfig[key] = answers[key];
+            }
+        });
     });
-
-    if (['craft3'].includes(answers.projectType)) {
-        localConfig['cmsAdminEmail'] = answers.cmsAdminEmail;
-        localConfig['cmsAdminUsername'] = answers.cmsAdminUsername;
-        localConfig['cmsAdminPassword'] = answers.cmsAdminPassword;
-        localConfig['cpTrigger'] = answers.cpTrigger;
-    }
-    if (answers.setupDb) {
-        localConfig['dbHost'] = answers.dbHost;
-        localConfig['dbUser'] = answers.dbUser;
-        localConfig['dbPort'] = answers.dbPort;
-    }
-    if (answers.setupRepo) {
-        localConfig['gitUser'] = answers.gitUser;
-        localConfig['gitOrg'] = answers.gitOrg;
-        localConfig['gitPrivate'] = answers.gitPrivate;
-    }
-    localConfig['npmInstaller'] = npmInstaller;
 
     fs.outputFileSync(`${ os.homedir() }/.workbench.config.json`, JSON.stringify(localConfig, null, 2));
 
