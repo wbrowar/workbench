@@ -515,7 +515,7 @@ async function run() {
 
                 // Set up project basics
                 g.log('verbose', `Running setup script`, verbose);
-                g.verboseExec(`node ${projectDirectory}/_wb/setup.mjs --component-defaults${verbose ? ' --verbose' : ''}`, verbose);
+                g.verboseExec(`node ${projectDirectory}/_wb/setup.mjs --component-defaults${verbose ? ' --verbose' : ''}`, true);
             } else if (answers.installEnd === 'back') {
                 g.verboseExec(`rm -f package.json`, verbose);
                 g.verboseExec(`rm -f package-lock.json`, verbose);
@@ -526,8 +526,6 @@ async function run() {
             g.log('title', `Cleaning Up`);
             g.verboseExec(`rm -rf ${ process.cwd() }/SETUP`, verbose);
             g.log('verbose', `Install directory deleted`, verbose);
-
-
 
             if (answers.setupRepo) {
                 g.log('title', 'Setting up GitHub repo');
