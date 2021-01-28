@@ -16,14 +16,11 @@ let askToSetUpFavicon = typeof argv.options.favicon !== 'undefined' ? argv.optio
 let askToSetUpFonts = typeof argv.options.fonts !== 'undefined' ? argv.options.fonts : true;
 const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
-// set variables based on wb options
-let questions;
-
 async function run() {
   // HELLO
   g.log('app', `Setting Up Site`);
 
-  questions = [
+  const questions = [
     {
       type: 'confirm',
       name: 'setUpFavicon',

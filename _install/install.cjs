@@ -186,6 +186,12 @@ async function run() {
                 type: 'input',
                 name: 'dbPrefix',
                 message: 'Database Prefix',
+                default: (answers) => {
+                    if (['craft3'].includes(answers.projectType)) {
+                        return 'craft_';
+                    }
+                    return null;
+                },
                 when: (answers) => {
                     return answers.installEnd === 'back' && answers.setupDb;
                 },
@@ -306,7 +312,7 @@ async function run() {
                 type: 'confirm',
                 name: 'gitPrivate',
                 message: 'Private repo?',
-                default: true,
+                default: localConfig ? (localConfig.gitPrivate || true) : true,
                 when: (answers) => {
                     return answers.setupRepo;
                 }
@@ -382,31 +388,7 @@ async function run() {
             }
 
             if (answers.saveConfig) {
-                g.log('title', `Saving Local Configuring File`);
-                localConfig = {};
-
-                if (['craft3'].includes(answers.projectType)) {
-                    localConfig['cpTrigger'] = answers.cpTrigger;
-                    localConfig['cmsAdminEmail'] = answers.cmsAdminEmail;
-                    localConfig['cmsAdminUsername'] = answers.cmsAdminUsername;
-                    localConfig['cmsAdminPassword'] = answers.cmsAdminPassword;
-                }
-                if (answers.setupDb) {
-                    localConfig['dbHost'] = answers.dbHost;
-                    localConfig['dbUser'] = answers.dbUser;
-                    localConfig['dbPort'] = answers.dbPort;
-                }
-                if (answers.setupRepo) {
-                    localConfig['gitUser'] = answers.gitUser;
-                    localConfig['gitOrg'] = answers.gitOrg;
-                    localConfig['gitPrivate'] = answers.gitPrivate;
-                }
-                localConfig['npmInstaller'] = npmInstaller;
-
-                fs.outputFileSync(`${ os.homedir() }/.workbench.config.json`, JSON.stringify(localConfig, null, 2));
-
-                g.log('title', `Saved Local Configuring File`);
-                g.log('dump', localConfig, verbose);
+                saveLocalConfig(answers);
             }
 
             if (answers.setupDb) {
@@ -417,9 +399,6 @@ async function run() {
 
             g.log('title', 'Updating package.json values with dynamic data', verbose);
             pkg = _.merge(pkg, {
-                scripts: {
-                    update: npmInstaller + ' install',
-                },
                 name: handle,
                 version: '1.0.0',
             });
@@ -531,7 +510,8 @@ async function run() {
                 g.log('verbose', `NPM Packages updated`, verbose);
 
                 // Set up project basics
-                g.verboseExec(`node ${projectDirectory}/_wb/setup.mjs${verbose ? ' --verbose' : ''}`, verbose);
+                g.log('verbose', `Running setup script`, verbose);
+                g.verboseExec(`node ${projectDirectory}/_wb/setup.mjs --component-defaults${verbose ? ' --verbose' : ''}`, verbose);
             } else if (answers.installEnd === 'back') {
                 g.verboseExec(`rm -f package.json`, verbose);
                 g.verboseExec(`rm -f package-lock.json`, verbose);
@@ -622,6 +602,124 @@ function mergeIntoPkg(pkgFile) {
     } else {
         g.log('verbose', `Package JSON not found at: ${ pkgFile }`, verbose);
     }
+}
+
+function saveLocalConfig(config) {
+    g.log('title', `Saving Local Configuring File`);
+    localConfig = {};
+
+    const questions = [
+        {
+            type: 'input',
+            name: 'cpTrigger',
+            message: 'Default CP Trigger (path to Craft CP)',
+            when: !config.cpTrigger,
+        },
+        {
+            type: 'input',
+            name: 'cmsAdminEmail',
+            message: 'Default CMS Admin Email Address',
+            when: !config.cmsAdminEmail,
+        },
+        {
+            type: 'input',
+            name: 'cmsAdminUsername',
+            message: 'Default CMS Admin Username',
+            when: !config.cmsAdminUsername,
+        },
+        {
+            type: 'input',
+            name: 'cmsAdminPassword',
+            message: 'Default CMS Admin Password',
+            when: !config.cmsAdminPassword,
+        },
+        {
+            type: 'input',
+            name: 'dbHost',
+            message: 'Default Database Host',
+            when: !config.dbHost,
+        },
+        {
+            type: 'input',
+            name: 'dbPort',
+            message: 'Default Database Port',
+            when: !config.dbPort,
+        },
+        {
+            type: 'input',
+            name: 'dbUser',
+            message: 'Default Database User',
+            when: !config.dbUser,
+        },
+        {
+            type: 'input',
+            name: 'dbPass',
+            message: 'Default Database Password',
+            when: !config.dbPass,
+        },
+        {
+            type: 'input',
+            name: 'gitUser',
+            message: 'Default Git User',
+            when: !config.gitUser,
+        },
+        {
+            type: 'input',
+            name: 'gitOrg',
+            message: 'Default Git Organization',
+            when: !config.gitOrg,
+        },
+        {
+            type: 'confirm',
+            name: 'gitPrivate',
+            message: 'Repos Private By Default?',
+            default: true,
+            when: !config.gitPrivate,
+        },
+        {
+            type: 'list',
+            name: 'npmInstaller',
+            message: 'npm installer',
+            default: 'npm',
+            choices: [
+                { name: 'npm', value: 'npm' },
+                { name: 'Yarn', value: 'yarn' },
+            ],
+            when: !config.npmInstaller,
+        },
+    ];
+
+    inquirer.prompt(questions).then(function (answers) {
+        g.log('verbose', `Answers:`, verbose);
+        g.log('dump', answers, verbose);
+
+        const setUpComponents = typeof answers.setUpComponents !== 'undefined' ? answers.setUpComponents : false;
+        const setUpFavicon = typeof answers.setUpFavicon !== 'undefined' ? answers.setUpFavicon : false;
+        const setUpFonts = typeof answers.setUpFonts !== 'undefined' ? answers.setUpFonts : false;
+    });
+
+    if (['craft3'].includes(answers.projectType)) {
+        localConfig['cmsAdminEmail'] = answers.cmsAdminEmail;
+        localConfig['cmsAdminUsername'] = answers.cmsAdminUsername;
+        localConfig['cmsAdminPassword'] = answers.cmsAdminPassword;
+        localConfig['cpTrigger'] = answers.cpTrigger;
+    }
+    if (answers.setupDb) {
+        localConfig['dbHost'] = answers.dbHost;
+        localConfig['dbUser'] = answers.dbUser;
+        localConfig['dbPort'] = answers.dbPort;
+    }
+    if (answers.setupRepo) {
+        localConfig['gitUser'] = answers.gitUser;
+        localConfig['gitOrg'] = answers.gitOrg;
+        localConfig['gitPrivate'] = answers.gitPrivate;
+    }
+    localConfig['npmInstaller'] = npmInstaller;
+
+    fs.outputFileSync(`${ os.homedir() }/.workbench.config.json`, JSON.stringify(localConfig, null, 2));
+
+    g.log('title', `Saved Local Configuring File`);
+    g.log('dump', localConfig, verbose);
 }
 
 function _bye() {
