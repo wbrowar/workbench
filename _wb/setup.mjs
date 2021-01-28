@@ -35,6 +35,7 @@ async function run() {
             `No Favicon file found. Before continuing, save one at ${paths.favicon.src}favicon.png or this step will be skipped.`,
             verbose
           );
+          return false;
         }
 
         return true;
@@ -110,7 +111,7 @@ async function run() {
             ? `--list=${projectTypeDefaultComponents[settings.projectType].join(',')}`
             : ''
         }${verbose ? ' --verbose' : ''}`,
-        verbose
+        true
       );
     }
 
