@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { addClass, log, removeClass } from 'JS/global.js';
-import wb from 'JS/automated/wb.js';
+import { addClass, log, removeClass } from 'JS/global';
+import wb from 'JS/automated/settings.js';
 
 export default {
   name: 'ColorSchemeToggle',

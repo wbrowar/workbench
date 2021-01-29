@@ -1,11 +1,13 @@
 {
   "scripts": {
-    "ci:build": "vuedx-typecheck . && VITE_POSTCSS_PURGECSS=true vite build",
-    "dev": "vite",
-    "prod": "vuedx-typecheck . && VITE_POSTCSS_PURGECSS=true vite build"
+    "ci:build": "vuedx-typecheck . && node ./_wb/prebuild.mjs && VITE_POSTCSS_PURGECSS=true vite build",
+    "dev": "node ./_wb/prebuild.mjs && vite",
+    "prod": "vuedx-typecheck . && node ./_wb/prebuild.mjs && VITE_POSTCSS_PURGECSS=true vite build"
   },
   "dependencies": {
     "vue": "^3.0.5",
+    "vue-cleave-component": "^3.0.0",
+    "vue-meta": "^3.0.0-alpha.0",
     "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {

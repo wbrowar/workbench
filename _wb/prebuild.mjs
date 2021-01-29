@@ -1,28 +1,58 @@
-import * as g from './functions.mjs';
+import { default as ejs } from 'ejs';
 import { default as fs } from 'fs-extra';
-import wb from '../wb.config.js';
+import { default as paths } from '../wb.paths.js';
+import * as g from './functions.mjs';
+import { default as scraper } from '../wb.scraper.js';
+import { default as settings } from '../wb.settings.js';
 
 // set constants
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
-const scraper = typeof argv.options.scraper !== 'undefined' ? argv.options.scraper : false;
+const runScraper = typeof argv.options.scraper !== 'undefined' ? argv.options.scraper : false;
 const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
 async function run() {
+  const settingsToEsm = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
+    _configToEsm(resolve, paths, settings, 'settings', verbose);
+  });
+  let settingsToEsmComplete = await settingsToEsm;
+
   if (runScraper) {
-    const scraper = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
-      _prebuildScraper(resolve, wb.paths, wb.scraper, verbose);
+    const execScraper = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
+      _scraper(resolve, paths, scraper, verbose);
     });
-    let scraperComplete = await scraper;
+    let execScraperComplete = await execScraper;
   }
 }
+
+/*
+ * Creates a copy of the config file in JS/automated
+ * @param callback
+ */
+function _configToEsm(callback, paths, config, outputFilename, verbose) {
+  const options = {
+    config: config,
+  };
+
+  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function(err, str) {
+    if (err) {
+      g.log('warn', err);
+    }
+    fs.outputFile(paths.js.src + `automated/${outputFilename}.js`, str, (err) => {
+      if (!err) {
+        g.log('verbose', `JS templates compiled: automated/${outputFilename}.js`, verbose);
+        callback();
+      }
+    });
+  });
+};
 
 /*
  * Scrape URLs and save as local file
  * @param callback
  */
-function _prebuildScraper(callback, paths, options, verbose) {
+function _scraper(callback, paths, options, verbose) {
   let count = options.pages.length;
 
   if (count > 0) {

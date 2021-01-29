@@ -25,14 +25,11 @@
 </template>
 
 <script>
-import { log, processIsClient } from 'JS/global.js';
-import wb from 'JS/automated/wb.js';
+import { log, processIsClient } from 'JS/global';
+import wb from 'JS/automated/settings.js';
+
 export default {
   name: 'Button',
-  components: {},
-  data() {
-    return {};
-  },
   props: {
     ariaLabel: String,
     elementType: { type: String, default: 'button' },

@@ -126,7 +126,7 @@ async function run() {
      * Fonts
      */
     if (setUpFonts) {
-      g.verboseExec(`node ${paths.wb.workbench}fonts.mjs${verbose ? ' --verbose' : ''}`, verbose);
+      g.verboseExec(`node ${paths.wb.workbench}font.mjs${verbose ? ' --verbose' : ''}`, verbose);
     }
 
     // BYE

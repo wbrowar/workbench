@@ -6,7 +6,6 @@
 const colors = {
   white: 'rgb(255, 255, 255)',
   black: 'rgb(0, 0, 0)',
-  bidenBlue: 'rgb(10, 36, 88)',
   // gray: {
   //   DEFAULT: '#9e9e9e',
   //   '100': '#f5f5f5',

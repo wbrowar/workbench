@@ -24,7 +24,7 @@ async function run() {
       });
     });
   } else {
-    g.log('warn', `There are no fonts to create from the given settings.`, verbose);
+    g.log('warn', `There are no fonts to create from the given settings. No files generated.`, verbose);
   }
 }
 
