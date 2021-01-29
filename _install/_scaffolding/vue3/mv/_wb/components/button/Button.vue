@@ -1,6 +1,6 @@
 <template>
   <span
-    :is="elementTypeComputed"
+    v-is="elementTypeComputed"
     :class="classes"
     :aria-label="ariaLabel || null"
     :href="formattedHref"
@@ -12,7 +12,7 @@
     ><slot>{{ labelText }}</slot></span
   >
   <span
-    :is="elementTypeComputed"
+    v-is="elementTypeComputed"
     :class="classes"
     :aria-label="ariaLabel || null"
     :href="formattedHref"
@@ -25,10 +25,11 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
 import { log, processIsClient } from 'JS/global';
 import wb from 'JS/automated/settings.js';
 
-export default {
+export default defineComponent({
   name: 'Button',
   props: {
     ariaLabel: String,
@@ -68,6 +69,9 @@ export default {
         switch (wb.projectType) {
           case 'nuxt2':
             linkType = 'nuxt-link';
+            break;
+          case 'vue3':
+            linkType = 'a';
             break;
         }
         return linkType;
@@ -139,5 +143,5 @@ export default {
       this.$emit('clicked', event);
     },
   },
-};
+});
 </script>

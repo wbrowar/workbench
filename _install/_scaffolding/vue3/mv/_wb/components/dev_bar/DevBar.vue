@@ -22,25 +22,24 @@
         </div>
       </div>
       <div class="flex flex-row">
-        <!--      <div class="flex flex-row items-center" v-if="showColorSchemeToggles">-->
-        <!--        <span class="p-3 text-white whitespace-nowrap text-xs">Color Scheme:</span>-->
-        <!--        <ColorSchemeToggle-->
-        <!--          class="mx-2 focus:outline-none"-->
-        <!--          remember-->
-        <!--          scheme-id="default"-->
-        <!--          title="Reset to default color scheme"-->
-        <!--          v-if="showColorSchemeToggles"-->
-        <!--          >🚫</ColorSchemeToggle-->
-        <!--        >-->
-        <!--        <ColorSchemeToggle-->
-        <!--          class="mx-2 focus:outline-none"-->
-        <!--          remember-->
-        <!--          :scheme-id="index"-->
-        <!--          v-for="(label, index) in colorSchemes"-->
-        <!--          :key="index"-->
-        <!--          >{{ label }}</ColorSchemeToggle-->
-        <!--        >-->
-        <!--      </div>-->
+        <div class="p-3 flex flex-row relative items-center space-x-2" v-if="dataToReset === 'none'">
+          <span class="text-white whitespace-nowrap text-xs">Clear:</span>
+          <span class="cursor-pointer" title="Clear localStorage" @click="dataToReset = 'localStorage'">🗄</span>
+          <!--          <span class="cursor-pointer" title="Clear Cookies" @click="dataToReset = 'cookies'">🍪</span>-->
+        </div>
+        <div class="p-3 flex flex-row relative items-center space-x-2" v-else>
+          <span class="text-white whitespace-nowrap text-xs">Clear {{ dataToReset }}?</span>
+          <span
+            class="px-2 py-1 rounded bg-dev-gray-500 hover:bg-error text-xs cursor-pointer"
+            @click="clearLocalData(dataToReset)"
+            >Yes</span
+          >
+          <span
+            class="px-2 py-0.5 rounded bg-dev-gray-500 hover:bg-dev-gray-600 text-xs cursor-pointer"
+            @click="dataToReset = 'none'"
+            >No</span
+          >
+        </div>
         <div class="p-3 flex flex-row items-center space-x-2">
           <span class="text-white whitespace-nowrap text-xs">Display:</span>
           <span class="cursor-pointer" @click="toggleSticky" v-if="isSticky">❄️</span>
@@ -57,24 +56,13 @@ import { computed, defineComponent, reactive, toRefs } from 'vue';
 import { log } from 'JS/global';
 import wb from 'JS/automated/settings.js';
 import Button from 'Components/button/Button.vue';
-// import ColorSchemeToggle from 'Components/color_scheme_toggle/ColorSchemeToggle.vue';
-
-// To determine color schemes and labels
-// :color-schemes="{ dark: '🌑', light: '🌕', high-contrast: '🔲' }"
 
 export default defineComponent({
   name: 'DevBar',
   components: {
     Button,
-    // ColorSchemeToggle,
   },
   props: {
-    colorSchemes: {
-      type: Object,
-      default() {
-        return { dark: '🌑', light: '🌕' };
-      },
-    },
     links: {
       type: Array,
       default() {
@@ -84,6 +72,7 @@ export default defineComponent({
   },
   setup(props) {
     const state = reactive({
+      dataToReset: 'none',
       devMode: wb.devMode,
       isSticky: false,
       isVisible: true,
@@ -117,6 +106,18 @@ export default defineComponent({
     });
 
     /*
+     * Wipe all localStorage items for the current site
+     */
+    function clearLocalData(target) {
+      if (target === 'cookies') {
+        // TODO figure out how to clear all cookies (or delete this option)
+      } else if (target === 'localStorage') {
+        localStorage.clear();
+      }
+      state.dataToReset = 'none';
+    }
+
+    /*
      * Makes the bar stick to the bottom of the viewport, or displays it at the bottom of the page.
      */
     function toggleSticky() {
@@ -128,6 +129,7 @@ export default defineComponent({
       ...toRefs(state),
       allLinks,
       classes,
+      clearLocalData,
       toggleSticky,
     };
   },

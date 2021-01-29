@@ -1,5 +1,5 @@
 <template>
-  <div :is="elementType" v-bind="loadAttributes"><slot /></div>
+  <div v-is="elementType" v-bind="loadAttributes"><slot /></div>
 </template>
 
 <script>

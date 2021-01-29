@@ -1,5 +1,5 @@
 <template>
-  <figure :is="background ? elementType : 'figure'" :class="classes">
+  <figure v-is="background ? elementType : 'figure'" :class="classes">
     <picture class="c-image" :class="containerClasses">
       <LazyLoad
         :class="imageClasses"

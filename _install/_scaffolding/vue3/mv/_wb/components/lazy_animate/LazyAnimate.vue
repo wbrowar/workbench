@@ -1,5 +1,5 @@
 <template>
-  <div :is="elementType" class="c-lazy-animate" v-bind="computedAttributes">
+  <div v-is="elementType" class="c-lazy-animate" v-bind="computedAttributes">
     <slot></slot>
   </div>
 </template>
