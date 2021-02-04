@@ -2,7 +2,7 @@ const theme = require('./wb.theme.js');
 
 // Import PostCss plugins
 const autoprefixer = require('autoprefixer');
-const easyImport = require('postcss-easy-import');
+const atImport = require('postcss-import');
 const customMedia = require('postcss-custom-media');
 const nested = require('postcss-nested');
 const purgecss = require('@fullhuman/postcss-purgecss');
@@ -24,8 +24,8 @@ const mediaQueries = {
 };
 
 const postcssPlugins = [
+  atImport(),
   simpleVars(),
-  easyImport(),
   nested(),
   customMedia(mediaQueries),
   tailwind(require('./tailwind.config.js')),

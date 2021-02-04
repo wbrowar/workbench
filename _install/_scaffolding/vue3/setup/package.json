@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "ci:build": "vuedx-typecheck . && node ./_wb/prebuild.mjs && VITE_POSTCSS_PURGECSS=true vite build",
-    "dev": "node ./_wb/prebuild.mjs && vite",
-    "prod": "vuedx-typecheck . && node ./_wb/prebuild.mjs && VITE_POSTCSS_PURGECSS=true vite build"
+    "ci:build": "vuedx-typecheck . && npm run prebuild && VITE_POSTCSS_PURGECSS=true vite build",
+    "dev": "npm run prebuild && vite",
+    "prebuild": "node ./_wb/prebuild.mjs --css-includes",
+    "prod": "vuedx-typecheck . && npm run prebuild && VITE_POSTCSS_PURGECSS=true vite build"
   },
   "dependencies": {
     "vue": "^3.0.5",
@@ -25,7 +26,7 @@
     "eslint-plugin-vue": "^7.4.1",
     "postcss": "^8.2.4",
     "postcss-custom-media": "^8.0.0",
-    "postcss-easy-import": "^3.0.0",
+    "postcss-import": "^14.0.0",
     "postcss-nested": "^5.0.3",
     "postcss-simple-vars": "^6.0.2",
     "prettier": "^2.2.1",

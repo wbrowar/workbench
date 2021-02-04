@@ -3,4 +3,5 @@
 @import './_global.css';
 @import './_animations.css';
 @import 'tailwindcss/components';
+@import './automated/_components.css';
 @import 'tailwindcss/utilities';

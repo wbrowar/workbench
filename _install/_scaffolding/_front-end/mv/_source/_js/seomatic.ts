@@ -2,7 +2,7 @@
 
 import { log } from 'JS/global';
 
-export function gqlToObject(data) {
+export function gqlToObject(data: any) {
   log('SEOmatic GraphQL to Object', data);
 
   // Convert the graphql JSON data to an object so we can work with it
@@ -22,12 +22,12 @@ export function gqlToObject(data) {
   // Flatten metaTagContainer values into string
   const meta = metaTagContainer
     ? Object.values(metaTagContainer).reduce((flat, next) => {
-      if (next.name === 'description') {
-        // Override description tag with updated description
-        next.hid = 'description';
-      }
-      return flat.concat(next);
-    }, [])
+        if (next.name === 'description') {
+          // Override description tag with updated description
+          next.hid = 'description';
+        }
+        return flat.concat(next);
+      }, [])
     : null;
 
   // Flatten metaLinkContainer values into string

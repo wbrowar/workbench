@@ -1,5 +1,6 @@
 import { default as ejs } from 'ejs';
 import { default as fs } from 'fs-extra';
+import { default as glob } from 'glob-all';
 import { default as paths } from '../wb.paths.js';
 import * as g from './functions.mjs';
 import { default as scraper } from '../wb.scraper.js';
@@ -9,6 +10,7 @@ import { default as settings } from '../wb.settings.js';
 const argv = g.parseArgv();
 
 // use CLI arguments to set variables
+const runCssIncludes = typeof argv.options['css-includes'] !== 'undefined' ? argv.options['css-includes'] : false;
 const runScraper = typeof argv.options.scraper !== 'undefined' ? argv.options.scraper : false;
 const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
@@ -17,6 +19,13 @@ async function run() {
     _configToEsm(resolve, paths, settings, 'settings', verbose);
   });
   let settingsToEsmComplete = await settingsToEsm;
+
+  if (runCssIncludes) {
+    const cssIncludes = g.asyncFunction(`Combining PostCSS Files`, `PostCSS Files Combined`, (resolve) => {
+      _cssIncludes(resolve, paths, verbose);
+    });
+    let cssIncludesComplete = await cssIncludes;
+  }
 
   if (runScraper) {
     const execScraper = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
@@ -35,7 +44,7 @@ function _configToEsm(callback, paths, config, outputFilename, verbose) {
     config: config,
   };
 
-  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function(err, str) {
+  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function (err, str) {
     if (err) {
       g.log('warn', err);
     }
@@ -46,7 +55,33 @@ function _configToEsm(callback, paths, config, outputFilename, verbose) {
       }
     });
   });
-};
+}
+
+/*
+ * Scrape URLs and save as local file
+ * @param callback
+ */
+function _cssIncludes(callback, paths, verbose) {
+  glob(`${paths.components.src}**/*.css`, function (er, files) {
+    g.log('verbose', `Compontent CSS Files:`, verbose);
+    g.log('dump', files, verbose);
+    let data = `/* CSS from _source/_components/ */
+`;
+    files.forEach((item) => {
+      data += `@import "../../_components/${item.replace(paths.components.src, '')}";
+`;
+    });
+    g.log('verbose', data, verbose);
+
+    const cssIncludesPath = paths.css.src + 'automated/_components.css';
+    fs.outputFile(cssIncludesPath, data, (err) => {
+      if (!err) {
+        g.log('verbose', `Writing combined PostCSS files to: ${cssIncludesPath}`, verbose);
+        callback();
+      }
+    });
+  });
+}
 
 /*
  * Scrape URLs and save as local file

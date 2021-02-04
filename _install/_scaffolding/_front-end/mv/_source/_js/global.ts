@@ -1,22 +1,22 @@
-import wb from 'WB/wb.config.js';
+import wb from 'JS/automated/settings.js';
 
 // LOGGING FUNCTIONS
-export function dir(...args) {
+export function dir(...args: any[]) {
   logger('dir', args);
 }
-export function error(...args) {
+export function error(...args: any[]) {
   logger('error', args);
 }
-export function log(...args) {
+export function log(...args: any[]) {
   logger('log', args);
 }
-export function table(...args) {
+export function table(...args: any[]) {
   logger('log', args);
 }
-export function warn(...args) {
+export function warn(...args: any[]) {
   logger('warn', args);
 }
-function logger(type = 'log', args) {
+function logger(type: string, args: any[]) {
   const spirit = '🚀';
 
   if (wb.devMode) {
@@ -54,7 +54,7 @@ function logger(type = 'log', args) {
 }
 
 // UTILITY FUNCTIONS
-export function addClass(el, className) {
+export function addClass(el: Element, className: string) {
   if (!hasClass(el, className)) {
     if (el.classList) {
       el.classList.add(className);
@@ -63,7 +63,7 @@ export function addClass(el, className) {
     }
   }
 }
-export function classToggle(selector, getClass) {
+export function classToggle(selector: string, getClass: string) {
   const query = document.querySelectorAll(selector);
   query.forEach((el) => {
     if (hasClass(el, getClass)) {
@@ -73,7 +73,7 @@ export function classToggle(selector, getClass) {
     }
   });
 }
-export function gaTrack(category, action, label) {
+export function gaTrack(category: string, action: string, label: string) {
   if (!wb.devMode) {
     if (typeof window.ga === 'function') {
       window.ga('send', 'event', category, action, label);
@@ -84,7 +84,7 @@ export function gaTrack(category, action, label) {
     log('GA Tracking Preview: ', category, action, label);
   }
 }
-export function hasClass(el, className) {
+export function hasClass(el: Element, className: string) {
   if (el.classList) {
     return el.classList.contains(className);
   } else {
@@ -94,17 +94,15 @@ export function hasClass(el, className) {
 export function processIsClient() {
   let isClient = true;
 
-  if (process) {
-    switch (wb.projectType) {
-      // case 'gridsome':
-      //   isClient = process.isClient;
-      //   break;
-    }
+  switch (wb.projectType) {
+    case 'gridsome':
+      isClient = typeof process !== 'undefined' ? process.isClient : true;
+      break;
   }
 
   return isClient;
 }
-export function removeClass(el, className) {
+export function removeClass(el: Element, className: string) {
   if (hasClass(el, className)) {
     if (el.classList) {
       el.classList.remove(className);
@@ -116,7 +114,7 @@ export function removeClass(el, className) {
     }
   }
 }
-export function slugify(text) {
+export function slugify(text: string) {
   /* eslint-disable */
   return text
     .toString()
@@ -128,7 +126,7 @@ export function slugify(text) {
     .replace(/-+$/, ''); // Trim - from end of text
   /* eslint-enable */
 }
-export function snake(text) {
+export function snake(text: string) {
   /* eslint-disable */
   return text
     .toString()
