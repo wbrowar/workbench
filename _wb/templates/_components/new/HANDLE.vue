@@ -2,10 +2,11 @@
   <div class="c-<%- handleKebab %>"></div>
 </template>
 
-<script>
-// import { log } from 'JS/global.js';
+<script lang="ts">
+import { defineComponent } from 'vue';
+// import { log } from 'JS/global';
 
-export default {
+export default defineComponent({
   name: <%- `'${condensedName}'` %>,
   components: {},
   data() {
@@ -14,9 +15,10 @@ export default {
   props: {},
   computed: {},
   methods: {},
+  setup() {},
   created() {},
   mounted() {},
-};
+});
 </script>
 
 <style>
