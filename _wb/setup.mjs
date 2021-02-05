@@ -84,6 +84,7 @@ async function run() {
      * Components
      */
     if (setUpComponents) {
+      g.log('title', `Moving Components`, verbose);
       const vue3DefaultComponents = [
         'accessibility',
         'button',
@@ -110,20 +111,26 @@ async function run() {
         }${verbose ? ' --verbose' : ''}`,
         true
       );
+
+      g.log('title', `Components Moved`, verbose);
     }
 
     /*
      * Favicon
      */
     if (setUpFavicon) {
+      g.log('title', `Generating Favicon`, verbose);
       g.verboseExec(`node ${paths.wb.workbench}favicon.mjs${verbose ? ' --verbose' : ''}`, verbose);
+      g.log('title', `Favicon Generated`, verbose);
     }
 
     /*
      * Fonts
      */
     if (setUpFonts) {
+      g.log('title', `Creating @font-face CSS`, verbose);
       g.verboseExec(`node ${paths.wb.workbench}fonts.mjs${verbose ? ' --verbose' : ''}`, verbose);
+      g.log('title', `@font-face CSS Created`, verbose);
     }
 
     // BYE

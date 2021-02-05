@@ -9,19 +9,19 @@
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "~/*": "./*",
-      "Components/*": "./_source/_components/*",
-      "CSS/*": "./_source/_css/*",
-      "GQL/*": "./gql/*",
-      "Layouts/*": "./src/layouts/*",
-      "Pages/*": "./src/pages/*",
-      "JS/*": "./_source/_js/*",
-      "Source/*": "./_source/*",
-      "WB/*": "./_wb/*"
+      "~/*": ["./*"],
+      "Components/*": ["./_source/_components/*"],
+      "CSS/*": ["./_source/_css/*"],
+      "GQL/*": ["./gql/*"],
+      "Layouts/*": ["./src/layouts/*"],
+      "Pages/*": ["./src/pages/*"],
+      "JS/*": ["./_source/_js/*"],
+      "Source/*": ["./_source/*"],
+      "WB/*": ["./_wb/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "_source/**/*.ts", "_source/**/*.d.ts", "_source/**/*.vue"],
-  "exclude": ["_wb"]
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.tsx", "./src/**/*.vue", "./_source/**/*.ts", "./_source/**/*.d.ts", "./_source/**/*.vue"],
+  "exclude": ["./dist", "./node_modules", "./*.config.js", "./_source/_js/*.js", "./_wb/**/*"]
 }
