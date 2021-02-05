@@ -9,19 +9,22 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: <%- `'${condensedName}'` %>,
   components: {},
-  data() {
-    return {};
-  },
   props: {},
+  setup() {
+    // const state = reactive({});
+
+    // return {
+    //   ...toRefs(state),
+    // };
+  },
   computed: {},
   methods: {},
-  setup() {},
   created() {},
   mounted() {},
 });
 </script>
 
-<style>
+<style scoped>
 .c-<%- handleKebab %> {
 }
 </style>

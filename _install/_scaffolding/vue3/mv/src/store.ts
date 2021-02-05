@@ -2,14 +2,14 @@ import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 
 export interface State {
-  count: number;
+  colorScheme: string;
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
   state: {
-    colorScheme: 'default',
+    colorScheme: 'browser',
   },
 });
 

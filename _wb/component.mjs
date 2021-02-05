@@ -5,6 +5,7 @@ import { default as inquirer } from 'inquirer';
 import { default as path } from 'path';
 import * as g from './functions.mjs';
 import { default as paths } from '../wb.paths.js';
+import { default as settings } from '../wb.settings.js';
 
 // set constants
 const argv = g.parseArgv();
@@ -93,7 +94,7 @@ async function run() {
         choices: [
           { name: 'CSS', value: 'css' },
           { name: 'Twig', value: 'twig' },
-          { name: 'Vue', value: 'vue' },
+          { checked: ['vue3'].includes(settings.projectType), name: 'Vue', value: 'vue' },
         ],
         validate: (answer) => {
           return answer.length > 0;

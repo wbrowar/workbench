@@ -5,7 +5,7 @@ declare module '@vue/runtime-core' {
     // declare your own store states
     interface State {
         state: {
-            devMode: boolean|undefined,
+            colorScheme: string,
         }
     }
 

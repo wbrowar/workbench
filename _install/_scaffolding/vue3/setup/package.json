@@ -8,8 +8,9 @@
   "dependencies": {
     "vue": "^3.0.5",
     "vue-cleave-component": "^3.0.0",
-    "vue-meta": "^3.0.0-alpha.0",
-    "vuex": "^4.0.0-rc.2"
+    "vue-meta": "^3.0.0-alpha.1",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.0",
