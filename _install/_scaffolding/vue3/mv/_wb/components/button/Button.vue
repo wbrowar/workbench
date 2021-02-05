@@ -70,9 +70,6 @@ export default defineComponent({
           case 'nuxt2':
             linkType = 'nuxt-link';
             break;
-          case 'vue3':
-            linkType = 'a';
-            break;
         }
         return linkType;
       }
