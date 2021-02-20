@@ -47,18 +47,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
 import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
 
-export default {
+export default defineComponent({
   name: 'MediaVideo',
   components: {
     LazyLoad,
-  },
-  data() {
-    return {
-      lazyLoad: false,
-      playerUrl: false,
-    };
   },
   props: {
     autoplay: { type: Boolean, default: false },
@@ -80,6 +75,12 @@ export default {
     src: String,
     videoClass: String,
     videoId: String,
+  },
+  data() {
+    return {
+      lazyLoad: false,
+      playerUrl: false,
+    };
   },
   computed: {
     classes() {
@@ -114,5 +115,5 @@ export default {
   created() {
     this.lazyLoad = this.loading === 'lazy';
   },
-};
+});
 </script>
