@@ -9,7 +9,7 @@ const path = require('path');
 
 // Import global functions
 let g;
-fs.copySync(`../../_wb/functions.mjs`, `./functions.mjs`);
+fs.copySync(`../_scaffolding/_front-end/mv/front-end/_wb/functions.mjs`, `./functions.mjs`);
 
 // Load package file
 let pkg = require(`${ process.cwd() }/package.json`);
@@ -23,9 +23,11 @@ let scaffoldingDirectory;
 let verbose;
 
 // Set other variables
+const ddevInstalled = fs.existsSync(`${projectDirectory}/.ddev`);
+const backEndInstalled = fs.existsSync(`${projectDirectory}/back-end/`);
+const frontEndInstalled = fs.existsSync(`${projectDirectory}/front-end/`);
 let enableInstall = false;
 let localConfig   = false;
-let npmInstaller = 'npm';
 
 async function run() {
     g = await import('./functions.mjs');
@@ -36,15 +38,12 @@ async function run() {
     // Use CLI arguments to set variables
     projectDirectory     = argv.options['project-dir'] || '';
     scaffoldingDirectory = `${projectDirectory}/SETUP/_install/_scaffolding`;
-    verbose              = argv.options.verbose || false;
     handle               = argv.options.handle || false;
     installerVersion     = argv.options.version || '0';
+    verbose              = argv.options.verbose || false;
 
     // Set variables to be processed by EJS
     ejsVars = {
-        nodeVersion: process.version,
-        projectDir: projectDirectory,
-        pkg: pkg,
         securityKey: g.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
     };
 
@@ -96,24 +95,33 @@ async function run() {
                 choices: [
                     { name: 'Front-end', value: 'front' },
                     { name: 'Back-end', value: 'back' },
+                    { name: 'Both', value: 'back_front' },
                 ],
             },
             {
                 type: 'list',
-                name: 'projectType',
-                message: (answers) => {
-                    return answers.installEnd === 'front' ? 'Front-end framework' : 'Back-end platform';
+                name: 'frontEndFramework',
+                message: 'Front-end Framework',
+                when: (answers) => {
+                    return ['front', 'back_front'].includes(answers.installEnd);
                 },
-                choices: (answers) => {
-                    return answers.installEnd === 'front' ? [
-                        { name: 'Nuxt', value: 'nuxt2' },
-                        { name: 'Vue SPA', value: 'vue3' },
-                        { name: 'HTML (Tailwind, Webpack)', value: 'html' },
-                        { name: 'Marketo Vue SPA', value: 'vue3-marketo' },
-                    ] : [
-                        { name: 'Craft 3', value: 'craft3' },
-                    ]
+                choices: [
+                    { name: 'Vue SPA', value: 'vue3' },
+                    { name: 'Nuxt', value: 'nuxt2' },
+                    { name: 'HTML (Tailwind, Webpack)', value: 'html' },
+                    { name: 'Marketo Vue SPA', value: 'vue3-marketo' },
+                ],
+            },
+            {
+                type: 'list',
+                name: 'backEndPlatform',
+                message: 'Back-end Platform',
+                when: (answers) => {
+                    return ['back', 'back_front'].includes(answers.installEnd);
                 },
+                choices: [
+                    { name: 'Craft 3', value: 'craft3' },
+                ],
             },
             {
                 type: 'input',
@@ -124,76 +132,6 @@ async function run() {
                 },
                 validate: (answer) => {
                     return answer !== '';
-                },
-            },
-            {
-                type: 'input',
-                name: 'localUrl',
-                message: 'Local Dev URL',
-                default: (answers) => {
-                    const url = answers.handle.toLowerCase();
-                    return `http://${ url }.test/`;
-                },
-            },
-            {
-                type: 'confirm',
-                name: 'setupDb',
-                message: 'Set Up Database?',
-                default: (answers) => {
-                    return ['craft3'].includes(answers.projectType);
-                },
-                when: (answers) => {
-                    return answers.installEnd === 'back';
-                },
-            },
-            {
-                type: 'input',
-                name: 'dbHost',
-                message: 'Database Host',
-                default: localConfig ? (localConfig.dbHost || '127.0.0.1') : '127.0.0.1',
-                when: (answers) => {
-                    return answers.installEnd === 'back' && answers.setupDb;
-                },
-            },
-            {
-                type: 'input',
-                name: 'dbUser',
-                message: 'Database Username',
-                default: localConfig ? (localConfig.dbUser || 'root') : 'root',
-                when: (answers) => {
-                    return answers.installEnd === 'back' && answers.setupDb;
-                },
-            },
-            {
-                type: 'password',
-                name: 'dbPass',
-                message: 'Database Password',
-                default: localConfig ? (localConfig.dbPass || '') : '',
-                when: (answers) => {
-                    return answers.installEnd === 'back' && answers.setupDb;
-                },
-            },
-            {
-                type: 'input',
-                name: 'dbPort',
-                message: 'Database Port',
-                default: localConfig ? (localConfig.dbPort || '') : '',
-                when: (answers) => {
-                    return answers.installEnd === 'back' && answers.setupDb;
-                },
-            },
-            {
-                type: 'input',
-                name: 'dbPrefix',
-                message: 'Database Prefix',
-                default: (answers) => {
-                    if (['craft3'].includes(answers.projectType)) {
-                        return 'craft_';
-                    }
-                    return null;
-                },
-                when: (answers) => {
-                    return answers.installEnd === 'back' && answers.setupDb;
                 },
             },
             {
@@ -318,19 +256,6 @@ async function run() {
                 }
             },
             {
-                type: 'list',
-                name: 'npmInstaller',
-                message: 'npm installer',
-                default: localConfig ? (localConfig.npmInstaller || 'npm') : 'npm',
-                choices: [
-                    { name: 'npm', value: 'npm' },
-                    { name: 'Yarn', value: 'yarn' },
-                ],
-                when: (answers) => {
-                    return !localConfig.npmInstaller && answers.installEnd === 'front';
-                },
-            },
-            {
                 type: 'confirm',
                 name: 'saveConfig',
                 message: 'Save these options to a config file (in your home folder)?',
@@ -351,40 +276,50 @@ async function run() {
             if (answers.handle) {
                 handle = ejsVars.handle = answers.handle || '';
             }
-            if (answers.npmInstaller) {
-                npmInstaller = answers.npmInstaller;
-            }
 
             // Assign install directories
-            let installDirectories = [];
+            const installDirectories = [];
             let installEjs = [];
             let installMv = [];
 
-            if (answers.projectType) {
-                switch (answers.projectType) {
+            // If .ddev doesn’t exist, assume it’s a fresh install and include .ddev files
+            if (!ddevInstalled) {
+                installDirectories.push('_root');
+            }
+
+            if (answers.backEndPlatform) {
+                switch (answers.backEndPlatform) {
                     case 'craft3':
-                        installDirectories = ['craft3'];
+                        installDirectories.push('craft3');
                         break;
+                }
+            }
+            if (answers.frontEndFramework) {
+                switch (answers.frontEndFramework) {
                     case 'html':
-                        installDirectories = ['html'];
+                        installDirectories.push('html');
                         break;
                     case 'vue3-marketo':
                         ejsVars.appEnvPrefix = 'VUE_APP_';
-                        installDirectories = ['vue3', 'vue3-marketo'];
+                        installDirectories.push('vue3', 'vue3-marketo');
                         break;
                     case 'nuxt2':
                         ejsVars.appEnvPrefix = '';
-                        installDirectories = ['nuxt2'];
+                        installDirectories.push('nuxt2');
                         break;
                     case 'vue3':
                         ejsVars.appEnvPrefix = 'VITE_';
-                        installDirectories = ['_front-end', 'vue3'];
+                        installDirectories.push('_front-end', 'vue3');
                         // installMv = [
                         //     { pattern: `${ scaffoldingDirectory }/_front-end/mv/.prettierrc`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },
                         //     { pattern: `${ scaffoldingDirectory }/vue3/mv/**/*`, src: `${ scaffoldingDirectory }/vue3/mv/`, dist: `${projectDirectory}/` },
                         // ];
                         break;
                 }
+            }
+
+            if (answers.installEnd === 'back_front') {
+                installDirectories.push('_back-end_front-end');
             }
 
             if (answers.saveConfig) {
@@ -438,6 +373,34 @@ async function run() {
                   });
                 let installDir2Complete = await installDir2;
             }
+            if (installDirectories[3]) {
+                const installDir3 = g.asyncFunction(
+                  `Installing directory: ${installDirectories[3]}`, `Directory: ${installDirectories[3]} installed`, (resolve) => {
+                      installDirectory(installDirectories[3], resolve);
+                  });
+                let installDir3Complete = await installDir3;
+            }
+            if (installDirectories[4]) {
+                const installDir4 = g.asyncFunction(
+                  `Installing directory: ${installDirectories[4]}`, `Directory: ${installDirectories[4]} installed`, (resolve) => {
+                      installDirectory(installDirectories[4], resolve);
+                  });
+                let installDir4Complete = await installDir4;
+            }
+            if (installDirectories[5]) {
+                const installDir5 = g.asyncFunction(
+                  `Installing directory: ${installDirectories[5]}`, `Directory: ${installDirectories[5]} installed`, (resolve) => {
+                      installDirectory(installDirectories[5], resolve);
+                  });
+                let installDir5Complete = await installDir5;
+            }
+            if (installDirectories[6]) {
+                const installDir6 = g.asyncFunction(
+                  `Installing directory: ${installDirectories[6]}`, `Directory: ${installDirectories[6]} installed`, (resolve) => {
+                      installDirectory(installDirectories[6], resolve);
+                  });
+                let installDir6Complete = await installDir6;
+            }
 
 
             // Change working directory to project folder
@@ -451,76 +414,66 @@ async function run() {
             }
 
 
-            g.log('verbose', `Updating package.json file`, verbose);
-            const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
-            const pkgWithDependenciesAtTheEnd = _.merge(pkgWithoutDependencies, {
-                dependencies: pkg.dependencies,
-                devDependencies: pkg.devDependencies,
-            });
-            fs.outputFileSync(`${ process.cwd() }/package.json`, JSON.stringify(pkgWithDependenciesAtTheEnd, null, 2));
-            g.log('verbose', `package.json file updated:`, verbose);
-            g.log('dump', pkg, verbose);
-
-            const removeGitkeep = g.asyncFunction(
-                `Removing Default .gitkeep Files`, `Default .gitkeep Files Removed`, (resolve) => {
-                    g.globRemove(`${ process.cwd() }/_source/**/.gitkeep`, resolve, verbose);
+            if (answers.frontEndFramework) {
+                g.log('verbose', `Updating package.json file`, verbose);
+                const pkgWithoutDependencies = _.omit(pkg, ['dependencies', 'devDependencies']);
+                const pkgWithDependenciesAtTheEnd = _.merge(pkgWithoutDependencies, {
+                    dependencies: pkg.dependencies,
+                    devDependencies: pkg.devDependencies,
                 });
-            let removeGitkeepComplete = await removeGitkeep;
+                fs.outputFileSync(`${ process.cwd() }/front-end/package.json`, JSON.stringify(pkgWithDependenciesAtTheEnd, null, 2));
+                g.log('verbose', `package.json file updated:`, verbose);
+                g.log('dump', pkg, verbose);
 
-            if (fs.existsSync(`${ process.cwd() }/INSTALL.env`)) {
-                fs.moveSync(`${ process.cwd() }/INSTALL.env`, `${ process.cwd() }/.env`);
+                const removeGitkeep = g.asyncFunction(
+                    `Removing Default .gitkeep Files`, `Default .gitkeep Files Removed`, (resolve) => {
+                        g.globRemove(`${ process.cwd() }/front-end/_source/**/.gitkeep`, resolve, verbose);
+                    });
+                let removeGitkeepComplete = await removeGitkeep;
             }
+            if (answers.backEndPlatform) {
+                g.log('title', 'Running project specific install scripts', verbose);
+                if (['craft3'].includes(answers.backEndPlatform)) {
+                    g.verboseExec(`mv ./craft ./craft`, verbose);
+                    g.log('verbose', `Craft files moved`, verbose);
 
-            g.log('title', 'Running project specific install scripts', verbose);
-            if (['craft3'].includes(answers.projectType)) {
-                g.verboseExec(`mv ./craft ./craft`, verbose);
-                g.log('verbose', `Craft files moved`, verbose);
+                    g.log('title', 'Setting Up Craft Scripts');
+                    g.verboseExec(`mv scripts/craft3-example.env.sh scripts/.env.sh`, verbose);
+                    g.log('verbose', `.env.sh created from example`, verbose);
 
-                g.log('title', 'Setting Up Craft Scripts');
-                g.verboseExec(`mv scripts/craft3-example.env.sh scripts/.env.sh`, verbose);
-                g.log('verbose', `.env.sh created from example`, verbose);
+                    g.log('title', 'Running Composer Install');
+                    g.verboseExec(`composer install --ignore-platform-reqs`, verbose);
+                    g.log('verbose', `Composer updated`, verbose);
 
-                g.log('title', 'Running Composer Install');
-                g.verboseExec(`composer install --ignore-platform-reqs`, verbose);
-                g.log('verbose', `Composer updated`, verbose);
+                    g.log('title', 'Installing Craft');
+                    g.verboseExec(`./craft install --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --siteName="${ answers.cmsSiteName }" --siteUrl="$DEFAULT_SITE_URL" --language="en"`, verbose);
+                    g.log('verbose', `Craft 3 installed`, verbose);
 
-                g.log('title', 'Installing Craft');
-                g.verboseExec(`./craft install --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --siteName="${ answers.cmsSiteName }" --siteUrl="$DEFAULT_SITE_URL" --language="en"`, verbose);
-                g.log('verbose', `Craft 3 installed`, verbose);
-
-                g.log('title', 'Applying Project Config Settings');
-                if (fs.existsSync(`config/default.project.yaml`)) {
-                    if (fs.existsSync(`config/project.yaml`)) {
-                        g.verboseExec(`rm config/project.yaml`, verbose);
-                        g.log('verbose', `Deleted project config generated from install`, verbose);
+                    g.log('title', 'Applying Project Config Settings');
+                    if (fs.existsSync(`config/default.project.yaml`)) {
+                        if (fs.existsSync(`config/project.yaml`)) {
+                            g.verboseExec(`rm config/project.yaml`, verbose);
+                            g.log('verbose', `Deleted project config generated from install`, verbose);
+                        }
+                        g.verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
+                        g.log('verbose', `Renamed default project config to project.yaml`, verbose);
                     }
-                    g.verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
-                    g.log('verbose', `Renamed default project config to project.yaml`, verbose);
+                    try {
+                        g.verboseExec(`./craft project-config/sync`, verbose);
+                        g.log('verbose', `Project Config synced`, verbose);
+                    } catch {
+                        g.verboseExec(`./craft project-config/sync`, verbose); // Running again to fix minify issue
+                        g.log('verbose', `Project Config synced`, verbose);
+                    }
+                    g.verboseExec(`./craft update all --backup`, verbose);
+                    g.log('verbose', `Craft and plugins updated`, verbose);
                 }
-                try {
-                    g.verboseExec(`./craft project-config/sync`, verbose);
-                    g.log('verbose', `Project Config synced`, verbose);
-                } catch {
-                    g.verboseExec(`./craft project-config/sync`, verbose); // Running again to fix minify issue
-                    g.log('verbose', `Project Config synced`, verbose);
-                }
-                g.verboseExec(`./craft update all --backup`, verbose);
-                g.log('verbose', `Craft and plugins updated`, verbose);
             }
 
             if (answers.installEnd === 'front') {
-                g.log('title', 'Updating NPM packages', verbose);
-                g.verboseExec(npmInstaller + ` install`, verbose);
-                g.log('verbose', `NPM Packages updated`, verbose);
-
                 // Set up project basics
-                g.log('verbose', `Running setup script`, verbose);
-                g.verboseExec(`node ${projectDirectory}/_wb/setup.mjs --component-defaults${verbose ? ' --verbose' : ''}`, true);
-            } else if (answers.installEnd === 'back') {
-                g.verboseExec(`rm -f package.json`, verbose);
-                g.verboseExec(`rm -f package-lock.json`, verbose);
-                g.verboseExec(`rm -rf node_modules`, verbose);
-                g.log('verbose', `Removed node_modules and package.json`, verbose);
+                // g.log('verbose', `Running setup script`, verbose);
+                // g.verboseExec(`ddev exec node ${projectDirectory}/_wb/setup.mjs --component-defaults${verbose ? ' --verbose' : ''}`, true);
             }
 
             g.log('title', `Cleaning Up`);
@@ -551,7 +504,11 @@ async function run() {
 
             g.log('app', `Workbench Project Installed`);
             g.log('app', `Run: cd ${ handle }`);
-            g.log('app', `     npm run dev`);
+            g.log('app', `     ddev start`);
+            if (answers.frontEndFramework) {
+                g.log('app', `     ddev npm run setup`);
+                g.log('app', `     ddev npm run dev`);
+            }
 
             g.log('message', chalk.dim(`\n${_bye()}\n`));
         });
@@ -637,30 +594,6 @@ async function saveLocalConfig(config, callback) {
         },
         {
             type: 'input',
-            name: 'dbHost',
-            message: 'Default Database Host',
-            when: !config.dbHost,
-        },
-        {
-            type: 'input',
-            name: 'dbPort',
-            message: 'Default Database Port',
-            when: !config.dbPort,
-        },
-        {
-            type: 'input',
-            name: 'dbUser',
-            message: 'Default Database User',
-            when: !config.dbUser,
-        },
-        {
-            type: 'input',
-            name: 'dbPass',
-            message: 'Default Database Password',
-            when: !config.dbPass,
-        },
-        {
-            type: 'input',
             name: 'gitUser',
             message: 'Default Git User',
             when: !config.gitUser,
@@ -678,17 +611,6 @@ async function saveLocalConfig(config, callback) {
             default: true,
             when: !config.gitPrivate,
         },
-        {
-            type: 'list',
-            name: 'npmInstaller',
-            message: 'npm installer',
-            default: 'npm',
-            choices: [
-                { name: 'npm', value: 'npm' },
-                { name: 'Yarn', value: 'yarn' },
-            ],
-            when: !config.npmInstaller,
-        },
     ];
 
     inquirer.prompt(questions).then(function (answers) {
@@ -700,14 +622,9 @@ async function saveLocalConfig(config, callback) {
             'cmsAdminUsername',
             'cmsAdminPassword',
             'cpTrigger',
-            'dbHost',
-            'dbPass',
-            'dbPort',
-            'dbUser',
             'gitPrivate',
             'gitOrg',
             'gitUser',
-            'npmInstaller',
         ];
         configSettings.forEach((key) => {
             if (typeof answers[key] !== 'undefined') {
@@ -726,7 +643,7 @@ async function saveLocalConfig(config, callback) {
 
 function _bye() {
     const lines = [
-        `Coming soon`,
+        `We’re all done here. Byyyye!`,
     ]
     return lines[Math.floor(Math.random()*lines.length)];
 }

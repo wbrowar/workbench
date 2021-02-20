@@ -29,7 +29,7 @@ GLOBAL_DB_DRIVER="mysql"
 # -- LOCAL settings --
 
 # Local path constants; paths should always have a trailing /
-LOCAL_ROOT_PATH="<%- projectDir %>/"
+LOCAL_ROOT_PATH="/var/www/html/"
 LOCAL_ASSETS_PATH=${LOCAL_ROOT_PATH}"web/u/"
 
 # Local user & group that should own the Craft CMS install

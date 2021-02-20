@@ -1,0 +1,37 @@
+# OS AND CODE EDITORS
+.DS_Store
+.idea
+.vscode
+
+# CRAFT DEFAULTS
+.env
+vendor
+
+# BUILD FILES
+.cache
+_build/*
+node_modules/*
+Thumbs.db
+yarn.lock
+storage/backups
+storage/logs
+storage/runtime
+
+# DDEV
+.ddev/*
+!.ddev/scripts
+!.ddev/config.yaml
+!.ddev/config.*.yaml
+
+# ENVIRONMENT CONFIG FILES
+.env.php
+.env
+scripts/.env.sh
+
+# USER UPLOADS
+web/u/*
+web/uploads/*
+web/imager/*
+web/resized/*
+web/cpresources/*
+backups/*
