@@ -20,6 +20,9 @@ async function run() {
   // HELLO
   g.log('app', `Setting Up Site`);
 
+  g.log('verbose', `Settings:`, verbose);
+  g.log('dump', settings, verbose);
+
   const questions = [
     {
       type: 'confirm',

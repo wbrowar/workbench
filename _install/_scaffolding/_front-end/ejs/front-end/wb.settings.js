@@ -29,7 +29,7 @@ const name = '<%- install.handle %>';
 /*
  * Project type chosen when installing this project.
  */
-const projectType = '<%- install.projectType %>';
+const projectType = '<%- install.frontEndFramework %>';
 
 /*
  * All settings combined.

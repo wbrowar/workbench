@@ -9,7 +9,7 @@ const path = require('path');
 
 // Import global functions
 let g;
-fs.copySync(`../_scaffolding/_front-end/mv/front-end/_wb/functions.mjs`, `./functions.mjs`);
+fs.copySync(`./_scaffolding/_front-end/mv/front-end/_wb/functions.mjs`, `./functions.mjs`);
 
 // Load package file
 let pkg = require(`${ process.cwd() }/package.json`);
@@ -23,9 +23,6 @@ let scaffoldingDirectory;
 let verbose;
 
 // Set other variables
-const ddevInstalled = fs.existsSync(`${projectDirectory}/.ddev`);
-const backEndInstalled = fs.existsSync(`${projectDirectory}/back-end/`);
-const frontEndInstalled = fs.existsSync(`${projectDirectory}/front-end/`);
 let enableInstall = false;
 let localConfig   = false;
 
@@ -93,9 +90,9 @@ async function run() {
                 name: 'installEnd',
                 message: 'What kind of project are you building?',
                 choices: [
-                    { name: 'Front-end', value: 'front' },
-                    { name: 'Back-end', value: 'back' },
-                    { name: 'Both', value: 'back_front' },
+                    { name: 'Back-end + Front-end (Headless, Jamstack, etc...)', value: 'back_front' },
+                    { name: 'Front-end Only', value: 'front' },
+                    { name: 'Back-end Only', value: 'back' },
                 ],
             },
             {
@@ -278,14 +275,9 @@ async function run() {
             }
 
             // Assign install directories
-            const installDirectories = [];
+            const installDirectories = ['_root'];
             let installEjs = [];
             let installMv = [];
-
-            // If .ddev doesn’t exist, assume it’s a fresh install and include .ddev files
-            if (!ddevInstalled) {
-                installDirectories.push('_root');
-            }
 
             if (answers.backEndPlatform) {
                 switch (answers.backEndPlatform) {
@@ -476,6 +468,12 @@ async function run() {
                 // g.verboseExec(`ddev exec node ${projectDirectory}/_wb/setup.mjs --component-defaults${verbose ? ' --verbose' : ''}`, true);
             }
 
+            // Start DDEV
+            process.chdir(projectDirectory);
+            g.log('title', `Starting DDEV for the first time`);
+            g.verboseExec(`ddev start`, verbose);
+            g.log('verbose', `DDEV started`, verbose);
+
             g.log('title', `Cleaning Up`);
             g.verboseExec(`rm -rf ${ process.cwd() }/SETUP`, verbose);
             g.log('verbose', `Install directory deleted`, verbose);
@@ -503,11 +501,20 @@ async function run() {
             }
 
             g.log('app', `Workbench Project Installed`);
-            g.log('app', `Run: cd ${ handle }`);
-            g.log('app', `     ddev start`);
             if (answers.frontEndFramework) {
-                g.log('app', `     ddev npm run setup`);
-                g.log('app', `     ddev npm run dev`);
+                process.chdir(projectDirectory);
+
+                g.log('title', `Running Setup`);
+                g.verboseExec(`ddev npm run setup -- --component-defaults`, verbose);
+                g.log('verbose', `Setup script ran`, verbose);
+
+                g.log('title', `Running Initial Build`);
+                g.verboseExec(`ddev npm run dev`, verbose);
+                g.log('verbose', `Initial build ran`, verbose);
+
+                // g.log('app', `Run: cd ${ handle }`);
+                // g.log('app', `     ddev npm run setup`);
+                // g.log('app', `     ddev npm run dev`);
             }
 
             g.log('message', chalk.dim(`\n${_bye()}\n`));

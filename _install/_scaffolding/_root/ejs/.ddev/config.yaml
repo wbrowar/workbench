@@ -1,17 +1,19 @@
 name: <%- handle %>
 type: php
+docroot: <%- install.installEnd === 'back' ? 'back-end/web' : 'front-end/dist' %>
 php_version: "7.4"
 webserver_type: nginx-fpm
 router_http_port: "80"
 router_https_port: "443"
 xdebug_enabled: false
-additional_hostnames: []
+additional_hostnames: [<%- install.installEnd === 'back' ? `${ handle }-api` : '' %>]
 additional_fqdns:
 - <%- handle %>.test
 provider: default
 hooks:
   post-import-db:
-  - exec: time .ddev/scripts/migrate.sh
+  - exec: chmod +x .ddev/scripts/migrate.sh && time .ddev/scripts/migrate.sh
   post-start:
-  - exec: time .ddev/scripts/setup.sh
+  - exec: chmod +x .ddev/scripts/setup.sh && time .ddev/scripts/setup.sh
 use_dns_when_possible: false
+<%- install.installEnd === 'front' ? `omit_containers: [db, dba]` : '' %>

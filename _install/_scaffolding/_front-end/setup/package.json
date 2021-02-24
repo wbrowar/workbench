@@ -2,7 +2,8 @@
   "scripts": {
     "component": "node ./_wb/component.mjs",
     "favicon": "node ./_wb/favicon.mjs",
-    "font": "node ./_wb/font.mjs"
+    "font": "node ./_wb/font.mjs",
+    "setup": "node ./_wb/setup.mjs"
   },
   "name": "example-project",
   "private": true,
