@@ -7,7 +7,7 @@
     "url": "https://github.com/wbrowar/Workbench.git"
   },
   "version": "6.0.0",
-  "requiredInstallerVersion": "17",
+  "requiredInstallerVersion": "18",
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "ejs": "^3.1.2",
