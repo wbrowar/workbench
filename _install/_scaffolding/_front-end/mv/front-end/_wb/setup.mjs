@@ -112,7 +112,8 @@ async function run() {
             ? `--list=${projectTypeDefaultComponents[settings.projectType].join(',')}`
             : ''
         }${verbose ? ' --verbose' : ''}`,
-        true
+        verbose,
+        true,
       );
 
       g.log('title', `Components Moved`, verbose);

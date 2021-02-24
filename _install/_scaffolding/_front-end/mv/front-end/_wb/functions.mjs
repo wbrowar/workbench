@@ -213,9 +213,11 @@ export function snake(text) {
 }
 
 // Determine if a command should be displayed in terminal when running shell commands
-export function verboseExec(command, verbose = false) {
+export function verboseExec(command, verbose = false, showOutput = false) {
   if (verbose) {
     log('running', command);
+    exec.spawnSync(command, [], { stdio: 'inherit', shell: true });
+  } else if (showOutput) {
     exec.spawnSync(command, [], { stdio: 'inherit', shell: true });
   } else {
     exec.execSync(`${command} > /dev/null 2>&1`);

@@ -471,7 +471,7 @@ async function run() {
             // Start DDEV
             process.chdir(projectDirectory);
             g.log('title', `Starting DDEV for the first time`);
-            g.verboseExec(`ddev start`, verbose);
+            g.verboseExec(`ddev start`, verbose, true);
             g.log('verbose', `DDEV started`, verbose);
 
             g.log('title', `Cleaning Up`);
@@ -505,11 +505,11 @@ async function run() {
                 process.chdir(projectDirectory);
 
                 g.log('title', `Running Setup`);
-                g.verboseExec(`ddev npm run setup -- --component-defaults`, verbose);
+                g.verboseExec(`ddev npm run setup -- --component-defaults`, verbose, true);
                 g.log('verbose', `Setup script ran`, verbose);
 
                 g.log('title', `Running Initial Build`);
-                g.verboseExec(`ddev npm run dev`, verbose);
+                g.verboseExec(`ddev npm run dev`, verbose, true);
                 g.log('verbose', `Initial build ran`, verbose);
 
                 // g.log('app', `Run: cd ${ handle }`);
