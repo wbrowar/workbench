@@ -137,7 +137,7 @@ async function run() {
                 message: 'CMS Admin Email Address',
                 default: localConfig ? (localConfig.cmsAdminEmail || '') : '',
                 when: (answers) => {
-                    return ['craft3'].includes(answers.projectType);
+                    return ['craft3'].includes(answers.backEndPlatform);
                 },
                 validate: (answer) => {
                     return answer !== '';
@@ -149,7 +149,7 @@ async function run() {
                 message: 'CMS Admin Username',
                 default: localConfig ? (localConfig.cmsAdminUsername || 'admin') : 'admin',
                 when: (answers) => {
-                    return ['craft3'].includes(answers.projectType);
+                    return ['craft3'].includes(answers.backEndPlatform);
                 },
                 validate: (answer) => {
                     return answer !== '';
@@ -161,7 +161,7 @@ async function run() {
                 message: 'CMS Admin Password',
                 default: localConfig ? (localConfig.cmsAdminPassword || '') : '',
                 when: (answers) => {
-                    return ['craft3'].includes(answers.projectType);
+                    return ['craft3'].includes(answers.backEndPlatform);
                 },
                 validate: (answer) => {
                     return answer !== '';
@@ -173,7 +173,7 @@ async function run() {
                 message: 'Craft Site Name',
                 default: 'My Site',
                 when: (answers) => {
-                    return ['craft3'].includes(answers.projectType);
+                    return ['craft3'].includes(answers.backEndPlatform);
                 },
                 validate: (answer) => {
                     return answer !== '';
@@ -185,11 +185,23 @@ async function run() {
                 message: 'CP Trigger (path to Craft CP)',
                 default: localConfig ? (localConfig.cpTrigger || 'admin') : 'admin',
                 when: (answers) => {
-                    return ['craft3'].includes(answers.projectType);
+                    return ['craft3'].includes(answers.backEndPlatform);
                 },
                 validate: (answer) => {
                     return answer !== '';
                 },
+            },
+            {
+                type: 'checkbox',
+                name: 'craftSections',
+                message: 'Craft Sections (creates fields and sections for each)',
+                when: (answers) => {
+                    return ['craft3'].includes(answers.backEndPlatform);
+                },
+                choices: [
+                    { checked: true, name: 'Homepage', value: 'homepage' },
+                    { name: 'Basic Page', value: 'basic_page' },
+                ],
             },
             {
                 type: 'confirm',
@@ -275,14 +287,14 @@ async function run() {
             }
 
             // Assign install directories
-            const installDirectories = ['_root'];
+            const installDirectories = ['_all'];
             let installEjs = [];
             let installMv = [];
 
             if (answers.backEndPlatform) {
                 switch (answers.backEndPlatform) {
                     case 'craft3':
-                        installDirectories.push('craft3');
+                        installDirectories.push('_back-end', 'craft3');
                         break;
                 }
             }
@@ -293,15 +305,15 @@ async function run() {
                         break;
                     case 'vue3-marketo':
                         ejsVars.appEnvPrefix = 'VUE_APP_';
-                        installDirectories.push('vue3', 'vue3-marketo');
+                        installDirectories.push('_front-end', '_vue3', 'vue3', 'vue3-marketo');
                         break;
                     case 'nuxt2':
                         ejsVars.appEnvPrefix = '';
-                        installDirectories.push('nuxt2');
+                        installDirectories.push('_front-end', '_vue2', 'nuxt2');
                         break;
                     case 'vue3':
                         ejsVars.appEnvPrefix = 'VITE_';
-                        installDirectories.push('_front-end', 'vue3');
+                        installDirectories.push('_front-end', '_vue3', 'vue3');
                         // installMv = [
                         //     { pattern: `${ scaffoldingDirectory }/_front-end/mv/.prettierrc`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },
                         //     { pattern: `${ scaffoldingDirectory }/vue3/mv/**/*`, src: `${ scaffoldingDirectory }/vue3/mv/`, dist: `${projectDirectory}/` },
@@ -320,12 +332,6 @@ async function run() {
                       saveLocalConfig(answers, resolve);
                   });
                 let saveConfigComplete = await saveConfig;
-            }
-
-            if (answers.setupDb) {
-                g.log('title', 'Creating Database');
-                g.verboseExec(`mysql --user="${ answers.dbUser }" --password="${ answers.dbPass }" -e 'CREATE DATABASE IF NOT EXISTS ${ '`' + handle + '`' } CHARACTER SET utf8 COLLATE utf8_general_ci'`, verbose);
-                g.log('verbose', `Created mysql database: '${ handle }'`, verbose);
             }
 
             g.log('title', 'Updating package.json values with dynamic data', verbose);
@@ -423,50 +429,6 @@ async function run() {
                     });
                 let removeGitkeepComplete = await removeGitkeep;
             }
-            if (answers.backEndPlatform) {
-                g.log('title', 'Running project specific install scripts', verbose);
-                if (['craft3'].includes(answers.backEndPlatform)) {
-                    g.verboseExec(`mv ./craft ./craft`, verbose);
-                    g.log('verbose', `Craft files moved`, verbose);
-
-                    g.log('title', 'Setting Up Craft Scripts');
-                    g.verboseExec(`mv scripts/craft3-example.env.sh scripts/.env.sh`, verbose);
-                    g.log('verbose', `.env.sh created from example`, verbose);
-
-                    g.log('title', 'Running Composer Install');
-                    g.verboseExec(`composer install --ignore-platform-reqs`, verbose);
-                    g.log('verbose', `Composer updated`, verbose);
-
-                    g.log('title', 'Installing Craft');
-                    g.verboseExec(`./craft install --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --siteName="${ answers.cmsSiteName }" --siteUrl="$DEFAULT_SITE_URL" --language="en"`, verbose);
-                    g.log('verbose', `Craft 3 installed`, verbose);
-
-                    g.log('title', 'Applying Project Config Settings');
-                    if (fs.existsSync(`config/default.project.yaml`)) {
-                        if (fs.existsSync(`config/project.yaml`)) {
-                            g.verboseExec(`rm config/project.yaml`, verbose);
-                            g.log('verbose', `Deleted project config generated from install`, verbose);
-                        }
-                        g.verboseExec(`mv config/default.project.yaml config/project.yaml`, verbose);
-                        g.log('verbose', `Renamed default project config to project.yaml`, verbose);
-                    }
-                    try {
-                        g.verboseExec(`./craft project-config/sync`, verbose);
-                        g.log('verbose', `Project Config synced`, verbose);
-                    } catch {
-                        g.verboseExec(`./craft project-config/sync`, verbose); // Running again to fix minify issue
-                        g.log('verbose', `Project Config synced`, verbose);
-                    }
-                    g.verboseExec(`./craft update all --backup`, verbose);
-                    g.log('verbose', `Craft and plugins updated`, verbose);
-                }
-            }
-
-            if (answers.installEnd === 'front') {
-                // Set up project basics
-                // g.log('verbose', `Running setup script`, verbose);
-                // g.verboseExec(`ddev exec node ${projectDirectory}/_wb/setup.mjs --component-defaults${verbose ? ' --verbose' : ''}`, true);
-            }
 
             // Start DDEV
             process.chdir(projectDirectory);
@@ -478,7 +440,35 @@ async function run() {
             g.verboseExec(`rm -rf ${ process.cwd() }/SETUP`, verbose);
             g.log('verbose', `Install directory deleted`, verbose);
 
+            if (answers.backEndPlatform) {
+                process.chdir(`${ projectDirectory }/back-end`);
+                g.log('title', 'Running project specific install scripts', verbose);
+                if (['craft3'].includes(answers.backEndPlatform)) {
+                    g.verboseExec(`mv ./craft ./craft`, verbose);
+                    g.log('verbose', `Craft file moved`, verbose);
+
+                    g.log('title', 'Installing Craft');
+
+                    g.verboseExec(`ddev craft setup/app-id`, verbose);
+                    g.log('verbose', `App ID set`, verbose);
+
+                    g.verboseExec(`ddev craft setup/security-key`, verbose);
+                    g.log('verbose', `Security key set`, verbose);
+
+                    g.verboseExec(`ddev craft install/craft --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --site-name="${ answers.cmsSiteName }" --site-url="$DEFAULT_SITE_URL" --language="en-US"`, verbose);
+                    g.log('verbose', `Craft 3 installed`, verbose);
+
+                    g.verboseExec(`ddev craft project-config/apply`, verbose);
+                    g.log('verbose', `Project Config applied`, verbose);
+
+                    g.log('title', 'Updating Craft and plugins to the latest version');
+                    g.verboseExec(`ddev craft update all --backup`, verbose);
+                    g.log('verbose', `Craft and plugins updated`, verbose);
+                }
+            }
+
             if (answers.setupRepo) {
+                process.chdir(projectDirectory);
                 g.log('title', 'Setting up GitHub repo');
                 const gitHubEndPoint = answers.gitOrg || false ? `https://api.github.com/orgs/${answers.gitOrg}/repos` : `https://api.github.com/user/repos`;
 
@@ -516,6 +506,11 @@ async function run() {
                 // g.log('app', `     ddev npm run setup`);
                 // g.log('app', `     ddev npm run dev`);
             }
+            // if (answers.backEndPlatform) {
+            //     g.log('app', `Run: cd ${ handle }`);
+            //     g.log('app', `     ddev npm run setup`);
+            //     g.log('app', `     ddev npm run dev`);
+            // }
 
             g.log('message', chalk.dim(`\n${_bye()}\n`));
         });

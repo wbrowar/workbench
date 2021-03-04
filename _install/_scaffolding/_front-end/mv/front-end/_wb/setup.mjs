@@ -88,7 +88,7 @@ async function run() {
      */
     if (setUpComponents) {
       g.log('title', `Moving Components`, verbose);
-      const vue3DefaultComponents = [
+      const vueDefaultComponents = [
         'accessibility',
         'button',
         'color_scheme_toggle',
@@ -102,8 +102,9 @@ async function run() {
         'wrapper',
       ];
       const projectTypeDefaultComponents = {
-        vue3: vue3DefaultComponents,
-        'vue3-marketo': ['marketo_form', ...vue3DefaultComponents],
+        nuxt2: vueDefaultComponents,
+        vue3: vueDefaultComponents,
+        'vue3-marketo': ['marketo_form', ...vueDefaultComponents],
       };
 
       g.verboseExec(
