@@ -20,6 +20,10 @@ storage/runtime
 # DDEV
 .ddev/*
 !.ddev/scripts
+!.ddev/commands/web/composer
+!.ddev/commands/web/craft
+!.ddev/commands/web/node
+!.ddev/commands/web/npm
 !.ddev/config.yaml
 !.ddev/config.*.yaml
 

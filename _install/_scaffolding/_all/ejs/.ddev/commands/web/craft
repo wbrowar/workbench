@@ -1,0 +1,11 @@
+#!/bin/bash
+
+## Description: Run Craft console command at /var/www/html/back-end/
+## Usage: craft [command]
+## Example: "ddev craft migrate/all"
+
+echo "Changing working directory to /var/www/html/back-end/"
+cd /var/www/html/back-end/ || exit
+
+echo "Running command"
+./craft $@
