@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { log } from 'JS/global.js';
+import { log } from 'JS/global';
 import Button from 'Components/button/Button.vue';
 import CodeExample from 'WB/docs/vue/CodeExample.vue';
 import EventsTable from 'WB/docs/vue/EventsTable.vue';

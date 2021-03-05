@@ -52,10 +52,8 @@ export default {
       config.resolve.alias.Templates = path.resolve(`${paths.wb.src}templates/`);
     },
   },
-  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/style-resources'],
-  components: [
-    paths.components.src
-  ],
+  buildModules: ['@nuxtjs/eslint-module', ['@nuxt/typescript-build', { typeCheck: false }], '@nuxtjs/style-resources'],
+  components: [paths.components.src],
   css: [`${path.resolve(paths.css.src)}/app.css`],
   // generate: {
   //   fallback: true,
@@ -83,6 +81,9 @@ export default {
   //       });
   //   },
   // },
+  dir: {
+    static: 'public',
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -99,7 +100,6 @@ export default {
   loading: { color: '#fff' },
   modules: [
     // '@nuxt/http',
-    'nuxt-purgecss',
     [
       'nuxt-mq',
       {
@@ -132,11 +132,7 @@ export default {
       process.env.NODE_ENV === 'production' && process.env.DEV_MODE !== 'true' && process.env.ENABLE_DOCS !== 'true'
         ? process.env.POSTCSS_PURGECSS === 'true' || false
         : false,
-    paths: [
-      `_source/_components/**/*.vue`,
-      `pages/**/*.vue`,
-      `components/**/*.vue`,
-    ],
+    paths: [`_source/_components/**/*.vue`, `pages/**/*.vue`, `components/**/*.vue`],
     whitelist: ['body', 'html', 'img', 'a', 'nuxt-link', 'hidden'],
     whitelistPatterns: [/scheme/],
     whitelistPatternsChildren: [/^token/, /^pre/, /^code/],

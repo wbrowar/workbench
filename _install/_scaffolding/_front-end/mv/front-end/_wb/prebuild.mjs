@@ -2,9 +2,10 @@ import { default as ejs } from 'ejs';
 import { default as fs } from 'fs-extra';
 import { default as glob } from 'glob-all';
 import { default as paths } from '../wb.paths.js';
-import * as g from './functions.mjs';
 import { default as scraper } from '../wb.scraper.js';
+import { default as favicon } from '../wb.favicon.js';
 import { default as settings } from '../wb.settings.js';
+import * as g from './functions.mjs';
 
 // set constants
 const argv = g.parseArgv();
@@ -18,20 +19,25 @@ async function run() {
   const settingsToEsm = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
     _configToEsm(resolve, paths, settings, 'settings', verbose);
   });
-  let settingsToEsmComplete = await settingsToEsm;
+  const settingsToEsmComplete = await settingsToEsm;
+
+  const faviconSettingsToEsm = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
+    _configToEsm(resolve, paths, favicon, 'favicon', verbose);
+  });
+  const faviconSettingsToEsmComplete = await faviconSettingsToEsm;
 
   if (runCssIncludes) {
     const cssIncludes = g.asyncFunction(`Combining PostCSS Files`, `PostCSS Files Combined`, (resolve) => {
       _cssIncludes(resolve, paths, verbose);
     });
-    let cssIncludesComplete = await cssIncludes;
+    const cssIncludesComplete = await cssIncludes;
   }
 
   if (runScraper) {
     const execScraper = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
       _scraper(resolve, paths, scraper, verbose);
     });
-    let execScraperComplete = await execScraper;
+    const execScraperComplete = await execScraper;
   }
 }
 
@@ -41,10 +47,10 @@ async function run() {
  */
 function _configToEsm(callback, paths, config, outputFilename, verbose) {
   const options = {
-    config: config,
+    config,
   };
 
-  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function (err, str) {
+  ejs.renderFile(`${paths.wb.templates}_js/config.js`, options, {}, function(err, str) {
     if (err) {
       g.log('warn', err);
     }
@@ -62,7 +68,7 @@ function _configToEsm(callback, paths, config, outputFilename, verbose) {
  * @param callback
  */
 function _cssIncludes(callback, paths, verbose) {
-  glob(`${paths.components.src}**/*.css`, function (er, files) {
+  glob(`${paths.components.src}**/*.css`, function(er, files) {
     g.log('verbose', `Compontent CSS Files:`, verbose);
     g.log('dump', files, verbose);
     let data = `/* CSS from _source/_components/ */

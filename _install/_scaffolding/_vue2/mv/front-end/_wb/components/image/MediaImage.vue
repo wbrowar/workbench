@@ -1,21 +1,18 @@
 <template>
   <figure :is="background ? elementType : 'figure'" :class="classes">
     <picture class="c-image" :class="containerClasses">
-      <LazyLoad
+      <img
         :class="imageClasses"
         :key="index"
-        :alt="alt && lastSource(index) ? alt : false"
-        :after-load="{ src: lastSource(index) ? source.src || placeholder : false, srcset: source.srcset || false }"
-        :check-for-native-lazy-load="lazyLoad"
+        :alt="alt && lastSource(index) ? alt : null"
         :element-type="lastSource(index) ? 'img' : 'source'"
-        :enabled="lazyLoad"
-        :loading="loading"
-        :media="source.media || false"
-        :sizes="lastSource(index) ? source.sizes || '100vw' : false"
-        :type="source.type || false"
-        :src="lastSource(index) ? placeholder : null"
-        :width="source.width || false"
-        :height="source.height || false"
+        :media="source.media || null"
+        :sizes="source.sizes || null"
+        :type="source.type || null"
+        :src="source.src || null"
+        :srcset="source.srcset || null"
+        :width="source.width || null"
+        :height="source.height || null"
         v-for="(source, index) in filteredSources"
       />
     </picture>
@@ -24,14 +21,10 @@
 </template>
 
 <script>
-import wb from 'JS/automated/wb.js';
-import LazyLoad from 'Components/lazy_load/LazyLoad.vue';
+import settings from 'JS/automated/settings.js';
 
 export default {
   name: 'MediaImage',
-  components: {
-    LazyLoad,
-  },
   data() {
     return {
       lazyLoad: false,
@@ -63,7 +56,7 @@ export default {
       const classes = [];
 
       if (this.ignoreScheme) {
-        classes.push(`c-image-ignore-scheme`);
+        classes.push(`image-ignore-scheme`);
       }
 
       if (classes.length) {
@@ -90,7 +83,7 @@ export default {
       const sources = [];
 
       this.sources.forEach((source) => {
-        if ((wb.enableWebp && source.type === 'image/webp') || source.type !== 'image/webp') {
+        if ((settings.enableWebp && source.type === 'image/webp') || source.type !== 'image/webp') {
           sources.push(source);
         }
       });
@@ -124,9 +117,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .c-image {
-  &:not(.c-image-ignore-scheme) {
+  &:not(.image-ignore-scheme) {
     .scheme-dark & {
       img {
         filter: brightness(0.8) contrast(1.2);

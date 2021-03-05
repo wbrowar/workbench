@@ -10,14 +10,11 @@ module.exports = {
   extends: [
     '@nuxtjs',
     'prettier',
-    'prettier/vue',
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended'
   ],
   ignorePatterns: [
     '_wb/*.js',
-    '_wb/docs/**/*.js',
-    '_wb/docs/**/*.vue',
     '_source/_js/automated/**/*.js',
     '_source/_js/automated/**/*.vue',
   ],

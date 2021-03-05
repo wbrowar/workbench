@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <div
-      class="c-dev_bar flex flex-row flex-no-wrap justify-between w-full bg-dev-black bg-opacity-60 leading-none text-dev-white overflow-x-scroll scrolling-touch z-50"
+      class="c-dev-bar flex flex-row flex-no-wrap justify-between w-full bg-dev-black bg-opacity-60 leading-none text-dev-white overflow-x-scroll scrolling-touch z-50"
       :class="classes"
       v-if="isVisible"
     >
@@ -54,7 +54,7 @@
 <script>
 import { computed, defineComponent, reactive, toRefs } from 'vue';
 import { log } from 'JS/global';
-import wb from 'JS/automated/settings.js';
+import settings from 'JS/automated/settings.js';
 import Button from 'Components/button/Button.vue';
 
 export default defineComponent({
@@ -73,11 +73,10 @@ export default defineComponent({
   setup(props) {
     const state = reactive({
       dataToReset: 'none',
-      devMode: wb.devMode,
+      devMode: settings.devMode,
       isSticky: false,
       isVisible: true,
-      showDocsLink: wb.enableDocs,
-      showColorSchemeToggles: false,
+      showDocsLink: settings.enableDocs,
     });
 
     /*
@@ -134,7 +133,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    log('WB Config', wb);
+    log('WB Config', settings);
 
     this.isSticky = localStorage.getItem('devMode:sticky') ? localStorage.getItem('devMode:sticky') === 'true' : false;
   },
@@ -142,7 +141,7 @@ export default defineComponent({
 </script>
 
 <style>
-.c-dev_bar {
+.c-dev-bar {
   backdrop-filter: blur(0.9rem);
 }
 </style>

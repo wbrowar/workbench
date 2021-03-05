@@ -23,18 +23,13 @@ const mediaQueries = {
   ],
 };
 
-const postcssPlugins = [
-  atImport(),
-  simpleVars(),
-  nested(),
-  customMedia(mediaQueries),
-  tailwind(require('./tailwind.config.js')),
-  autoprefixer(),
-];
-
-if (process.env.NODE_ENV === 'production' && process.env.VUE_APP_POSTCSS_PURGECSS === 'true')
-  postcssPlugins.push(purgecss(require('./purgecss.config.js')));
-
 module.exports = {
-  plugins: postcssPlugins,
+  plugins: [
+    atImport(),
+    simpleVars(),
+    nested(),
+    customMedia(mediaQueries),
+    tailwind(require('./tailwind.config.js')),
+    autoprefixer(),
+  ],
 };

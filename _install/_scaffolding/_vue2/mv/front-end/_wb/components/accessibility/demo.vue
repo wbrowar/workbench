@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { log } from 'JS/global.js';
+import { log } from 'JS/global';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import CodeExample from 'WB/docs/vue/CodeExample.vue';
 

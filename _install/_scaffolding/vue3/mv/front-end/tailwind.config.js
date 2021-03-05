@@ -1,8 +1,7 @@
-const theme = require('./wb.theme.js');
-const settings = require('./wb.settings.js');
-
 const _ = require('lodash');
 const plugin = require('tailwindcss/plugin');
+const theme = require('./wb.theme.js');
+const settings = require('./wb.settings.js');
 
 // Add colors
 const colors = theme.colors;
@@ -49,7 +48,7 @@ if (settings.devMode || settings.enableDocs) {
 const plugins = [];
 const pluginFunctions = [
   // Modify a property after LazyAnimate has been activated on an element
-  function ({ addVariant, e }) {
+  function({ addVariant, e }) {
     addVariant('animated', ({ modifySelectors, separator }) => {
       modifySelectors(({ className }) => {
         return `.${e(`animated${separator}${className}`)}.animated`;
@@ -57,7 +56,7 @@ const pluginFunctions = [
     });
   },
   // A generic "current" class that can be used in components where you need to identify one item in a list of like elements
-  function ({ addVariant, e }) {
+  function({ addVariant, e }) {
     addVariant('current', ({ modifySelectors, separator }) => {
       modifySelectors(({ className }) => {
         return `.${e(`current${separator}${className}`)}.current`;

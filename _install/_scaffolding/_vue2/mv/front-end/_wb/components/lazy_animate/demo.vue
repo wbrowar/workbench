@@ -168,7 +168,7 @@ export default {
       {
         name: 'animation.type',
         type: 'String',
-        description: `Select an animation from 'animation.js' or enter 'css' to create a CSS animation.`,
+        description: `Select an animation from 'animation.ts' or enter 'css' to create a CSS animation.`,
       },
       {
         name: 'beforeAnimate',

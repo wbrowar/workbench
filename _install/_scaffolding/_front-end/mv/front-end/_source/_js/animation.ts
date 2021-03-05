@@ -2,7 +2,7 @@
 //  🖌 Global animations used around the website
 
 import gsap from 'gsap';
-import { log, warn } from './global.js';
+import { log, warn } from './global';
 
 export function animate(animation, el, options = {}) {
   const delay = options.delay !== undefined ? _randomFromRange(options.delay) : 0;

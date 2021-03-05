@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { log, warn, processIsClient } from 'JS/global.js';
+import { log, warn, processIsClient } from 'JS/global';
 import { merge } from 'lodash';
 
 let animations = false;
@@ -125,7 +125,7 @@ export default {
           this.addToObserver(this.animate);
         }
       } else {
-        import(/* webpackChunkName: "animation" */ 'JS/animation.js')
+        import(/* webpackChunkName: "animation" */ 'JS/animation.ts')
           .then((module) => {
             animations = module;
             this.animationsLoaded = true;
@@ -136,7 +136,7 @@ export default {
               this.addToObserver(this.animate);
             }
           })
-          .catch((error) => warn('An error occurred while loading animation.js', error));
+          .catch((error) => warn('An error occurred while loading animation.ts', error));
       }
     }
   },

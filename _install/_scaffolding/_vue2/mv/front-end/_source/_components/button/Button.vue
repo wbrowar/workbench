@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import { log, processIsClient } from 'JS/global.js';
-import wb from 'JS/automated/wb.js';
+import { log, processIsClient } from 'JS/global';
+import settings from 'JS/automated/settings.js';
 export default {
   name: 'Button',
   components: {},
@@ -68,7 +68,7 @@ export default {
     elementTypeComputed() {
       if (this.useRouterLink) {
         let linkType = 'router-link';
-        switch (wb.projectType) {
+        switch (settings.projectType) {
           case 'nuxt2':
             linkType = 'nuxt-link';
             break;

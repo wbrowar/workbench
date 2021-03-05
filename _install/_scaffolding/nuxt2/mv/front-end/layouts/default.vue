@@ -4,13 +4,13 @@
       <nuxt />
     </main>
 
-    <DevBar v-if="devMode || showDocsLink" />
+    <DevBar v-if="devMode" />
   </div>
 </template>
 
 <script>
-import { faviconVueMeta } from 'JS/favicons.js';
-import wb from 'JS/automated/wb.js';
+import { faviconVueMeta } from 'JS/favicons';
+import settings from 'JS/automated/settings.js';
 
 export default {
   components: {
@@ -23,8 +23,7 @@ export default {
   },
   data() {
     return {
-      devMode: wb.devMode,
-      showDocsLink: wb.enableDocs,
+      devMode: settings.devMode,
     };
   },
 };

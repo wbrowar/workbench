@@ -6,11 +6,11 @@
         :key="index"
         :alt="alt && lastSource(index) ? alt : null"
         :element-type="lastSource(index) ? 'img' : 'source'"
-        :media="source.media || false"
-        :sizes="lastSource(index) ? source.sizes || '100vw' : null"
-        :type="source.type || false"
-        :src="source.src"
-        :srcset="source.srcset"
+        :media="source.media || null"
+        :sizes="source.sizes || null"
+        :type="source.type || null"
+        :src="source.src || null"
+        :srcset="source.srcset || null"
         :width="source.width || null"
         :height="source.height || null"
         v-for="(source, index) in filteredSources"
@@ -51,7 +51,7 @@ export default {
       const classes = [];
 
       if (this.ignoreScheme) {
-        classes.push(`c-image-ignore-scheme`);
+        classes.push(`image-ignore-scheme`);
       }
 
       if (classes.length) {
