@@ -1,3 +1,5 @@
+const paths = require('./wb.paths.js');
+
 /*
  * Colors values that are converted to CSS custom properties.
  * Accepts any CSS color value as a string, or an object of color shades.
