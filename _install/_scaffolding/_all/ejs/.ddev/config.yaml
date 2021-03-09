@@ -1,19 +1,17 @@
 name: <%- handle %>
 type: php
-docroot: <%- install.installEnd === 'back' ? 'back-end/web' : 'front-end/dist' %>
+docroot: <%- install.installEnd === 'front' ? 'front-end/dist' : 'back-end/web' %>
 php_version: "7.4"
 webserver_type: nginx-fpm
 router_http_port: "80"
 router_https_port: "443"
 xdebug_enabled: false
-additional_hostnames: [<%- install.installEnd === 'back' ? `${ handle }-api` : '' %>]
-additional_fqdns:
-- <%- handle %>.test
+additional_hostnames: [<%- ['back', 'back_front'].includes(install.installEnd) ? `${ handle }-api` : '' %><%- install.installEnd === 'back_front' ? ', ' : '' %><%- ['front', 'back_front'].includes(install.installEnd) ? `${ handle }-dist` : '' %>]
 provider: default
 hooks:
   post-import-db:
   - exec: chmod +x .ddev/scripts/migrate.sh && time .ddev/scripts/migrate.sh
   post-start:
   - exec: chmod +x .ddev/scripts/setup.sh && time .ddev/scripts/setup.sh
-use_dns_when_possible: false
-<%- install.installEnd === 'front' ? `omit_containers: [db, dba]` : '' %>
+use_dns_when_possible: false<%- install.installEnd === 'front' ? `
+omit_containers: [db, dba]` : '' %>

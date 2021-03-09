@@ -103,6 +103,7 @@ async function run() {
       ];
       const projectTypeDefaultComponents = {
         nuxt2: vueDefaultComponents,
+        'nuxt2-craft': vueDefaultComponents,
         vue3: vueDefaultComponents,
         'vue3-marketo': ['marketo_form', ...vueDefaultComponents],
       };

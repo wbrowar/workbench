@@ -3,6 +3,7 @@
 const path = require('path');
 const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
+const settings = require(`./wb.settings.js`);
 
 export default {
   build: {
@@ -53,6 +54,32 @@ export default {
   buildModules: ['@nuxtjs/eslint-module', ['@nuxt/typescript-build', { typeCheck: false }], '@nuxtjs/style-resources'],
   components: [{ path: paths.components.src, pathPrefix: false }],
   css: [`${path.resolve(paths.css.src)}/app.css`],
+  // generate: {
+  //   fallback: true,
+  //   routes() {
+  //     return axios
+  //       .post(
+  //         process.env.CRAFT_API_URL,
+  //         {
+  //           query: `query {
+  //   entries(limit: null) {
+  //     uri
+  //   }
+  // }`,
+  //         },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${process.env.CRAFT_AUTH_TOKEN}`,
+  //           },
+  //         }
+  //       )
+  //       .then((res) => {
+  //         return res.data.data.entries.map((entry) => {
+  //           return entry.uri === '__home__' ? `/` : `/${entry.uri}`;
+  //         });
+  //       });
+  //   },
+  // },
   dir: {
     static: 'public',
   },
@@ -71,6 +98,7 @@ export default {
   },
   loading: { color: '#fff' },
   modules: [
+    // '@nuxt/http',
     [
       'nuxt-mq',
       {
@@ -101,5 +129,5 @@ export default {
   target: 'static',
   server: {
     host: '0',
-  }
+  },
 };

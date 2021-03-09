@@ -70,6 +70,22 @@ export default {
         return [];
       },
     },
+    urlBuild: {
+      type: String,
+      default: `https://${settings.name}-dist.ddev.site/`,
+    },
+    urlCms: {
+      type: String,
+      default: `https://${settings.name}-api.ddev.site/`,
+    },
+    urlHome: {
+      type: String,
+      default: `https://${settings.name}.ddev.site:3000/`,
+    },
+    urlStorybook: {
+      type: String,
+      default: `https://${settings.name}-storybook.ddev.site/`,
+    },
   },
   data() {
     return {
@@ -82,12 +98,21 @@ export default {
   },
   computed: {
     allLinks() {
-      return [
-        { href: '/', labelText: '🏠&thinsp;Home' },
-        { href: '/', labelText: '📚&thinsp;Components' },
-        { href: '/', labelText: '🎨&thinsp;Design System' },
-        ...this.links,
+      const links = [
+        { href: this.urlHome, labelText: '🏠&thinsp;Home' },
+        { href: this.urlBuild, labelText: '🧱&thinsp;Build' },
       ];
+
+      if (['nuxt2-craft'].includes(settings.projectType)) {
+        links.push({ href: this.urlCms, labelText: '📚&thinsp;CMS' });
+      }
+      if (settings.enableDocs) {
+        links.push({ href: this.urlStorybook, labelText: '🎨&thinsp;Design System' });
+      }
+
+      links.push(...this.links);
+
+      return links;
     },
     classes() {
       const classes = [];

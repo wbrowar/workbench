@@ -104,9 +104,10 @@ async function run() {
                 },
                 choices: [
                     { name: 'Vue SPA', value: 'vue3' },
-                    { name: 'Nuxt', value: 'nuxt2' },
-                    { name: 'HTML (Tailwind, Webpack)', value: 'html' },
+                    { name: 'Nuxt (Craft front-end)', value: 'nuxt2-craft' },
+                    { name: 'HTML (Tailwind, Vite)', value: 'html' },
                     { name: 'Marketo Vue SPA', value: 'vue3-marketo' },
+                    { name: 'Nuxt (Static)', value: 'nuxt2' },
                 ],
             },
             {
@@ -311,6 +312,10 @@ async function run() {
                         ejsVars.appEnvPrefix = '';
                         installDirectories.push('_front-end', '_vue2', 'nuxt2');
                         break;
+                    case 'nuxt2-craft':
+                        ejsVars.appEnvPrefix = '';
+                        installDirectories.push('_front-end', '_vue2', 'nuxt2', 'nuxt2-craft');
+                        break;
                     case 'vue3':
                         ejsVars.appEnvPrefix = 'VITE_';
                         installDirectories.push('_front-end', '_vue3', 'vue3');
@@ -498,19 +503,18 @@ async function run() {
                 g.verboseExec(`ddev npm run setup -- --component-defaults`, verbose, true);
                 g.log('verbose', `Setup script ran`, verbose);
 
-                g.log('title', `Running Initial Build`);
-                g.verboseExec(`ddev npm run dev`, verbose, true);
-                g.log('verbose', `Initial build ran`, verbose);
+                // g.log('title', `Running Initial Build`);
+                // g.verboseExec(`ddev npm run dev`, verbose, true);
+                // g.log('verbose', `Initial build ran`, verbose);
 
-                // g.log('app', `Run: cd ${ handle }`);
-                // g.log('app', `     ddev npm run setup`);
-                // g.log('app', `     ddev npm run dev`);
+                g.log('app', `Run: cd ${ handle }`);
+                g.log('app', `     ddev npm run dev`);
+                g.log('app', `Serve URL: https://${ handle }.ddev.site:3000/`);
+                g.log('app', `Build URL: https://${ handle }-dist.ddev.site/`);
             }
-            // if (answers.backEndPlatform) {
-            //     g.log('app', `Run: cd ${ handle }`);
-            //     g.log('app', `     ddev npm run setup`);
-            //     g.log('app', `     ddev npm run dev`);
-            // }
+            if (answers.backEndPlatform) {
+                g.log('app', `CMS   URL: https://${ handle }-api.ddev.site/`);
+            }
 
             g.log('message', chalk.dim(`\n${_bye()}\n`));
         });
