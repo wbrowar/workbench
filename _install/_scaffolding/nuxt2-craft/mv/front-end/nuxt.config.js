@@ -1,9 +1,11 @@
-// import axios from 'axios';
+import axios from 'axios';
 
 const path = require('path');
+const fs = require('fs-extra');
 const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
-const settings = require(`./wb.settings.js`);
+
+const enableLivePreview = process.env.ENABLE_LIVE_PREVIEW === 'true';
 
 export default {
   build: {
@@ -51,35 +53,42 @@ export default {
       config.resolve.alias.Templates = path.resolve(`${paths.wb.src}templates/`);
     },
   },
-  buildModules: ['@nuxtjs/eslint-module', ['@nuxt/typescript-build', { typeCheck: false }], '@nuxtjs/style-resources'],
+  buildModules: [
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/composition-api',
+    ['@nuxt/typescript-build', { typeCheck: false }],
+    '@nuxtjs/style-resources',
+  ],
   components: [{ path: paths.components.src, pathPrefix: false }],
   css: [`${path.resolve(paths.css.src)}/app.css`],
-  // generate: {
-  //   fallback: true,
-  //   routes() {
-  //     return axios
-  //       .post(
-  //         process.env.CRAFT_API_URL,
-  //         {
-  //           query: `query {
-  //   entries(limit: null) {
-  //     uri
-  //   }
-  // }`,
-  //         },
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${process.env.CRAFT_AUTH_TOKEN}`,
-  //           },
-  //         }
-  //       )
-  //       .then((res) => {
-  //         return res.data.data.entries.map((entry) => {
-  //           return entry.uri === '__home__' ? `/` : `/${entry.uri}`;
-  //         });
-  //       });
-  //   },
-  // },
+  generate: {
+    fallback: true,
+    routes() {
+      if (process.env.CRAFT_API_URL && process.env.CRAFT_AUTH_TOKEN) {
+        return axios
+          .post(
+            process.env.CRAFT_API_URL,
+            {
+              query: `query {
+      entries(limit: null) {
+        uri
+      }
+    }`,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.CRAFT_AUTH_TOKEN}`,
+              },
+            }
+          )
+          .then((res) => {
+            return res.data.data.entries.map((entry) => {
+              return entry.uri === '__home__' ? `/` : `/${entry.uri}`;
+            });
+          });
+      }
+    },
+  },
   dir: {
     static: 'public',
   },
@@ -98,7 +107,6 @@ export default {
   },
   loading: { color: '#fff' },
   modules: [
-    // '@nuxt/http',
     [
       'nuxt-mq',
       {
@@ -112,22 +120,24 @@ export default {
     ],
   ],
   pageTransition: 'page',
-  plugins: [
-    // '~/plugins/craft.js',
-    // '~/plugins/preview.client.js'
-  ],
-  // privateRuntimeConfig: {
-  //   craftApiUrl: process.env.CRAFT_API_URL,
-  //   craftAuthToken: process.env.CRAFT_AUTH_TOKEN,
-  // },
-  // publicRuntimeConfig: {
-  //   livePreview: process.env.LIVE_PREVIEW === 'true',
-  //   craftApiUrl: process.env.LIVE_PREVIEW === 'true' ? process.env.CRAFT_API_URL : '',
-  //   // craftApiUrl: process.env.CRAFT_API_URL,
-  //   craftAuthToken: process.env.LIVE_PREVIEW === 'true' ? process.env.CRAFT_AUTH_TOKEN : '',
-  // },
+  plugins: ['~/plugins/craft.js', '~/plugins/preview.client.js'],
+  privateRuntimeConfig: {
+    craftApiUrl: process.env.CRAFT_API_URL,
+    craftAuthToken: process.env.CRAFT_AUTH_TOKEN,
+    serverlessDirectory: process.env.SERVERLESS_DIRECTORY !== '' ? process.env.SERVERLESS_DIRECTORY : null,
+  },
+  publicRuntimeConfig: {
+    livePreview: enableLivePreview,
+    craftApiUrl: enableLivePreview ? process.env.CRAFT_API_URL : '',
+    craftAuthToken: enableLivePreview ? process.env.CRAFT_AUTH_TOKEN : '',
+    serverlessDirectory: process.env.SERVERLESS_DIRECTORY !== '' ? process.env.SERVERLESS_DIRECTORY : null,
+  },
   target: 'static',
   server: {
     host: '0',
+    https: {
+      key: fs.readFileSync(path.resolve('/etc/ssl/certs/', 'master.key')),
+      cert: fs.readFileSync(path.resolve('/etc/ssl/certs/', 'master.crt')),
+    },
   },
 };

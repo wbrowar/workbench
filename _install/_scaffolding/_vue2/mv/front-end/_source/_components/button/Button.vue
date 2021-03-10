@@ -70,6 +70,7 @@ export default {
         let linkType = 'router-link';
         switch (settings.projectType) {
           case 'nuxt2':
+          case 'nuxt2-craft':
             linkType = 'nuxt-link';
             break;
         }

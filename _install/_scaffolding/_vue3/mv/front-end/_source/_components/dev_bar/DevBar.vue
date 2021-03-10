@@ -76,7 +76,7 @@ export default defineComponent({
       devMode: settings.devMode,
       isSticky: false,
       isVisible: true,
-      showDocsLink: settings.enableDocs,
+      showDocsLink: settings.docsUrl,
     });
 
     /*

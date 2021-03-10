@@ -9,7 +9,7 @@
 <script>
 import { getMarketoDescriptions, getMarketoVariables } from 'JS/marketo.js';
 import { log } from 'JS/global.js';
-import wb from 'JS/automated/wb.js';
+import settings from 'JS/automated/wb.js';
 
 export default {
   components: {
@@ -17,10 +17,10 @@ export default {
   },
   data() {
     return {
-      devMode: wb.devMode,
+      devMode: settings.devMode,
       marketoDescriptions: false,
       mutationObserver: false,
-      showDocsLink: wb.enableDocs,
+      showDocsLink: settings.docsUrl,
     };
   },
   methods: {

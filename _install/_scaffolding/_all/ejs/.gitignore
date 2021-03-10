@@ -19,11 +19,14 @@ storage/runtime
 
 # DDEV
 .ddev/*
+!docker-compose.front-end.yaml
 !.ddev/scripts
 !.ddev/commands/web/composer
 !.ddev/commands/web/craft
 !.ddev/commands/web/node
 !.ddev/commands/web/npm
+!.ddev/nginx_full/back-end-api.conf
+!.ddev/nginx_full/front-end-api.conf
 !.ddev/config.yaml
 !.ddev/config.*.yaml
 

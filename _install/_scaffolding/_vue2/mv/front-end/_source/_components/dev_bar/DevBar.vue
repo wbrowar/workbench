@@ -76,15 +76,15 @@ export default {
     },
     urlCms: {
       type: String,
-      default: `https://${settings.name}-api.ddev.site/`,
+      default: settings.cmsUrl || null,
+    },
+    urlDocs: {
+      type: String,
+      default: settings.docsUrl || null,
     },
     urlHome: {
       type: String,
       default: `https://${settings.name}.ddev.site:3000/`,
-    },
-    urlStorybook: {
-      type: String,
-      default: `https://${settings.name}-storybook.ddev.site/`,
     },
   },
   data() {
@@ -93,7 +93,6 @@ export default {
       devMode: settings.devMode,
       isSticky: false,
       isVisible: true,
-      showDocsLink: settings.enableDocs,
     };
   },
   computed: {
@@ -103,10 +102,10 @@ export default {
         { href: this.urlBuild, labelText: '🧱&thinsp;Build' },
       ];
 
-      if (['nuxt2-craft'].includes(settings.projectType)) {
+      if (this.urlCms) {
         links.push({ href: this.urlCms, labelText: '📚&thinsp;CMS' });
       }
-      if (settings.enableDocs) {
+      if (this.urlDocs) {
         links.push({ href: this.urlStorybook, labelText: '🎨&thinsp;Design System' });
       }
 

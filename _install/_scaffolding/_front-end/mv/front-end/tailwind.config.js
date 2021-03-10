@@ -20,30 +20,6 @@ Object.keys(theme.mq.tailwind).forEach((key) => {
   screens[key] = `${theme.mq.tailwind[key]}px`;
 });
 
-if (settings.devMode || settings.enableDocs) {
-  // Add dev colors
-  _.merge(colors, {
-    'dev-black': '#000000',
-    'dev-gray': {
-      100: '#f5f5f5',
-      200: '#eeeeee',
-      300: '#e0e0e0',
-      400: '#bdbdbd',
-      500: '#9e9e9e',
-      600: '#757575',
-      700: '#616161',
-      800: '#424242',
-      900: '#212121',
-    },
-    'dev-white': '#ffffff',
-  });
-
-  // Add dev fonts
-  _.merge(fontFamily, {
-    'dev-apple': "-apple-system, BlinkMacSystemFont, 'Avinir Next', 'Avinir', Helvetica, Arial, sans-serif",
-  });
-}
-
 // Add Tailwind plugins
 const plugins = [];
 const pluginFunctions = [

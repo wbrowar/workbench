@@ -24,7 +24,7 @@ let routes = [
   // },
 ];
 
-if (process.env.VUE_APP_ENABLE_DOCS) {
+if (process.env.VUE_APP_DOCS_URL) {
   routes.push({
     path: `/dev/docs/:slug`,
     name: `dev_docs`,

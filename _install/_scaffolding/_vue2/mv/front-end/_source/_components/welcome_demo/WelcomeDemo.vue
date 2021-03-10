@@ -5,7 +5,8 @@
         Hello, <span class="cursor-pointer" @click="clickedWorld">{{ world }}</span>
       </h1>
       <div class="c-text text-2xl opacity-0">
-        <p>This app has been installed and is ready for programming.</p>
+        <p class="text-center">This app has been installed and is ready for programming.</p>
+        <slot></slot>
       </div>
     </div>
   </div>

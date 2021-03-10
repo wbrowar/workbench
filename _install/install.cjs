@@ -460,7 +460,7 @@ async function run() {
                     g.verboseExec(`ddev craft setup/security-key`, verbose);
                     g.log('verbose', `Security key set`, verbose);
 
-                    g.verboseExec(`ddev craft install/craft --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --site-name="${ answers.cmsSiteName }" --site-url="$DEFAULT_SITE_URL" --language="en-US"`, verbose);
+                    g.verboseExec(`ddev craft install/craft --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --site-name="$SITE_NAME" --site-url="$DEFAULT_SITE_URL" --language="en-US"`, verbose);
                     g.log('verbose', `Craft 3 installed`, verbose);
 
                     g.verboseExec(`ddev craft project-config/apply`, verbose);
