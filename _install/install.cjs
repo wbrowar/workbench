@@ -404,6 +404,27 @@ async function run() {
                   });
                 let installDir6Complete = await installDir6;
             }
+            if (installDirectories[7]) {
+                const installDir7 = g.asyncFunction(
+                  `Installing directory: ${installDirectories[7]}`, `Directory: ${installDirectories[7]} installed`, (resolve) => {
+                      installDirectory(installDirectories[7], resolve);
+                  });
+                let installDir7Complete = await installDir7;
+            }
+            if (installDirectories[8]) {
+                const installDir8 = g.asyncFunction(
+                  `Installing directory: ${installDirectories[8]}`, `Directory: ${installDirectories[8]} installed`, (resolve) => {
+                      installDirectory(installDirectories[8], resolve);
+                  });
+                let installDir8Complete = await installDir8;
+            }
+            if (installDirectories[9]) {
+                const installDir9 = g.asyncFunction(
+                  `Installing directory: ${installDirectories[9]}`, `Directory: ${installDirectories[9]} installed`, (resolve) => {
+                      installDirectory(installDirectories[9], resolve);
+                  });
+                let installDir9Complete = await installDir9;
+            }
 
 
             // Change working directory to project folder
@@ -467,7 +488,7 @@ async function run() {
                     g.log('verbose', `Project Config applied`, verbose);
 
                     g.log('title', 'Updating Craft and plugins to the latest version');
-                    g.verboseExec(`ddev craft update all --backup`, verbose);
+                    g.verboseExec(`ddev craft update all`, verbose);
                     g.log('verbose', `Craft and plugins updated`, verbose);
                 }
             }
