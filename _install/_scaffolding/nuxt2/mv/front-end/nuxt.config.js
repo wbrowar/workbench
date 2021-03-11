@@ -51,7 +51,8 @@ export default {
     },
   },
   buildModules: ['@nuxtjs/eslint-module', ['@nuxt/typescript-build', { typeCheck: false }], '@nuxtjs/style-resources'],
-  components: [{ path: paths.components.src, pathPrefix: false }],
+  // components: [{ path: paths.components.src, pathPrefix: false }],
+  components: false,
   css: [`${path.resolve(paths.css.src)}/app.css`],
   dir: {
     static: 'public',
@@ -101,5 +102,11 @@ export default {
   target: 'static',
   server: {
     host: '0',
-  }
+  },
+  watchers: {
+    webpack: {
+      poll: 500,
+      ignored: ['./_wb', './node_modules'],
+    },
+  },
 };

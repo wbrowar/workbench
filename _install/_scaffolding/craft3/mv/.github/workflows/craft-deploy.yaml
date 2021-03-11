@@ -53,7 +53,7 @@ jobs:
           echo "${SSH_KEY}" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
           echo "SERVER_ROOT=${SERVER_ROOT}" >> $GITHUB_ENV
-          echo "PHP_RESTART_CMD=php7.3-fpm" >> $GITHUB_ENV
+          echo "PHP_RESTART_CMD=php7.4-fpm" >> $GITHUB_ENV
         env:
           SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
           SSH_PORT: ${{ secrets.PROD_SSH_PORT }}
@@ -88,6 +88,7 @@ jobs:
       # Composer caching
       - name: Setup Composer cache
         id: composer-cache
+        working-directory: ./back-end
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
       - uses: actions/cache@v1
@@ -99,14 +100,16 @@ jobs:
 
       # Install PHP dependencies
       - name: Composer install
+        working-directory: ./back-end
         run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
 
       # rsync
       # Exclude web/uploads is there to avoid deleting user uploaded files
       # Setting StrictHostKeyChecking=no will automatically add new host keys to the user known hosts files
       - name: Place files into temporary folder on the server (via rsync)
+        working-directory: ./back-end
         run: |
-          rsync -a -h -v -z --delete --exclude=/.ddev/ --exclude=/.git/ --exclude=/.github/ --exclude=/web/cpresources/ --exclude=.env --exclude=/node_modules/ --exclude=/storage/ --port=${{ env.SSH_PORT }} -e "ssh -o StrictHostKeyChecking=no" ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:${{ env.SERVER_ROOT }}/deploy-cache/
+          rsync -a -h -v -z --delete --exclude=/.ddev/ --exclude=/.git/ --exclude=/.github/ --exclude=/web/cpresources/ --exclude=.env --exclude=/storage/ --port=${{ env.SSH_PORT }} -e "ssh -o StrictHostKeyChecking=no" ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:${{ env.SERVER_ROOT }}/deploy-cache/
 
       # Execute Craft commands on remote server
       - name: Execute SSH commmands on remote server

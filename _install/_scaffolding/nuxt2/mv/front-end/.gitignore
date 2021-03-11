@@ -1,11 +1,14 @@
-/static/humans.txt
-/static/robots.txt
-/static/[sitmap]*
+# Project-specific excludes
+_source/_css/automated
+_source/_js/automated
+public/humans.txt
+public/robots.txt
+public/[sitmap]*
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
-/logs
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*

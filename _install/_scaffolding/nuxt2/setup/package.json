@@ -3,7 +3,7 @@
     "ci:build": "npm run prebuild && nuxt generate --quiet --fail-on-error",
     "dev": "npm run prebuild && nuxt",
     "prebuild": "node ./_wb/prebuild.mjs --css-includes",
-    "prod": "npm run prebuild && nuxt generate"
+    "prod": "DEV_MODE=false npm run prebuild && DEV_MODE=false nuxt generate"
   },
   "dependencies": {
     "nuxt": "^2.15.2"
