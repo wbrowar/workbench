@@ -488,7 +488,7 @@ async function run() {
                     g.log('verbose', `Project Config applied`, verbose);
 
                     g.log('title', 'Updating Craft and plugins to the latest version');
-                    g.verboseExec(`ddev craft update all`, verbose);
+                    g.verboseExec(`ddev craft update all --backup=0`, verbose, true);
                     g.log('verbose', `Craft and plugins updated`, verbose);
                 }
             }

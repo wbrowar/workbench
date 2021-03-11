@@ -17,17 +17,6 @@ storage/backups
 storage/logs
 storage/runtime
 
-# DDEV
-.ddev/*
-!.ddev/scripts
-!.ddev/config.yaml
-!.ddev/config.*.yaml
-
-# ENVIRONMENT CONFIG FILES
-.env.php
-.env
-scripts/.env.sh
-
 # USER UPLOADS
 web/u/*
 web/uploads/*

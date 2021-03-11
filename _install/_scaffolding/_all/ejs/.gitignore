@@ -2,43 +2,20 @@
 .DS_Store
 .idea
 .vscode
-
-# CRAFT DEFAULTS
-.env
-vendor
-
-# BUILD FILES
 .cache
-_build/*
-node_modules/*
 Thumbs.db
 yarn.lock
-storage/backups
-storage/logs
-storage/runtime
 
 # DDEV
 .ddev/*
-!docker-compose.front-end.yaml
-!.ddev/scripts
+!.ddev/config.yaml
+!.ddev/config.*.yaml
+!.ddev/docker-compose.front-end.yaml
 !.ddev/commands/web/composer
 !.ddev/commands/web/craft
 !.ddev/commands/web/node
 !.ddev/commands/web/npm
 !.ddev/nginx_full/back-end-api.conf
 !.ddev/nginx_full/front-end-api.conf
-!.ddev/config.yaml
-!.ddev/config.*.yaml
-
-# ENVIRONMENT CONFIG FILES
-.env.php
-.env
-scripts/.env.sh
-
-# USER UPLOADS
-web/u/*
-web/uploads/*
-web/imager/*
-web/resized/*
-web/cpresources/*
-backups/*
+!.ddev/scripts
+!.ddev/web-build/Dockerfile

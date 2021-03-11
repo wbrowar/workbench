@@ -2,9 +2,7 @@
   CI = "1"
 
 [context.preview.environment]
-  LIVE_PREVIEW = "true"
+  ENABLE_LIVE_PREVIEW = "true"
 
 [context.dev.environment]
   DEV_MODE = "true"
-  ENABLE_DOCS = "true"
-  POSTCSS_PURGECSS = "false"

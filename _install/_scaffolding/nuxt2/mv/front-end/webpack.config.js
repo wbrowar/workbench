@@ -11,14 +11,14 @@
 module.exports = {
   resolve: {
     alias: {
-      Components: path.resolve(__dirname, '../_source/_components/'),
-      CSS: path.resolve(__dirname, '../_source/_css/'),
-      GQL: path.resolve(__dirname, '../gql/'),
-      Layouts: path.resolve(__dirname, '../layouts/'),
-      Pages: path.resolve(__dirname, '../pages/'),
-      JS: path.resolve(__dirname, '../_source/_js/'),
-      Source: path.resolve(__dirname, '../_source/'),
-      WB: path.resolve(__dirname, '../_wb/'),
+      Components: path.resolve(__dirname, './_source/_components/'),
+      CSS: path.resolve(__dirname, './_source/_css/'),
+      GQL: path.resolve(__dirname, './gql/'),
+      Layouts: path.resolve(__dirname, './layouts/'),
+      Pages: path.resolve(__dirname, './pages/'),
+      JS: path.resolve(__dirname, './_source/_js/'),
+      Source: path.resolve(__dirname, './_source/'),
+      WB: path.resolve(__dirname, './_wb/'),
     },
   },
 };

@@ -1,7 +1,7 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 # Set node version
-ENV NODE_VERSION=13
+ENV NODE_VERSION=14
 # Run setup steps
 RUN sudo apt-get remove -y nodejs
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -

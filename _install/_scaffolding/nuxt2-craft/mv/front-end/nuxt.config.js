@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const path = require('path');
-const fs = require('fs-extra');
 const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
 
@@ -41,7 +40,7 @@ export default {
       },
     },
     transpile: ['gsap'],
-    extend(config, ctx) {
+    extend(config) {
       config.resolve.alias.Components = path.resolve(paths.components.src);
       config.resolve.alias.CSS = path.resolve(paths.css.src);
       config.resolve.alias.GQL = path.resolve(`${paths.wb.src}gql/`);
@@ -64,7 +63,7 @@ export default {
   generate: {
     fallback: true,
     routes() {
-      if (process.env.CRAFT_API_URL && process.env.CRAFT_AUTH_TOKEN) {
+      if (process.env.CRAFT_API_URL !== '' && process.env.CRAFT_AUTH_TOKEN !== '') {
         return axios
           .post(
             process.env.CRAFT_API_URL,
@@ -124,7 +123,6 @@ export default {
   privateRuntimeConfig: {
     craftApiUrl: process.env.CRAFT_API_URL,
     craftAuthToken: process.env.CRAFT_AUTH_TOKEN,
-    serverlessDirectory: process.env.SERVERLESS_DIRECTORY !== '' ? process.env.SERVERLESS_DIRECTORY : null,
   },
   publicRuntimeConfig: {
     livePreview: enableLivePreview,
@@ -135,9 +133,5 @@ export default {
   target: 'static',
   server: {
     host: '0',
-    https: {
-      key: fs.readFileSync(path.resolve('/etc/ssl/certs/', 'master.key')),
-      cert: fs.readFileSync(path.resolve('/etc/ssl/certs/', 'master.crt')),
-    },
   },
 };
