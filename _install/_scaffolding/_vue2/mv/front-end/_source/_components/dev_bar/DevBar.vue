@@ -84,7 +84,7 @@ export default {
     },
     urlHome: {
       type: String,
-      default: `https://${settings.name}.ddev.site:3000/`,
+      default: `/`,
     },
   },
   data() {

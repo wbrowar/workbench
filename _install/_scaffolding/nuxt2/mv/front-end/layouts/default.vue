@@ -11,10 +11,11 @@
 <script>
 import { faviconVueMeta } from 'JS/favicons';
 import settings from 'JS/automated/settings.js';
+import DevBar from 'Components/dev_bar/DevBar.vue';
 
 export default {
   components: {
-    DevBar: () => import('Components/dev_bar/DevBar.vue'),
+    DevBar,
   },
   head() {
     return {
@@ -25,6 +26,20 @@ export default {
     return {
       devMode: settings.devMode,
     };
+  },
+  mounted() {
+    // eslint-disable-next-line nuxt/no-env-in-hooks
+    if (process.client && this.$config.livePreview) {
+      window.addEventListener(
+        'message',
+        ({ data }) => {
+          if (data === 'livepreview' && this.$preview) {
+            this.$nuxt.refresh();
+          }
+        },
+        false
+      );
+    }
   },
 };
 </script>

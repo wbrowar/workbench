@@ -3,6 +3,10 @@ export default function(context, inject) {
   // Usage: `this.$craft({ query: gqlQuery, variables: { uri: `code/${this.$route.params.slug}` } })`
 
   inject('craft', async (params) => {
+    /*
+     * Serverless Method
+     * Use serverless functions, like Lambda or Netlify functions
+     */
     if (context.$preview && context.query?.token && context.$config.serverlessDirectory) {
       const previewPayload = {
         request: params,
@@ -25,7 +29,8 @@ export default function(context, inject) {
 
     if (context.$config.craftApiUrl && context.$config.craftAuthToken) {
       try {
-        const response = await fetch(context.$config.craftApiUrl, {
+        const previewToken = context.$preview && context.query?.token ? `?token=${context.query.token}` : '';
+        const response = await fetch(context.$config.craftApiUrl + previewToken, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${context.$config.craftAuthToken}`,

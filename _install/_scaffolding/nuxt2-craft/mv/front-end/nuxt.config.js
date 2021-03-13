@@ -4,8 +4,6 @@ const path = require('path');
 const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
 
-const enableLivePreview = process.env.ENABLE_LIVE_PREVIEW === 'true';
-
 export default {
   build: {
     babel: {
@@ -58,7 +56,8 @@ export default {
     ['@nuxt/typescript-build', { typeCheck: false }],
     '@nuxtjs/style-resources',
   ],
-  components: [{ path: paths.components.src, pathPrefix: false }],
+  // components: [{ path: paths.components.src, pathPrefix: false }],
+  components: false,
   css: [`${path.resolve(paths.css.src)}/app.css`],
   generate: {
     fallback: true,
@@ -125,9 +124,9 @@ export default {
     craftAuthToken: process.env.CRAFT_AUTH_TOKEN,
   },
   publicRuntimeConfig: {
-    livePreview: enableLivePreview,
-    craftApiUrl: enableLivePreview ? process.env.CRAFT_API_URL : '',
-    craftAuthToken: enableLivePreview ? process.env.CRAFT_AUTH_TOKEN : '',
+    livePreview: process.env.ENABLE_LIVE_PREVIEW === 'true',
+    craftApiUrl: process.env.ENABLE_LIVE_PREVIEW === 'true' ? process.env.CRAFT_API_URL : '',
+    craftAuthToken: process.env.ENABLE_LIVE_PREVIEW === 'true' ? process.env.CRAFT_AUTH_TOKEN : '',
     serverlessDirectory: process.env.SERVERLESS_DIRECTORY !== '' ? process.env.SERVERLESS_DIRECTORY : null,
   },
   target: 'static',

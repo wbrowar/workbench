@@ -1,8 +1,10 @@
+[build]
+  base = "front-end/"
+  publish = "dist/"
+
 [build.environment]
   CI = "1"
-
-[context.preview.environment]
-  ENABLE_LIVE_PREVIEW = "true"
+  NODE_VERSION = "14.16.0"
 
 [context.dev.environment]
   DEV_MODE = "true"

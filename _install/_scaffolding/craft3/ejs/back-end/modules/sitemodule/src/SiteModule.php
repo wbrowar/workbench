@@ -10,9 +10,6 @@
 
 namespace modules\sitemodule;
 
-use modules\sitemodule\assetbundles\sitemodule\SiteModuleAsset;
-use modules\sitemodule\twigextensions\SiteModuleTwigExtension;
-
 use Craft;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\i18n\PhpMessageSource;
@@ -103,26 +100,20 @@ class SiteModule extends Module
         parent::init();
         self::$instance = $this;
 
-        // Load our AssetBundle
-        if (Craft::$app->getRequest()->getIsCpRequest()) {
-            Event::on(
-                View::class,
-                View::EVENT_BEFORE_RENDER_TEMPLATE,
-                function () {
-                    try {
-                        Craft::$app->getView()->registerAssetBundle(SiteModuleAsset::class);
-                    } catch (InvalidConfigException $e) {
-                        Craft::error(
-                            'Error registering AssetBundle - '.$e->getMessage(),
-                            __METHOD__
-                        );
+        if (Craft::parseEnv('$LIVE_PREVIEW_URL') ?? false) {
+            // Update Nuxt Live Preview without reloading the page
+            $livePreviewJs = <<<'EOD'
+                Garnish.on(Craft.Preview, 'beforeUpdateIframe', function(event) {
+                    if (!event.refresh) {
+                        event.target.$iframe[0].contentWindow.postMessage('livepreview', '*');
                     }
-                }
-            );
-        }
+                });
+            EOD;
 
-        // Add in our Twig extensions
-        Craft::$app->view->registerTwigExtension(new SiteModuleTwigExtension());
+            if (Craft::$app->getRequest()->getIsCpRequest()) {
+                Craft::$app->getView()->registerJs($livePreviewJs);
+            }
+        }
 
 /**
  * Logging in Craft involves using one of the following methods:

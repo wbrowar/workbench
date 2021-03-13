@@ -32,7 +32,16 @@ export default defineComponent({
       }
     });
 
-    useMeta(() => ({ title: entry.value?.title || null }));
+    useMeta(() => ({
+      title: entry.value?.title || null,
+      // meta: [
+      //   {
+      //     hid: 'description',
+      //     name: 'description',
+      //     content: entry.value?.textField,
+      //   },
+      // ],
+    }));
 
     return { entry };
   },
