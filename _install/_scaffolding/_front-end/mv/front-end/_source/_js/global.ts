@@ -75,7 +75,9 @@ export function classToggle(selector: string, getClass: string) {
 }
 export function gaTrack(category: string, action: string, label: string) {
   if (!wb.devMode) {
+    // @ts-ignore
     if (typeof window.ga === 'function') {
+      // @ts-ignore
       window.ga('send', 'event', category, action, label);
     } else {
       warn('Google Analytics is not set up.');
@@ -95,8 +97,9 @@ export function processIsClient() {
   let isClient = true;
 
   switch (wb.projectType) {
-    case 'gridsome':
-      isClient = typeof process !== 'undefined' ? process.isClient : true;
+    case 'nuxt2':
+    case 'nuxt2-craft':
+      isClient = typeof process !== 'undefined' ? process.client : true;
       break;
   }
 

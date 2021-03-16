@@ -4,10 +4,20 @@
 import gsap from 'gsap';
 import { log, warn } from './global';
 
-export function animate(animation, el, options = {}) {
-  const delay = options.delay !== undefined ? _randomFromRange(options.delay) : 0;
+interface AnimateOptions {
+  color?: string;
+  delay?: number | number[];
+  ease?: string;
+  properties?: string | object;
+  speed?: number | number[];
+  x?: string | number;
+  y?: string | number;
+}
+
+export function animate(animation: string, el: string | HTMLElement, options: AnimateOptions = {}) {
+  const delay: number = options.delay !== undefined ? _randomFromRange(options.delay) : 0;
   const ease = options.speed !== undefined ? options.ease : 'power2';
-  const speed = options.speed !== undefined ? _randomFromRange(options.speed) : 0.5;
+  const speed: number = options.speed !== undefined ? _randomFromRange(options.speed) : 0.5;
 
   switch (animation) {
     case 'background-color':
@@ -60,8 +70,11 @@ export function animate(animation, el, options = {}) {
   log('Animation:', animation, options);
 }
 
-function _randomFromRange(arr) {
-  return arr.constructor === Array ? Math.random() * (arr[1] - arr[0]) + arr[0] : arr;
+function _randomFromRange(arr: number | number[]): number {
+  if (typeof arr === 'number') {
+    return arr;
+  }
+  return Math.random() * (arr[1] - arr[0]) + arr[0];
 }
 
 // INIT FUNCTIONS

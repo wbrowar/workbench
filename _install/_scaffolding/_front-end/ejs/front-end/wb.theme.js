@@ -89,26 +89,6 @@ const tailwind = {
         'aspect': `var(--aspect-ratio)`,
       },
     },
-    opacity: {
-      0: '0',
-      10: '0.1',
-      20: '0.2',
-      30: '0.3',
-      40: '0.4',
-      50: '0.5',
-      60: '0.6',
-      70: '0.7',
-      80: '0.8',
-      90: '0.9',
-      100: '1',
-    },
-  },
-  variants: {
-    // Variants added by Workbench: animated, current
-    backgroundColor: ['responsive', 'current', 'hover', 'focus', 'animated', 'even', 'odd'],
-    opacity: ['responsive', 'hover', 'focus', 'animated'],
-    textColor: ['responsive', 'hover', 'focus', 'animated', 'even', 'odd'],
-    translate: ['responsive', 'hover', 'focus', 'animated'],
   },
   purge: {
     content: [

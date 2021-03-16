@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "ci:build": "npm run prebuild && node --max-old-space-size=4096 node_modules/nuxt/bin/nuxt.js generate --quiet --fail-on-error",
-    "dev": "npm run prebuild && node --max-old-space-size=4096 node_modules/nuxt/bin/nuxt.js nuxt",
+    "ci:build": "npm run prebuild && nuxt generate --quiet --fail-on-error",
+    "dev": "npm run prebuild && nuxt",
     "prebuild": "node ./_wb/prebuild.mjs --css-includes",
-    "prod": "DEV_MODE=false npm run prebuild && DEV_MODE=false node --max-old-space-size=4096 node_modules/nuxt/bin/nuxt.js generate"
+    "prod": "DEV_MODE=false npm run prebuild && DEV_MODE=false nuxt generate --fail-on-error"
   },
   "dependencies": {
     "nuxt": "^2.15.3"

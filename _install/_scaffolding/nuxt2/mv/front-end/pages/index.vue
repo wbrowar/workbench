@@ -13,6 +13,7 @@ import { homeGql } from 'GQL/homeGql.js';
 import { log } from 'JS/global';
 
 export default defineComponent({
+  name: 'PageHome',
   components: {
     WelcomeDemo,
   },

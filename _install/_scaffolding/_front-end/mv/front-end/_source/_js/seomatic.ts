@@ -1,6 +1,7 @@
+// @ts-nocheck
 // Based on https://github.com/ben-rogerson/nuxt-seomatic-meta/blob/master/lib/plugin.js
 
-import { log } from 'JS/global';
+import { log } from 'JS/global.ts';
 
 export function gqlToObject(data: any) {
   log('SEOmatic GraphQL to Object', data);
@@ -14,7 +15,7 @@ export function gqlToObject(data: any) {
     metaLinkContainer,
     metaScriptContainer,
     metaJsonLdContainer,
-  } = Object.entries(data).reduce((acc, [key, value]) => {
+  }: any = Object.entries(data).reduce((acc, [key, value]) => {
     acc[key] = JSON.parse(value);
     return acc;
   }, {});

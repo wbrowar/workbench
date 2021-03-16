@@ -1,8 +1,8 @@
 <template>
-  <figure v-is="background ? elementType : 'figure'" :class="classes">
+  <figure :is="background ? elementType : 'figure'" :class="classes">
     <picture class="c-image" :class="containerClasses">
       <img
-        v-is="lastSource(index) ? 'img' : 'source'"
+        :is="lastSource(index) ? 'img' : 'source'"
         :class="imageClasses"
         :key="index"
         :alt="alt && lastSource(index) ? alt : null"
@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     lastSource(index) {
-      return index === this.sources.length - 1;
+      return index === this.filteredSources.length - 1;
     },
   },
   created() {

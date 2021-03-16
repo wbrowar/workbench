@@ -1,15 +1,29 @@
 import axios from 'axios';
 
 const path = require('path');
+const dotenv = require('dotenv');
 const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
+dotenv.config();
 
 export default {
+  analyze: true,
+  alias: {
+    Components: path.resolve(paths.components.src),
+    CSS: path.resolve(paths.css.src),
+    GQL: path.resolve(`${paths.wb.src}gql/`),
+    JS: path.resolve(paths.js.src),
+    Layouts: path.resolve(`${paths.wb.src}layouts/`),
+    Pages: path.resolve(`${paths.wb.src}pages/`),
+    Source: path.resolve(paths.wb.source),
+    WB: path.resolve(paths.wb.workbench),
+    Templates: path.resolve(`${paths.wb.src}templates/`),
+  },
   build: {
     babel: {
       plugins: ['@babel/plugin-proposal-optional-chaining'],
     },
-    extractCSS: true,
+    extractCSS: false,
     html: {
       minify: {
         minifyCSS: false,
@@ -33,34 +47,16 @@ export default {
             },
           ],
         },
-        tailwindcss: path.resolve(__dirname, './tailwind.config.js'),
         autoprefixer: {},
       },
     },
     transpile: ['gsap'],
-    extend(config) {
-      config.resolve.alias.Components = path.resolve(paths.components.src);
-      config.resolve.alias.CSS = path.resolve(paths.css.src);
-      config.resolve.alias.GQL = path.resolve(`${paths.wb.src}gql/`);
-      config.resolve.alias.JS = path.resolve(paths.js.src);
-      config.resolve.alias.Layouts = path.resolve(`${paths.wb.src}layouts/`);
-      config.resolve.alias.Pages = path.resolve(`${paths.wb.src}pages/`);
-      config.resolve.alias.Source = path.resolve(paths.wb.source);
-      config.resolve.alias.WB = path.resolve(paths.wb.workbench);
-      config.resolve.alias.Templates = path.resolve(`${paths.wb.src}templates/`);
-    },
   },
-  buildModules: [
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/composition-api',
-    ['@nuxt/typescript-build', { typeCheck: false }],
-    '@nuxtjs/style-resources',
-  ],
-  // components: [{ path: paths.components.src, pathPrefix: false }],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxt/typescript-build', '@nuxtjs/composition-api', '@nuxtjs/tailwindcss'],
   components: false,
-  css: [`${path.resolve(paths.css.src)}/app.css`],
   generate: {
     fallback: true,
+    interval: 100,
     routes() {
       if (process.env.CRAFT_API_URL !== '' && process.env.CRAFT_AUTH_TOKEN !== '') {
         return axios
@@ -68,10 +64,10 @@ export default {
             process.env.CRAFT_API_URL,
             {
               query: `query {
-      entries(limit: null) {
-        uri
-      }
-    }`,
+  entries(limit: null) {
+    uri
+  }
+}`,
             },
             {
               headers: {
@@ -104,19 +100,6 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   loading: { color: '#fff' },
-  modules: [
-    [
-      'nuxt-mq',
-      {
-        // Default breakpoint for SSR
-        defaultBreakpoint: 'default',
-        breakpoints: {
-          ...theme.mq.breakpoints,
-          lg: Infinity,
-        },
-      },
-    ],
-  ],
   pageTransition: 'page',
   plugins: ['~/plugins/craft.js', '~/plugins/preview.client.js'],
   privateRuntimeConfig: {
@@ -124,13 +107,19 @@ export default {
     craftAuthToken: process.env.CRAFT_AUTH_TOKEN,
   },
   publicRuntimeConfig: {
-    livePreview: process.env.ENABLE_LIVE_PREVIEW === 'true',
     craftApiUrl: process.env.ENABLE_LIVE_PREVIEW === 'true' ? process.env.CRAFT_API_URL : '',
     craftAuthToken: process.env.ENABLE_LIVE_PREVIEW === 'true' ? process.env.CRAFT_AUTH_TOKEN : '',
-    serverlessDirectory: process.env.SERVERLESS_DIRECTORY !== '' ? process.env.SERVERLESS_DIRECTORY : null,
+    livePreview: process.env.ENABLE_LIVE_PREVIEW === 'true',
+    livePreviewEndpoint: process.env.LIVE_PREVIEW_ENDPOINT !== '' ? process.env.LIVE_PREVIEW_ENDPOINT : null,
   },
-  target: 'static',
   server: {
     host: '0',
+    port: 3000,
   },
+  tailwindcss: {
+    cssPath: `${path.resolve(paths.css.src)}/app.css`,
+    jit: true,
+  },
+  target: 'static',
+  telemetry: false,
 };

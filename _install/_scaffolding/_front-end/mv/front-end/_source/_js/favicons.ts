@@ -1,6 +1,4 @@
 import favicon from 'JS/automated/favicon.js';
-// Matches `distPath` in wb.favicon.js
-const dist = 'img/meta/';
 
 // Based on files generated into /img/meta/
 // If favicon files are saved into a different location, update the object below
@@ -11,7 +9,7 @@ export const faviconVueMeta = {
     { rel: 'icon', type: 'image/png', sizes: '16x16', href: `/${favicon.distPath}favicon-16x16.png` },
     { rel: 'icon', type: 'image/png', sizes: '32x32', href: `/${favicon.distPath}favicon-32x32.png` },
     { rel: 'icon', type: 'image/png', sizes: '48x48', href: `/${favicon.distPath}favicon-48x48.png` },
-    { rel: 'manifest', href: `/${favicon.distPath}manifest.json` },
+    // { rel: 'manifest', href: `/${favicon.distPath}manifest.json` },
     { rel: 'apple-touch-icon', sizes: '57x57', href: `/${favicon.distPath}apple-touch-icon-57x57.png` },
     { rel: 'apple-touch-icon', sizes: '60x60', href: `/${favicon.distPath}apple-touch-icon-60x60.png` },
     { rel: 'apple-touch-icon', sizes: '72x72', href: `/${favicon.distPath}apple-touch-icon-72x72.png` },

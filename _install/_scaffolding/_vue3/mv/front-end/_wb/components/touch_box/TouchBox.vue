@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { log, processIsClient } from 'JS/global.js';
+import { log, processIsClient } from 'JS/global.ts';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/Draggable.js';
 

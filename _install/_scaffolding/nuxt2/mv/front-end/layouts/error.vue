@@ -13,6 +13,7 @@
 import Button from 'Components/button/Button.vue';
 
 export default {
+  name: 'LayoutError',
   components: {
     Button,
   },
