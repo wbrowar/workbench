@@ -9,11 +9,13 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api';
 import { faviconVueMeta } from 'JS/favicons';
 import settings from 'JS/automated/settings.js';
 import DevBar from 'Components/dev_bar/DevBar.vue';
 
-export default {
+export default defineComponent({
+  name: 'LayoutDefault',
   components: {
     DevBar,
   },
@@ -28,8 +30,9 @@ export default {
     };
   },
   mounted() {
+
     // eslint-disable-next-line nuxt/no-env-in-hooks
-    if (process.client && this.$config.livePreview) {
+    if (process.client) {
       window.addEventListener(
         'message',
         ({ data }) => {
@@ -41,7 +44,7 @@ export default {
       );
     }
   },
-};
+});
 </script>
 
 <style>

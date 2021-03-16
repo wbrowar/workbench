@@ -3,5 +3,12 @@ export const homeGql = `query homeGql {
     uri: "__home__"
   ) {
     title
+    seomatic(asArray: true) {
+      metaTitleContainer
+      metaLinkContainer
+      metaScriptContainer
+      metaJsonLdContainer
+      metaTagContainer
+    }
   }
 }`;

@@ -7,14 +7,14 @@ export default function(context, inject) {
      * Serverless Method
      * Use serverless functions, like Lambda or Netlify functions
      */
-    if (context.$preview && context.query?.token && context.$config.serverlessDirectory) {
+    if (context.$preview && context.query?.token && context.$config.livePreviewEndpoint) {
       const previewPayload = {
         request: params,
         token: context.query.token,
       };
 
       try {
-        const response = await fetch(`${context.$config.serverlessDirectory}/craft`, {
+        const response = await fetch(context.$config.livePreviewEndpoint, {
           method: 'POST',
           body: JSON.stringify(previewPayload),
         });

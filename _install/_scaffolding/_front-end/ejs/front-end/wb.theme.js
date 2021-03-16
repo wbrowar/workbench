@@ -86,6 +86,7 @@ const tailwind = {
       padding: {
         '1/1': '100%',
         '16/9': '56.25%',
+        'aspect': `var(--aspect-ratio)`,
       },
     },
     opacity: {

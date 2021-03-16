@@ -2,10 +2,10 @@
   <figure v-is="background ? elementType : 'figure'" :class="classes">
     <picture class="c-image" :class="containerClasses">
       <img
+        v-is="lastSource(index) ? 'img' : 'source'"
         :class="imageClasses"
         :key="index"
         :alt="alt && lastSource(index) ? alt : null"
-        :element-type="lastSource(index) ? 'img' : 'source'"
         :media="source.media || null"
         :sizes="source.sizes || null"
         :type="source.type || null"

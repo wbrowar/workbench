@@ -1,5 +1,6 @@
 [build]
   base = "front-end/"
+  functions = "functions/"
   publish = "dist/"
 
 [build.environment]

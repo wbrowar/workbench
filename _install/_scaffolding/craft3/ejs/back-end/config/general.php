@@ -20,6 +20,7 @@ return [
             '@basePath' => getenv('BASE_PATH'),
             '@baseUrl' => getenv('BASE_URL'),
             '@baseCpUrl' => getenv('CP_BASE_URL') ?? getenv('BASE_URL'),
+            '@livePreviewParam' => getenv('LIVE_PREVIEW_PARAM'),
             '@livePreviewUrl' => getenv('LIVE_PREVIEW_URL'),
         ],
         'baseUrl' => getenv('PRIMARY_SITE_URL'),

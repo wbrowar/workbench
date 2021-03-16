@@ -53,7 +53,7 @@
 
 <script>
 import { Portal } from '@linusborg/vue-simple-portal';
-import { log } from 'JS/global';
+import { log } from 'JS/global.ts';
 import settings from 'JS/automated/settings.js';
 import Button from 'Components/button/Button.vue';
 
@@ -82,6 +82,10 @@ export default {
       type: String,
       default: settings.docsUrl || null,
     },
+    urlTailwind: {
+      type: String,
+      default: `/_tailwind/`,
+    },
     urlHome: {
       type: String,
       default: `/`,
@@ -98,15 +102,18 @@ export default {
   computed: {
     allLinks() {
       const links = [
-        { href: this.urlHome, labelText: '🏠&thinsp;Home' },
-        { href: this.urlBuild, labelText: '🧱&thinsp;Build' },
+        { href: this.urlHome, labelText: '🏠&thinsp;&thinsp;Home' },
+        { href: this.urlBuild, labelText: '🧱&thinsp;&thinsp;Build', newWindow: true },
       ];
 
       if (this.urlCms) {
-        links.push({ href: this.urlCms, labelText: '📚&thinsp;CMS' });
+        links.push({ href: this.urlCms, labelText: '🥃&thinsp;&thinsp;CMS', newWindow: true });
       }
+
+      links.push({ href: this.urlTailwind, labelText: '🎨&thinsp;&thinsp;Design System', newWindow: true });
+
       if (this.urlDocs) {
-        links.push({ href: this.urlStorybook, labelText: '🎨&thinsp;Design System' });
+        links.push({ href: this.urlStorybook, labelText: '📚&thinsp;&thinsp;Components', newWindow: true });
       }
 
       links.push(...this.links);

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { log, processIsClient } from 'JS/global';
+import { log, processIsClient } from 'JS/global.ts';
 import settings from 'JS/automated/settings.js';
 export default {
   name: 'Button',

@@ -2,18 +2,18 @@
   <figure :is="background ? elementType : 'figure'" :class="classes">
     <picture class="c-image" :class="containerClasses">
       <img
-        :class="imageClasses"
-        :key="index"
-        :alt="alt && lastSource(index) ? alt : null"
-        :element-type="lastSource(index) ? 'img' : 'source'"
-        :media="source.media || null"
-        :sizes="source.sizes || null"
-        :type="source.type || null"
-        :src="source.src || null"
-        :srcset="source.srcset || null"
-        :width="source.width || null"
-        :height="source.height || null"
-        v-for="(source, index) in filteredSources"
+          :is="lastSource(index) ? 'img' : 'source'"
+          :class="imageClasses"
+          :key="index"
+          :alt="alt && lastSource(index) ? alt : null"
+          :media="source.media || null"
+          :sizes="source.sizes || null"
+          :type="source.type || null"
+          :src="source.src || null"
+          :srcset="source.srcset || null"
+          :width="source.width || null"
+          :height="source.height || null"
+          v-for="(source, index) in filteredSources"
       />
     </picture>
     <figcaption :class="captionClass" v-if="elementType === 'figure' && caption">{{ caption }}</figcaption>
@@ -25,11 +25,6 @@ import settings from 'JS/automated/settings.js';
 
 export default {
   name: 'MediaImage',
-  data() {
-    return {
-      lazyLoad: false,
-    };
-  },
   props: {
     alt: String,
     background: { type: Boolean, default: false },
@@ -117,9 +112,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .c-image {
-  &:not(.image-ignore-scheme) {
+  &:not(.c-image-ignore-scheme) {
     .scheme-dark & {
       img {
         filter: brightness(0.8) contrast(1.2);
