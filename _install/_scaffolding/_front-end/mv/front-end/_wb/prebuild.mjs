@@ -1,5 +1,6 @@
 import { default as ejs } from 'ejs';
 import { default as fs } from 'fs-extra';
+import { default as requestSync } from 'sync-request';
 import { default as glob } from 'glob-all';
 import { default as paths } from '../wb.paths.js';
 import { default as scraper } from '../wb.scraper.js';
@@ -16,14 +17,18 @@ const runScraper = typeof argv.options.scraper !== 'undefined' ? argv.options.sc
 const verbose = typeof argv.options.verbose !== 'undefined' ? argv.options.verbose : false;
 
 async function run() {
-  const settingsToEsm = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
+  const settingsToEsm = g.asyncFunction(`Converting Settings for the Front-end`, `Settings Converted`, (resolve) => {
     _configToEsm(resolve, paths, settings, 'settings', verbose);
   });
   const settingsToEsmComplete = await settingsToEsm;
 
-  const faviconSettingsToEsm = g.asyncFunction(`Scraping HTML Pages`, `Pages Scraped`, (resolve) => {
-    _configToEsm(resolve, paths, favicon, 'favicon', verbose);
-  });
+  const faviconSettingsToEsm = g.asyncFunction(
+    `Converting Favicon Settings for the Front-end`,
+    `Favicon Settings Converted`,
+    (resolve) => {
+      _configToEsm(resolve, paths, favicon, 'favicon', verbose);
+    }
+  );
   const faviconSettingsToEsmComplete = await faviconSettingsToEsm;
 
   if (runCssIncludes) {

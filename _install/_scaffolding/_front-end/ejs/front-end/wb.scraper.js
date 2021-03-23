@@ -1,14 +1,18 @@
+const dotenv = require('dotenv');
+const paths = require('./wb.paths.js');
+dotenv.config();
+
 /*
  * Options used by Workbench favicon script.
  */
 module.exports = {
   pages: [
     // {
-    //   dist: `${paths.staticPath}/humans.txt`,
+    //   dist: `${paths.wb.static}/humans.txt`,
     //   src: `${process.env.CRAFT_URL_ROOT}/humans.txt`,
     // },
     // {
-    //   dist: `${paths.staticPath}/robots.txt`,
+    //   dist: `${paths.wb.static}/robots.txt`,
     //   src: `${process.env.CRAFT_URL_ROOT}/robots.txt`,
     //   allow404: true,
     //   replacements: {
@@ -16,10 +20,10 @@ module.exports = {
     //   },
     // },
     // {
-    //   dist: `${paths.staticPath}/sitemap.xml`,
+    //   dist: `${paths.wb.static}/sitemap.xml`,
     //   src: `${process.env.CRAFT_URL_ROOT}/sitemap.xml`,
     //   type: 'sitemap',
-    //   sitemapRootSrc: process.env.URL,
+    //   sitemapRootSrc: process.env.FRONT_END_URL_ROOT,
     //   sitemapRootDist: process.env.CRAFT_URL_ROOT,
     // },
   ],

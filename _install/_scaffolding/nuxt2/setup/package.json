@@ -2,7 +2,7 @@
   "scripts": {
     "ci:build": "npm run prebuild && nuxt generate --quiet --fail-on-error",
     "dev": "npm run prebuild && nuxt",
-    "prebuild": "node ./_wb/prebuild.mjs --css-includes",
+    "prebuild": "node ./_wb/prebuild.mjs --css-includes --scraper",
     "prod": "DEV_MODE=false npm run prebuild && DEV_MODE=false nuxt generate --fail-on-error"
   },
   "dependencies": {
