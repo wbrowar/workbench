@@ -1,4 +1,6 @@
-export default function(context, inject) {
+import { defineNuxtPlugin } from '@nuxtjs/composition-api';
+
+export default defineNuxtPlugin((context, inject) => {
   // Create $craft and inject it into Vue components
   // Usage: `this.$craft({ query: gqlQuery, variables: { uri: `code/${this.$route.params.slug}` } })`
 
@@ -49,4 +51,4 @@ export default function(context, inject) {
       error: { error: `No connection information set.` },
     };
   });
-}
+});

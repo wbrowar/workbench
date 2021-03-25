@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { defineNuxtConfig } from '@nuxtjs/composition-api';
 
 const path = require('path');
 const dotenv = require('dotenv');
@@ -6,7 +7,7 @@ const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
 dotenv.config();
 
-export default {
+export default defineNuxtConfig({
   analyze: true,
   alias: {
     Components: path.resolve(paths.components.src),
@@ -81,6 +82,7 @@ export default {
             });
           });
       }
+      return [];
     },
   },
   dir: {
@@ -122,4 +124,4 @@ export default {
   },
   target: 'static',
   telemetry: false,
-};
+});
