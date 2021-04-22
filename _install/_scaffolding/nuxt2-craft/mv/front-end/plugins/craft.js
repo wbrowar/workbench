@@ -5,6 +5,8 @@ export default defineNuxtPlugin((context, inject) => {
   // Usage: `this.$craft({ query: gqlQuery, variables: { uri: `code/${this.$route.params.slug}` } })`
 
   inject('craft', async (params) => {
+    // eslint-disable-next-line no-console
+    console.log(`🗄 API call${params.apiLog ? ': ' + params.apiLog : ''}`);
     /*
      * Serverless Method
      * Use serverless functions, like Lambda or Netlify functions

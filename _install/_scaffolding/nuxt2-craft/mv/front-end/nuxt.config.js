@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { defineNuxtConfig } from '@nuxtjs/composition-api';
+import { getPayloadForSection } from './nuxtGenerateRoutes.js';
 
 const path = require('path');
-const dotenv = require('dotenv');
 const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
-dotenv.config();
 
 export default defineNuxtConfig({
   analyze: true,
@@ -23,13 +22,6 @@ export default defineNuxtConfig({
   build: {
     babel: {
       plugins: ['@babel/plugin-proposal-optional-chaining'],
-    },
-    extractCSS: false,
-    html: {
-      minify: {
-        minifyCSS: false,
-        minifyJS: false,
-      },
     },
     postcss: {
       plugins: {
@@ -51,40 +43,11 @@ export default defineNuxtConfig({
         autoprefixer: {},
       },
     },
+    quiet: false,
     transpile: ['gsap'],
   },
   buildModules: ['@nuxtjs/eslint-module', '@nuxt/typescript-build', '@nuxtjs/composition-api', '@nuxtjs/tailwindcss'],
   components: false,
-  generate: {
-    fallback: true,
-    interval: 100,
-    routes() {
-      if (process.env.CRAFT_API_URL !== '' && process.env.CRAFT_AUTH_TOKEN !== '') {
-        return axios
-          .post(
-            process.env.CRAFT_API_URL,
-            {
-              query: `query {
-  entries(limit: null) {
-    uri
-  }
-}`,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${process.env.CRAFT_AUTH_TOKEN}`,
-              },
-            }
-          )
-          .then((res) => {
-            return res.data.data.entries.map((entry) => {
-              return entry.uri === '__home__' ? `/` : `/${entry.uri}`;
-            });
-          });
-      }
-      return [];
-    },
-  },
   dir: {
     static: 'public',
   },
@@ -100,6 +63,23 @@ export default defineNuxtConfig({
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  },
+  generate: {
+    fallback: true,
+    interval: 1,
+    crawler: false,
+    async routes() {
+      const routes = [];
+      if (process.env.CRAFT_API_URL !== '' && process.env.CRAFT_AUTH_TOKEN !== '') {
+        // Globals shared across entries
+        const globals = await getPayloadForSection('globals');
+
+        // EXAMPLE usage
+        // const news = await getPayloadForSection('news', globals, { offset: '0', limit: '20' });
+        // routes.push(...news);
+      }
+      return routes;
+    },
   },
   loading: { color: '#fff' },
   pageTransition: 'page',
@@ -118,6 +98,7 @@ export default defineNuxtConfig({
     host: '0',
     port: 3000,
   },
+  ssr: process.env.ENABLE_LIVE_PREVIEW !== 'true',
   tailwindcss: {
     cssPath: `${path.resolve(paths.css.src)}/app.css`,
     jit: true,

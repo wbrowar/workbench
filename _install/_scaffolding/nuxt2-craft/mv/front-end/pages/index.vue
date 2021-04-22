@@ -1,14 +1,23 @@
 <template>
   <div>
-    <WelcomeDemo>
-      <p class="text-center" v-if="entry.title">Loaded {{ entry.title }} Entry</p>
+    <WelcomeDemo v-if="entry">
+      <p class="text-center">Loaded {{ entry.title }} Entry</p>
     </WelcomeDemo>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useFetch, useMeta } from '@nuxtjs/composition-api';
-import { homeGql } from 'GQL/homeGql.js';
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  useContext,
+  useFetch,
+  useMeta,
+  useRoute,
+  useStore,
+} from '@nuxtjs/composition-api';
+import { articleGql } from 'GQL/pages/articleGql.js';
 import { log } from 'JS/global';
 import { gqlToObject } from 'JS/seomatic';
 import WelcomeDemo from 'Components/welcome_demo/WelcomeDemo.vue';
@@ -24,36 +33,54 @@ interface CraftRequest {
 }
 
 export default defineComponent({
-  name: 'PageHome',
+  name: 'PageArticle',
   head: {},
   components: {
     WelcomeDemo,
   },
   setup() {
-    const { $craft } = useContext();
-    const entry = ref();
-    const seomatic = ref({});
+    const { $craft, payload, $preview } = useContext();
+    const route = useRoute();
+    const state = reactive({
+      entry: null,
+      seomatic: null,
+    });
 
     useFetch(async () => {
-      const request = await $craft({
-        query: homeGql,
-      });
+      let data;
+      if (!$preview && payload) {
+        data = payload;
+      } else {
+        const request: CraftRequest = await $craft({
+          apiLog: 'PageArticle',
+          query: articleGql,
+          variables: {
+            uri: `segment/${route.value.params.slug}`,
+          },
+        });
 
-      if (request?.data?.entry) {
-        log('Entry', request.data.entry);
-        entry.value = request.data.entry;
+        if (request?.data) {
+          data = request.data;
+        }
+      }
 
-        if (request.data.entry?.seomatic) {
-          seomatic.value = request.data.entry.seomatic;
+      if (data?.entry) {
+        state.entry = data.entry;
+
+        if (data.entry.seomatic) {
+          state.seomatic = data.entry.seomatic;
         }
       }
     });
 
     useMeta(() => {
-      return Object.keys(seomatic.value).length ? { ...gqlToObject(seomatic.value) } : {};
+      return state.seomatic ? { ...gqlToObject(state.seomatic) } : {};
     });
 
-    return { entry, seomatic };
+    return { ...toRefs(state) };
+  },
+  mounted() {
+    log('PageArticle loaded');
   },
 });
 </script>
