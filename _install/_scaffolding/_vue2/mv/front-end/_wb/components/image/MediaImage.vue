@@ -6,6 +6,7 @@
           :class="imageClasses"
           :key="index"
           :alt="alt && lastSource(index) ? alt : null"
+          :loading="loading"
           :media="source.media || null"
           :sizes="source.sizes || null"
           :type="source.type || null"

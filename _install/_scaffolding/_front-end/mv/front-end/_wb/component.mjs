@@ -42,7 +42,11 @@ async function run() {
 
               libraryComponents.forEach((item) => {
                 const dirName = path.basename(item);
-                components.push({ checked: list.length ? list.includes(dirName) : false, name: dirName, value: dirName });
+                components.push({
+                  checked: list.length ? list.includes(dirName) : false,
+                  name: dirName,
+                  value: dirName,
+                });
               });
 
               return components;
@@ -110,6 +114,7 @@ async function run() {
         let config = answers;
         config.condensedName = answers.name.replace(/\s+/g, '');
         config.handleKebab = answers.handle.replace(/_/g, '-');
+        config.settings = settings;
         let delimiter = '%';
 
         switch (item) {

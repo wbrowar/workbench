@@ -1,12 +1,12 @@
 <template>
   <div
-    :is="anchor ? 'a' : 'div'"
+    v-is="anchor ? 'a' : 'div'"
     :id="anchor ? containerId : null"
     class="c-subheader"
     :class="{ 'c-subheader-anchor': anchor }"
     :href="anchor ? `#${containerId}` : null"
   >
-    <h2 :is="elementType" :class="classes" v-html="text"></h2>
+    <h2 v-is="elementType" :class="classes" v-html="text"></h2>
   </div>
 </template>
 

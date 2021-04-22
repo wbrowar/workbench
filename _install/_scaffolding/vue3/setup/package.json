@@ -3,7 +3,9 @@
     "ci:build": "npm run prebuild && VITE_POSTCSS_PURGECSS=true vite build",
     "dev": "npm run prebuild && vite",
     "prebuild": "node ./_wb/prebuild.mjs --css-includes",
-    "prod": "npm run prebuild && VITE_POSTCSS_PURGECSS=true vite build"
+    "prod": "npm run prebuild && VITE_POSTCSS_PURGECSS=true vite build",
+    "tw": "tailwind-config-viewer -p 4000",
+    "two": "tailwind-config-viewer export ./dist/design-system"
   },
   "dependencies": {
     "vue": "^3.0.5",
@@ -29,7 +31,8 @@
     "postcss-nested": "^5.0.3",
     "postcss-simple-vars": "^6.0.2",
     "prettier": "^2.2.1",
-    "tailwindcss": "^2.0.3",
+    "tailwindcss": "^2.1.1",
+    "tailwind-config-viewer": "^1.5.1",
     "typescript": "^4.1.3",
     "vite": "^2.0.2"
   }

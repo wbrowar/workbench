@@ -1,5 +1,5 @@
 <template>
-  <div :is="elementType" class="c-resize-container" v-bind="computedAttributes"><slot></slot></div>
+  <div v-is="elementType" class="c-resize-container" v-bind="computedAttributes"><slot></slot></div>
 </template>
 
 <script>

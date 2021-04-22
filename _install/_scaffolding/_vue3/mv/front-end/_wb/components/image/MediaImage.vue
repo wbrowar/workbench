@@ -1,11 +1,12 @@
 <template>
-  <figure :is="background ? elementType : 'figure'" :class="classes">
+  <figure v-is="background ? elementType : 'figure'" :class="classes">
     <picture class="c-image" :class="containerClasses">
       <img
-        :is="lastSource(index) ? 'img' : 'source'"
+        v-is="lastSource(index) ? 'img' : 'source'"
         :class="imageClasses"
         :key="index"
         :alt="alt && lastSource(index) ? alt : null"
+        :loading="loading"
         :media="source.media || null"
         :sizes="source.sizes || null"
         :type="source.type || null"
