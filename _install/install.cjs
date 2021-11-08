@@ -2,10 +2,8 @@
 const _ = require('lodash');
 const chalk = require('chalk');
 const fs = require('fs-extra');
-const glob = require('glob-all');
 const inquirer = require('inquirer');
 const os = require('os');
-const path = require('path');
 
 // Import global functions
 let g;

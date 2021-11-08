@@ -1,7 +1,0 @@
-{% extends "dev/_dev_page.twig" %}
-
-{% set currentStylesNavItem = craft.app.request.getSegment(3) ?? 'index' %}
-
-{% block content %}
-    {% include 'dev/inv/' ~ currentStylesNavItem %}
-{% endblock %}

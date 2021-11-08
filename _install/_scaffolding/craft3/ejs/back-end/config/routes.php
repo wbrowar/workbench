@@ -19,6 +19,5 @@
  */
 
 return [
-    // 'home' => ['template' => '_layout.twig'], // Enable for headless CMS
-    // 'api' => 'graphql/api', // Enable for headless CMS
+//    'api' => 'graphql/api',
 ];
