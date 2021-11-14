@@ -1,27 +1,20 @@
 import axios from 'axios';
-import { defineNuxtConfig } from '@nuxtjs/composition-api';
-import { getPayloadForSection } from './nuxtGenerateRoutes.js';
 
 const path = require('path');
 const paths = require(`./wb.paths.js`);
 const theme = require(`./wb.theme.js`);
 
-export default defineNuxtConfig({
-  analyze: true,
-  alias: {
-    Components: path.resolve(paths.components.src),
-    CSS: path.resolve(paths.css.src),
-    GQL: path.resolve(`${paths.wb.src}gql/`),
-    JS: path.resolve(paths.js.src),
-    Layouts: path.resolve(`${paths.wb.src}layouts/`),
-    Pages: path.resolve(`${paths.wb.src}pages/`),
-    Source: path.resolve(paths.wb.source),
-    WB: path.resolve(paths.wb.workbench),
-    Templates: path.resolve(`${paths.wb.src}templates/`),
-  },
+export default {
   build: {
     babel: {
       plugins: ['@babel/plugin-proposal-optional-chaining'],
+    },
+    extractCSS: true,
+    html: {
+      minify: {
+        minifyCSS: false,
+        minifyJS: false,
+      },
     },
     postcss: {
       plugins: {
@@ -40,14 +33,60 @@ export default defineNuxtConfig({
             },
           ],
         },
+        tailwindcss: path.resolve(__dirname, './tailwind.config.cjs'),
         autoprefixer: {},
       },
     },
-    quiet: false,
     transpile: ['gsap'],
+    extend(config) {
+      config.resolve.alias.Components = path.resolve(paths.components.src);
+      config.resolve.alias.CSS = path.resolve(paths.css.src);
+      config.resolve.alias.GQL = path.resolve(`${paths.wb.src}gql/`);
+      config.resolve.alias.JS = path.resolve(paths.js.src);
+      config.resolve.alias.Layouts = path.resolve(`${paths.wb.src}layouts/`);
+      config.resolve.alias.Pages = path.resolve(`${paths.wb.src}pages/`);
+      config.resolve.alias.Source = path.resolve(paths.wb.source);
+      config.resolve.alias.WB = path.resolve(paths.wb.workbench);
+      config.resolve.alias.Templates = path.resolve(`${paths.wb.src}templates/`);
+    },
   },
-  buildModules: ['@nuxtjs/eslint-module', '@nuxt/typescript-build', '@nuxtjs/composition-api', '@nuxtjs/tailwindcss'],
+  buildModules: [
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/composition-api',
+    ['@nuxt/typescript-build', { typeCheck: false }],
+    '@nuxtjs/style-resources',
+  ],
+  // components: [{ path: paths.components.src, pathPrefix: false }],
   components: false,
+  css: [`${path.resolve(paths.css.src)}/app.css`],
+  generate: {
+    fallback: true,
+    routes() {
+      if (process.env.CRAFT_API_URL !== '' && process.env.CRAFT_AUTH_TOKEN !== '') {
+        return axios
+          .post(
+            process.env.CRAFT_API_URL,
+            {
+              query: `query {
+      entries(limit: null) {
+        uri
+      }
+    }`,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.CRAFT_AUTH_TOKEN}`,
+              },
+            }
+          )
+          .then((res) => {
+            return res.data.data.entries.map((entry) => {
+              return entry.uri === '__home__' ? `/` : `/${entry.uri}`;
+            });
+          });
+      }
+    },
+  },
   dir: {
     static: 'public',
   },
@@ -64,24 +103,20 @@ export default defineNuxtConfig({
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  generate: {
-    fallback: true,
-    interval: 1,
-    crawler: false,
-    async routes() {
-      const routes = [];
-      if (process.env.CRAFT_API_URL !== '' && process.env.CRAFT_AUTH_TOKEN !== '') {
-        // Globals shared across entries
-        const globals = await getPayloadForSection('globals');
-
-        // EXAMPLE usage
-        // const news = await getPayloadForSection('news', globals, { offset: '0', limit: '20' });
-        // routes.push(...news);
-      }
-      return routes;
-    },
-  },
   loading: { color: '#fff' },
+  modules: [
+    [
+      'nuxt-mq',
+      {
+        // Default breakpoint for SSR
+        defaultBreakpoint: 'default',
+        breakpoints: {
+          ...theme.mq.breakpoints,
+          lg: Infinity,
+        },
+      },
+    ],
+  ],
   pageTransition: 'page',
   plugins: ['~/plugins/craft.js', '~/plugins/preview.client.js'],
   privateRuntimeConfig: {
@@ -89,20 +124,13 @@ export default defineNuxtConfig({
     craftAuthToken: process.env.CRAFT_AUTH_TOKEN,
   },
   publicRuntimeConfig: {
+    livePreview: process.env.ENABLE_LIVE_PREVIEW === 'true',
     craftApiUrl: process.env.ENABLE_LIVE_PREVIEW === 'true' ? process.env.CRAFT_API_URL : '',
     craftAuthToken: process.env.ENABLE_LIVE_PREVIEW === 'true' ? process.env.CRAFT_AUTH_TOKEN : '',
-    livePreview: process.env.ENABLE_LIVE_PREVIEW === 'true',
-    livePreviewEndpoint: process.env.LIVE_PREVIEW_ENDPOINT !== '' ? process.env.LIVE_PREVIEW_ENDPOINT : null,
-  },
-  server: {
-    host: '0',
-    port: 3000,
-  },
-  ssr: process.env.ENABLE_LIVE_PREVIEW !== 'true',
-  tailwindcss: {
-    cssPath: `${path.resolve(paths.css.src)}/app.css`,
-    jit: true,
+    serverlessDirectory: process.env.SERVERLESS_DIRECTORY !== '' ? process.env.SERVERLESS_DIRECTORY : null,
   },
   target: 'static',
-  telemetry: false,
-});
+  server: {
+    host: '0',
+  },
+};

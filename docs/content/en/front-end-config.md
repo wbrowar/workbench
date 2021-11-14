@@ -7,7 +7,7 @@ version: 6.1.0
 fullscreen: false
 ---
 
-All front-end projects include a `wb.config.js` file and a `tailwind.config.js` file in the project root. Depending on the project type, other config files may also be found in the project root.
+All front-end projects include a `wb.config.js` file and a `tailwind.config.cjs` file in the project root. Depending on the project type, other config files may also be found in the project root.
 
 ## Config Files
 
@@ -18,7 +18,7 @@ All front-end projects include a `wb.config.js` file and a `tailwind.config.js` 
 | `nuxt.config.js` | Used in Nuxt.js projects to configure build steps, register modules and plugins, and configure Webpack. |
 | `postcss.config.js` | Set options for PostCSS. Additional PostCSS plugins can be configured here. |
 | `purgecss.config.js` | Configure PurgeCSS to reduce extra CSS created by Tailwind CSS. |
-| `tailwind.config.js` | A shell for the default Tailwind CSS config. Tailwind utilities and plugins should be managed in the `wb.config.js` file. |
+| `tailwind.config.cjs` | A shell for the default Tailwind CSS config. Tailwind utilities and plugins should be managed in the `wb.config.js` file. |
 | `vue.config.js` | Used in Vue SPA projects to configure Webpack and set settings used by `vue-cli`. |
 | `wb.config.js` | Creates the general config for Tailwind CSS, configures the node scripts in the `_starter` directory, and provides additional options that can be used in components and throughout the project. |
 

@@ -25,7 +25,7 @@ return [
         ],
         'baseUrl' => getenv('PRIMARY_SITE_URL'),
         'baseCpUrl' => getenv('CP_BASE_URL') ?? getenv('BASE_URL'),
-        'cpTrigger' => 'cms',
+        'cpTrigger' => '<%- install.cpTrigger %>',
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
@@ -49,7 +49,6 @@ return [
         'backupOnUpdate' => true,
         'devMode' => false,
         'enableTemplateCaching' => true,
-//        'run­QueueAu­to­mat­i­cal­ly' => false,
     ],
 
     // Staging (pre-production) environment
@@ -62,7 +61,6 @@ return [
         'disallowRobots' => true,
         'enableTemplateCaching' => true,
         'rememberedUserSessionDuration' => 31557600,
-//        'run­QueueAu­to­mat­i­cal­ly' => false,
         'userSessionDuration' => 31557600,
     ],
 

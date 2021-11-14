@@ -71,7 +71,7 @@ const mq = {
 };
 
 /*
- * Define values to merge into tailwind.config.js, other than those defined above.
+ * Define values to merge into tailwind.config.cjs, other than those defined above.
  */
 const tailwind = {
   theme: {

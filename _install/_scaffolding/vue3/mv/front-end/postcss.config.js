@@ -29,7 +29,7 @@ module.exports = {
     simpleVars(),
     nested(),
     customMedia(mediaQueries),
-    tailwind(require('./tailwind.config.js')),
+    tailwind(require('./tailwind.config.cjs')),
     autoprefixer(),
   ],
 };

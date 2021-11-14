@@ -1,7 +1,0 @@
-{% extends "pages/basic_page.twig" %}
-
-{% if craft.app.config.general.devMode %}
-  {% block content %}{% endblock %}
-{% else %}
-  {% redirect url(siteUrl) %}
-{% endif %}
