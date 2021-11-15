@@ -88,9 +88,9 @@ async function run() {
                 name: 'installEnd',
                 message: 'What kind of project are you building?',
                 choices: [
-                    { name: 'Back-end + Front-end (Headless, Jamstack, etc...)', value: 'back_front' },
                     { name: 'Front-end Only', value: 'front' },
                     { name: 'Back-end Only', value: 'back' },
+                    { name: 'Back-end + Front-end (Headless, Jamstack, etc...)', value: 'back_front' },
                 ],
             },
             {
@@ -101,10 +101,9 @@ async function run() {
                     return ['front', 'back_front'].includes(answers.installEnd);
                 },
                 choices: [
-                    { name: 'Vue SPA', value: 'vue3' },
-                    { name: 'Nuxt (Craft front-end)', value: 'nuxt2-craft' },
                     { name: 'HTML (Tailwind, Vite)', value: 'html' },
-                    { name: 'Marketo Vue SPA', value: 'vue3-marketo' },
+                    { name: 'Vue SPA', value: 'vue3' },
+                    { name: 'Nuxt 2 (Craft front-end)', value: 'nuxt2-craft' },
                     { name: 'Nuxt (Static)', value: 'nuxt2' },
                 ],
             },
@@ -482,7 +481,7 @@ async function run() {
                     g.verboseExec(`ddev craft install/craft --interactive=0 --email="${ answers.cmsAdminEmail }" --username="${ answers.cmsAdminUsername }" --password="${ answers.cmsAdminPassword }" --site-name="$SITE_NAME" --site-url="$DEFAULT_SITE_URL" --language="en-US"`, verbose);
                     g.log('verbose', `Craft 3 installed`, verbose);
 
-                    g.verboseExec(`ddev craft project-config/apply`, verbose);
+                    g.verboseExec(`ddev craft up`, verbose);
                     g.log('verbose', `Project Config applied`, verbose);
 
                     g.log('title', 'Updating Craft and plugins to the latest version');
