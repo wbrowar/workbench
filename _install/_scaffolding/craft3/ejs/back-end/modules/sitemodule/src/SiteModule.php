@@ -11,12 +11,16 @@
 namespace modules\sitemodule;
 
 use Craft;
+use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterTemplateRootsEvent;
+use craft\events\RegisterUserPermissionsEvent;
 use craft\i18n\PhpMessageSource;
+use craft\services\Dashboard;
+use craft\services\UserPermissions;
 use craft\web\View;
 
+use modules\sitemodule\widgets\WebhookDeploy as WebhookDeployWidget;
 use yii\base\Event;
-use yii\base\InvalidConfigException;
 use yii\base\Module;
 
 /**
@@ -56,6 +60,7 @@ class SiteModule extends Module
     public function __construct($id, $parent = null, array $config = [])
     {
         Craft::setAlias('@modules/sitemodule', $this->getBasePath());
+        // FEATURE: Webhook Deploy
         $this->controllerNamespace = 'modules\sitemodule\controllers';
 
         // Translation category
@@ -72,6 +77,7 @@ class SiteModule extends Module
         }
 
         // Base template directory
+        // FEATURE: Webhook Deploy
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function (RegisterTemplateRootsEvent $e) {
             if (is_dir($baseDir = $this->getBasePath().DIRECTORY_SEPARATOR.'templates')) {
                 $e->roots[$this->id] = $baseDir;
@@ -100,39 +106,45 @@ class SiteModule extends Module
         parent::init();
         self::$instance = $this;
 
-        if (Craft::parseEnv('$LIVE_PREVIEW_URL') ?? false) {
-            // Update Nuxt Live Preview without reloading the page
-            $livePreviewJs = <<<'EOD'
-                Garnish.on(Craft.Preview, 'beforeUpdateIframe', function(event) {
-                    if (!event.refresh) {
-                        event.target.$iframe[0].contentWindow.postMessage('livepreview', '*');
-                    }
-                });
-            EOD;
-
-            if (Craft::$app->getRequest()->getIsCpRequest()) {
-                Craft::$app->getView()->registerJs($livePreviewJs);
-            }
+        // Add custom permissions
+        if (Craft::$app->getEdition() > 0) {
+            Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
+                $event->permissions['Webhooks'] = [
+                    // FEATURE: Webhook Deploy
+                    'siteModuleEnableWebhooks' => ['label' => 'Enable/Disable Webhooks'],
+                    'siteModuleTriggerWebhookDeploy' => ['label' => 'Trigger Webhook Deploy'],
+                ];
+            });
         }
 
-/**
- * Logging in Craft involves using one of the following methods:
- *
- * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
- * Craft::info(): record a message that conveys some useful information.
- * Craft::warning(): record a warning message that indicates something unexpected has happened.
- * Craft::error(): record a fatal error that should be investigated as soon as possible.
- *
- * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
- *
- * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
- * the category to the method (prefixed with the fully qualified class name) where the constant appears.
- *
- * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
- * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
- *
- * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
- */
+        Event::on(
+            Dashboard::class,
+            Dashboard::EVENT_REGISTER_WIDGET_TYPES,
+            function (RegisterComponentTypesEvent $event) {
+                // FEATURE: Webhook Deploy
+                $event->types[] = WebhookDeployWidget::class;
+            }
+        );
+
+
+        /**
+         * Logging in Craft involves using one of the following methods:
+         *
+         * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
+         * Craft::info(): record a message that conveys some useful information.
+         * Craft::warning(): record a warning message that indicates something unexpected has happened.
+         * Craft::error(): record a fatal error that should be investigated as soon as possible.
+         *
+         * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
+         *
+         * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
+         * the category to the method (prefixed with the fully qualified class name) where the constant appears.
+         *
+         * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
+         * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
+         *
+         * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
+         */
         Craft::info(
             Craft::t(
                 'site-module',

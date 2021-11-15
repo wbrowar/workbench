@@ -1,0 +1,40 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Site Module module for Craft CMS
+ *
+ * WebhookDeploy Widget Body
+ *
+ * @author    Will Browar
+ * @copyright Copyright (c) 2021 Will Browar
+ * @link      https://wbrowar.com/
+ * @package   SiteModule
+ * @since     1.0.0
+ */
+#}
+
+{% for webhook in webhooks %}
+  {% if not loop.first %}
+    <hr>
+  {% endif %}
+  <div class="hasstatus" title="{{ webhook.enabled ? 'The ' ~ webhook.name ~ ' webhook is enabled, will fire automatically, and can be triggered manually.' : 'The ' ~ webhook.name ~ ' webhook is disabled and won’t fire automatically.' }}"><span class="status {{ webhook.enabled ? 'live' : 'disabled' }}"></span><strong>{{ webhook.name }}</strong></div>
+  {% if userCanEnableWebhooks or userCanTriggerWebhookDeploy %}
+    <form method="post" action="" style="margin-top: .8rem;">
+      {{ csrfInput() }}
+      <input type="hidden" name="action" value="site-module/webhook-deploy/update-webhook">
+      <input type="hidden" name="id" value="{{ webhook.id }}">
+      {% if webhook.enabled and userCanTriggerWebhookDeploy %}
+        <input class="btn submit" name="deploy-webhook" type="submit" value="Deploy">
+      {% endif %}
+      {% if userCanEnableWebhooks %}
+        {% if webhook.enabled %}
+          <input class="btn" name="disable-webhook" type="submit" value="Disable Webhook">
+        {% else %}
+          <input class="btn" name="enable-webhook" type="submit" value="Enable Webhook">
+        {% endif %}
+      {% endif %}
+    </form>
+  {% else %}
+    <p></p>
+  {% endif %}
+{% endfor %}
