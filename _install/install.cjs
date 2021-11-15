@@ -303,19 +303,19 @@ async function run() {
                         break;
                     case 'vue3-marketo':
                         ejsVars.appEnvPrefix = 'VUE_APP_';
-                        installDirectories.push('_front-end', '_vue3', 'vue3', 'vue3-marketo');
+                        installDirectories.push('_front-end', 'vue3', 'vue3-marketo');
                         break;
                     case 'nuxt2':
                         ejsVars.appEnvPrefix = '';
-                        installDirectories.push('_front-end', '_vue2', 'nuxt2');
+                        installDirectories.push('_front-end', 'nuxt2');
                         break;
                     case 'nuxt2-craft':
                         ejsVars.appEnvPrefix = '';
-                        installDirectories.push('_front-end', '_vue2', 'nuxt2', 'nuxt2-craft');
+                        installDirectories.push('_front-end', 'nuxt2', 'nuxt2-craft');
                         break;
                     case 'vue3':
                         ejsVars.appEnvPrefix = 'VITE_';
-                        installDirectories.push('_front-end', '_vue3', 'vue3');
+                        installDirectories.push('_front-end', 'vue3');
                         // installMv = [
                         //     { pattern: `${ scaffoldingDirectory }/_front-end/mv/.prettierrc`, src: `${ scaffoldingDirectory }/_front-end/mv/`, dist: `${projectDirectory}/` },
                         //     { pattern: `${ scaffoldingDirectory }/vue3/mv/**/*`, src: `${ scaffoldingDirectory }/vue3/mv/`, dist: `${projectDirectory}/` },

@@ -162,7 +162,6 @@ export const faviconVueMeta = {
   ],
   meta: [
     { name: 'mobile-web-app-capable', content: 'yes' },
-    { name: 'theme-color', content: favicon.themeColor || '#fff' },
     { name: 'application-name' },
     { name: 'apple-mobile-web-app-capable', content: 'yes' },
     { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },

@@ -1,7 +1,9 @@
 @import 'tailwindcss/base';
 @import './_variables.css';
+@import './automated/_colors.css';
 @import './_global.css';
 @import './_animations.css';
 @import 'tailwindcss/components';
 @import './automated/_components.css';
+@import './automated/_fonts.css';
 @import 'tailwindcss/utilities';

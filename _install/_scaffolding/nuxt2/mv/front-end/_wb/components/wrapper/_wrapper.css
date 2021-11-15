@@ -1,0 +1,6 @@
+.c-wrapper {
+  @apply grid grid-cols-[1fr,minmax(6rem,42rem),1fr]];
+}
+.c-wrapper > * {
+  @apply col-start-2 col-span-1;
+}

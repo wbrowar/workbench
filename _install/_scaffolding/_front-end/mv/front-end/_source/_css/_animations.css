@@ -1,28 +1,58 @@
-@keyframes fadeIn {
-  0% {
-    display: none;
-    opacity: 0;
-  }
-  1% {
-    display: block;
-    opacity: 0;
-  }
-  100% {
-    display: block;
-    opacity: 1;
-  }
+/*
+ * Fade opacity in
+ */
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
-@keyframes fadeOut {
-  0% {
-    display: block;
-    opacity: 1;
-  }
-  99% {
-    display: block;
-    opacity: 0;
-  }
-  100% {
-    display: none;
-    opacity: 0;
-  }
+.c-animation-fade-in {
+  @apply opacity-0 animated:animate-fade-in reduce-motion:opacity-100 reduce-motion:animate-none;
 }
+.c-group-animation-fade-in {
+  @apply opacity-0 group-animated:animate-fade-in reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+
+/*
+ * Fade opacity in from a particular direction
+ */
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(100%) }
+  100% { opacity: 1; transform: translateY(0) }
+}
+.c-animation-fade-up {
+  @apply opacity-0 animated:animate-fade-up reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+.c-group-animation-fade-up {
+  @apply opacity-0 group-animated:animate-fade-up reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+@keyframes fade-right {
+  0% { opacity: 0; transform: translateX(-100%) }
+  100% { opacity: 1; transform: translateX(0) }
+}
+.c-animation-fade-right {
+  @apply opacity-0 animated:animate-fade-right reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+.c-group-animation-fade-right {
+  @apply opacity-0 group-animated:animate-fade-right reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+@keyframes fade-down {
+  0% { opacity: 0; transform: translateY(-100%) }
+  100% { opacity: 1; transform: translateY(0) }
+}
+.c-animation-fade-down {
+  @apply opacity-0 animated:animate-fade-down reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+.c-group-animation-fade-down {
+  @apply opacity-0 group-animated:animate-fade-down reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+@keyframes fade-left {
+  0% { opacity: 0; transform: translateX(100%) }
+  100% { opacity: 1; transform: translateX(0) }
+}
+.c-animation-fade-left {
+  @apply opacity-0 animated:animate-fade-left reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+.c-group-animation-fade-left {
+  @apply opacity-0 group-animated:animate-fade-left reduce-motion:opacity-100 reduce-motion:animate-none;
+}
+

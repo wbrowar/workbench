@@ -1,0 +1,49 @@
+.c-text {
+  @apply space-y-4 lg:space-y-6;
+}
+
+.c-text p :is(b, strong) {
+  @apply font-semibold;
+}
+.c-text p :is(i, em) {
+  @apply italic;
+}
+.c-text p :is(b i, b em, strong i, strong em) {
+  @apply font-semibold italic;
+}
+.c-text p a {
+  @apply underline;
+}
+.c-text p a:hover, .c-text p a:focus {
+  @apply opacity-50;
+}
+.c-text p a:active {
+  @apply opacity-50;
+}
+.c-text :is(ol, ul) li {
+  @apply ml-4;
+  break-inside: avoid;
+}
+.c-text ol li a, .c-text ul li a {
+  @apply underline;
+}
+.c-text :is(ol, ul) li a:hover, .c-text :is(ol, ul) li a:focus {
+  @apply opacity-50;
+}
+.c-text :is(ol, ul) li a:active {
+  @apply opacity-50;
+}
+.c-text ol li {
+  @apply list-decimal;
+}
+.c-text ul li {
+  @apply list-disc;
+}
+
+/* Modifiers */
+.c-text-collapse-br br {
+  @apply hidden md:inline;
+}
+.c-text-callout {
+  @apply text-xl md:py-10 md:border-t md:border-b md:text-3xl;
+}
