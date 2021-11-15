@@ -13,6 +13,11 @@ This is here for my own storage, but please [let me know if you have any feedbac
 
 Documentation can be found at [workbench.wbrowar.com](https://workbench.wbrowar.com/)
 
+# Quick Start
+
+1. Install [new-wb](https://www.npmjs.com/package/new-wb) by running `npm install -g new-wb`.
+1. Run `new-wb` in the directory of your choice.
+1. Enter the required information requested by various sets of prompts.
 
 ## Credits
 This project has been created with help and advice from @khalwat, @MarcHartwig13, @zsackett-dixonschwabl, @ds-mfoster, @muneath.
