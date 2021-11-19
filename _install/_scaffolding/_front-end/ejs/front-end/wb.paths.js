@@ -16,6 +16,9 @@ module.exports = {
   components: {
     src: `${roots.sourcePath}_components/`,
   },
+  composables: {
+    src: `${roots.srcPath}composables/`,
+  },
   css: {
     src: `${roots.sourcePath}_css/`,
   },

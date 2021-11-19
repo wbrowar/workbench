@@ -8,6 +8,7 @@
       "ESNext.AsyncIterable",
       "DOM"
     ],
+    "noImplicitAny": true,
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
@@ -20,12 +21,14 @@
         "./*"
       ],
       "Components/*": ["./_source/_components/*"],
+      "Composables/*": ["./composables/*"],
       "CSS/*": ["./_source/_css/*"],
       "GQL/*": ["./gql/*"],
       "Layouts/*": ["./layouts/*"],
       "Pages/*": ["./pages/*"],
       "JS/*": ["./_source/_js/*"],
       "Source/*": ["./_source/*"],
+      "Types/*": ["./types/*"],
       "WB/*": ["./_wb/*"]
     },
     "types": [
@@ -34,6 +37,7 @@
     ]
   },
   "exclude": [
+    "./dist",
     "./node_modules",
     "./_wb"
   ]

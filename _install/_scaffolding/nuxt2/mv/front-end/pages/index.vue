@@ -7,33 +7,69 @@
 </template>
 
 <script>
-import { defineComponent, ref, useContext, useFetch } from '@nuxtjs/composition-api';
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  useContext,
+  useFetch,
+  useMeta,
+} from '@nuxtjs/composition-api';
 import WelcomeDemo from 'Components/welcome_demo/WelcomeDemo.vue';
-import { homeGql } from 'GQL/homeGql.js';
+import { homeGql } from 'GQL/pages/homeGql.js';
 import { log } from 'JS/global';
+import { gqlToObject } from 'JS/seomatic';
 
 export default defineComponent({
   name: 'PageHome',
+  head: {},
   components: {
     WelcomeDemo,
   },
   setup() {
-    const { $craft } = useContext();
-    const entry = ref({});
+    const { $craft, $craftGlobals, payload, $preview } = useContext();
+    const state = reactive({
+      animatedElements: [],
+      articles: [] as CraftArticleThumb[],
+      entry: null as Home_Home_Entry | null,
+      pageIsDark: false,
+      seomatic: null as SeomaticInterface | null,
+    });
 
     useFetch(async () => {
-      const request = await $craft({
-        query: homeGql,
-      });
+      let data;
+      if (!$preview && payload?.entry) {
+        data = payload;
+      } else {
+        const request = await $craft({
+          apiLog: 'PageHome',
+          query: homeGql,
+        });
 
-      log('Request', request);
+        if (request?.data) {
+          data = request.data;
+        }
+      }
 
-      if (request?.data?.entry) {
-        entry.value = request.data.entry;
+      if (data?.entry) {
+        state.entry = data.entry;
+
+        if (data.entry.seomatic) {
+          state.seomatic = data.entry.seomatic;
+        }
       }
     });
 
-    return { entry };
+    useMeta(() => {
+      return state.seomatic ? { ...gqlToObject(state.seomatic) } : {};
+    });
+
+    return {
+      ...toRefs(state),
+    };
+  },
+  mounted() {
+    log('PageHome loaded');
   },
 });
 </script>

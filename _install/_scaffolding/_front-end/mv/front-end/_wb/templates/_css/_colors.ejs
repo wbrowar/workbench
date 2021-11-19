@@ -1,0 +1,7 @@
+<% Object.entries(colors.schemes).forEach(([schemeKey, schemeColors]) => { %><% if (schemeKey === 'default') { %>html {
+<% Object.entries(schemeColors).forEach(([colorKey, colorValue]) => { -%>  --color-<%- colorKey %>: <%- colorValue %>;
+<% }); -%>}
+<% } else { -%><%- schemeKey %> {
+<% Object.entries(schemeColors).forEach(([colorKey, colorValue]) => { -%>  --color-<%- colorKey %>: <%- colorValue %>;
+<% }); -%>}
+<% } }); -%>

@@ -1,9 +1,17 @@
+import Vue from 'vue';
+
+declare global {
+  interface Window {
+    dl: any; // Datalayer for GTM
+  }
+}
+
 declare module '*.vue' {
-  import Vue from 'vue';
   export default Vue;
 }
-declare module '@nuxt/types' {
-  interface Context {
-    $craft(params: object): Promise<any> | object;
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $metaInfo: any;
   }
 }

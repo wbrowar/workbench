@@ -1,12 +1,20 @@
+// import * as global from './_wb/functions.mjs';
+
 const _ = require('lodash');
 const plugin = require('tailwindcss/plugin');
+const global = require('./_wb/functions.mjs');
 const theme = require('./wb.theme.js');
 const settings = require('./wb.settings.js');
 
 // Add colors
-const colors = theme.colors;
+const colors = {};
 colors.current = 'currentColor';
 colors.transparent = 'transparent';
+colors.fpo = 'rgb(230,0,255)';
+
+// Add colors
+const themeColors = global.parseThemeColors(theme.colors);
+_.merge(colors, themeColors.tailwind);
 
 // Add fonts
 const fontFamily = {};
@@ -47,7 +55,7 @@ if (settings.devMode) {
 // Add Tailwind plugins
 const plugins = [];
 const pluginFunctions = [
-  // Modify a property after LazyAnimate has been activated on an element
+  // Used to animate an element from one visual state to another
   function({ addVariant, e }) {
     addVariant('animated', ({ modifySelectors, separator }) => {
       modifySelectors(({ className }) => {
@@ -60,6 +68,22 @@ const pluginFunctions = [
     addVariant('current', ({ modifySelectors, separator }) => {
       modifySelectors(({ className }) => {
         return `.${e(`current${separator}${className}`)}.current`;
+      });
+    });
+  },
+  // Used to animate a child element from a parent with an `.animated` class on it
+  function({ addVariant, e }) {
+    addVariant('group-animated', ({ modifySelectors, separator }) => {
+      modifySelectors(({ className }) => {
+        return `.animated-group .${e(`group-animated${separator}${className}`)}`;
+      });
+    });
+  },
+  // Used to remove motion when user turns on `reduce-motion`
+  function({ addVariant, e }) {
+    addVariant('reduce-motion', ({ modifySelectors, separator }) => {
+      modifySelectors(({ className }) => {
+        return `.reduce-motion .${e(`reduce-motion${separator}${className}`)}`;
       });
     });
   },

@@ -8,10 +8,13 @@
  * Usage: import MediaImage from 'Components/MediaImage.vue';
  */
 
+const path = require('path');
+
 module.exports = {
   resolve: {
     alias: {
       Components: path.resolve(__dirname, './_source/_components/'),
+      Composables: path.resolve(__dirname, './composables/'),
       CSS: path.resolve(__dirname, './_source/_css/'),
       GQL: path.resolve(__dirname, './gql/'),
       Layouts: path.resolve(__dirname, './layouts/'),

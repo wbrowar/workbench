@@ -1,46 +1,41 @@
-// Test using `articleType`, then swap handle out
+const elementGql = `title
+seomatic(asArray: true) {
+  metaTitleContainer
+  metaLinkContainer
+  metaScriptContainer
+  metaJsonLdContainer
+  metaTagContainer
+}`;
 
-const elementGql = (handle = 'articleType') => {
-  return `title
-    postDate @formatDateTime(format: "F j, Y")
-    dateUpdated @formatDateTime(format: "F j, Y")
-    uri
-    ... on articleSection_articleType_Entry {
-      myCustomField
-    }
-    seomatic(asArray: true) {
-      metaTitleContainer
-      metaLinkContainer
-      metaScriptContainer
-      metaJsonLdContainer
-      metaTagContainer
-    }`
-    .replace(/articleType/g, handle);
-};
+export const basicPageGql = `query($uri: String) {
+  entry(
+    section: ["basicPage"]
+    uri: [$uri]
+  ) {
+    ${elementGql}
+  }
+}`;
 
-export const articleGql = (handle = 'articleType', aboutHandle = 'codeAbout') => {
-  return `query articleGql($uri: String) {
-    entry(type: "${handle}", uri: [$uri]) {
-      ${elementGql(handle, aboutHandle)}
-    }
-  }`;
-};
+export const basicPageGenerateGql = function(params = {}) {
+  const offset = params.offset || '0';
+  const limit = params.limit || 'null';
 
-export const articleGenerateGql = (handle = 'articleType', aboutHandle = 'codeAbout') => {
   return `query {
     entryCount(
-      limit: null
-      type: ["${handle}"]
       uri:":notempty:"
+      section: ["basicPage"]
+      limit: null
     )
     entries(
-      limit: null
-      type: ["${handle}"]
       uri:":notempty:"
+      section: ["basicPage"]
+      offset: ${offset}
+      limit: ${limit}
     ) {
       sectionHandle
+      siteId
       uri
-      ${elementGql(handle, aboutHandle)}
+      ${elementGql}
     }
   }`;
 };

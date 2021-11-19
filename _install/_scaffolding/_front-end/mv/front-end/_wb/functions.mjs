@@ -183,6 +183,106 @@ export function parseArgv() {
   };
 }
 
+// Parse color object into Tailwind config and color schemes
+function _getRgbValuesFromCssRgbValue(color) {
+  return color.startsWith('rgb(') && color.endsWith(')') ? color.substr(4, color.length - 5) : color;
+}
+export function parseThemeColors(themeColors, verbose = false) {
+  const colors = {
+    tailwind: {},
+    schemes: {},
+  };
+
+  Object.entries(themeColors).forEach(([key1, value1]) => {
+    if (typeof value1 === 'string') {
+      // Set strings directly to Tailwind values
+      colors.tailwind[`${key1}-val`] = value1;
+      colors.tailwind[key1] = value1;
+    } else if (typeof value1 === 'object' && value1?.value !== undefined) {
+      // Set values for top-level scheme objects
+      Object.entries(value1).forEach(([schemeKey, schemeValue]) => {
+        if (schemeKey === 'value') {
+          colors.tailwind[`${key1}-val`] = value1.value;
+          colors.tailwind[key1] = ({ opacityVariable, opacityValue }) => {
+            if (opacityValue !== undefined) {
+              return `rgba(var(--color-${key1}), ${opacityValue})`
+            }
+            if (opacityVariable !== undefined) {
+              return `rgba(var(--color-${key1}), var(${opacityVariable}, 1))`
+            }
+            return `rgb(var(--color-${key1}))`
+          };
+        } else {
+          if (colors.schemes[schemeKey] === undefined) {
+            colors.schemes[schemeKey] = {};
+          }
+          colors.schemes[schemeKey][key1] = _getRgbValuesFromCssRgbValue(schemeValue);
+        }
+      });
+    } else if (typeof value1 === 'object') {
+      // Set values for shade-level scheme objects
+      Object.entries(value1).forEach(([key2, value2]) => {
+        if (typeof value2 === 'string') {
+          // Set strings directly to Tailwind values
+          if (key2 === 'DEFAULT') {
+            colors.tailwind[`${key1}-val`] = value2;
+            colors.tailwind[key1][key2] = value2;
+          } else {
+            if (colors.tailwind[key1] === undefined) {
+              colors.tailwind[key1] = {};
+            }
+            colors.tailwind[key1][`${key2}-val`] = value2;
+            colors.tailwind[key1][key2] = value2;
+          }
+        } else if (typeof value2 === 'object' && value2?.value !== undefined) {
+          // Set values for top-level scheme objects
+          Object.entries(value2).forEach(([schemeKey, schemeValue]) => {
+            if (schemeKey === 'value') {
+              if (key2 === 'DEFAULT') {
+                colors.tailwind[`${key1}-val`] = value2.value;
+                colors.tailwind[key1][key2] = ({ opacityVariable, opacityValue }) => {
+                  if (opacityValue !== undefined) {
+                    return `rgba(var(--color-${key1}), ${opacityValue})`;
+                  }
+                  if (opacityVariable !== undefined) {
+                    return `rgba(var(--color-${key1}), var(${opacityVariable}, 1))`;
+                  }
+                  return `rgb(var(--color-${key1}))`;
+                };
+              } else {
+                if (colors.tailwind[key1] === undefined) {
+                  colors.tailwind[key1] = {};
+                }
+                colors.tailwind[key1][`${key2}-val`] = value2.value;
+                colors.tailwind[key1][key2] = ({ opacityVariable, opacityValue }) => {
+                  if (opacityValue !== undefined) {
+                    return `rgba(var(--color-${key1}-${key2}), ${opacityValue})`
+                  }
+                  if (opacityVariable !== undefined) {
+                    return `rgba(var(--color-${key1}-${key2}), var(${opacityVariable}, 1))`
+                  }
+                  return `rgb(var(--color-${key1}-${key2}))`
+                };
+              }
+            } else {
+              if (colors.schemes[schemeKey] === undefined) {
+                colors.schemes[schemeKey] = {};
+              }
+              if (key2 === 'DEFAULT') {
+                colors.schemes[schemeKey][key1] = _getRgbValuesFromCssRgbValue(schemeValue);
+              } else {
+                colors.schemes[schemeKey][`${key1}-${key2}`] = _getRgbValuesFromCssRgbValue(schemeValue);
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+
+  return colors;
+}
+
 // Usage: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 export function randomString(length, chars) {
   let result = '';

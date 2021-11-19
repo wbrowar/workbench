@@ -1,27 +1,18 @@
 import axios from 'axios';
-import { articleGenerateGql } from './gql/pages/articleGql.js';
+import { basicPageGenerateGql } from './gql/pages/basicPageGql.js';
 
-function getGlobalsForElement(globals, element) {
-  return {
-    // payload objects
-  };
-}
+export const sites = `"default"`;
 
-export function getPayloadForSection(handle, globals = null, params = {}) {
+export function getPayloadForSection(handle, params = {}) {
   let query = ``;
+  const queryVariables = {};
   let setRoute = null;
 
   console.log(`Getting routes for: ${handle}`);
 
   switch (handle) {
-    case 'globals':
-      query = `query {}`;
-      setRoute = (data) => {
-        return data;
-      };
-      break;
-    case 'article':
-      query = articleGenerateGql(params);
+    case 'basicPage':
+      query = basicPageGenerateGql(params);
       setRoute = (data) => {
         if (data.entryCount) {
           console.log(`Total ${handle}: ${data.entryCount}`);
@@ -31,7 +22,6 @@ export function getPayloadForSection(handle, globals = null, params = {}) {
             route: `/${element.uri}`,
             payload: {
               entry: element,
-              ...getGlobalsForElement(globals, element),
             },
           };
         });
@@ -44,6 +34,7 @@ export function getPayloadForSection(handle, globals = null, params = {}) {
       process.env.CRAFT_API_URL,
       {
         query,
+        variables: Object.keys(queryVariables).length ? queryVariables : null,
       },
       {
         headers: {

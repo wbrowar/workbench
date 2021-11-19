@@ -1,4 +1,4 @@
-export default function (to, from, savedPosition) {
+export default function(to, from, savedPosition) {
   if (to.hash) {
     const element = document.querySelector(to.hash);
     if (element) {

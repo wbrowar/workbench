@@ -1,9 +1,10 @@
 # Project-specific excludes
-_source/_css/automated
+_source/_css/automated/
+!_source/_css/automated/_colors.css
+!_source/_css/automated/_fonts.css
 _source/_js/automated
 public/humans.txt
 public/robots.txt
-public/[sitmap]*
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
@@ -95,3 +96,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Storybook
+.nuxt-storybook/

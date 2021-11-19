@@ -1,0 +1,15 @@
+overwrite: true
+schema:
+  - http://<%- handle %>-api.ddev.site/api:
+      headers:
+        Authorization: "Bearer XXXXXXXXXXXXXXXXXXXX"
+generates:
+  types/automated/generated-craft.d.ts:
+    plugins:
+      - "typescript"
+    config:
+      avoidOptionals:
+        field: true
+        inputValue: true
+        object: true
+        defaultValue: true

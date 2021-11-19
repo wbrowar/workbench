@@ -1,10 +1,9 @@
 <% Object.keys(fonts).forEach((key) => {
 const font = fonts[key];
 if (font.files !== undefined) { %>@font-face {
-  font-family: <%- font.fontFamily %>;
-  src: url('<%= font.files.eot %>');
-  src: url('<%= font.files.eot %>?#iefix') format('embedded-opentype')<% if (font.files.woff2 !== undefined) { %>,
-  url('<%= font.files.woff2 %>') format('woff2')<% } %><% if (font.files.woff !== undefined) { %>,
+  font-family: <%- font.fontFamily %>;<% if (font.files.eot !== undefined) { %>
+  src: url('<%= font.files.eot %>');<% } %>
+  src: <% if (font.files.eot !== undefined) { %>url('<%= font.files.eot %>?#iefix') format('embedded-opentype'),<% } %><% if (font.files.woff2 !== undefined) { %>url('<%= font.files.woff2 %>') format('woff2')<% } %><% if (font.files.woff !== undefined) { %>,
   url('<%= font.files.woff %>') format('woff')<% } %><% if (font.files.otf !== undefined) { %>,
   url('<%= font.files.otf %>') format('opentype')<% } %><% if (font.files.ttf !== undefined) { %>,
   url('<%= font.files.ttf %>') format('truetype')<% } %>;
